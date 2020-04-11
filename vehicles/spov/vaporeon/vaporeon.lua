@@ -437,8 +437,6 @@ function state_full()
 	end
 end
 
-state_struggle = struggle_generator()
-
 function struggle_generator(state, has_look)
 	if state == nil then
 		state = ""
@@ -477,6 +475,8 @@ function struggle_generator(state, has_look)
 		end
 	end
 end
+
+state_struggle = struggle_generator()
 
 -------------------------------------------------------------------------------
 
