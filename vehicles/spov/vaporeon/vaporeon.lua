@@ -7,15 +7,40 @@ require("/scripts/vore/vsosimple.lua")
 
 vaporeon plan:
 
+	state chart:
+	              sleep
+	                |
+	 *idle - sit - lay * back ·· bed - hug
+	   :                                V
+	  full - sit - lay   back <----- shlorp
+	                |
+	              sleep
+
+	  *idle: start
+	  lay * back: stupid placeholder animation
+	    no way to leave full_back state yet
+	  (struggling not included in chart, everything in full has it)
+
+	
 	todo:
 	- fix up placeholder animations
 	- escape animation
-	- roll over animations
+	- full roll over animation
+	- roll over on top of player, as alternative to hugging when you're laying on its belly
+	- location dependent interaction
+	  - in front -> eat, beside/behind -> pet
+	- multiple prey?
+	  - 2 max
+	  - 2 bulges? struggle independently?
+	    - split the sprite up into multiple components
+
 	eventually if I can figure out how:
 	- walk around
 	- follow nearby player
 	- eat automatically if low health, to protect (and heal w/ pill)
 	- attack enemies
+	- ride on back to control
+	  - shlorp in from back -> control from inside?
 
 ]]--
 
@@ -412,29 +437,44 @@ function state_full()
 	end
 end
 
-function state_struggle()
+state_struggle = struggle_generator()
 
-	local movedir = struggleDir
-	struggleDir = "-"
-	local direction_name = nil
-	if movedir == "B" then direction_name = "left" end
-	if movedir == "F" then direction_name = "right" end
-	if movedir == "U" then direction_name = "up" end
-	if movedir == "D" then direction_name = "down" end
-
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle_"..direction_name )
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
-	elseif movedir ~= "-" then
-		vsoNext( "state_full" )
+function struggle_generator(state, has_look)
+	if state == nil then
+		state = ""
+	else
+		state = "_"..state
+	end
+	local look_state
+	if has_look == false then
+		look_state = state
+	else
+		look_state = state.."_look"
 	end
 
-	local anim = vsoAnimCurr( "bodyState" );
+	return function()
+		local movedir = struggleDir
+		struggleDir = "-"
+		local direction_name = nil
+		if movedir == "B" then direction_name = "_left" end
+		if movedir == "F" then direction_name = "_right" end
+		if movedir == "U" then direction_name = "_up" end
+		if movedir == "D" then direction_name = "_down" end
 
-	if vsoAnimEnd( "bodyState" ) then
-		vsoAnim( "bodyState", "full_look" )
-		vsoNext( "state_full" )
+		if direction_name ~= nil then
+			vsoAnim( "bodyState", "struggle"..state..direction_name )
+			vsoSound( "struggle" )
+			vsoCounterAdd( "struggleCount", 1 )
+		elseif movedir ~= "-" then
+			vsoNext( "state_full"..state )
+		end
+
+		local anim = vsoAnimCurr( "bodyState" );
+
+		if vsoAnimEnd( "bodyState" ) then
+			vsoAnim( "bodyState", "full"..look_state )
+			vsoNext( "state_full"..state )
+		end
 	end
 end
 
@@ -479,31 +519,7 @@ function state_full_sit()
 	end
 end
 
-function state_struggle_sit()
-
-	local movedir = struggleDir
-	struggleDir = "-"
-	local direction_name = nil
-	if movedir == "B" then direction_name = "left" end
-	if movedir == "F" then direction_name = "right" end
-	if movedir == "U" then direction_name = "up" end
-	if movedir == "D" then direction_name = "down" end
-
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle_sit_"..direction_name )
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
-	elseif movedir ~= "-" then
-		vsoNext( "state_full_sit" )
-	end
-
-	local anim = vsoAnimCurr( "bodyState" );
-
-	if vsoAnimEnd( "bodyState" ) then
-		vsoAnim( "bodyState", "full_sit_look"  )
-		vsoNext( "state_full_sit" )
-	end
-end
+state_struggle_sit = struggle_generator("sit")
 
 -------------------------------------------------------------------------------
 
@@ -549,31 +565,7 @@ function state_full_lay()
 	end
 end
 
-function state_struggle_lay()
-
-	local movedir = struggleDir
-	struggleDir = "-"
-	local direction_name = nil
-	if movedir == "B" then direction_name = "left" end
-	if movedir == "F" then direction_name = "right" end
-	if movedir == "U" then direction_name = "up" end
-	if movedir == "D" then direction_name = "down" end
-
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle_lay_"..direction_name )
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
-	elseif movedir ~= "-" then
-		vsoNext( "state_full_lay" )
-	end
-
-	local anim = vsoAnimCurr( "bodyState" );
-
-	if vsoAnimEnd( "bodyState" ) then
-		vsoAnim( "bodyState", "full_lay_look"  )
-		vsoNext( "state_full_lay" )
-	end
-end
+state_struggle_lay = struggle_generator("lay")
 
 -------------------------------------------------------------------------------
 
@@ -617,31 +609,7 @@ function state_full_sleep()
 	end
 end
 
-function state_struggle_sleep()
-
-	local movedir = struggleDir
-	struggleDir = "-"
-	local direction_name = nil
-	if movedir == "B" then direction_name = "left" end
-	if movedir == "F" then direction_name = "right" end
-	if movedir == "U" then direction_name = "up" end
-	if movedir == "D" then direction_name = "down" end
-
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle_sleep_"..direction_name )
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
-	elseif movedir ~= "-" then
-		vsoNext( "state_full_sleep" )
-	end
-
-	local anim = vsoAnimCurr( "bodyState" );
-
-	if vsoAnimEnd( "bodyState" ) then
-		vsoAnim( "bodyState", "full_sleep" )
-		vsoNext( "state_full_sleep" )
-	end
-end
+state_struggle_sleep = struggle_generator("sleep", false)
 
 -------------------------------------------------------------------------------
 
@@ -695,31 +663,7 @@ function state_full_back()
 	end
 end
 
-function state_struggle_back()
-
-	local movedir = struggleDir
-	struggleDir = "-"
-	local direction_name = nil
-	if movedir == "B" then direction_name = "left" end
-	if movedir == "F" then direction_name = "right" end
-	if movedir == "U" then direction_name = "up" end
-	if movedir == "D" then direction_name = "down" end
-
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle_back_"..direction_name )
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
-	elseif movedir ~= "-" then
-		vsoNext( "state_full_back" )
-	end
-
-	local anim = vsoAnimCurr( "bodyState" );
-
-	if vsoAnimEnd( "bodyState" ) then
-		vsoAnim( "bodyState", "full_back" )
-		vsoNext( "state_full_back" )
-	end
-end
+state_struggle_back = struggle_generator("back", false)
 
 -------------------------------------------------------------------------------
 
