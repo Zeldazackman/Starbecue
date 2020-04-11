@@ -137,15 +137,15 @@ function state_idle_sit()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "idle_standup" )
 			vsoNext( "state_idle" )
-		elseif percent < 1+7 then
+		elseif percent < 5+7 then
 			vsoAnim( "bodyState", "idle_laydown" )
 			vsoNext( "state_idle_lay" )
-		elseif percent < 1+7+15 then
+		elseif percent < 5+7+15 then
 			vsoAnim( "bodyState", "idle_sit_tail_flick" )
-		elseif percent < 1+7+15+15 then
+		elseif percent < 5+7+15+15 then
 			vsoAnim( "bodyState", "idle_sit_blink" )
 
 		else
@@ -176,18 +176,18 @@ function state_idle_lay()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "idle_situp" )
 			vsoNext( "state_idle_sit" )
-		elseif percent < 1+5 then
+		elseif percent < 5+5 then
 			vsoAnim( "bodyState", "idle_fallasleep" )
 			vsoNext( "state_idle_sleep" )
-		elseif percent < 1+5+10 then
+		elseif percent < 5+5+10 then
 			vsoAnim( "bodyState", "idle_lay_rollover" )
 			vsoNext( "state_idle_back" )
-		elseif percent < 1+5+10+15 then
+		elseif percent < 5+5+10+15 then
 			vsoAnim( "bodyState", "idle_lay_tail_flick" )
-		elseif percent < 1+5+10+15+15 then
+		elseif percent < 5+5+10+15+15 then
 			vsoAnim( "bodyState", "idle_lay_blink" )
 		else
 			vsoAnim( "bodyState", "idle_lay" )
@@ -221,7 +221,7 @@ function state_idle_sleep()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "idle_wakeup" )
 			vsoNext( "state_idle_lay" )
 		-- elseif percent < 1+5 then
@@ -314,11 +314,11 @@ function state_idle_back_hug()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "idle_back_grab" )
 			vsoNext( "state_idle_back_bed" )
 			vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
-		elseif percent < 1+5 then
+		elseif percent < 5+5 then
 			vsoSound( "slurp" )
 			vsoAnim( "bodyState", "absorb_back" )
 			vsoVictimAnimReplay( "drivingSeat", "absorbback", "bodyState")
@@ -518,15 +518,18 @@ function state_full_lay()
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "full_situp" )
 			vsoNext( "state_full_sit" )
-		elseif percent < 1+10 then
+		elseif percent < 5+10 then
 			vsoAnim( "bodyState", "full_fallasleep" )
 			vsoNext( "state_full_sleep" )
-		elseif percent < 1+10+15 then
+		elseif percent < 5+10+10 then
+			vsoAnim( "bodyState", "idle_lay_rollover" )
+			vsoNext( "state_full_back" )
+		elseif percent < 5+10+10+15 then
 			vsoAnim( "bodyState", "full_lay_blink" )
-		elseif percent < 1+10+15+15 then
+		elseif percent < 5+10+10+15+15 then
 			vsoAnim( "bodyState", "full_lay_tail_flick" )
 		else
 			vsoAnim( "bodyState", "full_lay" )
@@ -535,7 +538,7 @@ function state_full_lay()
 
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
-		if vsoCounterValue( "struggleCount" ) >= 10 and vsoCounterChance( "struggleCount", 10, 45 ) then
+		if vsoCounterValue( "struggleCount" ) >= 10 and vsoCounterChance( "struggleCount", 10, 20 ) then
 			vsoCounterReset( "struggleCount" )
 			vsoAnim( "bodyState", "full_situp" )
 			vsoNext( "state_full_sit" )
@@ -585,9 +588,13 @@ function state_full_sleep()
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 15 then
 			vsoAnim( "bodyState", "full_wakeup" )
 			vsoNext( "state_full_lay" )
+		--elseif percent < 15+15 then
+		--	vsoAnim( "bodyState", "full_wakeup" )
+		--	vsoAnim( "bodyState", "idle_lay_rollover" )
+		--	vsoNext( "state_full_back" )
 		-- elseif percent < 1+5 then
 		-- 	vsoAnim( "bodyState", "full_fallasleep" )
 		-- 	vsoNext( "state_full_sleep" )
@@ -661,16 +668,16 @@ function state_full_back()
 
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
-		-- local percent = vsoRand(100)
-		-- if percent < 1 then
-		-- 	vsoAnim( "bodyState", "full_wakeup" )
-		-- 	vsoNext( "state_full_lay" )
+		local percent = vsoRand(100)
+		if percent < 5 then
+			vsoAnim( "bodyState", "idle_back_rollover" )
+			vsoNext( "state_full_lay" )
 		-- elseif percent < 1+5 then
 		-- 	vsoAnim( "bodyState", "full_fallasleep" )
 		-- 	vsoNext( "state_full_sleep" )
-		-- else
+		else
 			vsoAnim( "bodyState", "full_back" )
-		-- end
+		end
 	end
 
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
@@ -678,8 +685,9 @@ function state_full_back()
 		-- can't wake it up from the inside, just wait for it to wake up on its own
 		-- if vsoCounterValue( "struggleCount" ) >= 20 and vsoCounterChance( "struggleCount", 20, 75 ) then
 		-- 	vsoCounterReset( "struggleCount" )
-		-- 	vsoAnim( "bodyState", "full_wakeup" )
-		-- 	vsoNext( "state_full_lay" )
+			--vsoAnim( "bodyState", "idle_back_rollover" )
+			--vsoAnim( "bodyState", "full_fallasleep" )
+			--vsoNext( "state_full_sleep" )
 		-- else
 			struggleDir = movedir
 			vsoNext( "state_struggle_back" )
