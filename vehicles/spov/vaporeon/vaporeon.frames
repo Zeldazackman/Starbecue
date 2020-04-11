@@ -1,246 +1,128 @@
 {
 	"frameGrid" : {
-		"size" : [128, 64]
-		,"dimensions" : [8, 32]
-		,"names" : [
-			[ "idle.1", "idle.6", "idle.14", null, "full.1", "full.6", "full.14", "full_look.1" ]
-			,[ "eat.1", "eat.2", "eat.3", "eat.4", "eat.5", "eat.6", "eat.7", "eat.8" ]
-			,[ "struggle_left.1", "struggle_left.2", "struggle_left.3", "struggle_left.4",
-			"struggle_right.1", "struggle_right.2", "struggle_right.3", "struggle_right.4" ]
-			,[ "struggle_up.1", "struggle_up.2", "struggle_up.3", "struggle_up.4",
-				"struggle_down.1", "struggle_down.2", "struggle_down.3", "struggle_down.4" ]
-			,[ ] // escape
-			,[ "idle_sitdown.1", "idle_sitdown.2", null, null, "full_sitdown.1", "full_sitdown.2", null, null ]
-			,[ "idle_sit.1", "idle_sit.6", "idle_sit.14", "idle_sit_pet.1", "full_sit.1", "full_sit.6", "full_sit.14", "full_sit_look.1" ]
-			,[ "struggle_sit_left.1", "struggle_sit_left.2", "struggle_sit_left.3", "struggle_sit_left.4",
-				"struggle_sit_right.1", "struggle_sit_right.2", "struggle_sit_right.3", "struggle_sit_right.4" ]
-			,[ "struggle_sit_up.1", "struggle_sit_up.2", "struggle_sit_up.3", "struggle_sit_up.4",
-				"struggle_sit_down.1", "struggle_sit_down.2", "struggle_sit_down.3", "struggle_sit_down.4" ]
-			,[ "idle_laydown.1", "idle_laydown.2", null, null, "full_laydown.1", "full_laydown.2", null, null ]
-			,[ "idle_lay.1", "idle_lay.6", "idle_lay.14", "idle_lay_pet.1", "full_lay.1", "full_lay.6", "full_lay.14", "full_lay_look.1" ]
-			,[ "struggle_lay_left.1", "struggle_lay_left.2", "struggle_lay_left.3", "struggle_lay_left.4",
-				"struggle_lay_right.1", "struggle_lay_right.2", "struggle_lay_right.3", "struggle_lay_right.4" ]
-			,[ "struggle_lay_up.1", "struggle_lay_up.2", "struggle_lay_up.3", "struggle_lay_up.4",
-				"struggle_lay_down.1", "struggle_lay_down.2", "struggle_lay_down.3", "struggle_lay_down.4" ]
-			,[ "idle_fallasleep.1", "idle_fallasleep.2", null, null, "full_fallasleep.1", "full_fallasleep.2", null, null]
-			,[ "idle_sleep.1", "idle_sleep.2", null, null, "full_sleep.1", "full_sleep.2", null, null ]
-			,[ "struggle_sleep_left.1", "struggle_sleep_left.2", "struggle_sleep_left.3", "struggle_sleep_left.4",
-				"struggle_sleep_right.1", "struggle_sleep_right.2", "struggle_sleep_right.3", "struggle_sleep_right.4" ]
-			,[ "struggle_sleep_up.1", "struggle_sleep_up.2", "struggle_sleep_up.3", "struggle_sleep_up.4",
-				"struggle_sleep_down.1", "struggle_sleep_down.2", "struggle_sleep_down.3", "struggle_sleep_down.4" ]
-			,[ "idle_lay_rollover.1", "idle_lay_rollover.2", "idle_lay_rollover.3", "idle_lay_rollover.4",
-				"idle_lay_rollover.5", "idle_lay_rollover.6", "idle_lay_rollover.7", "idle_lay_rollover.8"]
-			,[ "idle_back.1", "idle_back.2", "idle_back_grab.1", "idle_back_hug.1", "absorb_back.1", "absorb_back.2", "absorb_back.4", "absorb_back_fg.3" ]
-			,[ "idle_back_fg.1", "idle_back_fg.2", "idle_back_grab_fg.1", "idle_back_hug_fg.1", "absorb_back_fg.1", "absorb_back_fg.2", "full_back.1", "full_back.2" ]
-			,[ "struggle_back_left.1", "struggle_back_left.2", "struggle_back_left.3", "struggle_back_left.4",
-				"struggle_back_right.1", "struggle_back_right.2", "struggle_back_right.3", "struggle_back_right.4" ]
-			,[ "struggle_back_up.1", "struggle_back_up.2", "struggle_back_up.3", "struggle_back_up.4",
-				"struggle_back_down.1", "struggle_back_down.2", "struggle_back_down.3", "struggle_back_down.4" ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
-			,[ ]
+		"size" : [128, 64],
+		"dimensions" : [8, 32],
+		"names" : [
+			[ "idle.1", "idle_breathe.1", "idle_tail_flick.1", "idle_blink.1", "full.1", "full.2", "full_tail_flick.1", "full_look.1" ],
+			[ "eat.1", "eat.2", "eat.3", "eat.4", "eat.5", "eat.6", "eat.7", "eat.8" ],
+			[ "struggle_left.1", "struggle_left.2", "struggle_left.3", "struggle_left.4",
+			"struggle_right.1", "struggle_right.2", "struggle_right.3", "struggle_right.4" ],
+			[ "struggle_up.1", "struggle_up.2", "struggle_up.3", "struggle_up.4",
+				"struggle_down.1", "struggle_down.2", "struggle_down.3", "struggle_down.4" ],
+			[ ], // escape,
+			[ "idle_sitdown.1", "idle_sitdown.2", null, null, "full_sitdown.1", "full_sitdown.2", "full_blink.1", "full_sit_blink.1" ],
+			[ "idle_sit.1", "idle_sit.2", "idle_sit_tail_flick.1", "idle_sit_pet.1", "full_sit.1", "full_sit.1", "full_sit_tail_flick.1", "full_sit_look.1" ],
+			[ "struggle_sit_left.1", "struggle_sit_left.2", "struggle_sit_left.3", "struggle_sit_left.4",
+				"struggle_sit_right.1", "struggle_sit_right.2", "struggle_sit_right.3", "struggle_sit_right.4" ],
+			[ "struggle_sit_up.1", "struggle_sit_up.2", "struggle_sit_up.3", "struggle_sit_up.4",
+				"struggle_sit_down.1", "struggle_sit_down.2", "struggle_sit_down.3", "struggle_sit_down.4" ],
+			[ "idle_laydown.1", "idle_laydown.2", null, null, "full_laydown.1", "full_laydown.2", "full_lay_blink.1", null ],
+			[ "idle_lay.1", "idle_lay.6", "idle_lay.14", "idle_lay_pet.1", "full_lay.1", "full_lay.2", "full_lay_tail_flick.1", "full_lay_look.1" ],
+			[ "struggle_lay_left.1", "struggle_lay_left.2", "struggle_lay_left.3", "struggle_lay_left.4",
+				"struggle_lay_right.1", "struggle_lay_right.2", "struggle_lay_right.3", "struggle_lay_right.4" ],
+			[ "struggle_lay_up.1", "struggle_lay_up.2", "struggle_lay_up.3", "struggle_lay_up.4",
+				"struggle_lay_down.1", "struggle_lay_down.2", "struggle_lay_down.3", "struggle_lay_down.4" ],
+			[ "idle_fallasleep.1", "idle_fallasleep.2", null, null, "full_fallasleep.1", "full_fallasleep.2", null, null],
+			[ "idle_sleep.1", "idle_sleep.2", null, null, "full_sleep.1", "full_sleep.2", null, null ],
+			[ "struggle_sleep_left.1", "struggle_sleep_left.2", "struggle_sleep_left.3", "struggle_sleep_left.4",
+				"struggle_sleep_right.1", "struggle_sleep_right.2", "struggle_sleep_right.3", "struggle_sleep_right.4" ],
+			[ "struggle_sleep_up.1", "struggle_sleep_up.2", "struggle_sleep_up.3", "struggle_sleep_up.4",
+				"struggle_sleep_down.1", "struggle_sleep_down.2", "struggle_sleep_down.3", "struggle_sleep_down.4" ],
+			[ "idle_lay_rollover.1", "idle_lay_rollover.2", "idle_lay_rollover.3", "idle_lay_rollover.4",
+				"idle_lay_rollover.5", "idle_lay_rollover.6", "idle_lay_rollover.7", "idle_lay_rollover.8"],
+			[ "idle_back.1", "idle_back.2", "idle_back_grab.1", "idle_back_hug.1", "absorb_back.1", "absorb_back.2", "absorb_back.4", "absorb_back_fg.3" ],
+			[ "idle_back_fg.1", "idle_back_fg.2", "idle_back_grab_fg.1", "idle_back_hug_fg.1", "absorb_back_fg.1", "absorb_back_fg.2", "full_back.1", "full_back.2" ],
+			[ "struggle_back_left.1", "struggle_back_left.2", "struggle_back_left.3", "struggle_back_left.4",
+				"struggle_back_right.1", "struggle_back_right.2", "struggle_back_right.3", "struggle_back_right.4" ],
+			[ "struggle_back_up.1", "struggle_back_up.2", "struggle_back_up.3", "struggle_back_up.4",
+				"struggle_back_down.1", "struggle_back_down.2", "struggle_back_down.3", "struggle_back_down.4" ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ],
+			[ ]
 		]
-	}
-	,"aliases" : {"idle.default" : "idle.1"
-		//idle.1
-		,"idle.2" : "idle.1"
-		,"idle.3" : "idle.1"
-		,"idle.4" : "idle.1"
-		,"idle.5" : "idle.1"
-		//idle.6
-		,"idle.7" : "idle.6"
-		,"idle.8" : "idle.6"
-		,"idle.9" : "idle.6"
-		,"idle.10" : "idle.6"
-		,"idle.11" : "idle.1"
-		,"idle.12" : "idle.1"
-		,"idle.13" : "idle.1"
-		//idle.14
-		,"idle.15" : "idle.1"
-		,"idle.16" : "idle.6"
-		,"idle.17" : "idle.6"
-		,"idle.18" : "idle.6"
-		,"idle.19" : "idle.6"
-		,"idle.20" : "idle.6"
-		
-		//full.1
-		,"full.2" : "full.1"
-		,"full.3" : "full.1"
-		,"full.4" : "full.1"
-		,"full.5" : "full.1"
-		//full.6
-		,"full.7" : "full.6"
-		,"full.8" : "full.6"
-		,"full.9" : "full.6"
-		,"full.10" : "full.6"
-		,"full.11" : "full.1"
-		,"full.12" : "full.1"
-		,"full.13" : "full.1"
-		//full.14
-		,"full.15" : "full.1"
-		,"full.16" : "full.6"
-		,"full.17" : "full.6"
-		,"full.18" : "full.6"
-		,"full.19" : "full.6"
-		,"full.20" : "full.6"
+	},
+	"aliases" : {"idle.default" : "idle.1",
+		"idle_blink.2" : "idle.1",
+		"idle_breathe.2" : "idle.1",
+		"idle_tail_flick.2" : "idle.1",
 
-		,"struggle_left.5" : "full_look.1"
-		,"struggle_right.5" : "full_look.1"
-		,"struggle_up.5" : "full_look.1"
-		,"struggle_down.5" : "full_look.1"
+		"struggle_left.5" : "full_look.1",
+		"struggle_right.5" : "full_look.1",
+		"struggle_up.5" : "full_look.1",
+		"struggle_down.5" : "full_look.1",
 
-		,"idle_standup.1" : "idle_sitdown.2"
-		,"idle_standup.2" : "idle_sitdown.1"
-		,"full_standup.1" : "full_sitdown.2"
-		,"full_standup.2" : "full_sitdown.1"
+		"idle_standup.1" : "idle_sitdown.2",
+		"idle_standup.2" : "idle_sitdown.1",
+		"full_standup.1" : "full_sitdown.2",
+		"full_standup.2" : "full_sitdown.1",
 
-		//idle_sit.1
-		,"idle_sit.2" : "idle_sit.1"
-		,"idle_sit.3" : "idle_sit.1"
-		,"idle_sit.4" : "idle_sit.1"
-		,"idle_sit.5" : "idle_sit.1"
-		//idle_sit.6
-		,"idle_sit.7" : "idle_sit.6"
-		,"idle_sit.8" : "idle_sit.6"
-		,"idle_sit.9" : "idle_sit.6"
-		,"idle_sit.10" : "idle_sit.6"
-		,"idle_sit.11" : "idle_sit.1"
-		,"idle_sit.12" : "idle_sit.1"
-		,"idle_sit.13" : "idle_sit.1"
-		//idle_sit.14
-		,"idle_sit.15" : "idle_sit.1"
-		,"idle_sit.16" : "idle_sit.6"
-		,"idle_sit.17" : "idle_sit.6"
-		,"idle_sit.18" : "idle_sit.6"
-		,"idle_sit.19" : "idle_sit.6"
-		,"idle_sit.20" : "idle_sit.6"
-		
-		//full_sit.1
-		,"full_sit.2" : "full_sit.1"
-		,"full_sit.3" : "full_sit.1"
-		,"full_sit.4" : "full_sit.1"
-		,"full_sit.5" : "full_sit.1"
-		//full_sit.6
-		,"full_sit.7" : "full_sit.6"
-		,"full_sit.8" : "full_sit.6"
-		,"full_sit.9" : "full_sit.6"
-		,"full_sit.10" : "full_sit.6"
-		,"full_sit.11" : "full_sit.1"
-		,"full_sit.12" : "full_sit.1"
-		,"full_sit.13" : "full_sit.1"
-		//full_sit.14
-		,"full_sit.15" : "full_sit.1"
-		,"full_sit.16" : "full_sit.6"
-		,"full_sit.17" : "full_sit.6"
-		,"full_sit.18" : "full_sit.6"
-		,"full_sit.19" : "full_sit.6"
-		,"full_sit.20" : "full_sit.6"
+		"idle_sit_blink.1" : "idle_sit_pet.1",
 
-		,"struggle_sit_left.5" : "full_sit_look.1"
-		,"struggle_sit_right.5" : "full_sit_look.1"
-		,"struggle_sit_up.5" : "full_sit_look.1"
-		,"struggle_sit_down.5" : "full_sit_look.1"
+		"struggle_sit_left.5" : "full_sit_look.1",
+		"struggle_sit_right.5" : "full_sit_look.1",
+		"struggle_sit_up.5" : "full_sit_look.1",
+		"struggle_sit_down.5" : "full_sit_look.1",
 
-		,"idle_situp.1" : "idle_laydown.2"
-		,"idle_situp.2" : "idle_laydown.1"
-		,"full_situp.1" : "full_laydown.2"
-		,"full_situp.2" : "full_laydown.1"
+		"idle_situp.1" : "idle_laydown.2",
+		"idle_situp.2" : "idle_laydown.1",
+		"full_situp.1" : "full_laydown.2",
+		"full_situp.2" : "full_laydown.1",
 
-		//idle_lay.1
-		,"idle_lay.2" : "idle_lay.1"
-		,"idle_lay.3" : "idle_lay.1"
-		,"idle_lay.4" : "idle_lay.1"
-		,"idle_lay.5" : "idle_lay.1"
-		//idle_lay.6
-		,"idle_lay.7" : "idle_lay.6"
-		,"idle_lay.8" : "idle_lay.6"
-		,"idle_lay.9" : "idle_lay.6"
-		,"idle_lay.10" : "idle_lay.6"
-		,"idle_lay.11" : "idle_lay.1"
-		,"idle_lay.12" : "idle_lay.1"
-		,"idle_lay.13" : "idle_lay.1"
-		//idle_lay.14
-		,"idle_lay.15" : "idle_lay.1"
-		,"idle_lay.16" : "idle_lay.6"
-		,"idle_lay.17" : "idle_lay.6"
-		,"idle_lay.18" : "idle_lay.6"
-		,"idle_lay.19" : "idle_lay.6"
-		,"idle_lay.20" : "idle_lay.6"
-		
-		//full_lay.1
-		,"full_lay.2" : "full_lay.1"
-		,"full_lay.3" : "full_lay.1"
-		,"full_lay.4" : "full_lay.1"
-		,"full_lay.5" : "full_lay.1"
-		//full_lay.6
-		,"full_lay.7" : "full_lay.6"
-		,"full_lay.8" : "full_lay.6"
-		,"full_lay.9" : "full_lay.6"
-		,"full_lay.10" : "full_lay.6"
-		,"full_lay.11" : "full_lay.1"
-		,"full_lay.12" : "full_lay.1"
-		,"full_lay.13" : "full_lay.1"
-		//full_lay.14
-		,"full_lay.15" : "full_lay.1"
-		,"full_lay.16" : "full_lay.6"
-		,"full_lay.17" : "full_lay.6"
-		,"full_lay.18" : "full_lay.6"
-		,"full_lay.19" : "full_lay.6"
-		,"full_lay.20" : "full_lay.6"
+		"idle_lay_blink.1" : "idle_lay_pet.1",
 
-		,"struggle_lay_left.5" : "full_lay_look.1"
-		,"struggle_lay_right.5" : "full_lay_look.1"
-		,"struggle_lay_up.5" : "full_lay_look.1"
-		,"struggle_lay_down.5" : "full_lay_look.1"
+		"struggle_lay_left.5" : "full_lay_look.1",
+		"struggle_lay_right.5" : "full_lay_look.1",
+		"struggle_lay_up.5" : "full_lay_look.1",
+		"struggle_lay_down.5" : "full_lay_look.1",
 
-		,"idle_wakeup.1" : "idle_fallasleep.2"
-		,"idle_wakeup.2" : "idle_fallasleep.1"
-		,"full_wakeup.1" : "full_fallasleep.2"
-		,"full_wakeup.2" : "full_fallasleep.1"
+		"idle_wakeup.1" : "idle_fallasleep.2",
+		"idle_wakeup.2" : "idle_fallasleep.1",
+		"full_wakeup.1" : "full_fallasleep.2",
+		"full_wakeup.2" : "full_fallasleep.1",
 
 		// no tail flick, no need to subdivide the frames,
-		// still two loops per cycle to keep timing consistent
-		,"idle_sleep.3" : "idle_sleep.1"
-		,"idle_sleep.4" : "idle_sleep.2"
-		,"full_sleep.3" : "full_sleep.1"
-		,"full_sleep.4" : "full_sleep.2"
+		// still two loops per cycle to keep timing consistent,
+		"idle_sleep.3" : "idle_sleep.1",
+		"idle_sleep.4" : "idle_sleep.2",
+		"full_sleep.3" : "full_sleep.1",
+		"full_sleep.4" : "full_sleep.2",
 
-		,"struggle_sleep_left.5" : "full_sleep.1"
-		,"struggle_sleep_right.5" : "full_sleep.1"
-		,"struggle_sleep_up.5" : "full_sleep.1"
-		,"struggle_sleep_down.5" : "full_sleep.1"
+		"struggle_sleep_left.5" : "full_sleep.1",
+		"struggle_sleep_right.5" : "full_sleep.1",
+		"struggle_sleep_up.5" : "full_sleep.1",
+		"struggle_sleep_down.5" : "full_sleep.1",
 
-		,"idle_back_rollover.1" : "idle_lay_rollover.8"
-		,"idle_back_rollover.2" : "idle_lay_rollover.7"
-		,"idle_back_rollover.3" : "idle_lay_rollover.6"
-		,"idle_back_rollover.4" : "idle_lay_rollover.5"
-		,"idle_back_rollover.5" : "idle_lay_rollover.4"
-		,"idle_back_rollover.6" : "idle_lay_rollover.3"
-		,"idle_back_rollover.7" : "idle_lay_rollover.2"
-		,"idle_back_rollover.8" : "idle_lay_rollover.1"
+		"idle_back_rollover.1" : "idle_lay_rollover.8",
+		"idle_back_rollover.2" : "idle_lay_rollover.7",
+		"idle_back_rollover.3" : "idle_lay_rollover.6",
+		"idle_back_rollover.4" : "idle_lay_rollover.5",
+		"idle_back_rollover.5" : "idle_lay_rollover.4",
+		"idle_back_rollover.6" : "idle_lay_rollover.3",
+		"idle_back_rollover.7" : "idle_lay_rollover.2",
+		"idle_back_rollover.8" : "idle_lay_rollover.1",
 
 		// no tail flick, no need to subdivide the frames,
-		// still two loops per cycle to keep timing consistent
-		,"idle_back.3" : "idle_back.1"
-		,"idle_back.4" : "idle_back.2"
-		,"idle_back_fg.3" : "idle_back_fg.1"
-		,"idle_back_fg.4" : "idle_back_fg.2"
-		,"full_back.3" : "full_back.1"
-		,"full_back.4" : "full_back.2"
+		// still two loops per cycle to keep timing consistent,
+		"idle_back.3" : "idle_back.1",
+		"idle_back.4" : "idle_back.2",
+		"idle_back_fg.3" : "idle_back_fg.1",
+		"idle_back_fg.4" : "idle_back_fg.2",
+		"full_back.3" : "full_back.1",
+		"full_back.4" : "full_back.2",
 
-		,"absorb_back.3" : "absorb_back.2"
-		,"absorb_back_fg.4" : "absorb_back_fg.3" // empty
+		"absorb_back.3" : "absorb_back.2",
+		"absorb_back_fg.4" : "absorb_back_fg.3", // empty
 
-		,"struggle_back_left.5" : "full_back.1"
-		,"struggle_back_right.5" : "full_back.1"
-		,"struggle_back_up.5" : "full_back.1"
-		,"struggle_back_down.5" : "full_back.1"
+		"struggle_back_left.5" : "full_back.1",
+		"struggle_back_right.5" : "full_back.1",
+		"struggle_back_up.5" : "full_back.1",
+		"struggle_back_down.5" : "full_back.1"
 	}
 }

@@ -1,5 +1,5 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
---https://creativecommons.org/licenses/by-nc-sa/2.0/  @ 
+--https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 require("/scripts/vore/vsosimple.lua")
 
@@ -7,41 +7,16 @@ require("/scripts/vore/vsosimple.lua")
 
 vaporeon plan:
 
-	state chart:
-	              sleep
-	                |
-	 *idle - sit - lay * back ·· bed - hug
-	   :                                V
-	  full - sit - lay   back <----- shlorp
-	                |
-	              sleep
-
-	  *idle: start
-	  lay * back: stupid placeholder animation
-	    no way to leave full_back state yet
-	  (struggling not included in chart, everything in full has it)
-
-	
 	todo:
 	- fix up placeholder animations
 	- escape animation
 	- roll over animations
-	  - roll over on top of player, as alternative to hugging when you're laying on its belly
-	- location dependent interaction
-	  - in front -> eat, beside/behind -> pet
-	- multiple prey?
-	  - 2 max
-	  - 2 bulges? struggle independently?
-	    - split the sprite up into multiple components
-
 	eventually if I can figure out how:
 	- walk around
 	- follow nearby player
 	- eat automatically if low health, to protect (and heal w/ pill)
 	- attack enemies
-	- ride on back to control
-	  - shlorp in from back -> control from inside?
-	
+
 ]]--
 
 function loadStoredData()
@@ -61,30 +36,30 @@ end
 
 -------------------------------------------------------------------------------
 
-function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong) 
+function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
 	vsoAnimSpeed( 1.0 );
 	vsoVictimAnimVisible( "drivingSeat", false )
 	vsoUseLounge( false, "drivingSeat" )
 	vsoUseSolid( false )
-		
+
 	vsoNext( "state_idle" )
 	vsoAnim( "bodyState", "idle" )
-	
+
 	vsoMakeInteractive( true )
 end
 
 function onBegin()	--This sets up the VSO ONCE.
 
 	vsoEffectWarpIn();	--Play warp in effect
-	
+
 	onForcedReset();	--Do a forced reset once.
-	
+
 	vsoStorageLoad( loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
-	
+
 	vsoOnBegin( "state_idle", begin_state_idle )
 	vsoOnInteract( "state_idle", interact_state_idle )
-	
+
 	vsoOnInteract( "state_idle_sit", interact_state_idle_sit )
 	vsoOnInteract( "state_idle_lay", interact_state_idle_lay )
 	vsoOnInteract( "state_idle_sleep", interact_state_idle_sleep )
@@ -93,7 +68,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnBegin( "state_eat", begin_state_eat )
 
 	vsoOnBegin( "state_full", begin_state_full )
-	
+
 	vsoOnEnd( "state_release", end_state_release )
 
 	vsoOnBegin( "state_idle_walk", begin_state_idle_walk )
@@ -103,9 +78,9 @@ function onBegin()	--This sets up the VSO ONCE.
 end
 
 function onEnd()
-	
+
 	vsoEffectWarpOut();
-	
+
 end
 
 -------------------------------------------------------------------------------
@@ -121,9 +96,9 @@ function begin_state_idle()
 end
 
 function state_idle()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 5 then
@@ -131,6 +106,10 @@ function state_idle()
 			vsoNext( "state_idle_sit" )
 		-- elseif percent < 100 then
 		-- 	vsoNext( "state_idle_walk")
+		elseif percent < 5+15 then
+			vsoAnim( "bodyState", "idle_tail_flick" )
+		elseif percent < 5+15+15 then
+			vsoAnim( "bodyState", "idle_blink" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -138,7 +117,7 @@ function state_idle()
 end
 
 function interact_state_idle( targetid )
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
 
 	showEmote("emotehappy")
@@ -147,15 +126,15 @@ function interact_state_idle( targetid )
 
 	-- vsoAnim( "bodyState", "idle_back" )
 	-- vsoNext( "state_idle_back" ) -- jump to currently worked on state to test
-	
+
 end
 
 -------------------------------------------------------------------------------
 
 function state_idle_sit()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 1 then
@@ -164,6 +143,11 @@ function state_idle_sit()
 		elseif percent < 1+7 then
 			vsoAnim( "bodyState", "idle_laydown" )
 			vsoNext( "state_idle_lay" )
+		elseif percent < 1+7+15 then
+			vsoAnim( "bodyState", "idle_sit_tail_flick" )
+		elseif percent < 1+7+15+15 then
+			vsoAnim( "bodyState", "idle_sit_blink" )
+
 		else
 			vsoAnim( "bodyState", "idle_sit" )
 		end
@@ -171,9 +155,9 @@ function state_idle_sit()
 end
 
 function interact_state_idle_sit( targetid )
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoChance(20) then
 		vsoAnim( "bodyState", "idle_standup" )
 		vsoNext( "state_idle" )
@@ -187,9 +171,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_idle_lay()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 1 then
@@ -201,6 +185,10 @@ function state_idle_lay()
 		elseif percent < 1+5+10 then
 			vsoAnim( "bodyState", "idle_lay_rollover" )
 			vsoNext( "state_idle_back" )
+		elseif percent < 1+5+10+15 then
+			vsoAnim( "bodyState", "idle_lay_tail_flick" )
+		elseif percent < 1+5+10+15+15 then
+			vsoAnim( "bodyState", "idle_lay_blink" )
 		else
 			vsoAnim( "bodyState", "idle_lay" )
 		end
@@ -208,9 +196,9 @@ function state_idle_lay()
 end
 
 function interact_state_idle_lay( targetid )
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	local percent = vsoRand(100)
 	if percent < 10 then
 		vsoAnim( "bodyState", "idle_situp" )
@@ -228,9 +216,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_idle_sleep()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 1 then
@@ -246,9 +234,9 @@ function state_idle_sleep()
 end
 
 function interact_state_idle_sleep( targetid )
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	local percent = vsoRand(100)
 	if percent < 5 then
 		vsoAnim( "bodyState", "idle_wakeup" )
@@ -263,9 +251,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_idle_back()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 5 then
@@ -281,9 +269,9 @@ function state_idle_back()
 end
 
 function interact_state_idle_back( targetid )
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	vsoUseLounge( true, "drivingSeat" )
 	vsoEat( targetid, "drivingSeat" )
 	vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
@@ -294,9 +282,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_idle_back_bed()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 5 then
@@ -321,9 +309,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_idle_back_hug()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
 		if percent < 1 then
@@ -352,20 +340,20 @@ end
 -------------------------------------------------------------------------------
 
 function begin_state_eat()
-	
-	vsoAnim( "bodyState", "eat"  ) 
-	
+
+	vsoAnim( "bodyState", "eat"  )
+
 	vsoUseLounge( true, "drivingSeat" )
-	vsoEat( vsoGetTargetId( "food" ), "drivingSeat" ) 
+	vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
 	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
 	vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
-	
+
 end
 
 function state_eat()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoSound( "swallow" )
 		vsoAnim( "bodyState", "full_look" )
@@ -378,13 +366,13 @@ end
 local struggleType, struggleDir -- keep between functions
 
 function begin_state_full()
-		
+
 	vsoVictimAnimVisible( "drivingSeat", false )
-	
+
 	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatebelly" } );
-	
+
 	vsoTimerSet( "gurgle", 1.0, 8.0 )	--For playing sounds
-	
+
 end
 
 function state_full()
@@ -394,20 +382,24 @@ function state_full()
 	end
 
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
-		if percent < 15 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "full_sitdown" )
 			vsoNext( "state_full_sit" )
 		-- elseif percent < 5+10 then
 			-- vsoNext( "state_full_walk")
+		elseif percent < 5+15 then
+			vsoAnim( "bodyState", "full_tail_flick" )
+		elseif percent < 5+15+15 then
+			vsoAnim( "bodyState", "full_blink" )
 		else
 			vsoAnim( "bodyState", "full" )
 		end
 	end
-	
+
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
 		if vsoCounterValue( "struggleCount" ) >= 5 and vsoCounterChance( "struggleCount", 5, 15 ) then
@@ -437,9 +429,9 @@ function state_struggle()
 	elseif movedir ~= "-" then
 		vsoNext( "state_full" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoAnim( "bodyState", "full_look" )
 		vsoNext( "state_full" )
@@ -453,23 +445,27 @@ function state_full_sit()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
 		vsoSound( "digest" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
-		if percent < 1 then
+		if percent < 5 then
 			vsoAnim( "bodyState", "full_standup" )
 			vsoNext( "state_full" )
-		elseif percent < 1+20 then
+		elseif percent < 5+25 then
 			vsoAnim( "bodyState", "full_laydown" )
 			vsoNext( "state_full_lay" )
+		elseif percent < 5+25+15 then
+			vsoAnim( "bodyState", "full_sit_blink" )
+		elseif percent < 5+25+15+15 then
+			vsoAnim( "bodyState", "full_sit_tail_flick" )
 		else
 			vsoAnim( "bodyState", "full_sit" )
 		end
 	end
-	
+
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
 		if vsoCounterValue( "struggleCount" ) >= 5 and vsoCounterChance( "struggleCount", 5, 15 ) then
@@ -500,9 +496,9 @@ function state_struggle_sit()
 	elseif movedir ~= "-" then
 		vsoNext( "state_full_sit" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoAnim( "bodyState", "full_sit_look"  )
 		vsoNext( "state_full_sit" )
@@ -516,9 +512,9 @@ function state_full_lay()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
 		vsoSound( "digest" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
@@ -528,11 +524,15 @@ function state_full_lay()
 		elseif percent < 1+10 then
 			vsoAnim( "bodyState", "full_fallasleep" )
 			vsoNext( "state_full_sleep" )
+		elseif percent < 1+10+15 then
+			vsoAnim( "bodyState", "full_lay_blink" )
+		elseif percent < 1+10+15+15 then
+			vsoAnim( "bodyState", "full_lay_tail_flick" )
 		else
 			vsoAnim( "bodyState", "full_lay" )
 		end
 	end
-	
+
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
 		if vsoCounterValue( "struggleCount" ) >= 10 and vsoCounterChance( "struggleCount", 10, 45 ) then
@@ -563,9 +563,9 @@ function state_struggle_lay()
 	elseif movedir ~= "-" then
 		vsoNext( "state_full_lay" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoAnim( "bodyState", "full_lay_look"  )
 		vsoNext( "state_full_lay" )
@@ -579,9 +579,9 @@ function state_full_sleep()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
 		vsoSound( "digest" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
@@ -595,7 +595,7 @@ function state_full_sleep()
 			vsoAnim( "bodyState", "full_sleep" )
 		end
 	end
-	
+
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
 		-- can't wake it up from the inside, just wait for it to wake up on its own
@@ -627,9 +627,9 @@ function state_struggle_sleep()
 	elseif movedir ~= "-" then
 		vsoNext( "state_full_sleep" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoAnim( "bodyState", "full_sleep" )
 		vsoNext( "state_full_sleep" )
@@ -639,9 +639,9 @@ end
 -------------------------------------------------------------------------------
 
 function state_absorb_back()
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatebelly" } )
 		vsoAnim( "bodyState", "full_back" )
@@ -656,9 +656,9 @@ function state_full_back()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
 		vsoSound( "digest" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoCounterReset( "struggleCount" )
 		-- local percent = vsoRand(100)
@@ -672,7 +672,7 @@ function state_full_back()
 			vsoAnim( "bodyState", "full_back" )
 		-- end
 	end
-	
+
 	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
 	if movetype ~= 0 then
 		-- can't wake it up from the inside, just wait for it to wake up on its own
@@ -704,9 +704,9 @@ function state_struggle_back()
 	elseif movedir ~= "-" then
 		vsoNext( "state_full_back" )
 	end
-	
+
 	local anim = vsoAnimCurr( "bodyState" );
-	
+
 	if vsoAnimEnd( "bodyState" ) then
 		vsoAnim( "bodyState", "full_back" )
 		vsoNext( "state_full_back" )
@@ -724,9 +724,9 @@ end
 function end_state_release()
 
 	vsoUneat( "drivingSeat" )
-	
+
 	vsoApplyStatus( "food", "droolsoaked", 5.0 );	--Add status effect "droolsoaked"
-	
+
 	vsoSetTarget( "food", nil )
 	vsoAnim( "bodyState", "idle" )
 	vsoUseLounge( false, "drivingSeat" )
