@@ -17,7 +17,7 @@
 			[ "struggle_sit_up.1", "struggle_sit_up.2", "struggle_sit_up.3", "struggle_sit_up.4",
 				"struggle_sit_down.1", "struggle_sit_down.2", "struggle_sit_down.3", "struggle_sit_down.4" ],
 			[ "idle_laydown.1", "idle_laydown.2", null, null, "full_laydown.1", "full_laydown.2", "full_lay_blink.1", null ],
-			[ "idle_lay.1", "idle_lay.6", "idle_lay.14", "idle_lay_pet.1", "full_lay.1", "full_lay.2", "full_lay_tail_flick.1", "full_lay_look.1" ],
+			[ "idle_lay.1", "idle_lay.2", "idle_lay_tail_flick.1", "idle_lay_pet.1", "full_lay.1", "full_lay.2", "full_lay_tail_flick.1", "full_lay_look.1" ],
 			[ "struggle_lay_left.1", "struggle_lay_left.2", "struggle_lay_left.3", "struggle_lay_left.4",
 				"struggle_lay_right.1", "struggle_lay_right.2", "struggle_lay_right.3", "struggle_lay_right.4" ],
 			[ "struggle_lay_up.1", "struggle_lay_up.2", "struggle_lay_up.3", "struggle_lay_up.4",
