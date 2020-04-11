@@ -1,0 +1,312 @@
+{  
+	"globalTagDefaults" : {
+		"frame" : "1"
+		,"directives" : ""
+	}
+    ,"animatedParts": {
+        "stateTypes": {
+			"bodyState": {
+                "default": "idle"
+                , "states": {
+					"idle": { "frames": 20, "cycle": 6, "mode": "end" }
+					
+                    ,"idle_sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"idle_sit": { "frames": 20, "cycle": 6, "mode": "end" }
+                    ,"idle_sit_pet": { "frames": 1, "cycle": 2, "mode": "end" }
+					,"idle_standup": { "frames": 2, "cycle": 0.5, "mode": "end" }
+					
+                    ,"idle_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"idle_lay": { "frames": 20, "cycle": 6, "mode": "end" }
+                    ,"idle_lay_pet": { "frames": 1, "cycle": 2, "mode": "end" }
+					,"idle_situp": { "frames": 2, "cycle": 0.5, "mode": "end" }
+					
+                    ,"idle_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"idle_sleep": { "frames": 4, "cycle": 6, "mode": "end" }
+					,"idle_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" }
+					
+                    ,"idle_lay_rollover": { "frames": 8, "cycle": 1.5, "mode": "end" }
+                    ,"idle_back": { "frames": 4, "cycle": 6, "mode": "end" }
+					,"idle_back_grab": { "frames": 1, "cycle": 0.25, "mode": "end" }
+					,"idle_back_hug": { "frames": 1, "cycle": 1, "mode": "end" }
+                    ,"idle_back_rollover": { "frames": 8, "cycle": 1.5, "mode": "end" }
+					
+					,"eat": { "frames": 8, "cycle": 1.5, "mode": "end" }
+					,"absorb_back": { "frames": 4, "cycle": 1.5, "mode": "end" }
+					
+
+					,"full": { "frames": 20, "cycle": 6, "mode": "end" }
+                    ,"struggle_left": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_right": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_up": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_down": { "frames": 5, "cycle": 1, "mode": "end" }
+					,"full_look": { "frames": 1, "cycle": 2, "mode": "end" }
+					
+                    ,"full_sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"full_sit": { "frames": 20, "cycle": 6, "mode": "end" }
+                    ,"full_standup": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"struggle_sit_left": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sit_right": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sit_up": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sit_down": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"full_sit_look": { "frames": 1, "cycle": 2, "mode": "end" }
+					
+                    ,"full_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"full_lay": { "frames": 20, "cycle": 6, "mode": "end" }
+					,"full_situp": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"struggle_lay_left": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_lay_right": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_lay_up": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_lay_down": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"full_lay_look": { "frames": 1, "cycle": 2, "mode": "end" }
+					
+                    ,"full_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"full_sleep": { "frames": 4, "cycle": 6, "mode": "end" }
+					,"full_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"struggle_sleep_left": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sleep_right": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sleep_up": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_sleep_down": { "frames": 5, "cycle": 1, "mode": "end" }
+					
+                    ,"full_lay_rollover": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"full_back": { "frames": 4, "cycle": 6, "mode": "end" }
+					,"full_back_rollover": { "frames": 2, "cycle": 0.5, "mode": "end" }
+                    ,"struggle_back_left": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_back_right": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_back_up": { "frames": 5, "cycle": 1, "mode": "end" }
+                    ,"struggle_back_down": { "frames": 5, "cycle": 1, "mode": "end" }
+                }
+            }
+        }
+        , "parts": {
+            "background": {
+                "properties": {
+                    "centered": true
+                    , "zLevel": -1
+                    , "transformationGroups": ["flip"]
+                }
+                , "partStates": {
+                    "bodyState": {
+                        "idle": { "properties": { "image": "vaporeon.png:idle.<frame><directives>" }  }
+						
+						,"idle_sitdown": { "properties": { "image": "vaporeon.png:idle_sitdown.<frame><directives>" }  }
+                        ,"idle_sit": { "properties": { "image": "vaporeon.png:idle_sit.<frame><directives>" }  }
+                        ,"idle_sit_pet": { "properties": { "image": "vaporeon.png:idle_sit_pet.<frame><directives>" }  }
+                        ,"idle_standup": { "properties": { "image": "vaporeon.png:idle_standup.<frame><directives>" }  }
+						
+						,"idle_laydown": { "properties": { "image": "vaporeon.png:idle_laydown.<frame><directives>" }  }
+                        ,"idle_lay": { "properties": { "image": "vaporeon.png:idle_lay.<frame><directives>" }  }
+                        ,"idle_lay_pet": { "properties": { "image": "vaporeon.png:idle_lay_pet.<frame><directives>" }  }
+                        ,"idle_situp": { "properties": { "image": "vaporeon.png:idle_situp.<frame><directives>" }  }
+						
+						,"idle_fallasleep": { "properties": { "image": "vaporeon.png:idle_fallasleep.<frame><directives>" }  }
+                        ,"idle_sleep": { "properties": { "image": "vaporeon.png:idle_sleep.<frame><directives>" }  }
+                        ,"idle_wakeup": { "properties": { "image": "vaporeon.png:idle_wakeup.<frame><directives>" }  }
+						
+						,"idle_lay_rollover": { "properties": { "image": "vaporeon.png:idle_lay_rollover.<frame><directives>" }  }
+                        ,"idle_back": { "properties": { "image": "vaporeon.png:idle_back.<frame><directives>" }  }
+                        ,"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab.<frame><directives>" }  }
+                        ,"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug.<frame><directives>" }  }
+                        ,"idle_back_rollover": { "properties": { "image": "vaporeon.png:idle_back_rollover.<frame><directives>" }  }
+						
+						,"eat": { "properties": { "image": "vaporeon.png:eat.<frame><directives>" }  }
+						,"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back.<frame><directives>" }  }
+						
+
+                        ,"full": { "properties": { "image": "vaporeon.png:full.<frame><directives>" }  }
+                        ,"struggle_left": { "properties": { "image": "vaporeon.png:struggle_left.<frame><directives>" }  }
+                        ,"struggle_right": { "properties": { "image": "vaporeon.png:struggle_right.<frame><directives>" }  }
+                        ,"struggle_up": { "properties": { "image": "vaporeon.png:struggle_up.<frame><directives>" }  }
+                        ,"struggle_down": { "properties": { "image": "vaporeon.png:struggle_down.<frame><directives>" }  }
+                        ,"full_look": { "properties": { "image": "vaporeon.png:full_look.<frame><directives>" }  }
+						
+						,"full_sitdown": { "properties": { "image": "vaporeon.png:full_sitdown.<frame><directives>" }  }
+                        ,"full_sit": { "properties": { "image": "vaporeon.png:full_sit.<frame><directives>" }  }
+                        ,"full_standup": { "properties": { "image": "vaporeon.png:full_standup.<frame><directives>" }  }
+                        ,"struggle_sit_left": { "properties": { "image": "vaporeon.png:struggle_sit_left.<frame><directives>" }  }
+                        ,"struggle_sit_right": { "properties": { "image": "vaporeon.png:struggle_sit_right.<frame><directives>" }  }
+                        ,"struggle_sit_up": { "properties": { "image": "vaporeon.png:struggle_sit_up.<frame><directives>" }  }
+                        ,"struggle_sit_down": { "properties": { "image": "vaporeon.png:struggle_sit_down.<frame><directives>" }  }
+                        ,"full_sit_look": { "properties": { "image": "vaporeon.png:full_sit_look.<frame><directives>" }  }
+						
+						,"full_laydown": { "properties": { "image": "vaporeon.png:full_laydown.<frame><directives>" }  }
+                        ,"full_lay": { "properties": { "image": "vaporeon.png:full_lay.<frame><directives>" }  }
+                        ,"full_situp": { "properties": { "image": "vaporeon.png:full_situp.<frame><directives>" }  }
+                        ,"struggle_lay_left": { "properties": { "image": "vaporeon.png:struggle_lay_left.<frame><directives>" }  }
+                        ,"struggle_lay_right": { "properties": { "image": "vaporeon.png:struggle_lay_right.<frame><directives>" }  }
+                        ,"struggle_lay_up": { "properties": { "image": "vaporeon.png:struggle_lay_up.<frame><directives>" }  }
+                        ,"struggle_lay_down": { "properties": { "image": "vaporeon.png:struggle_lay_down.<frame><directives>" }  }
+                        ,"full_lay_look": { "properties": { "image": "vaporeon.png:full_lay_look.<frame><directives>" }  }
+						
+						,"full_fallasleep": { "properties": { "image": "vaporeon.png:full_fallasleep.<frame><directives>" }  }
+                        ,"full_sleep": { "properties": { "image": "vaporeon.png:full_sleep.<frame><directives>" }  }
+                        ,"full_wakeup": { "properties": { "image": "vaporeon.png:full_wakeup.<frame><directives>" }  }
+                        ,"struggle_sleep_left": { "properties": { "image": "vaporeon.png:struggle_sleep_left.<frame><directives>" }  }
+                        ,"struggle_sleep_right": { "properties": { "image": "vaporeon.png:struggle_sleep_right.<frame><directives>" }  }
+                        ,"struggle_sleep_up": { "properties": { "image": "vaporeon.png:struggle_sleep_up.<frame><directives>" }  }
+                        ,"struggle_sleep_down": { "properties": { "image": "vaporeon.png:struggle_sleep_down.<frame><directives>" }  }
+						
+						,"full_lay_rollover": { "properties": { "image": "vaporeon.png:full_lay_rollover.<frame><directives>" }  }
+                        ,"full_back": { "properties": { "image": "vaporeon.png:full_back.<frame><directives>" }  }
+                        ,"full_back_rollover": { "properties": { "image": "vaporeon.png:full_back_rollover.<frame><directives>" }  }
+                        ,"struggle_back_left": { "properties": { "image": "vaporeon.png:struggle_back_left.<frame><directives>" }  }
+                        ,"struggle_back_right": { "properties": { "image": "vaporeon.png:struggle_back_right.<frame><directives>" }  }
+                        ,"struggle_back_up": { "properties": { "image": "vaporeon.png:struggle_back_up.<frame><directives>" }  }
+                        ,"struggle_back_down": { "properties": { "image": "vaporeon.png:struggle_back_down.<frame><directives>" }  }
+                    }
+                }
+            }
+            , "victim": {
+                "properties": {
+                    "centered": true
+                    , "zLevel": 0
+                    , "transformationGroups": ["flip", "victimposition"]
+                    , "drivingSeatPosition": [0.0, 0.0]
+                }
+                , "partStates": {
+                    "bodyState": {
+                    }
+                }
+            }
+            , "foreground": {
+                "properties": {
+                    "centered": true
+					,"zLevel": 1
+                    , "transformationGroups": ["flip"]
+                }
+                , "partStates": {
+                    "bodyState": {
+                        "idle_back": { "properties": { "image": "vaporeon.png:idle_back_fg.<frame><directives>" }  }
+                        ,"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab_fg.<frame><directives>" }  }
+						,"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug_fg.<frame><directives>" }  }
+						
+                        ,"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  }
+                    }
+                }
+            }
+        }
+	}
+	, "transformationGroups": {
+		"flip": {}
+		, "victimposition": {
+			"interpolated": true
+		}
+	}
+	, "sounds": {
+		"swallow": ["/sfx/objects/gulp.ogg"]
+		, "digest": [ "/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg" ]
+		, "lay": ["/sfx/objects/eggLay.ogg"]
+		, "struggle": ["/sfx/vore/struggle/burbslosh.ogg","/sfx/vore/struggle/blurbsquish2.ogg","/sfx/vore/struggle/blorbsquish.ogg","/sfx/vore/swallow/swallow (11).ogg"]
+		, "slurp" : [ "/sfx/vore/common/slurp.ogg" ]
+	}
+	,"particleEmitters": {
+		"emotehappy" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/happy.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
+		}
+
+		,"emotesad" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/sad.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
+		}
+
+		,"emoteconfused" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/confused.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
+		}
+
+		,"emotesleepy" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/sleepy.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
+		}
+
+		,
+		"drips" : {
+		  "emissionRate" : 15,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"layer" : "front",
+				"size" : 1.0,
+				"color" : [120, 221, 254, 230],
+				"fade" : 0.9,
+				"destructionAction" : "shrink",
+				"destructionTime" : 0.8,
+				"position" : [0.5, 0.9],
+				"offsetRegion" : [0, 0, 0, 0],
+				"initialVelocity" : [0, 0.0],
+				"finalVelocity" : [0, -1],
+				"approach" : [3, 10],
+				"timeToLive" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.2, 0.0],
+				  "size" : 0.5,
+				  "position" : [0.3, 0]
+				},
+				"flippable" : true
+			  }
+			}
+		  ]
+		}
+	  }
+}

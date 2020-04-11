@@ -1,0 +1,9 @@
+{
+  "version" : "0.0",
+  "tags" : "",
+  "author" : "Notnat Tlikehis",
+  "description" : "SSVM SPOVs made by Notnat Tlikehis aka Alpaca53382",
+  "name" : "SSVMSPOVNotnat",
+  "friendlyName" : "SSVMSPOVNotnat",  
+  "requires" : ["StarboundSimpleVoreModVSO"]
+}

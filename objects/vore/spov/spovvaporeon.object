@@ -1,0 +1,62 @@
+{
+    "objectName": "spovspawnervaporeon"
+    , "colonyTags": ["vore"]
+    , "rarity": "Rare"
+    , "shortdescription": "Vaporeon"
+    , "race": "generic"
+    , "category": "other"
+    , "price": 500
+	, "health" : 5
+	
+	, "tooltipKind" : "vso"
+	, "objectImage" : "/vehicles/spov/vaporeon/vaporeon.png:idle.1"
+    , "description": "fishcat fishcat fishcat"
+	, "tooltipFields": {
+		"statusLabel": "fishcat fishcat fishcat"
+	}
+	, "tooltipSubtitle" : "fishcat"
+	
+    , "orientations": [{
+            "image": "/vehicles/spov/vaporeon/vaporeon.png:idle.1"
+            , "imagePosition": [-64, 0]
+            , "direction": "left"
+            , "flipImages": true
+            , "spaceScan": 0.1
+            , "anchors": ["bottom"]
+        }, {
+            "image": "/vehicles/spov/vaporeon/vaporeon.png:idle.1"
+            , "imagePosition": [-64, 0]
+            , "direction": "right"
+            , "spaceScan": 0.1
+            , "anchors": ["bottom"]
+        }]
+
+    , "inventoryIcon": "/vehicles/spov/vaporeon/vaporeonicon.png"
+
+    , "animation": "spovspawner.animation"
+	, "animationParts" : {
+        "bg": "/vehicles/spov/vaporeon/vaporeon.png:idle.1"
+	}
+	, "animationPosition" : [0, 32]
+	, "animationCustom" : {}
+
+    , "spov": {
+        "types": ["spovvaporeon"]
+        , "position": [0.0, 4, 0.0, 4]
+        , "template": {}
+		, "pillsAdd": {}
+    }
+	
+	, "retainObjectParametersInItem" : true
+	, "isWired" : false
+	, "printable" : false
+	, "scannable" : false
+	, "interactive" : false
+	, "inspectable" : false
+	, "allowScanning" : false
+	, "isContainer" : false
+	, "builder" : "/scripts/vore/spovitembuilder.lua"
+    , "scripts": [
+        "/scripts/vore/spovspawner.lua", "/vehicles/spov/vaporeon/vaporeonitemscript.lua" 
+    ]
+}
