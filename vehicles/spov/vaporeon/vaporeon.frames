@@ -11,7 +11,7 @@
 				"struggle_down.1", "struggle_down.2", "struggle_down.3", "struggle_down.4" ],
 			[ ], // escape,
 			[ "idle_sitdown.1", "idle_sitdown.2", null, null, "full_sitdown.1", "full_sitdown.2", "full_blink.1", "full_sit_blink.1" ],
-			[ "idle_sit.1", "idle_sit.2", "idle_sit_tail_flick.1", "idle_sit_pet.1", "full_sit.1", "full_sit.1", "full_sit_tail_flick.1", "full_sit_look.1" ],
+			[ "idle_sit.1", "idle_sit.2", "idle_sit_tail_flick.1", "idle_sit_pet.1", "full_sit.1", "full_sit.2", "full_sit_tail_flick.1", "full_sit_look.1" ],
 			[ "struggle_sit_left.1", "struggle_sit_left.2", "struggle_sit_left.3", "struggle_sit_left.4",
 				"struggle_sit_right.1", "struggle_sit_right.2", "struggle_sit_right.3", "struggle_sit_right.4" ],
 			[ "struggle_sit_up.1", "struggle_sit_up.2", "struggle_sit_up.3", "struggle_sit_up.4",
