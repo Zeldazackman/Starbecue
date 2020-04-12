@@ -21,7 +21,6 @@ vaporeon plan:
 
 	
 	todo:
-	- pills
 	- roll over on top of player, as alternative to hugging when you're laying on its belly
 	- location dependent interaction
 	  - in front -> eat, beside/behind -> pet
@@ -59,6 +58,31 @@ function escapePillChoice(list)
 	if vsoPill( "easyescape" ) then return list[1] end
 	if vsoPill( "antiescape" ) then return list[3] end
 	return list[2]
+end
+
+function bellyEffects(empty_state)
+	local effect = 0
+	if vsoPill( "digest" ) or vsoPill( "softdigest" ) then
+		effect = -1
+	elseif vsoPill( "heal" ) then
+		effect = 1
+	end
+	if effect ~= 0 then
+		effect = effect * vsoDelta()
+		local health = world.entityHealth( vsoGetTargetId("food") )
+		if vsoPill("softdigest") and health[1]/health[2] <= -effect then
+			effect = (1 - health[1]) / health[2]
+		end
+		vsoResourceAddPercent( vsoGetTargetId("food"), "health", effect, function(still_alive)
+			if not still_alive then
+				vsoUneat( "drivingSeat" )
+
+				vsoSetTarget( "food", nil )
+				vsoUseLounge( false, "drivingSeat" )
+				vsoNext( empty_state )
+			end
+		end)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -493,6 +517,7 @@ function state_full()
 	end
 
 	struggle_handler({{2, 5}, {5, 15}, {10, 20}}, "state_struggle", "state_release")
+	bellyEffects( "state_idle" )
 end
 
 state_struggle = struggle_generator()
@@ -526,6 +551,7 @@ function state_full_sit()
 	end
 
 	struggle_handler({{2, 5}, {5, 15}, {10, 20}}, "state_struggle_sit", "state_full", "full_standup")
+	bellyEffects( "state_idle_sit" )
 end
 
 state_struggle_sit = struggle_generator("sit")
@@ -562,6 +588,7 @@ function state_full_lay()
 	end
 
 	struggle_handler({{2, 10}, {10, 20}, {20, 40}}, "state_struggle_lay", "state_full_sit", "full_situp")
+	bellyEffects( "state_idle_lay" )
 end
 
 state_struggle_lay = struggle_generator("lay")
@@ -595,6 +622,7 @@ function state_full_sleep()
 	end
 
 	struggle_handler({{5, 15}, {20, 40}, nil}, "state_struggle_sleep", "state_full_lay", "full_wakeup")
+	bellyEffects( "state_idle_sleep" )
 end
 
 state_struggle_sleep = struggle_generator("sleep", false)
@@ -637,6 +665,7 @@ function state_full_back()
 	end
 
 	struggle_handler({{5, 15}, {20, 40}, nil}, "state_struggle_back", "state_full_back", "full_back_rollover")
+	bellyEffects( "state_idle_back" )
 end
 
 state_struggle_back = struggle_generator("back", false)
