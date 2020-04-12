@@ -92,9 +92,9 @@
                     "struggle_sleep_up": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_sleep_down": { "frames": 5, "cycle": 1, "mode": "end" },
 
-                    "full_lay_rollover": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "full_lay_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
                     "full_back": { "frames": 4, "cycle": 6, "mode": "end" },
-                    "full_back_rollover": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "full_back_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
                     "struggle_back_left": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_back_right": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_back_up": { "frames": 5, "cycle": 1, "mode": "end" },

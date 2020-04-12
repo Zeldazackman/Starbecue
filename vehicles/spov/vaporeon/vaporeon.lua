@@ -21,7 +21,7 @@ vaporeon plan:
 
 	
 	todo:
-	- full roll over animation
+	- pills
 	- roll over on top of player, as alternative to hugging when you're laying on its belly
 	- location dependent interaction
 	  - in front -> eat, beside/behind -> pet
@@ -540,7 +540,7 @@ function state_full_lay()
 			vsoAnim( "bodyState", "full_fallasleep" )
 			vsoNext( "state_full_sleep" )
 		elseif percent < 5+10+10 then
-			vsoAnim( "bodyState", "idle_lay_rollover" )
+			vsoAnim( "bodyState", "full_lay_rollover" )
 			vsoNext( "state_full_back" )
 		elseif percent < 5+10+10+15 then
 			vsoAnim( "bodyState", "full_lay_blink" )
@@ -637,7 +637,7 @@ function state_full_back()
 		vsoCounterReset( "struggleCount" )
 		local percent = vsoRand(100)
 		if percent < 5 then
-			vsoAnim( "bodyState", "idle_back_rollover" )
+			vsoAnim( "bodyState", "full_back_rollover" )
 			vsoNext( "state_full_lay" )
 		-- elseif percent < 1+5 then
 		-- 	vsoAnim( "bodyState", "full_fallasleep" )
