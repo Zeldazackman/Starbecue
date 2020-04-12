@@ -5,11 +5,11 @@
 		"names" : [
 			[ "idle.1", "idle_breathe.1", "idle_tail_flick.1", "idle_blink.1", "full.1", "full.2", "full_tail_flick.1", "full_look.1" ],
 			[ "eat.1", "eat.2", "eat.3", "eat.4", "eat.5", "eat.6", "eat.7", "eat.8" ],
+			[ "eat_fg.1", "eat_fg.2", "eat_fg.3", "eat_fg.4", "eat_fg.5", "eat_fg.6", "eat_fg.7", "eat_fg.8" ],
 			[ "struggle_left.1", "struggle_left.2", "struggle_left.3", "struggle_left.4",
 			"struggle_right.1", "struggle_right.2", "struggle_right.3", "struggle_right.4" ],
 			[ "struggle_up.1", "struggle_up.2", "struggle_up.3", "struggle_up.4",
 				"struggle_down.1", "struggle_down.2", "struggle_down.3", "struggle_down.4" ],
-			[ ], // escape,
 			[ "idle_sitdown.1", "idle_sitdown.2", null, null, "full_sitdown.1", "full_sitdown.2", "full_blink.1", "full_sit_blink.1" ],
 			[ "idle_sit.1", "idle_sit.2", "idle_sit_tail_flick.1", "idle_sit_pet.1", "full_sit.1", "full_sit.2", "full_sit_tail_flick.1", "full_sit_look.1" ],
 			[ "struggle_sit_left.1", "struggle_sit_left.2", "struggle_sit_left.3", "struggle_sit_left.4",
@@ -120,6 +120,24 @@
 		"struggle_back_left.5" : "full_back.1",
 		"struggle_back_right.5" : "full_back.1",
 		"struggle_back_up.5" : "full_back.1",
-		"struggle_back_down.5" : "full_back.1"
+		"struggle_back_down.5" : "full_back.1",
+
+		"escape.1" : "eat.8",
+		"escape.2" : "eat.7",
+		"escape.3" : "eat.6",
+		"escape.4" : "eat.4",
+		"escape.5" : "eat.3",
+		"escape.6" : "eat.2",
+		"escape.7" : "eat.2",
+		"escape.8" : "eat.1",
+
+		"escape_fg.1" : "eat_fg.8",
+		"escape_fg.2" : "eat_fg.7",
+		"escape_fg.3" : "eat_fg.6",
+		"escape_fg.4" : "eat_fg.4",
+		"escape_fg.5" : "eat_fg.3",
+		"escape_fg.6" : "eat_fg.2",
+		"escape_fg.7" : "eat_fg.2",
+		"escape_fg.8" : "eat_fg.1"
 	}
 }

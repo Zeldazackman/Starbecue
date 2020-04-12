@@ -69,24 +69,15 @@
 				"seat":"drivingSeat"
 				,"loop":false
 				,"interpMode":1
-				,"effectmap": {
-					"f5":["vsomask_feet5"]
-					,"f4":["vsomask_feet4"]
-					,"f3":["vsomask_feet3"]
-					,"f2":["vsomask_feet2"]
-					,"f1":["vsomask_feet1"]
-					,"clear":["vsomask_none"]
-					,"n":[]
-				}
 				,"transformGroup":"victimposition"
 				,"frames":[ 0,1,2,3,4,5,6,7]
-				,"visible": [ 1,1,1,1,1,1,0,0 ]
+				,"visible": [ 1,1,1,1,1,1,1,0 ]
 				,"xs": [ -1 ]
 				,"x": [
 					3
 					,3
 					,3
-					,3.875
+					,3.75
 					,3.75
 					,3.5
 					,2.25
@@ -97,9 +88,9 @@
 					,-1.875
 					,-1.875
 					,-1.875
-					,-1.5
-					,0.25
-					,-0.125
+					,-1.24
+					,0.75
+					,-0.375
 					,-1.25
 				]
 				,"r": [ 
@@ -112,16 +103,6 @@
 					,130
 					,135
 					,125
-				]
-				,"e": [
-					"e"
-					,"f1"
-					,"f2"
-					,"f3"
-					,"f4"
-					,"f5"
-					,"f5"
-					,"n"
 				]
 				,"sitpos": [ "stand" ]
 				,"emote": [ "oooh" ]
@@ -139,6 +120,7 @@
 				,"r": [ -90.0 ]
 				,"sitpos": [ "lay" ]
 				,"emote": [ "sleep" ]
+				,"dance": [ ]
 			}
 			,"bellyhug":{
 				"seconds":[ 0.0 ]
@@ -152,6 +134,7 @@
 				,"r": [ -90.0 ]
 				,"sitpos": [ "lay" ]
 				,"emote": [ "sleep" ]
+				,"dance": [ ]
 			}
 			,"absorbback":{
 				"seat":"drivingSeat"
@@ -166,6 +149,46 @@
 				,"r": [ -90.0, -90.0, -90.0 ]
 				,"sitpos": [ "lay" ]
 				,"emote": [ "sleep" ]
+				,"dance": [ ]
+			}
+			, "escape":{
+				"seat":"drivingSeat"
+				,"loop":false
+				,"interpMode":1
+				,"transformGroup":"victimposition"
+				,"frames":[ 0,1,2,3,4,5,6]
+				,"visible": [ 0,1,1,1,1,1,1 ]
+				,"xs": [ -1 ]
+				,"x": [
+					1.25
+					,1.25
+					,1.25
+					,2.75
+					,3.5
+					,3.5
+					,3.5
+				]
+				,"y": [ 
+					-1.25
+					,-1.25
+					,-1.0
+					,-0.75
+					,-0.75
+					,-1.5
+					,-1.875
+				]
+				,"r": [ 
+					125
+					,135
+					,130
+					,135
+					,100
+					,40
+					,0
+				]
+				,"sitpos": [ "stand" ]
+				,"emote": [ "oooh" ]
+				,"dance": [ "victimrun" ]
 			}
 		}
 	}

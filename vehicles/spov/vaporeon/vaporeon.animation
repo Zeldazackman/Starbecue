@@ -45,6 +45,7 @@
 
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
                     "absorb_back": { "frames": 4, "cycle": 1.5, "mode": "end" },
+                    "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
 
 
                     "full": { "frames": 2, "cycle": 1, "mode": "end" },
@@ -146,6 +147,8 @@
 
 						"eat": { "properties": { "image": "vaporeon.png:eat.<frame><directives>" }  },
 						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back.<frame><directives>" }  },
+						"escape": { "properties": { "image": "vaporeon.png:escape.<frame><directives>" }  },
+
 
 						"full": { "properties": { "image": "vaporeon.png:full.<frame><directives>" }  },
 						"full_blink": { "properties": { "image": "vaporeon.png:full_blink.<frame><directives>" }  },
@@ -226,7 +229,9 @@
 						"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab_fg.<frame><directives>" }  },
 						"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug_fg.<frame><directives>" }  },
 
-						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  }
+						"eat": { "properties": { "image": "vaporeon.png:eat_fg.<frame><directives>" }  },
+						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  },
+						"escape": { "properties": { "image": "vaporeon.png:escape_fg.<frame><directives>" }  }
                     }
                 }
             }

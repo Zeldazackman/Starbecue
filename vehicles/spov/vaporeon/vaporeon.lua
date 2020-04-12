@@ -10,21 +10,17 @@ vaporeon plan:
 	state chart:
 	              sleep
 	                |
-	 *idle - sit - lay * back ·· bed - hug
+	 *idle - sit - lay - back ·· bed - hug
 	   :                                V
-	  full - sit - lay   back <----- shlorp
+	  full - sit - lay - back <----- shlorp
 	                |
 	              sleep
 
 	  *idle: start
-	  lay * back: stupid placeholder animation
-	    no way to leave full_back state yet
 	  (struggling not included in chart, everything in full has it)
 
 	
 	todo:
-	- fix up placeholder animations
-	- escape animation
 	- full roll over animation
 	- roll over on top of player, as alternative to hugging when you're laying on its belly
 	- location dependent interaction
@@ -94,6 +90,7 @@ function onBegin()	--This sets up the VSO ONCE.
 
 	vsoOnBegin( "state_full", begin_state_full )
 
+	vsoOnBegin( "state_release", begin_state_release )
 	vsoOnEnd( "state_release", end_state_release )
 
 	vsoOnBegin( "state_idle_walk", begin_state_idle_walk )
@@ -368,6 +365,7 @@ function begin_state_eat()
 
 	vsoAnim( "bodyState", "eat"  )
 
+	vsoMakeInteractive( false )
 	vsoUseLounge( true, "drivingSeat" )
 	vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
 	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
@@ -380,6 +378,7 @@ function state_eat()
 	local anim = vsoAnimCurr( "bodyState" );
 
 	if vsoAnimEnd( "bodyState" ) then
+		vsoMakeInteractive( true )
 		vsoSound( "swallow" )
 		vsoAnim( "bodyState", "full_look" )
 		vsoNext( "state_full" )
@@ -429,7 +428,7 @@ function state_full()
 	if movetype ~= 0 then
 		if vsoCounterValue( "struggleCount" ) >= 5 and vsoCounterChance( "struggleCount", 5, 15 ) then
 			vsoCounterReset( "struggleCount" )
-			vsoNext( "state_release" ) -- TODO: escape animation
+			vsoNext( "state_release" )
 		else
 			struggleDir = movedir
 			vsoNext( "state_struggle" )
@@ -667,8 +666,16 @@ state_struggle_back = struggle_generator("back", false)
 
 -------------------------------------------------------------------------------
 
+function begin_state_release()
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
+	vsoAnim( "bodyState", "escape" )
+	vsoVictimAnimReplay( "drivingSeat", "escape", "bodyState")
+end
+
 function state_release()
-	if vsoVictimAnimClearReady( "drivingSeat" ) then
+	if vsoAnimEnd( "bodyState" ) then
+		vsoMakeInteractive( true )
 		vsoNext( "state_idle" )	--release
 	end
 end
