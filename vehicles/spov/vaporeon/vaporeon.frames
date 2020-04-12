@@ -29,17 +29,17 @@
 			[ "struggle_sleep_up.1", "struggle_sleep_up.2", "struggle_sleep_up.3", "struggle_sleep_up.4",
 				"struggle_sleep_down.1", "struggle_sleep_down.2", "struggle_sleep_down.3", "struggle_sleep_down.4" ],
 			[ "idle_lay_rollover.1", "idle_lay_rollover.2", "idle_lay_rollover.3", "idle_lay_rollover.4",
-				"idle_lay_rollover.5", "idle_lay_rollover.6", "idle_lay_rollover.7", "idle_lay_rollover.8" ],
+				"idle_lay_rollover.5", "idle_pin_fg.4", "idle_pin_fg.3", "idle_pin_fg.1" ],
 			[ "full_lay_rollover.1", "full_lay_rollover.2", "full_lay_rollover.3", "full_lay_rollover.4",
-				"full_lay_rollover.5", "full_lay_rollover.6", "full_lay_rollover.7", "full_lay_rollover.8" ],
+				"full_lay_rollover.5", null, null, null ],
 			[ "idle_back.1", "idle_back.2", "idle_back_grab.1", "idle_back_hug.1", "absorb_back.1", "absorb_back.2", "absorb_back.4", "absorb_back_fg.3" ],
 			[ "idle_back_fg.1", "idle_back_fg.2", "idle_back_grab_fg.1", "idle_back_hug_fg.1", "absorb_back_fg.1", "absorb_back_fg.2", "full_back.1", "full_back.2" ],
 			[ "struggle_back_left.1", "struggle_back_left.2", "struggle_back_left.3", "struggle_back_left.4",
 				"struggle_back_right.1", "struggle_back_right.2", "struggle_back_right.3", "struggle_back_right.4" ],
 			[ "struggle_back_up.1", "struggle_back_up.2", "struggle_back_up.3", "struggle_back_up.4",
 				"struggle_back_down.1", "struggle_back_down.2", "struggle_back_down.3", "struggle_back_down.4" ],
-			[ ],
-			[ ],
+			[ "idle_pinned.1", "idle_pinned_lick.1", "idle_pinned_lick.2", "idle_pinned_lick.3", "idle_pinned_lick.4" ],
+			[ "idle_pinned_fg.1", "idle_pinned_lick_fg.1", "idle_pinned_lick_fg.2", "idle_pinned_lick_fg.3", "idle_pinned_lick_fg.4" ],
 			[ ],
 			[ ],
 			[ ],
@@ -145,6 +145,24 @@
 		"escape_fg.5" : "eat_fg.3",
 		"escape_fg.6" : "eat_fg.2",
 		"escape_fg.7" : "eat_fg.2",
-		"escape_fg.8" : "eat_fg.1"
+		"escape_fg.8" : "eat_fg.1",
+
+		"idle_pin.1" : "idle_back_rollover.1",
+		"idle_pin.2" : "idle_back_rollover.2",
+		"idle_pin.3" : "idle_back_rollover.3",
+		"idle_pin.4" : "idle_back_rollover.4",
+		"idle_pin_fg.2" : "absorb_back_fg.3", //empty
+
+		"idle_unpin.1" : "idle_pin.4",
+		"idle_unpin.2" : "idle_pin.3",
+		"idle_unpin.3" : "idle_pin.2",
+		"idle_unpin.4" : "idle_pin.1",
+		"idle_unpin_fg.1" : "idle_pin_fg.4",
+		"idle_unpin_fg.2" : "idle_pin_fg.3",
+		"idle_unpin_fg.3" : "idle_pin_fg.2",
+		"idle_unpin_fg.4" : "idle_pin_fg.1",
+
+		"idle_pinned_lick.5" : "idle_pinned.1",
+		"idle_pinned_lick_fg.5" : "idle_pinned_fg.1"
 	}
 }

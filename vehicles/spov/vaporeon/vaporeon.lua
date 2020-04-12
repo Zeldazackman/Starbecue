@@ -345,9 +345,10 @@ function state_idle_back_bed()
 			vsoAnim( "bodyState", "idle_back_grab" )
 			vsoNext( "state_idle_back_hug" )
 			vsoVictimAnimReplay( "drivingSeat", "bellyhug", "bodyState")
-		-- elseif percent < 1+5 then
-		-- 	vsoAnim( "bodyState", "idle_fallasleep" )
-		-- 	vsoNext( "state_idle_sleep" )
+		elseif percent < hugChance+hugChance then
+			vsoAnim( "bodyState", "idle_pin" )
+			vsoNext( "state_idle_pinned" )
+			vsoVictimAnimReplay( "drivingSeat", "pinned", "bodyState")
 		else
 			vsoAnim( "bodyState", "idle_back" )
 		end
@@ -388,6 +389,39 @@ function state_idle_back_hug()
 		vsoAnim( "bodyState", "idle_back_grab" )
 		vsoNext( "state_idle_back_bed" )
 		vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+	end
+end
+
+-------------------------------------------------------------------------------
+
+function state_idle_pinned()
+
+	local anim = vsoAnimCurr( "bodyState" );
+
+	if vsoAnimEnd( "bodyState" ) then
+		local percent = vsoRand(100)
+		local unpinChance = escapePillChoice{5, 3, 1}
+		-- local absorbChance = escapePillChoice{1, 5, 10}
+		if percent < unpinChance then
+			vsoAnim( "bodyState", "idle_unpin" )
+			vsoNext( "state_idle_back_bed" )
+			vsoVictimAnimReplay( "drivingSeat", "unpin", "bodyState")
+		elseif percent < unpinChance+70 then
+			vsoAnim( "bodyState", "idle_pinned_lick")
+		-- elseif percent < unhugChance+absorbChance then
+		-- 	vsoSound( "slurp" )
+		-- 	vsoAnim( "bodyState", "absorb_back" )
+		-- 	vsoVictimAnimReplay( "drivingSeat", "absorbback", "bodyState")
+		-- 	vsoNext( "state_absorb_back" )
+		else
+			vsoAnim( "bodyState", "idle_pinned" )
+		end
+	end
+
+	if vsoHasAnySPOInputs( "drivingSeat" ) and vsoPill( "easyescape" ) then
+		vsoAnim( "bodyState", "idle_unpin" )
+		vsoNext( "state_idle_back_bed" )
+		vsoVictimAnimReplay( "drivingSeat", "unpin", "bodyState")
 	end
 end
 

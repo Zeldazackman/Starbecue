@@ -151,6 +151,36 @@
 				,"emote": [ "sleep" ]
 				,"dance": [ ]
 			}
+			,"pinned":{
+				"seconds":[ 1.5 ]
+				,"seat":"drivingSeat"
+				,"loop":true
+				,"interpMode":1
+				,"visible": [1]
+				,"transformGroup":"victimposition"
+				,"xs": [ -1 ]
+				,"x": [ 3.8175 ] // why is it half a pixel off ugh
+				,"y": [ -3.5 ]
+				,"r": [ -90.0 ]
+				,"sitpos": [ "lay" ]
+				,"emote": [ "idle" ]
+				,"dance": [ ]
+			}
+			,"unpin":{ // the same as bellybed but 1.5 seconds instead of 0, to get that nice t r a n s i t i o n
+				"seconds":[ 1.5 ]
+				,"seat":"drivingSeat"
+				,"loop":true
+				,"interpMode":1
+				,"visible": [1]
+				,"transformGroup":"victimposition"
+				,"xs": [ -1 ]
+				,"x": [ 1.3125 ] // why is it half a pixel off ugh
+				,"y": [ -2.0 ]
+				,"r": [ -90.0 ]
+				,"sitpos": [ "lay" ]
+				,"emote": [ "sleep" ]
+				,"dance": [ ]
+			}
 			, "escape":{
 				"seat":"drivingSeat"
 				,"loop":false

@@ -43,6 +43,12 @@
                     "idle_back_grab": { "frames": 1, "cycle": 0.25, "mode": "end" },
                     "idle_back_hug": { "frames": 1, "cycle": 1, "mode": "end" },
 
+					"idle_pin": { "frames": 4, "cycle": 1.5, "mode": "end" },
+					"idle_pinned": { "frames": 1, "cycle": 6, "mode": "end" },
+					"idle_pinned_lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
+					"idle_unpin": { "frames": 4, "cycle": 1.5, "mode": "end" },
+					
+
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
                     "absorb_back": { "frames": 4, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
@@ -145,6 +151,11 @@
 						"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab.<frame><directives>" }  },
 						"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug.<frame><directives>" }  },
 
+						"idle_pin": { "properties": { "image": "vaporeon.png:idle_pin.<frame><directives>" }  },
+						"idle_pinned": { "properties": { "image": "vaporeon.png:idle_pinned.<frame><directives>" }  },
+						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick.<frame><directives>" }  },
+						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin.<frame><directives>" }  },
+
 						"eat": { "properties": { "image": "vaporeon.png:eat.<frame><directives>" }  },
 						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back.<frame><directives>" }  },
 						"escape": { "properties": { "image": "vaporeon.png:escape.<frame><directives>" }  },
@@ -228,6 +239,11 @@
                         "idle_back": { "properties": { "image": "vaporeon.png:idle_back_fg.<frame><directives>" }  },
 						"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab_fg.<frame><directives>" }  },
 						"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug_fg.<frame><directives>" }  },
+
+						"idle_pin": { "properties": { "image": "vaporeon.png:idle_pin_fg.<frame><directives>" }  },
+						"idle_pinned": { "properties": { "image": "vaporeon.png:idle_pinned_fg.<frame><directives>" }  },
+						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick_fg.<frame><directives>" }  },
+						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin_fg.<frame><directives>" }  },
 
 						"eat": { "properties": { "image": "vaporeon.png:eat_fg.<frame><directives>" }  },
 						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  },
