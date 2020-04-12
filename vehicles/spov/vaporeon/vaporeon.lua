@@ -55,6 +55,12 @@ function showEmote( emotename )	--helper function to express a emotion particle	
 	end
 end
 
+function escapePillChoice(list)
+	if vsoPill( "easyescape" ) then return list[1] end
+	if vsoPill( "antiescape" ) then return list[3] end
+	return list[2]
+end
+
 -------------------------------------------------------------------------------
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
@@ -297,6 +303,7 @@ function interact_state_idle_back( targetid )
 	vsoUseLounge( true, "drivingSeat" )
 	vsoEat( targetid, "drivingSeat" )
 	vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+	vsoVictimAnimSetStatus( "drivingSeat", {} );
 	vsoNext( "state_idle_back_bed" )
 
 end
@@ -309,7 +316,8 @@ function state_idle_back_bed()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 5 then
+		local hugChance = escapePillChoice{5, 5, 20}
+		if percent < hugChance then
 			vsoAnim( "bodyState", "idle_back_grab" )
 			vsoNext( "state_idle_back_hug" )
 			vsoVictimAnimReplay( "drivingSeat", "bellyhug", "bodyState")
@@ -336,11 +344,13 @@ function state_idle_back_hug()
 
 	if vsoAnimEnd( "bodyState" ) then
 		local percent = vsoRand(100)
-		if percent < 5 then
+		local unhugChance = escapePillChoice{10, 5, 1}
+		local absorbChance = escapePillChoice{1, 5, 10}
+		if percent < unhugChance then
 			vsoAnim( "bodyState", "idle_back_grab" )
 			vsoNext( "state_idle_back_bed" )
 			vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
-		elseif percent < 5+5 then
+		elseif percent < unhugChance+absorbChance then
 			vsoSound( "slurp" )
 			vsoAnim( "bodyState", "absorb_back" )
 			vsoVictimAnimReplay( "drivingSeat", "absorbback", "bodyState")
@@ -350,11 +360,11 @@ function state_idle_back_hug()
 		end
 	end
 
-	-- if vsoHasAnySPOInputs( "drivingSeat" ) then
-	-- 	vsoUneat( "drivingSeat" )
-	-- 	vsoUseLounge( false, "drivingSeat" )
-	-- 	vsoNext( "state_idle_back" )
-	-- end
+	if vsoHasAnySPOInputs( "drivingSeat" ) and vsoPill( "easyescape" ) then
+		vsoAnim( "bodyState", "idle_back_grab" )
+		vsoNext( "state_idle_back_bed" )
+		vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -388,53 +398,6 @@ end
 -------------------------------------------------------------------------------
 
 local struggleType, struggleDir -- keep between functions
-
-function begin_state_full()
-
-	vsoVictimAnimVisible( "drivingSeat", false )
-
-	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatebelly" } );
-
-	vsoTimerSet( "gurgle", 1.0, 8.0 )	--For playing sounds
-
-end
-
-function state_full()
-
-	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
-		vsoSound( "digest" )
-	end
-
-	local anim = vsoAnimCurr( "bodyState" );
-
-	if vsoAnimEnd( "bodyState" ) then
-		vsoCounterReset( "struggleCount" )
-		local percent = vsoRand(100)
-		if percent < 5 then
-			vsoAnim( "bodyState", "full_sitdown" )
-			vsoNext( "state_full_sit" )
-		-- elseif percent < 5+10 then
-			-- vsoNext( "state_full_walk")
-		elseif percent < 5+15 then
-			vsoAnim( "bodyState", "full_tail_flick" )
-		elseif percent < 5+15+15 then
-			vsoAnim( "bodyState", "full_blink" )
-		else
-			vsoAnim( "bodyState", "full" )
-		end
-	end
-
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype ~= 0 then
-		if vsoCounterValue( "struggleCount" ) >= 5 and vsoCounterChance( "struggleCount", 5, 15 ) then
-			vsoCounterReset( "struggleCount" )
-			vsoNext( "state_release" )
-		else
-			struggleDir = movedir
-			vsoNext( "state_struggle" )
-		end
-	end
-end
 
 function struggle_generator(state, has_look)
 	if state == nil then
@@ -475,6 +438,63 @@ function struggle_generator(state, has_look)
 	end
 end
 
+function struggle_handler(success_chances, struggle_state, success_state, success_anim)
+	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
+	if movetype ~= 0 then
+		local chance = escapePillChoice(success_chances)
+		if chance ~= nil
+		and vsoCounterValue( "struggleCount" ) >= chance[1]
+		and vsoCounterChance( "struggleCount", chance[1], chance[2] )then
+			vsoCounterReset( "struggleCount" )
+			if success_anim ~= nil then
+				vsoAnim( "bodyState", success_anim )
+			end
+			vsoNext( success_state )
+		else
+			struggleDir = movedir
+			vsoNext( struggle_state )
+		end
+	end
+end
+
+function begin_state_full()
+
+	vsoVictimAnimVisible( "drivingSeat", false )
+
+	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatebelly" } );
+
+	vsoTimerSet( "gurgle", 1.0, 8.0 )	--For playing sounds
+
+end
+
+function state_full()
+
+	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then	--play gurgle sounds <= "Play sound from list [soundlist] every [ 1 to 8 seconds ]"
+		vsoSound( "digest" )
+	end
+
+	local anim = vsoAnimCurr( "bodyState" );
+
+	if vsoAnimEnd( "bodyState" ) then
+		vsoCounterReset( "struggleCount" )
+		local percent = vsoRand(100)
+		if percent < 5 then
+			vsoAnim( "bodyState", "full_sitdown" )
+			vsoNext( "state_full_sit" )
+		-- elseif percent < 5+10 then
+			-- vsoNext( "state_full_walk")
+		elseif percent < 5+15 then
+			vsoAnim( "bodyState", "full_tail_flick" )
+		elseif percent < 5+15+15 then
+			vsoAnim( "bodyState", "full_blink" )
+		else
+			vsoAnim( "bodyState", "full" )
+		end
+	end
+
+	struggle_handler({{2, 5}, {5, 15}, {10, 20}}, "state_struggle", "state_release")
+end
+
 state_struggle = struggle_generator()
 
 -------------------------------------------------------------------------------
@@ -505,17 +525,7 @@ function state_full_sit()
 		end
 	end
 
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype ~= 0 then
-		if vsoCounterValue( "struggleCount" ) >= 5 and vsoCounterChance( "struggleCount", 5, 15 ) then
-			vsoCounterReset( "struggleCount" )
-			vsoAnim( "bodyState", "full_standup" )
-			vsoNext( "state_full" )
-		else
-			struggleDir = movedir
-			vsoNext( "state_struggle_sit" )
-		end
-	end
+	struggle_handler({{2, 5}, {5, 15}, {10, 20}}, "state_struggle_sit", "state_full", "full_standup")
 end
 
 state_struggle_sit = struggle_generator("sit")
@@ -551,17 +561,7 @@ function state_full_lay()
 		end
 	end
 
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype ~= 0 then
-		if vsoCounterValue( "struggleCount" ) >= 10 and vsoCounterChance( "struggleCount", 10, 20 ) then
-			vsoCounterReset( "struggleCount" )
-			vsoAnim( "bodyState", "full_situp" )
-			vsoNext( "state_full_sit" )
-		else
-			struggleDir = movedir
-			vsoNext( "state_struggle_lay" )
-		end
-	end
+	struggle_handler({{2, 10}, {10, 20}, {20, 40}}, "state_struggle_lay", "state_full_sit", "full_situp")
 end
 
 state_struggle_lay = struggle_generator("lay")
@@ -594,18 +594,7 @@ function state_full_sleep()
 		end
 	end
 
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype ~= 0 then
-		-- can't wake it up from the inside, just wait for it to wake up on its own
-		-- if vsoCounterValue( "struggleCount" ) >= 20 and vsoCounterChance( "struggleCount", 20, 75 ) then
-		-- 	vsoCounterReset( "struggleCount" )
-		-- 	vsoAnim( "bodyState", "full_wakeup" )
-		-- 	vsoNext( "state_full_lay" )
-		-- else
-			struggleDir = movedir
-			vsoNext( "state_struggle_sleep" )
-		-- end
-	end
+	struggle_handler({{5, 15}, {20, 40}, nil}, "state_struggle_sleep", "state_full_lay", "full_wakeup")
 end
 
 state_struggle_sleep = struggle_generator("sleep", false)
@@ -647,19 +636,7 @@ function state_full_back()
 		end
 	end
 
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype ~= 0 then
-		-- can't wake it up from the inside, just wait for it to wake up on its own
-		-- if vsoCounterValue( "struggleCount" ) >= 20 and vsoCounterChance( "struggleCount", 20, 75 ) then
-		-- 	vsoCounterReset( "struggleCount" )
-			--vsoAnim( "bodyState", "idle_back_rollover" )
-			--vsoAnim( "bodyState", "full_fallasleep" )
-			--vsoNext( "state_full_sleep" )
-		-- else
-			struggleDir = movedir
-			vsoNext( "state_struggle_back" )
-		-- end
-	end
+	struggle_handler({{5, 15}, {20, 40}, nil}, "state_struggle_back", "state_full_back", "full_back_rollover")
 end
 
 state_struggle_back = struggle_generator("back", false)

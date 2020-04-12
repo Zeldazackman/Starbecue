@@ -44,7 +44,7 @@
         "types": ["spovvaporeon"]
         , "position": [0.0, 4, 0.0, 4]
         , "template": {}
-		, "pillsAdd": {}
+		, "pillsAdd": { "antiescape":{}, "easyescape":{} }
     }
 	
 	, "retainObjectParametersInItem" : true
