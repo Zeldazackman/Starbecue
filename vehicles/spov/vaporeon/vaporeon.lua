@@ -45,7 +45,7 @@ function loadStoredData()
 end
 
 function showEmote( emotename )	--helper function to express a emotion particle	"emotesleepy","emoteconfused","emotesad","emotehappy","love"
-	if vsoTimeDelta( "emoteblock" ) > 1 then
+	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
 		animator.burstParticleEmitter( emotename )
 	end
@@ -163,14 +163,14 @@ function handleStruggles(success_chances)
 		return true
 	end
 
-	local direction_name = nil
-	if movedir == "B" then direction_name = "_left" end
-	if movedir == "F" then direction_name = "_right" end
-	if movedir == "U" then direction_name = "_up" end
-	if movedir == "D" then direction_name = "_down" end
+	local anim = nil
+	if movedir == "B" then anim = "s_left" end
+	if movedir == "F" then anim = "s_right" end
+	if movedir == "U" then anim = "s_up" end
+	if movedir == "D" then anim = "s_down" end
 
-	if direction_name ~= nil then
-		vsoAnim( "bodyState", "struggle"..direction_name )
+	if anim ~= nil then
+		vsoAnim( "bodyState", anim )
 		vsoSound( "struggle" )
 		vsoCounterAdd( "struggleCount", 1 )
 		_struggling = true
@@ -193,6 +193,8 @@ function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, 
 	vsoAnim( "bodyState", "idle" )
 
 	vsoMakeInteractive( true )
+
+	vsoTimeDelta( "emoteblock" ) -- without this, the first call to showEmote() does nothing
 end
 
 function onBegin()	--This sets up the VSO ONCE.
@@ -258,35 +260,47 @@ function state_stand()
 end
 
 function interact_state_stand( targetid )
+	if not stateQueued() then
 
-	-- vsoAnim( "bodyState", "idle_back" )
-	-- vsoNext( "state_idle_back" ) -- jump to currently worked on state to test
-	-- return
+		-- vsoAnim( "bodyState", "idle_back" )
+		-- vsoNext( "state_idle_back" ) -- jump to currently worked on state to test
+		-- return
 
-	if getOccupants() == 0 then
-		local position = world.entityPosition( targetid )
-		local relative = vsoRelativePoint( position[1], position[2] )
-		if relative[1] > 3 then -- target in front
-			vsoMakeInteractive( false )
-			showEmote("emotehappy")
-			vsoAnim( "bodyState", "eat" )
-			vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
-			nextOccupants( 1 )
+		if getOccupants() == 0 then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 2 then -- target in front
+				vsoMakeInteractive( false )
+				showEmote("emotehappy")
+				vsoAnim( "bodyState", "eat" )
+				vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
+				nextOccupants( 1 )
 
-			vsoSetTarget( "food", targetid )
-			vsoUseLounge( true, "drivingSeat" )
-			vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
-			vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
-			vsoSound( "swallow" )
+				vsoSetTarget( "food", targetid )
+				vsoUseLounge( true, "drivingSeat" )
+				vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
+				vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
+				vsoSound( "swallow" )
+			else
+				if vsoChance(20) then
+					vsoAnim( "bodyState", "sitdown" )
+					nextState( "sit" )
+				else
+					showEmote("emotehappy")
+					vsoAnim( "bodyState", "pet" )
+				end
+			end
 		else
-			showEmote("emotehappy")
-			vsoAnim( "bodyState", "pet" )
+			if vsoChance(20) then
+				vsoAnim( "bodyState", "sitdown" )
+				nextState( "sit" )
+			else
+				showEmote("emotehappy")
+				vsoAnim( "bodyState", "pet" )
+			end
 		end
-	else
-		showEmote("emotehappy")
-		vsoAnim( "bodyState", "pet" )
-	end
 
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -297,7 +311,6 @@ function state_sit()
 	vsoDebugRect( pin_bounds[1][1], pin_bounds[1][2], pin_bounds[2][1], pin_bounds[2][2] )
 
 	if vsoAnimEnd( "bodyState" ) and updateState() then
-		sb.logInfo(previousState())
 		if previousState() == "pinned" then
 			vsoUneat( "drivingSeat" )
 			vsoSetTarget( "food", nil )
@@ -315,6 +328,7 @@ function state_sit()
 			end
 			if #pinnable == 1 then
 				vsoUseLounge( true, "drivingSeat" )
+				vsoSetTarget( "food", pinnable[1] )
 				vsoEat( pinnable[1], "drivingSeat" )
 				vsoVictimAnimSetStatus( "drivingSeat", {} )
 				vsoAnim( "bodyState", "pin" )
@@ -346,15 +360,29 @@ function state_sit()
 end
 
 function interact_state_sit( targetid )
+	if not stateQueued() then
 
-	if vsoChance(20) then
-		vsoAnim( "bodyState", "standup" )
-		nextState( "stand" )
-	else
-		showEmote("emotehappy");
-		vsoAnim( "bodyState", "pet" )
+		if vsoChance(20) then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 2 then -- target in front
+				vsoUseLounge( true, "drivingSeat" )
+				vsoSetTarget( "food", tartetid )
+				vsoEat( targetid, "drivingSeat" )
+				vsoVictimAnimSetStatus( "drivingSeat", {} )
+				vsoAnim( "bodyState", "pin" )
+				vsoVictimAnimReplay( "drivingSeat", "sitpinned", "bodyState")
+				nextState( "pinned" )
+			else
+				vsoAnim( "bodyState", "standup" )
+				nextState( "stand" )
+			end
+		else
+			showEmote("emotehappy");
+			vsoAnim( "bodyState", "pet" )
+		end
+
 	end
-
 end
 
 -------------------------------------------------------------------------------
@@ -395,19 +423,21 @@ function state_lay()
 end
 
 function interact_state_lay( targetid )
+	if not stateQueued() then
 
-	local percent = vsoRand(100)
-	if percent < 10 then
-		vsoAnim( "bodyState", "situp" )
-		nextState( "sit" )
-	elseif percent < 10+10 then
-		vsoAnim( "bodyState", "rollover" )
-		nextState( "back" )
-	else
-		showEmote("emotehappy");
-		vsoAnim( "bodyState", "pet" )
+		local percent = vsoRand(100)
+		if percent < 10 then
+			vsoAnim( "bodyState", "situp" )
+			nextState( "sit" )
+		elseif percent < 10+10 then
+			vsoAnim( "bodyState", "rollover" )
+			nextState( "back" )
+		else
+			showEmote("emotehappy");
+			vsoAnim( "bodyState", "pet" )
+		end
+
 	end
-
 end
 
 -------------------------------------------------------------------------------
@@ -438,16 +468,18 @@ function state_sleep()
 end
 
 function interact_state_sleep( targetid )
+	if not stateQueued() then
 
-	local percent = vsoRand(100)
-	if percent < 15 then
-		vsoAnim( "bodyState", "wakeup" )
-		nextState( "lay" )
-	else
-		showEmote("emotehappy");
-		-- vsoAnim( "bodyState", "pet" )
+		local percent = vsoRand(100)
+		if percent < 15 then
+			vsoAnim( "bodyState", "wakeup" )
+			nextState( "lay" )
+		else
+			showEmote("emotehappy");
+			-- vsoAnim( "bodyState", "pet" )
+		end
+
 	end
-
 end
 
 -------------------------------------------------------------------------------
@@ -461,6 +493,10 @@ function state_back()
 		if percent < 5 then
 			vsoAnim( "bodyState", "rollover" )
 			nextState( "lay" )
+		elseif percent < 5+15 then
+			vsoAnim( "bodyState", "tail_flick" )
+		elseif percent < 5+15+15 then
+			vsoAnim( "bodyState", "blink" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -478,25 +514,29 @@ function state_back()
 end
 
 function interact_state_back( targetid )
+	if not stateQueued() then
 
-	if getOccupants() == 0 then
-		local position = world.entityPosition( targetid )
-		local relative = vsoRelativePoint( position[1], position[2] )
-		if relative[1] > 3 then -- target in front
-			showEmote("emotehappy");
-			-- vsoAnim( "bodyState", "pet" )
+		if getOccupants() == 0 then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 3 then -- target in front
+				showEmote("emotehappy");
+				vsoAnim( "bodyState", "pet" )
+			else
+				nextState( "bed" )
+				updateState()
+				vsoAnim( "bodyState", "idle" )
+				vsoUseLounge( true, "drivingSeat" )
+				vsoEat( targetid, "drivingSeat" )
+				vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+				vsoVictimAnimSetStatus( "drivingSeat", {} );
+			end
 		else
-			vsoUseLounge( true, "drivingSeat" )
-			vsoEat( targetid, "drivingSeat" )
-			vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
-			vsoVictimAnimSetStatus( "drivingSeat", {} );
-			vsoNext( "state_bed" ) -- no transition animation
+			showEmote("emotehappy");
+			vsoAnim( "bodyState", "pet" )
 		end
-	else
-		showEmote("emotehappy");
-		-- vsoAnim( "bodyState", "pet" )
-	end
 
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -514,27 +554,36 @@ function state_bed() -- only accessible with no occupants
 			vsoAnim( "bodyState", "rollover" )
 			vsoVictimAnimReplay( "drivingSeat", "pinned", "bodyState")
 			nextState( "pinned" )
+		elseif percent < hugChance+hugChance+15 then
+			vsoAnim( "bodyState", "tail_flick" )
+		elseif percent < hugChance+hugChance+15+15 then
+			vsoAnim( "bodyState", "blink" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
 	end
 
 	if vsoHasAnySPOInputs( "drivingSeat" ) then
+		nextState( "back" )
+		updateState()
+		vsoAnim( "bodyState", "idle" )
 		vsoUneat( "drivingSeat" )
 		vsoUseLounge( false, "drivingSeat" )
-		vsoNext( "state_back" ) -- no transition animation
 	end
 end
 
 function interact_state_bed( targetid )
+	if not stateQueued() then
 
-	if getOccupants() == 0 then
-		local position = world.entityPosition( targetid )
-		local relative = vsoRelativePoint( position[1], position[2] )
-		if relative[1] > 3 then -- target in front
-			showEmote("emotehappy");
-			-- vsoAnim( "bodyState", "pet" )
+		if getOccupants() == 0 then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 3 then -- target in front
+				showEmote("emotehappy");
+				vsoAnim( "bodyState", "pet" )
+			end
 		end
+
 	end
 end
 
@@ -558,6 +607,8 @@ function state_hug()
 			vsoVictimAnimReplay( "drivingSeat", "absorbback", "bodyState")
 			nextOccupants( 1 )
 			nextState( "back" )
+		elseif percent < unhugChance+absorbChance+15 then
+			vsoAnim( "bodyState", "tail_flick" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -571,14 +622,17 @@ function state_hug()
 end
 
 function interact_state_hug( targetid )
+	if not stateQueued() then
 
-	if getOccupants() == 0 then
-		local position = world.entityPosition( targetid )
-		local relative = vsoRelativePoint( position[1], position[2] )
-		if relative[1] > 3 then -- target in front
-			showEmote("emotehappy");
-			-- vsoAnim( "bodyState", "pet" )
+		if getOccupants() == 0 then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 3 then -- target in front
+				showEmote("emotehappy");
+				-- vsoAnim( "bodyState", "pet" )
+			end
 		end
+
 	end
 end
 
@@ -611,6 +665,10 @@ function state_pinned()
 			vsoAnim( "bodyState", "situp" )
 			vsoVictimAnimReplay( "drivingSeat", "situnpin", "bodyState")
 			nextState( "sit" )
+		elseif percent < unpinChance+absorbChance+3+40+3+15 then
+			vsoAnim( "bodyState", "tail_flick" )
+		elseif percent < unpinChance+absorbChance+3+40+3+15+15 then
+			vsoAnim( "bodyState", "blink" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -624,10 +682,12 @@ function state_pinned()
 end
 
 function interact_state_pinned( targetid )
+	if not stateQueued() then
 
-	showEmote("emotehappy");
-	vsoAnim( "bodyState", "pet" )
+		showEmote("emotehappy");
+		vsoAnim( "bodyState", "pet" )
 
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -653,14 +713,16 @@ function state_pinned_sleep()
 end
 
 function interact_state_pinned_sleep( targetid )
+	if not stateQueued() then
 
-	local percent = vsoRand(100)
-	if percent < 15 then
-		vsoAnim( "bodyState", "wakeup" )
-		nextState( "pinned" )
-	else
-		showEmote("emotehappy");
-		-- vsoAnim( "bodyState", "pet" )
+		local percent = vsoRand(100)
+		if percent < 15 then
+			vsoAnim( "bodyState", "wakeup" )
+			nextState( "pinned" )
+		else
+			showEmote("emotehappy");
+			-- vsoAnim( "bodyState", "pet" )
+		end
+
 	end
-
 end

@@ -35,10 +35,10 @@
                     "absorb": { "frames": 4, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
 
-                    "struggle_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_right": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_down": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_left": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_right": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_up": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_down": { "frames": 5, "cycle": 1, "mode": "end" },
                     "look": { "frames": 1, "cycle": 2, "mode": "end" }
                 }
             }
@@ -77,10 +77,10 @@
 						"absorb": { "properties": { "image": "vaporeon.png:<occupants>.<state>.absorb.<frame><directives>" } },
 						"escape": { "properties": { "image": "vaporeon.png:<occupants>.<state>.escape.<frame><directives>" } },
 
-						"struggle_left": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_left.<frame><directives>" } },
-						"struggle_right": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_right.<frame><directives>" } },
-						"struggle_up": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_up.<frame><directives>" } },
-						"struggle_down": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_down.<frame><directives>" } },
+						"s_left": { "properties": { "image": "vaporeon.png:<occupants>.<state>.s_left.<frame><directives>" } },
+						"s_right": { "properties": { "image": "vaporeon.png:<occupants>.<state>.s_right.<frame><directives>" } },
+						"s_up": { "properties": { "image": "vaporeon.png:<occupants>.<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "vaporeon.png:<occupants>.<state>.s_down.<frame><directives>" } },
 						"look": { "properties": { "image": "vaporeon.png:<occupants>.<state>.look.<frame><directives>" } }
                     }
                 }
@@ -107,17 +107,22 @@
                 "partStates": {
                     "bodyState": {
 						"idle": { "properties": { "image": "vaporeon.png:<occupants>.<state>.f<frame><directives>" } },
-						
-						"grab": { "properties": { "image": "vaporeon.png:<occupants>.<state>.grab.f<frame><directives>" } },
-
-						"lick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.lick.f<frame><directives>" } },
-
-						"fallasleep": { "properties": { "image": "vaporeon.png:<occupants>.<state>.fallasleep.f<frame><directives>" } },
-						"wakeup": { "properties": { "image": "vaporeon.png:<occupants>.<state>.wakeup.f<frame><directives>" } },
+                        "blink": { "properties": { "image": "vaporeon.png:<occupants>.<state>.blink.f<frame><directives>" } },
+						"pet": { "properties": { "image": "vaporeon.png:<occupants>.<state>.pet.f<frame><directives>" } },
+                        "tail_flick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.tail_flick.f<frame><directives>" } },
 
 						"laydown": { "properties": { "image": "vaporeon.png:<occupants>.<state>.laydown.f<frame><directives>" } },
 						"pin": { "properties": { "image": "vaporeon.png:<occupants>.<state>.pin.f<frame><directives>" } },
 						"situp": { "properties": { "image": "vaporeon.png:<occupants>.<state>.situp.f<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "vaporeon.png:<occupants>.<state>.rollover.f<frame><directives>" } },
+
+						"fallasleep": { "properties": { "image": "vaporeon.png:<occupants>.<state>.fallasleep.f<frame><directives>" } },
+						"wakeup": { "properties": { "image": "vaporeon.png:<occupants>.<state>.wakeup.f<frame><directives>" } },
+						
+						"grab": { "properties": { "image": "vaporeon.png:<occupants>.<state>.grab.f<frame><directives>" } },
+
+						"lick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.lick.f<frame><directives>" } },
 
 						"eat": { "properties": { "image": "vaporeon.png:<occupants>.<state>.eat.f<frame><directives>" } },
 						"absorb": { "properties": { "image": "vaporeon.png:<occupants>.<state>.absorb.f<frame><directives>" } },
