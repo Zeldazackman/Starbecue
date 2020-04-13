@@ -7,7 +7,7 @@
 			[ "eat.1", "eat.2", "eat.3", "eat.4", "eat.5", "eat.6", "eat.7", "eat.8" ],
 			[ "eat_fg.1", "eat_fg.2", "eat_fg.3", "eat_fg.4", "eat_fg.5", "eat_fg.6", "eat_fg.7", "eat_fg.8" ],
 			[ "struggle_left.1", "struggle_left.2", "struggle_left.3", "struggle_left.4",
-			"struggle_right.1", "struggle_right.2", "struggle_right.3", "struggle_right.4" ],
+				"struggle_right.1", "struggle_right.2", "struggle_right.3", "struggle_right.4" ],
 			[ "struggle_up.1", "struggle_up.2", "struggle_up.3", "struggle_up.4",
 				"struggle_down.1", "struggle_down.2", "struggle_down.3", "struggle_down.4" ],
 			[ "idle_sitdown.1", "idle_sitdown.2", null, null, "full_sitdown.1", "full_sitdown.2", "full_blink.1", "full_sit_blink.1" ],
@@ -38,10 +38,10 @@
 				"struggle_back_right.1", "struggle_back_right.2", "struggle_back_right.3", "struggle_back_right.4" ],
 			[ "struggle_back_up.1", "struggle_back_up.2", "struggle_back_up.3", "struggle_back_up.4",
 				"struggle_back_down.1", "struggle_back_down.2", "struggle_back_down.3", "struggle_back_down.4" ],
-			[ "idle_pinned.1", "idle_pinned_lick.1", "idle_pinned_lick.2", "idle_pinned_lick.3", "idle_pinned_lick.4" ],
-			[ "idle_pinned_fg.1", "idle_pinned_lick_fg.1", "idle_pinned_lick_fg.2", "idle_pinned_lick_fg.3", "idle_pinned_lick_fg.4" ],
-			[ ],
-			[ ],
+			[ "idle_pinned.1", "idle_pinned_lick.1", "idle_pinned_lick.2", "idle_pinned_lick.3", "idle_pinned_lick.4", "absorb_pinned.1", "absorb_pinned.2", null ],
+			[ "idle_pinned_fg.1", "idle_pinned_lick_fg.1", "idle_pinned_lick_fg.2", "idle_pinned_lick_fg.3", "idle_pinned_lick_fg.4", "absorb_pinned_fg.1", "absorb_pinned_fg.2", null ],
+			[ "idle_pinned_fallasleep.1", "idle_pinned_fallasleep.2", "idle_pinned_sleep.1", "idle_pinned_sleep.2", "idle_pinned_situp.1", "idle_pinned_situp.2", null, null ],
+			[ "idle_pinned_fallasleep_fg.1", "idle_pinned_fallasleep_fg.2", "idle_pinned_sleep_fg.1", "idle_pinned_sleep_fg.2", "idle_pinned_situp_fg.1", "idle_pinned_situp_fg.2", null, null ],
 			[ ],
 			[ ],
 			[ ],
@@ -163,6 +163,24 @@
 		"idle_unpin_fg.4" : "idle_pin_fg.1",
 
 		"idle_pinned_lick.5" : "idle_pinned.1",
-		"idle_pinned_lick_fg.5" : "idle_pinned_fg.1"
+		"idle_pinned_lick_fg.5" : "idle_pinned_fg.1",
+
+		"idle_pinned_wakeup.1" : "idle_pinned_fallasleep.2",
+		"idle_pinned_wakeup.2" : "idle_pinned_fallasleep.1",
+		"idle_pinned_wakeup_fg.1" : "idle_pinned_fallasleep.2",
+		"idle_pinned_wakeup_fg.2" : "idle_pinned_fallasleep.1",
+
+		"idle_pinned_sleep.3" : "idle_pinned_sleep.1",
+		"idle_pinned_sleep.4" : "idle_pinned_sleep.2",
+		"idle_pinned_sleep_fg.3" : "idle_pinned_sleep_fg.1",
+		"idle_pinned_sleep_fg.4" : "idle_pinned_sleep_fg.2",
+
+		"absorb_pinned.3" : "full_lay.1",
+		"absorb_pinned_fg.3" : "absorb_back_fg.3", //empty
+
+		"idle_pinned_laydown.1" : "idle_pinned_situp.2",
+		"idle_pinned_laydown.2" : "idle_pinned_situp.1",
+		"idle_pinned_laydown_fg.1" : "idle_pinned_situp_fg.2",
+		"idle_pinned_laydown_fg.2" : "idle_pinned_situp_fg.1"
 	}
 }

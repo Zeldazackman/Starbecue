@@ -48,9 +48,17 @@
 					"idle_pinned_lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
 					"idle_unpin": { "frames": 4, "cycle": 1.5, "mode": "end" },
 					
+					"idle_pinned_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
+					"idle_pinned_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
+					"idle_pinned_sleep": { "frames": 4, "cycle": 6, "mode": "end" },
+
+                    "idle_pinned_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
+				    "idle_pinned_situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
+					
 
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
                     "absorb_back": { "frames": 4, "cycle": 1.5, "mode": "end" },
+                    "absorb_pinned": { "frames": 3, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
 
 
@@ -156,8 +164,16 @@
 						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick.<frame><directives>" }  },
 						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin.<frame><directives>" }  },
 
+						"idle_pinned_fallasleep": { "properties": { "image": "vaporeon.png:idle_pinned_fallasleep.<frame><directives>" }  },
+						"idle_pinned_wakeup": { "properties": { "image": "vaporeon.png:idle_pinned_wakeup.<frame><directives>" }  },
+						"idle_pinned_sleep": { "properties": { "image": "vaporeon.png:idle_pinned_sleep.<frame><directives>" }  },
+
+						"idle_pinned_laydown": { "properties": { "image": "vaporeon.png:idle_pinned_laydown.<frame><directives>" }  },
+						"idle_pinned_situp": { "properties": { "image": "vaporeon.png:idle_pinned_situp.<frame><directives>" }  },
+
 						"eat": { "properties": { "image": "vaporeon.png:eat.<frame><directives>" }  },
 						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back.<frame><directives>" }  },
+						"absorb_pinned": { "properties": { "image": "vaporeon.png:absorb_pinned.<frame><directives>" }  },
 						"escape": { "properties": { "image": "vaporeon.png:escape.<frame><directives>" }  },
 
 
@@ -245,8 +261,16 @@
 						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick_fg.<frame><directives>" }  },
 						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin_fg.<frame><directives>" }  },
 
+						"idle_pinned_fallasleep": { "properties": { "image": "vaporeon.png:idle_pinned_fallasleep_fg.<frame><directives>" }  },
+						"idle_pinned_wakeup": { "properties": { "image": "vaporeon.png:idle_pinned_wakeup_fg.<frame><directives>" }  },
+						"idle_pinned_sleep": { "properties": { "image": "vaporeon.png:idle_pinned_sleep_fg.<frame><directives>" }  },
+
+						"idle_pinned_laydown": { "properties": { "image": "vaporeon.png:idle_pinned_laydown_fg.<frame><directives>" }  },
+						"idle_pinned_situp": { "properties": { "image": "vaporeon.png:idle_pinned_situp_fg.<frame><directives>" }  },
+
 						"eat": { "properties": { "image": "vaporeon.png:eat_fg.<frame><directives>" }  },
 						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  },
+						"absorb_pinned": { "properties": { "image": "vaporeon.png:absorb_pinned_fg.<frame><directives>" }  },
 						"escape": { "properties": { "image": "vaporeon.png:escape_fg.<frame><directives>" }  }
                     }
                 }
