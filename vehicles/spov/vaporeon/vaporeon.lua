@@ -266,19 +266,26 @@ function interact_state_stand( targetid )
 	-- return
 
 	if getOccupants() == 0 then
-		vsoMakeInteractive( false )
-		showEmote("emotehappy")
-		vsoAnim( "bodyState", "eat" )
-		vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
-		nextOccupants( 1 )
+		local position = world.entityPosition( targetid )
+		local relative = vsoRelativePoint( position[1], position[2] )
+		if relative[1] > 3 then -- target in front
+			vsoMakeInteractive( false )
+			showEmote("emotehappy")
+			vsoAnim( "bodyState", "eat" )
+			vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
+			nextOccupants( 1 )
 
-		vsoSetTarget( "food", targetid )
-		vsoUseLounge( true, "drivingSeat" )
-		vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
-		vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
-		vsoSound( "swallow" )
+			vsoSetTarget( "food", targetid )
+			vsoUseLounge( true, "drivingSeat" )
+			vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
+			vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
+			vsoSound( "swallow" )
+		else
+			showEmote("emotehappy")
+			vsoAnim( "bodyState", "pet" )
+		end
 	else
-		showEmote("emotehappy");
+		showEmote("emotehappy")
 		vsoAnim( "bodyState", "pet" )
 	end
 
