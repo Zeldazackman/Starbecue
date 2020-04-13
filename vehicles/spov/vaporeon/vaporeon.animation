@@ -1,5 +1,7 @@
 {
 	"globalTagDefaults" : {
+		"occupants" : "0",
+		"state" : "stand",
 		"frame" : "1",
 		"directives" : ""
 	},
@@ -8,111 +10,36 @@
 			"bodyState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"idle": { "frames": 2, "cycle": 3, "mode": "end" },
+					"blink": { "frames": 1, "cycle": 0.25, "mode": "end" },
+                    "pet": { "frames": 1, "cycle": 2, "mode": "end" },
+					"tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
 
-					"idle_blink": { "frames": 1, "cycle": 1, "mode": "end" },
-					//"idle_breathe": { "frames": 2, "cycle": 6, "mode": "end" },
-					"idle_tail_flick": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" },
+					"standup": { "frames": 2, "cycle": 0.5, "mode": "end" },
 
-                    "idle_sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"idle_standup": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "pin": { "frames": 2, "cycle": 0.5, "mode": "end" },
+				    "situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
 
-                    "idle_sit": { "frames": 1, "cycle": 1, "mode": "end" },
-                    "idle_sit_pet": { "frames": 1, "cycle": 2, "mode": "end" },
-					"idle_sit_blink": { "frames": 1, "cycle": 1, "mode": "end" },
-					"idle_sit_tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
-					//"idle_sit_breathe": { "frames": 2, "cycle": 6, "mode": "end" },
+                    "fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
+					"wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
 
-                    "idle_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-				    "idle_situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
 
-                    "idle_lay": { "frames": 1, "cycle": 1, "mode": "end" },
-                    "idle_lay_blink": { "frames": 1, "cycle": 0.5, "mode": "end" },
-                    "idle_lay_tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
-                    "idle_lay_pet": { "frames": 1, "cycle": 2, "mode": "end" },
+                    "grab": { "frames": 1, "cycle": 0.25, "mode": "end" },
 
-                    "idle_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"idle_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
-
-                    "idle_sleep": { "frames": 4, "cycle": 6, "mode": "end" },
-
-                    "idle_lay_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
-                    "idle_back_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
-
-                    "idle_back": { "frames": 4, "cycle": 6, "mode": "end" },
-                    "idle_back_grab": { "frames": 1, "cycle": 0.25, "mode": "end" },
-                    "idle_back_hug": { "frames": 1, "cycle": 1, "mode": "end" },
-
-					"idle_pin": { "frames": 4, "cycle": 1.5, "mode": "end" },
-					"idle_pinned": { "frames": 1, "cycle": 6, "mode": "end" },
-					"idle_pinned_lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
-					"idle_unpin": { "frames": 4, "cycle": 1.5, "mode": "end" },
+					"lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
 					
-					"idle_pinned_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"idle_pinned_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"idle_pinned_sleep": { "frames": 4, "cycle": 6, "mode": "end" },
-
-                    "idle_pinned_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-				    "idle_pinned_situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					
-
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
-                    "absorb_back": { "frames": 4, "cycle": 1.5, "mode": "end" },
-                    "absorb_pinned": { "frames": 3, "cycle": 1.5, "mode": "end" },
+                    "absorb": { "frames": 4, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
-
-
-                    "full": { "frames": 2, "cycle": 1, "mode": "end" },
-                    "full_blink": { "frames": 1, "cycle": 0.5, "mode": "end" },
-                    "full_tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
 
                     "struggle_left": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_right": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_up": { "frames": 5, "cycle": 1, "mode": "end" },
                     "struggle_down": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "full_look": { "frames": 1, "cycle": 2, "mode": "end" },
-
-                    "full_sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-                    "full_standup": { "frames": 2, "cycle": 0.5, "mode": "end" },
-
-                    "full_sit": { "frames": 2, "cycle": 1, "mode": "end" },
-                    "full_sit_blink": { "frames": 1, "cycle": 0.5, "mode": "end" },
-                    "full_sit_tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
-
-                    "struggle_sit_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sit_right": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sit_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sit_down": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "full_sit_look": { "frames": 1, "cycle": 2, "mode": "end" },
-
-                    "full_laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-                    "full_situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
-
-                    "full_lay": { "frames": 2, "cycle": 1, "mode": "end" },
-                    "full_lay_blink": { "frames": 1, "cycle": 0.5, "mode": "end" },
-                    "full_lay_tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
-
-                    "struggle_lay_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_lay_right": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_lay_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_lay_down": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "full_lay_look": { "frames": 1, "cycle": 2, "mode": "end" },
-
-                    "full_fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
-                    "full_sleep": { "frames": 4, "cycle": 6, "mode": "end" },
-                    "full_wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
-                    "struggle_sleep_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sleep_right": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sleep_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_sleep_down": { "frames": 5, "cycle": 1, "mode": "end" },
-
-                    "full_lay_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
-                    "full_back": { "frames": 4, "cycle": 6, "mode": "end" },
-                    "full_back_rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
-                    "struggle_back_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_back_right": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_back_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "struggle_back_down": { "frames": 5, "cycle": 1, "mode": "end" }
+                    "look": { "frames": 1, "cycle": 2, "mode": "end" }
                 }
             }
         },
@@ -125,109 +52,36 @@
                 },
                 "partStates": {
                     "bodyState": {
-                        "idle": { "properties": { "image": "vaporeon.png:idle.<frame><directives>" }  },
+                        "idle": { "properties": { "image": "vaporeon.png:<occupants>.<state>.<frame><directives>" } },
+                        "blink": { "properties": { "image": "vaporeon.png:<occupants>.<state>.blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "vaporeon.png:<occupants>.<state>.pet.<frame><directives>" } },
+                        "tail_flick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.tail_flick.<frame><directives>" } },
 
-                        "idle_blink": { "properties": { "image": "vaporeon.png:idle_blink.<frame><directives>" }  },
-                        //"idle_breathe": { "properties": { "image": "vaporeon.png:idle_breathe.<frame><directives>" }  },
-                        "idle_tail_flick": { "properties": { "image": "vaporeon.png:idle_tail_flick.<frame><directives>" }  },
+						"sitdown": { "properties": { "image": "vaporeon.png:<occupants>.<state>.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "vaporeon.png:<occupants>.<state>.standup.<frame><directives>" } },
 
-						"idle_sitdown": { "properties": { "image": "vaporeon.png:idle_sitdown.<frame><directives>" }  },
-						"idle_standup": { "properties": { "image": "vaporeon.png:idle_standup.<frame><directives>" }  },
+						"laydown": { "properties": { "image": "vaporeon.png:<occupants>.<state>.laydown.<frame><directives>" } },
+						"pin": { "properties": { "image": "vaporeon.png:<occupants>.<state>.pin.<frame><directives>" } },
+						"situp": { "properties": { "image": "vaporeon.png:<occupants>.<state>.situp.<frame><directives>" } },
 
-						"idle_sit": { "properties": { "image": "vaporeon.png:idle_sit.<frame><directives>" }  },
-						"idle_sit_pet": { "properties": { "image": "vaporeon.png:idle_sit_pet.<frame><directives>" }  },
-						"idle_sit_tail_flick": { "properties": { "image": "vaporeon.png:idle_sit_tail_flick.<frame><directives>" }  },
-						"idle_sit_blink": { "properties": { "image": "vaporeon.png:idle_sit_blink.<frame><directives>" }  },
+						"fallasleep": { "properties": { "image": "vaporeon.png:<occupants>.<state>.fallasleep.<frame><directives>" } },
+						"wakeup": { "properties": { "image": "vaporeon.png:<occupants>.<state>.wakeup.<frame><directives>" } },
 
-						"idle_laydown": { "properties": { "image": "vaporeon.png:idle_laydown.<frame><directives>" }  },
-						"idle_situp": { "properties": { "image": "vaporeon.png:idle_situp.<frame><directives>" }  },
+						"rollover": { "properties": { "image": "vaporeon.png:<occupants>.<state>.rollover.<frame><directives>" } },
 
-						"idle_lay": { "properties": { "image": "vaporeon.png:idle_lay.<frame><directives>" }  },
-						"idle_lay_pet": { "properties": { "image": "vaporeon.png:idle_lay_pet.<frame><directives>" }  },
-						"idle_lay_blink": { "properties": { "image": "vaporeon.png:idle_lay_blink.<frame><directives>" }  },
-						"idle_lay_tail_flick": { "properties": { "image": "vaporeon.png:idle_lay_tail_flick.<frame><directives>" }  },
+						"grab": { "properties": { "image": "vaporeon.png:<occupants>.<state>.grab.<frame><directives>" } },
 
-						"idle_fallasleep": { "properties": { "image": "vaporeon.png:idle_fallasleep.<frame><directives>" }  },
-						"idle_wakeup": { "properties": { "image": "vaporeon.png:idle_wakeup.<frame><directives>" }  },
+						"lick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.lick.<frame><directives>" } },
 
-						"idle_sleep": { "properties": { "image": "vaporeon.png:idle_sleep.<frame><directives>" }  },
+						"eat": { "properties": { "image": "vaporeon.png:<occupants>.<state>.eat.<frame><directives>" } },
+						"absorb": { "properties": { "image": "vaporeon.png:<occupants>.<state>.absorb.<frame><directives>" } },
+						"escape": { "properties": { "image": "vaporeon.png:<occupants>.<state>.escape.<frame><directives>" } },
 
-						"idle_lay_rollover": { "properties": { "image": "vaporeon.png:idle_lay_rollover.<frame><directives>" }  },
-						"idle_back_rollover": { "properties": { "image": "vaporeon.png:idle_back_rollover.<frame><directives>" }  },
-
-						"idle_back": { "properties": { "image": "vaporeon.png:idle_back.<frame><directives>" }  },
-						"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab.<frame><directives>" }  },
-						"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug.<frame><directives>" }  },
-
-						"idle_pin": { "properties": { "image": "vaporeon.png:idle_pin.<frame><directives>" }  },
-						"idle_pinned": { "properties": { "image": "vaporeon.png:idle_pinned.<frame><directives>" }  },
-						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick.<frame><directives>" }  },
-						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin.<frame><directives>" }  },
-
-						"idle_pinned_fallasleep": { "properties": { "image": "vaporeon.png:idle_pinned_fallasleep.<frame><directives>" }  },
-						"idle_pinned_wakeup": { "properties": { "image": "vaporeon.png:idle_pinned_wakeup.<frame><directives>" }  },
-						"idle_pinned_sleep": { "properties": { "image": "vaporeon.png:idle_pinned_sleep.<frame><directives>" }  },
-
-						"idle_pinned_laydown": { "properties": { "image": "vaporeon.png:idle_pinned_laydown.<frame><directives>" }  },
-						"idle_pinned_situp": { "properties": { "image": "vaporeon.png:idle_pinned_situp.<frame><directives>" }  },
-
-						"eat": { "properties": { "image": "vaporeon.png:eat.<frame><directives>" }  },
-						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back.<frame><directives>" }  },
-						"absorb_pinned": { "properties": { "image": "vaporeon.png:absorb_pinned.<frame><directives>" }  },
-						"escape": { "properties": { "image": "vaporeon.png:escape.<frame><directives>" }  },
-
-
-						"full": { "properties": { "image": "vaporeon.png:full.<frame><directives>" }  },
-						"full_blink": { "properties": { "image": "vaporeon.png:full_blink.<frame><directives>" }  },
-						"full_tail_flick": { "properties": { "image": "vaporeon.png:full_tail_flick.<frame><directives>" }  },
-
-						"struggle_left": { "properties": { "image": "vaporeon.png:struggle_left.<frame><directives>" }  },
-						"struggle_right": { "properties": { "image": "vaporeon.png:struggle_right.<frame><directives>" }  },
-						"struggle_up": { "properties": { "image": "vaporeon.png:struggle_up.<frame><directives>" }  },
-						"struggle_down": { "properties": { "image": "vaporeon.png:struggle_down.<frame><directives>" }  },
-						"full_look": { "properties": { "image": "vaporeon.png:full_look.<frame><directives>" }  },
-
-						"full_sitdown": { "properties": { "image": "vaporeon.png:full_sitdown.<frame><directives>" }  },
-						"full_standup": { "properties": { "image": "vaporeon.png:full_standup.<frame><directives>" }  },
-
-						"full_sit": { "properties": { "image": "vaporeon.png:full_sit.<frame><directives>" }  },
-						"full_sit_blink": { "properties": { "image": "vaporeon.png:full_sit_blink.<frame><directives>" }  },
-						"full_sit_tail_flick": { "properties": { "image": "vaporeon.png:full_sit_tail_flick.<frame><directives>" }  },
-
-						"struggle_sit_left": { "properties": { "image": "vaporeon.png:struggle_sit_left.<frame><directives>" }  },
-						"struggle_sit_right": { "properties": { "image": "vaporeon.png:struggle_sit_right.<frame><directives>" }  },
-						"struggle_sit_up": { "properties": { "image": "vaporeon.png:struggle_sit_up.<frame><directives>" }  },
-						"struggle_sit_down": { "properties": { "image": "vaporeon.png:struggle_sit_down.<frame><directives>" }  },
-						"full_sit_look": { "properties": { "image": "vaporeon.png:full_sit_look.<frame><directives>" }  },
-
-						"full_laydown": { "properties": { "image": "vaporeon.png:full_laydown.<frame><directives>" }  },
-						"full_situp": { "properties": { "image": "vaporeon.png:full_situp.<frame><directives>" }  },
-
-						"full_lay": { "properties": { "image": "vaporeon.png:full_lay.<frame><directives>" }  },
-						"full_lay_blink": { "properties": { "image": "vaporeon.png:full_lay_blink.<frame><directives>" }  },
-						"full_lay_tail_flick": { "properties": { "image": "vaporeon.png:full_lay_tail_flick.<frame><directives>" }  },
-
-						"struggle_lay_left": { "properties": { "image": "vaporeon.png:struggle_lay_left.<frame><directives>" }  },
-						"struggle_lay_right": { "properties": { "image": "vaporeon.png:struggle_lay_right.<frame><directives>" }  },
-						"struggle_lay_up": { "properties": { "image": "vaporeon.png:struggle_lay_up.<frame><directives>" }  },
-						"struggle_lay_down": { "properties": { "image": "vaporeon.png:struggle_lay_down.<frame><directives>" }  },
-						"full_lay_look": { "properties": { "image": "vaporeon.png:full_lay_look.<frame><directives>" }  },
-
-						"full_fallasleep": { "properties": { "image": "vaporeon.png:full_fallasleep.<frame><directives>" }  },
-						"full_sleep": { "properties": { "image": "vaporeon.png:full_sleep.<frame><directives>" }  },
-						"full_wakeup": { "properties": { "image": "vaporeon.png:full_wakeup.<frame><directives>" }  },
-						"struggle_sleep_left": { "properties": { "image": "vaporeon.png:struggle_sleep_left.<frame><directives>" }  },
-						"struggle_sleep_right": { "properties": { "image": "vaporeon.png:struggle_sleep_right.<frame><directives>" }  },
-						"struggle_sleep_up": { "properties": { "image": "vaporeon.png:struggle_sleep_up.<frame><directives>" }  },
-						"struggle_sleep_down": { "properties": { "image": "vaporeon.png:struggle_sleep_down.<frame><directives>" }  },
-
-						"full_lay_rollover": { "properties": { "image": "vaporeon.png:full_lay_rollover.<frame><directives>" }  },
-						"full_back": { "properties": { "image": "vaporeon.png:full_back.<frame><directives>" }  },
-						"full_back_rollover": { "properties": { "image": "vaporeon.png:full_back_rollover.<frame><directives>" }  },
-						"struggle_back_left": { "properties": { "image": "vaporeon.png:struggle_back_left.<frame><directives>" }  },
-						"struggle_back_right": { "properties": { "image": "vaporeon.png:struggle_back_right.<frame><directives>" }  },
-						"struggle_back_up": { "properties": { "image": "vaporeon.png:struggle_back_up.<frame><directives>" }  },
-						"struggle_back_down": { "properties": { "image": "vaporeon.png:struggle_back_down.<frame><directives>" }  }
+						"struggle_left": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_left.<frame><directives>" } },
+						"struggle_right": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_right.<frame><directives>" } },
+						"struggle_up": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_up.<frame><directives>" } },
+						"struggle_down": { "properties": { "image": "vaporeon.png:<occupants>.<state>.struggle_down.<frame><directives>" } },
+						"look": { "properties": { "image": "vaporeon.png:<occupants>.<state>.look.<frame><directives>" } }
                     }
                 }
             },
@@ -252,26 +106,22 @@
                 },
                 "partStates": {
                     "bodyState": {
-                        "idle_back": { "properties": { "image": "vaporeon.png:idle_back_fg.<frame><directives>" }  },
-						"idle_back_grab": { "properties": { "image": "vaporeon.png:idle_back_grab_fg.<frame><directives>" }  },
-						"idle_back_hug": { "properties": { "image": "vaporeon.png:idle_back_hug_fg.<frame><directives>" }  },
+						"idle": { "properties": { "image": "vaporeon.png:<occupants>.<state>.f<frame><directives>" } },
+						
+						"grab": { "properties": { "image": "vaporeon.png:<occupants>.<state>.grab.f<frame><directives>" } },
 
-						"idle_pin": { "properties": { "image": "vaporeon.png:idle_pin_fg.<frame><directives>" }  },
-						"idle_pinned": { "properties": { "image": "vaporeon.png:idle_pinned_fg.<frame><directives>" }  },
-						"idle_pinned_lick": { "properties": { "image": "vaporeon.png:idle_pinned_lick_fg.<frame><directives>" }  },
-						"idle_unpin": { "properties": { "image": "vaporeon.png:idle_unpin_fg.<frame><directives>" }  },
+						"lick": { "properties": { "image": "vaporeon.png:<occupants>.<state>.lick.f<frame><directives>" } },
 
-						"idle_pinned_fallasleep": { "properties": { "image": "vaporeon.png:idle_pinned_fallasleep_fg.<frame><directives>" }  },
-						"idle_pinned_wakeup": { "properties": { "image": "vaporeon.png:idle_pinned_wakeup_fg.<frame><directives>" }  },
-						"idle_pinned_sleep": { "properties": { "image": "vaporeon.png:idle_pinned_sleep_fg.<frame><directives>" }  },
+						"fallasleep": { "properties": { "image": "vaporeon.png:<occupants>.<state>.fallasleep.f<frame><directives>" } },
+						"wakeup": { "properties": { "image": "vaporeon.png:<occupants>.<state>.wakeup.f<frame><directives>" } },
 
-						"idle_pinned_laydown": { "properties": { "image": "vaporeon.png:idle_pinned_laydown_fg.<frame><directives>" }  },
-						"idle_pinned_situp": { "properties": { "image": "vaporeon.png:idle_pinned_situp_fg.<frame><directives>" }  },
+						"laydown": { "properties": { "image": "vaporeon.png:<occupants>.<state>.laydown.f<frame><directives>" } },
+						"pin": { "properties": { "image": "vaporeon.png:<occupants>.<state>.pin.f<frame><directives>" } },
+						"situp": { "properties": { "image": "vaporeon.png:<occupants>.<state>.situp.f<frame><directives>" } },
 
-						"eat": { "properties": { "image": "vaporeon.png:eat_fg.<frame><directives>" }  },
-						"absorb_back": { "properties": { "image": "vaporeon.png:absorb_back_fg.<frame><directives>" }  },
-						"absorb_pinned": { "properties": { "image": "vaporeon.png:absorb_pinned_fg.<frame><directives>" }  },
-						"escape": { "properties": { "image": "vaporeon.png:escape_fg.<frame><directives>" }  }
+						"eat": { "properties": { "image": "vaporeon.png:<occupants>.<state>.eat.f<frame><directives>" } },
+						"absorb": { "properties": { "image": "vaporeon.png:<occupants>.<state>.absorb.f<frame><directives>" } },
+						"escape": { "properties": { "image": "vaporeon.png:<occupants>.<state>.escape.f<frame><directives>" } }
                     }
                 }
             }

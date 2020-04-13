@@ -215,7 +215,7 @@
 				"seat":"drivingSeat"
 				,"loop":false
 				,"interpMode":1
-				,"frames": [ 0, 1 ]
+				,"frames": [ 2, 3 ]
 				,"visible": [1]
 				,"transformGroup":"victimposition"
 				,"xs": [ -1 ]
