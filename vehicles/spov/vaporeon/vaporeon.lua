@@ -171,13 +171,13 @@ function bellyEffects()
 end
 
 function stateQueued()
-	return _struggling or _qstate ~= nil
+	return _struggling or _qstate ~= nil or _qoccupants ~= nil
 end
 
 function handleStruggles(success_chances)
 	local movetype, movedir = vso4DirectionInput( "firstOccupant" )
 	if movetype == 0 then
-		local movetype, movedir = vso4DirectionInput( "secondOccupant" )
+		movetype, movedir = vso4DirectionInput( "secondOccupant" )
 		if movetype == 0 then return false end
 	end
 
