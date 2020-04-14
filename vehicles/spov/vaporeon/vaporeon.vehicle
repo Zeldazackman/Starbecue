@@ -20,7 +20,7 @@
 			"statusEffects" : [ ]
 		},
 		"secondOccupant" : {
-			"part" : "victim",
+			"part" : "victim2",
 			"partAnchor" : "secondOccupantPosition",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
@@ -275,7 +275,7 @@
 				"seat":"secondOccupant"
 				,"loop":false
 				,"interpMode":1
-				,"transformGroup":"victimposition"
+				,"transformGroup":"victimposition2"
 				,"frames":[ 0,1,2,3,4,5,6,7]
 				,"visible": [ 1,1,1,1,1,1,1,0 ]
 				,"xs": [ -1 ]
@@ -318,7 +318,7 @@
 				"seat":"secondOccupant"
 				,"loop":false
 				,"interpMode":1
-				,"transformGroup":"victimposition"
+				,"transformGroup":"victimposition2"
 				,"frames":[ 0,1,2,3,4,5,6]
 				,"visible": [ 0,1,1,1,1,1,1 ]
 				,"xs": [ -1 ]

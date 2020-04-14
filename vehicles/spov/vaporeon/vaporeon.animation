@@ -98,6 +98,19 @@
                     }
                 }
             },
+            "victim2": {
+                "properties": {
+                    "centered": true,
+                     "zLevel": 0,
+                     "transformationGroups": ["flip", "victimposition2"],
+                     "secondOccupantPosition": [0.0, 0.0]
+                },
+                "partStates": {
+                    "bodyState": {
+                    }
+                }
+			},
+			
             "foreground": {
                 "properties": {
                     "centered": true,
