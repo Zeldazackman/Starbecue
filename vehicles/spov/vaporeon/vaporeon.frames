@@ -201,6 +201,6 @@
 		"0.sit.pin.1" : "0.pinned.situp.2",
 		"0.sit.pin.2" : "0.pinned.situp.1",
 		"0.sit.pin.f1" : "0.pinned.situp.f2",
-		"0.sit.pin.f2" : "0.pinned.situp.f1",
+		"0.sit.pin.f2" : "0.pinned.situp.f1"
 	}
 }
