@@ -91,7 +91,7 @@
                     "centered": true,
                      "zLevel": 0,
                      "transformationGroups": ["flip", "victimposition"],
-                     "drivingSeatPosition": [0.0, 0.0]
+                     "firstOccupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
                     "bodyState": {

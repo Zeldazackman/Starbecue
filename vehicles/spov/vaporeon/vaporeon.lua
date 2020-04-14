@@ -96,10 +96,15 @@ function updateState()
 		_qstate = nil
 	end
 	if _qoccupants ~= nil then
-		if _qoccupants < _occupants then -- TODO: I don't like how this is handled, maybe replace it with a _qfunc or something
-			vsoUneat( "drivingSeat" )
+		if _qoccupants < 1 then -- TODO: I don't like how this is handled, maybe replace it with a _qfunc or something
+			vsoUneat( "firstOccupant" )
 			vsoSetTarget( "food", nil )
-			vsoUseLounge( false, "drivingSeat" )
+			vsoUseLounge( false, "firstOccupant" )
+		end
+		if _qoccupants < 2 then -- TODO: I don't like how this is handled, maybe replace it with a _qfunc or something
+			vsoUneat( "secondOccupant" )
+			vsoSetTarget( "dessert", nil )
+			vsoUseLounge( false, "secondOccupant" )
 		end
 		setOccupants(_qoccupants)
 		_qoccupants = nil
@@ -122,25 +127,43 @@ function bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
-	vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatebelly" } )
+	vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly" } )
 	local effect = 0
 	if vsoPill( "digest" ) or vsoPill( "softdigest" ) then
 		effect = -1
 	elseif vsoPill( "heal" ) then
 		effect = 1
 	end
-	if effect ~= 0 then
-		effect = effect * vsoDelta()
-		local health = world.entityHealth( vsoGetTargetId("food") )
-		if vsoPill("softdigest") and health[1]/health[2] <= -effect then
-			effect = (1 - health[1]) / health[2]
+	if getOccupants() > 1 then
+		if effect ~= 0 then
+			local health_change = effect * vsoDelta()
+			local health = world.entityHealth( vsoGetTargetId("dessert") )
+			if vsoPill("softdigest") and health[1]/health[2] <= -health_change then
+				health_change = (1 - health[1]) / health[2]
+			end
+			vsoResourceAddPercent( vsoGetTargetId("dessert"), "health", health_change, function(still_alive)
+				if not still_alive then
+					vsoUneat( "secondOccupant" )
+	
+					vsoSetTarget( "dessert", nil )
+					vsoUseLounge( false, "secondOccupant" )
+					setOccupants(1)
+				end
+			end)
 		end
-		vsoResourceAddPercent( vsoGetTargetId("food"), "health", effect, function(still_alive)
+	end
+	if effect ~= 0 then
+		local health_change = effect * vsoDelta()
+		local health = world.entityHealth( vsoGetTargetId("food") )
+		if vsoPill("softdigest") and health[1]/health[2] <= -health_change then
+			health_change = (1 - health[1]) / health[2]
+		end
+		vsoResourceAddPercent( vsoGetTargetId("food"), "health", health_change, function(still_alive)
 			if not still_alive then
-				vsoUneat( "drivingSeat" )
+				vsoUneat( "firstOccupant" )
 
 				vsoSetTarget( "food", nil )
-				vsoUseLounge( false, "drivingSeat" )
+				vsoUseLounge( false, "firstOccupant" )
 				setOccupants(0)
 			end
 		end)
@@ -152,8 +175,11 @@ function stateQueued()
 end
 
 function handleStruggles(success_chances)
-	local movetype, movedir = vso4DirectionInput( "drivingSeat" )
-	if movetype == 0 then return false end
+	local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+	if movetype == 0 then
+		local movetype, movedir = vso4DirectionInput( "secondOccupant" )
+		if movetype == 0 then return false end
+	end
 
 	local chance = escapePillChoice(success_chances)
 	if chance ~= nil
@@ -184,8 +210,10 @@ end
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
 	vsoAnimSpeed( 1.0 );
-	vsoVictimAnimVisible( "drivingSeat", false )
-	vsoUseLounge( false, "drivingSeat" )
+	vsoVictimAnimVisible( "firstOccupant", false )
+	vsoUseLounge( false, "firstOccupant" )
+	vsoVictimAnimVisible( "secondOccupant", false )
+	vsoUseLounge( false, "secondOccupant" )
 	vsoUseSolid( false )
 
 	setOccupants(0)
@@ -248,12 +276,21 @@ function state_stand()
 		bellyEffects()
 		if not stateQueued() then
 			if handleStruggles{ {2, 5}, {5, 15}, {10, 20} } then
-				vsoMakeInteractive( false )
-				vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
-				vsoApplyStatus( "food", "droolsoaked", 5.0 );
-				vsoAnim( "bodyState", "escape" )
-				vsoVictimAnimReplay( "drivingSeat", "escape", "bodyState")
-				nextOccupants( 0 )
+				if getOccupants() == 1 then
+					vsoMakeInteractive( false )
+					vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatemaw" } );
+					vsoApplyStatus( "food", "droolsoaked", 5.0 );
+					vsoAnim( "bodyState", "escape" )
+					vsoVictimAnimReplay( "firstOccupant", "escape", "bodyState")
+					nextOccupants( 0 )
+				elseif getOccupants() == 2 then
+					vsoMakeInteractive( false )
+					vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatemaw" } );
+					vsoApplyStatus( "dessert", "droolsoaked", 5.0 );
+					vsoAnim( "bodyState", "escape" )
+					vsoVictimAnimReplay( "secondOccupant", "escape2", "bodyState")
+					nextOccupants( 1 )
+				end
 			end
 		end
 	end
@@ -273,13 +310,37 @@ function interact_state_stand( targetid )
 				vsoMakeInteractive( false )
 				showEmote("emotehappy")
 				vsoAnim( "bodyState", "eat" )
-				vsoVictimAnimReplay( "drivingSeat", "playereat", "bodyState")
+				vsoVictimAnimReplay( "firstOccupant", "playereat", "bodyState")
 				nextOccupants( 1 )
 
 				vsoSetTarget( "food", targetid )
-				vsoUseLounge( true, "drivingSeat" )
-				vsoEat( vsoGetTargetId( "food" ), "drivingSeat" )
-				vsoVictimAnimSetStatus( "drivingSeat", { "vsoindicatemaw" } );
+				vsoUseLounge( true, "firstOccupant" )
+				vsoEat( vsoGetTargetId( "food" ), "firstOccupant" )
+				vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatemaw" } );
+				vsoSound( "swallow" )
+			else
+				if vsoChance(20) then
+					vsoAnim( "bodyState", "sitdown" )
+					nextState( "sit" )
+				else
+					showEmote("emotehappy")
+					vsoAnim( "bodyState", "pet" )
+				end
+			end
+		elseif getOccupants() == 1 then
+			local position = world.entityPosition( targetid )
+			local relative = vsoRelativePoint( position[1], position[2] )
+			if relative[1] > 2 then -- target in front
+				vsoMakeInteractive( false )
+				showEmote("emotehappy")
+				vsoAnim( "bodyState", "eat" )
+				vsoVictimAnimReplay( "secondOccupant", "playereat2", "bodyState")
+				nextOccupants( 2 )
+
+				vsoSetTarget( "dessert", targetid )
+				vsoUseLounge( true, "secondOccupant" )
+				vsoEat( vsoGetTargetId( "dessert" ), "secondOccupant" )
+				vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatemaw" } );
 				vsoSound( "swallow" )
 			else
 				if vsoChance(20) then
@@ -312,9 +373,9 @@ function state_sit()
 
 	if vsoAnimEnd( "bodyState" ) and updateState() then
 		if previousState() == "pinned" then
-			vsoUneat( "drivingSeat" )
+			vsoUneat( "firstOccupant" )
 			vsoSetTarget( "food", nil )
-			vsoUseLounge( false, "drivingSeat" )
+			vsoUseLounge( false, "firstOccupant" )
 		end
 
 		local percent = vsoRand(100)
@@ -327,12 +388,12 @@ function state_sit()
 				pinnable = world.playerQuery( pin_bounds[1], pin_bounds[2] )
 			end
 			if #pinnable == 1 then
-				vsoUseLounge( true, "drivingSeat" )
+				vsoUseLounge( true, "firstOccupant" )
 				vsoSetTarget( "food", pinnable[1] )
-				vsoEat( pinnable[1], "drivingSeat" )
-				vsoVictimAnimSetStatus( "drivingSeat", {} )
+				vsoEat( pinnable[1], "firstOccupant" )
+				vsoVictimAnimSetStatus( "firstOccupant", {} )
 				vsoAnim( "bodyState", "pin" )
-				vsoVictimAnimReplay( "drivingSeat", "sitpinned", "bodyState")
+				vsoVictimAnimReplay( "firstOccupant", "sitpinned", "bodyState")
 				nextState( "pinned" )
 			else
 				vsoAnim( "bodyState", "laydown" )
@@ -342,7 +403,6 @@ function state_sit()
 			vsoAnim( "bodyState", "tail_flick" )
 		elseif percent < 5+7+15+15 then
 			vsoAnim( "bodyState", "blink" )
-
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -366,12 +426,12 @@ function interact_state_sit( targetid )
 			local position = world.entityPosition( targetid )
 			local relative = vsoRelativePoint( position[1], position[2] )
 			if relative[1] > 2 then -- target in front
-				vsoUseLounge( true, "drivingSeat" )
+				vsoUseLounge( true, "firstOccupant" )
 				vsoSetTarget( "food", tartetid )
-				vsoEat( targetid, "drivingSeat" )
-				vsoVictimAnimSetStatus( "drivingSeat", {} )
+				vsoEat( targetid, "firstOccupant" )
+				vsoVictimAnimSetStatus( "firstOccupant", {} )
 				vsoAnim( "bodyState", "pin" )
-				vsoVictimAnimReplay( "drivingSeat", "sitpinned", "bodyState")
+				vsoVictimAnimReplay( "firstOccupant", "sitpinned", "bodyState")
 				nextState( "pinned" )
 			else
 				vsoAnim( "bodyState", "standup" )
@@ -399,13 +459,13 @@ function state_lay()
 		elseif percent < 5+5 then
 			vsoAnim( "bodyState", "fallasleep" )
 			nextState( "sleep" )
-		elseif percent < 5+5+10 then
-			vsoAnim( "bodyState", "rollover" )
-			nextState( "back" )
 		elseif percent < 5+5+10+15 then
 			vsoAnim( "bodyState", "tail_flick" )
 		elseif percent < 5+5+10+15+15 then
 			vsoAnim( "bodyState", "blink" )
+		elseif percent < 5+5+10 and getOccupants() < 2 then
+			vsoAnim( "bodyState", "rollover" )
+			nextState( "back" )
 		else
 			vsoAnim( "bodyState", "idle" )
 		end
@@ -429,7 +489,7 @@ function interact_state_lay( targetid )
 		if percent < 10 then
 			vsoAnim( "bodyState", "situp" )
 			nextState( "sit" )
-		elseif percent < 10+10 then
+		elseif percent < 10+10 and getOccupants() < 2 then
 			vsoAnim( "bodyState", "rollover" )
 			nextState( "back" )
 		else
@@ -526,10 +586,10 @@ function interact_state_back( targetid )
 				nextState( "bed" )
 				updateState()
 				vsoAnim( "bodyState", "idle" )
-				vsoUseLounge( true, "drivingSeat" )
-				vsoEat( targetid, "drivingSeat" )
-				vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
-				vsoVictimAnimSetStatus( "drivingSeat", {} );
+				vsoUseLounge( true, "firstOccupant" )
+				vsoEat( targetid, "firstOccupant" )
+				vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
+				vsoVictimAnimSetStatus( "firstOccupant", {} );
 			end
 		else
 			showEmote("emotehappy");
@@ -548,11 +608,11 @@ function state_bed() -- only accessible with no occupants
 		local hugChance = escapePillChoice{5, 5, 20}
 		if percent < hugChance then
 			vsoAnim( "bodyState", "grab" )
-			vsoVictimAnimReplay( "drivingSeat", "bellyhug", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "bellyhug", "bodyState")
 			nextState( "hug" )
 		elseif percent < hugChance+hugChance then
 			vsoAnim( "bodyState", "rollover" )
-			vsoVictimAnimReplay( "drivingSeat", "pinned", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "pinned", "bodyState")
 			nextState( "pinned" )
 		elseif percent < hugChance+hugChance+15 then
 			vsoAnim( "bodyState", "tail_flick" )
@@ -563,12 +623,12 @@ function state_bed() -- only accessible with no occupants
 		end
 	end
 
-	if vsoHasAnySPOInputs( "drivingSeat" ) then
+	if vsoHasAnySPOInputs( "firstOccupant" ) then
 		nextState( "back" )
 		updateState()
 		vsoAnim( "bodyState", "idle" )
-		vsoUneat( "drivingSeat" )
-		vsoUseLounge( false, "drivingSeat" )
+		vsoUneat( "firstOccupant" )
+		vsoUseLounge( false, "firstOccupant" )
 	end
 end
 
@@ -599,12 +659,12 @@ function state_hug()
 		local absorbChance = escapePillChoice{1, 5, 10}
 		if percent < unhugChance then
 			vsoAnim( "bodyState", "grab" )
-			vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
 			nextState( "bed" )
 		elseif percent < unhugChance+absorbChance then
 			vsoSound( "slurp" )
 			vsoAnim( "bodyState", "absorb" )
-			vsoVictimAnimReplay( "drivingSeat", "absorbback", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "absorbback", "bodyState")
 			nextOccupants( 1 )
 			nextState( "back" )
 		elseif percent < unhugChance+absorbChance+15 then
@@ -614,9 +674,9 @@ function state_hug()
 		end
 	end
 
-	if vsoHasAnySPOInputs( "drivingSeat" ) and vsoPill( "easyescape" ) then
+	if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 		vsoAnim( "bodyState", "grab" )
-		vsoVictimAnimReplay( "drivingSeat", "bellybed", "bodyState")
+		vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
 		nextState( "bed" )
 	end
 end
@@ -648,12 +708,12 @@ function state_pinned()
 		local absorbChance = escapePillChoice{1, 3, 5}
 		if percent < unpinChance then
 			vsoAnim( "bodyState", "rollover" )
-			vsoVictimAnimReplay( "drivingSeat", "unpin", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "unpin", "bodyState")
 			nextState( "bed" )
 		elseif percent < unpinChance+absorbChance then
 			vsoSound( "slurp" )
 			vsoAnim( "bodyState", "absorb" )
-			vsoVictimAnimReplay( "drivingSeat", "absorbpinned", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "absorbpinned", "bodyState")
 			nextOccupants( 1 )
 			nextState( "lay" )
 		elseif percent < unpinChance+absorbChance+3 then
@@ -663,7 +723,7 @@ function state_pinned()
 			vsoAnim( "bodyState", "lick")
 		elseif percent < unpinChance+absorbChance+3+40+3 then
 			vsoAnim( "bodyState", "situp" )
-			vsoVictimAnimReplay( "drivingSeat", "situnpin", "bodyState")
+			vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
 			nextState( "sit" )
 		elseif percent < unpinChance+absorbChance+3+40+3+15 then
 			vsoAnim( "bodyState", "tail_flick" )
@@ -674,9 +734,9 @@ function state_pinned()
 		end
 	end
 
-	if vsoHasAnySPOInputs( "drivingSeat" ) and vsoPill( "easyescape" ) then
+	if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 		vsoAnim( "bodyState", "situp" )
-		vsoVictimAnimReplay( "drivingSeat", "situnpin", "bodyState")
+		vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
 		nextState( "sit" )
 	end
 end
@@ -706,7 +766,7 @@ function state_pinned_sleep()
 		end
 	end
 
-	if vsoHasAnySPOInputs( "drivingSeat" ) and vsoPill( "easyescape" ) then
+	if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 		vsoAnim( "bodyState", "wakeup" )
 		nextState( "pinned" )
 	end

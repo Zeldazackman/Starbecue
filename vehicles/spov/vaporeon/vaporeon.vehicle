@@ -13,9 +13,15 @@
 	"animation" : "vaporeon.animation",
 
 	"loungePositions" : {
-		"drivingSeat" : {
+		"firstOccupant" : {
 			"part" : "victim",
-			"partAnchor" : "drivingSeatPosition",
+			"partAnchor" : "firstOccupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"secondOccupant" : {
+			"part" : "victim",
+			"partAnchor" : "secondOccupantPosition",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		}
@@ -57,7 +63,7 @@
 		,"victimAnimations":{
 			"invis":{
 				"seconds":[ 0.0 ]
-				,"seat":"drivingSeat"
+				,"seat":"firstOccupant"
 				,"loop":true
 				,"visible": [0]
 				,"transformGroup":"victimposition"
@@ -66,7 +72,7 @@
 				,"r": [ 0.0 ]
 			}
 			, "playereat":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"transformGroup":"victimposition"
@@ -110,7 +116,7 @@
 			}
 			,"bellybed":{
 				"seconds":[ 0.0 ]
-				,"seat":"drivingSeat"
+				,"seat":"firstOccupant"
 				,"loop":true
 				,"visible": [1]
 				,"transformGroup":"victimposition"
@@ -124,7 +130,7 @@
 			}
 			,"bellyhug":{
 				"seconds":[ 0.0 ]
-				,"seat":"drivingSeat"
+				,"seat":"firstOccupant"
 				,"loop":true
 				,"visible": [1]
 				,"transformGroup":"victimposition"
@@ -137,7 +143,7 @@
 				,"dance": [ ]
 			}
 			,"absorbback":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames":[ 0,1,2 ]
@@ -152,7 +158,7 @@
 				,"dance": [ ]
 			}
 			,"pinned":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames": [ 0, 2, 4 ]
@@ -167,7 +173,7 @@
 				,"dance": [ ]
 			}
 			,"unpin":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames": [ 0, 2, 4 ]
@@ -182,7 +188,7 @@
 				,"dance": [ ]
 			}
 			,"absorbpinned":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames":[ 0,1,2 ]
@@ -197,7 +203,7 @@
 				,"dance": [ ]
 			}
 			,"sitpinned":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames": [ 0, 1 ]
@@ -212,7 +218,7 @@
 				,"dance": [ ]
 			}
 			,"situnpin":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"frames": [ 1, 2 ]
@@ -227,7 +233,89 @@
 				,"dance": [ ]
 			}
 			, "escape":{
-				"seat":"drivingSeat"
+				"seat":"firstOccupant"
+				,"loop":false
+				,"interpMode":1
+				,"transformGroup":"victimposition"
+				,"frames":[ 0,1,2,3,4,5,6]
+				,"visible": [ 0,1,1,1,1,1,1 ]
+				,"xs": [ -1 ]
+				,"x": [
+					1.25
+					,1.25
+					,1.25
+					,2.75
+					,3.5
+					,3.5
+					,3.5
+				]
+				,"y": [ 
+					-1.25
+					,-1.25
+					,-1.0
+					,-0.75
+					,-0.75
+					,-1.5
+					,-1.875
+				]
+				,"r": [ 
+					125
+					,135
+					,130
+					,135
+					,100
+					,40
+					,0
+				]
+				,"sitpos": [ "stand" ]
+				,"emote": [ "oooh" ]
+				,"dance": [ "victimrun" ]
+			}
+			, "playereat2":{
+				"seat":"secondOccupant"
+				,"loop":false
+				,"interpMode":1
+				,"transformGroup":"victimposition"
+				,"frames":[ 0,1,2,3,4,5,6,7]
+				,"visible": [ 1,1,1,1,1,1,1,0 ]
+				,"xs": [ -1 ]
+				,"x": [
+					3
+					,3
+					,3
+					,3.75
+					,3.75
+					,3.5
+					,2.25
+					,1.25
+				]
+				,"y": [ 
+					-1.875
+					,-1.875
+					,-1.875
+					,-1.875
+					,-1.24
+					,0.75
+					,-0.375
+					,-1.25
+				]
+				,"r": [ 
+					0
+					,0
+					,0
+					,10
+					,60
+					,135
+					,130
+					,135
+					,125
+				]
+				,"sitpos": [ "stand" ]
+				,"emote": [ "oooh" ]
+				,"dance": [ "victimrun" ]
+			}
+			, "escape2":{
+				"seat":"secondOccupant"
 				,"loop":false
 				,"interpMode":1
 				,"transformGroup":"victimposition"
