@@ -78,6 +78,11 @@ function nextState(state, manual)
 	vsoNext( "state_"..state )
 end
 
+local _qaction
+function nextAction(func)
+	_qaction = func
+end
+
 local _state
 local _pstate
 local _struggling
@@ -96,18 +101,12 @@ function updateState()
 		_qstate = nil
 	end
 	if _qoccupants ~= nil then
-		if _qoccupants < 1 then -- TODO: I don't like how this is handled, maybe replace it with a _qfunc or something
-			vsoUneat( "firstOccupant" )
-			vsoSetTarget( "food", nil )
-			vsoUseLounge( false, "firstOccupant" )
-		end
-		if _qoccupants < 2 then -- TODO: I don't like how this is handled, maybe replace it with a _qfunc or something
-			vsoUneat( "secondOccupant" )
-			vsoSetTarget( "dessert", nil )
-			vsoUseLounge( false, "secondOccupant" )
-		end
 		setOccupants(_qoccupants)
 		_qoccupants = nil
+	end
+	if _qaction ~= nil then
+		_qaction()
+		_qaction = nil
 	end
 	return true
 end
@@ -133,7 +132,7 @@ function controlState()
 end
 
 function updateControlMode()
-	if getOccupants() > 1 then
+	if vsoGetTargetId( "food" ) ~= nil then
 		local inputs = vsoGetInput( "firstOccupant" )
 		if inputs.fastA == 1 then
 			_controlmode = 1
@@ -318,6 +317,11 @@ function state_stand()
 						vsoAnim( "bodyState", "escape" )
 						vsoVictimAnimReplay( "firstOccupant", "escape", "bodyState")
 						nextOccupants( 0 )
+						nextAction(function()
+							vsoUneat( "firstOccupant" )
+							vsoSetTarget( "food", nil )
+							vsoUseLounge( false, "firstOccupant" )
+						end)
 					else
 						if who == 1 then
 							local food = vsoGetTargetId("food")
@@ -335,6 +339,11 @@ function state_stand()
 						vsoAnim( "bodyState", "escape" )
 						vsoVictimAnimReplay( "secondOccupant", "escape2", "bodyState")
 						nextOccupants( 1 )
+						nextAction(function()
+							vsoUneat( "secondOccupant" )
+							vsoSetTarget( "dessert", nil )
+							vsoUseLounge( false, "secondOccupant" )
+						end)
 					end
 				end
 			else -- inspector
@@ -426,11 +435,6 @@ function state_sit()
 	vsoDebugRect( pin_bounds[1][1], pin_bounds[1][2], pin_bounds[2][1], pin_bounds[2][2] )
 
 	if vsoAnimEnd( "bodyState" ) and updateState() then
-		if previousState() == "pinned" then
-			vsoUneat( "firstOccupant" )
-			vsoSetTarget( "food", nil )
-			vsoUseLounge( false, "firstOccupant" )
-		end
 
 		local idle = false
 		if controlState() then
@@ -945,6 +949,11 @@ function state_pinned()
 				vsoAnim( "bodyState", "situp" )
 				vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
 				nextState( "sit" )
+				nextAction(function()
+					vsoUneat( "firstOccupant" )
+					vsoSetTarget( "food", nil )
+					vsoUseLounge( false, "firstOccupant" )
+				end)
 			else
 				idle = true
 			end
@@ -977,6 +986,11 @@ function state_pinned()
 				vsoAnim( "bodyState", "situp" )
 				vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
 				nextState( "sit" )
+				nextAction(function()
+					vsoUneat( "firstOccupant" )
+					vsoSetTarget( "food", nil )
+					vsoUseLounge( false, "firstOccupant" )
+				end)
 			end
 			if movedir == "D" then
 				vsoAnim( "bodyState", "fallasleep")

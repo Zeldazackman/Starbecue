@@ -7,7 +7,7 @@ defaultDescription = "fishcat fishcat fishcat"
 
 defaultIcon = "/vehicles/spov/vaporeon/vaporeonicon.png"
 
-defaultFrame = "/vehicles/spov/vaporeon/vaporeon.png:idle.1"
+defaultFrame = "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
 
 defaultValues = {
 	name = "fishcat"
