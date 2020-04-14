@@ -436,8 +436,11 @@ function interact_state_sit( targetid )
 	if not stateQueued() then
 
 		if vsoChance(20) then
-			local position = world.entityPosition( targetid )
-			local relative = vsoRelativePoint( position[1], position[2] )
+			local relative = {0}
+			if getOccupants() == 0 then
+				local position = world.entityPosition( targetid )
+				relative = vsoRelativePoint( position[1], position[2] )
+			end
 			if relative[1] > 2 then -- target in front
 				vsoUseLounge( true, "firstOccupant" )
 				vsoSetTarget( "food", tartetid )
