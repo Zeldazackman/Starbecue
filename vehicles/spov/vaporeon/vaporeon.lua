@@ -15,16 +15,16 @@ vaporeon plan:
 		0   :   sleep - pin - bed - hug
 		·   :            V         L
 		1  idle - sit - lay - back
-		|                |
-		1              sleep
+		|   :            |
+		1   :          sleep
+		·   :
+		2  idle - sit - lay - sleep
 
 	(struggling not included in chart, everything in full has it)
 
 	todo:
-	- multiple prey?
-	  - 2 max
-	  - 2 bulges? struggle independently?
-	    - split the sprite up into multiple components
+	- pills to control the chance of entering/leaving a desired state (and states leading toward it)
+
 
 	eventually if I can figure out how:
 	- walk around
@@ -176,8 +176,10 @@ end
 
 function handleStruggles(success_chances)
 	local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+	local struggler = 1
 	if movetype == 0 then
 		movetype, movedir = vso4DirectionInput( "secondOccupant" )
+		struggler = 2
 		if movetype == 0 then return false end
 	end
 
@@ -186,7 +188,7 @@ function handleStruggles(success_chances)
 	and vsoCounterValue( "struggleCount" ) >= chance[1]
 	and vsoCounterChance( "struggleCount", chance[1], chance[2] ) then
 		vsoCounterReset( "struggleCount" )
-		return true
+		return true, struggler, movedir
 	end
 
 	local anim = nil
@@ -275,7 +277,8 @@ function state_stand()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if handleStruggles{ {2, 5}, {5, 15}, {10, 20} } then
+			local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
+			if escape then
 				if getOccupants() == 1 then
 					vsoMakeInteractive( false )
 					vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatemaw" } );
@@ -283,7 +286,17 @@ function state_stand()
 					vsoAnim( "bodyState", "escape" )
 					vsoVictimAnimReplay( "firstOccupant", "escape", "bodyState")
 					nextOccupants( 0 )
-				elseif getOccupants() == 2 then
+				else
+					if who == 1 then
+						local food = vsoGetTargetId("food")
+						vsoSetTarget( "food", vsoGetTargetId("dessert") )
+						vsoSetTarget( "dessert", food )
+
+						vsoUneat( "firstOccupant" )
+						vsoUneat( "secondOccupant" )
+						vsoEat( vsoGetTargetId("food"), "firstOccupant" )
+						vsoEat( vsoGetTargetId("dessert"), "secondOccupant" )
+					end
 					vsoMakeInteractive( false )
 					vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatemaw" } );
 					vsoApplyStatus( "dessert", "droolsoaked", 5.0 );

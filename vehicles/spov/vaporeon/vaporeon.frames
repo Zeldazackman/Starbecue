@@ -134,6 +134,7 @@
 		"1.back.s_down.5" : "1.back.1",
 		"1.back.look.1" : "1.back.1",
 		"1.back.blink.1" : "1.back.1",
+		"1.back.pet.1" : "1.back.1",
 
 		"1.stand.escape.1" : "0.stand.eat.8",
 		"1.stand.escape.2" : "0.stand.eat.7",
