@@ -149,6 +149,9 @@
 		"flip": {},
 		"victimposition": {
 			"interpolated": true
+		},
+		"victimposition2": {
+			"interpolated": true
 		}
 	},
 	"sounds": {
