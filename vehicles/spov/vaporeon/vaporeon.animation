@@ -48,7 +48,8 @@
                 "properties": {
                     "centered": true,
                      "zLevel": -1,
-                     "transformationGroups": ["flip"]
+					 "transformationGroups": ["flip"],
+					 "driverPosition": [0.0, -1.0] // only used for standalone
                 },
                 "partStates": {
                     "bodyState": {
@@ -169,6 +170,7 @@
 		, "lay": ["/sfx/objects/eggLay.ogg"]
 		, "struggle": ["/sfx/vore/struggle/burbslosh.ogg","/sfx/vore/struggle/blurbsquish2.ogg","/sfx/vore/struggle/blorbsquish.ogg","/sfx/vore/swallow/swallow (11).ogg"]
 		, "slurp" : [ "/sfx/vore/common/slurp.ogg" ]
+		, "doublejump" : [ "/sfx/tech/tech_doublejump.ogg" ]
 	},
 	"particleEmitters": {
 		"emotehappy" : {
@@ -275,6 +277,77 @@
 				  "position" : [0.3, 0]
 				},
 				"flippable" : true
+			  }
+			}
+		  ]
+		},
+
+		"doublejump" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/doublejump/doublejump.animation",
+				"position" : [0, -3],
+				"finalVelocity" : [0, 0],
+				"approach" : [0, 50],
+				"size" : 2.0,
+				"timeToLive" : 0.85,
+				"layer" : "back",
+				"light" : [70, 100, 140],
+				"fade" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.0, 0.0]
+				}
+			  }
+			}
+		  ]
+		},
+		"defaultblue" : {
+		  "emissionRate" : 6,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [49, 166, 255, 255],
+				"fade" : 0.9,
+				"position" : [0, -3],
+				"initialVelocity" : [-2, -3.0],
+				"finalVelocity" : [-2, -3.0],
+				"approach" : [0, 20],
+				"timeToLive" : 0.8,
+				"layer" : "middle",
+				"variance" : {
+				  "initialVelocity" : [2, 3.0],
+				  "size" : 0.5
+				}
+			  }
+			}
+		  ]
+		},
+		"defaultlightblue" : {
+		  "emissionRate" : 6,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [155, 212, 255, 255],
+				"fade" : 0.9,
+				"position" : [0, -3],
+				"destructionAction" : "shrink",
+				"destructionTime" : 1,
+				"initialVelocity" : [-2, -6.0],
+				"finalVelocity" : [-2, -6.0],
+				"approach" : [0, 20],
+				"timeToLive" : 0.8,
+				"light" : [46, 63, 76],
+				"layer" : "back",
+				"variance" : {
+				  "initialVelocity" : [6, 6.0]
+				}
 			  }
 			}
 		  ]

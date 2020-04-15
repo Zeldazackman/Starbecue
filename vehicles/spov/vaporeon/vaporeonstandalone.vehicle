@@ -1,6 +1,6 @@
 {
-	"name" : "spovvaporeon",
-	"script" : "vaporeon.lua",
+	"name" : "spovvaporeonstandalone",
+	"script" : "vaporeonstandalone.lua",
 	"slaveControlTimeout" : 2.0,
 	"slaveControlHeartbeat" : 1.0,
 	"canBeHit" : false,
@@ -13,6 +13,12 @@
 	"animation" : "vaporeon.animation",
 
 	"loungePositions" : {
+		"driver" : {
+			"part" : "background",
+			"partAnchor" : "driverPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
 		"firstOccupant" : {
 			"part" : "victim",
 			"partAnchor" : "firstOccupantPosition",
