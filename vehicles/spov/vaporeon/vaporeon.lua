@@ -190,7 +190,6 @@ function bellyEffects()
 			end
 		end)
 	end
-	updateControlMode()
 end
 
 function handleStruggles(success_chances)
@@ -200,6 +199,8 @@ function handleStruggles(success_chances)
 		movetype, movedir = vso4DirectionInput( "secondOccupant" )
 		struggler = 2
 		if movetype == 0 then return false end
+	elseif controlState() then
+		return false -- control vappy instead of struggling
 	end
 
 	local chance = escapePillChoice(success_chances)
@@ -262,6 +263,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_pinned", interact_state_pinned )
 	vsoOnInteract( "state_pinned_sleep", interact_state_pinned_sleep )
 
+	-- mMotionParametersSet( mParams() )
 end
 
 function onEnd()
@@ -274,12 +276,101 @@ end
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
+local jumps = 0
+local jumped = false
+local waswater = false
+function probablyOnGround()
+	local yvel = mcontroller.yVelocity()
+	return yvel < 0.1 and yvel > -0.1
+end
+function notMoving()
+	local xvel = mcontroller.xVelocity()
+	return xvel < 0.1 and xvel > -0.1
+end
+function underWater()
+	return mcontroller.liquidPercentage() >= 0.2
+end
+function doPhysics()
+	if not underWater() then
+		mcontroller.setXVelocity( 0 )
+		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
+	else
+		mcontroller.approachYVelocity( 0, 50 )
+		mcontroller.approachYVelocity( -10, 50 )
+	end
+end
+
+function eat( targetid )
+	local food = "food"
+	local occupant = "firstOccupant"
+	local playereat = "playereat"
+	local center = "center"
+	if getOccupants() == 1 then
+		food = "dessert"
+		occupant = "secondOccupant"
+		playereat = "playereat2"
+		center = "center2"
+	elseif getOccupants() == 2 then
+		sb.logError("[Vappy] Can't eat more than two people!")
+	end
+	vsoMakeInteractive( false )
+	showEmote("emotehappy")
+	vsoAnim( "bodyState", "eat" )
+	vsoVictimAnimReplay( occupant, playereat, "bodyState")
+	nextOccupants( getOccupants() + 1 )
+
+	vsoSetTarget( food, targetid )
+	vsoUseLounge( true, occupant )
+	vsoEat( vsoGetTargetId( food ), occupant )
+	vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
+	vsoSound( "swallow" )
+	nextAction(function()
+		vsoMakeInteractive( true )
+		vsoVictimAnimReplay( occupant, center, "bodyState")
+	end)
+end
+function swapOccupants()
+	local food = vsoGetTargetId("food")
+	vsoSetTarget( "food", vsoGetTargetId("dessert") )
+	vsoSetTarget( "dessert", food )
+
+	vsoUneat( "firstOccupant" )
+	vsoUneat( "secondOccupant" )
+	vsoEat( vsoGetTargetId("food"), "firstOccupant" )
+	vsoEat( vsoGetTargetId("dessert"), "secondOccupant" )
+end
+function letout()
+	local food = "food"
+	local occupant = "firstOccupant"
+	local escape = "escape"
+	if getOccupants() == 2 then
+		food = "dessert"
+		occupant = "secondOccupant"
+		escape = "escape2"
+	elseif getOccupants() == 0 then
+		sb.logError( "[Vappy] No one to let out!" )
+	end
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
+	if vsoGetTargetId( food ) ~= nil then
+		vsoApplyStatus( food, "droolsoaked", 5.0 );
+	end
+	vsoAnim( "bodyState", "escape" )
+	vsoVictimAnimReplay( occupant, escape, "bodyState")
+	nextOccupants( getOccupants() - 1 )
+	nextAction(function()
+		vsoMakeInteractive( true )
+		vsoUneat( occupant )
+		vsoSetTarget( food, nil )
+		vsoUseLounge( false, occupant )
+	end)
+end
+
 function state_stand()
 
 	local anim = vsoAnimCurr( "bodyState" );
 
 	if vsoAnimEnd( "bodyState" ) and updateState() then
-		vsoMakeInteractive( true )
 		local idle = false
 		if controlState() then
 			idle = true
@@ -307,56 +398,95 @@ function state_stand()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if not controlState() then
-				local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
-				if escape then
-					if getOccupants() == 1 then
-						vsoMakeInteractive( false )
-						vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatemaw" } );
-						vsoApplyStatus( "food", "droolsoaked", 5.0 );
-						vsoAnim( "bodyState", "escape" )
-						vsoVictimAnimReplay( "firstOccupant", "escape", "bodyState")
-						nextOccupants( 0 )
-						nextAction(function()
-							vsoUneat( "firstOccupant" )
-							vsoSetTarget( "food", nil )
-							vsoUseLounge( false, "firstOccupant" )
-						end)
-					else
-						if who == 1 then
-							local food = vsoGetTargetId("food")
-							vsoSetTarget( "food", vsoGetTargetId("dessert") )
-							vsoSetTarget( "dessert", food )
-
-							vsoUneat( "firstOccupant" )
-							vsoUneat( "secondOccupant" )
-							vsoEat( vsoGetTargetId("food"), "firstOccupant" )
-							vsoEat( vsoGetTargetId("dessert"), "secondOccupant" )
-						end
-						vsoMakeInteractive( false )
-						vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatemaw" } );
-						vsoApplyStatus( "dessert", "droolsoaked", 5.0 );
-						vsoAnim( "bodyState", "escape" )
-						vsoVictimAnimReplay( "secondOccupant", "escape2", "bodyState")
-						nextOccupants( 1 )
-						nextAction(function()
-							vsoUneat( "secondOccupant" )
-							vsoSetTarget( "dessert", nil )
-							vsoUseLounge( false, "secondOccupant" )
-						end)
+			local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
+			-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
+			if escape then
+				if getOccupants() == 1 then
+					letout( 1 )
+				else
+					if who == 1 then
+						swapOccupants()
 					end
-				end
-			else -- inspector
-				local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-				if movetype > 0 then
-					if movedir == "D" then
-						vsoAnim( "bodyState", "sitdown" )
-						nextState( "sit" )
-					end
+					letout( 2 )
 				end
 			end
 		end
 	end
+
+	if controlState() then
+		local dx = 0
+		local speed = 10
+		if probablyOnGround() or underWater() then
+			jumps = 0
+		end
+		if not stateQueued() then
+			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			if movetype > 0 and notMoving() and probablyOnGround() then
+				if movedir == "D" and not stateQueued() then
+					vsoAnim( "bodyState", "sitdown" )
+					nextState( "sit" )
+				end
+			end
+			-- movement controls, use vanilla methods because they need to be held
+			if vehicle.controlHeld( "firstOccupant", "left" ) then
+				dx = dx - 1
+			end
+			if vehicle.controlHeld( "firstOccupant", "right" ) then
+				dx = dx + 1
+			end
+			if dx ~= 0 then
+				vsoFaceDirection( dx )
+			end
+			if not underWater() then
+				if vehicle.controlHeld( "firstOccupant", "up" ) then
+					speed = 20
+				end
+				if vehicle.controlHeld( "firstOccupant", "jump" ) then
+					if jumps < 2 and not jumped then
+						jumps = 1
+						if not probablyOnGround() and not waswater then
+							jumps = 2
+							-- particles from effects/multiJump.effectsource
+							animator.burstParticleEmitter( "doublejump" )
+							for i = 1,6 do -- 2x because we big
+								animator.burstParticleEmitter( "defaultblue" )
+								animator.burstParticleEmitter( "defaultlightblue" )
+							end
+							vsoSound( "doublejump" )
+						end
+						mcontroller.setYVelocity( 50 )
+					end
+					jumped = true
+				else
+					jumped = false
+				end
+			else
+				speed = 20
+				jumped = false
+				if vehicle.controlHeld( "firstOccupant", "jump" ) then
+					mcontroller.approachYVelocity( 10, 50 )
+				else
+					mcontroller.approachYVelocity( -10, 50 )
+				end
+			end
+		end
+		if not underWater() then
+			waswater = false
+			mcontroller.setXVelocity( dx * speed )
+			if mcontroller.yVelocity() > 0 and vehicle.controlHeld( "firstOccupant", "jump" )  then
+				mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
+			else
+				mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
+			end
+		else
+			waswater = true
+			mcontroller.approachXVelocity( dx * speed, 50 )
+		end
+	else
+	
+		doPhysics()
+	end
+	updateControlMode()
 end
 
 function interact_state_stand( targetid )
@@ -366,45 +496,11 @@ function interact_state_stand( targetid )
 		-- vsoNext( "state_idle_back" ) -- jump to currently worked on state to test
 		-- return
 
-		if getOccupants() == 0 then
+		if getOccupants() < 2 and not controlState() then
 			local position = world.entityPosition( targetid )
 			local relative = vsoRelativePoint( position[1], position[2] )
 			if relative[1] > 2 then -- target in front
-				vsoMakeInteractive( false )
-				showEmote("emotehappy")
-				vsoAnim( "bodyState", "eat" )
-				vsoVictimAnimReplay( "firstOccupant", "playereat", "bodyState")
-				nextOccupants( 1 )
-
-				vsoSetTarget( "food", targetid )
-				vsoUseLounge( true, "firstOccupant" )
-				vsoEat( vsoGetTargetId( "food" ), "firstOccupant" )
-				vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatemaw" } );
-				vsoSound( "swallow" )
-			else
-				if vsoChance(20) then
-					vsoAnim( "bodyState", "sitdown" )
-					nextState( "sit" )
-				else
-					showEmote("emotehappy")
-					vsoAnim( "bodyState", "pet" )
-				end
-			end
-		elseif getOccupants() == 1 then
-			local position = world.entityPosition( targetid )
-			local relative = vsoRelativePoint( position[1], position[2] )
-			if relative[1] > 2 then -- target in front
-				vsoMakeInteractive( false )
-				showEmote("emotehappy")
-				vsoAnim( "bodyState", "eat" )
-				vsoVictimAnimReplay( "secondOccupant", "playereat2", "bodyState")
-				nextOccupants( 2 )
-
-				vsoSetTarget( "dessert", targetid )
-				vsoUseLounge( true, "secondOccupant" )
-				vsoEat( vsoGetTargetId( "dessert" ), "secondOccupant" )
-				vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatemaw" } );
-				vsoSound( "swallow" )
+				eat( targetid )
 			else
 				if vsoChance(20) then
 					vsoAnim( "bodyState", "sitdown" )
@@ -415,7 +511,7 @@ function interact_state_stand( targetid )
 				end
 			end
 		else
-			if vsoChance(20) then
+			if vsoChance(20) and not controlState() then
 				vsoAnim( "bodyState", "sitdown" )
 				nextState( "sit" )
 			else
@@ -428,6 +524,16 @@ function interact_state_stand( targetid )
 end
 
 -------------------------------------------------------------------------------
+
+function sitPin( targetid )
+	vsoUseLounge( true, "firstOccupant" )
+	vsoSetTarget( "food", targetid )
+	vsoEat( vsoGetTargetId("food"), "firstOccupant" )
+	vsoVictimAnimSetStatus( "firstOccupant", {} )
+	vsoAnim( "bodyState", "pin" )
+	vsoVictimAnimReplay( "firstOccupant", "sitpinned", "bodyState")
+	nextState( "pinned" )
+end
 
 function state_sit()
 
@@ -450,13 +556,7 @@ function state_sit()
 					pinnable = world.playerQuery( pin_bounds[1], pin_bounds[2] )
 				end
 				if #pinnable == 1 then
-					vsoUseLounge( true, "firstOccupant" )
-					vsoSetTarget( "food", pinnable[1] )
-					vsoEat( pinnable[1], "firstOccupant" )
-					vsoVictimAnimSetStatus( "firstOccupant", {} )
-					vsoAnim( "bodyState", "pin" )
-					vsoVictimAnimReplay( "firstOccupant", "sitpinned", "bodyState")
-					nextState( "pinned" )
+					sitPin( pinnable[1] )
 				else
 					vsoAnim( "bodyState", "laydown" )
 					nextState( "lay" )
@@ -480,45 +580,50 @@ function state_sit()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if not controlState() then
-				if handleStruggles{ {2, 5}, {5, 15}, {10, 20} } then
-					vsoAnim( "bodyState", "standup" )
-					nextState( "stand" )
+			if handleStruggles{ {2, 5}, {5, 15}, {10, 20} } then
+				vsoAnim( "bodyState", "standup" )
+				nextState( "stand" )
+			end
+		end
+	end
+
+	if controlState() and not stateQueued() then
+		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		if movetype > 0 then
+			if movedir == "U" or movedir == "F" or movedir == "B" or movedir == "J" then
+				vsoAnim( "bodyState", "standup" )
+				nextState( "stand" )
+			end
+			if movedir == "D" then
+				local pinnable = {}
+				if getOccupants() == 0 then
+					pinnable = world.playerQuery( pin_bounds[1], pin_bounds[2] )
 				end
-			else -- inspector
-				local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-				if movetype > 0 then
-					if movedir == "U" then
-						vsoAnim( "bodyState", "standup" )
-						nextState( "stand" )
-					end
-					if movedir == "D" then
-						vsoAnim( "bodyState", "laydown" )
-						nextState( "lay" )
-					end
+				if #pinnable == 1 then
+					sitPin( pinnable[1] )
+				else
+					vsoAnim( "bodyState", "laydown" )
+					nextState( "lay" )
 				end
 			end
 		end
 	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_sit( targetid )
 	if not stateQueued() then
 
-		if vsoChance(20) then
+		if vsoChance(20) and not controlState() then
 			local relative = {0}
 			if getOccupants() == 0 then
 				local position = world.entityPosition( targetid )
 				relative = vsoRelativePoint( position[1], position[2] )
 			end
 			if relative[1] > 2 then -- target in front
-				vsoUseLounge( true, "firstOccupant" )
-				vsoSetTarget( "food", tartetid )
-				vsoEat( targetid, "firstOccupant" )
-				vsoVictimAnimSetStatus( "firstOccupant", {} )
-				vsoAnim( "bodyState", "pin" )
-				vsoVictimAnimReplay( "firstOccupant", "sitpinned", "bodyState")
-				nextState( "pinned" )
+				sitPin( targetid )
 			else
 				vsoAnim( "bodyState", "standup" )
 				nextState( "stand" )
@@ -571,40 +676,43 @@ function state_lay()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if not controlState() then
-				if handleStruggles{ {2, 10}, {10, 20}, {20, 40} } then
-					vsoAnim( "bodyState", "situp" )
-					nextState( "sit" )
-				end
-			else -- inspector
-				local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-				if movetype > 0 then
-					if movedir == "U" then
-						vsoAnim( "bodyState", "situp" )
-						nextState( "sit" )
-					end
-					if movedir == "F" or movedir == "B" then
-						vsoAnim( "bodyState", "rollover" )
-						nextState( "back" )
-					end
-					if movedir == "D" then
-						vsoAnim( "bodyState", "fallasleep" )
-						nextState( "sleep" )
-					end
-				end
+			if handleStruggles{ {2, 10}, {10, 20}, {20, 40} } then
+				vsoAnim( "bodyState", "situp" )
+				nextState( "sit" )
 			end
 		end
 	end
+
+	if controlState() and not stateQueued() then
+		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		if movetype > 0 then
+			if movedir == "U" then
+				vsoAnim( "bodyState", "situp" )
+				nextState( "sit" )
+			end
+			if movedir == "F" or movedir == "B" and getOccupants() < 2 then
+				vsoAnim( "bodyState", "rollover" )
+				nextState( "back" )
+			end
+			if movedir == "D" then
+				vsoAnim( "bodyState", "fallasleep" )
+				nextState( "sleep" )
+			end
+		end
+	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_lay( targetid )
 	if not stateQueued() then
 
 		local percent = vsoRand(100)
-		if percent < 10 then
+		if percent < 10 and not controlState() then
 			vsoAnim( "bodyState", "situp" )
 			nextState( "sit" )
-		elseif percent < 10+10 and getOccupants() < 2 then
+		elseif percent < 10+10 and getOccupants() < 2 and not controlState() then
 			vsoAnim( "bodyState", "rollover" )
 			nextState( "back" )
 		else
@@ -649,29 +757,32 @@ function state_sleep()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if not controlState() then
-				if handleStruggles{ {5, 15}, {20, 40}, nil } then
-					vsoAnim( "bodyState", "wakeup" )
-					nextState( "lay" )
-				end
-			else -- inspector
-				local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-				if movetype > 0 then
-					if movedir == "U" then
-						vsoAnim( "bodyState", "wakeup" )
-						nextState( "lay" )
-					end
-				end
+			if handleStruggles{ {5, 15}, {20, 40}, nil } then
+				vsoAnim( "bodyState", "wakeup" )
+				nextState( "lay" )
 			end
 		end
 	end
+
+	if controlState() and not stateQueued() then
+		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		if movetype > 0 then
+			if movedir == "U" then
+				vsoAnim( "bodyState", "wakeup" )
+				nextState( "lay" )
+			end
+		end
+	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_sleep( targetid )
 	if not stateQueued() then
 
 		local percent = vsoRand(100)
-		if percent < 15 then
+		if percent < 15 and not controlState() then
 			vsoAnim( "bodyState", "wakeup" )
 			nextState( "lay" )
 		else
@@ -716,22 +827,25 @@ function state_back()
 	if getOccupants() > 0 then
 		bellyEffects()
 		if not stateQueued() then
-			if not controlState() then
-				if handleStruggles{ {5, 15}, {20, 40}, nil } then
-					vsoAnim( "bodyState", "rollover" )
-					nextState( "lay" )
-				end
-			else -- inspector
-				local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-				if movetype > 0 then
-					if movedir == "F" or movedir == "B" then
-						vsoAnim( "bodyState", "rollover" )
-						nextState( "lay" )
-					end
-				end
+			if handleStruggles{ {5, 15}, {20, 40}, nil } then
+				vsoAnim( "bodyState", "rollover" )
+				nextState( "lay" )
 			end
 		end
 	end
+
+	if controlState() and not stateQueued() then
+		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		if movetype > 0 then
+			if movedir == "F" or movedir == "B" then
+				vsoAnim( "bodyState", "rollover" )
+				nextState( "lay" )
+			end
+		end
+	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_back( targetid )
@@ -797,29 +911,34 @@ function state_bed() -- only accessible with no occupants
 	end
 
 	updateControlMode()
-	if not controlState() then
-		if vsoHasAnySPOInputs( "firstOccupant" ) then
-			nextState( "back" )
-			updateState()
-			vsoAnim( "bodyState", "idle" )
-			vsoUneat( "firstOccupant" )
-			vsoUseLounge( false, "firstOccupant" )
-		end
-	else -- inspector
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-		if movetype > 0 then
-			if movedir == "D" then
-				vsoAnim( "bodyState", "grab" )
-				vsoVictimAnimReplay( "firstOccupant", "bellyhug", "bodyState")
-				nextState( "hug" )
+	if not stateQueued() then
+		if not controlState() then
+			if vsoHasAnySPOInputs( "firstOccupant" ) then
+				nextState( "back" )
+				updateState()
+				vsoAnim( "bodyState", "idle" )
+				vsoUneat( "firstOccupant" )
+				vsoUseLounge( false, "firstOccupant" )
 			end
-			if movedir == "F" or movedir == "B" then
-				vsoAnim( "bodyState", "rollover" )
-				vsoVictimAnimReplay( "firstOccupant", "pinned", "bodyState")
-				nextState( "pinned" )
+		else
+			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			if movetype > 0 then
+				if movedir == "D" then
+					vsoAnim( "bodyState", "grab" )
+					vsoVictimAnimReplay( "firstOccupant", "bellyhug", "bodyState")
+					nextState( "hug" )
+				end
+				if movedir == "F" or movedir == "B" then
+					vsoAnim( "bodyState", "rollover" )
+					vsoVictimAnimReplay( "firstOccupant", "pinned", "bodyState")
+					nextState( "pinned" )
+				end
 			end
 		end
 	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_bed( targetid )
@@ -839,6 +958,17 @@ end
 
 -------------------------------------------------------------------------------
 
+function hugAbsorb()
+	vsoSound( "slurp" )
+	vsoAnim( "bodyState", "absorb" )
+	vsoVictimAnimReplay( "firstOccupant", "absorbback", "bodyState")
+	nextOccupants( 1 )
+	nextState( "back" )
+	nextAction(function()
+		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
+	end)
+end
+
 function state_hug()
 
 	local anim = vsoAnimCurr( "bodyState" );
@@ -856,11 +986,7 @@ function state_hug()
 				vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
 				nextState( "bed" )
 			elseif percent < unhugChance+absorbChance then
-				vsoSound( "slurp" )
-				vsoAnim( "bodyState", "absorb" )
-				vsoVictimAnimReplay( "firstOccupant", "absorbback", "bodyState")
-				nextOccupants( 1 )
-				nextState( "back" )
+				hugAbsorb()
 			else
 				idle = true
 			end
@@ -878,29 +1004,30 @@ function state_hug()
 	end
 
 	updateControlMode()
-	if not controlState() then
-		if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
-			vsoAnim( "bodyState", "grab" )
-			vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
-			nextState( "bed" )
-		end
-	else -- inspector
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-		if movetype > 0 then
-			if movedir == "U" then
+	if not stateQueued() then
+		if not controlState() then
+			if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 				vsoAnim( "bodyState", "grab" )
 				vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
 				nextState( "bed" )
 			end
-			if movedir == "J" then
-				vsoSound( "slurp" )
-				vsoAnim( "bodyState", "absorb" )
-				vsoVictimAnimReplay( "firstOccupant", "absorbback", "bodyState")
-				nextOccupants( 1 )
-				nextState( "back" )
+		else
+			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			if movetype > 0 then
+				if movedir == "U" then
+					vsoAnim( "bodyState", "grab" )
+					vsoVictimAnimReplay( "firstOccupant", "bellybed", "bodyState")
+					nextState( "bed" )
+				end
+				if movedir == "J" then
+					hugAbsorb()
+				end
 			end
 		end
 	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_hug( targetid )
@@ -920,6 +1047,27 @@ end
 
 -------------------------------------------------------------------------------
 
+function unpin()
+	vsoAnim( "bodyState", "situp" )
+	vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
+	nextState( "sit" )
+	nextAction(function()
+		vsoUneat( "firstOccupant" )
+		vsoSetTarget( "food", nil )
+		vsoUseLounge( false, "firstOccupant" )
+	end)
+end
+function pinAbsorb()
+	vsoSound( "slurp" )
+	vsoAnim( "bodyState", "absorb" )
+	vsoVictimAnimReplay( "firstOccupant", "absorbpinned", "bodyState")
+	nextOccupants( 1 )
+	nextState( "lay" )
+	nextAction(function()
+		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
+	end)
+end
+
 function state_pinned()
 
 	local anim = vsoAnimCurr( "bodyState" );
@@ -937,23 +1085,12 @@ function state_pinned()
 				vsoVictimAnimReplay( "firstOccupant", "unpin", "bodyState")
 				nextState( "bed" )
 			elseif percent < unpinChance+absorbChance then
-				vsoSound( "slurp" )
-				vsoAnim( "bodyState", "absorb" )
-				vsoVictimAnimReplay( "firstOccupant", "absorbpinned", "bodyState")
-				nextOccupants( 1 )
-				nextState( "lay" )
+				pinAbsorb()
 			elseif percent < unpinChance+absorbChance+3 then
 				vsoAnim( "bodyState", "fallasleep")
 				nextState( "pinned_sleep")
 			elseif percent < unpinChance+absorbChance+3+40+3 then
-				vsoAnim( "bodyState", "situp" )
-				vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
-				nextState( "sit" )
-				nextAction(function()
-					vsoUneat( "firstOccupant" )
-					vsoSetTarget( "food", nil )
-					vsoUseLounge( false, "firstOccupant" )
-				end)
+				unpin()
 			else
 				idle = true
 			end
@@ -973,43 +1110,37 @@ function state_pinned()
 	end
 
 	updateControlMode()
-	if not controlState() then
-		if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
-			vsoAnim( "bodyState", "situp" )
-			vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
-			nextState( "sit" )
-		end
-	else -- inspector
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-		if movetype > 0 then
-			if movedir == "U" then
+	if not stateQueued() then
+		if not controlState() then
+			if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 				vsoAnim( "bodyState", "situp" )
 				vsoVictimAnimReplay( "firstOccupant", "situnpin", "bodyState")
 				nextState( "sit" )
-				nextAction(function()
-					vsoUneat( "firstOccupant" )
-					vsoSetTarget( "food", nil )
-					vsoUseLounge( false, "firstOccupant" )
-				end)
 			end
-			if movedir == "D" then
-				vsoAnim( "bodyState", "fallasleep")
-				nextState( "pinned_sleep")
-			end
-			if movedir == "F" or movedir == "B" then
-				vsoAnim( "bodyState", "rollover" )
-				vsoVictimAnimReplay( "firstOccupant", "unpin", "bodyState")
-				nextState( "bed" )
-			end
-			if movedir == "J" then
-				vsoSound( "slurp" )
-				vsoAnim( "bodyState", "absorb" )
-				vsoVictimAnimReplay( "firstOccupant", "absorbpinned", "bodyState")
-				nextOccupants( 1 )
-				nextState( "lay" )
+		else
+			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			if movetype > 0 then
+				if movedir == "U" then
+					unpin()
+				end
+				if movedir == "D" then
+					vsoAnim( "bodyState", "fallasleep")
+					nextState( "pinned_sleep")
+				end
+				if movedir == "F" or movedir == "B" then
+					vsoAnim( "bodyState", "rollover" )
+					vsoVictimAnimReplay( "firstOccupant", "unpin", "bodyState")
+					nextState( "bed" )
+				end
+				if movedir == "J" then
+					pinAbsorb()
+				end
 			end
 		end
 	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_pinned( targetid )
@@ -1053,20 +1184,25 @@ function state_pinned_sleep()
 	end
 
 	updateControlMode()
-	if not controlState() then
-		if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
-			vsoAnim( "bodyState", "wakeup" )
-			nextState( "pinned" )
-		end
-	else -- inspector
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-		if movetype > 0 then
-			if movedir == "U" then
+	if not stateQueued() then
+		if not controlState() then
+			if vsoHasAnySPOInputs( "firstOccupant" ) and vsoPill( "easyescape" ) then
 				vsoAnim( "bodyState", "wakeup" )
 				nextState( "pinned" )
 			end
+		else
+			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			if movetype > 0 then
+				if movedir == "U" then
+					vsoAnim( "bodyState", "wakeup" )
+					nextState( "pinned" )
+				end
+			end
 		end
 	end
+	
+	doPhysics()
+	updateControlMode()
 end
 
 function interact_state_pinned_sleep( targetid )

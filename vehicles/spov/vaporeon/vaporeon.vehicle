@@ -29,8 +29,8 @@
 	
 	, "mouthPosition" : [ 0.0, 0.0 ],
 
-	"boundBox" : [-5, -4, 5, 4],
-	"metaBoundBox" : [-5, -4, 5, 4],
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
 
 	"physicsCollisions" : {
 	},
@@ -41,14 +41,19 @@
 		,"movementSettingsFlipPoly" : 0
 		,"movementSettings" : {
 			"default":{
-				"collisionPoly" : [[-5, 4], [-5, -4], [5, -4], [5, 4]]
+				"collisionPoly" : [
+					[-2.5, 1], [-3, 0.5],
+					[-3, -3.5], [-2.5, -4],
+					[2.5, -4], [3, -3.5],
+					[3, 0.5], [2.5, 1]
+				]
 				,"gravityMultiplier" : 0.0
 				,"liquidBuoyancy" : 0.0
 				,"airBuoyancy" : 0.0
 				,"bounceFactor" : 0.0
 				,"collisionEnabled" : true
 				,"frictionEnabled" : true
-				,"gravityEnabled" : true
+				,"gravityEnabled" : false // using custom gravity instead, for snappier falls
 				,"ignorePlatformCollision" : false
 			}
 		}
@@ -352,6 +357,34 @@
 				,"sitpos": [ "stand" ]
 				,"emote": [ "oooh" ]
 				,"dance": [ "victimrun" ]
+			}
+			,"center":{
+				"seconds":[ 0.0 ]
+				,"seat":"firstOccupant"
+				,"loop":true
+				,"visible": [0]
+				,"transformGroup":"victimposition"
+				,"xs": [ -1 ]
+				,"x": [ 0.0 ]
+				,"y": [ -1.0 ]
+				,"r": [ 0.0 ]
+				,"sitpos": [ "sit" ]
+				,"emote": [ "sleep" ]
+				,"dance": [ ]
+			}
+			,"center2":{
+				"seconds":[ 0.0 ]
+				,"seat":"secondOccupant"
+				,"loop":true
+				,"visible": [0]
+				,"transformGroup":"victimposition2"
+				,"xs": [ -1 ]
+				,"x": [ 0.0 ]
+				,"y": [ -1.0 ]
+				,"r": [ 0.0 ]
+				,"sitpos": [ "sit" ]
+				,"emote": [ "sleep" ]
+				,"dance": [ ]
 			}
 		}
 	}
