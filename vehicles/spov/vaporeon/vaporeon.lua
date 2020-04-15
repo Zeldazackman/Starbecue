@@ -449,6 +449,12 @@ function state_stand()
 					nextState( "sit" )
 				end
 			end
+			if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) and getOccupants() < 2 then
+				local prey = world.playerQuery( vehicle.aimPosition(), 1 )
+				if #prey > 0 then
+					eat( prey[1] )
+				end
+			end
 			-- movement controls, use vanilla methods because they need to be held
 			if vehicle.controlHeld( controlSeat(), "left" ) then
 				dx = dx - 1
