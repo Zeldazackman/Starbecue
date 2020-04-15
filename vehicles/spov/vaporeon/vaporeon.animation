@@ -48,7 +48,8 @@
                 "properties": {
                     "centered": true,
                      "zLevel": -1,
-                     "transformationGroups": ["flip"]
+					 "transformationGroups": ["flip"],
+					 "driverPosition": [0.0, -1.0] // only used for standalone
                 },
                 "partStates": {
                     "bodyState": {

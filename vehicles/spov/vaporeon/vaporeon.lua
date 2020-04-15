@@ -130,10 +130,15 @@ local _controlmode = 0
 function controlState()
 	return _controlmode == 1
 end
+function controlSeat()
+	return "firstOccupant"
+end
 
 function updateControlMode()
-	if vsoGetTargetId( "food" ) ~= nil then
-		local inputs = vsoGetInput( "firstOccupant" )
+	if controlSeat() == "driver" then
+		_controlmode = 1
+	elseif vsoGetTargetId( "food" ) ~= nil then
+		local inputs = vsoGetInput( controlSeat() )
 		if inputs.fastA == 1 then
 			_controlmode = 1
 		end
@@ -250,6 +255,9 @@ end
 function onBegin()	--This sets up the VSO ONCE.
 
 	vsoEffectWarpIn();	--Play warp in effect
+	if standaloneinit ~= nil then
+		standaloneinit()
+	end
 
 	onForcedReset();	--Do a forced reset once.
 
@@ -420,7 +428,7 @@ function state_stand()
 			jumps = 0
 		end
 		if not stateQueued() then
-			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 and notMoving() and probablyOnGround() then
 				if movedir == "D" and not stateQueued() then
 					vsoAnim( "bodyState", "sitdown" )
@@ -428,20 +436,20 @@ function state_stand()
 				end
 			end
 			-- movement controls, use vanilla methods because they need to be held
-			if vehicle.controlHeld( "firstOccupant", "left" ) then
+			if vehicle.controlHeld( controlSeat(), "left" ) then
 				dx = dx - 1
 			end
-			if vehicle.controlHeld( "firstOccupant", "right" ) then
+			if vehicle.controlHeld( controlSeat(), "right" ) then
 				dx = dx + 1
 			end
 			if dx ~= 0 then
 				vsoFaceDirection( dx )
 			end
 			if not underWater() then
-				if vehicle.controlHeld( "firstOccupant", "up" ) then
+				if vehicle.controlHeld( controlSeat(), "up" ) then
 					speed = 20
 				end
-				if vehicle.controlHeld( "firstOccupant", "jump" ) then
+				if vehicle.controlHeld( controlSeat(), "jump" ) then
 					if jumps < 2 and not jumped then
 						jumps = 1
 						if not probablyOnGround() and not waswater then
@@ -463,7 +471,7 @@ function state_stand()
 			else
 				speed = 20
 				jumped = false
-				if vehicle.controlHeld( "firstOccupant", "jump" ) then
+				if vehicle.controlHeld( controlSeat(), "jump" ) then
 					mcontroller.approachYVelocity( 10, 50 )
 				else
 					mcontroller.approachYVelocity( -10, 50 )
@@ -473,7 +481,7 @@ function state_stand()
 		if not underWater() then
 			waswater = false
 			mcontroller.setXVelocity( dx * speed )
-			if mcontroller.yVelocity() > 0 and vehicle.controlHeld( "firstOccupant", "jump" )  then
+			if mcontroller.yVelocity() > 0 and vehicle.controlHeld( controlSeat(), "jump" )  then
 				mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
 			else
 				mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
@@ -588,7 +596,7 @@ function state_sit()
 	end
 
 	if controlState() and not stateQueued() then
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		local movetype, movedir = vso4DirectionInput( controlSeat() )
 		if movetype > 0 then
 			if movedir == "U" or movedir == "F" or movedir == "B" or movedir == "J" then
 				vsoAnim( "bodyState", "standup" )
@@ -684,7 +692,7 @@ function state_lay()
 	end
 
 	if controlState() and not stateQueued() then
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		local movetype, movedir = vso4DirectionInput( controlSeat() )
 		if movetype > 0 then
 			if movedir == "U" then
 				vsoAnim( "bodyState", "situp" )
@@ -765,7 +773,7 @@ function state_sleep()
 	end
 
 	if controlState() and not stateQueued() then
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		local movetype, movedir = vso4DirectionInput( controlSeat() )
 		if movetype > 0 then
 			if movedir == "U" then
 				vsoAnim( "bodyState", "wakeup" )
@@ -835,7 +843,7 @@ function state_back()
 	end
 
 	if controlState() and not stateQueued() then
-		local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+		local movetype, movedir = vso4DirectionInput( controlSeat() )
 		if movetype > 0 then
 			if movedir == "F" or movedir == "B" then
 				vsoAnim( "bodyState", "rollover" )
@@ -921,7 +929,7 @@ function state_bed() -- only accessible with no occupants
 				vsoUseLounge( false, "firstOccupant" )
 			end
 		else
-			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 then
 				if movedir == "D" then
 					vsoAnim( "bodyState", "grab" )
@@ -1012,7 +1020,7 @@ function state_hug()
 				nextState( "bed" )
 			end
 		else
-			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 then
 				if movedir == "U" then
 					vsoAnim( "bodyState", "grab" )
@@ -1118,7 +1126,7 @@ function state_pinned()
 				nextState( "sit" )
 			end
 		else
-			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 then
 				if movedir == "U" then
 					unpin()
@@ -1191,7 +1199,7 @@ function state_pinned_sleep()
 				nextState( "pinned" )
 			end
 		else
-			local movetype, movedir = vso4DirectionInput( "firstOccupant" )
+			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 then
 				if movedir == "U" then
 					vsoAnim( "bodyState", "wakeup" )
