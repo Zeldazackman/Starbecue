@@ -138,11 +138,10 @@ function updateControlMode()
 	if controlSeat() == "driver" then
 		_controlmode = 1
 	elseif vsoGetTargetId( "food" ) ~= nil then
-		local inputs = vsoGetInput( controlSeat() )
-		if inputs.fastA == 1 then
+		if vehicle.controlHeld( controlSeat(), "Special1" ) then
 			_controlmode = 1
 		end
-		if inputs.fastB == 1 then
+		if vehicle.controlHeld( controlSeat(), "Special2" ) then
 			_controlmode = 0
 		end
 	else
@@ -208,7 +207,10 @@ function handleStruggles(success_chances)
 		return false -- control vappy instead of struggling
 	end
 
-	local chance = escapePillChoice(success_chances)
+	local chance
+	if not controlState() then
+		chance = escapePillChoice(success_chances)
+	end
 	if chance ~= nil
 	and vsoCounterValue( "struggleCount" ) >= chance[1]
 	and vsoCounterChance( "struggleCount", chance[1], chance[2] ) then
@@ -428,6 +430,18 @@ function state_stand()
 			jumps = 0
 		end
 		if not stateQueued() then
+			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
+				if getOccupants() == 0 then
+					_vsoOnDeath() -- letout( 0 )
+				elseif getOccupants() == 1 then
+					letout( 1 )
+				else
+					if who == 1 then
+						swapOccupants()
+					end
+					letout( 2 )
+				end
+			end
 			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 and notMoving() and probablyOnGround() then
 				if movedir == "D" and not stateQueued() then
