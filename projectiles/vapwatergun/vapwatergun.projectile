@@ -1,0 +1,30 @@
+{
+  "projectileName" : "vapwatergun",
+  "physics" : "grenade",
+  "actionOnReap" : [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/tools/wateringcan1.ogg", "/sfx/tools/wateringcan2.ogg", "/sfx/tools/wateringcan3.ogg", "/sfx/tools/wateringcan4.ogg"
+      ]
+    },
+    {
+      "action" : "particle",
+      "specification" : "vapwatergunsplash",
+      "time" : 0,
+      "repeat" : false
+    }
+  ],
+  "statusEffects" : [
+    "wet"
+  ],
+  "image" : "vapwatergun.png",
+  "animationCycle" : 1,
+  "frameNumber" : 4,
+  "damageKind" : "default",
+  "power": 0.1,
+  "knockback" : 10,
+  "knockbackDirectional" : true,
+  "timeToLive" : 1,
+  "damagePoly" : [ [8, -0.2], [8.5, -0.2], [8.5, 0.2], [8, 0.2] ]
+}

@@ -44,9 +44,10 @@
                     "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
 
-					"jump": { "frames": 4, "cycle": 0.75, "mode": "end" },
-                    "fall": { "frames": 4, "cycle": 0.75, "mode": "end" }
-
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
+					"jumpcont": { "frames": 1, "cycle": 1, "mode": "end" },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
+                    "fallcont": { "frames": 1, "cycle": 1, "mode": "end" }
                 }
             }
         },
@@ -95,8 +96,9 @@
 						"run": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.run.<frame><directives>" } },
 
 						"jump": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } }
-
+						"jumpcont": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jumpcont.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } },
+						"fallcont": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fallcont.<frame><directives>" } }
                     }
                 }
             },
@@ -169,8 +171,9 @@
 						"run": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.run.<frame><directives>" } },
 
 						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } }
-
+						"jumpcont": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jumpcont.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } },
+						"fallcont": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fallcont.<frame><directives>" } }
                     }
                 }
             }

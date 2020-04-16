@@ -291,9 +291,16 @@ end
 local jumps = 0
 local jumped = false
 local waswater = false
-function probablyOnGround()
+local downframes = 0
+local _groundframes = 0
+function probablyOnGround() -- check number of frames -> ceiling isn't ground
 	local yvel = mcontroller.yVelocity()
-	return yvel < 0.1 and yvel > -0.1
+	if yvel < 0.1 and yvel > -0.1 then
+		_groundframes = _groundframes + 1
+	else
+		_groundframes = 0
+	end
+	return _groundframes > 2
 end
 function notMoving()
 	local xvel = mcontroller.xVelocity()
@@ -423,12 +430,12 @@ function state_stand()
 				end
 			end
 		end
-	-- elseif vsoAnimEnd( "bodyState" ) then
-	-- 	if mcontroller.yVelocity() > 0 then
-	-- 		vsoAnim( "bodyState" "jumpcont" )
-	-- 	else
-	-- 		vsoAnim( "bodyState", "fallcont" )
-	-- 	end
+	elseif vsoAnimEnd( "bodyState" ) then
+		if mcontroller.yVelocity() > 0 then
+			vsoAnim( "bodyState", "jumpcont" )
+		else
+			vsoAnim( "bodyState", "fallcont" )
+		end
 	end
 
 	if getOccupants() > 0 then
@@ -451,17 +458,22 @@ function state_stand()
 
 	if controlState() then
 		local dx = 0
-		local speed = 10
+		local speed = 20
+		if getOccupants() == 2 then
+			speed = 10
+		end
 		if probablyOnGround() or underWater() then
 			jumps = 0
 		end
 		if not stateQueued() then
-			local movetype, movedir = vso4DirectionInput( controlSeat() )
-			if movetype > 0 and notMoving() and probablyOnGround() then
-				if movedir == "D" and not stateQueued() then
+			if vehicle.controlHeld( controlSeat(), "down" ) then
+				downframes = downframes + 1
+			else
+				if downframes > 0 and downframes < 10 and notMoving() and probablyOnGround() then
 					vsoAnim( "bodyState", "sitdown" )
 					nextState( "sit" )
 				end
+				downframes = 0
 			end
 			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
 				if getOccupants() == 0 then
@@ -489,36 +501,46 @@ function state_stand()
 				vsoFaceDirection( dx )
 			end
 			if not underWater() then
-				if vehicle.controlHeld( controlSeat(), "up" ) and getOccupants() < 2 then
-					speed = 20
+				if vehicle.controlHeld( controlSeat(), "down" ) then
+					speed = 10
+					if not probablyOnGround() then
+						mcontroller.applyParameters{ ignorePlatformCollision = true }
+					end
+				else
+					mcontroller.applyParameters{ ignorePlatformCollision = false }
 				end
 				if vehicle.controlHeld( controlSeat(), "jump" ) then
-					if jumps < 2 and not jumped then
-						jumps = 1
-						if not probablyOnGround() and not waswater then
-							jumps = 2
-							-- particles from effects/multiJump.effectsource
-							animator.burstParticleEmitter( "doublejump" )
-							for i = 1,6 do -- 2x because we big
-								animator.burstParticleEmitter( "defaultblue" )
-								animator.burstParticleEmitter( "defaultlightblue" )
+					if not vehicle.controlHeld( controlSeat(), "down" ) then
+						if jumps < 2 and not jumped then
+							jumps = 1
+							if not probablyOnGround() and not waswater then
+								jumps = 2
+								-- particles from effects/multiJump.effectsource
+								animator.burstParticleEmitter( "doublejump" )
+								for i = 1,6 do -- 2x because we big
+									animator.burstParticleEmitter( "defaultblue" )
+									animator.burstParticleEmitter( "defaultlightblue" )
+								end
+								vsoSound( "doublejump" )
 							end
-							vsoSound( "doublejump" )
+							vsoAnim( "bodyState", "jump" )
+							if getOccupants() < 2 then
+								mcontroller.setYVelocity( 50 )
+							else
+								mcontroller.setYVelocity( 20 )
+							end
 						end
-						if getOccupants() < 2 then
-							mcontroller.setYVelocity( 50 )
-						else
-							mcontroller.setYVelocity( 20 )
-						end
+						jumped = true
+					else
+						mcontroller.applyParameters{ ignorePlatformCollision = true }
 					end
-					jumped = true
 				else
 					jumped = false
 				end
 			else
 				jumped = false
-				if getOccupants() < 2 then
-					speed = 20
+				if getOccupants() == 2 then
+					speed = 10
 				end
 				if vehicle.controlHeld( controlSeat(), "jump" ) then
 					mcontroller.approachYVelocity( 10, 50 )
@@ -526,7 +548,7 @@ function state_stand()
 					mcontroller.approachYVelocity( -10, 50 )
 				end
 			end
-			-- if probablyOnGround() then
+			if probablyOnGround() then
 				if dx ~= 0 then
 					if speed == 10 and not vsoAnimIs( "bodyState", "walk" ) then
 						vsoAnim( "bodyState", "walk" )
@@ -536,7 +558,11 @@ function state_stand()
 				else
 					vsoAnim( "bodyState", "idle" )
 				end
-			-- end
+			else
+				if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
+					vsoAnim( "bodyState", "fall" )
+				end
+			end
 		end
 		if not underWater() then
 			waswater = false
@@ -549,6 +575,20 @@ function state_stand()
 		else
 			waswater = true
 			mcontroller.approachXVelocity( dx * speed, 50 )
+		end
+		if vehicle.controlHeld( controlSeat(), "AltFire" ) then
+			local aiming = vehicle.aimPosition( controlSeat() )
+			local mposition = mcontroller.position()
+			local direction = -1
+			if aiming[1] > mposition[1] then direction = 1 end
+			vsoFaceDirection( direction )
+			local position = { mposition[1] + direction * 2.75, mposition[2] - 0.125 }
+			world.spawnProjectile(
+				"vapwatergun",
+				position,
+				entity.id(), 
+				{ aiming[1] - position[1], aiming[2] - position[2] + 0.2*direction*(aiming[1] - position[1]) }
+			)
 		end
 	else
 	
