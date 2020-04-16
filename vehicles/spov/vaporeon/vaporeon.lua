@@ -203,12 +203,14 @@ function handleStruggles(success_chances)
 		movetype, movedir = vso4DirectionInput( "secondOccupant" )
 		struggler = 2
 		if movetype == 0 then return false end
-	elseif controlState() then
+	end
+	
+	if controlState() and struggler == 1 and controlSeat() == "firstOccupant" then
 		return false -- control vappy instead of struggling
 	end
 
 	local chance
-	if not controlState() then
+	if not controlState() then -- controller handles escape
 		chance = escapePillChoice(success_chances)
 	end
 	if chance ~= nil
@@ -308,6 +310,17 @@ function doPhysics()
 		mcontroller.approachYVelocity( 0, 50 )
 		mcontroller.approachYVelocity( -10, 50 )
 	end
+	if _state ~= "stand" and mcontroller.yVelocity() < -5 then
+		sb.logInfo( "falling" )
+		nextState( "stand" )
+		updateState()
+		-- vsoAnim( "bodyState", "fall" )
+		if _state == "bed" or _state == "hug" or _state == "pinned" or _state == "pinned_sleep" then
+			vsoUneat( "firstOccupant" )
+			vsoSetTarget( "food", nil )
+			vsoUseLounge( false, "firstOccupant" )
+		end
+	end
 end
 
 function eat( targetid )
@@ -316,12 +329,17 @@ function eat( targetid )
 	local playereat = "playereat"
 	local center = "center"
 	if getOccupants() == 1 then
+		if targetid == vsoGetTargetId( "food" ) then
+			sb.logError("[Vappy] Can't eat someone who's already eaten!")
+			return
+		end
 		food = "dessert"
 		occupant = "secondOccupant"
 		playereat = "playereat2"
 		center = "center2"
 	elseif getOccupants() == 2 then
 		sb.logError("[Vappy] Can't eat more than two people!")
+		return
 	end
 	vsoMakeInteractive( false )
 	showEmote("emotehappy")
@@ -380,34 +398,42 @@ function state_stand()
 
 	local anim = vsoAnimCurr( "bodyState" );
 
-	if vsoAnimEnd( "bodyState" ) and updateState() then
-		local idle = false
-		if controlState() then
-			idle = true
-		else
-			local percent = vsoRand(100)
-			if percent < 5 then -- and previousState() ~= "sit" then -- needs a timer
-				vsoAnim( "bodyState", "sitdown" )
-				nextState( "sit" )
-			else
+	if probablyOnGround() then
+		if vsoAnimEnd( "bodyState" ) and updateState() then
+			local idle = false
+			if controlState() then
 				idle = true
-			end
-		end
-		if idle then
-			local percent = vsoRand(100)
-			if percent < 15 then
-				vsoAnim( "bodyState", "tail_flick" )
-			elseif percent < 15+15 then
-				vsoAnim( "bodyState", "blink" )
 			else
-				vsoAnim( "bodyState", "idle" )
+				local percent = vsoRand(100)
+				if percent < 5 then -- and previousState() ~= "sit" then -- needs a timer
+					vsoAnim( "bodyState", "sitdown" )
+					nextState( "sit" )
+				else
+					idle = true
+				end
+			end
+			if idle then
+				local percent = vsoRand(100)
+				if percent < 15 then
+					vsoAnim( "bodyState", "tail_flick" )
+				elseif percent < 15+15 then
+					vsoAnim( "bodyState", "blink" )
+				else
+					vsoAnim( "bodyState", "idle" )
+				end
 			end
 		end
+	-- elseif vsoAnimEnd( "bodyState" ) then
+	-- 	if mcontroller.yVelocity() > 0 then
+	-- 		vsoAnim( "bodyState" "jumpcont" )
+	-- 	else
+	-- 		vsoAnim( "bodyState", "fallcont" )
+	-- 	end
 	end
 
 	if getOccupants() > 0 then
 		bellyEffects()
-		if not stateQueued() then
+		if not stateQueued() and probablyOnGround() then
 			local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
 			-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
 			if escape then
@@ -430,18 +456,6 @@ function state_stand()
 			jumps = 0
 		end
 		if not stateQueued() then
-			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
-				if getOccupants() == 0 then
-					_vsoOnDeath() -- letout( 0 )
-				elseif getOccupants() == 1 then
-					letout( 1 )
-				else
-					if who == 1 then
-						swapOccupants()
-					end
-					letout( 2 )
-				end
-			end
 			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 and notMoving() and probablyOnGround() then
 				if movedir == "D" and not stateQueued() then
@@ -449,12 +463,21 @@ function state_stand()
 					nextState( "sit" )
 				end
 			end
+			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
+				if getOccupants() == 0 then
+					_vsoOnDeath() -- letout( 0 )
+				else
+					letout( getOccupants() ) -- last eaten
+				end
+			end
 			if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) and getOccupants() < 2 then
-				local prey = world.playerQuery( vehicle.aimPosition(), 1 )
+				local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
 				if #prey > 0 then
 					eat( prey[1] )
 				end
 			end
+		end
+		if not stateQueued() then
 			-- movement controls, use vanilla methods because they need to be held
 			if vehicle.controlHeld( controlSeat(), "left" ) then
 				dx = dx - 1
@@ -466,7 +489,7 @@ function state_stand()
 				vsoFaceDirection( dx )
 			end
 			if not underWater() then
-				if vehicle.controlHeld( controlSeat(), "up" ) then
+				if vehicle.controlHeld( controlSeat(), "up" ) and getOccupants() < 2 then
 					speed = 20
 				end
 				if vehicle.controlHeld( controlSeat(), "jump" ) then
@@ -482,21 +505,38 @@ function state_stand()
 							end
 							vsoSound( "doublejump" )
 						end
-						mcontroller.setYVelocity( 50 )
+						if getOccupants() < 2 then
+							mcontroller.setYVelocity( 50 )
+						else
+							mcontroller.setYVelocity( 20 )
+						end
 					end
 					jumped = true
 				else
 					jumped = false
 				end
 			else
-				speed = 20
 				jumped = false
+				if getOccupants() < 2 then
+					speed = 20
+				end
 				if vehicle.controlHeld( controlSeat(), "jump" ) then
 					mcontroller.approachYVelocity( 10, 50 )
 				else
 					mcontroller.approachYVelocity( -10, 50 )
 				end
 			end
+			-- if probablyOnGround() then
+				if dx ~= 0 then
+					if speed == 10 and not vsoAnimIs( "bodyState", "walk" ) then
+						vsoAnim( "bodyState", "walk" )
+					elseif speed == 20 and not vsoAnimIs( "bodyState", "run" ) then
+						vsoAnim( "bodyState", "run" )
+					end
+				else
+					vsoAnim( "bodyState", "idle" )
+				end
+			-- end
 		end
 		if not underWater() then
 			waswater = false
@@ -518,7 +558,7 @@ function state_stand()
 end
 
 function interact_state_stand( targetid )
-	if not stateQueued() then
+	if not stateQueued() and mcontroller.yVelocity() > -5 then
 
 		-- vsoAnim( "bodyState", "idle_back" )
 		-- vsoNext( "state_idle_back" ) -- jump to currently worked on state to test
@@ -940,15 +980,17 @@ function state_bed() -- only accessible with no occupants
 
 	updateControlMode()
 	if not stateQueued() then
-		if not controlState() then
+		if not controlState() or controlSeat() == "driver" then
 			if vsoHasAnySPOInputs( "firstOccupant" ) then
 				nextState( "back" )
 				updateState()
 				vsoAnim( "bodyState", "idle" )
 				vsoUneat( "firstOccupant" )
+				vsoSetTarget( "food", nil )
 				vsoUseLounge( false, "firstOccupant" )
 			end
-		else
+		end
+		if controlState() then
 			local movetype, movedir = vso4DirectionInput( controlSeat() )
 			if movetype > 0 then
 				if movedir == "D" then
