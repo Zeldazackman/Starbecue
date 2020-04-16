@@ -440,7 +440,7 @@ function state_stand()
 
 	if getOccupants() > 0 then
 		bellyEffects()
-		if not stateQueued() and probablyOnGround() then
+		if not stateQueued() and probablyOnGround() and notMoving() then
 			local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
 			-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
 			if escape then
@@ -496,6 +496,11 @@ function state_stand()
 						local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
 						if #prey > 0 then
 							eat( prey[1] )
+						elseif controlSeat() == "driver" then
+							prey = world.npcQuery( vehicle.aimPosition( controlSeat() ), 1 )
+							if #prey > 0 then
+								eat( prey[1] )
+							end
 						end
 					end
 					bapped = 30
