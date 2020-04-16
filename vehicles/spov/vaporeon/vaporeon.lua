@@ -291,6 +291,7 @@ end
 local jumps = 0
 local jumped = false
 local waswater = false
+local bapped = 0
 local downframes = 0
 local _groundframes = 0
 function probablyOnGround() -- check number of frames -> ceiling isn't ground
@@ -331,15 +332,14 @@ function doPhysics()
 end
 
 function eat( targetid )
+	if targetid == vehicle.entityLoungingIn( controlSeat() ) then return end
+	if targetid == vehicle.entityLoungingIn( "firstOccupant" ) then return end
+	if targetid == vehicle.entityLoungingIn( "secondOccupant" ) then return end
 	local food = "food"
 	local occupant = "firstOccupant"
 	local playereat = "playereat"
 	local center = "center"
 	if getOccupants() == 1 then
-		if targetid == vsoGetTargetId( "food" ) then
-			sb.logError("[Vappy] Can't eat someone who's already eaten!")
-			return
-		end
 		food = "dessert"
 		occupant = "secondOccupant"
 		playereat = "playereat2"
@@ -482,12 +482,26 @@ function state_stand()
 					letout( getOccupants() ) -- last eaten
 				end
 			end
-			if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) and getOccupants() < 2 then
-				local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
-				if #prey > 0 then
-					eat( prey[1] )
+			if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) then
+				if bapped < 1 then
+					local mposition = mcontroller.position()
+					local direction = self.vsoCurrentDirection
+					world.spawnProjectile(
+						"vapbap",
+						{ mposition[1] + 3 * direction, mposition[2] - 2.5 },
+						entity.id(),
+						{ direction, 0 }
+					)
+					if getOccupants() < 2 then
+						local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
+						if #prey > 0 then
+							eat( prey[1] )
+						end
+					end
+					bapped = 30
 				end
 			end
+			bapped = bapped - 1
 		end
 		if not stateQueued() then
 			-- movement controls, use vanilla methods because they need to be held
