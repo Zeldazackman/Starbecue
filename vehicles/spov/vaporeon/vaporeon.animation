@@ -30,7 +30,7 @@
                     "grab": { "frames": 1, "cycle": 0.25, "mode": "end" },
 
 					"lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
-					
+
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
                     "absorb": { "frames": 4, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
@@ -40,9 +40,13 @@
                     "s_up": { "frames": 5, "cycle": 1, "mode": "end" },
                     "s_down": { "frames": 5, "cycle": 1, "mode": "end" },
 					"look": { "frames": 1, "cycle": 2, "mode": "end" },
-					
+
                     "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" }
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+
+					"jump": { "frames": 4, "cycle": 0.75, "mode": "end" },
+                    "fall": { "frames": 4, "cycle": 0.75, "mode": "end" }
+
                 }
             }
         },
@@ -88,7 +92,11 @@
 						"look": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.look.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.run.<frame><directives>" } }
+						"run": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } }
+
                     }
                 }
             },
@@ -117,7 +125,7 @@
                     }
                 }
 			},
-			
+
             "foreground": {
                 "properties": {
                     "centered": true,
@@ -158,7 +166,11 @@
 						"look": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.look.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.run.<frame><directives>" } }
+						"run": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } }
+
                     }
                 }
             }
