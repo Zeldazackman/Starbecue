@@ -184,6 +184,11 @@
 		"0.sit.pin.2" : "0.pinned.situp.1",
 
 		"0.stand.jumpcont.1" : "0.stand.jump.4",
-		"0.stand.fallcont.1" : "0.stand.fall.4"
+		"0.stand.fallcont.1" : "0.stand.fall.4",
+		"1.stand.jumpcont.1" : "1.stand.jump.4",
+		"1.stand.fallcont.1" : "1.stand.fall.4",
+		"2.stand.jumpcont.1" : "2.stand.jump.4",
+		"2.stand.fallcont.1" : "2.stand.fall.4"
+
 	}
 }

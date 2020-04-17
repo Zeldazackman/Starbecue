@@ -47,7 +47,13 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
 					"jumpcont": { "frames": 1, "cycle": 1, "mode": "end" },
                     "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
-                    "fallcont": { "frames": 1, "cycle": 1, "mode": "end" }
+                    "fallcont": { "frames": 1, "cycle": 1, "mode": "end" },
+
+					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
+
+					"bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
+
                 }
             }
         },
@@ -98,7 +104,13 @@
 						"jump": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jump.<frame><directives>" } },
 						"jumpcont": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jumpcont.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } },
-						"fallcont": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fallcont.<frame><directives>" } }
+						"fallcont": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fallcont.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.swim.<frame><directives>" } },
+
+						"bap": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.bap.<frame><directives>" } }
+
                     }
                 }
             },
@@ -173,7 +185,13 @@
 						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
 						"jumpcont": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jumpcont.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } },
-						"fallcont": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fallcont.<frame><directives>" } }
+						"fallcont": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fallcont.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swim.<frame><directives>" } },
+
+						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } }
+
                     }
                 }
             }

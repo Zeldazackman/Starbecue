@@ -170,7 +170,7 @@ function bellyEffects()
 			vsoResourceAddPercent( vsoGetTargetId("dessert"), "health", health_change, function(still_alive)
 				if not still_alive then
 					vsoUneat( "secondOccupant" )
-	
+
 					vsoSetTarget( "dessert", nil )
 					vsoUseLounge( false, "secondOccupant" )
 					setOccupants(1)
@@ -204,7 +204,7 @@ function handleStruggles(success_chances)
 		struggler = 2
 		if movetype == 0 then return false end
 	end
-	
+
 	if controlState() and struggler == 1 and controlSeat() == "firstOccupant" then
 		return false -- control vappy instead of struggling
 	end
@@ -322,7 +322,7 @@ function doPhysics()
 		sb.logInfo( "falling" )
 		nextState( "stand" )
 		updateState()
-		-- vsoAnim( "bodyState", "fall" )
+		vsoAnim( "bodyState", "fall" )
 		if _state == "bed" or _state == "hug" or _state == "pinned" or _state == "pinned_sleep" then
 			vsoUneat( "firstOccupant" )
 			vsoSetTarget( "food", nil )
@@ -492,6 +492,7 @@ function state_stand()
 						entity.id(),
 						{ direction, 0 }
 					)
+					vsoAnim( "bodyState", "bap" )
 					if getOccupants() < 2 then
 						local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
 						if #prey > 0 then
@@ -567,19 +568,23 @@ function state_stand()
 					mcontroller.approachYVelocity( -10, 50 )
 				end
 			end
-			if probablyOnGround() then
-				if dx ~= 0 then
-					if speed == 10 and not vsoAnimIs( "bodyState", "walk" ) then
-						vsoAnim( "bodyState", "walk" )
-					elseif speed == 20 and not vsoAnimIs( "bodyState", "run" ) then
-						vsoAnim( "bodyState", "run" )
+			if not vsoAnimIs( "bodyState", "bap" ) then
+				if probablyOnGround() then
+					if dx ~= 0 then
+						if speed == 10 and not vsoAnimIs( "bodyState", "walk" ) then
+							vsoAnim( "bodyState", "walk" )
+						elseif speed == 20 and not vsoAnimIs( "bodyState", "run" ) then
+							vsoAnim( "bodyState", "run" )
+						end
+					else
+						vsoAnim( "bodyState", "idle" )
 					end
+				elseif underWater() and dx ~0 and not vsoAnimIs( "bodyState", "swim" ) then
+					vsoAnim( "bodyState", "swim" )
 				else
-					vsoAnim( "bodyState", "idle" )
-				end
-			else
-				if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
-					vsoAnim( "bodyState", "fall" )
+					if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
+						vsoAnim( "bodyState", "fall" )
+					end
 				end
 			end
 		end
@@ -605,12 +610,12 @@ function state_stand()
 			world.spawnProjectile(
 				"vapwatergun",
 				position,
-				entity.id(), 
+				entity.id(),
 				{ aiming[1] - position[1], aiming[2] - position[2] + 0.2*direction*(aiming[1] - position[1]) }
 			)
 		end
 	else
-	
+
 		doPhysics()
 	end
 	updateControlMode()
@@ -735,7 +740,7 @@ function state_sit()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -827,7 +832,7 @@ function state_lay()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -900,7 +905,7 @@ function state_sleep()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -970,7 +975,7 @@ function state_back()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -1065,7 +1070,7 @@ function state_bed() -- only accessible with no occupants
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -1154,7 +1159,7 @@ function state_hug()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -1267,7 +1272,7 @@ function state_pinned()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
@@ -1329,7 +1334,7 @@ function state_pinned_sleep()
 			end
 		end
 	end
-	
+
 	doPhysics()
 	updateControlMode()
 end
