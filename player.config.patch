@@ -1,0 +1,7 @@
+[
+	{
+		"op": "add",
+		"path": "/companionsConfig/scripts/-",
+		"value": "/scripts/openvappysettings.lua"
+	}
+]

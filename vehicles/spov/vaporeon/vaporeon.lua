@@ -138,6 +138,9 @@ function updateControlMode()
 	if controlSeat() == "driver" then
 		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		_controlmode = 1
+		if vehicle.controlHeld( controlSeat(), "Special3" ) then
+			world.sendEntityMessage( vehicle.entityLoungingIn( controlSeat() ), "openvappysettings", entity.id() )
+		end
 	elseif vsoGetTargetId( "food" ) ~= nil then
 		if vehicle.controlHeld( controlSeat(), "Special1" ) then
 			_controlmode = 1
@@ -150,6 +153,7 @@ function updateControlMode()
 	end
 end
 
+local bellyeffect = ""
 function bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
@@ -158,9 +162,9 @@ function bellyEffects()
 	vsoVictimAnimSetStatus( "firstOccupant", { "breathprotectionvehicle" } )
 
 	local effect = 0
-	if vsoPill( "digest" ) or vsoPill( "softdigest" ) then
+	if bellyeffect == "digest" or bellyeffect == "softdigest" then
 		effect = -1
-	elseif vsoPill( "heal" ) then
+	elseif bellyeffect == "heal" then
 		effect = 1
 	end
 	if getOccupants() > 1 then
@@ -170,7 +174,7 @@ function bellyEffects()
 			if effect ~= 0 then
 			local health_change = effect * vsoDelta()
 			local health = world.entityHealth( vsoGetTargetId("dessert") )
-			if vsoPill("softdigest") and health[1]/health[2] <= -health_change then
+			if bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
 				health_change = (1 - health[1]) / health[2]
 			end
 			vsoResourceAddPercent( vsoGetTargetId("dessert"), "health", health_change, function(still_alive)
@@ -187,7 +191,7 @@ function bellyEffects()
 	if effect ~= 0 then
 		local health_change = effect * vsoDelta()
 		local health = world.entityHealth( vsoGetTargetId("food") )
-		if vsoPill("softdigest") and health[1]/health[2] <= -health_change then
+		if bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
 			health_change = (1 - health[1]) / health[2]
 		end
 		vsoResourceAddPercent( vsoGetTargetId("food"), "health", health_change, function(still_alive)
@@ -282,6 +286,14 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_pinned_sleep", interact_state_pinned_sleep )
 
 	-- mMotionParametersSet( mParams() )
+
+	if vsoPill( "heal" ) then bellyeffect = "heal" end
+	if vsoPill( "digest" ) then bellyeffect = "digest" end
+	if vsoPill( "softdigest" ) then bellyeffect = "softdigest" end
+
+	message.setHandler( "settingsMenuGet", settingsMenuGet )
+	message.setHandler( "settingsMenuSet", settingsMenuSet )
+	message.setHandler( "despawn", _vsoOnDeath )
 end
 
 function onEnd()
@@ -291,23 +303,43 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
+
+function settingsMenuGet()
+	return {
+		bellyeffect = bellyeffect,
+		clickmode = "attack" -- todo
+	}
+end
+
+function settingsMenuSet(_,_, key, val )
+	if key == "bellyeffect" then
+		bellyeffect = val
+	elseif key == "clickmode" then
+		-- todo
+	end
+end
+
+-------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-local jumps = 0
-local jumped = false
-local waswater = false
-local bapped = 0
-local downframes = 0
-local _groundframes = 0
+local movement = {
+	jumps = 0,
+	jumped = false,
+	waswater = false,
+	bapped = 0,
+	downframes = 0,
+	groundframes = 0,
+	run = false
+}
 function probablyOnGround() -- check number of frames -> ceiling isn't ground
 	local yvel = mcontroller.yVelocity()
 	if yvel < 0.1 and yvel > -0.1 then
-		_groundframes = _groundframes + 1
+		movement.groundframes = movement.groundframes + 1
 	else
-		_groundframes = 0
+		movement.groundframes = 0
 	end
-	return _groundframes > 2
+	return movement.groundframes > 2
 end
 function notMoving()
 	local xvel = mcontroller.xVelocity()
@@ -469,27 +501,25 @@ function state_stand()
 			speed = 10
 		end
 		if probablyOnGround() or underWater() then
-			jumps = 0
+			movement.jumps = 0
 		end
 		if not stateQueued() then
 			if vehicle.controlHeld( controlSeat(), "down" ) then
-				downframes = downframes + 1
+				movement.downframes = movement.downframes + 1
 			else
-				if downframes > 0 and downframes < 10 and notMoving() and probablyOnGround() then
+				if movement.downframes > 0 and movement.downframes < 10 and notMoving() and probablyOnGround() then
 					vsoAnim( "bodyState", "sitdown" )
 					nextState( "sit" )
 				end
-				downframes = 0
+				movement.downframes = 0
 			end
 			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
-				if getOccupants() == 0 then
-					_vsoOnDeath() -- letout( 0 )
-				else
+				if getOccupants() > 0 then
 					letout( getOccupants() ) -- last eaten
 				end
 			end
 			if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) then
-				if bapped < 1 then
+				if movement.bapped < 1 then
 					local mposition = mcontroller.position()
 					local direction = self.vsoCurrentDirection
 					world.spawnProjectile(
@@ -510,10 +540,10 @@ function state_stand()
 							end
 						end
 					end
-					bapped = 30
+					movement.bapped = 30
 				end
 			end
-			bapped = bapped - 1
+			movement.bapped = movement.bapped - 1
 		end
 		if not stateQueued() then
 			-- movement controls, use vanilla methods because they need to be held
@@ -537,10 +567,10 @@ function state_stand()
 				end
 				if vehicle.controlHeld( controlSeat(), "jump" ) then
 					if not vehicle.controlHeld( controlSeat(), "down" ) then
-						if jumps < 2 and not jumped then
-							jumps = 1
-							if not probablyOnGround() and not waswater then
-								jumps = 2
+						if movement.jumps < 2 and not movement.jumped then
+							movement.jumps = 1
+							if not probablyOnGround() and not movement.waswater then
+								movement.jumps = 2
 								-- particles from effects/multiJump.effectsource
 								animator.burstParticleEmitter( "doublejump" )
 								for i = 1,6 do -- 2x because we big
@@ -556,15 +586,15 @@ function state_stand()
 								mcontroller.setYVelocity( 20 )
 							end
 						end
-						jumped = true
+						movement.jumped = true
 					else
 						mcontroller.applyParameters{ ignorePlatformCollision = true }
 					end
 				else
-					jumped = false
+					movement.jumped = false
 				end
 			else
-				jumped = false
+				movement.jumped = false
 				if getOccupants() == 2 then
 					speed = 10
 				end
@@ -602,7 +632,7 @@ function state_stand()
 			end
 		end
 		if not underWater() then
-			waswater = false
+			movement.waswater = false
 			mcontroller.setXVelocity( dx * speed )
 			if mcontroller.yVelocity() > 0 and vehicle.controlHeld( controlSeat(), "jump" )  then
 				mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
@@ -610,7 +640,7 @@ function state_stand()
 				mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
 			end
 		else
-			waswater = true
+			movement.waswater = true
 			mcontroller.approachXVelocity( dx * speed, 50 )
 		end
 		if vehicle.controlHeld( controlSeat(), "AltFire" ) then
