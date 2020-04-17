@@ -579,8 +579,15 @@ function state_stand()
 					else
 						vsoAnim( "bodyState", "idle" )
 					end
-				elseif underWater() and dx ~0 and not vsoAnimIs( "bodyState", "swim" ) then
-					vsoAnim( "bodyState", "swim" )
+				elseif underWater() then
+					if vehicle.controlHeld( controlSeat(), "jump" )
+					or vehicle.controlHeld( controlSeat(), "down" )
+					or vehicle.controlHeld( controlSeat(), "left" )
+					or vehicle.controlHeld( controlSeat(), "right" ) then
+						vsoAnim( "bodyState", "swim" )
+					else
+						vsoAnim( "bodyState", "swimidle" )
+					end
 				else
 					if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
 						vsoAnim( "bodyState", "fall" )
