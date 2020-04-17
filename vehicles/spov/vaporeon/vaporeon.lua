@@ -136,6 +136,8 @@ end
 
 function updateControlMode()
 	if controlSeat() == "driver" then
+		vappydriver = "vappydriver"
+		vsoApplyStatus( vappydriver, "breathProtection", 1.0 )
 		_controlmode = 1
 	elseif vsoGetTargetId( "food" ) ~= nil then
 		if vehicle.controlHeld( controlSeat(), "Special1" ) then
@@ -154,6 +156,9 @@ function bellyEffects()
 		vsoSound( "digest" )
 	end
 	vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly" } )
+	local food = "food"
+	vsoApplyStatus( food, "breathProtection", 1.0 )
+
 	local effect = 0
 	if vsoPill( "digest" ) or vsoPill( "softdigest" ) then
 		effect = -1
@@ -161,6 +166,8 @@ function bellyEffects()
 		effect = 1
 	end
 	if getOccupants() > 1 then
+		local food = "dessert"
+		vsoApplyStatus( food, "breathProtection", 1.0 )
 		if effect ~= 0 then
 			local health_change = effect * vsoDelta()
 			local health = world.entityHealth( vsoGetTargetId("dessert") )
