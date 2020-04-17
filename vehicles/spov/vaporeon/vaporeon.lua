@@ -158,8 +158,7 @@ function bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
-	vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly" } )
-	vsoVictimAnimSetStatus( "firstOccupant", { "breathprotectionvehicle" } )
+	vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
 
 	local effect = 0
 	if bellyeffect == "digest" or bellyeffect == "softdigest" then
@@ -168,9 +167,7 @@ function bellyEffects()
 		effect = 1
 	end
 	if getOccupants() > 1 then
-		local food = "dessert"
-		vsoVictimAnimSetStatus( "second", { "vsoindicatebelly" } )
-		vsoVictimAnimSetStatus( "firstOccupant", { "breathprotectionvehicle" } )
+		vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
 			if effect ~= 0 then
 			local health_change = effect * vsoDelta()
 			local health = world.entityHealth( vsoGetTargetId("dessert") )
@@ -522,25 +519,36 @@ function state_stand()
 				if movement.bapped < 1 then
 					local mposition = mcontroller.position()
 					local direction = self.vsoCurrentDirection
+					local position = { mposition[1] + 3 * direction, mposition[2] - 2.5 }
 					world.spawnProjectile(
 						"vapbap",
-						{ mposition[1] + 3 * direction, mposition[2] - 2.5 },
+						position,
 						entity.id(),
 						{ direction, 0 }
 					)
 					vsoAnim( "bodyState", "bap" )
 					if getOccupants() < 2 then
-						local prey = world.playerQuery( vehicle.aimPosition( controlSeat() ), 1 )
+						local prey = world.playerQuery( position, 2 )
 						if #prey > 0 then
 							eat( prey[1] )
 						elseif controlSeat() == "driver" then
-							prey = world.npcQuery( vehicle.aimPosition( controlSeat() ), 1 )
+							prey = world.npcQuery( position, 2 )
 							if #prey > 0 then
 								eat( prey[1] )
 							end
 						end
 					end
 					movement.bapped = 30
+					world.entityQuery( position, 2,
+						{
+							withoutEntityId = entity.id(), -- don't interact with self
+							callScript = "onInteraction",
+							callScriptArgs = { {
+								source = { 0, 0 },
+								sourceId = vehicle.entityLoungingIn( controlSeat() )
+							} }
+						}
+					)
 				end
 			end
 			movement.bapped = movement.bapped - 1
