@@ -122,6 +122,10 @@ function previousState()
 	return _pstate
 end
 
+function nonStruggleStateQueued()
+	return _qstate ~= nil or _qoccupants ~= nil
+end
+
 function stateQueued()
 	return _struggling or _qstate ~= nil or _qoccupants ~= nil
 end
@@ -504,7 +508,7 @@ function state_stand()
 		if probablyOnGround() or underWater() then
 			movement.jumps = 0
 		end
-		if not stateQueued() then
+		if not nonStruggleStateQueued() then
 			if vehicle.controlHeld( controlSeat(), "down" ) then
 				movement.downframes = movement.downframes + 1
 			else
@@ -568,7 +572,7 @@ function state_stand()
 			end
 			movement.bapped = movement.bapped - 1
 		end
-		if not stateQueued() then
+		if not nonStruggleStateQueued() then
 			-- movement controls, use vanilla methods because they need to be held
 			if vehicle.controlHeld( controlSeat(), "left" ) then
 				dx = dx - 1
@@ -635,8 +639,9 @@ function state_stand()
 						elseif speed == 20 and not vsoAnimIs( "bodyState", "run" ) then
 							vsoAnim( "bodyState", "run" )
 						end
-					else
+					elseif not _struggling then
 						vsoAnim( "bodyState", "idle" )
+					--else
 					end
 				elseif underWater() then
 					if vehicle.controlHeld( controlSeat(), "jump" )
@@ -644,8 +649,9 @@ function state_stand()
 					or vehicle.controlHeld( controlSeat(), "left" )
 					or vehicle.controlHeld( controlSeat(), "right" ) then
 						vsoAnim( "bodyState", "swim" )
-					else
+					elseif not _struggling then
 						vsoAnim( "bodyState", "swimidle" )
+					--else
 					end
 				else
 					if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
