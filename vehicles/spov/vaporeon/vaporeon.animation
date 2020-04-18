@@ -147,7 +147,9 @@
 						"smol.swimidle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swimidle.<frame><directives>" } },
 						"smol.swim": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swim.<frame><directives>" } },
 						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } },
-						"smol.bap": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.bap.<frame><directives>" } }
+						"smol.bap": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.bap.<frame><directives>" } },
+
+						"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
                     }
                 }
             },
@@ -227,7 +229,9 @@
 						"swimidle": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swim.<frame><directives>" } },
 
-						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } }
+						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } },
+
+						"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
 
 					}
                 }
@@ -246,20 +250,7 @@
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
 					}
 				}
-			},
-
-			"ball" : {
-        		"properties" : {
-         			"transformationGroups" : [ "ball" ],
-          			"centered" : true
-        		},
-
-       			"partStates" : {
-          			"ballState" : {
-            			"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
-          			}
-        		}
-      		}
+			}
         }
 	},
 	"transformationGroups": {
@@ -272,9 +263,6 @@
 		},
 		"head": {
 			"interpolated": false
-		},
-		"ball" : {
-			"interpolated": true
 		}
 	},
 	"sounds": {

@@ -1677,12 +1677,44 @@ end
 
 function begin_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
-	initCommonParameters()
+	--initCommonParameters()
 end
 
 function state_chonk_ball()
 
+	if getOccupants() > 0 then
+		bellyEffects()
+		-- if not stateQueued() and probablyOnGround() and notMoving() then
+		-- 	local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
+		-- 	-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
+		-- 	if escape then
+		-- 		if getOccupants() == 1 then
+		-- 			letout( 1 )
+		-- 		else
+		-- 			if who == 1 then
+		-- 				swapOccupants()
+		-- 			end
+		-- 			letout( 2 )
+		-- 		end
+		-- 	end
+		-- end
+	end
+
+	local dx = 0
+	local speed = 20
+	if getOccupants() > 0 then
+		speed = 10
+	end
 	if not stateQueued() then
+		if vehicle.controlHeld( controlSeat(), "down" ) then
+			movement.downframes = movement.downframes + 1
+		else
+			-- if movement.downframes > 0 and movement.downframes < 10 and notMoving() and probablyOnGround() then
+			-- 	vsoAnim( "bodyState", "sitdown" )
+			-- 	nextState( "sit" )
+			-- end
+			movement.downframes = 0
+		end
 		if vehicle.controlHeld( controlSeat(), "Special1" ) then
 			if not movement.wasspecial1 then
 				-- vsoAnim( "bodyState", "unsmolify" )
@@ -1694,7 +1726,13 @@ function state_chonk_ball()
 		else
 			movement.wasspecial1 = false
 		end
-
+		if vehicle.controlHeld( controlSeat(), "Special2" ) then
+			if getOccupants() > 0 then
+				-- letout( getOccupants() ) -- last eaten
+			end
+		end
+	end
+	if not stateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
 		if vehicle.controlHeld( controlSeat(), "left" ) then
 			dx = dx - 1
@@ -1702,11 +1740,45 @@ function state_chonk_ball()
 		if vehicle.controlHeld( controlSeat(), "right" ) then
 			dx = dx + 1
 		end
-
-		local dt = vsoDelta()
-		updateAngularVelocity(dt)
-		updateRotationFrame(dt)
+		if dx ~= 0 then
+			vsoFaceDirection( dx )
+		end
+		if not underWater() then
+			if vehicle.controlHeld( controlSeat(), "down" ) then
+				speed = 10
+				if not probablyOnGround() then
+					mcontroller.applyParameters{ ignorePlatformCollision = true }
+				end
+			else
+				mcontroller.applyParameters{ ignorePlatformCollision = false }
+			end
+		else
+			movement.jumped = false
+			if getOccupants() == 2 then
+				speed = 10
+			end
+			if vehicle.controlHeld( controlSeat(), "jump" ) then
+				mcontroller.approachYVelocity( 10, 50 )
+			else
+				mcontroller.approachYVelocity( -10, 50 )
+			end
+		end
+		if not vsoAnimIs( "bodyState", "smol.bap" ) or vsoAnimEnded( "bodyState" ) then
+			if probablyOnGround() then
+				if dx ~= 0 then
+					if speed == 10 and (not vsoAnimIs( "bodyState", "smol.walk" ) or vsoAnimEnded( "bodyState" )) then
+						vsoAnim( "bodyState", "smol.walk" )
+					elseif speed == 20 and (not vsoAnimIs( "bodyState", "smol.run" ) or vsoAnimEnded( "bodyState" )) then
+						vsoAnim( "bodyState", "smol.run" )
+					end
+				else
+					vsoAnim( "bodyState", "smol.idle" )
+				end
+			end
+		end
 	end
+
+	updateControlMode()
 end
 
 function end_state_chonk_ball()
