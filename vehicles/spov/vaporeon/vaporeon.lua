@@ -1674,3 +1674,75 @@ function end_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 	vsoAnim( "headState", "idle" )
 end
+
+-- these are yoinked from tech/distortionsphere/distortionsphere.lua
+
+function initCommonParameters()
+	self.angularVelocity = 0
+	self.angle = 0
+	self.transformFadeTimer = 0
+
+	-- self.energyCost = config.getParameter("energyCost")
+	self.ballRadius = 2 -- config.getParameter("ballRadius")
+	self.ballFrames = 12 -- config.getParameter("ballFrames")
+	--self.ballSpeed = 5 -- config.getParameter("ballSpeed")
+
+	-- these all seem unnecessary
+
+	--self.transformFadeTime = config.getParameter("transformFadeTime", 0.3)
+	--self.transformedMovementParameters = config.getParameter("transformedMovementParameters")
+	--self.transformedMovementParameters.runSpeed = self.ballSpeed
+	--self.transformedMovementParameters.walkSpeed = self.ballSpeed
+	--self.basePoly = mcontroller.baseParameters().standingPoly
+	--self.collisionSet = {"Null", "Block", "Dynamic", "Slippery"}
+
+	--self.forceDeactivateTime = config.getParameter("forceDeactivateTime", 3.0)
+	--self.forceShakeMagnitude = config.getParameter("forceShakeMagnitude", 0.125)
+  end
+
+function storePosition()
+	if self.active then
+	  storage.restorePosition = restorePosition()
+
+	  -- try to restore position. if techs are being switched, this will work and the storage will
+	  -- be cleared anyway. if the client's disconnecting, this won't work but the storage will remain to
+	  -- restore the position later in update()
+	  if storage.restorePosition then
+		storage.lastActivePosition = mcontroller.position()
+		mcontroller.setPosition(storage.restorePosition)
+	  end
+	end
+  end
+
+  function restoreStoredPosition()
+	if storage.restorePosition then
+	  -- restore position if the player was logged out (in the same planet/universe) with the tech active
+	  if vec2.mag(vec2.sub(mcontroller.position(), storage.lastActivePosition)) < 1 then
+		mcontroller.setPosition(storage.restorePosition)
+	  end
+	  storage.lastActivePosition = nil
+	  storage.restorePosition = nil
+	end
+  end
+
+function updateAngularVelocity(dt)
+	if mcontroller.groundMovement() then
+	  -- If we are on the ground, assume we are rolling without slipping to
+	  -- determine the angular velocity
+	  local positionDiff = world.distance(self.lastPosition or mcontroller.position(), mcontroller.position())
+	  self.angularVelocity = -vec2.mag(positionDiff) / dt / self.ballRadius
+
+	  if positionDiff[1] > 0 then
+		self.angularVelocity = -self.angularVelocity
+	  end
+	end
+  end
+
+  function updateRotationFrame(dt)
+	self.angle = math.fmod(math.pi * 2 + self.angle + self.angularVelocity * dt, math.pi * 2)
+
+	-- Rotation frames for the ball are given as one *half* rotation so two
+	-- full cycles of each of the ball frames completes a total rotation.
+	local rotationFrame = math.floor(self.angle / math.pi * self.ballFrames) % self.ballFrames
+	animator.setGlobalTag("rotationFrame", rotationFrame)
+  end

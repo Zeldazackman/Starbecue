@@ -3,7 +3,10 @@
 		"occupants" : "0",
 		"state" : "stand",
 		"frame" : "1",
-		"directives" : ""
+		"directives" : "",
+    	"rotationFrame" : "0",
+    	"ballDirectives" : ""
+
 	},
     "animatedParts": {
         "stateTypes": {
@@ -65,7 +68,9 @@
 					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
 					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
+					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
+
+					"chonk_ball" : { }
                 }
             },
 			"headState": {
@@ -227,7 +232,7 @@
 					}
                 }
 			},
-			
+
 			"smolhead" : {
 				"properties": {
                     "centered": true,
@@ -241,7 +246,24 @@
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
 					}
 				}
-			}
+			},
+
+			"ball" : {
+        		"properties" : {
+         			"transformationGroups" : [ "ball" ],
+          			"centered" : true
+        		},
+
+       			"partStates" : {
+          			"ballState" : {
+            			"chonk_ball" : {
+              				"properties" : {
+                				"image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>"
+              				}
+            			}
+          			}
+        		}
+      		}
         }
 	},
 	"transformationGroups": {
@@ -254,6 +276,9 @@
 		},
 		"head": {
 			"interpolated": false
+		},
+		"ball" : {
+			"interpolated": true
 		}
 	},
 	"sounds": {
