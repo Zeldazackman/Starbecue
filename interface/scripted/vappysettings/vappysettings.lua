@@ -9,15 +9,19 @@ local clickmodes = {
 
 }
 local rpcGet
+local sentInitial = false
 
 function init()
 	vappy = config.getParameter( "vappy" )
-	rpcGet = world.sendEntityMessage( vappy, "settingsMenuGet" )
 	widget.setChecked( "autoDeploy", player.getProperty( "vappyAutoDeploy" ) or false )
+	widget.setChecked( "defaultSmall", player.getProperty( "vappyDefaultSmall" ) or false )
 end
 
 function update( dt )
-	if rpcGet ~= nil and rpcGet:finished() then
+	if not sentInitial then
+		rpcGet = world.sendEntityMessage( vappy, "settingsMenuGet" )
+		sentInitial = true
+	elseif rpcGet ~= nil and rpcGet:finished() then
 		if rpcGet:succeeded() then
 			local result = rpcGet:result()
 			widget.setSelectedOption( "bellyEffect", bellyeffects[result.bellyeffect] )
@@ -46,6 +50,10 @@ end
 function autoDeploy()
 	local value = widget.getChecked( "autoDeploy" )
 	player.setProperty( "vappyAutoDeploy", value )
+end
+function defaultSmall()
+	local value = widget.getChecked( "defaultSmall" )
+	player.setProperty( "vappyDefaultSmall", value )
 end
 
 function despawn()
