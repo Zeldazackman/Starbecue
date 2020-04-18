@@ -282,6 +282,9 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_pinned", interact_state_pinned )
 	vsoOnInteract( "state_pinned_sleep", interact_state_pinned_sleep )
 
+	vsoOnBegin( "state_smol", begin_state_smol )
+	vsoOnEnd( "state_smol", end_state_smol )
+
 	-- mMotionParametersSet( mParams() )
 
 	if vsoPill( "heal" ) then bellyeffect = "heal" end
@@ -327,7 +330,8 @@ local movement = {
 	bapped = 0,
 	downframes = 0,
 	groundframes = 0,
-	run = false
+	run = false,
+	wasspecial1 = true, -- special 1 is used to activate vappy from tech
 }
 function probablyOnGround() -- check number of frames -> ceiling isn't ground
 	local yvel = mcontroller.yVelocity()
@@ -509,6 +513,17 @@ function state_stand()
 					nextState( "sit" )
 				end
 				movement.downframes = 0
+			end
+			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special1" ) then
+				if not movement.wasspecial1 then
+					-- vsoAnim( "bodyState", "smolify" )
+					vsoEffectWarpOut()
+					nextState( "smol" )
+					updateState()
+				end
+				movement.wasspecial1 = true
+			else
+				movement.wasspecial1 = false
 			end
 			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
 				if getOccupants() > 0 then
@@ -1403,4 +1418,229 @@ function interact_state_pinned_sleep( targetid )
 		end
 
 	end
+end
+
+-------------------------------------------------------------------------------
+
+function begin_state_smol()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
+end
+
+function state_smol()
+
+	if vsoAnimEnd( "bodyState" ) and not probablyOnGround() then
+		if mcontroller.yVelocity() > 0 then
+			vsoAnim( "bodyState", "smol.jumpcont" )
+		else
+			vsoAnim( "bodyState", "smol.fallcont" )
+		end
+	end
+
+	if getOccupants() > 0 then
+		bellyEffects()
+		-- if not stateQueued() and probablyOnGround() and notMoving() then
+		-- 	local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
+		-- 	-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
+		-- 	if escape then
+		-- 		if getOccupants() == 1 then
+		-- 			letout( 1 )
+		-- 		else
+		-- 			if who == 1 then
+		-- 				swapOccupants()
+		-- 			end
+		-- 			letout( 2 )
+		-- 		end
+		-- 	end
+		-- end
+	end
+
+	local dx = 0
+	local speed = 20
+	if getOccupants() > 0 then
+		speed = 10
+	end
+	if probablyOnGround() or underWater() then
+		movement.jumps = 0
+	end
+	if not stateQueued() then
+		if vehicle.controlHeld( controlSeat(), "down" ) then
+			movement.downframes = movement.downframes + 1
+		else
+			-- if movement.downframes > 0 and movement.downframes < 10 and notMoving() and probablyOnGround() then
+			-- 	vsoAnim( "bodyState", "sitdown" )
+			-- 	nextState( "sit" )
+			-- end
+			movement.downframes = 0
+		end
+		if vehicle.controlHeld( controlSeat(), "Special1" ) then
+			if not movement.wasspecial1 then
+				-- vsoAnim( "bodyState", "unsmolify" )
+				vsoEffectWarpIn()
+				nextState( "stand" )
+				updateState()
+			end
+			movement.wasspecial1 = true
+		else
+			movement.wasspecial1 = false
+		end
+		if vehicle.controlHeld( controlSeat(), "Special2" ) then
+			if getOccupants() > 0 then
+				-- letout( getOccupants() ) -- last eaten
+			end
+		end
+		if vehicle.controlHeld( controlSeat(), "PrimaryFire" ) then
+			if movement.bapped < 1 then
+				local mposition = mcontroller.position()
+				local direction = self.vsoCurrentDirection
+				local position = { mposition[1] + 3 * direction, mposition[2] - 2.5 }
+				world.spawnProjectile(
+					"vapbap",
+					position,
+					entity.id(),
+					{ direction, 0 }
+				)
+				-- vsoAnim( "bodyState", "bap" )
+				if getOccupants() < 2 then
+					local prey = world.playerQuery( position, 2 )
+					if #prey > 0 then
+						-- eat( prey[1] )
+					elseif controlSeat() == "driver" then
+						prey = world.npcQuery( position, 2 )
+						if #prey > 0 then
+							-- eat( prey[1] )
+						end
+					end
+				end
+				movement.bapped = 30
+				world.entityQuery( position, 2,
+					{
+						withoutEntityId = entity.id(), -- don't interact with self
+						callScript = "onInteraction",
+						callScriptArgs = { {
+							source = { 0, 0 },
+							sourceId = vehicle.entityLoungingIn( controlSeat() )
+						} }
+					}
+				)
+			end
+		end
+		movement.bapped = movement.bapped - 1
+	end
+	if not stateQueued() then
+		-- movement controls, use vanilla methods because they need to be held
+		if vehicle.controlHeld( controlSeat(), "left" ) then
+			dx = dx - 1
+		end
+		if vehicle.controlHeld( controlSeat(), "right" ) then
+			dx = dx + 1
+		end
+		if dx ~= 0 then
+			vsoFaceDirection( dx )
+		end
+		if not underWater() then
+			if vehicle.controlHeld( controlSeat(), "down" ) then
+				speed = 10
+				if not probablyOnGround() then
+					mcontroller.applyParameters{ ignorePlatformCollision = true }
+				end
+			else
+				mcontroller.applyParameters{ ignorePlatformCollision = false }
+			end
+			if vehicle.controlHeld( controlSeat(), "jump" ) then
+				if not vehicle.controlHeld( controlSeat(), "down" ) then
+					if movement.jumps < 2 and not movement.jumped then
+						movement.jumps = 1
+						if not probablyOnGround() and not movement.waswater then
+							movement.jumps = 2
+							-- particles from effects/multiJump.effectsource
+							animator.burstParticleEmitter( "smoldoublejump" )
+							for i = 1,3 do
+								animator.burstParticleEmitter( "defaultblue" )
+								animator.burstParticleEmitter( "defaultlightblue" )
+							end
+							vsoSound( "doublejump" )
+						end
+						vsoAnim( "bodyState", "smol.jump" )
+						if getOccupants() < 2 then
+							mcontroller.setYVelocity( 50 )
+						else
+							mcontroller.setYVelocity( 20 )
+						end
+					end
+					movement.jumped = true
+				else
+					mcontroller.applyParameters{ ignorePlatformCollision = true }
+				end
+			else
+				movement.jumped = false
+			end
+		else
+			movement.jumped = false
+			if getOccupants() == 2 then
+				speed = 10
+			end
+			if vehicle.controlHeld( controlSeat(), "jump" ) then
+				mcontroller.approachYVelocity( 10, 50 )
+			else
+				mcontroller.approachYVelocity( -10, 50 )
+			end
+		end
+		if not vsoAnimIs( "bodyState", "smol.bap" ) then
+			if probablyOnGround() then
+				if dx ~= 0 then
+					if speed == 10 and (not vsoAnimIs( "bodyState", "smol.walk" ) or vsoAnimEnded( "bodyState" )) then
+						vsoAnim( "bodyState", "smol.walk" )
+					elseif speed == 20 and (not vsoAnimIs( "bodyState", "smol.run" ) or vsoAnimEnded( "bodyState" )) then
+						vsoAnim( "bodyState", "smol.run" )
+					end
+				else
+					vsoAnim( "bodyState", "smol.idle" )
+				end
+			elseif underWater() then
+				if vehicle.controlHeld( controlSeat(), "jump" )
+				or vehicle.controlHeld( controlSeat(), "down" )
+				or vehicle.controlHeld( controlSeat(), "left" )
+				or vehicle.controlHeld( controlSeat(), "right" ) then
+					vsoAnim( "bodyState", "smol.swim" )
+				else
+					vsoAnim( "bodyState", "smol.swimidle" )
+				end
+			else
+				if mcontroller.yVelocity() < -30 and not vsoAnimIs( "bodyState", "smol.fall" ) and not vsoAnimIs( "bodyState", "smol.fallcont" ) then
+					vsoAnim( "bodyState", "smol.fall" )
+				end
+			end
+		end
+	end
+	if not underWater() then
+		movement.waswater = false
+		mcontroller.setXVelocity( dx * speed )
+		if mcontroller.yVelocity() > 0 and vehicle.controlHeld( controlSeat(), "jump" )  then
+			mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
+		else
+			mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
+		end
+	else
+		movement.waswater = true
+		mcontroller.approachXVelocity( dx * speed, 50 )
+	end
+	if vehicle.controlHeld( controlSeat(), "AltFire" ) then
+		local aiming = vehicle.aimPosition( controlSeat() )
+		local mposition = mcontroller.position()
+		local direction = -1
+		if aiming[1] > mposition[1] then direction = 1 end
+		vsoFaceDirection( direction )
+		local position = { mposition[1] + direction * 2.75, mposition[2] - 0.125 }
+		world.spawnProjectile(
+			"vapwatergun",
+			position,
+			entity.id(),
+			{ aiming[1] - position[1], aiming[2] - position[2] + 0.2*direction*(aiming[1] - position[1]) }
+		)
+	end
+	updateControlMode()
+end
+
+function end_state_smol()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 end

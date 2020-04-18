@@ -61,6 +61,22 @@
 				,"frictionEnabled" : true
 				,"gravityEnabled" : false // using custom gravity instead, for snappier falls
 				,"ignorePlatformCollision" : false
+			},
+			"smol":{
+				"collisionPoly" : [
+					[-1.25, -2.0], [-0.85, -2.5],
+					[0.85, -2.5], [1.25, -2.0],
+					[1.25, -0.35], [0.85, 0.22],
+					[-0.85, 0.22], [-1.25, -0.35]
+				]
+				,"gravityMultiplier" : 0.0
+				,"liquidBuoyancy" : 0.0
+				,"airBuoyancy" : 0.0
+				,"bounceFactor" : 0.0
+				,"collisionEnabled" : true
+				,"frictionEnabled" : true
+				,"gravityEnabled" : false // using custom gravity instead, for snappier falls
+				,"ignorePlatformCollision" : false
 			}
 		}
 		,"simple":{

@@ -9,4 +9,7 @@ function init()
 	message.setHandler( "vappyautodeploy", function()
 		return player.getProperty( "vappyAutoDeploy" )
 	end)
+	message.setHandler( "isLounging", function()
+		return player.isLounging()
+	end)
 end

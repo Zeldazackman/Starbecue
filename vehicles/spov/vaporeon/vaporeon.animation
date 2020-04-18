@@ -52,8 +52,19 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
 
-					"bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
+					"bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
 
+
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
+					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
+					"smol.jumpcont": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
+					"smol.fallcont": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
+					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" }
                 }
             }
         },
@@ -109,8 +120,19 @@
 						"swimidle": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.swim.<frame><directives>" } },
 
-						"bap": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.bap.<frame><directives>" } }
+						"bap": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.bap.<frame><directives>" } },
 
+
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.idle.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.run.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jump.<frame><directives>" } },
+						"smol.jumpcont": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jumpcont.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fall.<frame><directives>" } },
+						"smol.fallcont": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fallcont.<frame><directives>" } },
+						"smol.swimidle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swimidle.<frame><directives>" } },
+						"smol.swim": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swim.<frame><directives>" } },
+						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } }
                     }
                 }
             },
@@ -192,7 +214,11 @@
 
 						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } }
 
-                    }
+					},
+					"headState" : {
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:<occupants>.idle.<frame><directives>" } },
+						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:<occupants>.walk.<frame><directives>" } }
+					}
                 }
             }
         }
@@ -389,6 +415,29 @@
 				"layer" : "back",
 				"variance" : {
 				  "initialVelocity" : [6, 6.0]
+				}
+			  }
+			}
+		  ]
+		},
+
+		"smoldoublejump" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/doublejump/doublejump.animation",
+				"position" : [0, -1],
+				"finalVelocity" : [0, 0],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85,
+				"layer" : "back",
+				"light" : [70, 100, 140],
+				"fade" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.0, 0.0]
 				}
 			  }
 			}
