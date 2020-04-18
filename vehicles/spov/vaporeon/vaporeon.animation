@@ -64,9 +64,18 @@
 					"smol.fallcont": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
-					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" }
+					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
                 }
-            }
+            },
+			"headState": {
+                "default": "idle",
+                "states": {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end" }
+				}
+			}
         },
         "parts": {
             "background": {
@@ -132,7 +141,8 @@
 						"smol.fallcont": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fallcont.<frame><directives>" } },
 						"smol.swimidle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swimidle.<frame><directives>" } },
 						"smol.swim": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.swim.<frame><directives>" } },
-						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } }
+						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } },
+						"smol.bap": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.bap.<frame><directives>" } }
                     }
                 }
             },
@@ -214,13 +224,24 @@
 
 						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } }
 
-					},
-					"headState" : {
-						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:<occupants>.idle.<frame><directives>" } },
-						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:<occupants>.walk.<frame><directives>" } }
 					}
                 }
-            }
+			},
+			
+			"smolhead" : {
+				"properties": {
+                    "centered": true,
+                    "zLevel": 0,
+                     "transformationGroups": ["flip", "head"]
+                },
+                "partStates": {
+					"headState" : {
+                        "idle": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
+						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
+					}
+				}
+			}
         }
 	},
 	"transformationGroups": {
@@ -230,6 +251,9 @@
 		},
 		"victimposition2": {
 			"interpolated": true
+		},
+		"head": {
+			"interpolated": false
 		}
 	},
 	"sounds": {
