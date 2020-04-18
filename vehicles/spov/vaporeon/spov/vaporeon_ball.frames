@@ -2,9 +2,15 @@
   "frameGrid" : {
     "size" : [48, 48],
     "dimensions" : [3, 4],
-
+    "names" : [
+      [ "2.chonk_ball.1", "2.chonk_ball.2", "2.chonk_ball.3" ],
+      [ "2.chonk_ball.4", "2.chonk_ball.5", "2.chonk_ball.6" ],
+      [ "2.chonk_ball.7", "2.chonk_ball.8", "2.chonk_ball.9" ],
+      [ "2.chonk_ball.10", "2.chonk_ball.11", "2.chonk_ball.12" ]
+    ]
   },
   "aliases" : {
     "default" : "0"
+    "default" : "2.chonk_ball.1"
   }
 }

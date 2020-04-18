@@ -1677,10 +1677,10 @@ end
 
 function begin_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
+	initCommonParameters()
 end
 
 function state_chonk_ball()
-	initCommonParameters()
 
 	if not stateQueued() then
 		if vehicle.controlHeld( controlSeat(), "Special1" ) then
@@ -1702,8 +1702,10 @@ function state_chonk_ball()
 		if vehicle.controlHeld( controlSeat(), "right" ) then
 			dx = dx + 1
 		end
-		updateAngularVelocity(args.dt)
-		updateRotationFrame(args.dt)
+
+		local dt = vsoDelta()
+		updateAngularVelocity(dt)
+		updateRotationFrame(dt)
 	end
 end
 
@@ -1737,16 +1739,16 @@ function initCommonParameters()
 end
 
 function updateAngularVelocity(dt)
-	if mcontroller.groundMovement() then
+	--if mcontroller.groundMovement() then
 	  -- If we are on the ground, assume we are rolling without slipping to
 	  -- determine the angular velocity
 	  local positionDiff = world.distance(self.lastPosition or mcontroller.position(), mcontroller.position())
-	  self.angularVelocity = -vec2.mag(positionDiff) / dt / self.ballRadius
+	  self.angularVelocity = -vec2.mag(positionDiff) / dt / 2 --self.ballRadius
 
 	  if positionDiff[1] > 0 then
 		self.angularVelocity = -self.angularVelocity
 	  end
-	end
+	--end
 end
 
 function updateRotationFrame(dt)
