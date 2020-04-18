@@ -4,7 +4,7 @@
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
-    	"rotationFrame" : "0",
+    	"rotationFrame" : "1",
     	"ballDirectives" : ""
 
 	},
@@ -149,7 +149,7 @@
 						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } },
 						"smol.bap": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.bap.<frame><directives>" } },
 
-						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
+						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:chonk_ball.<rotationFrame><ballDirectives>" } }
                     }
                 }
             },

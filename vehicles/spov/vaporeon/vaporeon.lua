@@ -1764,7 +1764,7 @@ function state_chonk_ball()
 			end
 		end
 	end
-	vsoAnim( "bodystate", "chonk_ball" )
+	vsoAnim( "bodyState", "chonk_ball" )
 	updateControlMode()
 end
 
