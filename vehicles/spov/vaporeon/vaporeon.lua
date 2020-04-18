@@ -1484,7 +1484,7 @@ function state_smol()
 	if probablyOnGround() or underWater() then
 		movement.jumps = 0
 	end
-	if not stateQueued() then
+	if not nonStruggleStateQueued() then
 		if vehicle.controlHeld( controlSeat(), "down" ) then
 			movement.downframes = movement.downframes + 1
 		else
@@ -1547,7 +1547,7 @@ function state_smol()
 		end
 		movement.bapped = movement.bapped - 1
 	end
-	if not stateQueued() then
+	if not nonStruggleStateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
 		if vehicle.controlHeld( controlSeat(), "left" ) then
 			dx = dx - 1
@@ -1705,7 +1705,7 @@ function state_chonk_ball()
 	if getOccupants() > 0 then
 		speed = 10
 	end
-	if not stateQueued() then
+	if not nonStruggleStateQueued() then
 		if vehicle.controlHeld( controlSeat(), "down" ) then
 			movement.downframes = movement.downframes + 1
 		else
@@ -1732,7 +1732,7 @@ function state_chonk_ball()
 			end
 		end
 	end
-	if not stateQueued() then
+	if not nonStruggleStateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
 		if vehicle.controlHeld( controlSeat(), "left" ) then
 			dx = dx - 1
@@ -1763,21 +1763,8 @@ function state_chonk_ball()
 				mcontroller.approachYVelocity( -10, 50 )
 			end
 		end
-		if not vsoAnimIs( "bodyState", "smol.bap" ) or vsoAnimEnded( "bodyState" ) then
-			if probablyOnGround() then
-				if dx ~= 0 then
-					if speed == 10 and (not vsoAnimIs( "bodyState", "smol.walk" ) or vsoAnimEnded( "bodyState" )) then
-						vsoAnim( "bodyState", "smol.walk" )
-					elseif speed == 20 and (not vsoAnimIs( "bodyState", "smol.run" ) or vsoAnimEnded( "bodyState" )) then
-						vsoAnim( "bodyState", "smol.run" )
-					end
-				else
-					vsoAnim( "bodyState", "smol.idle" )
-				end
-			end
-		end
 	end
-
+	vsoAnim( "bodystate", "chonk_ball" )
 	updateControlMode()
 end
 

@@ -70,7 +70,7 @@
 					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
 
-					"chonk_ball" : { "frames": 1, "cycle": 1, "mode": "end" }
+					"chonk_ball": { "frames": 1, "cycle": 1, "mode": "end" }
                 }
             },
 			"headState": {
@@ -149,7 +149,7 @@
 						"smol.duck": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.duck.<frame><directives>" } },
 						"smol.bap": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.bap.<frame><directives>" } },
 
-						"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
+						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
                     }
                 }
             },
@@ -229,10 +229,7 @@
 						"swimidle": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swim.<frame><directives>" } },
 
-						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } },
-
-						"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
-
+						"bap": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.bap.<frame><directives>" } }
 					}
                 }
 			},
