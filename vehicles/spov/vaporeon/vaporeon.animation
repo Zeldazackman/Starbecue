@@ -68,9 +68,9 @@
 					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
 					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
+					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
 
-					//"chonk_ball" : { }
+					"chonk_ball" : { "frames": 1, "cycle": 1, "mode": "end" }
                 }
             },
 			"headState": {
@@ -256,11 +256,7 @@
 
        			"partStates" : {
           			"ballState" : {
-            			"chonk_ball" : {
-              				"properties" : {
-                				"image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>"
-              				}
-            			}
+            			"chonk_ball" : { "properties" : { "image" : "spov/vaporeon_ball.png:<rotationFrame><ballDirectives>" } }
           			}
         		}
       		}

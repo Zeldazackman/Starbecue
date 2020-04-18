@@ -527,7 +527,7 @@ function state_stand()
 					if getOccupants() < 2 then
 						nextState( "smol" )
 					else
-						nextState( "smol_boll" )
+						nextState( "chonk_ball" )
 					end
 					updateState()
 				end
@@ -1675,6 +1675,42 @@ function end_state_smol()
 	vsoAnim( "headState", "idle" )
 end
 
+function begin_state_chonk_ball()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
+end
+
+function state_chonk_ball()
+	initCommonParameters()
+
+	if not stateQueued() then
+		if vehicle.controlHeld( controlSeat(), "Special1" ) then
+			if not movement.wasspecial1 then
+				-- vsoAnim( "bodyState", "unsmolify" )
+				vsoEffectWarpIn()
+				nextState( "stand" )
+				updateState()
+			end
+			movement.wasspecial1 = true
+		else
+			movement.wasspecial1 = false
+		end
+
+		-- movement controls, use vanilla methods because they need to be held
+		if vehicle.controlHeld( controlSeat(), "left" ) then
+			dx = dx - 1
+		end
+		if vehicle.controlHeld( controlSeat(), "right" ) then
+			dx = dx + 1
+		end
+		updateAngularVelocity(args.dt)
+		updateRotationFrame(args.dt)
+	end
+end
+
+function end_state_chonk_ball()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+end
+
 -- these are yoinked from tech/distortionsphere/distortionsphere.lua
 
 function initCommonParameters()
@@ -1698,32 +1734,7 @@ function initCommonParameters()
 
 	--self.forceDeactivateTime = config.getParameter("forceDeactivateTime", 3.0)
 	--self.forceShakeMagnitude = config.getParameter("forceShakeMagnitude", 0.125)
-  end
-
-function storePosition()
-	if self.active then
-	  storage.restorePosition = restorePosition()
-
-	  -- try to restore position. if techs are being switched, this will work and the storage will
-	  -- be cleared anyway. if the client's disconnecting, this won't work but the storage will remain to
-	  -- restore the position later in update()
-	  if storage.restorePosition then
-		storage.lastActivePosition = mcontroller.position()
-		mcontroller.setPosition(storage.restorePosition)
-	  end
-	end
-  end
-
-  function restoreStoredPosition()
-	if storage.restorePosition then
-	  -- restore position if the player was logged out (in the same planet/universe) with the tech active
-	  if vec2.mag(vec2.sub(mcontroller.position(), storage.lastActivePosition)) < 1 then
-		mcontroller.setPosition(storage.restorePosition)
-	  end
-	  storage.lastActivePosition = nil
-	  storage.restorePosition = nil
-	end
-  end
+end
 
 function updateAngularVelocity(dt)
 	if mcontroller.groundMovement() then
@@ -1736,13 +1747,13 @@ function updateAngularVelocity(dt)
 		self.angularVelocity = -self.angularVelocity
 	  end
 	end
-  end
+end
 
-  function updateRotationFrame(dt)
+function updateRotationFrame(dt)
 	self.angle = math.fmod(math.pi * 2 + self.angle + self.angularVelocity * dt, math.pi * 2)
 
 	-- Rotation frames for the ball are given as one *half* rotation so two
 	-- full cycles of each of the ball frames completes a total rotation.
 	local rotationFrame = math.floor(self.angle / math.pi * self.ballFrames) % self.ballFrames
 	animator.setGlobalTag("rotationFrame", rotationFrame)
-  end
+end

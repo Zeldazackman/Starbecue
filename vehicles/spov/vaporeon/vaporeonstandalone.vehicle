@@ -84,9 +84,9 @@
 					[0.85, -2.5], [1.25, -2.0],
 					[1.25, -0.35], [0.85, 0.22],
 					[-0.85, 0.22], [-1.25, -0.35]
-				]
+				],
 				// stuff copied from distortion sphere have no idea if this will do anything here
-				,"groundForce" : 225.0,
+				"groundForce" : 225.0,
     			"normalGroundFriction" : 1.5,
    				"ambulatingGroundFriction" : 0.2,
     			"slopeSlidingFactor" : 3.0
