@@ -411,7 +411,11 @@ function doPhysics()
 	end
 end
 function forcedSitE(_,_, seatIndex )
-	movement.E = true
+	if seatIndex == 0 and controlSeat() == "driver" then
+		movement.E = true
+	elseif seatIndex == 1 and controlSeat() == "firstOccupant" then
+		movement.E = true
+	end
 end
 
 function eat( targetid )
