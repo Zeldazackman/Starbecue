@@ -135,7 +135,11 @@ function controlState()
 	return _controlmode == 1
 end
 function controlSeat()
-	return "firstOccupant"
+	if config.getParameter( "driver" ) ~= nil then
+		return "driver"
+	else
+		return "firstOccupant"
+	end
 end
 
 function updateControlMode()
@@ -280,8 +284,12 @@ end
 function onBegin()	--This sets up the VSO ONCE.
 
 	vsoEffectWarpIn();	--Play warp in effect
-	if standaloneinit ~= nil then
-		standaloneinit()
+	if config.getParameter( "driver" ) ~= nil then
+		local driver = config.getParameter( "driver" )
+		storage._vsoSpawnOwner = driver
+		storage._vsoSpawnOwnerName = world.entityName( driver )
+		vsoEat( driver, "driver" )
+		vsoVictimAnimVisible( "driver", false )
 	end
 
 	onForcedReset();	--Do a forced reset once.
@@ -748,7 +756,7 @@ function state_stand()
 	updateControlMode()
 end
 
-function basic_interact_state_stand()
+function interact_state_stand( targetid )
 	if not stateQueued() and mcontroller.yVelocity() > -5 then
 
 		-- vsoAnim( "bodyState", "idle_back" )
@@ -780,10 +788,6 @@ function basic_interact_state_stand()
 		end
 
 	end
-end
-
-function interact_state_stand( targetid )
-	basic_interact_state_stand()
 end
 
 
