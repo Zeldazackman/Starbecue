@@ -511,7 +511,7 @@ function state_stand()
 		if probablyOnGround() or underWater() then
 			movement.jumps = 0
 		end
-		if not nonStruggleStateQueued() then
+		if not stateQueued() then
 			if vehicle.controlHeld( controlSeat(), "down" ) then
 				movement.downframes = movement.downframes + 1
 			else
@@ -523,7 +523,7 @@ function state_stand()
 			end
 			if movement.wasspecial1 ~= true and movement.wasspecial1 ~= false and movement.wasspecial1 > 0 then
 				movement.wasspecial1 = movement.wasspecial1 - 1
-			elseif controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special1" ) and not _struggling then
+			elseif controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special1" ) then
 				if not movement.wasspecial1 then
 					-- vsoAnim( "bodyState", "smolify" )
 					vsoEffectWarpOut()
@@ -538,7 +538,7 @@ function state_stand()
 			else
 				movement.wasspecial1 = false
 			end
-			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) and not _struggling then
+			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" )  then
 				if getOccupants() > 0 then
 					letout( getOccupants() ) -- last eaten
 				end
@@ -691,7 +691,7 @@ function state_stand()
 			world.spawnProjectile(
 				"vapwatergun",
 				position,
-				entity.id(),
+				vehicle.entityLoungingIn( controlSeat() ),
 				{ aiming[1] - position[1], aiming[2] - position[2] + 0.2*direction*(aiming[1] - position[1]) }
 			)
 		end
@@ -1666,10 +1666,9 @@ function state_smol()
 		world.spawnProjectile(
 			"vapwatergun",
 			position,
-			entity.id(),
+			vehicle.entityLoungingIn( controlSeat() ),
 			{ aiming[1] - position[1], aiming[2] - position[2] + 0.2*direction*(aiming[1] - position[1]) }
 		)
-		vsoAnim( "headState", "smol.watergun" )
 	end
 	updateControlMode()
 end
