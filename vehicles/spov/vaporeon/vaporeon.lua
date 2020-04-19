@@ -523,7 +523,7 @@ function state_stand()
 			end
 			if movement.wasspecial1 ~= true and movement.wasspecial1 ~= false and movement.wasspecial1 > 0 then
 				movement.wasspecial1 = movement.wasspecial1 - 1
-			elseif controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special1" ) then
+			elseif controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special1" ) and not _struggling then
 				if not movement.wasspecial1 then
 					-- vsoAnim( "bodyState", "smolify" )
 					vsoEffectWarpOut()
@@ -1679,10 +1679,27 @@ function end_state_smol()
 	vsoAnim( "headState", "idle" )
 end
 
+local CurBallFrame
+function roll_chonk_ball()
+	if CurBallFrame > 11 then
+		CurBallFrame = 0
+	elseif CurBallFrame < 0 then
+		CurBallFrame = 11
+	end
+	animator.setGlobalTag("rotationFrame", CurBallFrame)
+	vsoAnim( "bodyState", "chonk_ball" )
+end
+
+
 function begin_state_chonk_ball()
+	animator.setGlobalTag("rotationFlip", self.vsoCurrentDirection)
+
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
 	_struggling = false
-	initCommonParameters()
+	CurBallFrame = 0
+	BallLastPosition = mcontroller.position()
+	vsoAnim( "bodyState", "chonk_ball" )
+	--initCommonParameters()
 end
 
 function state_chonk_ball()
@@ -1710,7 +1727,7 @@ function state_chonk_ball()
 	if getOccupants() > 0 then
 		speed = 10
 	end
-	if not nonStruggleStateQueued() then
+	if not stateQueued() then
 		if vehicle.controlHeld( controlSeat(), "down" ) then
 			movement.downframes = movement.downframes + 1
 		else
@@ -1737,14 +1754,23 @@ function state_chonk_ball()
 			end
 		end
 	end
-	if not nonStruggleStateQueued() then
+	if not stateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
 		if vehicle.controlHeld( controlSeat(), "left" ) then
 			dx = dx - 1
+			if vsoAnimEnd( "bodyState" ) then
+				CurBallFrame = CurBallFrame - 1
+				roll_chonk_ball()
+			end
 		end
 		if vehicle.controlHeld( controlSeat(), "right" ) then
 			dx = dx + 1
+			if vsoAnimEnd( "bodyState" ) then
+				CurBallFrame = CurBallFrame + 1
+				roll_chonk_ball()
+			end
 		end
+
 		if not underWater() then
 			if vehicle.controlHeld( controlSeat(), "down" ) then
 				speed = 10
@@ -1778,11 +1804,9 @@ function state_chonk_ball()
 		movement.waswater = true
 		mcontroller.approachXVelocity( dx * speed, 50 )
 	end
-	local dt = vsoDelta()
-	updateAngularVelocity(dt)
-	updateRotationFrame(dt)
-
-	vsoAnim( "bodyState", "chonk_ball" )
+	--local dt = vsoDelta()
+	--updateAngularVelocity(dt)
+	--updateRotationFrame(dt)
 	updateControlMode()
 end
 
@@ -1791,6 +1815,10 @@ function end_state_chonk_ball()
 end
 
 -- these are yoinked from tech/distortionsphere/distortionsphere.lua
+--local angularVelocity
+--local angle
+--local ballRadius
+--local ballFrames
 
 function initCommonParameters()
 	self.angularVelocity = 0

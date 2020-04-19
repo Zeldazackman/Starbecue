@@ -3,13 +3,25 @@
     "size" : [48, 48],
     "dimensions" : [3, 4],
     "names" : [
-      [ "chonk_ball.0", "chonk_ball.1", "chonk_ball.2" ],
-      [ "chonk_ball.3", "chonk_ball.4", "chonk_ball.5" ],
-      [ "chonk_ball.6", "chonk_ball.7", "chonk_ball.8" ],
-      [ "chonk_ball.9", "chonk_ball.10", "chonk_ball.11" ]
+      [ "1.chonk_ball.0", "1.chonk_ball.1", "1.chonk_ball.2" ],
+      [ "1.chonk_ball.3", "1.chonk_ball.4", "1.chonk_ball.5" ],
+      [ "1.chonk_ball.6", "1.chonk_ball.7", "1.chonk_ball.8" ],
+      [ "1.chonk_ball.9", "1.chonk_ball.10", "1.chonk_ball.11" ]
     ]
   },
   "aliases" : {
-    "default" : "chonk_ball.0"
+    "default" : "1.chonk_ball.0",
+    "-1.chonk_ball.0" : "1.chonk_ball.0",
+    "-1.chonk_ball.1" : "1.chonk_ball.11",
+    "-1.chonk_ball.2" : "1.chonk_ball.10",
+    "-1.chonk_ball.3" : "1.chonk_ball.9",
+    "-1.chonk_ball.4" : "1.chonk_ball.8",
+    "-1.chonk_ball.5" : "1.chonk_ball.7",
+    "-1.chonk_ball.6" : "1.chonk_ball.6",
+    "-1.chonk_ball.7" : "1.chonk_ball.5",
+    "-1.chonk_ball.8" : "1.chonk_ball.4",
+    "-1.chonk_ball.9" : "1.chonk_ball.3",
+    "-1.chonk_ball.10" : "1.chonk_ball.2",
+    "-1.chonk_ball.11" : "1.chonk_ball.1"
   }
 }
