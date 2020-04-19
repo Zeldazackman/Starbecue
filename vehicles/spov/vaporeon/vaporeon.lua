@@ -319,6 +319,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	-- message.setHandler( "settingsMenuGet", settingsMenuGet )
 	message.setHandler( "settingsMenuSet", settingsMenuSet )
 	message.setHandler( "despawn", _vsoOnDeath )
+	message.setHandler( "forcedsit", forcedSitE )
 end
 
 function onEnd()
@@ -370,6 +371,8 @@ local movement = {
 	groundframes = 0,
 	run = false,
 	wasspecial1 = 10, -- Give things time to finish initializing, so it realizes you're holding special1 from spawning vap instead of it being a new press
+	E = false,
+	wasE = false,
 }
 function probablyOnGround() -- check number of frames -> ceiling isn't ground
 	local yvel = mcontroller.yVelocity()
@@ -406,6 +409,9 @@ function doPhysics()
 			vsoUseLounge( false, "firstOccupant" )
 		end
 	end
+end
+function forcedSitE(_,_, seatIndex )
+	movement.E = true
 end
 
 function eat( targetid )
@@ -732,7 +738,17 @@ function basic_stand_control_bap(BapProjectile)
 				end
 			end
 			movement.bapped = 30
-			world.entityQuery( position, 2,
+		end
+	end
+	movement.bapped = movement.bapped - 1
+	if movement.E then -- intercepting vsoForcePlayerSit to get this
+		if not movement.wasE then
+			local aim = vehicle.aimPosition( controlSeat() )
+			local dpos = world.distance( aim, mcontroller.position() )
+			if world.magnitude( dpos ) > 10 then -- interact range
+				aim = mcontroller.position()
+			end
+			world.entityQuery( aim, 0.5,
 				{
 					withoutEntityId = entity.id(), -- don't interact with self
 					callScript = "onInteraction",
@@ -743,8 +759,11 @@ function basic_stand_control_bap(BapProjectile)
 				}
 			)
 		end
+		movement.wasE = true
+	else
+		movement.wasE = false
 	end
-	movement.bapped = movement.bapped - 1
+	movement.E = false
 end
 
 function state_stand()
@@ -1629,7 +1648,17 @@ function state_smol()
 				-- 	end
 				-- end
 				movement.bapped = 30
-				world.entityQuery( position, 0.5,
+			end
+		end
+		movement.bapped = movement.bapped - 1
+		if movement.E then -- intercepting vsoForcePlayerSit to get this
+			if not movement.wasE then
+				local aim = vehicle.aimPosition( controlSeat() )
+				local dpos = world.distance( aim, mcontroller.position() )
+				if world.magnitude( dpos ) > 10 then -- interact range
+					aim = mcontroller.position()
+				end
+				world.entityQuery( aim, 0.5,
 					{
 						withoutEntityId = entity.id(), -- don't interact with self
 						callScript = "onInteraction",
@@ -1640,8 +1669,11 @@ function state_smol()
 					}
 				)
 			end
+			movement.wasE = true
+		else
+			movement.wasE = false
 		end
-		movement.bapped = movement.bapped - 1
+		movement.E = false
 	end
 	if not stateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
