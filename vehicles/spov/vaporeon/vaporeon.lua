@@ -866,6 +866,9 @@ function basic_sit_control_state_changing(pin_bounds)
 				local pinnable = {}
 				if getOccupants() == 0 then
 					pinnable = world.playerQuery( pin_bounds[1], pin_bounds[2] )
+					if #pinnable == 0 and controlSeat() == "driver" then
+						pinnable = world.npcQuery( pin_bounds[1], pin_bounds[2] )
+					end
 				end
 				if #pinnable == 1 then
 					sitPin( pinnable[1] )
@@ -1138,6 +1141,15 @@ function state_back()
 	baic_back_control_state()
 	doPhysics()
 	updateControlMode()
+
+	if getOccupants() == 0 and controlSeat() == "driver" then
+		if vsoChance(0.1) then -- every frame, we don't want it too often
+			local npcs = world.npcQuery(mcontroller.position(), 4)
+			if npcs[1] ~= nil then
+				interact_state_back( npcs[1] )
+			end
+		end
+	end
 end
 
 function interact_state_back( targetid )
@@ -1205,7 +1217,8 @@ function state_bed() -- only accessible with no occupants
 	updateControlMode()
 	if not stateQueued() then
 		if not controlState() or controlSeat() == "driver" then
-			if vsoHasAnySPOInputs( "firstOccupant" ) then
+			if vsoHasAnySPOInputs( "firstOccupant" ) and
+			( not world.isNpc( vsoGetTargetId( "food" ) ) or vsoChance(0.1) ) then -- force npcs to stay longer
 				nextState( "back" )
 				updateState()
 				vsoAnim( "bodyState", "idle" )
