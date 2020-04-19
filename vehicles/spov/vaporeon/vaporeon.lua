@@ -178,7 +178,7 @@ function bellyEffects()
 		effect = 1
 	end
 	if getOccupants() > 1 then
-		vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
+		vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
 			if effect ~= 0 then
 			local health_change = effect * vsoDelta()
 			local health = world.entityHealth( vsoGetTargetId("dessert") )
