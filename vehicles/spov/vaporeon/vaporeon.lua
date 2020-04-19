@@ -972,7 +972,9 @@ function basic_lay_control_state()
 				vsoAnim( "bodyState", "situp" )
 				nextState( "sit" )
 			end
-			if movedir == "F" or movedir == "B" and getOccupants() < 2 then
+			if movedir == "F" and getOccupants() < 2
+			or movedir == "B" and getOccupants() < 2 then
+
 				vsoAnim( "bodyState", "rollover" )
 				nextState( "back" )
 			end
