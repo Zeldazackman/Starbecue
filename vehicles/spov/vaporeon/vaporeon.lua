@@ -538,7 +538,7 @@ function state_stand()
 			else
 				movement.wasspecial1 = false
 			end
-			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) then
+			if controlSeat() == "driver" and vehicle.controlHeld( controlSeat(), "Special2" ) and not _struggling then
 				if getOccupants() > 0 then
 					letout( getOccupants() ) -- last eaten
 				end
@@ -1439,6 +1439,7 @@ end
 
 function begin_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
+	_struggling = false
 end
 
 function state_smol()
@@ -1487,7 +1488,7 @@ function state_smol()
 	if probablyOnGround() or underWater() then
 		movement.jumps = 0
 	end
-	if not nonStruggleStateQueued() then
+	if not stateQueued() then
 		if vehicle.controlHeld( controlSeat(), "down" ) then
 			movement.downframes = movement.downframes + 1
 		else
@@ -1550,7 +1551,7 @@ function state_smol()
 		end
 		movement.bapped = movement.bapped - 1
 	end
-	if not nonStruggleStateQueued() then
+	if not stateQueued() then
 		-- movement controls, use vanilla methods because they need to be held
 		if vehicle.controlHeld( controlSeat(), "left" ) then
 			dx = dx - 1
@@ -1680,6 +1681,7 @@ end
 
 function begin_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
+	_struggling = false
 	initCommonParameters()
 end
 
