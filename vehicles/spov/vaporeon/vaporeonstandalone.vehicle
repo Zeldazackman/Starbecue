@@ -407,7 +407,7 @@
 				,"y": [ -1.0 ]
 				,"r": [ 0.0 ]
 				,"sitpos": [ "sit" ]
-				,"emote": [ "sleep" ]
+				,"emote": [ ]
 				,"dance": [ ]
 			}
 			,"center2":{
@@ -421,7 +421,7 @@
 				,"y": [ -1.0 ]
 				,"r": [ 0.0 ]
 				,"sitpos": [ "sit" ]
-				,"emote": [ "sleep" ]
+				,"emote": [ ]
 				,"dance": [ ]
 			}
 

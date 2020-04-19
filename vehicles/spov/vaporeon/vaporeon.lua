@@ -143,7 +143,10 @@ function updateControlMode()
 		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		_controlmode = 1
 		if vehicle.controlHeld( controlSeat(), "Special3" ) then
-			world.sendEntityMessage( vehicle.entityLoungingIn( controlSeat() ), "openvappysettings", entity.id() )
+			world.sendEntityMessage(
+				vehicle.entityLoungingIn( controlSeat() ), "openvappysettings",
+				entity.id(), vsoGetTargetId( "food" ), vsoGetTargetId( "dessert" )
+			)
 		end
 	elseif vsoGetTargetId( "food" ) ~= nil then
 		if vehicle.controlHeld( controlSeat(), "Special1" ) then
@@ -197,11 +200,18 @@ function bellyEffects()
 		end
 		vsoResourceAddPercent( vsoGetTargetId("food"), "health", health_change, function(still_alive)
 			if not still_alive then
-				vsoUneat( "firstOccupant" )
-
-				vsoSetTarget( "food", nil )
-				vsoUseLounge( false, "firstOccupant" )
-				setOccupants(0)
+				if getOccupants() == 2 then
+					swapOccupants()
+					vsoUneat( "SecondOccupant" )
+					vsoSetTarget( "dessert", nil )
+					vsoUseLounge( false, "secondOccupant" )
+					setOccupants(1)
+				else
+					vsoUneat( "firstOccupant" )
+					vsoSetTarget( "food", nil )
+					vsoUseLounge( false, "firstOccupant" )
+					setOccupants(0)
+				end
 			end
 		end)
 	end
@@ -298,7 +308,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	if vsoPill( "digest" ) then bellyeffect = "digest" end
 	if vsoPill( "softdigest" ) then bellyeffect = "softdigest" end
 
-	message.setHandler( "settingsMenuGet", settingsMenuGet )
+	-- message.setHandler( "settingsMenuGet", settingsMenuGet )
 	message.setHandler( "settingsMenuSet", settingsMenuSet )
 	message.setHandler( "despawn", _vsoOnDeath )
 end
@@ -314,7 +324,9 @@ end
 function settingsMenuGet()
 	return {
 		bellyeffect = bellyeffect,
-		clickmode = "attack" -- todo
+		clickmode = "attack", -- todo
+		firstOccupant = vsoGetTargetId( "food" ),
+		secondOccupant = vsoGetTargetId( "dessert" ),
 	}
 end
 
@@ -323,6 +335,17 @@ function settingsMenuSet(_,_, key, val )
 		bellyeffect = val
 	elseif key == "clickmode" then
 		-- todo
+	elseif key == "letout" then
+		if _state == "stand" and getOccupants() > 0 and not stateQueued() then
+			if getOccupants() == 1 then
+				letout( 1 )
+			else
+				if val == 1 then
+					swapOccupants()
+				end
+				letout( 2 )
+			end
+		end
 	end
 end
 
@@ -1727,6 +1750,8 @@ function end_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 	vsoAnim( "headState", "idle" )
 end
+
+-------------------------------------------------------------------------------
 
 local CurBallFrame
 function roll_chonk_ball()

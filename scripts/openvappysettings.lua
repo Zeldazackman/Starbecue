@@ -1,9 +1,11 @@
 local oldinit = init
 function init()
 	oldinit()
-	message.setHandler( "openvappysettings", function(_,_, vappy )
+	message.setHandler( "openvappysettings", function(_,_, vappy, firstOccupant, secondOccupant )
 		local pane = root.assetJson("/interface/scripted/vappysettings/vappysettings.config")
 		pane.vappy = vappy
+		pane.firstOccupant = firstOccupant
+		pane.secondOccupant = secondOccupant
 		player.interact( "ScriptPane", pane, vappy )
 	end)
 	message.setHandler( "vappyautodeploy", function()
