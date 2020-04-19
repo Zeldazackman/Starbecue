@@ -4,7 +4,7 @@
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
-    	"rotationFrame" : "1",
+    	"rotationFrame" : "0",
     	"ballDirectives" : ""
 
 	},

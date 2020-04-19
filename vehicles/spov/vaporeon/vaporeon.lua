@@ -289,6 +289,9 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnBegin( "state_smol", begin_state_smol )
 	vsoOnEnd( "state_smol", end_state_smol )
 
+	vsoOnBegin( "state_chonk_ball", begin_state_chonk_ball )
+	vsoOnEnd( "state_chonk_ball", end_state_chonk_ball )
+
 	-- mMotionParametersSet( mParams() )
 
 	if vsoPill( "heal" ) then bellyeffect = "heal" end
@@ -1677,7 +1680,7 @@ end
 
 function begin_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
-	--initCommonParameters()
+	initCommonParameters()
 end
 
 function state_chonk_ball()
@@ -1740,9 +1743,6 @@ function state_chonk_ball()
 		if vehicle.controlHeld( controlSeat(), "right" ) then
 			dx = dx + 1
 		end
-		if dx ~= 0 then
-			vsoFaceDirection( dx )
-		end
 		if not underWater() then
 			if vehicle.controlHeld( controlSeat(), "down" ) then
 				speed = 10
@@ -1764,6 +1764,22 @@ function state_chonk_ball()
 			end
 		end
 	end
+	if not underWater() then
+		movement.waswater = false
+		mcontroller.setXVelocity( dx * speed )
+		if mcontroller.yVelocity() > 0 and vehicle.controlHeld( controlSeat(), "jump" )  then
+			mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
+		else
+			mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
+		end
+	else
+		movement.waswater = true
+		mcontroller.approachXVelocity( dx * speed, 50 )
+	end
+	local dt = vsoDelta()
+	updateAngularVelocity(dt)
+	updateRotationFrame(dt)
+
 	vsoAnim( "bodyState", "chonk_ball" )
 	updateControlMode()
 end
@@ -1802,7 +1818,7 @@ function updateAngularVelocity(dt)
 	  -- If we are on the ground, assume we are rolling without slipping to
 	  -- determine the angular velocity
 	  local positionDiff = world.distance(self.lastPosition or mcontroller.position(), mcontroller.position())
-	  self.angularVelocity = -vec2.mag(positionDiff) / dt / 2 --self.ballRadius
+	  self.angularVelocity = -vec2.mag(positionDiff) / dt / self.ballRadius
 
 	  if positionDiff[1] > 0 then
 		self.angularVelocity = -self.angularVelocity
