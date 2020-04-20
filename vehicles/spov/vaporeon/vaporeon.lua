@@ -290,6 +290,8 @@ function onBegin()	--This sets up the VSO ONCE.
 		storage._vsoSpawnOwnerName = world.entityName( driver )
 		vsoEat( driver, "driver" )
 		vsoVictimAnimVisible( "driver", false )
+	else
+		vsoUseLounge( false, "driver" )
 	end
 
 	onForcedReset();	--Do a forced reset once.
