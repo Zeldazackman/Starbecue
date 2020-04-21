@@ -23,7 +23,7 @@
 			[ "0.stand.walk.1", "0.stand.walk.2", "0.stand.walk.3", "0.stand.walk.4", "0.stand.walk.5", "0.stand.walk.6", "0.stand.walk.7", "0.stand.walk.8",                  "2.sleep.s_up.1", "2.sleep.s_up.2", "2.sleep.s_up.3", "2.sleep.s_up.4", "2.sleep.s_down.1", "2.sleep.s_down.2", "2.sleep.s_down.3", "2.sleep.s_down.4" ],
 			[ "0.stand.run.1", "0.stand.run.2", "0.stand.run.3", "0.stand.run.4", "0.stand.run.5", "0.stand.run.6", "0.stand.run.7", "0.stand.run.8",                          "0.pinned.s_left.1", "0.pinned.s_left.2", "0.pinned.s_left.3", "0.pinned.s_left.4", "0.pinned.s_right.1", "0.pinned.s_right.2", "0.pinned.s_up.1", "0.pinned.s_up.2"],
 			[ "0.stand.jump.1", "0.stand.jump.2", "0.stand.jump.3", "0.stand.jump.4", "0.stand.fall.1", "0.stand.fall.2", "0.stand.fall.3", "0.stand.fall.4",                  "0.hug.s_left.1", "0.hug.s_left.2", "0.hug.s_right.1", "0.hug.s_right.2", "0.hug.s_up.1", "0.hug.s_up.2", "0.hug.s_down.1", "0.hug.s_down.2"],
-			[ "0.stand.swimidle.1", "0.stand.swim.1", "0.stand.swim.2", "0.stand.swim.3", "0.stand.swim.4", "0.stand.bap.1", "0.stand.bap.2"								   ],
+			[ "0.stand.swimidle.1", "0.stand.swim.1", "0.stand.swim.2", "0.stand.swim.3", "0.stand.swim.4", "0.stand.bap.1", "0.stand.bap.2",								   "0.pinned_sleep.s_left.1", "0.pinned_sleep.s_left.2", "0.pinned_sleep.s_left.3", "0.pinned_sleep.s_left.4", "0.pinned_sleep.s_right.1", "0.pinned_sleep.s_right.2", "0.pinned_sleep.s_up.1", "0.pinned_sleep.s_up.2"],
 			[ "1.stand.walk.1", "1.stand.walk.2", "1.stand.walk.3", "1.stand.walk.4", "1.stand.walk.5", "1.stand.walk.6", "1.stand.walk.7", "1.stand.walk.8"                   ],
 			[ "1.stand.run.1", "1.stand.run.2", "1.stand.run.3", "1.stand.run.4", "1.stand.run.5", "1.stand.run.6", "1.stand.run.7", "1.stand.run.8"                           ],
 			[ "1.stand.jump.1", "1.stand.jump.2", "1.stand.jump.3", "1.stand.jump.4", "1.stand.fall.1", "1.stand.fall.2", "1.stand.fall.3", "1.stand.fall.4"                   ],
@@ -197,5 +197,9 @@
  		"0.hug.s_right.3" : "0.hug.s_right.1",
 		"0.hug.s_up.3" : "0.hug.s_up.1",
 		"0.hug.s_down.3" : "0.hug.s_down.1",
+
+		"0.pinned_sleep.s_right.3" : "0.pinned_sleep.s_right.1",
+		"0.pinned_sleep.s_up.3" : "0.pinned_sleep.s_up.1",
+
 	}
 }
