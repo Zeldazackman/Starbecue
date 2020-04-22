@@ -94,98 +94,9 @@
 				,"gravityEnabled" : false // using custom gravity instead, for snappier falls
 				,"ignorePlatformCollision" : false
 			}
-		}
-		,"simple":{
-			"sets":{
-			}
-			,"histosets":{
-			}
-			,"vals":{
-			}
-		}
-		,"victimAnimations":{
-			"invis":{
-				"seconds":[ 0.0 ]
-				,"seat":"firstOccupant"
-				,"loop":true
-				,"visible": [0]
-				,"transformGroup":"victimposition"
-				,"x": [ 0.0 ]
-				,"y": [ 0.0 ]
-				,"r": [ 0.0 ]
-			}
-			, "playereat":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"transformGroup":"victimposition"
-				,"frames":[ 0,1,2,3,4,5,6,7]
-				,"visible": [ 1,1,1,1,1,1,1,0 ]
-				,"xs": [ -1 ]
-				,"x": [
-					3
-					,3
-					,3
-					,3.75
-					,3.75
-					,3.5
-					,2.25
-					,1.25
-				]
-				,"y": [
-					-1.875
-					,-1.875
-					,-1.875
-					,-1.875
-					,-1.24
-					,0.75
-					,-0.375
-					,-1.25
-				]
-				,"r": [
-					0
-					,0
-					,0
-					,10
-					,60
-					,135
-					,130
-					,135
-					,125
-				]
-				,"sitpos": [ "stand" ]
-				,"emote": [ "oooh" ]
-				,"dance": [ "victimrun" ]
-			}
-			,"bellybed":{
-				"seconds":[ 0.0 ]
-				,"seat":"firstOccupant"
-				,"loop":true
-				,"visible": [1]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 1.3125 ] // why is it half a pixel off ugh
-				,"y": [ -2.0 ]
-				,"r": [ -90.0 ]
-				,"sitpos": [ "lay" ]
-				,"emote": [ "sleep" ]
-				,"dance": [ ]
-			}
-			,"bellyhug":{
-				"seconds":[ 0.0 ]
-				,"seat":"firstOccupant"
-				,"loop":true
-				,"visible": [1]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 1.8175 ] // why is it half a pixel off ugh
-				,"y": [ -2.0 ]
-				,"r": [ -90.0 ]
-				,"sitpos": [ "lay" ]
-				,"emote": [ "sleep" ]
-				,"dance": [ ]
-			}
-			,"absorbback":{
+		},
+		"victimAnimations": {
+			"absorbback":{
 				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
@@ -199,38 +110,8 @@
 				,"sitpos": [ "lay" ]
 				,"emote": [ "sleep" ]
 				,"dance": [ ]
-			}
-			,"pinned":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"frames": [ 0, 2, 4 ]
-				,"visible": [ 1 ]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 1.8175, 2, 3.8175 ] // why is it half a pixel off ugh
-				,"y": [ -2.0, -3.125, -3.5 ]
-				,"r": [ -90.0 ]
-				,"sitpos": [ "lay" ]
-				,"emote": [ "idle" ]
-				,"dance": [ ]
-			}
-			,"unpin":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"frames": [ 0, 2, 4 ]
-				,"visible": [1]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 3.8175, 2, 1.3125 ] // why is it half a pixel off ugh
-				,"y": [ -3.5, -3.125, -2.0 ]
-				,"r": [ -90.0 ]
-				,"sitpos": [ "lay" ]
-				,"emote": [ "sleep" ]
-				,"dance": [ ]
-			}
-			,"absorbpinned":{
+			},
+			"absorbpinned":{
 				"seat":"firstOccupant"
 				,"loop":false
 				,"interpMode":1
@@ -245,235 +126,457 @@
 				,"emote": [ "sleep" ]
 				,"dance": [ ]
 			}
-			,"sitpinned":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"frames": [ 0, 1 ]
-				,"visible": [ 1 ]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 3.5, 3.8175 ] // why is it half a pixel off ugh
-				,"y": [ -1.75, -3.5 ]
-				,"r": [ 0, -90.0 ]
-				,"sitpos": [ "stand", "lay" ]
-				,"emote": [ "idle" ]
-				,"dance": [ ]
-			}
-			,"situnpin":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"frames": [ 1, 2 ]
-				,"visible": [1]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 3.8175, 3.5 ] // why is it half a pixel off ugh
-				,"y": [ -3.5, -1.75 ]
-				,"r": [ -90.0, 0.0 ]
-				,"sitpos": [ "lay", "stand" ]
-				,"emote": [ "idle" ]
-				,"dance": [ ]
-			}
-			, "escape":{
-				"seat":"firstOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"transformGroup":"victimposition"
-				,"frames":[ 0,1,2,3,4,5,6]
-				,"visible": [ 0,1,1,1,1,1,1 ]
-				,"xs": [ -1 ]
-				,"x": [
-					1.25
-					,1.25
-					,1.25
-					,2.75
-					,3.5
-					,3.5
-					,3.5
-				]
-				,"y": [
-					-1.25
-					,-1.25
-					,-1.0
-					,-0.75
-					,-0.75
-					,-1.5
-					,-1.875
-				]
-				,"r": [
-					125
-					,135
-					,130
-					,135
-					,100
-					,40
-					,0
-				]
-				,"sitpos": [ "stand" ]
-				,"emote": [ "oooh" ]
-				,"dance": [ "victimrun" ]
-			}
-			, "playereat2":{
-				"seat":"secondOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"transformGroup":"victimposition2"
-				,"frames":[ 0,1,2,3,4,5,6,7]
-				,"visible": [ 1,1,1,1,1,1,1,0 ]
-				,"xs": [ -1 ]
-				,"x": [
-					3
-					,3
-					,3
-					,3.75
-					,3.75
-					,3.5
-					,2.25
-					,1.25
-				]
-				,"y": [
-					-1.875
-					,-1.875
-					,-1.875
-					,-1.875
-					,-1.24
-					,0.75
-					,-0.375
-					,-1.25
-				]
-				,"r": [
-					0
-					,0
-					,0
-					,10
-					,60
-					,135
-					,130
-					,135
-					,125
-				]
-				,"sitpos": [ "stand" ]
-				,"emote": [ "oooh" ]
-				,"dance": [ "victimrun" ]
-			}
-			, "escape2":{
-				"seat":"secondOccupant"
-				,"loop":false
-				,"interpMode":1
-				,"transformGroup":"victimposition2"
-				,"frames":[ 0,1,2,3,4,5,6]
-				,"visible": [ 0,1,1,1,1,1,1 ]
-				,"xs": [ -1 ]
-				,"x": [
-					1.25
-					,1.25
-					,1.25
-					,2.75
-					,3.5
-					,3.5
-					,3.5
-				]
-				,"y": [
-					-1.25
-					,-1.25
-					,-1.0
-					,-0.75
-					,-0.75
-					,-1.5
-					,-1.875
-				]
-				,"r": [
-					125
-					,135
-					,130
-					,135
-					,100
-					,40
-					,0
-				]
-				,"sitpos": [ "stand" ]
-				,"emote": [ "oooh" ]
-				,"dance": [ "victimrun" ]
-			}
-			,"center":{
-				"seconds":[ 0.0 ]
-				,"seat":"firstOccupant"
-				,"loop":true
-				,"visible": [0]
-				,"transformGroup":"victimposition"
-				,"xs": [ -1 ]
-				,"x": [ 0.0 ]
-				,"y": [ -1.0 ]
-				,"r": [ 0.0 ]
-				,"sitpos": [ "sit" ]
-				,"emote": [ ]
-				,"dance": [ ]
-			}
-			,"center2":{
-				"seconds":[ 0.0 ]
-				,"seat":"secondOccupant"
-				,"loop":true
-				,"visible": [0]
-				,"transformGroup":"victimposition2"
-				,"xs": [ -1 ]
-				,"x": [ 0.0 ]
-				,"y": [ -1.0 ]
-				,"r": [ 0.0 ]
-				,"sitpos": [ "sit" ]
-				,"emote": [ ]
-				,"dance": [ ]
-			}
+		}
+	},
 
-
-
-			,"head.smol.idle":{
-				"seconds": [ 0.0 ]
-				,"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"x": [ 1.125 ]
-				,"y": [ -0.375 ]
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				"down": {
+					"animation": "sitdown",
+					"state": "sit",
+					"chance": 5 // percent, ignored when driver has control
+				},
+				// non directional = not accessible via controls, except from script
+				"eat": [ // array depends on occupants
+					{ // 0 occupants
+						"animation": "eat",
+						"victimAnimation": {
+							"which": "firstOccupant",
+							"name": "playereat"
+						},
+						"state": "stand",
+						"script": "eat"
+					},
+					{ // 1 occupant
+						"animation": "eat",
+						"victimAnimation": {
+							"which": "secondOccupant",
+							"name": "playereat2"
+						},
+						"state": "stand",
+						"script": "eat"
+					}
+					// can't eat with 2
+				],
+				"escape": [
+					{}, // can't escape from 0
+					{ // 1 occupant
+						"animation": "escape",
+						"victimAnimation": {
+							"which": "firstOccupant",
+							"name": "escape"
+						},
+						"state": "stand",
+						"script": "letout"
+					},
+					{ // 2 occupants
+						"animation": "escape",
+						"victimAnimation": {
+							"which": "secondOccupant",
+							"name": "escape2"
+						},
+						"state": "stand",
+						"script": "letout"
+					}
+				]
+			},
+			"idle": [ "blink", "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "escape" },
+				"front": { "transition": "escape" },
+				"back": { "transition": "down" },
+				"down": { "transition": "down" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 5 },
+					"normal": { "min": 5, "max": 15 },
+					"antiescape": { "min": 10, "max": 20 }
+				},
+				"lookAnimation": true
+			},
+			"interact": {
+				"front": [ // array depends on occupants
+					{ "transition": "eat", "chance": 100 }, // 0 occupants
+					{ "transition": "eat", "chance": 50 }, // 1 occupant
+					{ "transition": "down", "chance": 20 } // 2 occupants
+				],
+				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
+			},
+			"control": {
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpStrength": 50,
+				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullJumpStrength": 30,
+				"jumpCount": 2,
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
+				"primaryAction": {
+					"projectile": {
+						"name": "vapbap",
+						"position": [ 3, -2.5 ],
+						"aimable": false
+					},
+					"animation": "bap",
+					"cooldown": 30,
+					"script": "bapeat"
+				},
+				"altAction": {
+					"projectile": {
+						"name": "vapwatergun",
+						"position": [ 2.75, -0.125 ],
+						"aimable": true
+					},
+					"cooldown": 0
+				}
 			}
-			,"head.smol.walkbob":{
-				"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"frames": [ 0,2,4,6 ]
-				,"x": [ 1.125 ]
-				,"y": [ -0.5, -0.375, -0.5, -0.375 ]
+		},
+		"sit": {
+			"transitions": {
+				"up": {
+					"animation": "standup",
+					"state": "stand",
+					"chance": 5
+				},
+				"down": [
+					{
+						"animation": "pin",
+						"victimAnimation": {
+							"which": "firstOccupant",
+							"name": "sitpinned"
+						},
+						"state": "pinned",
+						"chance": 7,
+						"script": "pin" // may override animation/state
+					},
+					{
+						"animation": "laydown",
+						"state": "lay",
+						"chance": 7
+					},
+					{
+						"animation": "laydown",
+						"state": "lay",
+						"chance": 7
+					}
+				]
+			},
+			"idle": [ "blink", "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "up" },
+				"front": { "transition": "down" },
+				"back": { "transition": "up" },
+				"down": { "transition": "down" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 5 },
+					"normal": { "min": 5, "max": 15 },
+					"antiescape": { "min": 10, "max": 20 }
+				},
+				"lookAnimation": true
+			},
+			"interact": {
+				"front": { "transition": "down", "chance": 20 },
+				"side": { "transition": "up", "chance": 20 },
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
 			}
-			,"head.smol.runbob":{
-				"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"frames": [ 0,1,2,3,4,5,6,7 ]
-				,"x": [ 1.125 ]
-				,"y": [ -0.375, -0.25, -0.375, -0.5, -0.375, -0.25, -0.375, -0.5 ]
+		},
+		"lay": {
+			"transitions": {
+				"up": {
+					"animation": "situp",
+					"state": "sit",
+					"chance": 5
+				},
+				"down": {
+					"animation": "fallasleep",
+					"state": "sleep",
+					"chance": 5
+				},
+				"side": [
+					{
+						"animation": "rollover",
+						"state": "back",
+						"chance": 10
+					},
+					{
+						"animation": "rollover",
+						"state": "back",
+						"chance": 5
+					}
+					// no side transition with 2 occupants
+				]
+			},
+			"idle": [ "blink", "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "up" },
+				"front": { "transition": "down" },
+				"back": { "transition": "up" },
+				"down": { "transition": "down" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 10 },
+					"normal": { "min": 10, "max": 20 },
+					"antiescape": { "min": 20, "max": 40 }
+				},
+				"lookAnimation": true
+			},
+			"interact": {
+				"front": { "transition": "up", "chance": 20 },
+				"side": [
+					{ "transition": "side", "chance": 25 },
+					{ "transition": "side", "chance": 15 }
+					// no side transition with 2 occupants
+				],
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
 			}
-			,"head.smol.jumpfall":{
-				"seconds": [ 0.0 ]
-				,"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"x": [ 1.125 ]
-				,"y": [ -0.25 ]
+		},
+		"sleep": {
+			"transitions": {
+				"up": {
+					"animation": "wakeup",
+					"state": "lay",
+					"chance": 5
+				}
+			},
+			"idle": [],
+			"struggle": {
+				"up": { "transition": "up" },
+				"front": { "transition": "up" },
+				"back": { "transition": "up" },
+				"down": { "transition": "up" },
+				"chances": {
+					"easyescape": { "min": 5, "max": 15 },
+					"normal": { "min": 20, "max": 40 },
+					"antiescape": { "min": 40, "max": 80 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "up", "chance": 20 },
+				"side": { "transition": "up", "chance": 20 },
+				"back": { "transition": "up", "chance": 20 },
+				"petAnimation": false
 			}
-			,"head.smol.swim":{
-				"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"frames": [ 1,2,3,4 ]
-				,"x": [ 1.125 ]
-				,"y": [ -0.5, -0.625, -0.75, -0.625 ]
+		},
+		"back": {
+			"transitions": {
+				"side": {
+					"animation": "rollover",
+					"state": "lay",
+					"chance": 10
+				},
+				"bed": {
+					"state": "bed",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "bellybed"
+					},
+					"script": "bed"
+				}
+			},
+			"idle": [ "blink", "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "side" },
+				"front": { "transition": "side" },
+				"back": { "transition": "side" },
+				"down": { "transition": "side" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 10 },
+					"normal": { "min": 10, "max": 20 },
+					"antiescape": { "min": 20, "max": 40 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "side", "chance": 20 },
+				"side": [
+					{ "transition": "bed", "chance": 100 },
+					{ "transition": "side", "chance": 20 }
+					// can't get to this state with 2 occupants
+				],
+				"back": { "transition": "side", "chance": 20 },
+				"petAnimation": true
 			}
-			,"head.smol.swimidle":{
-				"seconds": [ 0.0 ]
-				,"loop":true
-				,"interpMode":0
-				,"transformGroup":"head"
-				,"x": [ 1.125 ]
-				,"y": [ -0.5 ]
+		},
+		"bed": {
+			"transitions": {
+				"side": {
+					"animation": "rollover",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "pinned"
+					},
+					"state": "pinned",
+					"chance": 10
+				},
+				"down": {
+					"animation": "grab",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "bellyhug"
+					},
+					"state": "hug",
+					"chance": 10
+				},
+				"up": {
+					"state": "back",
+					"script": "unbed"
+				}
+			},
+			"idle": [ "blink", "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "up" },
+				"front": { "transition": "up" },
+				"back": { "transition": "up" },
+				"down": { "transition": "up" },
+				"chances": {
+					"easyescape": { "min": 0, "max": 0 },
+					"normal": { "min": 0, "max": 0 },
+					"antiescape": { "min": 0, "max": 0 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "side", "chance": 20 },
+				"side": { "transition": "side", "chance": 20 },
+				"back": { "transition": "side", "chance": 20 },
+				"petAnimation": true
+			}
+		},
+		"hug": {
+			"transitions": {
+				"up": {
+					"animation": "grab",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "bellybed"
+					},
+					"state": "bed",
+					"chance": 10
+				},
+				"absorb": {
+					"animation": "absorb",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "absorbback"
+					},
+					"state": "back",
+					"chance": 10,
+					"script": "absorb"
+				}
+			},
+			"idle": [ "tail_flick" ],
+			"struggle": {
+				"up": { "transition": "up", "victimAnimation": "hug.s_up" },
+				"front": { "transition": "up", "victimAnimation": "hug.s_front" },
+				"back": { "transition": "up", "victimAnimation": "hug.s_back" },
+				"down": { "transition": "up", "victimAnimation": "hug.s_down" },
+				"chances": {
+					"easyescape": { "min": 0, "max": 2 },
+					"normal": { "min": 5, "max": 10 },
+					"antiescape": { "min": 15, "max": 25 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "side", "chance": 20 },
+				"side": { "transition": "side", "chance": 20 },
+				"back": { "transition": "side", "chance": 20 },
+				"petAnimation": false
+			}
+		},
+		"pinned": {
+			"transitions": {
+				"up": {
+					"animation": "situp",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "situnpin"
+					},
+					"state": "sit",
+					"chance": 5,
+					"script": "unpin"
+				},
+				"down": {
+					"animation": "fallasleep",
+					"state": "pinnedsleep",
+					"chance": 5
+				},
+				"side": {
+					"animation": "rollover",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "unpin"
+					},
+					"state": "bed",
+					"chance": 10
+				},
+				"absorb": {
+					"animation": "absorb",
+					"victimAnimation": {
+						"which": "firstOccupant",
+						"name": "absorbpinned"
+					},
+					"state": "lay",
+					"chance": 10,
+					"script": "absorb"
+				}
+			},
+			"idle": [ "blink", "tail_flick", "lick" ],
+			"struggle": {
+				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
+				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
+				"back": { "transition": "side", "victimAnimation": "pinned.s_back" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 10 },
+					"normal": { "min": 10, "max": 20 },
+					"antiescape": { "min": 20, "max": 40 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "up", "chance": 20 },
+				"side": { "transition": "side", "chance": 20 },
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
+			},
+			"control": {
+				"primaryAction": {
+					"animation": "lick",
+					"cooldown": 0.75 // length of animation
+				}
+			}
+		},
+		"pinnedsleep": {
+			"transitions": {
+				"up": {
+					"animation": "wakeup",
+					"state": "pinned",
+					"chance": 5
+				}
+			},
+			"idle": [ ],
+			"struggle": {
+				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
+				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
+				"back": { "transition": "up", "victimAnimation": "pinned.s_back" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 10 },
+					"normal": { "min": 10, "max": 20 },
+					"antiescape": { "min": 20, "max": 40 }
+				},
+				"lookAnimation": false
+			},
+			"interact": {
+				"front": { "transition": "up", "chance": 20 },
+				"side": { "transition": "up", "chance": 20 },
+				"back": { "transition": "up", "chance": 20 },
+				"petAnimation": false
 			}
 		}
 	}

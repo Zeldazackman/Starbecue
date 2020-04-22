@@ -48,21 +48,21 @@ function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = bellyeffects[value]
 	world.sendEntityMessage( vappy, "settingsMenuSet", "bellyeffect", bellyeffect )
-	player.setProperty( "vappyBellyEffect", bellyeffect )
+	player.setProperty( "vappySettings.bellyeffect", bellyeffect )
 end
 function setClickMode()
 	local value = widget.getSelectedOption( "clickMode" )
 	local clickmode = clickmodes[value]
 	world.sendEntityMessage( vappy, "settingsMenuSet", "clickmode", clickmode )
-	player.setProperty( "vappyClickMode", clickmode )
+	player.setProperty( "vappySettings.clickmode", clickmode )
 end
 function autoDeploy()
 	local value = widget.getChecked( "autoDeploy" )
-	player.setProperty( "vappyAutoDeploy", value )
+	player.setProperty( "vappySettings.autodeploy", value )
 end
 function defaultSmall()
 	local value = widget.getChecked( "defaultSmall" )
-	player.setProperty( "vappyDefaultSmall", value )
+	player.setProperty( "vappySettings.defaultsmall", value )
 end
 
 function despawn()

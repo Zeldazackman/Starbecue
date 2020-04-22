@@ -37,8 +37,8 @@
                     "absorb": { "frames": 4, "cycle": 1.5, "mode": "end" },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
 
-                    "s_left": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "s_right": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_back": { "frames": 5, "cycle": 1, "mode": "end" },
+                    "s_front": { "frames": 5, "cycle": 1, "mode": "end" },
                     "s_up": { "frames": 5, "cycle": 1, "mode": "end" },
                     "s_down": { "frames": 5, "cycle": 1, "mode": "end" },
 					"look": { "frames": 1, "cycle": 2, "mode": "end" },
@@ -116,8 +116,8 @@
 						"absorb": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.absorb.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.escape.<frame><directives>" } },
 
-						"s_left": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_left.<frame><directives>" } },
-						"s_right": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_right.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_front.<frame><directives>" } },
 						"s_up": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_up.<frame><directives>" } },
 						"s_down": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_down.<frame><directives>" } },
 						"look": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.look.<frame><directives>" } },
@@ -211,8 +211,8 @@
 						"absorb": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.absorb.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.escape.<frame><directives>" } },
 
-						"s_left": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_left.<frame><directives>" } },
-						"s_right": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_right.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_front.<frame><directives>" } },
 						"s_up": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_up.<frame><directives>" } },
 						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_down.<frame><directives>" } },
 						"look": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.look.<frame><directives>" } },
