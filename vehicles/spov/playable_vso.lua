@@ -27,6 +27,7 @@ p.movement = {
 	wasE = false,
 	primaryCooldown = 0,
 	altCooldown = 0,
+	lastYVelocity = 0
 }
 
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
@@ -87,6 +88,42 @@ function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "firstOccupant" ) then return true end
 	if entity == vehicle.entityLoungingIn( "secondOccupant" ) then return true end
 	return false
+end
+
+function p.bodyAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "bodyState", prefix..anim )
+	p.headbob( anim )
+end
+
+function p.headAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "headState", prefix..anim )
+end
+
+p.headbobbing = {vals = {}, time = 0}
+function p.headbob( name )
+	if p.headbobbing.name == name then return end
+	p.headbobbing.name = name
+	p.headbobbing.vals = (p.stateconfig[p.state].headbob or {})[name] or {}
+	p.headbobbing.time = 0
+end
+
+local _vsoTransAnimUpdate = vsoTransAnimUpdate
+function vsoTransAnimUpdate( transformname, dt )
+	if transformname == "headbob" and p.stateconfig[p.state].headbob ~= nil then
+		p.headbobbing.time = p.headbobbing.time + dt * self.sv.animspeed;
+		if p.headbobbing.time > 1 then
+			p.headbobbing.time = p.headbobbing.time -1
+		end
+		sb.setLogMap("headbob time", p.headbobbing.time)
+		vsoTransMoveTo( "head",
+			p.stateconfig[p.state].headbob.x or 0,
+			p.headbobbing.vals[ math.ceil( p.headbobbing.time * #p.headbobbing.vals ) ] or 0
+		)
+	else
+		_vsoTransAnimUpdate( transformname, dt )
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -176,6 +213,8 @@ function p.onBegin()
 	message.setHandler( "forcedsit", p.control.pressE )
 
 	p.stateconfig = config.getParameter("states")
+
+	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
 end
 
 function p.onEnd()
@@ -212,7 +251,9 @@ function p.doTransition( direction, scriptarg )
 	if not continue then return end
 	_ptransition.after = after
 	_ptransition.state = tconfig.state
-	vsoAnim( "bodyState", tconfig.animation )
+	if tconfig.animation ~= nil then
+		p.bodyAnim( tconfig.animation )
+	end
 	if tconfig.victimAnimation ~= nil then
 		vsoVictimAnimReplay( tconfig.victimAnimation.which, tconfig.victimAnimation.name, "bodyState" )
 	end
@@ -226,7 +267,7 @@ function state__ptransition()
 		_endedframes = _endedframes + 1
 		if _endedframes > 2 then
 			_endedframes = 0
-			vsoAnim( "bodyState", "idle" )
+			p.bodyAnim( "idle" )
 			_ptransition.after()
 			p.setState( _ptransition.state )
 		end
@@ -291,7 +332,7 @@ function p.control.doPhysics()
 		sb.logInfo( "falling" )
 		nextState( "stand" )
 		updateState()
-		vsoAnim( "bodyState", "fall" )
+		p.bodyAnim( "fall" )
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
 			vsoUneat( "firstOccupant" )
 			vsoSetTarget( "food", nil )
@@ -420,7 +461,7 @@ function p.control.primaryAction()
 				p.control.projectile(control.primaryAction.projectile)
 			end
 			if control.primaryAction.animation ~= nil then
-				vsoAnim( "bodyState", control.primaryAction.animation )
+				p.bodyAnim( control.primaryAction.animation )
 			end
 			if control.primaryAction.script ~= nil then
 				local statescript = p.statescripts[p.state][control.primaryAction.script]
@@ -439,7 +480,7 @@ function p.control.altAction()
 				p.control.projectile(control.altAction.projectile)
 			end
 			if control.altAction.animation ~= nil then
-				vsoAnim( "bodyState", control.altAction.animation )
+				p.bodyAnim( control.altAction.animation )
 			end
 			if control.altAction.script ~= nil then
 				local statescript = p.statescripts[p.state][control.altAction.script]
@@ -467,11 +508,25 @@ function p.control.groundMovement( dx )
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
 
+	if dx ~= 0 then
+		if not running then
+			p.bodyAnim( "walk" )
+			p.movement.animating = true
+		elseif running then
+			p.bodyAnim( "run" )
+			p.movement.animating = true
+		end
+	elseif p.movement.animating then
+		p.bodyAnim( "idle" )
+		p.movement.animating = false
+	end
+
 	mcontroller.setYVelocity( -0.15 ) -- to detect leaving ground
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not vehicle.controlHeld( p.control.driver, "down" ) then
 			if not p.movement.jumped then
-				vsoAnim( "bodyState", "jump" )
+				p.bodyAnim( "jump" )
+				p.movement.animating = true
 				if p.occupants < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
@@ -484,14 +539,6 @@ function p.control.groundMovement( dx )
 		p.movement.jumped = true
 	else
 		p.movement.jumped = false
-	end
-
-	if dx ~= 0 then
-		if not running and ( vsoAnimEnded( "bodyState" ) or not vsoAnimIs( "bodyState", "walk" ) ) then
-			vsoAnim( "bodyState", "walk" )
-		elseif running and ( vsoAnimEnded( "bodyState" ) or not vsoAnimIs( "bodyState", "run" ) ) then
-			vsoAnim( "bodyState", "run" )
-		end
 	end
 
 	p.movement.waswater = false
@@ -516,9 +563,11 @@ function p.control.waterMovement( dx )
 	-- or vehicle.controlHeld( p.control.driver, "down" )
 	or vehicle.controlHeld( p.control.driver, "left" )
 	or vehicle.controlHeld( p.control.driver, "right" ) then
-		vsoAnim( "bodyState", "swim" )
+		p.bodyAnim( "swim" )
+		p.movement.animating = true
 	elseif not p.struggling then
-		vsoAnim( "bodyState", "swimidle" )
+		p.bodyAnim( "swimidle" )
+		p.movement.animating = true
 	end
 
 	p.movement.waswater = true
@@ -555,7 +604,8 @@ function p.control.airMovement( dx )
 	end
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
-			vsoAnim( "bodyState", "jump" )
+			p.bodyAnim( "jump" )
+			p.movement.animating = true
 			if p.occupants < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
@@ -577,16 +627,11 @@ function p.control.airMovement( dx )
 		p.movement.jumped = false
 	end
 	
-
-	if vsoAnimEnded( "bodyState" ) and ( vsoAnimIs( "bodyState", "jump" ) or vsoAnimIs( "bodyState", "jumpcont" ) ) then
-		vsoAnim( "bodyState", "jumpcont" )
+	if mcontroller.yVelocity() < -10 and p.movement.lastYVelocity >= -10 then
+		p.bodyAnim( "fall" )
+		p.movement.animating = true
 	end
-	if mcontroller.yVelocity() < -10 and not vsoAnimIs( "bodyState", "fall" ) and not vsoAnimIs( "bodyState", "fallcont" ) then
-		vsoAnim( "bodyState", "fall" )
-	end
-	if vsoAnimEnded( "bodyState" ) and ( vsoAnimIs( "bodyState", "fall" ) or vsoAnimIs( "bodyState", "fallcont" ) ) then
-		vsoAnim( "bodyState", "fallcont" )
-	end
+	p.movement.lastYVelocity = mcontroller.yVelocity()
 end
 
 function p.control.projectile( projectiledata )
@@ -644,11 +689,24 @@ function p.idleStateChange()
 		for _, idle in pairs(idles) do
 			percent = percent - 15
 			if percent < 0 then
-				vsoAnim( "bodyState", idle )
+				p.bodyAnim( idle )
 				return
 			end
 		end
-		vsoAnim( "bodyState", "idle" )
+		p.bodyAnim( "idle" )
+	end
+
+	if vsoAnimEnded( "headState" ) then
+		local idles = p.stateconfig[p.state].headIdle or {}
+		local percent = vsoRand(100)
+		for _, idle in pairs(idles) do
+			percent = percent - 15
+			if percent < 0 then
+				p.headAnim( idle )
+				return
+			end
+		end
+		p.headAnim( "idle" )
 	end
 end
 
@@ -788,7 +846,7 @@ function p.handleStruggles()
 	) ) then
 		p.doTransition( struggledata[dir].transition, struggler )
 	else
-		vsoAnim( "bodyState", "s_"..dir )
+		p.bodyAnim( "s_"..dir )
 		if struggledata[dir].victimAnimation then
 			vsoVictimAnimReplay( "firstOccupant", struggledata[dir].victimAnimation, "bodyState" )
 		end
@@ -816,7 +874,7 @@ function p.onInteraction( targetid )
 		end
 	end
 	if state.interact.petAnimation then
-		vsoAnim( "bodyState", "pet" )
+		p.bodyAnim( "pet" )
 	end
 	p.showEmote( "emotehappy" )
 end

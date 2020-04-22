@@ -19,9 +19,5 @@
     ]
   },
   "aliases" : {
-    "0.jumpcont.1": "0.jump.4",
-    "0.fallcont.1": "0.fall.4",
-    "1.jumpcont.1": "1.jump.4",
-    "1.fallcont.1": "1.fall.4"
   }
 }

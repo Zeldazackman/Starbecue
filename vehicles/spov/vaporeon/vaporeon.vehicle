@@ -578,6 +578,49 @@
 				"back": { "transition": "up", "chance": 20 },
 				"petAnimation": false
 			}
+		},
+		"smol": {
+			"animationPrefix" : "smol.",
+			"transitions": {},
+			"headIdle": [ "blink" ],
+			"headbob": {
+				"x": 1.125,
+				"idle": [ -0.375 ],
+				"walk": [ -0.5, -0.5, -0.375, -0.375, -0.5, -0.5, -0.375, -0.375 ],
+				"run": [ -0.375, -0.25, -0.375, -0.5, -0.375, -0.25, -0.375, -0.5 ],
+				"jump": [ -0.25 ],
+				"fall": [ -0.25 ],
+				"swim": [ -0.5, -0.625, -0.75, -0.625 ],
+				"swimidle": [ -0.5 ]
+			},
+			"control": {
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpStrength": 50,
+				"fullThreshold": 1,
+				"fullJumpStrength": 20,
+				"jumpCount": 2,
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3,
+				"primaryAction": {
+					"projectile": {
+						"name": "smolvapbap",
+						"position": [ 0, -1.5 ],
+						"aimable": false
+					},
+					"animation": "bap",
+					"cooldown": 30
+				},
+				"altAction": {
+					"projectile": {
+						"name": "vapwatergun",
+						"position": [ 1.5, -0.625 ],
+						"aimable": true
+					},
+					"cooldown": 0
+				}
+			}
 		}
 	}
 }
