@@ -706,12 +706,13 @@ function p.control.projectile( projectiledata )
 	if projectiledata.aimable then
 		local aiming = vehicle.aimPosition( p.control.driver )
 		vsoFacePoint( aiming[1] )
+		position = p.localToGlobal( projectiledata.position )
 		aiming[2] = aiming[2] + 0.2 * self.vsoCurrentDirection * (aiming[1] - position[1])
 		direction = world.distance( aiming, position )
 	else
 		direction = { self.vsoCurrentDirection, 0 }
 	end
-	world.spawnProjectile( projectiledata.name, position, entity.id(), direction )
+	world.spawnProjectile( projectiledata.name, position, entity.id(), direction, true )
 end
 
 -------------------------------------------------------------------------------
