@@ -5,7 +5,8 @@
 		"frame" : "1",
 		"directives" : "",
     	"rotationFrame" : "0",
-		"rotationFlip" : "0"
+		"rotationFlip" : "0",
+		"smolprey": "vaporeon"
 	},
     "animatedParts": {
         "stateTypes": {
@@ -74,6 +75,14 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end" }
+				}
+			},
+			"smolprey": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
+					"firstOccupant": { "frames": 1, "cycle": 1, "mode": "end" },
+					"seccondOccupant": { "frames": 1, "cycle": 1, "mode": "end" }
 				}
 			}
         },
@@ -153,7 +162,8 @@
                      "firstOccupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
-                    "bodyState": {
+                    "smolprey": {
+						"firstOccupant": { "properties" : { "image": "/vehicles/spov/<smolprey>/spov/<smolprey>_small.png:smolprey<directives>" } }
                     }
                 }
             },
@@ -165,7 +175,8 @@
                      "secondOccupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
-                    "bodyState": {
+                    "smolprey": {
+						"secondOccupant": { "properties" : { "image": "/vehicles/spov/<smolprey>/spov/<smolprey>_small.png:smolprey<directives>" } }
                     }
                 }
 			},

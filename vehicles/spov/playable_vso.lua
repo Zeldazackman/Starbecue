@@ -126,6 +126,62 @@ function vsoTransAnimUpdate( transformname, dt )
 	end
 end
 
+function p.edible( targetid )
+	if vehicle.entityLoungingIn( "driver" ) ~= targetid then return false end
+	if p.occupants > 0 then return false end
+	return p.stateconfig[p.state].edible
+end
+
+p.smolpreyspecies = {}
+
+function p.eat( targetid, seatname )
+	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
+		withoutEntityId = entity.id(), includedTypes = { "vehicle" }
+	} )
+	local edibles = world.entityQuery( world.entityPosition(targetid), 2, {
+		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
+		callScript = "p.edible", callScriptArgs = { targetid }
+	} )
+	if edibles[1] == nil then
+		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
+			-- won't work with multiple loungeables near each other
+			vsoUseLounge( true, seatname )
+			vsoEat( targetid, seatname )
+			return true -- not lounging
+		else
+			return false -- lounging in something inedible
+		end
+	end
+	-- lounging in edible smol thing
+	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
+	p.smolpreyspecies[seatname] = species
+	p.smolprey( seatname )
+	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
+	vsoUseLounge( true, seatname )
+	vsoEat( targetid, seatname )
+	return true
+end
+
+function p.uneat( seatname )
+	if p.smolpreyspecies[seatname] ~= nil then
+		local targetid = vehicle.entityLoungingIn( seatname )
+		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatname] )
+		p.smolpreyspecies[seatname] = nil
+	end
+	p.smolprey() -- clear
+	vsoUneat( seatname )
+	vsoUseLounge( false, seatname )
+end
+
+function p.smolprey( seatname )
+	if seatname ~= nil and p.smolpreyspecies[seatname] ~= nil then
+		animator.setGlobalTag( "smolprey", p.smolpreyspecies[seatname] )
+		vsoAnim( "smolprey", seatname )
+	else
+		vsoAnim( "smolprey", "empty" )
+	end
+end
+
 -------------------------------------------------------------------------------
 
 function p.loadStoredData()
@@ -145,8 +201,13 @@ function p.onForcedReset()
 	vsoUseSolid( false )
 
 	p.setOccupants( 0 )
-	p.setState( "stand" )
-	vsoAnim( "bodyState", "idle" )
+	if not config.getParameter( "uneaten" ) then
+		p.setState( "stand" )
+		vsoAnim( "bodyState", "idle" )
+	else
+		p.setState( "smol" )
+		vsoAnim( "bodyState", "smol.idle" )
+	end
 
 	vsoMakeInteractive( true )
 
@@ -154,7 +215,9 @@ function p.onForcedReset()
 end
 
 function p.onBegin()
-	vsoEffectWarpIn();	--Play warp in effect
+	if not config.getParameter( "uneaten" ) then
+		vsoEffectWarpIn();	--Play warp in effect
+	end
 
 	if config.getParameter( "driver" ) ~= nil then
 		p.control.standalone = true
@@ -209,7 +272,10 @@ function p.onBegin()
 			end
 		end
 	end )
-	message.setHandler( "despawn", _vsoOnDeath )
+	message.setHandler( "despawn", function(_,_, nowarpout)
+		p.nowarpout = nowarpout
+		_vsoOnDeath()
+	end )
 	message.setHandler( "forcedsit", p.control.pressE )
 
 	p.stateconfig = config.getParameter("states")
@@ -218,9 +284,9 @@ function p.onBegin()
 end
 
 function p.onEnd()
-
-	vsoEffectWarpOut();
-	
+	if not p.nowarpout then
+		vsoEffectWarpOut();
+	end
 end
 
 -------------------------------------------------------------------------------

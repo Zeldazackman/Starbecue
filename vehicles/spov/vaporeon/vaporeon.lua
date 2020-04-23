@@ -90,18 +90,21 @@ p.registerStateScript( "stand", "eat", function( targetid )
 		sb.logError("[Vappy] Can't eat more than two people!")
 		return false
 	end
-	vsoMakeInteractive( false )
-	p.showEmote("emotehappy")
-
 	vsoSetTarget( food, targetid )
-	vsoUseLounge( true, occupant )
-	vsoEat( vsoGetTargetId( food ), occupant )
-	vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
-	return true, function()
-		vsoMakeInteractive( true )
-		vsoVictimAnimReplay( occupant, center, "bodyState")
-		p.setOccupants( p.occupants + 1 )
-		vsoSound( "swallow" )
+	if p.eat( vsoGetTargetId( food ), occupant ) then
+		vsoMakeInteractive( false )
+		p.showEmote("emotehappy")
+		vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
+		return true, function()
+			p.smolprey() -- clear
+			vsoMakeInteractive( true )
+			vsoVictimAnimReplay( occupant, center, "bodyState")
+			p.setOccupants( p.occupants + 1 )
+			vsoSound( "swallow" )
+		end
+	else
+		vsoSetTarget( food, nil )
+		return false
 	end
 end)
 p.registerStateScript( "stand", "letout", function( who )
@@ -118,10 +121,11 @@ p.registerStateScript( "stand", "letout", function( who )
 	end
 	vsoMakeInteractive( false )
 	vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
+	p.smolprey( occupant )
 
 	return true, function()
 		vsoMakeInteractive( true )
-		vsoUneat( occupant )
+		p.uneat( occupant )
 		vsoSetTarget( food, nil )
 		vsoUseLounge( false, occupant )
 		if vsoGetTargetId( food ) ~= nil then
@@ -206,10 +210,8 @@ p.registerStateScript( "sit", "pin", function( targetid )
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	if #pinnable >= 1 then
-		vsoUseLounge( true, "firstOccupant" )
-		vsoSetTarget( "food", pinnable[1] )
-		vsoEat( vsoGetTargetId("food"), "firstOccupant" )
+	vsoSetTarget( "food", pinnable[1] )
+	if #pinnable >= 1 and p.eat( vsoGetTargetId( "food" ), "firstOccupant" ) then
 		vsoVictimAnimSetStatus( "firstOccupant", {} )
 		return true
 	else
@@ -233,11 +235,14 @@ state_sleep = p.standardState
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "back", "bed", function( targetid )
-	vsoUseLounge( true, "firstOccupant" )
 	vsoSetTarget( "food", targetid )
-	vsoEat( targetid, "firstOccupant" )
-	vsoVictimAnimSetStatus( "firstOccupant", {} );
-	return true
+	if p.eat( vsoGetTargetId( "food" ), "firstOccupant" ) then
+		vsoVictimAnimSetStatus( "firstOccupant", {} );
+		return true
+	else
+		vsoSetTarget( "food", nil )
+		return false
+	end
 end)
 
 function state_back()
@@ -258,8 +263,7 @@ end
 
 p.registerStateScript( "bed", "unbed", function()
 	vsoSetTarget( "food", nil )
-	vsoUneat( "firstOccupant" )
-	vsoUseLounge( false, "firstOccupant" )
+	p.uneat( "firstOccupant" )
 	return true
 end)
 
@@ -271,6 +275,7 @@ p.registerStateScript( "hug", "absorb", function()
 	vsoSound( "slurp" )
 	return true, function()
 		p.setOccupants( 1 )
+		p.smolprey() -- clear
 		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
 	end
 end)
@@ -289,15 +294,15 @@ end
 
 p.registerStateScript( "pinned", "unpin", function()
 	return true, function()
-		vsoUneat( "firstOccupant" )
 		vsoSetTarget( "food", nil )
-		vsoUseLounge( false, "firstOccupant" )
+		p.uneat( "firstOccupant" )
 	end
 end)
 p.registerStateScript( "pinned", "absorb", function()
 	vsoSound( "slurp" )
 	return true, function()
 		p.setOccupants( 1 )
+		p.smolprey() -- clear
 		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
 	end
 end)
