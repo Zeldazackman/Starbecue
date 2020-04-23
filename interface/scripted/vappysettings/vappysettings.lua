@@ -1,6 +1,7 @@
 local vappy
 local firstOccupant
 local secondOccupant
+local settings
 local bellyeffects = {
 	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
 	[""] = -1, ["heal"] = 0, ["digest"] = 1, ["softdigest"] = 2 -- reverse lookup
@@ -27,10 +28,11 @@ function init()
 	else
 		widget.setButtonEnabled( "secondOccupant.letOut", false )
 	end
-	widget.setChecked( "autoDeploy", player.getProperty( "vappyAutoDeploy" ) or false )
-	widget.setChecked( "defaultSmall", player.getProperty( "vappyDefaultSmall" ) or false )
-	widget.setSelectedOption( "bellyEffect", bellyeffects[player.getProperty("vappyBellyEffect") or ""] )
-	widget.setSelectedOption( "clickMode", clickmodes[player.getProperty("vappyClickMode") or "attack"] )
+	settings = player.getProperty("vappySettings") or {}
+	widget.setChecked( "autoDeploy", settings.autodeploy or false )
+	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
+	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
+	widget.setSelectedOption( "clickMode", clickmodes[settings.clickmode or "attack"] )
 end
 
 function update( dt )
@@ -48,21 +50,25 @@ function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = bellyeffects[value]
 	world.sendEntityMessage( vappy, "settingsMenuSet", "bellyeffect", bellyeffect )
-	player.setProperty( "vappySettings.bellyeffect", bellyeffect )
+	settings.bellyeffect = bellyeffect
+	saveSettings()
 end
 function setClickMode()
 	local value = widget.getSelectedOption( "clickMode" )
 	local clickmode = clickmodes[value]
 	world.sendEntityMessage( vappy, "settingsMenuSet", "clickmode", clickmode )
-	player.setProperty( "vappySettings.clickmode", clickmode )
+	settings.clickmode = clickmode
+	saveSettings()
 end
 function autoDeploy()
 	local value = widget.getChecked( "autoDeploy" )
-	player.setProperty( "vappySettings.autodeploy", value )
+	settings.autodeploy = value
+	saveSettings()
 end
 function defaultSmall()
 	local value = widget.getChecked( "defaultSmall" )
-	player.setProperty( "vappySettings.defaultsmall", value )
+	settings.defaultsmall = value
+	saveSettings()
 end
 
 function despawn()
@@ -78,4 +84,8 @@ function setPortrait( canvasName, data )
 end
 function letOut(_, which )
 	world.sendEntityMessage( vappy, "settingsMenuSet", "letout", which )
+end
+
+function saveSettings()
+	player.setProperty( "vappySettings", settings )
 end
