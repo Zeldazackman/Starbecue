@@ -9,7 +9,7 @@ function init()
 		player.interact( "ScriptPane", pane, vappy )
 	end)
 	message.setHandler( "loadvappysettings", function()
-		return player.getProperty( "vappySettings" )
+		return player.getProperty( "vappySettings" ) or {}
 	end)
 	message.setHandler( "isLounging", function()
 		return player.isLounging(), player.loungingIn()
@@ -22,7 +22,7 @@ function init()
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )
 		local position = world.entityPosition( entity.id() )
-		local settings = player.getProperty( "vappySettings" )
+		local settings = player.getProperty( "vappySettings" ) or {}
 		world.spawnVehicle( "spov"..species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true } )
 	end )
 end
