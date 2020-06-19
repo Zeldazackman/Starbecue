@@ -82,7 +82,7 @@
 				"states": {
 					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
 					"firstOccupant": { "frames": 1, "cycle": 1, "mode": "end" },
-					"seccondOccupant": { "frames": 1, "cycle": 1, "mode": "end" }
+					"secondOccupant": { "frames": 1, "cycle": 1, "mode": "end" }
 				}
 			}
         },
