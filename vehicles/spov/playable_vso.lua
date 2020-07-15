@@ -231,11 +231,13 @@ function p.onBegin()
 
 		local settings = config.getParameter( "settings" )
 		p.bellyeffect = settings.bellyeffect
+		p.clickmode = settings.clickmode or "attack"
 	else
 		p.control.standalone = false
 		p.control.driver = "firstOccupant"
 		p.control.driving = false
 		vsoUseLounge( false, "driver" )
+		p.clickmode = "attack"
 	end
 
 	onForcedReset();	--Do a forced reset once.
@@ -258,7 +260,7 @@ function p.onBegin()
 		if key == "bellyeffect" then
 			p.bellyeffect = val
 		elseif key == "clickmode" then
-			-- todo
+			p.clickmode = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
 				if p.occupants == 1 then
@@ -351,8 +353,10 @@ function p.control.updateDriving()
 		p.control.driving = true
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), "openvappysettings",
-				entity.id(), vsoGetTargetId( "food" ), vsoGetTargetId( "dessert" )
+				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler, entity.id(),
+				vsoGetTargetId( "food" ), vsoGetTargetId( "dessert" ),
+				p.smolpreyspecies[ "food" ], p.smolpreyspecies[ "dessert" ]
+				
 			)
 		end
 	elseif vsoGetTargetId( "food" ) ~= nil then
@@ -522,18 +526,25 @@ end
 function p.control.primaryAction()
 	local control = p.stateconfig[p.state].control
 	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
-		if p.movement.primaryCooldown < 1 then
-			if control.primaryAction.projectile ~= nil then
-				p.control.projectile(control.primaryAction.projectile)
+		if p.clickmode == "attack" then
+			if p.movement.primaryCooldown < 1 then
+				if control.primaryAction.projectile ~= nil then
+					p.control.projectile(control.primaryAction.projectile)
+				end
+				if control.primaryAction.animation ~= nil then
+					p.bodyAnim( control.primaryAction.animation )
+				end
+				if control.primaryAction.script ~= nil then
+					local statescript = p.statescripts[p.state][control.primaryAction.script]
+					statescript() -- what arguments might this need?
+				end
+				p.movement.primaryCooldown = control.primaryAction.cooldown
 			end
-			if control.primaryAction.animation ~= nil then
-				p.bodyAnim( control.primaryAction.animation )
-			end
-			if control.primaryAction.script ~= nil then
-				local statescript = p.statescripts[p.state][control.primaryAction.script]
-				statescript() -- what arguments might this need?
-			end
-			p.movement.primaryCooldown = control.primaryAction.cooldown
+		elseif p.clickmode == "build" then
+			world.placeMaterial(
+				vehicle.aimPosition( p.control.driver ), "foreground",
+				p.buildMaterial, p.buildHue
+			)
 		end
 	end
 	p.movement.primaryCooldown = p.movement.primaryCooldown - 1

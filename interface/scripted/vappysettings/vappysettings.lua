@@ -15,15 +15,25 @@ local clickmodes = {
 function init()
 	vappy = config.getParameter( "vappy" )
 	firstOccupant = config.getParameter( "firstOccupant" )
+	local firstSpecies = config.getParameter( "firstSpecies" )
 	if firstOccupant ~= nil then
-		setPortrait( "firstOccupant", world.entityPortrait( firstOccupant, "bust" ) )
+		if firstSpecies == nil then
+			setPortrait( "firstOccupant", world.entityPortrait( firstOccupant, "bust" ) )
+		else
+			setPortrait( "firstOccupant", {{image="vehicles/spov/"..firstSpecies.."/"..firstSpecies.."icon.png"}})
+		end
 		widget.setText( "firstOccupant.name", world.entityName( firstOccupant ) )
 	else
 		widget.setButtonEnabled( "firstOccupant.letOut", false )
 	end
 	secondOccupant = config.getParameter( "secondOccupant" )
+	local secondSpecies = config.getParameter( "secondSpecies" )
 	if secondOccupant ~= nil then
-		setPortrait( "secondOccupant", world.entityPortrait( secondOccupant, "bust" ) )
+		if secondSpecies == nil then
+			setPortrait( "secondOccupant", world.entityPortrait( secondOccupant, "bust" ) )
+		else
+			setPortrait( "secondOccupant", {{image="vehicles/spov/"..secondSpecies.."/"..secondSpecies.."icon.png"}})
+		end
 		widget.setText( "secondOccupant.name", world.entityName( secondOccupant ) )
 	else
 		widget.setButtonEnabled( "secondOccupant.letOut", false )

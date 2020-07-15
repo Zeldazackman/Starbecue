@@ -1,11 +1,13 @@
 local oldinit = init
 function init()
 	oldinit()
-	message.setHandler( "openvappysettings", function(_,_, vappy, firstOccupant, secondOccupant )
+	message.setHandler( "openvappysettings", function(_,_, vappy, firstOccupant, secondOccupant, firstSpecies, secondSpecies )
 		local pane = root.assetJson("/interface/scripted/vappysettings/vappysettings.config")
 		pane.vappy = vappy
 		pane.firstOccupant = firstOccupant
 		pane.secondOccupant = secondOccupant
+		pane.firstSpecies = firstSpecies
+		pane.secondSpecies = secondSpecies
 		player.interact( "ScriptPane", pane, vappy )
 	end)
 	message.setHandler( "loadvappysettings", function()
