@@ -135,6 +135,7 @@ end
 p.smolpreyspecies = {}
 
 function p.eat( targetid, seatname )
+	if targetid == vehicle.entityLoungingIn( "driver" ) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" }
 	} )
