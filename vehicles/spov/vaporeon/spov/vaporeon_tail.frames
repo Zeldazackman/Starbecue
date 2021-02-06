@@ -1,0 +1,12 @@
+
+	"frameGrid" : {
+		"size" : [128, 64],
+		"dimensions" : [8, 2],
+		"names" : [
+			[ "stand.normal", "stand.flick", "ground.normal", "ground.flick", "back.normal", "back.flick"],
+			[ "walk.1", "walk.2", "walk.3", "walk.4", "walk.5", "walk.6", "walk.7", "walk.8"],
+		]
+	},
+	"aliases" : {
+	}
+}
