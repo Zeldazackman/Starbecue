@@ -70,3 +70,9 @@ function spovSpawnerItemGenerateCallback()	--THIS function is used to create the
 		,itemTags = { "spovpillable" }	--This is required if you want to use pills
 	}
 end
+
+local oldspawnerinit = spovSpawnerInit
+function spovSpawnerInit(...)
+	oldspawnerinit(...)
+	object.setInteractive(false)
+end
