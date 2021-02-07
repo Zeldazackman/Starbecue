@@ -14,9 +14,6 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 2, "cycle": 3, "mode": "end" },
-					"blink": { "frames": 1, "cycle": 0.25, "mode": "end" },
-                    "pet": { "frames": 1, "cycle": 2, "mode": "end" },
-					"tail_flick": { "frames": 1, "cycle": 0.5, "mode": "end" },
 
                     "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end" },
@@ -53,9 +50,6 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
 
-					"bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
-
-
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
 					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end" },
@@ -81,7 +75,7 @@
                     "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
 
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
+					"swim": { "frames": 4, "cycle": 1, "mode": "end" }
 				}
 			},
 			"bapState": {
@@ -107,7 +101,7 @@
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
 				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" }
 
 				}
 			},
@@ -247,14 +241,9 @@
 						"s_up": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_up.<frame><directives>" } },
 						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_down.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.run.<frame><directives>" } },
-
 						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } }
 
-						"swimidle": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swimidle.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.swim.<frame><directives>" } },
 					}
                 }
 			},
@@ -276,11 +265,11 @@
 						"fall": { "properties": { "image": "spov/Vappy_legs/vappy_legs_fg.png:<state>.<frame><directives>" } },
 
 						"swimidle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_fg.png:<state>.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_fg.png:<state>.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_fg.png:<state>.<frame><directives>" } }
 					}
                 }
 			},
-			"backleg": {
+			"backlegs": {
                 "properties": {
                     "centered": true,
                     "zLevel": -2,
@@ -297,11 +286,12 @@
 						"fall": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:<state>.<frame><directives>" } },
 
 						"swimidle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:<state>.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:<state>.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:<state>.<frame><directives>" } }
 					},
 
                     "bapState": {
                         "idle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
+						"bap": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
@@ -310,7 +300,7 @@
 						"fall": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
 
 						"swimidle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:<state>.<frame><directives>" } }
 					}
                 }
 			},
