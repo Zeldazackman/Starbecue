@@ -96,6 +96,12 @@ function p.bodyAnim( anim )
 	p.headbob( anim )
 end
 
+function p.legsAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "legState", prefix..anim )
+	p.headbob( anim )
+end
+
 function p.headAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "headState", prefix..anim )
@@ -357,7 +363,7 @@ function p.control.updateDriving()
 				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler, entity.id(),
 				vsoGetTargetId( "food" ), vsoGetTargetId( "dessert" ),
 				p.smolpreyspecies[ "food" ], p.smolpreyspecies[ "dessert" ]
-				
+
 			)
 		end
 	elseif vsoGetTargetId( "food" ) ~= nil then
@@ -404,6 +410,7 @@ function p.control.doPhysics()
 		nextState( "stand" )
 		updateState()
 		p.bodyAnim( "fall" )
+		p.legsAnim( "fall" )
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
 			vsoUneat( "firstOccupant" )
 			vsoSetTarget( "food", nil )
@@ -588,14 +595,14 @@ function p.control.groundMovement( dx )
 
 	if dx ~= 0 then
 		if not running then
-			p.bodyAnim( "walk" )
+			p.legsAnim( "walk" )
 			p.movement.animating = true
 		elseif running then
-			p.bodyAnim( "run" )
+			p.legsAnim( "run" )
 			p.movement.animating = true
 		end
 	elseif p.movement.animating then
-		p.bodyAnim( "idle" )
+		p.legsAnim( "idle" )
 		p.movement.animating = false
 	end
 
@@ -604,6 +611,7 @@ function p.control.groundMovement( dx )
 		if not vehicle.controlHeld( p.control.driver, "down" ) then
 			if not p.movement.jumped then
 				p.bodyAnim( "jump" )
+				p.legsAnim( "jump" )
 				p.movement.animating = true
 				if p.occupants < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
@@ -704,7 +712,7 @@ function p.control.airMovement( dx )
 	else
 		p.movement.jumped = false
 	end
-	
+
 	if mcontroller.yVelocity() < -10 and p.movement.lastYVelocity >= -10 then
 		p.bodyAnim( "fall" )
 		p.movement.animating = true

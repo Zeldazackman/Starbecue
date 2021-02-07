@@ -168,7 +168,7 @@ function state_stand()
 		end
 		if p.movement.wasspecial1 ~= true and p.movement.wasspecial1 ~= false and p.movement.wasspecial1 > 0 then
 			-- a bit of a hack, prevents the special1 press from activating vappy from also doing this by adding a 10 frame delay before checking if you're pressing it
-			p.movement.wasspecial1 = p.movement.wasspecial1 - 1 
+			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
 		elseif p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
 			if not p.movement.wasspecial1 then
 				-- vsoAnim( "bodyState", "smolify" )
@@ -442,7 +442,7 @@ function state_chonk_ball()
 			-- letout( p.occupants ) -- last eaten
 		end
 	end
-	
+
 	-- p.movement controls, use vanilla methods because they need to be held
 	if vehicle.controlHeld( p.control.driver, "left" ) then
 		dx = dx - 1
