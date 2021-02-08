@@ -99,6 +99,7 @@ end
 function p.legsAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "legState", prefix..anim )
+
 	if vsoAnimEnded( "bapState" ) or not vsoAnimIs( "bapState", "bap" ) then
 		vsoAnim( "bapState", prefix..anim )
 	end
@@ -607,6 +608,10 @@ function p.control.groundMovement( dx )
 	end
 
 	if dx ~= 0 then
+		if vsoAnimIs( "bodyState", "fall" ) then
+			p.bodyAnim( "idle" )
+		end
+
 		if not running then
 			p.legsAnim( "walk" )
 			p.movement.animating = true
