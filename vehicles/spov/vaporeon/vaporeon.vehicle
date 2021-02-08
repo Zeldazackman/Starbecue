@@ -182,7 +182,7 @@
 					}
 				]
 			},
-			"idle": [ "blink", "tail_flick" ],
+			"idle": [ ],
 			"struggle": {
 				"up": { "transition": "escape" },
 				"front": { "transition": "escape" },
@@ -265,7 +265,7 @@
 					}
 				]
 			},
-			"idle": [ "blink", "tail_flick" ],
+			"idle": [ ],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "down" },
@@ -311,7 +311,7 @@
 					// no side transition with 2 occupants
 				]
 			},
-			"idle": [ "blink", "tail_flick" ],
+			"idle": [ ],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "down" },
@@ -379,7 +379,7 @@
 					"script": "bed"
 				}
 			},
-			"idle": [ "blink", "tail_flick" ],
+			"idle": [ ],
 			"struggle": {
 				"up": { "transition": "side" },
 				"front": { "transition": "side" },
@@ -428,7 +428,7 @@
 					"script": "unbed"
 				}
 			},
-			"idle": [ "blink", "tail_flick" ],
+			"idle": [  ],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "up" },
@@ -527,7 +527,7 @@
 					"script": "absorb"
 				}
 			},
-			"idle": [ "blink", "tail_flick", "lick" ],
+			"idle": [ "lick" ],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
 				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },

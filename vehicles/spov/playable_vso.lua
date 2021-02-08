@@ -99,7 +99,15 @@ end
 function p.legsAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "legState", prefix..anim )
+	if vsoAnimEnded( "bapState" ) or not vsoAnimIs( "bapState", "bap" ) then
+		vsoAnim( "bapState", prefix..anim )
+	end
 	p.headbob( anim )
+end
+
+function p.baplegAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "bapState", prefix..anim )
 end
 
 function p.headAnim( anim )
@@ -343,6 +351,7 @@ function state__ptransition()
 		if _endedframes > 2 then
 			_endedframes = 0
 			p.bodyAnim( "idle" )
+			p.legsAnim( "idle" )
 			_ptransition.after()
 			p.setState( _ptransition.state )
 		end
@@ -540,7 +549,11 @@ function p.control.primaryAction()
 					p.control.projectile(control.primaryAction.projectile)
 				end
 				if control.primaryAction.animation ~= nil then
-					p.bodyAnim( control.primaryAction.animation )
+					if control.primaryAction.animation == "bap" then
+						p.baplegAnim( control.primaryAction.animation )
+					else
+						p.bodyAnim( control.primaryAction.animation )
+					end
 				end
 				if control.primaryAction.script ~= nil then
 					local statescript = p.statescripts[p.state][control.primaryAction.script]
@@ -650,9 +663,12 @@ function p.control.waterMovement( dx )
 	or vehicle.controlHeld( p.control.driver, "left" )
 	or vehicle.controlHeld( p.control.driver, "right" ) then
 		p.bodyAnim( "swim" )
+		p.legsAnim( "swim" )
+
 		p.movement.animating = true
 	elseif not p.struggling then
 		p.bodyAnim( "swimidle" )
+		p.legsAnim( "swimidle" )
 		p.movement.animating = true
 	end
 
@@ -691,6 +707,7 @@ function p.control.airMovement( dx )
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.bodyAnim( "jump" )
+			p.legsAnim( "jump" )
 			p.movement.animating = true
 			if p.occupants < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
@@ -715,6 +732,7 @@ function p.control.airMovement( dx )
 
 	if mcontroller.yVelocity() < -10 and p.movement.lastYVelocity >= -10 then
 		p.bodyAnim( "fall" )
+		p.legsAnim( "fall" )
 		p.movement.animating = true
 	end
 	p.movement.lastYVelocity = mcontroller.yVelocity()
@@ -781,6 +799,7 @@ function p.idleStateChange()
 			end
 		end
 		p.bodyAnim( "idle" )
+		p.legsAnim( "idle" )
 	end
 
 	if vsoAnimEnded( "headState" ) then

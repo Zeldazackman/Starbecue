@@ -287,8 +287,16 @@
 
 						"swimidle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bg.png:swim.<frame><directives>" } }
-					},
-
+					}
+                }
+			},
+			"bapleg": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": -2,
+                     "transformationGroups": ["flip"]
+                },
+                "partStates": {
                     "bapState": {
                         "idle": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:idle.<frame><directives>" } },
 						"bap": { "properties": { "image": "spov/Vappy_legs/vappy_legs_bappy_bg.png:bap.<frame><directives>" } },
