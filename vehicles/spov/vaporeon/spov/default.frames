@@ -3,7 +3,7 @@
 		"size" : [128, 64],
 		"dimensions" : [8, 38],
 		"names" : [
-			[ "0.stand.1", "1.stand.1", "2.stand.1"],
+			[ "0.stand.1", "1.stand.1", "2.stand.1", "1.stand.2", "2.stand.2"],
 			[ "0.stand.jump.1", "0.stand.jump.2", "0.stand.jump.3", "0.stand.jump.4", "0.stand.fall.1", "0.stand.fall.2", "0.stand.fall.3", "0.stand.fall.4" ],
 			[ "0.stand.eat.1", "0.stand.eat.2", "0.stand.eat.3", "0.stand.eat.4", "0.stand.eat.5", "0.stand.eat.6", "0.stand.eat.7", "0.stand.eat.8" ],
 
@@ -53,6 +53,15 @@
 	},
 	"aliases" : {"idle.default" : "0.stand.1", "idle.1" : "0.stand.1",
 		"0.stand.2" : "0.stand.1",
+
+		"1.stand.s_back.5" : "1.stand.1",
+		"1.stand.s_front.5" : "1.stand.1",
+		"1.stand.s_up.5" : "1.stand.1",
+		"1.stand.s_down.5" : "1.stand.1",
+		"2.stand.s_back.5" : "2.stand.1",
+		"2.stand.s_front.5" : "2.stand.1",
+		"2.stand.s_up.5" : "2.stand.1",
+		"2.stand.s_down.5" : "2.stand.1",
 
 		"0.sit.standup.1" : "0.stand.sitdown.2",
 		"0.sit.standup.2" : "0.stand.sitdown.1",
