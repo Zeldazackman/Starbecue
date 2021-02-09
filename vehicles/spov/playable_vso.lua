@@ -137,6 +137,21 @@ function p.bodyAnim( anim )
 	p.headbob( anim )
 end
 
+function p.legsAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "legState", prefix..anim )
+
+	if vsoAnimEnded( "bapState" ) or not vsoAnimIs( "bapState", "bap" ) then
+		vsoAnim( "bapState", prefix..anim )
+	end
+	p.headbob( anim )
+end
+
+function p.baplegAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "bapState", prefix..anim )
+end
+
 function p.headAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "headState", prefix..anim )
@@ -387,6 +402,7 @@ function state__ptransition()
 		if _endedframes > 2 then
 			_endedframes = 0
 			p.bodyAnim( "idle" )
+			p.legsAnim( "idle" )
 			_ptransition.after()
 			p.setState( _ptransition.state )
 		end
@@ -462,6 +478,7 @@ function p.control.doPhysics()
 		nextState( "stand" )
 		updateState()
 		p.bodyAnim( "fall" )
+		p.legsAnim( "fall" )
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
 			vsoUneat( "occupant1" )
 			vsoSetTarget( 1, nil )
@@ -592,7 +609,11 @@ function p.control.primaryAction()
 					p.control.projectile(control.primaryAction.projectile)
 				end
 				if control.primaryAction.animation ~= nil then
-					p.bodyAnim( control.primaryAction.animation )
+					if control.primaryAction.animation == "bap" then
+						p.baplegAnim( control.primaryAction.animation )
+					else
+						p.bodyAnim( control.primaryAction.animation )
+					end
 				end
 				if control.primaryAction.script ~= nil then
 					local statescript = p.statescripts[p.state][control.primaryAction.script]
@@ -646,15 +667,19 @@ function p.control.groundMovement( dx )
 	end
 
 	if dx ~= 0 then
+		if vsoAnimIs( "bodyState", "fall" ) then
+			p.bodyAnim( "idle" )
+		end
+
 		if not running then
-			p.bodyAnim( "walk" )
+			p.legsAnim( "walk" )
 			p.movement.animating = true
 		elseif running then
-			p.bodyAnim( "run" )
+			p.legsAnim( "run" )
 			p.movement.animating = true
 		end
 	elseif p.movement.animating then
-		p.bodyAnim( "idle" )
+		p.legsAnim( "idle" )
 		p.movement.animating = false
 	end
 
@@ -663,6 +688,7 @@ function p.control.groundMovement( dx )
 		if not vehicle.controlHeld( p.control.driver, "down" ) then
 			if not p.movement.jumped then
 				p.bodyAnim( "jump" )
+				p.legsAnim( "jump" )
 				p.movement.animating = true
 				if p.visualOccupants < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
@@ -701,9 +727,12 @@ function p.control.waterMovement( dx )
 	or vehicle.controlHeld( p.control.driver, "left" )
 	or vehicle.controlHeld( p.control.driver, "right" ) then
 		p.bodyAnim( "swim" )
+		p.legsAnim( "swim" )
+
 		p.movement.animating = true
 	elseif not p.struggling then
 		p.bodyAnim( "swimidle" )
+		p.legsAnim( "swimidle" )
 		p.movement.animating = true
 	end
 
@@ -742,6 +771,7 @@ function p.control.airMovement( dx )
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.bodyAnim( "jump" )
+			p.legsAnim( "jump" )
 			p.movement.animating = true
 			if p.visualOccupants < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
@@ -763,9 +793,10 @@ function p.control.airMovement( dx )
 	else
 		p.movement.jumped = false
 	end
-	
+
 	if mcontroller.yVelocity() < -10 and p.movement.lastYVelocity >= -10 then
 		p.bodyAnim( "fall" )
+		p.legsAnim( "fall" )
 		p.movement.animating = true
 	end
 	p.movement.lastYVelocity = mcontroller.yVelocity()
@@ -832,6 +863,7 @@ function p.idleStateChange()
 			end
 		end
 		p.bodyAnim( "idle" )
+		p.legsAnim( "idle" )
 	end
 
 	if vsoAnimEnded( "headState" ) then
