@@ -163,6 +163,11 @@ function p.baplegAnim( anim )
 	vsoAnim( "bapState", prefix..anim )
 end
 
+function p.tailAnim( anim )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	vsoAnim( "tailState", prefix..anim )
+end
+
 function p.headAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "headState", prefix..anim )
@@ -416,7 +421,7 @@ function state__ptransition()
 		if _endedframes > 2 then
 			_endedframes = 0
 			p.bodyAnim( "idle" )
-			p.legsAnim( "idle" )
+			--p.legsAnim( "idle" )
 			_ptransition.after()
 			p.setState( _ptransition.state )
 		end
@@ -684,6 +689,7 @@ function p.control.groundMovement( dx )
 		if vsoAnimIs( "bodyState", "fall" ) then
 			p.bodyAnim( "idle" )
 		end
+		p.tailAnim( "none" )
 
 		if not running then
 			p.legsAnim( "walk" )
@@ -694,6 +700,7 @@ function p.control.groundMovement( dx )
 		end
 	elseif p.movement.animating then
 		p.legsAnim( "idle" )
+		p.tailAnim( "idle" )
 		p.movement.animating = false
 	end
 
@@ -703,6 +710,7 @@ function p.control.groundMovement( dx )
 			if not p.movement.jumped then
 				p.bodyAnim( "jump" )
 				p.legsAnim( "jump" )
+				p.tailAnim( "none" )
 				p.movement.animating = true
 				if p.visualOccupants < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
@@ -881,7 +889,6 @@ function p.idleStateChange()
 			end
 		end
 		p.bodyAnim( "idle" )
-		p.legsAnim( "idle" )
 	end
 
 	if vsoAnimEnded( "headState" ) then

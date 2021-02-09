@@ -102,7 +102,7 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"flick": { "frames": 2, "cycle": 1, "mode": "end" },
+					"flick": { "frames": 1, "cycle": 1, "mode": "end" },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end" }
 				}
@@ -341,7 +341,7 @@
                 "partStates": {
                     "tailState": {
                         "idle": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
-                        "blink": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
+                        "flick": { "properties": { "image": "spov/vaporeon_tail.png:<state>.flick.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } }
 					}

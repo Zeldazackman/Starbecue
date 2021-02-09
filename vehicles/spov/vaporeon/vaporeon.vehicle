@@ -107,6 +107,7 @@
 					"animation": {
 						"body": "sitdown",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -119,6 +120,7 @@
 						"animation": {
 							"body": "eat",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -130,6 +132,7 @@
 						"animation": {
 							"body": "eat",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -145,6 +148,7 @@
 						"animation": {
 							"body": "escape",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -156,6 +160,7 @@
 						"animation": {
 							"body": "escape",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -165,7 +170,37 @@
 					}
 				]
 			},
-			"idle": [ ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "idle",
+					"bap": "idle",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "idle",
+					"bap": "idle",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "idle",
+					"bap": "idle",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "idle",
+					"bap": "idle",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
+
 			"struggle": {
 				"up": { "transition": "escape" },
 				"front": { "transition": "escape" },
@@ -230,6 +265,7 @@
 						"animation": {
 							"body": "pin",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -242,6 +278,7 @@
 						"animation": {
 							"body": "laydowm",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -252,6 +289,7 @@
 						"animation": {
 							"body": "laydowm",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -260,7 +298,36 @@
 					}
 				]
 			},
-			"idle": [ ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "down" },
@@ -286,6 +353,7 @@
 					"animation": {
 						"body": "situp",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -296,6 +364,7 @@
 					"animation": {
 						"body": "fallasleep",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -307,6 +376,7 @@
 						"animation": {
 							"body": "rollover",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -317,6 +387,7 @@
 						"animation": {
 							"body": "rollover",
 							"legs": "none",
+							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -326,7 +397,36 @@
 					// no side transition with 2 occupants
 				]
 			},
-			"idle": [ ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "down" },
@@ -356,6 +456,7 @@
 					"animation": {
 						"body": "wakeup",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -363,7 +464,36 @@
 					"chance": 5
 				}
 			},
-			"idle": [],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "up" },
@@ -389,6 +519,7 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -401,7 +532,36 @@
 					"script": "bed"
 				}
 			},
-			"idle": [ ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "side" },
 				"front": { "transition": "side" },
@@ -431,6 +591,7 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -442,6 +603,7 @@
 					"animation": {
 						"body": "grab",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -454,7 +616,36 @@
 					"script": "unbed"
 				}
 			},
-			"idle": [  ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "up" },
@@ -480,6 +671,7 @@
 					"animation": {
 						"body": "grab",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -491,6 +683,7 @@
 					"animation": {
 						"body": "absorb",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -500,7 +693,36 @@
 					"script": "absorb"
 				}
 			},
-			"idle": [ "tail_flick" ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "blink",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "idle",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "hug.s_up" },
 				"front": { "transition": "up", "victimAnimation": "hug.s_front" },
@@ -526,6 +748,7 @@
 					"animation": {
 						"body": "situp",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -538,6 +761,7 @@
 					"animation": {
 						"body": "fallasleep",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -548,6 +772,7 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -559,6 +784,7 @@
 					"animation": {
 						"body": "absorb",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -568,7 +794,36 @@
 					"script": "absorb"
 				}
 			},
-			"idle": [ "lick" ],
+			"idle": [
+				{
+					"body": "lick",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "idle"
+				},
+				{
+					"body": "lick",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "flick"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
 				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
@@ -599,6 +854,7 @@
 					"animation": {
 						"body": "wakeup",
 						"legs": "none",
+						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -606,7 +862,22 @@
 					"chance": 5
 				}
 			},
-			"idle": [ ],
+			"idle": [
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "idle"
+				},
+				{
+					"body": "idle",
+					"legs": "none",
+					"bap": "none",
+					"head": "none",
+					"tail": "flick"
+				}
+			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
 				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
