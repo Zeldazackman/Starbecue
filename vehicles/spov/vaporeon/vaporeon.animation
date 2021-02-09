@@ -261,7 +261,7 @@
             "frontlegs": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 2,
+                    "zLevel": -1,
                      "transformationGroups": ["flip"]
                 },
                 "partStates": {
@@ -325,7 +325,7 @@
 			"tail": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 1,
+                    "zLevel": -1,
                      "transformationGroups": ["flip"]
                 },
                 "partStates": {
