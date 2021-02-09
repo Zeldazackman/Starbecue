@@ -100,9 +100,9 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
-				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" }
+					"flick": { "frames": 2, "cycle": 1, "mode": "end" },
 
+					"none": { "frames": 1, "cycle": 1, "mode": "end" }
 				}
 			},
 
@@ -322,6 +322,22 @@
 					}
                 }
 			},
+			"tail": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": 1,
+                     "transformationGroups": ["flip"]
+                },
+                "partStates": {
+                    "tailState": {
+                        "idle": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
+                        "blink": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
+
+                        "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } }
+					}
+                }
+			},
+
 			"head": {
                 "properties": {
                     "centered": true,

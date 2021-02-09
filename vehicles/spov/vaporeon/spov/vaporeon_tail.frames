@@ -1,12 +1,14 @@
-
+{
 	"frameGrid" : {
 		"size" : [128, 64],
-		"dimensions" : [8, 2],
+		"dimensions" : [8, 1],
 		"names" : [
-			[ "stand.1", "stand.2", "ground.1", "ground.2", "back.1", "back.2"],
-			[ "walk.1", "walk.2", "walk.3", "walk.4", "walk.5", "walk.6", "walk.7", "walk.8"],
+			[ "stand.1", "stand.2", "sit.1", "sit.2", "back.1", "back.2", null, "empty.1"]
 		]
 	},
 	"aliases" : {
+		"lay.1" : "sit.1",
+		"lay.2" : "sit.2"
+
 	}
 }
