@@ -131,10 +131,21 @@ function p.entityLounging( entity )
 	return false
 end
 
+function p.doAnims( anims )
+	local prefix = p.stateconfig[p.state].animationPrefix or ""
+	for k,v in pairs(anims) do
+		if k ~= "bob" then
+			vsoAnim( k.."State", prefix..v )
+		else
+			p.headbob( v )
+		end
+	end
+end
+
 function p.bodyAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	vsoAnim( "bodyState", prefix..anim )
-	p.headbob( anim )
+	p.headbob( (p.stateconfig[p.state].headbob or {})[anim] or {} )
 end
 
 function p.legsAnim( anim )
@@ -144,7 +155,7 @@ function p.legsAnim( anim )
 	if vsoAnimEnded( "bapState" ) or not vsoAnimIs( "bapState", "bap" ) then
 		vsoAnim( "bapState", prefix..anim )
 	end
-	p.headbob( anim )
+	p.headbob( (p.stateconfig[p.state].headbob or {})[anim] or {} )
 end
 
 function p.baplegAnim( anim )
@@ -158,10 +169,9 @@ function p.headAnim( anim )
 end
 
 p.headbobbing = {vals = {}, time = 0}
-function p.headbob( name )
-	if p.headbobbing.name == name then return end
-	p.headbobbing.name = name
-	p.headbobbing.vals = (p.stateconfig[p.state].headbob or {})[name] or {}
+function p.headbob( data )
+	if p.headbobbing.vals == data then return end
+	p.headbobbing.vals = data
 	p.headbobbing.time = 0
 end
 
@@ -378,7 +388,11 @@ function p.doTransition( direction, scriptargs )
 	_ptransition.after = after
 	_ptransition.state = tconfig.state
 	if tconfig.animation ~= nil then
-		p.bodyAnim( tconfig.animation )
+		if type(tconfig.animation) == "string" then
+			p.bodyAnim( tconfig.animation )
+		else
+			p.doAnims( tconfig.animation )
+		end
 	end
 	if tconfig.victimAnimation ~= nil then
 		local i = (scriptargs or {}).index
@@ -858,7 +872,11 @@ function p.idleStateChange()
 		for _, idle in pairs(idles) do
 			percent = percent - 15
 			if percent < 0 then
-				p.bodyAnim( idle )
+				if type( idle ) == "string" then
+					p.bodyAnim( idle )
+				else
+					p.doAnims( idle )
+				end
 				return
 			end
 		end
