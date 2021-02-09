@@ -77,12 +77,18 @@
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end" }
 				}
 			},
-			"smolprey": {
+			"occupant1state": {
 				"default": "empty",
 				"states": {
 					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
-					"firstOccupant": { "frames": 1, "cycle": 1, "mode": "end" },
-					"secondOccupant": { "frames": 1, "cycle": 1, "mode": "end" }
+					"smol": { "frames": 1, "cycle": 1, "mode": "end" }
+				}
+			},
+			"occupant2state": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end" }
 				}
 			}
         },
@@ -154,29 +160,29 @@
                 }
             },
 
-            "victim": {
+            "occupant1": {
                 "properties": {
                     "centered": true,
                      "zLevel": 0,
-                     "transformationGroups": ["flip", "victimposition"],
-                     "firstOccupantPosition": [0.0, 0.0]
+                     "transformationGroups": ["flip", "occupant1position"],
+                     "occupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
-                    "smolprey": {
-						"firstOccupant": { "properties" : { "image": "/vehicles/spov/<smolprey>/spov/<smolprey>_small.png:smolprey<directives>" } }
+                    "occupant1state": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<occupant1species>/spov/<occupant1species>_small.png:smolprey<occupant1directives>" } }
                     }
                 }
             },
-            "victim2": {
+            "occupant2": {
                 "properties": {
                     "centered": true,
                      "zLevel": 0,
-                     "transformationGroups": ["flip", "victimposition2"],
-                     "secondOccupantPosition": [0.0, 0.0]
+                     "transformationGroups": ["flip", "occupant2position"],
+                     "occupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
-                    "smolprey": {
-						"secondOccupant": { "properties" : { "image": "/vehicles/spov/<smolprey>/spov/<smolprey>_small.png:smolprey<directives>" } }
+                    "occupant2state": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<occupant2species>/spov/<occupant2species>_small.png:smolprey<occupant2directives>" } }
                     }
                 }
 			},
@@ -252,10 +258,10 @@
 	},
 	"transformationGroups": {
 		"flip": {},
-		"victimposition": {
+		"occupant1position": {
 			"interpolated": true
 		},
-		"victimposition2": {
+		"occupant2position": {
 			"interpolated": true
 		},
 		"head": {

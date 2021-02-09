@@ -5,14 +5,45 @@ require("/scripts/vore/vsosimple.lua")
 
 function vsoNotnil( val, msg ) -- HACK: intercept self.cfgVSO to inject things from other files
 	if val == nil then vsoError( msg ) end
-	if msg == "missing vso in config file" then
-		local defaultVictimAnims = root.assetJson( "/vehicles/spov/default_victim_animations.config" )
-		val.victimAnimations = sb.jsonMerge( defaultVictimAnims, val.victimAnimations )
+	if msg == "missing vso in config file" and type(val.victimAnimations) == "string" then
+		val.victimAnimations = root.assetJson( val.victimAnimations )
 	end
 	return val;
 end
 
-p = {}
+local _oldVictimAnimUpdate = vsoVictimAnimUpdate
+function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods to change transformation group name based on seatname
+	-- check if patch is needed
+	if seatname:sub(1, #"occupant") ~= "occupant" then
+		return _oldVictimAnimUpdate( seatname, dt )
+	end
+	-- store real methods
+	local a_reset = animator.resetTransformationGroup
+	local a_scale = animator.scaleTransformationGroup
+	local a_rotate = animator.rotateTransformationGroup
+	local a_translate = animator.translateTransformationGroup
+	-- apply patch
+	animator.resetTransformationGroup = function(group, ...) a_reset(seatname.."position", ...) end
+	animator.scaleTransformationGroup = function(group, ...) a_scale(seatname.."position", ...) end
+	animator.rotateTransformationGroup = function(group, ...) a_rotate(seatname.."position", ...) end
+	animator.translateTransformationGroup = function(group, ...) a_translate(seatname.."position", ...) end
+	-- call original function
+	local ret = _oldVictimAnimUpdate( seatname, dt )
+	-- revert patch
+	animator.resetTransformationGroup = a_reset
+	animator.scaleTransformationGroup = a_scale
+	animator.rotateTransformationGroup = a_rotate
+	animator.translateTransformationGroup = a_translate
+	return ret
+end
+
+p = {
+	maxOccupants = 0,
+	occupants = 0,
+	occupantOffset = 1,
+	visualOccupants = 0,
+	justAte = false
+}
 
 p.movement = {
 	jumps = 0,
@@ -37,9 +68,18 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 	end
 end
 
-function p.setOccupants(occupants)
-	p.occupants = occupants
-	animator.setGlobalTag( "occupants", tostring(occupants) )
+function p.updateOccupants()
+	p.occupants = 0
+	for i = 1, p.maxOccupants do
+		if vehicle.entityLoungingIn( "occupant"..i ) then
+			p.occupants = p.occupants + 1
+		end
+	end
+	if vsoPill( "fatten" ) then -- this seems to not work in onbegin??
+		p.occupantOffset = math.floor(vsoPillValue( "fatten" )) + 1
+	end
+	p.visualOccupants = p.occupants + p.occupantOffset - 1 -- for pudge
+	animator.setGlobalTag( "occupants", tostring(p.visualOccupants) )
 end
 
 function p.setState(state)
@@ -68,25 +108,26 @@ function p.occupantArray( maybearray )
 	if maybearray[1] == nil then -- not an array, no change
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[p.occupants + 1]
+		return maybearray[p.visualOccupants + 1]
 	end
 end
 
-function p.swapOccupants()
-	local food = vsoGetTargetId("food")
-	vsoSetTarget( "food", vsoGetTargetId("dessert") )
-	vsoSetTarget( "dessert", food )
+function p.swapOccupants(a, b)
+	local t = vsoGetTargetId(a)
+	vsoSetTarget( a, vsoGetTargetId(b) )
+	vsoSetTarget( b, t )
 
-	vsoUneat( "firstOccupant" )
-	vsoUneat( "secondOccupant" )
-	vsoEat( vsoGetTargetId("food"), "firstOccupant" )
-	vsoEat( vsoGetTargetId("dessert"), "secondOccupant" )
+	vsoUneat( "occupant"..a )
+	vsoUneat( "occupant"..b )
+	vsoEat( vsoGetTargetId(a), "occupant"..a )
+	vsoEat( vsoGetTargetId(b), "occupant"..b )
 end
 
 function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
-	if entity == vehicle.entityLoungingIn( "firstOccupant" ) then return true end
-	if entity == vehicle.entityLoungingIn( "secondOccupant" ) then return true end
+	for i = p.occupantOffset, p.maxOccupants do
+		if entity == vehicle.entityLoungingIn( "occupant"..i ) then return true end
+	end
 	return false
 end
 
@@ -134,8 +175,8 @@ end
 
 p.smolpreyspecies = {}
 
-function p.eat( targetid, seatname )
-	if targetid == vehicle.entityLoungingIn( "driver" ) then return false end -- don't eat self
+function p.eat( targetid, seatindex )
+	if targetid == nil or p.entityLounging(targetid) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" }
 	} )
@@ -146,8 +187,9 @@ function p.eat( targetid, seatname )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
 			-- won't work with multiple loungeables near each other
-			vsoUseLounge( true, seatname )
-			vsoEat( targetid, seatname )
+			vsoUseLounge( true, "occupant"..seatindex )
+			vsoEat( targetid, "occupant"..seatindex )
+			p.justAte = true
 			return true -- not lounging
 		else
 			return false -- lounging in something inedible
@@ -155,31 +197,33 @@ function p.eat( targetid, seatname )
 	end
 	-- lounging in edible smol thing
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
-	p.smolpreyspecies[seatname] = species
-	p.smolprey( seatname )
+	p.smolpreyspecies[seatindex] = species
+	p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
-	vsoUseLounge( true, seatname )
-	vsoEat( targetid, seatname )
+	vsoUseLounge( true, "occupant"..seatindex )
+	vsoEat( targetid, "occupant"..seatindex )
+	p.justAte = true
 	return true
 end
 
-function p.uneat( seatname )
-	if p.smolpreyspecies[seatname] ~= nil then
-		local targetid = vehicle.entityLoungingIn( seatname )
-		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatname] )
-		p.smolpreyspecies[seatname] = nil
+function p.uneat( seatindex )
+	if p.smolpreyspecies[seatindex] ~= nil then
+		local targetid = vehicle.entityLoungingIn( "occupant"..seatindex )
+		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
+		p.smolpreyspecies[seatindex] = nil
 	end
-	p.smolprey() -- clear
-	vsoUneat( seatname )
-	vsoUseLounge( false, seatname )
+	p.smolprey( seatindex ) -- clear
+	vsoUneat( "occupant"..seatindex )
+	vsoUseLounge( false, "occupant"..seatindex )
 end
 
-function p.smolprey( seatname )
-	if seatname ~= nil and p.smolpreyspecies[seatname] ~= nil then
-		animator.setGlobalTag( "smolprey", p.smolpreyspecies[seatname] )
-		vsoAnim( "smolprey", seatname )
+function p.smolprey( seatindex )
+	if seatindex ~= nil and p.smolpreyspecies[seatindex] ~= nil then
+		animator.setGlobalTag( "species"..seatindex, p.smolpreyspecies[seatindex] )
+		-- directives too eventually
+		vsoAnim( "occupant"..seatindex.."state", "smol" )
 	else
-		vsoAnim( "smolprey", "empty" )
+		vsoAnim( "occupant"..seatindex.."state", "empty" )
 	end
 end
 
@@ -195,17 +239,16 @@ end
 
 function p.onForcedReset()
 	vsoAnimSpeed( 1.0 );
-	vsoVictimAnimVisible( "firstOccupant", false )
-	vsoUseLounge( false, "firstOccupant" )
-	vsoVictimAnimVisible( "secondOccupant", false )
-	vsoUseLounge( false, "secondOccupant" )
+	for i = p.occupantOffset, p.maxOccupants do
+		vsoVictimAnimVisible( "occupant"..i, false )
+		vsoUseLounge( false, "occupant"..i )
+	end
 	vsoUseSolid( false )
 
-	p.setOccupants( 0 )
 	if not config.getParameter( "uneaten" ) then
 		p.setState( "stand" )
 		vsoAnim( "bodyState", "idle" )
-	else
+	else -- released from larger pred
 		p.setState( "smol" )
 		vsoAnim( "bodyState", "smol.idle" )
 	end
@@ -235,7 +278,7 @@ function p.onBegin()
 		p.clickmode = settings.clickmode or "attack"
 	else
 		p.control.standalone = false
-		p.control.driver = "firstOccupant"
+		p.control.driver = "occupant1"
 		p.control.driving = false
 		vsoUseLounge( false, "driver" )
 		p.clickmode = "attack"
@@ -248,6 +291,8 @@ function p.onBegin()
 	if vsoPill( "heal" ) then p.bellyeffect = "heal" end
 	if vsoPill( "digest" ) then p.bellyeffect = "digest" end
 	if vsoPill( "softdigest" ) then p.bellyeffect = "softdigest" end
+
+	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
 
 	-- message.setHandler( "settingsMenuGet", function settingsMenuGet()
 	-- 	return {
@@ -264,14 +309,10 @@ function p.onBegin()
 			p.clickmode = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
-				if p.occupants == 1 then
-					p.doTransition( "escape", 1 )
-				else
-					if val == 1 then
-						p.swapOccupants()
-					end
-					p.doTransition( "escape", 2 )
-				end
+				-- while val < p.occupants do -- shift other prey forward
+				-- 	p.swapOccupants( val, val+1 )
+				-- end
+				p.doTransition( "escape", {index = val} )
 			end
 		end
 	end )
@@ -305,14 +346,15 @@ end
 
 local _ptransition = {}
 
-function p.doTransition( direction, scriptarg )
+function p.doTransition( direction, scriptargs )
 	vsoCounterReset( "struggleCount" )
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
+	if tconfig == nil then return end
 	local continue = true
 	local after = function() end
 	if tconfig.script ~= nil then
 		local statescript = p.statescripts[p.state][tconfig.script]
-		local _continue, _after, _tconfig = statescript( scriptarg )
+		local _continue, _after, _tconfig = statescript( scriptargs or {} )
 		if _continue ~= nil then continue = _continue end
 		if _after ~= nil then after = _after end
 		if _tconfig ~= nil then tconfig = _tconfig end
@@ -324,7 +366,15 @@ function p.doTransition( direction, scriptarg )
 		p.bodyAnim( tconfig.animation )
 	end
 	if tconfig.victimAnimation ~= nil then
-		vsoVictimAnimReplay( tconfig.victimAnimation.which, tconfig.victimAnimation.name, "bodyState" )
+		local i = (scriptargs or {}).index
+		if i == nil then
+			i = p.occupants
+			if p.justAte then
+				i = i + 1
+				p.justAte = false
+			end
+		end
+		vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, "bodyState" )
 	end
 	vsoNext( "state__ptransition" )
 end
@@ -353,14 +403,23 @@ function p.control.updateDriving()
 		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.control.driving = true
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
+			local occupants = {}
+			for i = 1, p.maxOccupants do -- using p.occupants has potential for issues if slots become empty
+				if vehicle.entityLoungingIn( "occupant"..i ) then
+					occupants[i] = {
+						id = vehicle.entityLoungingIn( "occupant"..i ),
+						species = p.smolpreyspecies[ i ]
+					}
+				else
+					occupants[i] = {}
+				end
+			end
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler, entity.id(),
-				vsoGetTargetId( "food" ), vsoGetTargetId( "dessert" ),
-				p.smolpreyspecies[ "food" ], p.smolpreyspecies[ "dessert" ]
-				
+				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler,
+				entity.id(), occupants, p.maxOccupants
 			)
 		end
-	elseif vsoGetTargetId( "food" ) ~= nil then
+	elseif p.occupants >= 1 then
 		if vehicle.controlHeld( p.control.driver, "Special1" ) then
 			p.control.driving = true
 		end
@@ -400,14 +459,13 @@ function p.control.doPhysics()
 		mcontroller.approachYVelocity( -10, 50 )
 	end
 	if p.state ~= "stand" and mcontroller.yVelocity() < -5 then
-		sb.logInfo( "falling" )
 		nextState( "stand" )
 		updateState()
 		p.bodyAnim( "fall" )
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
-			vsoUneat( "firstOccupant" )
-			vsoSetTarget( "food", nil )
-			vsoUseLounge( false, "firstOccupant" )
+			vsoUneat( "occupant1" )
+			vsoSetTarget( 1, nil )
+			vsoUseLounge( false, "occupant1" )
 		end
 	end
 end
@@ -429,6 +487,7 @@ function p.control.interact()
 			local interactables
 			local queryParameters = {
 				withoutEntityId = entity.id(), -- don't interact with self
+				boundMode = "collisionarea", -- hopefully this makes you not have to point at the exact center of the object... doubtful though
 				order = "nearest"
 			}
 			if world.magnitude( dpos ) < 9 then -- interact range -- and not world.lineTileCollision( mpos, aim )
@@ -574,7 +633,7 @@ function p.control.groundMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and p.occupants < control.fullThreshold then
+	if not vehicle.controlHeld( p.control.driver, "down" ) and p.visualOccupants < control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -605,7 +664,7 @@ function p.control.groundMovement( dx )
 			if not p.movement.jumped then
 				p.bodyAnim( "jump" )
 				p.movement.animating = true
-				if p.occupants < control.fullThreshold then
+				if p.visualOccupants < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
 					mcontroller.setYVelocity( control.fullJumpStrength )
@@ -657,7 +716,7 @@ function p.control.airMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and p.occupants < control.fullThreshold then
+	if not vehicle.controlHeld( p.control.driver, "down" ) and p.visualOccupants < control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -684,7 +743,7 @@ function p.control.airMovement( dx )
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.bodyAnim( "jump" )
 			p.movement.animating = true
-			if p.occupants < control.fullThreshold then
+			if p.visualOccupants < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
@@ -751,7 +810,7 @@ function p.idleStateChange()
 			local percent = vsoRand(100)
 			for name, t in pairs(transitions) do
 				local transition = p.occupantArray( t )
-				if transition.chance ~= nil and transition.chance > 0 then
+				if transition and transition.chance and transition.chance > 0 then
 					percent = percent - transition.chance
 					if percent < 0 then
 						p.doTransition( name )
@@ -806,6 +865,7 @@ function p.driverStateChange()
 end
 
 function p.handleBelly()
+	p.updateOccupants()
 	if p.occupants > 0 then
 		p.bellyEffects()
 	end
@@ -818,54 +878,34 @@ function p.bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
-	vsoVictimAnimSetStatus( "firstOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
-
 	local effect = 0
 	if p.bellyeffect == "digest" or p.bellyeffect == "softdigest" then
 		effect = -1
 	elseif p.bellyeffect == "heal" then
 		effect = 1
 	end
-	if p.occupants > 1 then
-		vsoVictimAnimSetStatus( "secondOccupant", { "vsoindicatebelly", "breathprotectionvehicle" } )
-			if effect ~= 0 then
+
+	for i = p.occupantOffset, p.maxOccupants do
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
+		local eid = vehicle.entityLoungingIn( "occupant"..i )
+		if effect ~= 0 and eid and world.entityExists(eid) then
 			local health_change = effect * vsoDelta()
-			local health = world.entityHealth( vsoGetTargetId("dessert") )
+			local health = world.entityHealth(eid)
 			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
 				health_change = (1 - health[1]) / health[2]
 			end
-			vsoResourceAddPercent( vsoGetTargetId("dessert"), "health", health_change, function(still_alive)
+			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
 				if not still_alive then
-					vsoUneat( "secondOccupant" )
-					vsoSetTarget( "dessert", nil )
-					vsoUseLounge( false, "secondOccupant" )
-					setOccupants(1)
+					local val = i
+					while val < p.occupants do -- shift other prey forward
+						p.swapOccupants( val, val+1 )
+					end
+					vsoUneat( "occupant"..p.occupants )
+					vsoSetTarget( p.occupants, nil )
+					vsoUseLounge( false, "occupant"..p.occupants )
 				end
 			end)
 		end
-	end
-	if effect ~= 0 then
-		local health_change = effect * vsoDelta()
-		local health = world.entityHealth( vsoGetTargetId("food") )
-		if p.bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
-			health_change = (1 - health[1]) / health[2]
-		end
-		vsoResourceAddPercent( vsoGetTargetId("food"), "health", health_change, function(still_alive)
-			if not still_alive then
-				if p.occupants == 2 then
-					p.swapOccupants()
-					vsoUneat( "SecondOccupant" )
-					vsoSetTarget( "dessert", nil )
-					vsoUseLounge( false, "secondOccupant" )
-					setOccupants(1)
-				else
-					vsoUneat( "firstOccupant" )
-					vsoSetTarget( "food", nil )
-					vsoUseLounge( false, "firstOccupant" )
-					setOccupants(0)
-				end
-			end
-		end)
 	end
 end
 
@@ -878,13 +918,13 @@ function p.handleStruggles()
 	) then
 		return -- already struggling
 	end
-	local movetype, movedir = vso4DirectionInput( "firstOccupant" )
-	local struggler = 1
-	if movetype == 0 then
-		movetype, movedir = vso4DirectionInput( "secondOccupant" )
-		struggler = 2
-		if movetype == 0 then return end
+	local struggler = p.occupantOffset - 1
+	local movetype, movedir
+	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants do
+		struggler = struggler + 1
+		movetype, movedir = vso4DirectionInput( "occupant"..struggler )
 	end
+	if movetype == nil or movetype == 0 then return end
 
 	if p.control.driving and struggler == 1 and not p.control.standalone then
 		return -- control vappy instead of struggling
@@ -923,11 +963,11 @@ function p.handleStruggles()
 		and vsoCounterValue( "struggleCount" ) >= chance.min
 		and vsoCounterChance( "struggleCount", chance.min, chance.max )
 	) ) then
-		p.doTransition( struggledata[dir].transition, struggler )
+		p.doTransition( struggledata[dir].transition, {index=struggler} )
 	else
 		p.bodyAnim( "s_"..dir )
 		if struggledata[dir].victimAnimation then
-			vsoVictimAnimReplay( "firstOccupant", struggledata[dir].victimAnimation, "bodyState" )
+			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, "bodyState" )
 		end
 		vsoSound( "struggle" )
 		vsoCounterAdd( "struggleCount", 1 )
@@ -948,7 +988,7 @@ function p.onInteraction( targetid )
 		end
 
 		if interact.chance > 0 and vsoChance( interact.chance ) then
-			p.doTransition( interact.transition, targetid )
+			p.doTransition( interact.transition, {id=targetid} )
 			return
 		end
 	end

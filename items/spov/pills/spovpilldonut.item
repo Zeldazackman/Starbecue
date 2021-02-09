@@ -1,0 +1,20 @@
+{
+  "itemName" : "spovpilldonut",
+  "price" : 10,
+  "rarity" : "Uncommon",
+  "category" : "craftingMaterial",
+  "inventoryIcon" : "spovpilldonut.png",
+  "description" : "A large donut that makes some SPOVs' bellies more pudgy. Useful if you don't have enough friends to feed to them~",
+  "shortdescription" : "Fattening Donut",
+  "itemTags" : [ "reagent", "vsopill" ],
+
+  "pillAdd" : {
+  	"fatten" : {
+  		"name" : "Fattened",
+  		"icon" : "/items/spov/pills/spovpilldonut.png",
+  		"description" : "Add pudge to the belly.",
+		  "value":1.0
+  	}
+  },
+  "pillRemove" : []
+}

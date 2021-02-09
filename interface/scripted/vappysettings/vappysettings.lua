@@ -1,6 +1,6 @@
 local vappy
-local firstOccupant
-local secondOccupant
+local occupants
+local maxOccupants
 local settings
 local bellyeffects = {
 	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
@@ -14,29 +14,21 @@ local clickmodes = {
 
 function init()
 	vappy = config.getParameter( "vappy" )
-	firstOccupant = config.getParameter( "firstOccupant" )
-	local firstSpecies = config.getParameter( "firstSpecies" )
-	if firstOccupant ~= nil then
-		if firstSpecies == nil then
-			setPortrait( "firstOccupant", world.entityPortrait( firstOccupant, "bust" ) )
+	occupants = config.getParameter( "occupants" )
+	maxOccupants = config.getParameter( "maxOccupants" )
+	for i = 1, maxOccupants do
+		if occupants[i] and occupants[i].id and world.entityExists( occupants[i].id ) then
+			local id = occupants[i].id
+			local species = occupants[i].species
+			if species == nil then
+				setPortrait( "occupant"..i, world.entityPortrait( id, "bust" ) )
+			else
+				setPortrait( "occupant"..i, {{image="vehicles/spov/"..species.."/"..species.."icon.png"}})
+			end
+			widget.setText( "occupant"..i..".name", world.entityName( id ) )
 		else
-			setPortrait( "firstOccupant", {{image="vehicles/spov/"..firstSpecies.."/"..firstSpecies.."icon.png"}})
+			widget.setButtonEnabled( "occupant"..i..".letout", false )
 		end
-		widget.setText( "firstOccupant.name", world.entityName( firstOccupant ) )
-	else
-		widget.setButtonEnabled( "firstOccupant.letOut", false )
-	end
-	secondOccupant = config.getParameter( "secondOccupant" )
-	local secondSpecies = config.getParameter( "secondSpecies" )
-	if secondOccupant ~= nil then
-		if secondSpecies == nil then
-			setPortrait( "secondOccupant", world.entityPortrait( secondOccupant, "bust" ) )
-		else
-			setPortrait( "secondOccupant", {{image="vehicles/spov/"..secondSpecies.."/"..secondSpecies.."icon.png"}})
-		end
-		widget.setText( "secondOccupant.name", world.entityName( secondOccupant ) )
-	else
-		widget.setButtonEnabled( "secondOccupant.letOut", false )
 	end
 	settings = player.getProperty("vappySettings") or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
@@ -46,13 +38,13 @@ function init()
 end
 
 function update( dt )
-	if firstOccupant ~= nil and world.entityExists( firstOccupant ) then
-		local firstOccupantHealth = world.entityHealth( firstOccupant )
-		widget.setProgress( "firstOccupant.healthbar", firstOccupantHealth[1] / firstOccupantHealth[2] )
-	end
-	if secondOccupant ~= nil and world.entityExists( secondOccupant ) then
-		local secondOccupantHealth = world.entityHealth( secondOccupant )
-		widget.setProgress( "secondOccupant.healthbar", secondOccupantHealth[1] / secondOccupantHealth[2] )
+	for i = 1, maxOccupants do
+		if occupants[i] and occupants[i].id and world.entityExists( occupants[i].id ) then
+			local health = world.entityHealth( occupants[i].id )
+			widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
+		else
+			widget.setProgress( "occupant"..i..".healthbar", 0)
+		end
 	end
 end
 
@@ -88,7 +80,7 @@ end
 function setPortrait( canvasName, data )
 	local canvas = widget.bindCanvas( canvasName..".portrait" )
 	canvas:clear()
-	for k,v in ipairs(data) do
+	for k,v in ipairs(data or {}) do
 		canvas:drawImage(v.image, { -7, -19 } )
 	end
 end

@@ -82,72 +82,55 @@ end
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "eat", function( targetid )
-	if p.entityLounging( targetid ) then return end
-	local food = "food"
-	local occupant = "firstOccupant"
-	local center = "center"
-	if p.occupants == 1 then
-		food = "dessert"
-		occupant = "secondOccupant"
-		center = "center2"
-	elseif p.occupants == 2 then
+p.registerStateScript( "stand", "eat", function( args )
+	if p.entityLounging( args.id ) then return end
+	if p.occupants == 2 then
 		sb.logError("[Vappy] Can't eat more than two people!")
 		return false
 	end
-	vsoSetTarget( food, targetid )
-	if p.eat( vsoGetTargetId( food ), occupant ) then
+	local i = p.occupants + 1
+	vsoSetTarget( i, args.id )
+	if p.eat( vsoGetTargetId( i ), i ) then
 		vsoMakeInteractive( false )
 		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
 		return true, function()
-			p.smolprey() -- clear
 			vsoMakeInteractive( true )
-			vsoVictimAnimReplay( occupant, center, "bodyState")
-			p.setOccupants( p.occupants + 1 )
+			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
 			vsoSound( "swallow" )
 		end
 	else
-		vsoSetTarget( food, nil )
+		vsoSetTarget( i, nil )
 		return false
 	end
 end)
-p.registerStateScript( "stand", "letout", function( who )
-	local food = "food"
-	local occupant = "firstOccupant"
-	local escape = "escape"
-	if who == 2 or (who == nil and p.occupants == 2) then
-		food = "dessert"
-		occupant = "secondOccupant"
-		escape = "escape2"
-	elseif p.occupants == 0 then
+p.registerStateScript( "stand", "letout", function( args )
+	if p.occupants == 0 then
 		sb.logError( "[Vappy] No one to let out!" )
 		return false
 	end
+	local i = args.index
 	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( occupant, { "vsoindicatemaw" } );
-	p.smolprey( occupant )
+	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
 
 	return true, function()
 		vsoMakeInteractive( true )
-		p.uneat( occupant )
-		vsoSetTarget( food, nil )
-		vsoUseLounge( false, occupant )
-		if vsoGetTargetId( food ) ~= nil then
-			vsoApplyStatus( food, "droolsoaked", 5.0 );
+		p.uneat( i )
+		vsoSetTarget( i, nil )
+		if vsoGetTargetId( i ) ~= nil then
+			vsoApplyStatus( i, "droolsoaked", 5.0 );
 		end
-		p.setOccupants( p.occupants - 1 )
 	end
 end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
-	if p.occupants < 2 then
+	if p.visualOccupants < 2 then
 		local prey = world.playerQuery( position, 2 )
 		if #prey < 1 and p.control.standalone then
 			prey = world.npcQuery( position, 2 )
 		end
 		if #prey > 0 then
-			p.doTransition( "eat", prey[1] )
+			p.doTransition( "eat", {id=prey[1]} )
 		end
 	end
 end)
@@ -173,7 +156,7 @@ function state_stand()
 			if not p.movement.wasspecial1 then
 				-- vsoAnim( "bodyState", "smolify" )
 				vsoEffectWarpOut()
-				if p.occupants < 2 then
+				if p.visualOccupants < 2 then
 					p.setState( "smol" )
 				else
 					vsoNext( "state_chonk_ball" )
@@ -185,7 +168,7 @@ function state_stand()
 		end
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
 			if p.occupants > 0 then
-				p.doTransition( "escape", p.occupants ) -- last eaten
+				p.doTransition( "escape", {index=p.occupants} ) -- last eaten
 			end
 		end
 		p.control.drive()
@@ -205,19 +188,19 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "sit", "pin", function( targetid )
-	local pinnable = { targetid }
+p.registerStateScript( "sit", "pin", function( args )
+	local pinnable = { args.id }
 	-- if not interact target or target isn't in front
-	if targetid == nil or p.globalToLocal( world.entityPosition( targetid ) )[1] < 3 then
+	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
 		local pinbounds = vsoRelativeRect( 2.75, -4, 3.5, -3.5 )
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
 		if #pinnable == 0 and p.control.driving then
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	vsoSetTarget( "food", pinnable[1] )
-	if #pinnable >= 1 and p.eat( vsoGetTargetId( "food" ), "firstOccupant" ) then
-		vsoVictimAnimSetStatus( "firstOccupant", {} )
+	vsoSetTarget( 1, pinnable[1] )
+	if #pinnable >= 1 and p.eat( vsoGetTargetId( 1 ), 1 ) then
+		vsoVictimAnimSetStatus( "occupant1", {} )
 		return true
 	else
 		return true, nil, { -- override transition
@@ -239,13 +222,13 @@ state_sleep = p.standardState
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "back", "bed", function( targetid )
-	vsoSetTarget( "food", targetid )
-	if p.eat( vsoGetTargetId( "food" ), "firstOccupant" ) then
-		vsoVictimAnimSetStatus( "firstOccupant", {} );
+p.registerStateScript( "back", "bed", function( args )
+	vsoSetTarget( 1, args.id )
+	if p.eat( vsoGetTargetId( 1 ), 1 ) then
+		vsoVictimAnimSetStatus( "occupant1", {} );
 		return true
 	else
-		vsoSetTarget( "food", nil )
+		vsoSetTarget( 1, nil )
 		return false
 	end
 end)
@@ -258,7 +241,7 @@ function state_back()
 		if vsoChance(0.1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
-				p.doTransition( "bed", npcs[1] )
+				p.doTransition( "bed", {id=npcs[1]} )
 			end
 		end
 	end
@@ -267,8 +250,8 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "bed", "unbed", function()
-	vsoSetTarget( "food", nil )
-	p.uneat( "firstOccupant" )
+	vsoSetTarget( 1, nil )
+	p.uneat( 1 )
 	return true
 end)
 
@@ -279,9 +262,7 @@ state_bed = p.standardState
 p.registerStateScript( "hug", "absorb", function()
 	vsoSound( "slurp" )
 	return true, function()
-		p.setOccupants( 1 )
-		p.smolprey() -- clear
-		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
+		vsoVictimAnimReplay( "occupant1", "center", "bodyState")
 	end
 end)
 
@@ -299,16 +280,14 @@ end
 
 p.registerStateScript( "pinned", "unpin", function()
 	return true, function()
-		vsoSetTarget( "food", nil )
-		p.uneat( "firstOccupant" )
+		vsoSetTarget( 1, nil )
+		p.uneat( 1 )
 	end
 end)
 p.registerStateScript( "pinned", "absorb", function()
 	vsoSound( "slurp" )
 	return true, function()
-		p.setOccupants( 1 )
-		p.smolprey() -- clear
-		vsoVictimAnimReplay( "firstOccupant", "center", "bodyState")
+		vsoVictimAnimReplay( "occupant", "center", "bodyState")
 	end
 end)
 
@@ -415,7 +394,7 @@ function state_chonk_ball()
 
 	local dx = 0
 	local speed = 20
-	if p.occupants > 0 then
+	if p.visualOccupants > 0 then
 		speed = 10
 	end
 	if vehicle.controlHeld( p.control.driver, "down" ) then
@@ -470,7 +449,7 @@ function state_chonk_ball()
 		end
 	else
 		p.movement.jumped = false
-		if p.occupants == 2 then
+		if p.visualOccupants == 2 then
 			speed = 10
 		end
 		if vehicle.controlHeld( p.control.driver, "jump" ) then
