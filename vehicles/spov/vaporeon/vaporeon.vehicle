@@ -104,20 +104,35 @@
 			"transitions": {
 				// directional = driver can press that direction to transition
 				"down": {
-					"animation": "sitdown",
+					"animation": {
+						"body": "sitdown",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "sit",
 					"chance": 5 // percent, ignored when driver has control
 				},
 				// non directional = not accessible via controls, except from script
 				"eat": [ // array depends on occupants
 					{ // 0 occupants
-						"animation": "eat",
+						"animation": {
+							"body": "eat",
+							"legs": "none",
+							"head": "none",
+							"tail": "idle"
+						},
 						"victimAnimation": "playereat",
 						"state": "stand",
 						"script": "eat"
 					},
 					{ // 1 occupant
-						"animation": "eat",
+						"animation": {
+							"body": "eat",
+							"legs": "none",
+							"head": "none",
+							"tail": "idle"
+						},
 						"victimAnimation": "playereat",
 						"state": "stand",
 						"script": "eat"
@@ -127,13 +142,23 @@
 				"escape": [
 					{}, // can't escape from 0
 					{ // 1 occupant
-						"animation": "escape",
+						"animation": {
+							"body": "escape",
+							"legs": "none",
+							"head": "none",
+							"tail": "idle"
+						},
 						"victimAnimation": "escape",
 						"state": "stand",
 						"script": "letout"
 					},
 					{ // 2 occupants
-						"animation": "escape",
+						"animation": {
+							"body": "escape",
+							"legs": "none",
+							"head": "none",
+							"tail": "idle"
+						},
 						"victimAnimation": "escape",
 						"state": "stand",
 						"script": "letout"
@@ -202,19 +227,34 @@
 				},
 				"down": [
 					{
-						"animation": "pin",
+						"animation": {
+							"body": "pin",
+							"legs": "none",
+							"head": "none",
+							"tail": "none"
+						},
 						"victimAnimation": "sitpinned",
 						"state": "pinned",
 						"chance": 7,
 						"script": "pin" // may override animation/state
 					},
 					{
-						"animation": "laydown",
+						"animation": {
+							"body": "laydowm",
+							"legs": "none",
+							"head": "none",
+							"tail": "none"
+						},
 						"state": "lay",
 						"chance": 7
 					},
 					{
-						"animation": "laydown",
+						"animation": {
+							"body": "laydowm",
+							"legs": "none",
+							"head": "none",
+							"tail": "none"
+						},
 						"state": "lay",
 						"chance": 7
 					}
@@ -243,23 +283,43 @@
 		"lay": {
 			"transitions": {
 				"up": {
-					"animation": "situp",
+					"animation": {
+						"body": "situp",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "sit",
 					"chance": 5
 				},
 				"down": {
-					"animation": "fallasleep",
+					"animation": {
+						"body": "fallasleep",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "sleep",
 					"chance": 5
 				},
 				"side": [
 					{
-						"animation": "rollover",
+						"animation": {
+							"body": "rollover",
+							"legs": "none",
+							"head": "none",
+							"tail": "none"
+						},
 						"state": "back",
 						"chance": 10
 					},
 					{
-						"animation": "rollover",
+						"animation": {
+							"body": "rollover",
+							"legs": "none",
+							"head": "none",
+							"tail": "none"
+						},
 						"state": "back",
 						"chance": 5
 					}
@@ -293,7 +353,12 @@
 		"sleep": {
 			"transitions": {
 				"up": {
-					"animation": "wakeup",
+					"animation": {
+						"body": "wakeup",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "lay",
 					"chance": 5
 				}
@@ -321,7 +386,12 @@
 		"back": {
 			"transitions": {
 				"side": {
-					"animation": "rollover",
+					"animation": {
+						"body": "rollover",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "lay",
 					"chance": 10
 				},
@@ -358,13 +428,23 @@
 		"bed": {
 			"transitions": {
 				"side": {
-					"animation": "rollover",
+					"animation": {
+						"body": "rollover",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"victimAnimation": "pinned",
 					"state": "pinned",
 					"chance": 10
 				},
 				"down": {
-					"animation": "grab",
+					"animation": {
+						"body": "grab",
+						"legs": "none",
+						"head": "none",
+						"tail": "idle"
+					},
 					"victimAnimation": "bellyhug",
 					"state": "hug",
 					"chance": 10
@@ -397,13 +477,23 @@
 		"hug": {
 			"transitions": {
 				"up": {
-					"animation": "grab",
+					"animation": {
+						"body": "grab",
+						"legs": "none",
+						"head": "none",
+						"tail": "idle"
+					},
 					"victimAnimation": "bellybed",
 					"state": "bed",
 					"chance": 10
 				},
 				"absorb": {
-					"animation": "absorb",
+					"animation": {
+						"body": "absorb",
+						"legs": "none",
+						"head": "none",
+						"tail": "idle"
+					},
 					"victimAnimation": "absorbback",
 					"state": "back",
 					"chance": 10,
@@ -433,25 +523,45 @@
 		"pinned": {
 			"transitions": {
 				"up": {
-					"animation": "situp",
+					"animation": {
+						"body": "situp",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"victimAnimation": "situnpin",
 					"state": "sit",
 					"chance": 5,
 					"script": "unpin"
 				},
 				"down": {
-					"animation": "fallasleep",
+					"animation": {
+						"body": "fallasleep",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "pinnedsleep",
 					"chance": 5
 				},
 				"side": {
-					"animation": "rollover",
+					"animation": {
+						"body": "rollover",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"victimAnimation": "unpin",
 					"state": "bed",
 					"chance": 10
 				},
 				"absorb": {
-					"animation": "absorb",
+					"animation": {
+						"body": "absorb",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"victimAnimation": "absorbpinned",
 					"state": "lay",
 					"chance": 10,
@@ -486,7 +596,12 @@
 		"pinnedsleep": {
 			"transitions": {
 				"up": {
-					"animation": "wakeup",
+					"animation": {
+						"body": "wakeup",
+						"legs": "none",
+						"head": "none",
+						"tail": "none"
+					},
 					"state": "pinned",
 					"chance": 5
 				}

@@ -150,7 +150,7 @@ end
 
 function p.legsAnim( anim )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
-	vsoAnim( "legState", prefix..anim )
+	vsoAnim( "legsState", prefix..anim )
 
 	if vsoAnimEnded( "bapState" ) or not vsoAnimIs( "bapState", "bap" ) then
 		vsoAnim( "bapState", prefix..anim )
