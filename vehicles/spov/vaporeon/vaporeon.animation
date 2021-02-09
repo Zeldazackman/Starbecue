@@ -110,6 +110,10 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"blink": { "frames": 1, "cycle": 1, "mode": "end" },
+					"look": { "frames": 1, "cycle": 1, "mode": "end" },
+
+
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end" }
 				}
@@ -318,7 +322,23 @@
 					}
                 }
 			},
+			"head": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": 1,
+                     "transformationGroups": ["flip"]
+                },
+                "partStates": {
+                    "headState": {
+                        "idle": { "properties": { "image": "spov/vaporeon_head.png:idle.<frame><directives>" } },
+                        "blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
+                        "look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
 
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } },
+						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } }
+					}
+                }
+			},
 
 			"smolhead" : {
 				"properties": {
@@ -328,7 +348,10 @@
                 },
                 "partStates": {
 					"headState" : {
-                        "idle": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
+                        "blink": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
+                        "look": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
+
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
 					}
