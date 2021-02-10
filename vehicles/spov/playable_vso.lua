@@ -134,7 +134,7 @@ end
 function p.doAnims( anims )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	for k,v in pairs(anims) do
-		if k ~= "bob" then
+		if k ~= "offset" then
 			vsoAnim( k.."State", prefix..v )
 		else
 			p.headbob( v )
@@ -173,25 +173,38 @@ function p.headAnim( anim )
 	vsoAnim( "headState", prefix..anim )
 end
 
-p.headbobbing = {vals = {}, time = 0}
+p.headbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
 function p.headbob( data )
-	if p.headbobbing.vals == data then return end
-	p.headbobbing.vals = data
-	p.headbobbing.time = 0
+	p.headbobbing = {
+		enabled = data ~= nil,
+		time = 0,
+		x = data and data.x or {0},
+		y = data and data.y or {0},
+		body = data and data.body or false
+	}
+	vsoTransAnimUpdate( "headbob", 0 )
+	if #p.headbobbing.x == 1 and #p.headbobbing.y == 1 then
+		p.headbobbing.enabled = false
+	end
 end
 
 local _vsoTransAnimUpdate = vsoTransAnimUpdate
 function vsoTransAnimUpdate( transformname, dt )
-	if transformname == "headbob" and p.stateconfig[p.state].headbob ~= nil then
+	if transformname == "headbob" then
+		if p.headbobbing == nil or not p.headbobbing.enabled then return end
 		p.headbobbing.time = p.headbobbing.time + dt * self.sv.animspeed;
 		if p.headbobbing.time > 1 then
 			p.headbobbing.time = p.headbobbing.time -1
 		end
 		sb.setLogMap("headbob time", p.headbobbing.time)
-		vsoTransMoveTo( "head",
-			p.stateconfig[p.state].headbob.x or 0,
-			p.headbobbing.vals[ math.ceil( p.headbobbing.time * #p.headbobbing.vals ) ] or 0
-		)
+		local x = p.headbobbing.x[ math.floor( p.headbobbing.time * #p.headbobbing.x ) + 1 ] or 0
+		local y = p.headbobbing.y[ math.floor( p.headbobbing.time * #p.headbobbing.y ) + 1 ] or 0
+		vsoTransMoveTo( "headbob", x, y )
+		if p.headbobbing.body then
+			vsoTransMoveTo( "bodybob", x, y )
+		else
+			vsoTransMoveTo( "bodybob", 0, 0 )
+		end
 	else
 		_vsoTransAnimUpdate( transformname, dt )
 	end
