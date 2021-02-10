@@ -203,10 +203,7 @@ p.registerStateScript( "sit", "pin", function( args )
 		vsoVictimAnimSetStatus( "occupant1", {} )
 		return true
 	else
-		return true, nil, { -- override transition
-			state = "lay",
-			animation = "laydown"
-		}
+		return true, nil, p.stateconfig.sit.transitions.down[2] -- normal laydown
 	end
 end)
 

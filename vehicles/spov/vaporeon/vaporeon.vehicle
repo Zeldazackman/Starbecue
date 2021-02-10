@@ -253,7 +253,7 @@
 				"down": [
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
+							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "pin",
 							"legs": "none",
 							"bap": "none",
@@ -267,7 +267,7 @@
 					},
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
+							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "laydown",
 							"legs": "none",
 							"bap": "none",
@@ -279,7 +279,7 @@
 					},
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
+							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "laydown",
 							"legs": "none",
 							"bap": "none",
@@ -326,7 +326,7 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [10, 4], "y": [-10, 4], "body": false },
+						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
 						"bap": "none",
@@ -628,7 +628,7 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [10, 4], "y": [-10, 4], "body": false },
+						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
 						"bap": "none",

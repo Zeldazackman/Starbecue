@@ -131,13 +131,13 @@ function p.entityLounging( entity )
 	return false
 end
 
-function p.doAnims( anims )
+function p.doAnims( anims, idle )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
-	for k,v in pairs(anims) do
-		if k ~= "offset" then
-			vsoAnim( k.."State", prefix..v )
-		else
+	for k,v in pairs( anims or {} ) do
+		if k == "offset" then
 			p.headbob( v )
+		elseif not idle or vsoAnimEnded( k.."State" ) then
+			vsoAnim( k.."State", prefix..v )
 		end
 	end
 end
@@ -175,8 +175,10 @@ end
 
 p.headbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
 function p.headbob( data )
+	if (p.headbobbing.data == data) then return end
 	p.headbobbing = {
 		enabled = data ~= nil,
+		data = data,
 		time = 0,
 		x = data and data.x or {0},
 		y = data and data.y or {0},
@@ -192,16 +194,21 @@ local _vsoTransAnimUpdate = vsoTransAnimUpdate
 function vsoTransAnimUpdate( transformname, dt )
 	if transformname == "headbob" then
 		if p.headbobbing == nil or not p.headbobbing.enabled then return end
-		p.headbobbing.time = p.headbobbing.time + dt * self.sv.animspeed;
-		if p.headbobbing.time > 1 then
-			p.headbobbing.time = p.headbobbing.time -1
+		local cycle = self.vsoAnimStateData.bodyState[vsoAnimCurr("bodyState")].cycle
+		local frames = self.vsoAnimStateData.bodyState[vsoAnimCurr("bodyState")].frames
+		local speed = frames / cycle
+		p.headbobbing.time = p.headbobbing.time + dt * speed;
+		if p.headbobbing.time > frames then
+			p.headbobbing.time = p.headbobbing.time - frames
 		end
-		sb.setLogMap("headbob time", p.headbobbing.time)
-		local x = p.headbobbing.x[ math.floor( p.headbobbing.time * #p.headbobbing.x ) + 1 ] or 0
-		local y = p.headbobbing.y[ math.floor( p.headbobbing.time * #p.headbobbing.y ) + 1 ] or 0
-		vsoTransMoveTo( "headbob", x, y )
+		local x = p.headbobbing.x[ math.floor( p.headbobbing.time ) + 1 ] or 0
+		local y = p.headbobbing.y[ math.floor( p.headbobbing.time ) + 1 ] or 0
+		sb.setLogMap("headbob x", x)
+		sb.setLogMap("headbob y", y)
+		sb.setLogMap("headbob t", math.floor(p.headbobbing.time * 100) / 100)
+		vsoTransMoveTo( "headbob", x / 8, y / 8 )
 		if p.headbobbing.body then
-			vsoTransMoveTo( "bodybob", x, y )
+			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
 		else
 			vsoTransMoveTo( "bodybob", 0, 0 )
 		end
@@ -433,10 +440,11 @@ function state__ptransition()
 		_endedframes = _endedframes + 1
 		if _endedframes > 2 then
 			_endedframes = 0
-			p.bodyAnim( "idle" )
+			-- p.bodyAnim( "idle" )
 			--p.legsAnim( "idle" )
 			_ptransition.after()
 			p.setState( _ptransition.state )
+			p.doAnims( p.stateconfig[p.state].idle )
 		end
 	end
 	p.control.doPhysics()
@@ -887,34 +895,12 @@ function p.idleStateChange()
 		end
 	end
 
-	if vsoAnimEnded( "bodyState" ) then
-		local idles = p.stateconfig[p.state].idle or {}
-		local percent = vsoRand(100)
-		for _, idle in pairs(idles) do
-			percent = percent - 15
-			if percent < 0 then
-				if type( idle ) == "string" then
-					p.bodyAnim( idle )
-				else
-					p.doAnims( idle )
-				end
-				return
-			end
-		end
-		p.bodyAnim( "idle" )
-	end
+	p.doAnims( p.stateconfig[p.state].idle, true )
 
-	if vsoAnimEnded( "headState" ) then
-		local idles = p.stateconfig[p.state].headIdle or {}
-		local percent = vsoRand(100)
-		for _, idle in pairs(idles) do
-			percent = percent - 15
-			if percent < 0 then
-				p.headAnim( idle )
-				return
-			end
-		end
-		p.headAnim( "idle" )
+	if vsoRand(100) < 2 then
+		local idles = p.stateconfig[p.state].idleAnimations
+		local which = math.random(#idles)
+		p.doAnims( idles[which] )
 	end
 end
 
