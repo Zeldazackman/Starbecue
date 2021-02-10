@@ -105,6 +105,7 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
+						"offset": { "x": [0, 0], "y": [0, 2], "body": false },
 						"body": "sitdown",
 						"legs": "none",
 						"bap": "none",
@@ -170,35 +171,17 @@
 					}
 				]
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "idle",
-					"bap": "idle",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "idle",
-					"bap": "idle",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "idle",
-					"bap": "idle",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "idle",
-					"bap": "idle",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "idle",
+				"bap": "idle",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "tail": "flick" }
 			],
 
 			"struggle": {
@@ -256,13 +239,21 @@
 		"sit": {
 			"transitions": {
 				"up": {
-					"animation": "standup",
+					"animation": {
+						"offset": { "x": [0, 0], "y": [2, 0], "body": false },
+						"body": "standup",
+						"legs": "none",
+						"bap": "none",
+						"head": "idle",
+						"tail": "none"
+					},
 					"state": "stand",
 					"chance": 5
 				},
 				"down": [
 					{
 						"animation": {
+							"offset": { "x": [0, 0], "y": [0, 2], "body": false },
 							"body": "pin",
 							"legs": "none",
 							"bap": "none",
@@ -298,35 +289,17 @@
 					}
 				]
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [4, 4], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -397,35 +370,17 @@
 					// no side transition with 2 occupants
 				]
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -464,35 +419,16 @@
 					"chance": 5
 				}
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "none",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -532,35 +468,16 @@
 					"script": "bed"
 				}
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "none",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "side" },
@@ -616,35 +533,16 @@
 					"script": "unbed"
 				}
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "none",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -693,35 +591,16 @@
 					"script": "absorb"
 				}
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "blink",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "idle",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "none",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "hug.s_up" },
@@ -794,35 +673,17 @@
 					"script": "absorb"
 				}
 			},
-			"idle": [
-				{
-					"body": "lick",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "idle"
-				},
-				{
-					"body": "lick",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "flick"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
@@ -862,21 +723,16 @@
 					"chance": 5
 				}
 			},
-			"idle": [
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "idle"
-				},
-				{
-					"body": "idle",
-					"legs": "none",
-					"bap": "none",
-					"head": "none",
-					"tail": "flick"
-				}
+			"idle": {
+				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"body": "idle",
+				"legs": "none",
+				"bap": "none",
+				"head": "none",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
