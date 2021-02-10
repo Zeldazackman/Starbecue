@@ -253,11 +253,11 @@
 				"down": [
 					{
 						"animation": {
-							"offset": { "x": [0, 0], "y": [0, 2], "body": false },
+							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
 							"body": "pin",
 							"legs": "none",
 							"bap": "none",
-							"head": "none",
+							"head": "idle",
 							"tail": "none"
 						},
 						"victimAnimation": "sitpinned",
@@ -267,10 +267,11 @@
 					},
 					{
 						"animation": {
+							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
 							"body": "laydown",
 							"legs": "none",
 							"bap": "none",
-							"head": "none",
+							"head": "idle",
 							"tail": "none"
 						},
 						"state": "lay",
@@ -278,10 +279,11 @@
 					},
 					{
 						"animation": {
+							"offset": { "x": [4, 10], "y": [4, -10], "body": false },
 							"body": "laydown",
 							"legs": "none",
 							"bap": "none",
-							"head": "none",
+							"head": "idle",
 							"tail": "none"
 						},
 						"state": "lay",
@@ -324,10 +326,11 @@
 			"transitions": {
 				"up": {
 					"animation": {
+						"offset": { "x": [10, 4], "y": [-10, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
 						"bap": "none",
-						"head": "none",
+						"head": "idle",
 						"tail": "none"
 					},
 					"state": "sit",
@@ -625,6 +628,7 @@
 			"transitions": {
 				"up": {
 					"animation": {
+						"offset": { "x": [10, 4], "y": [-10, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
 						"bap": "none",
@@ -661,10 +665,11 @@
 				},
 				"absorb": {
 					"animation": {
+						"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 						"body": "absorb",
 						"legs": "none",
 						"bap": "none",
-						"head": "none",
+						"head": "idle",
 						"tail": "none"
 					},
 					"victimAnimation": "absorbpinned",
