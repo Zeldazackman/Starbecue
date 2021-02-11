@@ -180,6 +180,7 @@ function p.headbob( data )
 		enabled = data ~= nil,
 		data = data,
 		time = 0,
+		loop = data.loop or false,
 		x = data and data.x or {0},
 		y = data and data.y or {0},
 		body = data and data.body or false
@@ -198,14 +199,15 @@ function vsoTransAnimUpdate( transformname, dt )
 		local frames = self.vsoAnimStateData.bodyState[vsoAnimCurr("bodyState")].frames
 		local speed = frames / cycle
 		p.headbobbing.time = p.headbobbing.time + dt * speed;
-		if p.headbobbing.time > frames then
-			p.headbobbing.time = p.headbobbing.time - frames
+		if p.headbobbing.time >= frames then
+			if p.headbobbing.loop then
+				p.headbobbing.time = p.headbobbing.time - frames
+			else
+				p.headbobbing.time = frames - 1
+			end
 		end
 		local x = p.headbobbing.x[ math.floor( p.headbobbing.time ) + 1 ] or 0
 		local y = p.headbobbing.y[ math.floor( p.headbobbing.time ) + 1 ] or 0
-		sb.setLogMap("headbob x", x)
-		sb.setLogMap("headbob y", y)
-		sb.setLogMap("headbob t", math.floor(p.headbobbing.time * 100) / 100)
 		vsoTransMoveTo( "headbob", x / 8, y / 8 )
 		if p.headbobbing.body then
 			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
