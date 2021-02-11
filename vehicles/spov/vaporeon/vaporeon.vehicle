@@ -120,8 +120,8 @@
 					{ // 0 occupants
 						"animation": {
 							"body": "eat",
-							"legs": "none",
-							"bap": "none",
+							"legs": "idle",
+							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -132,8 +132,8 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "eat",
-							"legs": "none",
-							"bap": "none",
+							"legs": "idle",
+							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -148,8 +148,8 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"legs": "none",
-							"bap": "none",
+							"legs": "idle",
+							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -160,8 +160,8 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "escape",
-							"legs": "none",
-							"bap": "none",
+							"legs": "idle",
+							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
