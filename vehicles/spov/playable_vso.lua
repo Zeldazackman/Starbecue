@@ -138,6 +138,9 @@ function p.doAnims( anims, continuous )
 			p.headbob( v )
 		elseif not continuous or vsoAnimEnded( k.."State" ) then
 			vsoAnim( k.."State", prefix..v )
+		elseif continuous then
+			vsoAnim( k.."State", prefix..v )
+
 		end
 	end
 end
@@ -671,15 +674,11 @@ function p.control.groundMovement( dx )
 	else
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
-	if vsoAnimIs( "bodyState", "fall" ) or vsoAnimIs( "bodyState", "jump" ) then
-		p.bodyAnim( "idle" )
+	if p.movement.falling or p.movement.jumping then
+		p.doAnims( state.idle )
 	end
 
 	if dx ~= 0 then
-		if p.movement.falling then
-			p.doAnims( state.idle )
-		end
-		
 		if not running then
 			p.doAnims( control.animations.walk, true )
 			p.movement.animating = true
