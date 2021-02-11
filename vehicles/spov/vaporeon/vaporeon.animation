@@ -6,7 +6,8 @@
 		"directives" : "",
     	"rotationFrame" : "0",
 		"rotationFlip" : "0",
-		"smolprey": "vaporeon"
+		"smolprey": "vaporeon",
+		"bap" : ""
 	},
     "animatedParts": {
         "stateTypes": {
@@ -301,28 +302,28 @@
 						"none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
 
 
-                        "idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/legs/legs_<bap>bg.png:idle.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/legs/legs_bg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/legs/legs_bg.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/legs/legs_<bap>bg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/legs/legs_<bap>bg.png:run.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/legs/legs_bg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/legs/legs_bg.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/legs/legs_<bap>bg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/legs/legs_<bap>bg.png:fall.<frame><directives>" } },
 
-						"swimidle": { "properties": { "image": "spov/legs/legs_bg.png:swimidle.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/legs/legs_bg.png:swim.<frame><directives>" } },
+						"swimidle": { "properties": { "image": "spov/legs/legs_<bap>bg.png:swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/legs/legs_<bap>bg.png:swim.<frame><directives>" } },
 
 
-						"smol.idle": { "properties": { "image": "spov/smol_legs/legs_bg.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:idle.<frame><directives>" } },
 
-						"smol.walk": { "properties": { "image": "spov/smol_legs/legs_bg.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/smol_legs/legs_bg.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:run.<frame><directives>" } },
 
-						"smol.jump": { "properties": { "image": "spov/smol_legs/legs_bg.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/smol_legs/legs_bg.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:fall.<frame><directives>" } },
 
-						"smol.swimidle": { "properties": { "image": "spov/smol_legs/legs_bg.png:swimidle.<frame><directives>" } },
-						"smol.swim": { "properties": { "image": "spov/smol_legs/legs_bg.png:swim.<frame><directives>" } }
+						"smol.swimidle": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:swimidle.<frame><directives>" } },
+						"smol.swim": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:swim.<frame><directives>" } }
 					}
                 }
 			},
@@ -336,30 +337,8 @@
                     "bapState": {
                         "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
 
-
-                        "idle": { "properties": { "image": "spov/legs/legs_bappy_bg.png:idle.<frame><directives>" } },
 						"bap": { "properties": { "image": "spov/legs/legs_bappy_bg.png:bap.<frame><directives>" } },
-
-						"walk": { "properties": { "image": "spov/legs/legs_bappy_bg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/legs/legs_bappy_bg.png:run.<frame><directives>" } },
-
-						"jump": { "properties": { "image": "spov/legs/legs_bappy_bg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/legs/legs_bappy_bg.png:fall.<frame><directives>" } },
-
-						"swimidle": { "properties": { "image": "spov/legs/legs_bappy_bg.png:swimidle.<frame><directives>" } },
-						"swim": { "properties": { "image": "spov/legs/legs_bappy_bg.png:swim.<frame><directives>" } },
-
-
-						"smol.idle": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:idle.<frame><directives>" } },
-
-						"smol.walk": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:run.<frame><directives>" } },
-
-						"smol.jump": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:fall.<frame><directives>" } },
-
-						"smol.swimidle": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:swimidle.<frame><directives>" } },
-						"smol.swim": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:swim.<frame><directives>" } }
+						"smol.bap": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:bap.<frame><directives>" } }
 					}
                 }
 			},

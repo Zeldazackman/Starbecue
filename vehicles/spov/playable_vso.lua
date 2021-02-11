@@ -140,6 +140,10 @@ function p.doAnims( anims, continuous )
 			vsoAnim( k.."State", prefix..v )
 		end
 	end
+	if vsoAnimEnded( "bapState" ) then
+		animator.setGlobalTag( "bap", "" )
+		vsoAnim( "bapState", "none" )
+	end
 end
 
 p.headbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
@@ -618,6 +622,7 @@ function p.control.primaryAction()
 					p.control.projectile(control.primaryAction.projectile)
 				end
 				if control.primaryAction.animation ~= nil then
+					animator.setGlobalTag( "bap", "bappy" )
 					p.doAnims( control.primaryAction.animation )
 				end
 				if control.primaryAction.script ~= nil then
