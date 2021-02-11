@@ -136,11 +136,8 @@ function p.doAnims( anims, continuous )
 	for k,v in pairs( anims or {} ) do
 		if k == "offset" then
 			p.headbob( v )
-		elseif not continuous or vsoAnimEnded( k.."State" ) then
+		elseif not vsoAnimIs( k.."State", prefix..v ) or vsoAnimEnded( k.."State", prefix..v ) then
 			vsoAnim( k.."State", prefix..v )
-		elseif continuous then
-			vsoAnim( k.."State", prefix..v )
-
 		end
 	end
 end
