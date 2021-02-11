@@ -8,7 +8,9 @@
 	},
 	"aliases" : {
 		"lay.1" : "sit.1",
-		"lay.flick.1" : "sit.flick.1"
+		"lay.flick.1" : "sit.flick.1",
 
+		"pinned.1" : "lay.1",
+		"pinned.flick.1" : "lay.flick.1"
 	}
 }
