@@ -671,6 +671,9 @@ function p.control.groundMovement( dx )
 	else
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
+	if vsoAnimIs( "bodyState", "fall" ) or vsoAnimIs( "bodyState", "jump" ) then
+		p.bodyAnim( "idle" )
+	end
 
 	if dx ~= 0 then
 		if p.movement.falling then
