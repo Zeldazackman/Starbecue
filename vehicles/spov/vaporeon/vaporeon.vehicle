@@ -222,7 +222,9 @@
 						"position": [ 3, -2.5 ],
 						"aimable": false
 					},
-					"animation": "bap",
+					"animation": {
+						"bap": "bap"
+					},
 					"cooldown": 30,
 					"script": "bapeat"
 				},
@@ -233,6 +235,38 @@
 						"aimable": true
 					},
 					"cooldown": 0
+				},
+				"animations": {
+					"walk": {
+						"legs": "walk",
+						"tail": "none"
+					},
+					"run": {
+						"legs": "run",
+						"tail": "none",
+						"offset": {
+							"y": [1, 2, 1, 0, 1, 2, -1, 0],
+							"body": true,
+							"loop": true,
+							"timing": "legs"
+						}
+					},
+					"jump": {
+						"legs": "jump",
+						"body": "jump",
+						"tail": "none",
+						"offset": {
+							"y": [1, 1, 2, 2]
+						}
+					},
+					"fall": {
+						"legs": "fall",
+						"body": "fall",
+						"tail": "none",
+						"offset": {
+							"y": [2, 2, 1, 1]
+						}
+					}
 				}
 			}
 		},
