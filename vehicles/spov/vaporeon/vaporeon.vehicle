@@ -430,7 +430,9 @@
 				"head": "none",
 				"tail": "none"
 			},
-			"idleAnimations": [],
+			"idleAnimations": [
+				{ "tail": "none" }
+			],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "up" },
