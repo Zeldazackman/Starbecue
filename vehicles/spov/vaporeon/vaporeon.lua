@@ -318,6 +318,8 @@ end
 
 function state_smol()
 
+	p.idleStateChange()
+
 	-- p.handleBelly()
 	if p.occupants > 0 then
 		p.bellyEffects()

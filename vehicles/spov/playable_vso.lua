@@ -685,6 +685,10 @@ function p.control.groundMovement( dx )
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
 
+	if vsoAnimIs( "bodyState", "fall") or vsoAnimIs( "bodyState", "jump") or vsoAnimIs( "bodyState", "smol.fall") or vsoAnimIs( "bodyState", "smol.jump") then
+		p.doAnims( state.idle )
+	end
+
 	if dx ~= 0 then
 		if not running then
 			p.doAnims( control.animations.walk, true )
@@ -854,7 +858,7 @@ function p.idleStateChange()
 		end
 	end
 
-	if not p.control.probablyOnGround() or not p.control.notMoving() then return end
+	if not p.control.probablyOnGround() or not p.control.notMoving() or p.movement.animating then return end
 
 	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions
