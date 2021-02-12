@@ -81,21 +81,10 @@
 				}
 			},
 			"bapState": {
-                "default": "idle",
+                "default": "none",
                 "states": {
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"none": { "frames": 1, "cycle": 1, "mode": "end" },
-
-				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
-
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
-                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
-
-					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
-
-					"bap": { "frames": 2, "cycle": 0.3, "mode": "end" }
+					"bap": { "frames": 3, "cycle": 0.3, "mode": "end" }
 				}
 			},
 
@@ -335,7 +324,7 @@
                 },
                 "partStates": {
                     "bapState": {
-                        "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
+                        "none": { "properties": { "image": "spov/legs/legs_bappy_bg.png:none<directives>" } },
 
 						"bap": { "properties": { "image": "spov/legs/legs_bappy_bg.png:bap.<frame><directives>" } },
 						"smol.bap": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:bap.<frame><directives>" } }

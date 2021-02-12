@@ -131,18 +131,27 @@ function p.entityLounging( entity )
 	return false
 end
 
+p.currentTags = {}
 function p.doAnims( anims, continuous )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
 	for k,v in pairs( anims or {} ) do
 		if k == "offset" then
 			p.headbob( v )
+		elseif k == "tags" then
+			for _,tag in ipairs(v) do
+				p.currentTags[tag.owner] = {
+					part = tag.part,
+					name = tag.name
+				}
+				if tag.part == "global" then
+					animator.setGlobalTag( tag.name, tag.value )
+				else
+					animator.setPartTag( tag.part, tag.name, tag.value )
+				end
+			end
 		elseif not vsoAnimIs( k.."State", prefix..v ) or vsoAnimEnded( k.."State", prefix..v ) then
 			vsoAnim( k.."State", prefix..v )
 		end
-	end
-	if vsoAnimEnded( "bapState" ) then
-		animator.setGlobalTag( "bap", "" )
-		vsoAnim( "bapState", "none" )
 	end
 end
 
@@ -622,7 +631,6 @@ function p.control.primaryAction()
 					p.control.projectile(control.primaryAction.projectile)
 				end
 				if control.primaryAction.animation ~= nil then
-					animator.setGlobalTag( "bap", "bappy_" )
 					p.doAnims( control.primaryAction.animation )
 				end
 				if control.primaryAction.script ~= nil then
@@ -838,7 +846,17 @@ function p.standardState()
 end
 
 function p.idleStateChange()
-	-- sb.setLogMap("isc", 0)
+	for owner,tag in pairs( p.currentTags ) do
+		if vsoAnimEnded( owner.."State" ) then
+			if tag.part == "global" then
+				animator.setGlobalTag( tag.name, "" )
+			else
+				animator.setPartTag( tag.part, tag.name, "" )
+			end
+			p.currentTags[owner] = nil
+		end
+	end
+
 	if not p.control.probablyOnGround() or not p.control.notMoving() then return end
 
 	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well

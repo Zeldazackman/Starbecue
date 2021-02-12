@@ -121,7 +121,6 @@
 						"animation": {
 							"body": "eat",
 							"legs": "idle",
-							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -133,7 +132,6 @@
 						"animation": {
 							"body": "eat",
 							"legs": "idle",
-							"bap": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -149,7 +147,7 @@
 						"animation": {
 							"body": "escape",
 							"legs": "idle",
-							"bap": "idle",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -161,7 +159,7 @@
 						"animation": {
 							"body": "escape",
 							"legs": "idle",
-							"bap": "idle",
+							"bap": "none",
 							"head": "none",
 							"tail": "idle"
 						},
@@ -175,7 +173,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "idle",
-				"bap": "idle",
 				"head": "idle",
 				"tail": "idle"
 			},
@@ -223,7 +220,15 @@
 						"aimable": false
 					},
 					"animation": {
-						"bap": "bap"
+						"bap": "bap",
+						"tags": [
+							{
+								"owner": "bap",
+								"part": "backlegs",
+								"name": "bap",
+								"value": "bappy_"
+							}
+						]
 					},
 					"cooldown": 30,
 					"script": "bapeat"
@@ -277,7 +282,6 @@
 						"offset": { "x": [0, 0], "y": [2, 0], "body": false },
 						"body": "standup",
 						"legs": "none",
-						"bap": "none",
 						"head": "idle",
 						"tail": "none"
 					},
@@ -290,7 +294,6 @@
 							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "pin",
 							"legs": "none",
-							"bap": "none",
 							"head": "idle",
 							"tail": "none"
 						},
@@ -304,7 +307,6 @@
 							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "laydown",
 							"legs": "none",
-							"bap": "none",
 							"head": "idle",
 							"tail": "none"
 						},
@@ -316,7 +318,6 @@
 							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
 							"body": "laydown",
 							"legs": "none",
-							"bap": "none",
 							"head": "idle",
 							"tail": "none"
 						},
@@ -329,7 +330,6 @@
 				"offset": { "x": [0, 0], "y": [4, 4], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "idle",
 				"tail": "idle"
 			},
@@ -363,7 +363,6 @@
 						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
-						"bap": "none",
 						"head": "idle",
 						"tail": "none"
 					},
@@ -374,7 +373,6 @@
 					"animation": {
 						"body": "fallasleep",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -386,7 +384,6 @@
 						"animation": {
 							"body": "rollover",
 							"legs": "none",
-							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -397,7 +394,6 @@
 						"animation": {
 							"body": "rollover",
 							"legs": "none",
-							"bap": "none",
 							"head": "none",
 							"tail": "none"
 						},
@@ -411,7 +407,6 @@
 				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "idle",
 				"tail": "idle"
 			},
@@ -448,7 +443,6 @@
 					"animation": {
 						"body": "wakeup",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -460,7 +454,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "none",
 				"tail": "none"
 			},
@@ -492,7 +485,6 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -509,7 +501,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "none",
 				"tail": "idle"
 			},
@@ -545,7 +536,6 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -557,7 +547,6 @@
 					"animation": {
 						"body": "grab",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -574,7 +563,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "none",
 				"tail": "idle"
 			},
@@ -606,7 +594,6 @@
 					"animation": {
 						"body": "grab",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -618,7 +605,6 @@
 					"animation": {
 						"body": "absorb",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "idle"
 					},
@@ -632,7 +618,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "none",
 				"tail": "idle"
 			},
@@ -665,7 +650,6 @@
 						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
 						"body": "situp",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -678,7 +662,6 @@
 					"animation": {
 						"body": "fallasleep",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -689,7 +672,6 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -702,7 +684,6 @@
 						"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 						"body": "absorb",
 						"legs": "none",
-						"bap": "none",
 						"head": "idle",
 						"tail": "none"
 					},
@@ -716,7 +697,6 @@
 				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "idle",
 				"tail": "idle"
 			},
@@ -754,7 +734,6 @@
 					"animation": {
 						"body": "wakeup",
 						"legs": "none",
-						"bap": "none",
 						"head": "none",
 						"tail": "none"
 					},
@@ -766,7 +745,6 @@
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"bap": "none",
 				"head": "none",
 				"tail": "idle"
 			},
