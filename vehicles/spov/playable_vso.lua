@@ -622,7 +622,7 @@ function p.control.primaryAction()
 					p.control.projectile(control.primaryAction.projectile)
 				end
 				if control.primaryAction.animation ~= nil then
-					animator.setGlobalTag( "bap", "bappy" )
+					animator.setGlobalTag( "bap", "bappy_" )
 					p.doAnims( control.primaryAction.animation )
 				end
 				if control.primaryAction.script ~= nil then
