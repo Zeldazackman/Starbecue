@@ -375,6 +375,10 @@ end
 
 function state_chonk_ball()
 
+	vsoAnim( "legsState", "none" )
+	vsoAnim( "tailState", "none" )
+	vsoAnim( "headState", "none" )
+
 	if p.occupants > 0 then
 		p.bellyEffects()
 		-- if not stateQueued() and probablyOnGround() and notMoving() then
