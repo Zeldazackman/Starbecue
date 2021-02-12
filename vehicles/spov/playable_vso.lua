@@ -134,11 +134,11 @@ end
 p.currentTags = {}
 function p.doAnims( anims, continuous )
 	local prefix = p.stateconfig[p.state].animationPrefix or ""
-	for k,v in pairs( anims or {} ) do
-		if k == "offset" then
-			p.headbob( v )
-		elseif k == "tags" then
-			for _,tag in ipairs(v) do
+	for state,anim in pairs( anims or {} ) do
+		if state == "offset" then
+			p.headbob( anim )
+		elseif state == "tags" then
+			for _,tag in ipairs(anim) do
 				p.currentTags[tag.owner] = {
 					part = tag.part,
 					name = tag.name
@@ -149,8 +149,14 @@ function p.doAnims( anims, continuous )
 					animator.setPartTag( tag.part, tag.name, tag.value )
 				end
 			end
-		elseif not vsoAnimIs( k.."State", prefix..v ) or vsoAnimEnded( k.."State", prefix..v ) then
-			vsoAnim( k.."State", prefix..v )
+		else
+			local oldPriority = (p.animStateData[state.."State"].states[vsoAnimCurr(state.."State") or "idle"] or {}).priority or 0
+			local newPriority = (p.animStateData[state.."State"].states[prefix..anim] or {}).priority or 0
+			local isSame = vsoAnimIs( state.."State", prefix..anim )
+			local priorityHigher = tonumber(newPriority) >= tonumber(oldPriority)
+			if (not isSame and priorityHigher) or vsoAnimEnded( state.."State" ) then
+				vsoAnim( state.."State", prefix..anim )
+			end
 		end
 	end
 end
@@ -360,6 +366,7 @@ function p.onBegin()
 	message.setHandler( "forcedsit", p.control.pressE )
 
 	p.stateconfig = config.getParameter("states")
+	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
 end

@@ -14,116 +14,104 @@
 			"bodyState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 2, "cycle": 3, "mode": "end" },
+					"idle": { "frames": 2, "cycle": 3, "mode": "end", "priority": 0 },
 
-                    "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"standup": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-                    "laydown": { "frames": 2, "cycle": 0.5, "mode": "end" },
-                    "pin": { "frames": 2, "cycle": 0.5, "mode": "end" },
-				    "situp": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "laydown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+                    "pin": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+				    "situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-                    "fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end" },
-					"wakeup": { "frames": 2, "cycle": 0.5, "mode": "end" },
+                    "fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"wakeup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-                    "rollover": { "frames": 5, "cycle": 1.5, "mode": "end" },
+                    "rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
 
-                    "grab": { "frames": 1, "cycle": 0.25, "mode": "end" },
+                    "grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 
-					"lick": { "frames": 5, "cycle": 0.75, "mode": "end" },
+					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3 },
 
-                    "eat": { "frames": 8, "cycle": 1.5, "mode": "end" },
-                    "absorb": { "frames": 4, "cycle": 1.5, "mode": "end" },
-                    "escape": { "frames": 8, "cycle": 1.5, "mode": "end" },
+                    "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+                    "absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
+                    "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
-                    "s_back": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "s_front": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "s_up": { "frames": 5, "cycle": 1, "mode": "end" },
-                    "s_down": { "frames": 5, "cycle": 1, "mode": "end" },
-					"look": { "frames": 1, "cycle": 2, "mode": "end" },
+                    "s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+                    "s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+                    "s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+                    "s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 
-                    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
-                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
-
-					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end" },
-					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
-					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
-					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
-					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end" },
-
-					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end" }
+					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 0 }
                 }
             },
 			"legsState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"none": { "frames": 1, "cycle": 1, "mode": "end" },
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-                    "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
-                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
-					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end" }
+					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"bapState": {
                 "default": "none",
                 "states": {
-					"none": { "frames": 1, "cycle": 1, "mode": "end" },
-					"bap": { "frames": 3, "cycle": 0.3, "mode": "end" }
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 }
 				}
 			},
 
 			"tailState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"flick": { "frames": 1, "cycle": 1, "mode": "end" },
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"flick": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
 
-					"none": { "frames": 1, "cycle": 1, "mode": "end" }
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 
 			"headState": {
                 "default": "idle",
                 "states": {
-					"none": { "frames": 1, "cycle": 1, "mode": "end" },
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"blink": { "frames": 1, "cycle": 1, "mode": "end" },
-					"look": { "frames": 1, "cycle": 1, "mode": "end" },
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"blink": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"look": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
 
 
-					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end" }
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 }
 				}
 			},
 			"occupant1state": {
 				"default": "empty",
 				"states": {
-					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol": { "frames": 1, "cycle": 1, "mode": "end" }
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"occupant2state": {
 				"default": "empty",
 				"states": {
-					"empty": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol": { "frames": 1, "cycle": 1, "mode": "end" }
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			}
         },
@@ -180,11 +168,6 @@
                      "zLevel": 2,
                      "transformationGroups": ["flip"],
 					 "driverPosition": [0.0, -1.0] // only used for standalone
-                },
-                "partStates": {
-                    "driverstate": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<occupant1species>/spov/<occupant1species>_small.png:smolprey<occupant1directives>" } }
-                    }
                 }
             },
             "occupant1": {
