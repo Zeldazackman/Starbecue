@@ -130,6 +130,8 @@ p.registerStateScript( "stand", "bapeat", function()
 			prey = world.npcQuery( position, 2 )
 		end
 		if #prey > 0 then
+			--animator.setGlobalTag( "bap", "" )
+			--vsoAnim( "bapState", "none" )
 			p.doTransition( "eat", {id=prey[1]} )
 		end
 	end

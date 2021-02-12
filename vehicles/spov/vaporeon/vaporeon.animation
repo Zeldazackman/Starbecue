@@ -132,8 +132,7 @@
                 "properties": {
                     "centered": true,
                      "zLevel": 1,
-					 "transformationGroups": ["flip", "bodybob"],
-					 "driverPosition": [0.0, -1.0] // only used for standalone
+					 "transformationGroups": ["flip", "bodybob"]
                 },
                 "partStates": {
                     "bodyState": {
@@ -175,6 +174,19 @@
                 }
             },
 
+			"driver": {
+                "properties": {
+                    "centered": true,
+                     "zLevel": 2,
+                     "transformationGroups": ["flip"],
+					 "driverPosition": [0.0, -1.0] // only used for standalone
+                },
+                "partStates": {
+                    "driverstate": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<occupant1species>/spov/<occupant1species>_small.png:smolprey<occupant1directives>" } }
+                    }
+                }
+            },
             "occupant1": {
                 "properties": {
                     "centered": true,
@@ -324,10 +336,10 @@
                 },
                 "partStates": {
                     "bapState": {
-                        "none": { "properties": { "image": "spov/legs/legs_bappy_bg.png:none<directives>" } },
+                        "none": { "properties": { "image": "spov/legs/legs_<bap>bg.png:none<directives>" } },
 
-						"bap": { "properties": { "image": "spov/legs/legs_bappy_bg.png:bap.<frame><directives>" } },
-						"smol.bap": { "properties": { "image": "spov/smol_legs/legs_bappy_bg.png:bap.<frame><directives>" } }
+						"bap": { "properties": { "image": "spov/legs/legs_<bap>bg.png:bap.<frame><directives>" } },
+						"smol.bap": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:bap.<frame><directives>" } }
 					}
                 }
 			},

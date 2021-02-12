@@ -14,7 +14,7 @@
 
 	"loungePositions" : {
 		"driver" : {
-			"part" : "background",
+			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
@@ -224,7 +224,7 @@
 						"tags": [
 							{
 								"owner": "bap",
-								"part": "backlegs",
+								"part": "global",
 								"name": "bap",
 								"value": "bappy_"
 							}
@@ -250,7 +250,7 @@
 						"legs": "run",
 						"tail": "none",
 						"offset": {
-							"y": [1, 2, 1, 0, 1, 2, -1, 0],
+							"y": [0, 0, -1, -1, 0, 1, -2, -1],
 							"body": true,
 							"loop": true,
 							"timing": "legs"
@@ -261,7 +261,7 @@
 						"body": "jump",
 						"tail": "none",
 						"offset": {
-							"y": [1, 1, 2, 2]
+							"y": [1, 2, 3, 4]
 						}
 					},
 					"fall": {
@@ -269,7 +269,7 @@
 						"body": "fall",
 						"tail": "none",
 						"offset": {
-							"y": [2, 2, 1, 1]
+							"y": [4, 3, 2, 1]
 						}
 					}
 				}
