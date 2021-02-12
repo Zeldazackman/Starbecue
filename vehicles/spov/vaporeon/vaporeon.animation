@@ -59,7 +59,7 @@
 					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
 					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.bap": { "frames": 2, "cycle": 0.3, "mode": "end" },
+					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end" },
 
 					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end" }
                 }
