@@ -52,14 +52,9 @@
 					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
-					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end" },
 					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
 					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
-					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.swim": { "frames": 4, "cycle": 0.5, "mode": "end" },
-					"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
-					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end" },
+					//"smol.duck": { "frames": 1, "cycle": 1, "mode": "end" },
 
 					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end" }
                 }
@@ -67,8 +62,9 @@
 			"legsState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
 					"none": { "frames": 1, "cycle": 1, "mode": "end" },
+
+					"idle": { "frames": 1, "cycle": 1, "mode": "end" },
 
 				    "walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end" },
@@ -77,14 +73,28 @@
                     "fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
 
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end" }
+					"swim": { "frames": 4, "cycle": 1, "mode": "end" },
+
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end" },
+
+				    "smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end" },
+                    "smol.run": { "frames": 8, "cycle": 0.75, "mode": "end" },
+
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end" },
+                    "smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end" },
+
+					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end" },
+					"smol.swim": { "frames": 4, "cycle": 1, "mode": "end" }
+
 				}
 			},
 			"bapState": {
                 "default": "none",
                 "states": {
 					"none": { "frames": 1, "cycle": 1, "mode": "end" },
-					"bap": { "frames": 3, "cycle": 0.3, "mode": "end" }
+
+					"bap": { "frames": 3, "cycle": 0.3, "mode": "end" },
+					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end" }
 				}
 			},
 
@@ -168,6 +178,8 @@
 						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } },
 
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fall.<frame><directives>" } },
 
 						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:<rotationFlip>.chonk_ball.<rotationFrame><directives>" } }
                     }
@@ -250,7 +262,11 @@
 						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_down.<frame><directives>" } },
 
 						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } }
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fall.<frame><directives>" } }
 
 					}
                 }
@@ -362,7 +378,7 @@
 			"head": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 3,
+                    "zLevel": 4,
                      "transformationGroups": ["flip", "headbob"]
                 },
                 "partStates": {
@@ -373,28 +389,10 @@
                         "blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
                         "look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
 
-						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } },
-						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:empty.<frame><directives>" } }
-					}
-                }
-			},
-
-			"smolhead" : {
-				"properties": {
-                    "centered": true,
-                    "zLevel": 2,
-                     "transformationGroups": ["flip", "headbob"]
-                },
-                "partStates": {
-					"headState" : {
-                        "idle": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
-                        "blink": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
-                        "look": { "properties": { "image": "spov/vaporeon_head.png:empty.<frame><directives>" } },
-
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
 					}
-				}
+                }
 			}
         }
 	},
