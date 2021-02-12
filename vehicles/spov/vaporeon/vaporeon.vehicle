@@ -244,11 +244,13 @@
 				"animations": {
 					"walk": {
 						"legs": "walk",
-						"tail": "none"
+						"body": "idle",
+						"tail": "walk"
 					},
 					"run": {
 						"legs": "run",
-						"tail": "none",
+						"body": "idle",
+						"tail": "run",
 						"offset": {
 							"y": [0, 0, -1, -1, 0, 1, -2, -1],
 							"body": true,
@@ -259,7 +261,7 @@
 					"jump": {
 						"legs": "jump",
 						"body": "jump",
-						"tail": "none",
+						"tail": "jump",
 						"offset": {
 							"y": [1, 2, 3, 4]
 						}
@@ -267,7 +269,7 @@
 					"fall": {
 						"legs": "fall",
 						"body": "fall",
-						"tail": "none",
+						"tail": "fall",
 						"offset": {
 							"y": [4, 3, 2, 1]
 						}
@@ -822,6 +824,7 @@
 				"animations": {
 					"walk": {
 						"legs": "smol.walk",
+						"body": "smol.idle",
 						"tail": "none",
 						"offset": {
 							"y" : [ 0, 0, 1, 1, 0, 0, 1, 1 ],
@@ -831,6 +834,7 @@
 					},
 					"run": {
 						"legs": "smol.run",
+						"body": "smol.idle",
 						"tail": "none",
 						"offset": {
 							"y": [ 1, 2, 1, 0, 1, 2, 1, 0 ],

@@ -97,6 +97,15 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"flick": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
 
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
@@ -134,7 +143,7 @@
             "background": {
                 "properties": {
                     "centered": true,
-                     "zLevel": 1,
+                     "zLevel": -1,
 					 "transformationGroups": ["flip", "bodybob"]
                 },
                 "partStates": {
@@ -182,7 +191,7 @@
 			"driver": {
                 "properties": {
                     "centered": true,
-                     "zLevel": 2,
+                     "zLevel": 0,
                      "transformationGroups": ["flip"],
 					 "driverPosition": [0.0, -1.0] // only used for standalone
                 }
@@ -190,7 +199,7 @@
             "occupant1": {
                 "properties": {
                     "centered": true,
-                     "zLevel": 2,
+                     "zLevel": 0,
                      "transformationGroups": ["flip", "occupant1position"],
                      "occupantPosition": [0.0, 0.0]
                 },
@@ -203,7 +212,7 @@
             "occupant2": {
                 "properties": {
                     "centered": true,
-                     "zLevel": 2,
+                     "zLevel": 0,
                      "transformationGroups": ["flip", "occupant2position"],
                      "occupantPosition": [0.0, 0.0]
                 },
@@ -217,7 +226,7 @@
             "foreground": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 3,
+                    "zLevel": 1,
                      "transformationGroups": ["flip", "bodybob"]
                 },
                 "partStates": {
@@ -263,7 +272,7 @@
             "frontlegs": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 4,
+                    "zLevel": 3,
                      "transformationGroups": ["flip"]
                 },
                 "partStates": {
@@ -299,7 +308,7 @@
 			"backlegs": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 0,
+                    "zLevel": -2,
                      "transformationGroups": ["flip"]
                 },
                 "partStates": {
@@ -335,7 +344,7 @@
 			"bapleg": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 0,
+                    "zLevel": -2,
                      "transformationGroups": ["flip", "headbob"]
                 },
                 "partStates": {
@@ -350,15 +359,24 @@
 			"tail": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 1,
-                     "transformationGroups": ["flip"]
+                    "zLevel": 2,
+                     "transformationGroups": ["flip", "bodybob"]
                 },
                 "partStates": {
                     "tailState": {
                         "idle": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
                         "flick": { "properties": { "image": "spov/vaporeon_tail.png:<state>.flick.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } }
+						"walk": { "properties": { "image": "spov/vaporeon_tail.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/vaporeon_tail.png:run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon_tail.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon_tail.png:fall.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/vaporeon_tail.png:swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/vaporeon_tail.png:swim.<frame><directives>" } },
+
+						"none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } }
 					}
                 }
 			},

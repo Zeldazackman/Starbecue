@@ -692,10 +692,6 @@ function p.control.groundMovement( dx )
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
 
-	if vsoAnimIs( "bodyState", "fall") or vsoAnimIs( "bodyState", "jump") or vsoAnimIs( "bodyState", "smol.fall") or vsoAnimIs( "bodyState", "smol.jump") then
-		p.doAnims( state.idle )
-	end
-
 	if dx ~= 0 then
 		if not running then
 			p.doAnims( control.animations.walk, true )
