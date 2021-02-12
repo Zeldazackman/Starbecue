@@ -684,9 +684,6 @@ function p.control.groundMovement( dx )
 	else
 		mcontroller.setXVelocity( dx * control.walkSpeed )
 	end
-	if p.movement.falling or p.movement.jumping then
-		p.doAnims( state.idle )
-	end
 
 	if dx ~= 0 then
 		if not running then
