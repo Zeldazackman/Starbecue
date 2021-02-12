@@ -153,7 +153,7 @@ function p.doAnims( anims, continuous )
 			local oldPriority = (p.animStateData[state.."State"].states[vsoAnimCurr(state.."State") or "idle"] or {}).priority or 0
 			local newPriority = (p.animStateData[state.."State"].states[prefix..anim] or {}).priority or 0
 			local isSame = vsoAnimIs( state.."State", prefix..anim )
-			local priorityHigher = tonumber(newPriority) >= tonumber(oldPriority)
+			local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
 			if (not isSame and priorityHigher) or vsoAnimEnded( state.."State" ) then
 				vsoAnim( state.."State", prefix..anim )
 			end

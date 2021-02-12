@@ -55,7 +55,7 @@
 			"legsState": {
                 "default": "idle",
                 "states": {
-					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
@@ -84,7 +84,7 @@
 			"bapState": {
                 "default": "none",
                 "states": {
-					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 },
 					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 }
@@ -106,14 +106,14 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
 
 			"headState": {
                 "default": "idle",
                 "states": {
-					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"blink": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },

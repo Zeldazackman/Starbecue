@@ -242,6 +242,17 @@
 					"cooldown": 0
 				},
 				"animations": {
+					"swim": {
+						"legs": "swim",
+						"body": "idle",
+						"tail": "swim"
+					},
+					"swimidle": {
+						"legs": "swimidle",
+						"body": "idle",
+						"tail": "swimidle"
+					},
+
 					"walk": {
 						"legs": "walk",
 						"body": "idle",
@@ -859,8 +870,14 @@
 							"y": [2, 2, 1, 0]
 						}
 					},
+					"swimidle": {
+						"legs": "smol.swimidle",
+						"body": "smol.idle",
+						"tail": "none"
+					},
 					"swim": {
 						"legs": "smol.swim",
+						"body": "smol.idle",
 						"tail": "none",
 						"offset": {
 							"y": [ 0, -1, -2, 0 ]
