@@ -94,8 +94,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1], "rotation": [0,45,90]},
-									{ "group": "backarmrotation", "center": [5,1], "rotation": [0,45,90]}
+									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45,90, 1, 1, 1, 1, 1]},
+									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45,90, 1, 1, 1, 1, 1]}
 								]
 							}
 						},

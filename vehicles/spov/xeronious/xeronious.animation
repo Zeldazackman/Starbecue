@@ -28,6 +28,8 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"hug": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -167,6 +169,7 @@
                     "armsState": {
                         "idle": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
                         "hug": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
+                        "rotation": { "properties": { "image": "spov/arms/arms_fg.png:rotation.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -182,6 +185,7 @@
                     "armsState": {
                         "idle": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
                         "hug": { "properties": { "image": "spov/arms/arms_bg.png:hug.<frame><directives>" } },
+                        "rotation": { "properties": { "image": "spov/arms/arms_bg.png:rotation.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -242,7 +246,7 @@
 			"head": {
                 "properties": {
                     "centered": true,
-                    "zLevel": 4,
+                    "zLevel": 3,
                      "transformationGroups": ["flip", "headbob"]
                 },
                 "partStates": {

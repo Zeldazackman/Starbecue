@@ -3,7 +3,7 @@
 		"size" : [96, 96],
 		"dimensions" : [8, 2],
 		"names" : [
-			[ "idle.1", "hug.1", "rotationarm.1"],
+			[ "idle.1", "hug.1", "rotation.1"],
 			[]
 		]
 	},

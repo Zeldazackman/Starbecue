@@ -190,13 +190,13 @@ function p.rotate( data )
 		data = data,
 		time = 0,
 		parts = {},
-		timing = r.timing or "body"
+		timing = data.timing or "body"
 	}
 	local continue = false
 	for _,r in ipairs(data.parts or {}) do
-		table.insert(p.rotating.rotations, {
-			group = r.group or "frontarmrotation"
-			center = r.center or {0,0}
+		table.insert(p.rotating.parts, {
+			group = r.group or "frontarmrotation",
+			center = r.center or {0,0},
 			rotation = r.rotation or {0}
 		})
 		if r.rotation and #r.rotation > 1 then
@@ -249,7 +249,7 @@ function vsoTransAnimUpdate( transformname, dt )
 				p.rotating.enabled = false
 			end
 		end
-		for _,r in ipairs(p.rotating.rotations) do
+		for _,r in ipairs(p.rotating.parts) do
 			local previousRotation = r.rotation[math.floor(p.rotating.time) + 1] or 0
 			local nextRotation = r.rotation[math.floor(p.rotating.time) + 2] or 0
 			local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
