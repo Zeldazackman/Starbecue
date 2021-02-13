@@ -137,6 +137,8 @@ function p.doAnims( anims, continuous )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
 			p.headbob( anim )
+		elseif state == "rotate" then
+			p.rotate( anim )
 		elseif state == "tags" then
 			for _,tag in ipairs(anim) do
 				p.currentTags[tag.owner] = {
@@ -178,6 +180,18 @@ function p.headbob( data )
 	if #p.headbobbing.x == 1 and #p.headbobbing.y == 1 then
 		p.headbobbing.enabled = false
 	end
+end
+
+p.rotating = []
+function p.rotate( data )
+	if data == p.rotating.data then return end
+	p.rotating = [
+		data = data
+		time = 0
+		center = data.center
+		rotation = data.rotation
+	]
+
 end
 
 local _vsoTransAnimUpdate = vsoTransAnimUpdate

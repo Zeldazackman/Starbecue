@@ -88,10 +88,14 @@
 					{ // 0 occupants
 						"animation": {
 							"body": "eat",
-							"arms": "idle",
+							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
-							"tail": "idle"
+							"tail": "idle",
+							"rotate": [
+								{ "group": "frontarmrotation", "center": [1,1], "rotation": [0,45,90]},
+								{ "group": "backarmrotation", "center": [5,1], "rotation": [0,45,90]}
+							]
 						},
 						"victimAnimation": "playereat",
 						"state": "stand",
@@ -197,7 +201,7 @@
 					{ // 0 occupants
 						"animation": {
 							"body": "eat",
-							"arms": "idle",
+							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
 							"tail": "idle"
@@ -213,7 +217,7 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
+							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
 							"tail": "idle"

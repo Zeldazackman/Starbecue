@@ -4,8 +4,6 @@
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
-    	"rotationFrame" : "0",
-		"rotationFlip" : "0",
 		"smolprey": "xeronious"
 	},
     "animatedParts": {
@@ -163,7 +161,7 @@
                 "properties": {
                     "centered": true,
                     "zLevel": 4,
-                     "transformationGroups": ["flip", "bodybob"]
+                     "transformationGroups": ["flip", "bodybob", "frontarmrotation"]
                 },
                 "partStates": {
                     "armsState": {
@@ -178,7 +176,7 @@
                 "properties": {
                     "centered": true,
                     "zLevel": -3,
-                     "transformationGroups": ["flip", "bodybob"]
+                     "transformationGroups": ["flip", "bodybob", "backarmrotation"]
                 },
                 "partStates": {
                     "armsState": {
@@ -271,6 +269,12 @@
 		},
 		"bodybob": {
 			"interpolated": false
+		},
+		"frontarmrotation": {
+			"interpolated": true
+		},
+		"backarmrotation": {
+			"interpolated": true
 		}
 	},
 	"sounds": {
