@@ -172,6 +172,13 @@ p.registerStateScript( "sit", "letout", function( args )
 	end
 end)
 
+function interact_state_sit( targetid )
+	if mcontroller.yVelocity() > -5 then
+		p.onInteraction( targetid )
+	end
+end
+
+
 state_sit = p.standardState
 
 -------------------------------------------------------------------------------

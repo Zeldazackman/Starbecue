@@ -165,7 +165,10 @@ end
 
 p.headbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
 function p.headbob( data )
-	if data == p.headbobbing.data then return end
+	if data == p.headbobbing.data then
+		if not p.headbobbing.enabled then p.headbobbing.time = 0 p.headbobbing.enabled = true end
+		return
+	end
 	p.headbobbing = {
 		enabled = data ~= nil,
 		data = data,
@@ -184,7 +187,10 @@ end
 
 p.rotating = {enabled = false, time = 0, rotations = {}}
 function p.rotate( data )
-	if data == p.rotating.data then return end
+	if data == p.rotating.data then
+		if not p.rotating.enabled then p.rotating.time = 0 p.rotating.enabled = true end
+		return
+	end
 	p.rotating = {
 		enabled = data ~= nil,
 		data = data,
@@ -250,11 +256,13 @@ function vsoTransAnimUpdate( transformname, dt )
 			end
 		end
 		for _,r in ipairs(p.rotating.parts) do
+
 			local previousRotation = r.rotation[math.floor(p.rotating.time) + 1] or 0
 			local nextRotation = r.rotation[math.floor(p.rotating.time) + 2] or 0
 			local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
 
-			animator.rotateTransformationGroup(r.group, rotation, r.center)
+			animator.resetTransformationGroup( r.group )
+			animator.rotateTransformationGroup(r.group, (rotation * math.pi/180), r.center)
 		end
 	else
 		_vsoTransAnimUpdate( transformname, dt )

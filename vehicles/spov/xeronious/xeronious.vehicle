@@ -94,8 +94,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45,90, 1, 1, 1, 1, 1]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45,90, 1, 1, 1, 1, 1]}
+									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -206,10 +206,16 @@
 							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
-							"tail": "idle"
+							"tail": "idle",
+							"rotate": {
+								"parts": [
+									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								]
+							}
 						},
 						"victimAnimation": "playereat",
-						"state": "stand",
+						"state": "sit",
 						"script": "eat"
 					},
 					{}// can't eat with 1
@@ -219,13 +225,13 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"arms": "rotation",
+							"arms": "idle",
 							"legs": "idle",
 							"head": "none",
 							"tail": "idle"
 						},
 						"victimAnimation": "escape",
-						"state": "stand",
+						"state": "sit",
 						"script": "letout"
 					}
 				]
@@ -243,7 +249,7 @@
 				{ "head": "blink" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
+				"up": { "transition": "escape" },
 				"front": { "transition": "down" },
 				"back": { "transition": "up" },
 				"down": { "transition": "down" },
@@ -255,8 +261,12 @@
 				"lookAnimation": true
 			},
 			"interact": {
-				"front": { "transition": "down", "chance": 20 },
-				"side": { "transition": "up", "chance": 20 },
+				"front": [ // array depends on occupants
+					{ "transition": "eat", "chance": 100 }, // 0 occupants
+					{ "transition": "eat", "chance": 50 }, // 1 occupant
+					{ "transition": "down", "chance": 20 } // 2 occupants
+				],
+				"side": { "transition": "up", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 },
 				"petAnimation": true
 			}

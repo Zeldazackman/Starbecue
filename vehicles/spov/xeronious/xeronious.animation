@@ -163,7 +163,7 @@
                 "properties": {
                     "centered": true,
                     "zLevel": 4,
-                     "transformationGroups": ["flip", "bodybob", "frontarmrotation"]
+                     "transformationGroups": ["flip", "frontarmrotation", "bodybob"]
                 },
                 "partStates": {
                     "armsState": {
@@ -179,7 +179,7 @@
                 "properties": {
                     "centered": true,
                     "zLevel": -3,
-                     "transformationGroups": ["flip", "bodybob", "backarmrotation"]
+                     "transformationGroups": ["flip", "backarmrotation", "bodybob"]
                 },
                 "partStates": {
                     "armsState": {
