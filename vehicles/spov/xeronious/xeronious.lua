@@ -22,8 +22,9 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.onBegin()
 
 	vsoOnInteract( "state_stand", interact_state_stand )
+	vsoOnInteract( "state_sit", interact_state_sit )
+	vsoOnInteract( "state_hug", p.onInteraction )
 
-	vsoOnInteract( "state_sit", p.onInteraction )
 end
 
 function onEnd()
@@ -153,6 +154,7 @@ p.registerStateScript( "sit", "eat", function( args )
 		return false
 	end
 end)
+
 p.registerStateScript( "sit", "letout", function( args )
 	if p.occupants == 0 then
 		sb.logError( "[Xeronious] No one to let out!" )
@@ -172,6 +174,18 @@ p.registerStateScript( "sit", "letout", function( args )
 	end
 end)
 
+p.registerStateScript( "sit", "hug", function( args )
+	vsoSetTarget( 1, args.id )
+	if p.eat( vsoGetTargetId( 1 ), 1 ) then
+		vsoVictimAnimSetStatus( "occupant1", {} );
+		return true
+	else
+		vsoSetTarget( 1, nil )
+		return false
+	end
+end)
+
+
 function interact_state_sit( targetid )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( targetid )
@@ -180,5 +194,15 @@ end
 
 
 state_sit = p.standardState
+
+-------------------------------------------------------------------------------
+
+p.registerStateScript( "hug", "unhug", function()
+	vsoSetTarget( 1, nil )
+	p.uneat( 1 )
+	return true
+end)
+
+state_hug = p.standardState
 
 -------------------------------------------------------------------------------

@@ -234,8 +234,20 @@
 						"state": "sit",
 						"script": "letout"
 					}
-				]
-
+				],
+				"hug": {
+					"animation": {
+						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true },
+						"body": "idle",
+						"arms": "hug",
+						"legs": "idle",
+						"head": "idle",
+						"tail": "idle"
+					},
+					"victimAnimation": "hug",
+					"state": "hug",
+					"chance": 5
+				}
 			},
 			"idle": {
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
@@ -249,7 +261,7 @@
 				{ "head": "blink" }
 			],
 			"struggle": {
-				"up": { "transition": "escape" },
+				"up": { "transition": "up" },
 				"front": { "transition": "down" },
 				"back": { "transition": "up" },
 				"down": { "transition": "down" },
@@ -266,7 +278,84 @@
 					{ "transition": "eat", "chance": 50 }, // 1 occupant
 					{ "transition": "down", "chance": 20 } // 2 occupants
 				],
-				"side": { "transition": "up", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"side": { "transition": "hug", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"back": { "transition": "up", "chance": 20 },
+				"petAnimation": true
+			}
+		},
+		"hug": {
+			"transitions": {
+				"up": {
+					"state": "back",
+					"script": "unbed"
+				},
+				"eat": [ // array depends on occupants
+					{ // 0 occupants
+						"animation": {
+							"body": "eat",
+							"arms": "rotation",
+							"legs": "idle",
+							"head": "none",
+							"tail": "idle",
+							"rotate": {
+								"parts": [
+									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								]
+							}
+						},
+						"victimAnimation": "playereat",
+						"state": "sit",
+						"script": "eat"
+					},
+					{}// can't eat with 1
+				],
+				"escape": [
+					{}, // can't escape from 0
+					{ // 1 occupant
+						"animation": {
+							"body": "escape",
+							"arms": "idle",
+							"legs": "idle",
+							"head": "none",
+							"tail": "idle"
+						},
+						"victimAnimation": "escape",
+						"state": "sit",
+						"script": "letout"
+					}
+				]
+			},
+			"idle": {
+				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" }
+			],
+			"struggle": {
+				"up": { "transition": "up" },
+				"front": { "transition": "down" },
+				"back": { "transition": "up" },
+				"down": { "transition": "down" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 5 },
+					"normal": { "min": 5, "max": 15 },
+					"antiescape": { "min": 10, "max": 20 }
+				},
+				"lookAnimation": true
+			},
+			"interact": {
+				"front": [ // array depends on occupants
+					{ "transition": "eat", "chance": 100 }, // 0 occupants
+					{ "transition": "eat", "chance": 50 }, // 1 occupant
+					{ "transition": "down", "chance": 20 } // 2 occupants
+				],
+				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 },
 				"petAnimation": true
 			}
