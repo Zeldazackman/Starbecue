@@ -3,7 +3,7 @@
 		"size" : [96, 96],
 		"dimensions" : [8, 8],
 		"names" : [
-			[ "0.belly.1", "1.belly.1", "2.belly.1", "1.belly.2", "2.belly.2"],
+			[ "0.belly.1", "1.belly.1", "1.belly.2", "2.belly.1", "2.belly.2"],
 			[ "0.belly.eat.1", "0.belly.eat.2", "0.belly.eat.3", "0.belly.eat.4", "0.belly.eat.5", "0.belly.eat.6", "0.belly.eat.7", "0.belly.eat.8" ],
 			[],
 			[],

@@ -13,7 +13,7 @@
 			"bodyState": {
                 "default": "idle",
                 "states": {
-					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"idle": { "frames": 2, "cycle": 3, "mode": "end", "priority": 0 },
 
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
