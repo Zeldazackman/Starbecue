@@ -96,7 +96,7 @@
                 "properties": {
                     "centered": true,
                      "zLevel": 0,
-                     "transformationGroups": ["flip", "occupant1position"],
+                     "transformationGroups": ["flip", "occupant1position", "bodybob"],
                      "occupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
@@ -109,7 +109,7 @@
                 "properties": {
                     "centered": true,
                      "zLevel": 0,
-                     "transformationGroups": ["flip", "occupant2position"],
+                     "transformationGroups": ["flip", "occupant2position", "bodybob"],
                      "occupantPosition": [0.0, 0.0]
                 },
                 "partStates": {

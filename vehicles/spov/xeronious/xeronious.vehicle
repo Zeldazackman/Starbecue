@@ -192,7 +192,38 @@
 					},
 					"state": "stand",
 					"chance": 5
-				}
+				},
+				"eat": [ // array depends on occupants
+					{ // 0 occupants
+						"animation": {
+							"body": "eat",
+							"arms": "idle",
+							"legs": "idle",
+							"head": "none",
+							"tail": "idle"
+						},
+						"victimAnimation": "playereat",
+						"state": "stand",
+						"script": "eat"
+					},
+					{}// can't eat with 1
+				],
+				"escape": [
+					{}, // can't escape from 0
+					{ // 1 occupant
+						"animation": {
+							"body": "escape",
+							"arms": "idle",
+							"legs": "idle",
+							"head": "none",
+							"tail": "idle"
+						},
+						"victimAnimation": "escape",
+						"state": "stand",
+						"script": "letout"
+					}
+				]
+
 			},
 			"idle": {
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },

@@ -131,6 +131,47 @@ end
 
 -------------------------------------------------------------------------------
 
+p.registerStateScript( "sit", "eat", function( args )
+	if p.entityLounging( args.id ) then return end
+	if p.occupants == 2 then
+		sb.logError("[Xeronious] Can't eat more than two people!")
+		return false
+	end
+	local i = p.occupants + 1
+	vsoSetTarget( i, args.id )
+	if p.eat( vsoGetTargetId( i ), i ) then
+		vsoMakeInteractive( false )
+		p.showEmote("emotehappy")
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+		return true, function()
+			vsoMakeInteractive( true )
+			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
+			vsoSound( "swallow" )
+		end
+	else
+		vsoSetTarget( i, nil )
+		return false
+	end
+end)
+p.registerStateScript( "sit", "letout", function( args )
+	if p.occupants == 0 then
+		sb.logError( "[Xeronious] No one to let out!" )
+		return false
+	end
+	local i = args.index
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+
+	return true, function()
+		vsoMakeInteractive( true )
+		p.uneat( i )
+		vsoSetTarget( i, nil )
+		if vsoGetTargetId( i ) ~= nil then
+			vsoApplyStatus( i, "droolsoaked", 5.0 );
+		end
+	end
+end)
+
 state_sit = p.standardState
 
 -------------------------------------------------------------------------------
