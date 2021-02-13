@@ -28,6 +28,7 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"hug": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -166,7 +167,8 @@
                 },
                 "partStates": {
                     "armsState": {
-                        "idle": { "properties": { "image": "spov/ArmsLegs/arms_fg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
+                        "hug": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -180,7 +182,8 @@
                 },
                 "partStates": {
                     "armsState": {
-                        "idle": { "properties": { "image": "spov/ArmsLegs/arms_bg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
+                        "hug": { "properties": { "image": "spov/arms/arms_bg.png:hug.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -194,10 +197,10 @@
                 },
                 "partStates": {
                     "legsState": {
-                        "idle": { "properties": { "image": "spov/ArmsLegs/legs_fg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/legs/legs_fg.png:idle.<state>.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/ArmsLegs/legs_fg.png:sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/ArmsLegs/legs_fg.png:standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/legs/legs_fg.png:sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/legs/legs_fg.png:standup.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -211,10 +214,10 @@
                 },
                 "partStates": {
                     "legsState": {
-                        "idle": { "properties": { "image": "spov/ArmsLegs/legs_bg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<state>.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/ArmsLegs/legs_bg.png:sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/ArmsLegs/legs_bg.png:standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/legs/legs_bg.png:sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/legs/legs_bg.png:standup.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
