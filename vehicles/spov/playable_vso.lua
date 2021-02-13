@@ -105,7 +105,7 @@ function p.globalToLocal( position )
 end
 
 function p.occupantArray( maybearray )
-	if maybearray[1] == nil then -- not an array, no change
+	if maybearray == nil or maybearray[1] == nil then -- not an array, no change
 		return maybearray
 	else -- pick one depending on number of occupants
 		return maybearray[p.visualOccupants + 1]
