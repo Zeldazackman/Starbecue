@@ -182,20 +182,29 @@ function p.headbob( data )
 	end
 end
 
-p.rotating = {enabled = false time = 0 center = {0,0} rotation = {0}}
+p.rotating = {enabled = false, time = 0, rotations = {}}
 function p.rotate( data )
 	if data == p.rotating.data then return end
 	p.rotating = {
 		enabled = data ~= nil,
-		data = data
-		time = 0
-		group = data.group or "frontarmrotation"
-		center = data.center or {0,0}
-		rotation = data.rotation or {0}
-		timing = data.timing or "body"
+		data = data,
+		time = 0,
+		parts = {},
+		timing = r.timing or "body"
 	}
+	local continue = false
+	for _,r in ipairs(data.parts or {}) do
+		table.insert(p.rotating.rotations, {
+			group = r.group or "frontarmrotation"
+			center = r.center or {0,0}
+			rotation = r.rotation or {0}
+		})
+		if r.rotation and #r.rotation > 1 then
+			continue = true
+		end
+	end
 	vsoTransAnimUpdate( "rotation", 0 )
-	if #p.rotating.rotation == 1 then
+	if not continue then
 		p.rotating.enabled = false
 	end
 end
@@ -240,11 +249,13 @@ function vsoTransAnimUpdate( transformname, dt )
 				p.rotating.enabled = false
 			end
 		end
-		local previousRotation = p.rotating.rotation[math.floor(p.rotating.time) + 1] or 0
-		local nextRotation = p.rotating.rotation[math.floor(p.rotating.time) + 2] or 0
-		local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
+		for _,r in ipairs(p.rotating.rotations) do
+			local previousRotation = r.rotation[math.floor(p.rotating.time) + 1] or 0
+			local nextRotation = r.rotation[math.floor(p.rotating.time) + 2] or 0
+			local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
 
-		animator.rotateTransformationGroup(p.rotating.group, rotation, p.rotating.center)
+			animator.rotateTransformationGroup(r.group, rotation, r.center)
+		end
 	else
 		_vsoTransAnimUpdate( transformname, dt )
 	end
@@ -409,6 +420,7 @@ function p.onBegin()
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
+	self.sv.ta.rotation = { visible = false } -- and rotation animation
 end
 
 function p.onEnd()
