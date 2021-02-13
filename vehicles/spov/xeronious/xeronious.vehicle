@@ -75,6 +75,7 @@
 					"animation": {
 						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true },
 						"body": "idle",
+						"arms": "idle",
 						"legs": "sitdown",
 						"head": "idle",
 						"tail": "sitdown"
@@ -87,6 +88,7 @@
 					{ // 0 occupants
 						"animation": {
 							"body": "eat",
+							"arms": "idle",
 							"legs": "idle",
 							"head": "none",
 							"tail": "idle"
@@ -102,6 +104,7 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
+							"arms": "idle",
 							"legs": "idle",
 							"head": "none",
 							"tail": "idle"
@@ -115,6 +118,7 @@
 			"idle": {
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
+				"arms": "idle",
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle"
@@ -181,6 +185,7 @@
 					"animation": {
 						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true },
 						"body": "idle",
+						"arms": "idle",
 						"legs": "standup",
 						"head": "idle",
 						"tail": "standup"
@@ -192,6 +197,7 @@
 			"idle": {
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
 				"body": "idle",
+				"arms": "idle",
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle"

@@ -24,6 +24,15 @@
                     "s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 }
                 }
             },
+			"armsState": {
+                "default": "idle",
+                "states": {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
+				}
+			},
+
 			"legsState": {
                 "default": "idle",
                 "states": {
@@ -149,6 +158,34 @@
 					}
                 }
 			},
+			"frontarms": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": 4,
+                     "transformationGroups": ["flip", "bodybob"]
+                },
+                "partStates": {
+                    "armsState": {
+                        "idle": { "properties": { "image": "spov/ArmsLegs/arms_fg.png:idle.<state>.<frame><directives>" } },
+
+                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+					}
+                }
+			},
+			"backarms": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": -3,
+                     "transformationGroups": ["flip", "bodybob"]
+                },
+                "partStates": {
+                    "armsState": {
+                        "idle": { "properties": { "image": "spov/ArmsLegs/arms_bg.png:idle.<state>.<frame><directives>" } },
+
+                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+					}
+                }
+			},
             "frontlegs": {
                 "properties": {
                     "centered": true,
@@ -209,8 +246,8 @@
                 },
                 "partStates": {
                     "headState": {
-                        "idle": { "properties": { "image": "spov/xeronious_head.png:idle.<frame><directives>" } },
-                        "blink": { "properties": { "image": "spov/xeronious_head.png:blink.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/head.png:idle.<frame><directives>" } },
+                        "blink": { "properties": { "image": "spov/head.png:blink.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}

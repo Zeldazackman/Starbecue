@@ -9,7 +9,7 @@
 	, "health" : 5
 
 	, "tooltipKind" : "vso"
-	, "objectImage" : "/vehicles/spov/xeronious/spov/xeronious.png:idle.1"
+	, "objectImage" : "/vehicles/spov/xeronious/spov/body.png:idle.1"
     , "description": "xeronious"
 	, "tooltipFields": {
 		"statusLabel": "xeronious"
@@ -17,14 +17,14 @@
 	, "tooltipSubtitle" : "xeronious"
 
     , "orientations": [{
-            "image": "/vehicles/spov/xeronious/spov/xeronious.png:idle.1"
+            "image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
             , "imagePosition": [-64, 0]
             , "direction": "left"
             , "flipImages": true
             , "spaceScan": 0.1
             , "anchors": ["bottom"]
         }, {
-            "image": "/vehicles/spov/xeronious/spov/xeronious.png:idle.1"
+            "image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
             , "imagePosition": [-64, 0]
             , "direction": "right"
             , "spaceScan": 0.1
@@ -35,7 +35,7 @@
 
     , "animation": "spovspawner.animation"
 	, "animationParts" : {
-        "bg": "/vehicles/spov/xeronious/spov/xeronious.png:idle.1"
+        "bg": "/vehicles/spov/xeronious/spov/body.png:idle.1"
 	}
 	, "animationPosition" : [0, 32]
 	, "animationCustom" : {}

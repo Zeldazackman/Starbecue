@@ -18,10 +18,6 @@
 		"1.belly.s_front.5" : "1.belly.1",
 		"1.belly.s_up.5" : "1.belly.1",
 		"1.belly.s_down.5" : "1.belly.1",
-		"2.belly.s_back.5" : "2.belly.1",
-		"2.belly.s_front.5" : "2.belly.1",
-		"2.belly.s_up.5" : "2.belly.1",
-		"2.belly.s_down.5" : "2.belly.1",
 
 		"1.belly.escape.1" : "0.belly.eat.8",
 		"1.belly.escape.2" : "0.belly.eat.7",
@@ -30,14 +26,6 @@
 		"1.belly.escape.5" : "0.belly.eat.3",
 		"1.belly.escape.6" : "0.belly.eat.2",
 		"1.belly.escape.7" : "0.belly.eat.2",
-		"1.belly.escape.8" : "0.belly.eat.1",
-		"2.belly.escape.1" : "1.belly.eat.8",
-		"2.belly.escape.2" : "1.belly.eat.7",
-		"2.belly.escape.3" : "1.belly.eat.6",
-		"2.belly.escape.4" : "1.belly.eat.4",
-		"2.belly.escape.5" : "1.belly.eat.3",
-		"2.belly.escape.6" : "1.belly.eat.2",
-		"2.belly.escape.7" : "1.belly.eat.2",
-		"2.belly.escape.8" : "1.belly.eat.1"
+		"1.belly.escape.8" : "0.belly.eat.1"
 	}
 }
