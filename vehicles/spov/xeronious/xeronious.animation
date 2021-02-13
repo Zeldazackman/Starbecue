@@ -1,6 +1,7 @@
 {
 	"globalTagDefaults" : {
 		"occupants" : "0",
+		"hugoccupants": "0",
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",

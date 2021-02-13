@@ -22,7 +22,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.onBegin()
 
 	vsoOnInteract( "state_stand", interact_state_stand )
-	vsoOnInteract( "state_sit", interact_state_sit )
+	vsoOnInteract( "state_sit", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
 
 end
@@ -185,15 +185,19 @@ p.registerStateScript( "sit", "hug", function( args )
 	end
 end)
 
+function state_sit()
+	p.standardState()
 
-function interact_state_sit( targetid )
-	if mcontroller.yVelocity() > -5 then
-		p.onInteraction( targetid )
+	-- simulate npc interaction when nearby
+	if p.occupants == 0 and p.control.standalone then
+		if vsoChance(0.1) then -- every frame, we don't want it too often
+			local npcs = world.npcQuery(mcontroller.position(), 4)
+			if npcs[1] ~= nil then
+				p.doTransition( "hug", {id=npcs[1]} )
+			end
+		end
 	end
 end
-
-
-state_sit = p.standardState
 
 -------------------------------------------------------------------------------
 

@@ -73,7 +73,7 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
-						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true },
+						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true, "timing": "legs"},
 						"body": "idle",
 						"arms": "idle",
 						"legs": "sitdown",
@@ -189,7 +189,7 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true },
+						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true, "timing": "legs" },
 						"body": "idle",
 						"arms": "idle",
 						"legs": "standup",
@@ -236,17 +236,9 @@
 					}
 				],
 				"hug": {
-					"animation": {
-						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true },
-						"body": "idle",
-						"arms": "hug",
-						"legs": "idle",
-						"head": "idle",
-						"tail": "idle"
-					},
-					"victimAnimation": "hug",
 					"state": "hug",
-					"chance": 5
+					"victimAnimation": "hug",
+					"script": "hug"
 				}
 			},
 			"idle": {
@@ -278,7 +270,11 @@
 					{ "transition": "eat", "chance": 50 }, // 1 occupant
 					{ "transition": "down", "chance": 20 } // 2 occupants
 				],
-				"side": { "transition": "hug", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"side": [
+					{ "transition": "hug", "chance": 100 },
+					{ "transition": "side", "chance": 20 }
+					// can't get to this state with 2 occupants
+				],
 				"back": { "transition": "up", "chance": 20 },
 				"petAnimation": true
 			}
@@ -286,8 +282,11 @@
 		"hug": {
 			"transitions": {
 				"up": {
-					"state": "back",
-					"script": "unbed"
+					"animation": {
+						"arms": "idle"
+					},
+					"state": "sit",
+					"script": "unhug"
 				},
 				"eat": [ // array depends on occupants
 					{ // 0 occupants
@@ -299,8 +298,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
+									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]}
 								]
 							}
 						},
@@ -329,7 +328,7 @@
 			"idle": {
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
 				"body": "idle",
-				"arms": "idle",
+				"arms": "hug",
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle"

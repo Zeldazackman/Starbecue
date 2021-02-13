@@ -8,6 +8,7 @@
 	},
 	"aliases" : {
 		"sitdown.1" : "standup.2",
-		"sitdown.2" : "standup.1"
+		"sitdown.2" : "standup.1",
+		"idle.hug.1" : "idle.sit.1"
 	}
 }
