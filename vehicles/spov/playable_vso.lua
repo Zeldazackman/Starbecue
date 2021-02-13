@@ -182,16 +182,22 @@ function p.headbob( data )
 	end
 end
 
-p.rotating = []
+p.rotating = {enabled = false time = 0 center = {0,0} rotation = {0}}
 function p.rotate( data )
 	if data == p.rotating.data then return end
-	p.rotating = [
+	p.rotating = {
+		enabled = data ~= nil,
 		data = data
 		time = 0
-		center = data.center
-		rotation = data.rotation
-	]
-
+		group = data.group or "frontarmrotation"
+		center = data.center or {0,0}
+		rotation = data.rotation or {0}
+		timing = data.timing or "body"
+	}
+	vsoTransAnimUpdate( "rotation", 0 )
+	if #p.rotating.rotation == 1 then
+		p.rotating.enabled = false
+	end
 end
 
 local _vsoTransAnimUpdate = vsoTransAnimUpdate
@@ -219,6 +225,26 @@ function vsoTransAnimUpdate( transformname, dt )
 		else
 			vsoTransMoveTo( "bodybob", 0, 0 )
 		end
+	elseif transformname == "rotation" then
+		if p.rotating == nil or not p.rotating.enabled then return end
+		local state = p.rotating.timing.."State"
+		local animdata = self.vsoAnimStateData[state][vsoAnimCurr(state) or "idle"] or {}
+		local cycle = animdata.cycle or 1
+		local frames = animdata.frames or 1
+		local speed = frames / cycle
+		p.rotating.time = p.rotating.time + dt * speed;
+		if p.rotating.time >= frames then
+			if p.rotating.loop then
+				p.rotating.time = p.rotating.time - frames
+			else
+				p.rotating.enabled = false
+			end
+		end
+		local previousRotation = p.rotating.rotation[math.floor(p.rotating.time) + 1] or 0
+		local nextRotation = p.rotating.rotation[math.floor(p.rotating.time) + 2] or 0
+		local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
+
+		animator.rotateTransformationGroup(p.rotating.group, rotation, p.rotating.center)
 	else
 		_vsoTransAnimUpdate( transformname, dt )
 	end
