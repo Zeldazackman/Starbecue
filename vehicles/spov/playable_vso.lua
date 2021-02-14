@@ -52,6 +52,7 @@ p.movement = {
 	bapped = 0,
 	downframes = 0,
 	groundframes = 0,
+	airframes = 0,
 	run = false,
 	wasspecial1 = 10, -- Give things time to finish initializing, so it realizes you're holding special1 from spawning vap instead of it being a new press
 	E = false,
@@ -788,6 +789,8 @@ function p.control.groundMovement( dx )
 
 	p.movement.waswater = false
 	p.movement.jumps = 1
+	p.movement.airframes = 0
+	p.movement.falling = false
 end
 
 function p.control.waterMovement( dx )
@@ -819,6 +822,8 @@ function p.control.waterMovement( dx )
 	p.movement.waswater = true
 	p.movement.jumped = false
 	p.movement.jumps = 1
+	p.movement.airframes = 0
+	p.movement.falling = false
 end
 
 function p.control.airMovement( dx )
@@ -857,7 +862,7 @@ function p.control.airMovement( dx )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
 			end
-			if not p.movement.waswater then
+			if not p.movement.waswater and p.movement.airframes > 10 then
 				p.movement.jumps = p.movement.jumps + 1
 				-- particles from effects/multiJump.effectsource
 				animator.burstParticleEmitter( control.pulseEffect )
@@ -873,12 +878,17 @@ function p.control.airMovement( dx )
 		p.movement.jumped = false
 	end
 
-	if mcontroller.yVelocity() < -10 and p.movement.lastYVelocity >= -10 then
-		p.doAnims( control.animations.fall )
-		p.movement.falling = true
-		p.movement.animating = true
+	if mcontroller.yVelocity() < -10 and p.movement.airframes > 15 then
+		if not p.movement.falling then
+			p.doAnims( control.animations.fall )
+			p.movement.falling = true
+			p.movement.animating = true
+		end
+	else
+		p.movement.falling = false
 	end
 	p.movement.lastYVelocity = mcontroller.yVelocity()
+	p.movement.airframes = p.movement.airframes + 1
 end
 
 function p.control.projectile( projectiledata )
