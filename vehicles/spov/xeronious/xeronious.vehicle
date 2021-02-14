@@ -213,7 +213,60 @@
 						"aimable": true
 					},
 					"cooldown": 0
+				},
+				"animations": {
+					"swim": {
+						"legs": "swim",
+						"body": "idle",
+						"tail": "swim"
+					},
+					"swimidle": {
+						"legs": "swimidle",
+						"body": "idle",
+						"tail": "swimidle"
+					},
+
+					"walk": {
+						"legs": "walk",
+						"body": "idle",
+						"tail": "idle",
+						"offset": {
+							"y": [0, 0, 0, 0, 0, 0, 0, 0],
+							"body": true,
+							"loop": true,
+							"timing": "legs"
+						}
+
+					},
+					"run": {
+						"legs": "walk",
+						"body": "idle",
+						"tail": "idle",
+						"offset": {
+							"y": [0, 0, 1, 1, 0, 0, -1, -1],
+							"body": true,
+							"loop": true,
+							"timing": "legs"
+						}
+					},
+					"jump": {
+						"legs": "jump",
+						"body": "jump",
+						"tail": "jump",
+						"offset": {
+							"y": [1, 2, 3, 4]
+						}
+					},
+					"fall": {
+						"legs": "fall",
+						"body": "fall",
+						"tail": "fall",
+						"offset": {
+							"y": [4, 3, 2, 1]
+						}
+					}
 				}
+
 
 			}
 		},

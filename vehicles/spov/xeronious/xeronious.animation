@@ -31,6 +31,9 @@
 
 					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -42,6 +45,9 @@
 
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+                    "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 
@@ -205,6 +211,9 @@
 						"sitdown": { "properties": { "image": "spov/legs/legs_fg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_fg.png:standup.<frame><directives>" } },
 
+						"walk": { "properties": { "image": "spov/legs/legs_fg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/legs/legs_fg.png:run.<frame><directives>" } },
+
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
                 }
@@ -221,6 +230,9 @@
 
 						"sitdown": { "properties": { "image": "spov/legs/legs_bg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_bg.png:standup.<frame><directives>" } },
+
+						"walk": { "properties": { "image": "spov/legs/legs_bg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/legs/legs_bg.png:run.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
