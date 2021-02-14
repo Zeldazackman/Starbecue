@@ -191,7 +191,7 @@
 					"normal": { "min": 5, "max": 15 },
 					"antiescape": { "min": 10, "max": 20 }
 				},
-				"lookAnimation": true
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": [ // array depends on occupants
@@ -201,7 +201,7 @@
 				],
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 },
-				"petAnimation": true
+				"animation": { "head": "pet" }
 			},
 			"control": {
 				"walkSpeed": 10,
@@ -367,13 +367,13 @@
 					"normal": { "min": 5, "max": 15 },
 					"antiescape": { "min": 10, "max": 20 }
 				},
-				"lookAnimation": true
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": { "transition": "down", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
 				"back": { "transition": "down", "chance": 20 },
-				"petAnimation": true
+				"animation": { "head": "pet" }
 			}
 		},
 		"lay": {
@@ -444,7 +444,7 @@
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
 				},
-				"lookAnimation": true
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
@@ -454,7 +454,7 @@
 					// no side transition with 2 occupants
 				],
 				"back": { "transition": "down", "chance": 20 },
-				"petAnimation": true
+				"animation": { "head": "pet" }
 			}
 		},
 		"sleep": {
@@ -477,9 +477,7 @@
 				"head": "none",
 				"tail": "none"
 			},
-			"idleAnimations": [
-				{ "tail": "none" }
-			],
+			"idleAnimations": [],
 			"struggle": {
 				"up": { "transition": "up" },
 				"front": { "transition": "up" },
@@ -489,14 +487,12 @@
 					"easyescape": { "min": 5, "max": 15 },
 					"normal": { "min": 20, "max": 40 },
 					"antiescape": { "min": 40, "max": 80 }
-				},
-				"lookAnimation": false
+				}
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "up", "chance": 20 },
-				"petAnimation": false
+				"back": { "transition": "up", "chance": 20 }
 			}
 		},
 		"back": {
@@ -536,8 +532,7 @@
 					"easyescape": { "min": 2, "max": 10 },
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
-				},
-				"lookAnimation": false
+				}
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
@@ -546,8 +541,7 @@
 					{ "transition": "side", "chance": 20 }
 					// can't get to this state with 2 occupants
 				],
-				"back": { "transition": "side", "chance": 20 },
-				"petAnimation": true
+				"back": { "transition": "side", "chance": 20 }
 			}
 		},
 		"bed": {
@@ -598,14 +592,12 @@
 					"easyescape": { "min": 0, "max": 0 },
 					"normal": { "min": 0, "max": 0 },
 					"antiescape": { "min": 0, "max": 0 }
-				},
-				"lookAnimation": false
+				}
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
-				"back": { "transition": "side", "chance": 20 },
-				"petAnimation": true
+				"back": { "transition": "side", "chance": 20 }
 			}
 		},
 		"hug": {
@@ -653,14 +645,12 @@
 					"easyescape": { "min": 0, "max": 2 },
 					"normal": { "min": 5, "max": 10 },
 					"antiescape": { "min": 15, "max": 25 }
-				},
-				"lookAnimation": false
+				}
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
-				"back": { "transition": "side", "chance": 20 },
-				"petAnimation": false
+				"back": { "transition": "side", "chance": 20 }
 			}
 		},
 		"pinned": {
@@ -733,13 +723,13 @@
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
 				},
-				"lookAnimation": false
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
 				"back": { "transition": "down", "chance": 20 },
-				"petAnimation": true
+				"animation": { "head": "pet" }
 			},
 			"control": {
 				"primaryAction": {
@@ -768,9 +758,7 @@
 				"head": "none",
 				"tail": "idle"
 			},
-			"idleAnimations": [
-				{ "tail": "flick" }
-			],
+			"idleAnimations": [],
 			"struggle": {
 				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
 				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
@@ -779,18 +767,15 @@
 					"easyescape": { "min": 2, "max": 10 },
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
-				},
-				"lookAnimation": false
+				}
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "up", "chance": 20 },
-				"petAnimation": false
+				"back": { "transition": "up", "chance": 20 }
 			}
 		},
 		"smol": {
-			//"animationPrefix" : "smol.",
 			"transitions": {},
 			"idle": {
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },

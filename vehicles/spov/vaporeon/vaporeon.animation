@@ -95,7 +95,7 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"flick": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"flick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
@@ -116,8 +116,9 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"blink": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
-					"look": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
+					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
+					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 },
 
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
@@ -393,6 +394,7 @@
 
                         "idle": { "properties": { "image": "spov/vaporeon_head.png:idle.<frame><directives>" } },
                         "blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
+                        "pet": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
                         "look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
 
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },

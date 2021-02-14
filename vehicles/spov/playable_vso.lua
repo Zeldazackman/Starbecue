@@ -42,7 +42,8 @@ p = {
 	occupants = 0,
 	occupantOffset = 1,
 	visualOccupants = 0,
-	justAte = false
+	justAte = false,
+	nextIdle = 0
 }
 
 p.movement = {
@@ -133,8 +134,7 @@ function p.entityLounging( entity )
 end
 
 p.currentTags = {}
-function p.doAnims( anims, continuous )
-	local prefix = p.stateconfig[p.state].animationPrefix or ""
+function p.doAnims( anims, restart )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
 			p.headbob( anim )
@@ -152,13 +152,15 @@ function p.doAnims( anims, continuous )
 					animator.setPartTag( tag.part, tag.name, tag.value )
 				end
 			end
+		elseif restart then
+			vsoAnimReplay( state.."State", anim ) -- force that animation to restart
 		else
 			local oldPriority = (p.animStateData[state.."State"].states[vsoAnimCurr(state.."State") or "idle"] or {}).priority or 0
-			local newPriority = (p.animStateData[state.."State"].states[prefix..anim] or {}).priority or 0
-			local isSame = vsoAnimIs( state.."State", prefix..anim )
+			local newPriority = (p.animStateData[state.."State"].states[anim] or {}).priority or 0
+			local isSame = vsoAnimIs( state.."State", anim )
 			local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
 			if (not isSame and priorityHigher) or vsoAnimEnded( state.."State" ) then
-				vsoAnim( state.."State", prefix..anim )
+				vsoAnim( state.."State", anim )
 			end
 		end
 	end
@@ -756,10 +758,10 @@ function p.control.groundMovement( dx )
 
 	if dx ~= 0 then
 		if not running then
-			p.doAnims( control.animations.walk, true )
+			p.doAnims( control.animations.walk )
 			p.movement.animating = true
 		elseif running then
-			p.doAnims( control.animations.run, true )
+			p.doAnims( control.animations.run )
 			p.movement.animating = true
 		end
 	elseif p.movement.animating then
@@ -811,11 +813,11 @@ function p.control.waterMovement( dx )
 	-- or vehicle.controlHeld( p.control.driver, "down" )
 	or vehicle.controlHeld( p.control.driver, "left" )
 	or vehicle.controlHeld( p.control.driver, "right" ) then
-		p.doAnims( control.animations.swim, true )
+		p.doAnims( control.animations.swim )
 
 		p.movement.animating = true
 	elseif not p.struggling then
-		p.doAnims( control.animations.swimIdle, true )
+		p.doAnims( control.animations.swimIdle )
 		p.movement.animating = true
 	end
 
@@ -951,9 +953,11 @@ function p.idleStateChange()
 		end
 	end
 
-	p.doAnims( p.stateconfig[p.state].idle, true )
+	p.doAnims( p.stateconfig[p.state].idle )
 
-	if vsoRand(100) < 2 then
+	p.nextIdle = p.nextIdle - 1
+	if p.nextIdle <= 0 then
+		p.nextIdle = math.random(50, 300)
 		local idles = p.stateconfig[p.state].idleAnimations
 		if idles ~= nil and #idles >= 1 then
 			local which = math.random(#idles)
@@ -1084,6 +1088,7 @@ function p.handleStruggles()
 			body = "s_"..dir,
 			offset = struggledata[dir].offset
 		} )
+		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
 		if struggledata[dir].victimAnimation then
 			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, "bodyState" )
 		end
