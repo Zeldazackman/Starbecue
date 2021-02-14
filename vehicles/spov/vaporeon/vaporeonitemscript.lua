@@ -3,11 +3,9 @@
 
 defaultPrice = 500
 
-defaultDescription = "fishcat fishcat fishcat"
-
 defaultIcon = "/vehicles/spov/vaporeon/vaporeonicon.png"
 
-defaultFrame = "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
+defaultFrame = "/vehicles/spov/vaporeon/vaporeon.png"
 
 defaultValues = {
 	name = "fishcat"
@@ -33,8 +31,11 @@ function getRecolorDirectives()	--Get the current recolor directive string
 end
 
 function getItemStatusString()	--Get the current item status message string
-	local R = tostring( storage.vso.name )
-	R = R..defaultDescription
+	if storage.vso.pills.fatten and storage.vso.pills.fatten.value > 0 then
+		return "A big, chubby, lovable vaporeon of your very own!"
+	else
+		return "A big, lovable vaporeon of your very own!"
+	end
 	return R;
 end
 
@@ -52,6 +53,14 @@ function buildIcon()	--Build a CUSTOM icon for this item
 	return R;
 end
 
+function largeImageFrame()
+	if storage.vso.pills.fatten and storage.vso.pills.fatten.value > 0 then
+		return defaultFrame..":chubby"
+	else
+		return defaultFrame..":normal"
+	end
+end
+
 function spovSpawnerItemGenerateCallback()	--THIS function is used to create the ITEM data when the object is broken. Very important. This is also a good way to test your storage.
 
 	--this sets our storage defaults, very important if we want to track things or change colors.
@@ -62,7 +71,7 @@ function spovSpawnerItemGenerateCallback()	--THIS function is used to create the
 	
 	storage.vso.itemConfigOverride = {
 		inventoryIcon = buildIcon()
-		,largeImage = defaultFrame.."?"..directivestring
+		,largeImage = largeImageFrame().."?"..directivestring
 		,subtitle = storage.vso.name
 		,price = getItemCurrentPrice()
 		,description = getItemStatusString()

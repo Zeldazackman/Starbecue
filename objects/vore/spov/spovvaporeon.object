@@ -9,22 +9,22 @@
 	, "health" : 5
 	
 	, "tooltipKind" : "vso"
-	, "objectImage" : "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
-    , "description": "fishcat fishcat fishcat"
+	, "objectImage" : "/vehicles/spov/vaporeon/vaporeon.png:normal"
+    , "description": "A big, lovable vaporeon of your very own!"
 	, "tooltipFields": {
-		"statusLabel": "fishcat fishcat fishcat"
+		"statusLabel": "A big, lovable vaporeon of your very own!"
 	}
 	, "tooltipSubtitle" : "fishcat"
 	
     , "orientations": [{
-            "image": "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
+            "image": "/vehicles/spov/vaporeon/vaporeon.png:normal"
             , "imagePosition": [-64, 0]
             , "direction": "left"
             , "flipImages": true
             , "spaceScan": 0.1
             , "anchors": ["bottom"]
         }, {
-            "image": "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
+            "image": "/vehicles/spov/vaporeon/vaporeon.png:normal"
             , "imagePosition": [-64, 0]
             , "direction": "right"
             , "spaceScan": 0.1
@@ -35,7 +35,7 @@
 
     , "animation": "spovspawner.animation"
 	, "animationParts" : {
-        "bg": "/vehicles/spov/vaporeon/spov/vaporeon.png:idle.1"
+        "bg": "/vehicles/spov/vaporeon/vaporeon.png:normal"
 	}
 	, "animationPosition" : [0, 32]
 	, "animationCustom" : {}
