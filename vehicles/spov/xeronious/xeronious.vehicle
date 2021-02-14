@@ -232,7 +232,7 @@
 						"body": "idle",
 						"tail": "idle",
 						"offset": {
-							"y": [0, 0, 0, 0, 0, 0, 0, 0],
+							"y": [2, 2, 1, 1, 0, 0, 1, 1],
 							"body": true,
 							"loop": true,
 							"timing": "legs"
@@ -244,7 +244,7 @@
 						"body": "idle",
 						"tail": "idle",
 						"offset": {
-							"y": [0, 0, 1, 1, 0, 0, -1, -1],
+							"y": [2, 2, 1, 1, 0, 0, 1, 1],
 							"body": true,
 							"loop": true,
 							"timing": "legs"
