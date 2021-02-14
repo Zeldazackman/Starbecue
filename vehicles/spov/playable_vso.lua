@@ -466,6 +466,7 @@ function p.doTransition( direction, scriptargs )
 	if not continue then return end
 	_ptransition.after = after
 	_ptransition.state = tconfig.state
+	_ptransition.timing = tconfig.timing or "body"
 	if tconfig.animation ~= nil then
 		p.doAnims( tconfig.animation )
 	end
@@ -486,7 +487,7 @@ end
  -- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
 local _endedframes = 0
 function state__ptransition()
-	if vsoAnimEnded( "bodyState" ) then
+	if vsoAnimEnded( _ptransition.timing.."State" ) then
 		_endedframes = _endedframes + 1
 		if _endedframes > 2 then
 			_endedframes = 0

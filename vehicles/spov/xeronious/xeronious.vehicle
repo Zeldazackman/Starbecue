@@ -81,6 +81,7 @@
 						"tail": "sitdown"
 					},
 					"state": "sit",
+					"timing": "legs",
 					"chance": 5 // percent, ignored when driver has control
 				},
 				// non directional = not accessible via controls, except from script
@@ -282,6 +283,7 @@
 						"tail": "standup"
 					},
 					"state": "stand",
+					"timing": "legs",
 					"chance": 5
 				},
 				"eat": [ // array depends on occupants
