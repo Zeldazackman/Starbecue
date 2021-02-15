@@ -216,18 +216,8 @@
 					"cooldown": 0
 				},
 				"animations": {
-					"swim": {
-						"legs": "swim",
-						"body": "idle",
-						"tail": "swim"
-					},
-					"swimidle": {
-						"legs": "swimidle",
-						"body": "idle",
-						"tail": "swimidle"
-					},
-
 					"walk": {
+						"arms": "idle",
 						"legs": "walk",
 						"body": "idle",
 						"tail": "idle",
@@ -240,11 +230,12 @@
 
 					},
 					"run": {
-						"legs": "walk",
+						"arms": "run",
+						"legs": "run",
 						"body": "idle",
 						"tail": "idle",
 						"offset": {
-							"y": [2, 2, 1, 1, 0, 0, 1, 1],
+							"y": [2, 3, 2, 1, 2, 3, 2, 1],
 							"body": true,
 							"loop": true,
 							"timing": "legs"

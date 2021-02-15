@@ -1,13 +1,16 @@
 {
 	"frameGrid" : {
 		"size" : [96, 96],
-		"dimensions" : [8, 2],
+		"dimensions" : [8, 3],
 		"names" : [
 			[ "idle.1", "hug.1", "rotation.1"],
+			[ "run.1", "run.2", "run.3", "run.4", "run.5"],
 			[]
 		]
 	},
 	"aliases" : {
-
+		"run.6" : "run.4",
+		"run.7" : "run.3",
+		"run.8" : "run.2"
 	}
 }

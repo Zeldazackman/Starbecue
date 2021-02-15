@@ -178,6 +178,9 @@
                         "hug": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
                         "rotation": { "properties": { "image": "spov/arms/arms_fg.png:rotation.<frame><directives>" } },
 
+						"walk": { "properties": { "image": "spov/arms/arms_fg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/arms/arms_fg.png:run.<frame><directives>" } },
+
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
                 }
@@ -193,6 +196,9 @@
                         "idle": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
                         "hug": { "properties": { "image": "spov/arms/arms_bg.png:hug.<frame><directives>" } },
                         "rotation": { "properties": { "image": "spov/arms/arms_bg.png:rotation.<frame><directives>" } },
+
+						"walk": { "properties": { "image": "spov/arms/arms_bg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/arms/arms_bg.png:run.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
