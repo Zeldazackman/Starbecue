@@ -363,7 +363,7 @@
 					{ "transition": "down", "chance": 20 } // 2 occupants
 				],
 				"side": [
-					{ "transition": "hug", "chance": 100 },
+					{ "transition": "hug", "chance": 100, "controlled": true },
 					{ "transition": "side", "chance": 20 }
 					// can't get to this state with 2 occupants
 				],

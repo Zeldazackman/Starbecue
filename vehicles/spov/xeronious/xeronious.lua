@@ -8,16 +8,35 @@ require("/vehicles/spov/playable_vso.lua")
 --[[
 
 Commissioned by:
-    xeronious#8891
-    https://www.furaffinity.net/user/xeronious/
+    -xeronious#8891			https://www.furaffinity.net/user/xeronious/
 
-Sprites created by
-    Wasabi_Raptor#1533
-    https://www.furaffinity.net/user/lokithevulpix/
+Sprites created by:
+    -Wasabi_Raptor#1533		https://www.furaffinity.net/user/lokithevulpix/
 
-Scripts created by
-    Zygan#0404 <-did like 99% of the scripts
-    Wasabi_Raptor#1533 <-did debugs and copied scripts around for things
+Scripts created by:
+    Zygan#0404 				<-did like 99% of the scripts
+    Wasabi_Raptor#1533 		<-did debugs and copied scripts around for things
+
+TODO:
+	-Third belly slot sprites
+	-crawl state
+	-crawl animation
+	-roaming behavior
+	-settings menu
+
+Pending features:
+
+	Vertical movement
+	-jump
+	-fly
+	-leg grab
+	-anal vore
+
+	Extra functions
+	-digest anim
+	-egg lay
+	-tail vore
+	-ranged inhale
 
 ]]--
 -------------------------------------------------------------------------------

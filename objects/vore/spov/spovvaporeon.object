@@ -7,7 +7,7 @@
     , "category": "other"
     , "price": 500
 	, "health" : 5
-	
+
 	, "tooltipKind" : "vso"
 	, "objectImage" : "/vehicles/spov/vaporeon/vaporeon.png:normal"
     , "description": "A big, lovable vaporeon of your very own!"
@@ -15,27 +15,33 @@
 		"statusLabel": "A big, lovable vaporeon of your very own!"
 	}
 	, "tooltipSubtitle" : "fishcat"
-	
+
     , "orientations": [{
-            "image": "/vehicles/spov/vaporeon/vaporeon.png:normal"
+            "imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
             , "imagePosition": [-64, 0]
             , "direction": "left"
             , "flipImages": true
             , "spaceScan": 0.1
             , "anchors": ["bottom"]
+            , "collision" : "platform"
+            , "collisionSpaces" : [ [7, 0], [6, 0], [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0], [-1, 0], [-2, 0], [-3, 0], [-4, 0] ]
+
         }, {
-            "image": "/vehicles/spov/vaporeon/vaporeon.png:normal"
+            "imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
             , "imagePosition": [-64, 0]
             , "direction": "right"
             , "spaceScan": 0.1
             , "anchors": ["bottom"]
+            , "collision" : "platform"
+            , "collisionSpaces" : [ [-8, 0], [-7, 0], [-6, 0], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+
         }]
 
     , "inventoryIcon": "/vehicles/spov/vaporeon/vaporeonicon.png"
 
-    , "animation": "spovspawner.animation"
+    , "animation": "visiblespovnest.animation"
 	, "animationParts" : {
-        "bg": "/vehicles/spov/vaporeon/vaporeon.png:normal"
+        "bg": "/vehicles/spov/vaporeon/vaporeonbed.png"
 	}
 	, "animationPosition" : [0, 32]
 	, "animationCustom" : {}
@@ -46,7 +52,7 @@
         , "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
     }
-	
+
 	, "retainObjectParametersInItem" : true
 	, "isWired" : false
 	, "printable" : false
@@ -57,6 +63,6 @@
 	, "isContainer" : false
 	, "builder" : "/scripts/vore/spovitembuilder.lua"
     , "scripts": [
-        "/scripts/vore/spovspawner.lua", "/vehicles/spov/vaporeon/vaporeonitemscript.lua" 
+        "/scripts/vore/spovspawner.lua", "/vehicles/spov/vaporeon/vaporeonitemscript.lua"
     ]
 }
