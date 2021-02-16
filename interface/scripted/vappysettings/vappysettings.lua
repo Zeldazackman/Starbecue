@@ -18,7 +18,10 @@ function init()
 			if species == nil then
 				setPortrait( "occupant"..i, world.entityPortrait( id, "bust" ) )
 			else
-				setPortrait( "occupant"..i, {{image="/vehicles/spov/"..species.."/"..species.."icon.png"}})
+				setPortrait( "occupant"..i, {{
+					image = "/vehicles/spov/"..species.."/"..species.."icon.png",
+					position = {13, 19}
+				}})
 			end
 			widget.setText( "occupant"..i..".name", world.entityName( id ) )
 		else
@@ -68,7 +71,8 @@ function setPortrait( canvasName, data )
 	local canvas = widget.bindCanvas( canvasName..".portrait" )
 	canvas:clear()
 	for k,v in ipairs(data or {}) do
-		canvas:drawImage(v.image, { -7, -19 } )
+		local pos = v.position or {0, 0}
+		canvas:drawImage(v.image, { -7 + pos[1], -19 + pos[2] } )
 	end
 end
 function letOut(_, which )
