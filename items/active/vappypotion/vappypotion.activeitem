@@ -1,0 +1,21 @@
+{
+  "itemName" : "vappypotion",
+  "level" : 1,
+  "price" : 500,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "A decorated bottle of thick blue liquid...",
+  "shortdescription" : "Vaporeon Goo",
+  "tooltipKind" : "tool",
+  "category" : "Potion",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "vappypotion.png",
+  "largeImage" : "vappypotionlarge.png",
+
+  "animation" : "vappypotion.animation",
+
+  "scripts" : ["vappypotion.lua"],
+  "tech" : "vappy",
+  "vehicle" : "spovvaporeon"
+}
