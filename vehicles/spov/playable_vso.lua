@@ -123,6 +123,10 @@ function p.swapOccupants(a, b)
 	vsoUneat( "occupant"..b )
 	vsoEat( vsoGetTargetId(a), "occupant"..a )
 	vsoEat( vsoGetTargetId(b), "occupant"..b )
+
+	t = p.smolpreyspecies[a]
+	p.smolpreyspecies[a] = p.smolpreyspecies[b]
+	p.smolpreyspecies[b] = t
 end
 
 function p.entityLounging( entity )
