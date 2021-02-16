@@ -537,7 +537,7 @@
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": [
-					{ "transition": "bed", "chance": 100 },
+					{ "transition": "bed", "chance": 100, "controlled": true }, // possible even for player vappy
 					{ "transition": "side", "chance": 20 }
 					// can't get to this state with 2 occupants
 				],

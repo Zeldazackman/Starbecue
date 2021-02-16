@@ -1129,22 +1129,23 @@ end
 
 function p.onInteraction( targetid )
 	local state = p.stateconfig[p.state]
-	if not p.control.driving then
-		local position = p.globalToLocal( world.entityPosition( targetid ) )
-		local interact
-		if position[1] > 3 then
-			interact = p.occupantArray( state.interact.front )
-		elseif position[1] < -3 then
-			interact = p.occupantArray( state.interact.back )
-		else
-			interact = p.occupantArray( state.interact.side )
-		end
 
+	local position = p.globalToLocal( world.entityPosition( targetid ) )
+	local interact
+	if position[1] > 3 then
+		interact = p.occupantArray( state.interact.front )
+	elseif position[1] < -3 then
+		interact = p.occupantArray( state.interact.back )
+	else
+		interact = p.occupantArray( state.interact.side )
+	end
+	if not p.control.driving or interact.controlled then
 		if interact.chance > 0 and vsoChance( interact.chance ) then
 			p.doTransition( interact.transition, {id=targetid} )
 			return
 		end
 	end
+	
 	if state.interact.animation then
 		p.doAnims( state.interact.animation )
 	end
