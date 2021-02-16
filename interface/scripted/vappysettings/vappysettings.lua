@@ -22,7 +22,7 @@ function init()
 			end
 			widget.setText( "occupant"..i..".name", world.entityName( id ) )
 		else
-			widget.setButtonEnabled( "occupant"..i..".letout", false )
+			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
 	settings = player.getProperty("vappySettings") or {}

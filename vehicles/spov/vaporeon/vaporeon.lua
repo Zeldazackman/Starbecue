@@ -107,6 +107,9 @@ p.registerStateScript( "stand", "letout", function( args )
 		return false
 	end
 	local i = args.index
+	if not vehicle.entityLoungingIn( "occupant"..i ) then -- could be part of above but no need to log an error here
+		return false
+	end
 	vsoMakeInteractive( false )
 	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
 
