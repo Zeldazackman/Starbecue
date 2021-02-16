@@ -598,7 +598,8 @@
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
-			}
+			},
+			"bellyEffect": false
 		},
 		"hug": {
 			"transitions": {
@@ -651,7 +652,8 @@
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
-			}
+			},
+			"bellyEffect": false
 		},
 		"pinned": {
 			"transitions": {
@@ -736,7 +738,8 @@
 					"animation": "lick",
 					"cooldown": 0.75 // length of animation
 				}
-			}
+			},
+			"bellyEffect": false
 		},
 		"pinnedsleep": {
 			"transitions": {
@@ -773,7 +776,8 @@
 				"front": { "transition": "up", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
 				"back": { "transition": "up", "chance": 20 }
-			}
+			},
+			"bellyEffect": false
 		},
 		"smol": {
 			"transitions": {},

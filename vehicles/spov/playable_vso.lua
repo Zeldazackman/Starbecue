@@ -1019,8 +1019,12 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
-	if p.occupants > 0 then
+	if p.occupants > 0 and p.stateconfig[p.state].bellyEffect ~= false then
 		p.bellyEffects()
+	else
+		for i = p.occupantOffset, p.maxOccupants do
+			vsoVictimAnimSetStatus( "occupant"..i, {} )
+		end
 	end
 	if p.control.probablyOnGround() and p.control.notMoving() then
 		p.handleStruggles()
