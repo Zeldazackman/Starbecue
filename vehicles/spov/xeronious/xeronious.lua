@@ -5,6 +5,22 @@ require("/scripts/vore/vsosimple.lua")
 require("/vehicles/spov/playable_vso.lua")
 
 -------------------------------------------------------------------------------
+--[[
+
+Commissioned by:
+    xeronious#8891
+    https://www.furaffinity.net/user/xeronious/
+
+Sprites created by
+    Wasabi_Raptor#1533
+    https://www.furaffinity.net/user/lokithevulpix/
+
+Scripts created by
+    Zygan#0404 <-did like 99% of the scripts
+    Wasabi_Raptor#1533 <-did debugs and copied scripts around for things
+
+]]--
+-------------------------------------------------------------------------------
 
 p.openSettingsHandler = "openvappysettings"
 
@@ -83,8 +99,6 @@ p.registerStateScript( "stand", "bapeat", function()
 			prey = world.npcQuery( position, 2 )
 		end
 		if #prey > 0 then
-			--animator.setGlobalTag( "bap", "" )
-			--vsoAnim( "bapState", "none" )
 			p.doTransition( "eat", {id=prey[1]} )
 		end
 	end

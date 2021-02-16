@@ -200,7 +200,7 @@
 				"pulseSparkles": 6,
 				"primaryAction": {
 					"projectile": {
-						"name": "vapbap",
+						"name": "xeroniousbap",
 						"position": [ 3, -2.5 ],
 						"aimable": false
 					},
@@ -209,7 +209,7 @@
 				},
 				"altAction": {
 					"projectile": {
-						"name": "vapwatergun",
+						"name": "xeroniousinhale",
 						"position": [ 2.75, -0.125 ],
 						"aimable": true
 					},
@@ -240,26 +240,8 @@
 							"loop": true,
 							"timing": "legs"
 						}
-					},
-					"jump": {
-						"legs": "jump",
-						"body": "jump",
-						"tail": "jump",
-						"offset": {
-							"y": [1, 2, 3, 4]
-						}
-					},
-					"fall": {
-						"legs": "fall",
-						"body": "fall",
-						"tail": "fall",
-						"offset": {
-							"y": [4, 3, 2, 1]
-						}
 					}
 				}
-
-
 			}
 		},
 		"sit": {

@@ -425,7 +425,7 @@
 			  "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/doublejump/doublejump.animation",
-				"position" : [0, -3],
+				"position" : [0, -5],
 				"finalVelocity" : [0, 0],
 				"approach" : [0, 50],
 				"size" : 2.0,
@@ -483,29 +483,6 @@
 				"layer" : "back",
 				"variance" : {
 				  "initialVelocity" : [6, 6.0]
-				}
-			  }
-			}
-		  ]
-		},
-
-		"smoldoublejump" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/doublejump/doublejump.animation",
-				"position" : [0, -1],
-				"finalVelocity" : [0, 0],
-				"approach" : [0, 50],
-				"size" : 1.0,
-				"timeToLive" : 0.85,
-				"layer" : "back",
-				"light" : [70, 100, 140],
-				"fade" : 0.5,
-				"variance" : {
-				  "initialVelocity" : [0.0, 0.0]
 				}
 			  }
 			}
