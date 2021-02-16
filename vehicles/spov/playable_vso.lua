@@ -43,7 +43,8 @@ p = {
 	occupantOffset = 1,
 	visualOccupants = 0,
 	justAte = false,
-	nextIdle = 0
+	nextIdle = 0,
+	swapCooldown = 0
 }
 
 p.movement = {
@@ -72,11 +73,19 @@ end
 
 function p.updateOccupants()
 	p.occupants = 0
+	local lastFilled = true
 	for i = 1, p.maxOccupants do
 		if vehicle.entityLoungingIn( "occupant"..i ) then
 			p.occupants = p.occupants + 1
+			if not lastFilled and p.swapCooldown <= 0 then
+				p.swapOccupants( i-1, i )
+			end
+			lastFilled = true
+		else
+			lastFilled = false
 		end
 	end
+	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 	if vsoPill( "fatten" ) then -- this seems to not work in onbegin??
 		p.occupantOffset = math.floor(vsoPillValue( "fatten" )) + 1
 	end
@@ -115,18 +124,28 @@ function p.occupantArray( maybearray )
 end
 
 function p.swapOccupants(a, b)
-	local t = vsoGetTargetId(a)
-	vsoSetTarget( a, vsoGetTargetId(b) )
-	vsoSetTarget( b, t )
+	local A = vsoGetTargetId(a)
+	local B = vsoGetTargetId(b)
+	if B then vsoSetTarget( a, B ) end
+	if A then vsoSetTarget( b, A ) end
 
-	vsoUneat( "occupant"..a )
-	vsoUneat( "occupant"..b )
-	vsoEat( vsoGetTargetId(a), "occupant"..a )
-	vsoEat( vsoGetTargetId(b), "occupant"..b )
+	if A then vsoUneat( "occupant"..a ) end
+	if B then vsoUneat( "occupant"..b ) end
+	if B then vsoEat( B, "occupant"..a ) end
+	if A then vsoEat( A, "occupant"..b ) end
 
-	t = p.smolpreyspecies[a]
+	local t = p.smolpreyspecies[a]
 	p.smolpreyspecies[a] = p.smolpreyspecies[b]
 	p.smolpreyspecies[b] = t
+
+	t = self.sv.va["occupant"..a] -- victim animations
+	self.sv.va["occupant"..a] = self.sv.va["occupant"..b]
+	self.sv.va["occupant"..b] = t
+	
+	self.sv.va["occupant"..a].playing = true
+	self.sv.va["occupant"..b].playing = true
+
+	p.swapCooldown = 100 -- vsoUneat and vsoEat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
 
 function p.entityLounging( entity )
@@ -411,9 +430,6 @@ function p.onBegin()
 			p.bellyeffect = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
-				-- while val < p.occupants do -- shift other prey forward
-				-- 	p.swapOccupants( val, val+1 )
-				-- end
 				p.doTransition( "escape", {index = val} )
 			end
 		end
