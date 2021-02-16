@@ -1088,6 +1088,7 @@ function p.handleStruggles()
 	end
 
 	local struggledata = p.stateconfig[p.state].struggle
+	if struggledata == nil then return end
 
 	local dir = nil
 	if movedir == "B" then dir = "back" end
