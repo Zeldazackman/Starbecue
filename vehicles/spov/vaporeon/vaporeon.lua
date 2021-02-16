@@ -313,7 +313,6 @@ state_pinnedsleep = p.standardState
 
 function begin_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
-	vsoAnim( "headState", "smol.idle" )
 end
 
 function state_smol()
@@ -346,7 +345,6 @@ end
 
 function end_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
-	vsoAnim( "headState", "idle" )
 end
 
 -------------------------------------------------------------------------------

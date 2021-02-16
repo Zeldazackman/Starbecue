@@ -37,19 +37,6 @@ Pending features:
 	-tail vore
 	-ranged inhale
 
-putting this here for now
-						"walk": {
-						"arms": "crawl",
-						"legs": "crawl",
-						"body": "crawl",
-						"tail": "crawl",
-						"offset": {
-							"x": [12],
-							"y": [-27],
-							"loop": true
-						}
-
-
 ]]--
 -------------------------------------------------------------------------------
 
@@ -69,6 +56,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.onBegin()
 
 	vsoOnInteract( "state_stand", interact_state_stand )
+	vsoOnInteract( "state_crouch", p.onInteraction )
 	vsoOnInteract( "state_sit", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
 
@@ -167,6 +155,15 @@ function state_stand()
 
 	p.control.updateDriving()
 
+	local position = mcontroller.position()
+
+	if p.control.probablyOnGround()
+	and world.rectCollision( {position[1]-5, position[2]+3, position[1]+5, position[2] }, { "Null", "block", "slippery"} )
+	and not world.rectCollision( {position[1]-5, position[2]-6, position[1]+5, position[2]-1 }, { "Null", "block", "slippery"} )
+	then
+		p.doTransition( "crouch" )
+	end
+
 end
 
 function interact_state_stand( targetid )
@@ -253,5 +250,39 @@ p.registerStateScript( "hug", "unhug", function()
 end)
 
 state_hug = p.standardState
+
+-------------------------------------------------------------------------------
+
+function begin_state_crouch()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.crouch )
+end
+
+function state_crouch()
+
+	p.idleStateChange()
+	p.handleBelly()
+
+	if p.control.driving then
+		p.control.drive()
+	else
+		p.control.doPhysics()
+	end
+
+	p.control.updateDriving()
+
+	local position = mcontroller.position()
+	if not world.rectCollision( {position[1]-5, position[2]+3, position[1]+5, position[2]+0 }, { "Null", "block", "dynamic", "slippery"} ) then
+		if not p.control.probablyOnGround() then
+			p.setState( "stand" )
+		else
+			p.doTransition( "uncrouch" )
+		end
+	end
+
+end
+
+function end_state_crouch()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+end
 
 -------------------------------------------------------------------------------
