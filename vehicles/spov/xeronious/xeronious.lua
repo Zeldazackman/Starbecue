@@ -20,7 +20,6 @@ Scripts created by:
 TODO:
 	-Third belly slot sprites
 	-crawl state
-	-crawl animation
 	-roaming behavior
 	-settings menu
 
@@ -37,6 +36,19 @@ Pending features:
 	-egg lay
 	-tail vore
 	-ranged inhale
+
+putting this here for now
+						"walk": {
+						"arms": "crawl",
+						"legs": "crawl",
+						"body": "crawl",
+						"tail": "crawl",
+						"offset": {
+							"x": [12],
+							"y": [-27],
+							"loop": true
+						}
+
 
 ]]--
 -------------------------------------------------------------------------------

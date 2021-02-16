@@ -14,6 +14,8 @@
                 "states": {
 					"idle": { "frames": 2, "cycle": 3, "mode": "end", "priority": 0 },
 
+					"crawl": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
+
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
@@ -34,6 +36,8 @@
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
+					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -49,6 +53,8 @@
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
+					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 
 				}
@@ -60,6 +66,8 @@
 
                     "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
+					"crawl": { "frames": 1, "cycle": 0.75, "mode": "end", "priority": 0 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -135,6 +143,8 @@
                     "bodyState": {
                         "idle": { "properties": { "image": "spov/body.png:<occupants>.belly.<frame><directives>" } },
 
+						"crawl": { "properties": { "image": "spov/body.png:<occupants>.crawl.<frame><directives>" } },
+
 						"eat": { "properties": { "image": "spov/body.png:<occupants>.belly.eat.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/body.png:<occupants>.belly.escape.<frame><directives>" } },
 
@@ -155,6 +165,8 @@
                 "partStates": {
                     "bodyState": {
                         "idle": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.<frame><directives>" } },
+
+						"crawl": { "properties": { "image": "spov/body.png:<occupants>.crawl.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.eat.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.escape.<frame><directives>" } },
@@ -180,6 +192,7 @@
 
 						"walk": { "properties": { "image": "spov/arms/arms_fg.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/arms/arms_fg.png:run.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -199,6 +212,7 @@
 
 						"walk": { "properties": { "image": "spov/arms/arms_bg.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/arms/arms_bg.png:run.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/arms/arms_bg.png:crawl.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -219,6 +233,7 @@
 
 						"walk": { "properties": { "image": "spov/legs/legs_fg.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/legs/legs_fg.png:run.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/legs/legs_fg.png:crawl.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -239,6 +254,7 @@
 
 						"walk": { "properties": { "image": "spov/legs/legs_bg.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/legs/legs_bg.png:run.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
 
                         "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
 					}
@@ -253,6 +269,8 @@
                 "partStates": {
                     "tailState": {
                         "idle": { "properties": { "image": "spov/tail.png:idle.<state>.<frame><directives>" } },
+
+						"crawl": { "properties": { "image": "spov/tail.png:crawl.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/tail.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/tail.png:standup.<frame><directives>" } },
