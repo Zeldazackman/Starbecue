@@ -23,7 +23,7 @@ function init()
 			if species == nil then
 				setPortrait( "occupant"..i, world.entityPortrait( id, "bust" ) )
 			else
-				setPortrait( "occupant"..i, {{image="vehicles/spov/"..species.."/"..species.."icon.png"}})
+				setPortrait( "occupant"..i, {{image="/vehicles/spov/"..species.."/"..species.."icon.png"}})
 			end
 			widget.setText( "occupant"..i..".name", world.entityName( id ) )
 		else
