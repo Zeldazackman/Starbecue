@@ -19,7 +19,8 @@ Scripts created by:
 
 TODO:
 	-Third belly slot sprites
-	-crawl state
+	-crawl transition anim
+	-crawl belly sizes
 	-roaming behavior
 	-settings menu
 
@@ -59,6 +60,9 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_crouch", p.onInteraction )
 	vsoOnInteract( "state_sit", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
+
+	vsoOnBegin( "state_crouch", begin_state_crouch )
+	vsoOnEnd( "state_crouch", end_state_crouch )
 
 end
 
@@ -128,6 +132,18 @@ function state_stand()
 	p.idleStateChange()
 	p.handleBelly()
 
+	local position = mcontroller.position()
+	if world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
+	and not world.rectCollision( {position[1]-3.5, position[2]-6, position[1]+3.5, position[2]-1 }, { "Null", "block", "slippery"} )
+	then
+		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
+		and vehicle.controlHeld( p.control.driver, "down") then
+			p.doTransition( "crouch" )
+		elseif not p.control.driving then
+			p.doTransition( "crouch" )
+		end
+	end
+
 	if p.control.driving then
 		if vehicle.controlHeld( p.control.driver, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
@@ -154,15 +170,6 @@ function state_stand()
 	end
 
 	p.control.updateDriving()
-
-	local position = mcontroller.position()
-
-	if p.control.probablyOnGround()
-	and world.rectCollision( {position[1]-5, position[2]+3, position[1]+5, position[2] }, { "Null", "block", "slippery"} )
-	and not world.rectCollision( {position[1]-5, position[2]-6, position[1]+5, position[2]-1 }, { "Null", "block", "slippery"} )
-	then
-		p.doTransition( "crouch" )
-	end
 
 end
 
@@ -271,18 +278,24 @@ function state_crouch()
 	p.control.updateDriving()
 
 	local position = mcontroller.position()
-	if not world.rectCollision( {position[1]-5, position[2]+3, position[1]+5, position[2]+0 }, { "Null", "block", "dynamic", "slippery"} ) then
+	if not world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2]+0 }, { "Null", "block", "dynamic", "slippery"} )
+	and not vehicle.controlHeld( p.control.driver, "down")
+	then
+		--[[
 		if not p.control.probablyOnGround() then
 			p.setState( "stand" )
 		else
+		]]--
 			p.doTransition( "uncrouch" )
-		end
+		--end
 	end
 
 end
 
 function end_state_crouch()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	p.movement.downframes = 11
+
 end
 
 -------------------------------------------------------------------------------

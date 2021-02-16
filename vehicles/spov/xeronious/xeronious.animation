@@ -212,7 +212,7 @@
 						"crouch": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
 						"crawl": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			},
@@ -234,7 +234,7 @@
 						"crouch": { "properties": { "image": "spov/arms/arms_bg.png:crawl.4<directives>" } },
 						"crawl": { "properties": { "image": "spov/arms/arms_bg.png:crawl.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			},
@@ -257,7 +257,7 @@
 						"crouch": { "properties": { "image": "spov/legs/legs_fg.png:crawl.4<directives>" } },
 						"crawl": { "properties": { "image": "spov/legs/legs_fg.png:crawl.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			},
@@ -280,7 +280,7 @@
 						"crouch": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
 						"crawl": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			},
@@ -299,7 +299,7 @@
 						"sitdown": { "properties": { "image": "spov/tail.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/tail.png:standup.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			},
@@ -315,7 +315,7 @@
                         "idle": { "properties": { "image": "spov/head.png:idle.<frame><directives>" } },
                         "blink": { "properties": { "image": "spov/head.png:blink.<frame><directives>" } },
 
-                        "none": { "properties": { "image": "spov/head.png:empty.<frame><directives>" } }
+                        "none": { "properties": {} }
 					}
                 }
 			}
