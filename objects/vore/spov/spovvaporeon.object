@@ -48,7 +48,7 @@
 
     , "spov": {
         "types": ["spovvaporeon"]
-        , "position": [0.0, 4, 0.0, 4]
+        , "position": [-1.5, 5, -1.5, 5]  // in blocks
         , "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
     }
