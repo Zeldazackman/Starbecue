@@ -22,29 +22,11 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 	local a_scale = animator.scaleTransformationGroup
 	local a_rotate = animator.rotateTransformationGroup
 	local a_translate = animator.translateTransformationGroup
-	local v_status = vehicle.setLoungeStatusEffects
 	-- apply patch
 	animator.resetTransformationGroup = function(group, ...) a_reset(seatname.."position", ...) end
 	animator.scaleTransformationGroup = function(group, ...) a_scale(seatname.."position", ...) end
 	animator.rotateTransformationGroup = function(group, ...) a_rotate(seatname.."position", ...) end
 	animator.translateTransformationGroup = function(group, ...) a_translate(seatname.."position", ...) end
-	if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] then -- fix invis on smolprey too
-		vehicle.setLoungeStatusEffects = function(seatname, effects)
-			local invis = false
-			local effects2 = {} -- don't touch outer table
-			for _,e in ipairs(effects) do
-				if e == "vsoinvisible" then invis = true end
-				table.insert(effects2, e)
-			end
-			if invis then
-				animator.setAnimationState( seatname.."state", "empty" )
-			else
-				animator.setAnimationState( seatname.."state", "smol" )
-				table.insert(effects2, "vsoinvisible")
-			end
-			v_status(seatname, effects2)
-		end
-	end
 	-- call original function
 	local ret = _oldVictimAnimUpdate( seatname, dt )
 	-- revert patch
@@ -52,7 +34,6 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 	animator.scaleTransformationGroup = a_scale
 	animator.rotateTransformationGroup = a_rotate
 	animator.translateTransformationGroup = a_translate
-	vehicle.setLoungeStatusEffects = v_status
 	return ret
 end
 
@@ -326,6 +307,9 @@ function p.eat( targetid, seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	vsoUseLounge( true, "occupant"..seatindex )
 	vsoEat( targetid, "occupant"..seatindex )
+	local invis = { "vsoinvisible" }
+	_ListAddStatus( invis, self.sv.va[ "occupant"..seatindex ].statuslist )
+	vehicle.setLoungeStatusEffects( "occupant"..seatindex, invis );
 	p.justAte = true
 	return true
 end
@@ -452,6 +436,27 @@ function p.onBegin()
 	else -- released from larger pred
 		p.setState( "smol" )
 		p.doAnims( p.stateconfig.smol.idle, true )
+	end
+
+	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
+	vehicle.setLoungeStatusEffects = function(seatname, effects)
+		if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] then -- fix invis on smolprey too
+			local invis = false
+			local effects2 = {} -- don't touch outer table
+			for _,e in ipairs(effects) do
+				if e == "vsoinvisible" then invis = true end
+				table.insert(effects2, e)
+			end
+			if invis then
+				animator.setAnimationState( seatname.."state", "empty" )
+			else
+				animator.setAnimationState( seatname.."state", "smol" )
+				table.insert(effects2, "vsoinvisible")
+			end
+			v_status(seatname, effects2)
+		else
+			v_status(seatname, effects)
+		end
 	end
 end
 
