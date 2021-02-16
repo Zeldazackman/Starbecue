@@ -22,11 +22,29 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 	local a_scale = animator.scaleTransformationGroup
 	local a_rotate = animator.rotateTransformationGroup
 	local a_translate = animator.translateTransformationGroup
+	local v_status = vehicle.setLoungeStatusEffects
 	-- apply patch
 	animator.resetTransformationGroup = function(group, ...) a_reset(seatname.."position", ...) end
 	animator.scaleTransformationGroup = function(group, ...) a_scale(seatname.."position", ...) end
 	animator.rotateTransformationGroup = function(group, ...) a_rotate(seatname.."position", ...) end
 	animator.translateTransformationGroup = function(group, ...) a_translate(seatname.."position", ...) end
+	if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] then -- fix invis on smolprey too
+		vehicle.setLoungeStatusEffects = function(seatname, effects)
+			local invis = false
+			local effects2 = {} -- don't touch outer table
+			for _,e in ipairs(effects) do
+				if e == "vsoinvisible" then invis = true end
+				table.insert(effects2, e)
+			end
+			if invis then
+				animator.setAnimationState( seatname.."state", "empty" )
+			else
+				animator.setAnimationState( seatname.."state", "smol" )
+				table.insert(effects2, "vsoinvisible")
+			end
+			v_status(seatname, effects2)
+		end
+	end
 	-- call original function
 	local ret = _oldVictimAnimUpdate( seatname, dt )
 	-- revert patch
@@ -34,6 +52,7 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 	animator.scaleTransformationGroup = a_scale
 	animator.rotateTransformationGroup = a_rotate
 	animator.translateTransformationGroup = a_translate
+	vehicle.setLoungeStatusEffects = v_status
 	return ret
 end
 
@@ -324,10 +343,12 @@ end
 
 function p.smolprey( seatindex )
 	if seatindex ~= nil and p.smolpreyspecies[seatindex] ~= nil then
-		animator.setGlobalTag( "species"..seatindex, p.smolpreyspecies[seatindex] )
-		-- directives too eventually
+		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
+		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		vsoAnim( "occupant"..seatindex.."state", "smol" )
 	else
+		animator.setPartTag( "occupant"..seatindex, "smolspecies", "" )
+		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" )
 		vsoAnim( "occupant"..seatindex.."state", "empty" )
 	end
 end
@@ -349,14 +370,6 @@ function p.onForcedReset()
 		vsoUseLounge( false, "occupant"..i )
 	end
 	vsoUseSolid( false )
-
-	if not config.getParameter( "uneaten" ) then
-		p.setState( "stand" )
-		vsoAnim( "bodyState", "idle" )
-	else -- released from larger pred
-		p.setState( "smol" )
-		vsoAnim( "bodyState", "smol.idle" )
-	end
 
 	vsoMakeInteractive( true )
 
@@ -432,6 +445,14 @@ function p.onBegin()
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
+
+	if not config.getParameter( "uneaten" ) then
+		p.setState( "stand" )
+		p.doAnims( p.stateconfig.stand.idle, true )
+	else -- released from larger pred
+		p.setState( "smol" )
+		p.doAnims( p.stateconfig.smol.idle, true )
+	end
 end
 
 function p.onEnd()
