@@ -6,11 +6,6 @@ local bellyeffects = {
 	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
 	[""] = -1, ["heal"] = 0, ["digest"] = 1, ["softdigest"] = 2 -- reverse lookup
 }
-local clickmodes = {
-	[-1] = "attack", [0] = "build",
-	["attack"] = -1, ["build"] = 0
-
-}
 
 function init()
 	vappy = config.getParameter( "vappy" )
@@ -34,7 +29,6 @@ function init()
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
-	widget.setSelectedOption( "clickMode", clickmodes[settings.clickmode or "attack"] )
 end
 
 function update( dt )
@@ -53,13 +47,6 @@ function setBellyEffect()
 	local bellyeffect = bellyeffects[value]
 	world.sendEntityMessage( vappy, "settingsMenuSet", "bellyeffect", bellyeffect )
 	settings.bellyeffect = bellyeffect
-	saveSettings()
-end
-function setClickMode()
-	local value = widget.getSelectedOption( "clickMode" )
-	local clickmode = clickmodes[value]
-	world.sendEntityMessage( vappy, "settingsMenuSet", "clickmode", clickmode )
-	settings.clickmode = clickmode
 	saveSettings()
 end
 function autoDeploy()

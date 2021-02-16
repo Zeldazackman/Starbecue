@@ -2,7 +2,6 @@ local pressed = true
 local rpcSettings = "send"
 local settings = {
 	bellyeffect = "",
-	clickmode = "attack",
 }
 
 function update(args)

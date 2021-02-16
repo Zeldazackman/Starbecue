@@ -381,13 +381,11 @@ function p.onBegin()
 
 		local settings = config.getParameter( "settings" )
 		p.bellyeffect = settings.bellyeffect
-		p.clickmode = settings.clickmode or "attack"
 	else
 		p.control.standalone = false
 		p.control.driver = "occupant1"
 		p.control.driving = false
 		vsoUseLounge( false, "driver" )
-		p.clickmode = "attack"
 	end
 
 	onForcedReset();	--Do a forced reset once.
@@ -411,8 +409,6 @@ function p.onBegin()
 	message.setHandler( "settingsMenuSet", function(_,_, key, val )
 		if key == "bellyeffect" then
 			p.bellyeffect = val
-		elseif key == "clickmode" then
-			p.clickmode = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
 				-- while val < p.occupants do -- shift other prey forward
@@ -726,25 +722,18 @@ end
 function p.control.primaryAction()
 	local control = p.stateconfig[p.state].control
 	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
-		if p.clickmode == "attack" then
-			if p.movement.primaryCooldown < 1 then
-				if control.primaryAction.projectile ~= nil then
-					p.control.projectile(control.primaryAction.projectile)
-				end
-				if control.primaryAction.animation ~= nil then
-					p.doAnims( control.primaryAction.animation )
-				end
-				if control.primaryAction.script ~= nil then
-					local statescript = p.statescripts[p.state][control.primaryAction.script]
-					statescript() -- what arguments might this need?
-				end
-				p.movement.primaryCooldown = control.primaryAction.cooldown
+		if p.movement.primaryCooldown < 1 then
+			if control.primaryAction.projectile ~= nil then
+				p.control.projectile(control.primaryAction.projectile)
 			end
-		elseif p.clickmode == "build" then
-			world.placeMaterial(
-				vehicle.aimPosition( p.control.driver ), "foreground",
-				p.buildMaterial, p.buildHue
-			)
+			if control.primaryAction.animation ~= nil then
+				p.doAnims( control.primaryAction.animation )
+			end
+			if control.primaryAction.script ~= nil then
+				local statescript = p.statescripts[p.state][control.primaryAction.script]
+				statescript() -- what arguments might this need?
+			end
+			p.movement.primaryCooldown = control.primaryAction.cooldown
 		end
 	end
 	p.movement.primaryCooldown = p.movement.primaryCooldown - 1
@@ -1145,7 +1134,7 @@ function p.onInteraction( targetid )
 			return
 		end
 	end
-	
+
 	if state.interact.animation then
 		p.doAnims( state.interact.animation )
 	end
