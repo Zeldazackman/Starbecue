@@ -81,11 +81,11 @@ end
 
 p.registerStateScript( "stand", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.occupants == 2 then
+	if p.visualOccupants == 2 then
 		sb.logError("[Vappy] Can't eat more than two people!")
 		return false
 	end
-	local i = p.occupants + 1
+	local i = p.visualOccupants + 1
 	vsoSetTarget( i, args.id )
 	if p.eat( vsoGetTargetId( i ), i ) then
 		vsoMakeInteractive( false )

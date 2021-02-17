@@ -74,7 +74,7 @@ end
 function p.updateOccupants()
 	p.occupants = 0
 	local lastFilled = true
-	for i = 1, p.maxOccupants do
+	for i = p.occupantOffset, p.maxOccupants do
 		if vehicle.entityLoungingIn( "occupant"..i ) then
 			p.occupants = p.occupants + 1
 			if not lastFilled and p.swapCooldown <= 0 then
@@ -86,9 +86,6 @@ function p.updateOccupants()
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
-	if vsoPill( "fatten" ) then -- this seems to not work in onbegin??
-		p.occupantOffset = math.floor(vsoPillValue( "fatten" )) + 1
-	end
 	p.visualOccupants = p.occupants + p.occupantOffset - 1 -- for pudge
 	animator.setGlobalTag( "occupants", tostring(p.visualOccupants) )
 end
@@ -368,12 +365,23 @@ function p.loadStoredData()
 		if storage.colorReplaceMap ~= nil then
 			vsoSetDirectives( vsoMakeColorReplaceDirectiveString( storage.colorReplaceMap ) );
 		end
+
+		if vsoPill( "heal" ) then p.bellyeffect = "heal" end
+		if vsoPill( "digest" ) then p.bellyeffect = "digest" end
+		if vsoPill( "softdigest" ) then p.bellyeffect = "softdigest" end
+
+		if vsoPill( "fatten" ) then
+			p.occupantOffset = math.floor(vsoPillValue( "fatten" )) + 1
+			if config.getParameter( "driver" ) == nil then
+				p.control.driver = "occupant"..p.occupantOffset
+			end
+		end
 	end )
 end
 
 function p.onForcedReset()
 	vsoAnimSpeed( 1.0 );
-	for i = p.occupantOffset, p.maxOccupants do
+	for i = 1, p.maxOccupants do
 		vsoVictimAnimVisible( "occupant"..i, false )
 		vsoUseLounge( false, "occupant"..i )
 	end
@@ -413,10 +421,6 @@ function p.onBegin()
 	onForcedReset();	--Do a forced reset once.
 
 	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
-
-	if vsoPill( "heal" ) then p.bellyeffect = "heal" end
-	if vsoPill( "digest" ) then p.bellyeffect = "digest" end
-	if vsoPill( "softdigest" ) then p.bellyeffect = "softdigest" end
 
 	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
 
@@ -521,7 +525,7 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.victimAnimation ~= nil then
 		local i = (scriptargs or {}).index
 		if i == nil then
-			i = p.occupants
+			i = p.visualOccupants
 			if p.justAte then
 				i = i + 1
 				p.justAte = false
