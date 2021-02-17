@@ -385,7 +385,7 @@
                 },
                 "partStates": {
                     "headState": {
-                        "none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
+                        "none": { "properties": {} },
 
                         "idle": { "properties": { "image": "spov/vaporeon_head.png:idle.<frame><directives>" } },
                         "blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },

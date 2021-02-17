@@ -696,7 +696,7 @@
 						"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 						"body": "absorb",
 						"legs": "none",
-						"head": "idle",
+						"head": "pinlook",
 						"tail": "none"
 					},
 					"victimAnimation": "absorbpinned",
@@ -709,7 +709,7 @@
 				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
 				"body": "idle",
 				"legs": "none",
-				"head": "idle",
+				"head": "pinlook",
 				"tail": "idle"
 			},
 			"idleAnimations": [
