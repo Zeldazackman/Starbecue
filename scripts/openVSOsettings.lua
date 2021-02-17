@@ -22,7 +22,7 @@ function init()
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )
 		local position = world.entityPosition( entity.id() )
-		local settings = player.getProperty( vsoMenuName.."Settings" ) or {}
+		local settings = player.getProperty( species.."Settings" ) or {}
 		world.spawnVehicle( "spov"..species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true } )
 	end )
 end
