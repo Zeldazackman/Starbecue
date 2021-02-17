@@ -725,7 +725,6 @@
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
 				},
-				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
