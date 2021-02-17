@@ -735,7 +735,9 @@
 			},
 			"control": {
 				"primaryAction": {
-					"animation": "lick",
+					"animation": {
+						"head": "lick"
+					},
 					"cooldown": 0.75 // length of animation
 				}
 			},
