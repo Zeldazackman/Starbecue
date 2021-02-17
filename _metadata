@@ -1,9 +1,9 @@
 {
-  "version" : "0.0",
+  "version" : "1.0",
   "tags" : "",
-  "author" : "Notnat Tlikehis",
-  "description" : "SSVM SPOVs made by Notnat Tlikehis aka Alpaca53382",
-  "name" : "SSVMSPOVNotnat",
-  "friendlyName" : "SSVMSPOVNotnat",  
+  "author" : "Zygan",
+  "description" : "SSVM addons made by Zygan (aka Notnat Tlikehis or Alpaca53382)",
+  "name" : "ZyganSSVMAddons",
+  "friendlyName" : "ZyganSSVMAddons",
   "requires" : ["StarboundSimpleVoreModVSO"]
 }
