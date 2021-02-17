@@ -724,7 +724,7 @@
 					"easyescape": { "min": 2, "max": 10 },
 					"normal": { "min": 10, "max": 20 },
 					"antiescape": { "min": 20, "max": 40 }
-				},
+				}
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
