@@ -10,7 +10,7 @@
 
 	, "tooltipKind" : "vso"
 	, "objectImage" : "/vehicles/spov/xeronious/spov/body.png:idle.1"
-    , "description": "xeronious"
+    , "description": "xeronious [WIP]"
 	, "tooltipFields": {
 		"statusLabel": "xeronious"
 	}
