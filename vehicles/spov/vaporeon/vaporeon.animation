@@ -30,8 +30,6 @@
 
                     "grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 
-					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3 },
-
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -120,6 +118,7 @@
 					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 },
 
+					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3 },
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 }
@@ -164,8 +163,6 @@
 						"rollover": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.rollover.<frame><directives>" } },
 
 						"grab": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.grab.<frame><directives>" } },
-
-						"lick": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.lick.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.eat.<frame><directives>" } },
 						"absorb": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.absorb.<frame><directives>" } },
@@ -247,8 +244,6 @@
 						"rollover": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.rollover.<frame><directives>" } },
 
 						"grab": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.grab.<frame><directives>" } },
-
-						"lick": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.lick.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.eat.<frame><directives>" } },
 						"absorb": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.absorb.<frame><directives>" } },
@@ -396,6 +391,8 @@
                         "blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
                         "pet": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
                         "look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
+
+						"lick": { "properties": { "image": "spov/vaporeon_head.png:lick.<frame><directives>" } },
 
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
