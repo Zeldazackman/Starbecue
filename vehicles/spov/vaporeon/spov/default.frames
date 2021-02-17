@@ -171,8 +171,8 @@
 		"1.pinned.absorb.3" : "1.lay.1",
 		"1.pinned.absorb.4" : "1.lay.1",
 
-		"0.sit.pin.1" : "1.pinned.situp.2",
-		"0.sit.pin.2" : "1.pinned.situp.1",
+		"1.sit.pin.1" : "1.pinned.situp.2",
+		"1.sit.pin.2" : "1.pinned.situp.1",
 
 		"1.pinned.s_back.5" : "1.pinned.1",
 		"1.pinned.s_front.3" : "1.pinned.s_front.2",

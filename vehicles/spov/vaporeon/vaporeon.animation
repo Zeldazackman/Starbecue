@@ -95,6 +95,12 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"flick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
 
+					"sitlay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"sitlayflick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"backflick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
@@ -360,8 +366,14 @@
                 },
                 "partStates": {
                     "tailState": {
-                        "idle": { "properties": { "image": "spov/vaporeon_tail.png:<state>.<frame><directives>" } },
-                        "flick": { "properties": { "image": "spov/vaporeon_tail.png:<state>.flick.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/vaporeon_tail.png:stand.<frame><directives>" } },
+                        "flick": { "properties": { "image": "spov/vaporeon_tail.png:stand.flick.<frame><directives>" } },
+
+						"sitlay": { "properties": { "image": "spov/vaporeon_tail.png:sit.<frame><directives>" } },
+                        "sitlayflick": { "properties": { "image": "spov/vaporeon_tail.png:sit.flick.<frame><directives>" } },
+
+						"backlay": { "properties": { "image": "spov/vaporeon_tail.png:back.<frame><directives>" } },
+                        "backflick": { "properties": { "image": "spov/vaporeon_tail.png:back.flick.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/vaporeon_tail.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/vaporeon_tail.png:run.<frame><directives>" } },
