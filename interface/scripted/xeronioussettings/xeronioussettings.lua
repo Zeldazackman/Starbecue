@@ -8,7 +8,7 @@ local bellyeffects = {
 }
 
 function init()
-	xeronious = config.getParameter( "xeronious" )
+	xeronious = config.getParameter( "vso" )
 	occupants = config.getParameter( "occupants" )
 	maxOccupants = config.getParameter( "maxOccupants" )
 	for i = 1, maxOccupants do

@@ -7,7 +7,7 @@ local settings = {
 
 function update(args)
 	if rpcSettings == "send" then
-		rpcSettings = world.sendEntityMessage( entity.id(), "loadxeronioussettings" )
+		rpcSettings = world.sendEntityMessage( entity.id(), "loadVSOsettings", "xeronious" )
 	elseif rpcSettings ~= nil and rpcSettings:finished() then
 		if rpcSettings:succeeded() then
 			local result = rpcSettings:result()

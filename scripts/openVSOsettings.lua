@@ -2,13 +2,13 @@ local oldinit = init
 function init()
 	oldinit()
 	message.setHandler( "openVSOsettings", function(_,_, vso, occupants, maxOccupants, vsoMenuName )
-		local pane = root.assetJson("/interface/scripted/" "settings/"vsoMenuName.."settings.config")
+		local pane = root.assetJson("/interface/scripted/"vsoMenuName.."settings/"vsoMenuName.."settings.config")
 		pane.vso = vso
 		pane.occupants = occupants
 		pane.maxOccupants = maxOccupants
 		player.interact( "ScriptPane", pane, vso )
 	end)
-	message.setHandler( "load"vsoMenuName.."settings", function()
+	message.setHandler( "loadVSOsettings", function( vsoMenuName )
 		return player.getProperty( vsoMenuName.."Settings" ) or {}
 	end)
 	message.setHandler( "isLounging", function()

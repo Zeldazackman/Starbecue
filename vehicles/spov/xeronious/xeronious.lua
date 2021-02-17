@@ -40,7 +40,6 @@ Pending features:
 ]]--
 -------------------------------------------------------------------------------
 
-p.openSettingsHandler = "openVSOsettings"
 p.vsoMenuName = "xeronious"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)

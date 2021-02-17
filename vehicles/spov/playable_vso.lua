@@ -565,7 +565,7 @@ function p.control.updateDriving()
 				end
 			end
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler,
+				vehicle.entityLoungingIn( p.control.driver ), "openVSOsettings",
 				entity.id(), occupants, p.maxOccupants, p.vsoMenuName
 			)
 		end
