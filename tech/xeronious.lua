@@ -7,7 +7,7 @@ local settings = {
 
 function update(args)
 	if rpcSettings == "send" then
-		rpcSettings = world.sendEntityMessage( entity.id(), "loadvappysettings" )
+		rpcSettings = world.sendEntityMessage( entity.id(), "loadxeronioussettings" )
 	elseif rpcSettings ~= nil and rpcSettings:finished() then
 		if rpcSettings:succeeded() then
 			local result = rpcSettings:result()

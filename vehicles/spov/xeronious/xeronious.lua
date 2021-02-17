@@ -40,7 +40,7 @@ Pending features:
 ]]--
 -------------------------------------------------------------------------------
 
-p.openSettingsHandler = "openvappysettings"
+p.openSettingsHandler = "openxeronioussettings"
 
 p.buildMaterial = "slime"
 p.buildHue = 75
