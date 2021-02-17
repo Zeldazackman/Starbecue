@@ -100,6 +100,7 @@ function p.setState(state)
 	p.state = state
 	animator.setGlobalTag( "state", state )
 	vsoNext( "state_"..state )
+	p.doAnims( p.stateconfig[state].idle )
 end
 
 function p.localToGlobal( position )
@@ -388,6 +389,8 @@ function p.onBegin()
 		vsoEffectWarpIn();	--Play warp in effect
 	end
 
+	vsoUseLounge( false )
+	
 	if config.getParameter( "driver" ) ~= nil then
 		p.control.standalone = true
 		p.control.driver = "driver"
