@@ -372,7 +372,7 @@
 						"sitlay": { "properties": { "image": "spov/vaporeon_tail.png:sit.<frame><directives>" } },
                         "sitlayflick": { "properties": { "image": "spov/vaporeon_tail.png:sit.flick.<frame><directives>" } },
 
-						"backlay": { "properties": { "image": "spov/vaporeon_tail.png:back.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/vaporeon_tail.png:back.<frame><directives>" } },
                         "backflick": { "properties": { "image": "spov/vaporeon_tail.png:back.flick.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/vaporeon_tail.png:walk.<frame><directives>" } },
