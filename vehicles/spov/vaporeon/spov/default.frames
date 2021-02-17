@@ -20,7 +20,7 @@
 			[ "0.lay.1", "0.lay.2", "0.lay.fallasleep.1", "0.lay.fallasleep.2", "0.sleep.1", "0.sleep.2"],
 			[ "0.lay.rollover.1", "0.lay.rollover.2", "0.lay.rollover.3", "0.lay.rollover.4", "0.lay.rollover.5", "1.bed.rollover.4", "1.bed.rollover.3", "1.bed.rollover.1" ],
 			[ "0.back.1", "0.back.2", "1.bed.grab.1", "1.hug.1", "1.hug.absorb.1", "1.hug.absorb.2", "1.hug.absorb.3" ],
-			[ "1.pinned.1", "1.pinned.2", "1.pinned.lick.1", "1.pinned.lick.2", "1.pinned.lick.3", "1.pinned.lick.4", "1.pinned.absorb.1", "1.pinned.absorb.2" ],
+			[ "1.pinned.1", "1.pinned.2", null, null, null, null, "1.pinned.absorb.1", "1.pinned.absorb.2" ],
 			[ "1.pinned.fallasleep.1", "1.pinned.fallasleep.2", "1.pinnedsleep.1", "1.pinnedsleep.2", "1.pinned.situp.1", "1.pinned.situp.2" ],
 
 			[ "1.stand.sitdown.1", "1.stand.sitdown.2", "1.sit.1", "1.sit.2", "1.sit.laydown.1", "1.sit.laydown.2" ],
@@ -164,8 +164,6 @@
 		"1.pinned.rollover.3" : "1.bed.rollover.2",
 		"1.pinned.rollover.4" : "1.bed.rollover.1",
 		"1.pinned.rollover.5" : "1.bed.1",
-
-		"1.pinned.lick.5" : "1.pinned.1",
 
 		"1.pinnedsleep.wakeup.1" : "1.pinned.fallasleep.2",
 		"1.pinnedsleep.wakeup.2" : "1.pinned.fallasleep.1",
