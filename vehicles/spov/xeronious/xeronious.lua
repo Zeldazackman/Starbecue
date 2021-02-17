@@ -19,10 +19,9 @@ Scripts created by:
 
 TODO:
 	-Third belly slot sprites
-	-crawl transition anim
-	-crawl belly sizes
 	-roaming behavior
 	-settings menu
+		-auto crouch option
 
 Pending features:
 
@@ -76,7 +75,7 @@ end
 
 p.registerStateScript( "stand", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.occupants == 2 then
+	if p.occupants == 3 then
 		sb.logError("[Xeronious] Can't eat more than two people!")
 		return false
 	end
@@ -116,7 +115,7 @@ p.registerStateScript( "stand", "letout", function( args )
 end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
-	if p.visualOccupants < 2 then
+	if p.visualOccupants < 3 then
 		local prey = world.playerQuery( position, 2 )
 		if #prey < 1 and p.control.standalone then
 			prey = world.npcQuery( position, 2 )
@@ -183,8 +182,8 @@ end
 
 p.registerStateScript( "sit", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.occupants == 2 then
-		sb.logError("[Xeronious] Can't eat more than two people!")
+	if p.occupants == 3 then
+		sb.logError("[Xeronious] Can't eat more than three people!")
 		return false
 	end
 	local i = p.occupants + 1

@@ -15,6 +15,7 @@
 					"idle": { "frames": 2, "cycle": 3, "mode": "end", "priority": 0 },
 
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"crouchdown": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 2 },
 
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -80,7 +81,7 @@
                 "states": {
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"blink": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"blink": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -98,7 +99,15 @@
 					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
+			},
+			"occupant3state": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
 			}
+
         },
         "parts": {
 			"driver": {
@@ -143,7 +152,7 @@
                      "occupantPosition": [0.0, 0.0]
                 },
                 "partStates": {
-                    "occupant2state": {
+                    "occupant3state": {
 						"smol": { "properties" : { "image": "/vehicles/spov/<occupant2species>/spov/<occupant2species>_small.png:smolprey<occupant2directives>" } }
                     }
                 }
@@ -160,6 +169,7 @@
                         "idle": { "properties": { "image": "spov/body.png:<occupants>.belly.<frame><directives>" } },
 
 						"crouch": { "properties": { "image": "spov/body.png:<occupants>.crouch.<frame><directives>" } },
+						"crouchdown": { "properties": { "image": "spov/body.png:<occupants>.crouchdown.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/body.png:<occupants>.belly.eat.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/body.png:<occupants>.belly.escape.<frame><directives>" } },
@@ -182,7 +192,8 @@
                     "bodyState": {
                         "idle": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/body.png:<occupants>.crouch.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/body_fg.png:<occupants>.crouch.<frame><directives>" } },
+						"crouchdown": { "properties": { "image": "spov/body_fg.png:<occupants>.crouchdown.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.eat.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.escape.<frame><directives>" } },

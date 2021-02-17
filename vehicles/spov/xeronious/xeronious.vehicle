@@ -110,15 +110,14 @@
 				},
 				"crouch": {
 					"animation": {
-						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true, "timing": "legs"},
-						"body": "idle",
+						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
+						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "sitdown",
+						"legs": "crouch",
 						"head": "idle",
-						"tail": "sitdown"
+						"tail": "idle"
 					},
-					"state": "crouch",
-					"timing": "legs"
+					"state": "crouch"
 				},
 
 				// non directional = not accessible via controls, except from script
@@ -230,7 +229,8 @@
 				"tail": "idle"
 			},
 			"idleAnimations": [
-				{ "head": "blink" }
+				{ "head": "blink" },
+				{ "head": "idle" }
 			],
 
 			"struggle": {
@@ -316,15 +316,13 @@
 			"transitions": {
 				"uncrouch": {
 					"animation": {
-						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true, "timing": "legs" },
-						"body": "idle",
+						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
+						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "standup",
-						"head": "idle",
-						"tail": "standup"
+						"legs": "crouch",
+						"tail": "idle"
 					},
-					"state": "stand",
-					"timing": "legs"
+					"state": "stand"
 				}
 			},
 			"idle": {
@@ -336,7 +334,8 @@
 				"tail": "crouch"
 			},
 			"idleAnimations": [
-				{ "head": "blink" }
+				{ "head": "blink" },
+				{ "head": "idle" }
 			],
 			"control": {
 				"walkSpeed": 7,
@@ -507,7 +506,8 @@
 				"tail": "idle"
 			},
 			"idleAnimations": [
-				{ "head": "blink" }
+				{ "head": "blink" },
+				{ "head": "idle" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -655,7 +655,8 @@
 				"tail": "idle"
 			},
 			"idleAnimations": [
-				{ "head": "blink" }
+				{ "head": "blink" },
+				{ "head": "idle" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
