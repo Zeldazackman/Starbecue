@@ -20,16 +20,23 @@ and G/tech action 2 to release prey, which can also be done from the settings me
 
 # Zygan / Zygahedron 
 Created and animated much of the original Vappy sprite
+
 Did almost all of the lua scripting
+
 The reason all of this works at all
 
 # LokiVulpix / Wasabi_Raptor
 Edited and animted some of the Vappy sprite
+
 Created the Xeronious sprites
+
 Debugged and coded a little
 
+
 I take commissions! contact me if I am open!
+
 https://www.furaffinity.net/user/lokithevulpix/
+
 https://twitter.com/LokiVulpix
 
 # Support Us!
