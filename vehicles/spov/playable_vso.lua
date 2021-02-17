@@ -609,8 +609,7 @@ function p.control.doPhysics()
 		mcontroller.approachYVelocity( -10, 50 )
 	end
 	if p.state ~= "stand" and mcontroller.yVelocity() < -5 then
-		nextState( "stand" )
-		updateState()
+		p.setState( "stand" )
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
 		p.movement.falling = true
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
