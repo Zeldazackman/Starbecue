@@ -503,7 +503,16 @@
 				"arms": "idle",
 				"legs": "idle",
 				"head": "idle",
-				"tail": "idle"
+				"tail": "idle",
+				"tags": [
+					{
+						"owner": "body",
+						"part": "body",
+						"name": "bellycrop",
+						"value": "?crop=0;0;96;80"
+					}
+				]
+
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -652,7 +661,16 @@
 				"arms": "hug",
 				"legs": "idle",
 				"head": "idle",
-				"tail": "idle"
+				"tail": "idle",
+				"tags": [
+					{
+						"owner": "body",
+						"part": "body",
+						"name": "bellycrop",
+						"value": "?crop=0;0;96;80"
+					}
+				]
+
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
