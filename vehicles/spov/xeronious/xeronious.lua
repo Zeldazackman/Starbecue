@@ -40,10 +40,7 @@ Pending features:
 ]]--
 -------------------------------------------------------------------------------
 
-p.openSettingsHandler = "openvappysettings"
-
-p.buildMaterial = "slime"
-p.buildHue = 75
+p.vsoMenuName = "xeronious"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 

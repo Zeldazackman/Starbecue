@@ -1,4 +1,4 @@
-local vappy
+local xeronious
 local occupants
 local maxOccupants
 local settings
@@ -8,7 +8,7 @@ local bellyeffects = {
 }
 
 function init()
-	vappy = config.getParameter( "vso" )
+	xeronious = config.getParameter( "vso" )
 	occupants = config.getParameter( "occupants" )
 	maxOccupants = config.getParameter( "maxOccupants" )
 	for i = 1, maxOccupants do
@@ -28,7 +28,7 @@ function init()
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
-	settings = player.getProperty("vappySettings") or {}
+	settings = player.getProperty("xeroniousSettings") or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
@@ -48,7 +48,7 @@ end
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = bellyeffects[value]
-	world.sendEntityMessage( vappy, "settingsMenuSet", "bellyeffect", bellyeffect )
+	world.sendEntityMessage( xeronious, "settingsMenuSet", "bellyeffect", bellyeffect )
 	settings.bellyeffect = bellyeffect
 	saveSettings()
 end
@@ -64,7 +64,7 @@ function defaultSmall()
 end
 
 function despawn()
-	world.sendEntityMessage( vappy, "despawn" )
+	world.sendEntityMessage( xeronious, "despawn" )
 end
 
 function setPortrait( canvasName, data )
@@ -76,9 +76,9 @@ function setPortrait( canvasName, data )
 	end
 end
 function letOut(_, which )
-	world.sendEntityMessage( vappy, "settingsMenuSet", "letout", which )
+	world.sendEntityMessage( xeronious, "settingsMenuSet", "letout", which )
 end
 
 function saveSettings()
-	player.setProperty( "vappySettings", settings )
+	player.setProperty( "xeroniousSettings", settings )
 end

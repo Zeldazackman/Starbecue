@@ -141,7 +141,7 @@ function p.swapOccupants(a, b)
 	t = self.sv.va["occupant"..a] -- victim animations
 	self.sv.va["occupant"..a] = self.sv.va["occupant"..b]
 	self.sv.va["occupant"..b] = t
-	
+
 	self.sv.va["occupant"..a].playing = true
 	self.sv.va["occupant"..b].playing = true
 
@@ -565,8 +565,8 @@ function p.control.updateDriving()
 				end
 			end
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), p.openSettingsHandler,
-				entity.id(), occupants, p.maxOccupants
+				vehicle.entityLoungingIn( p.control.driver ), "openVSOsettings",
+				entity.id(), occupants, p.maxOccupants, p.vsoMenuName
 			)
 		end
 	elseif p.occupants >= 1 then
