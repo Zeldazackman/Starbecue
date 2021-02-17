@@ -1,15 +1,15 @@
 local oldinit = init
 function init()
 	oldinit()
-	message.setHandler( "openvappysettings", function(_,_, vappy, occupants, maxOccupants )
-		local pane = root.assetJson("/interface/scripted/vappysettings/vappysettings.config")
-		pane.vappy = vappy
+	message.setHandler( "openVSOsettings", function(_,_, vso, occupants, maxOccupants, vsoMenuName )
+		local pane = root.assetJson("/interface/scripted/" "settings/"vsoMenuName.."settings.config")
+		pane.vso = vso
 		pane.occupants = occupants
 		pane.maxOccupants = maxOccupants
-		player.interact( "ScriptPane", pane, vappy )
+		player.interact( "ScriptPane", pane, vso )
 	end)
-	message.setHandler( "loadvappysettings", function()
-		return player.getProperty( "vappySettings" ) or {}
+	message.setHandler( "load"vsoMenuName.."settings", function()
+		return player.getProperty( vsoMenuName.."Settings" ) or {}
 	end)
 	message.setHandler( "isLounging", function()
 		return player.isLounging(), player.loungingIn()
@@ -22,7 +22,7 @@ function init()
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )
 		local position = world.entityPosition( entity.id() )
-		local settings = player.getProperty( "vappySettings" ) or {}
+		local settings = player.getProperty( vsoMenuName.."Settings" ) or {}
 		world.spawnVehicle( "spov"..species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true } )
 	end )
 end

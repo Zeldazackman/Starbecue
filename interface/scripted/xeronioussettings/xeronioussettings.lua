@@ -28,7 +28,7 @@ function init()
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
-	settings = player.getProperty("xeronioussettings") or {}
+	settings = player.getProperty("xeroniousSettings") or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
@@ -80,5 +80,5 @@ function letOut(_, which )
 end
 
 function saveSettings()
-	player.setProperty( "xeronioussettings", settings )
+	player.setProperty( "xeroniousSettings", settings )
 end

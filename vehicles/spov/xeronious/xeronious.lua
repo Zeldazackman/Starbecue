@@ -40,10 +40,8 @@ Pending features:
 ]]--
 -------------------------------------------------------------------------------
 
-p.openSettingsHandler = "openxeronioussettings"
-
-p.buildMaterial = "slime"
-p.buildHue = 75
+p.openSettingsHandler = "openVSOsettings"
+p.vsoMenuName = "xeronious"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
