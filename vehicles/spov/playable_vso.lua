@@ -398,7 +398,7 @@ function p.onBegin()
 	end
 
 	vsoUseLounge( false )
-	
+
 	if config.getParameter( "driver" ) ~= nil then
 		p.control.standalone = true
 		p.control.driver = "driver"
@@ -1044,28 +1044,35 @@ function p.bellyEffects()
 	local effect = 0
 	if p.bellyeffect == "digest" or p.bellyeffect == "softdigest" then
 		effect = -1
+		hungereffect = 1
 	elseif p.bellyeffect == "heal" then
 		effect = 1
+		hungereffect = 0
 	end
+
 
 	for i = p.occupantOffset, p.maxOccupants do
 		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 		local eid = vehicle.entityLoungingIn( "occupant"..i )
+		local driver = vehicle.entityLoungingIn( "driver")
+
 		if effect ~= 0 and eid and world.entityExists(eid) then
 			local health_change = effect * vsoDelta()
+			local hunger_change = hungereffect * vsoDelta()
 			local health = world.entityHealth(eid)
 			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
 				health_change = (1 - health[1]) / health[2]
+				hungereffect = 0
 			end
+
+			vsoResourceAddPercent( driver, "food", hunger_change, function(still_alive)
+			end)
+
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
 				if not still_alive then
-					local val = i
-					while val < p.occupants do -- shift other prey forward
-						p.swapOccupants( val, val+1 )
-					end
-					vsoUneat( "occupant"..p.occupants )
-					vsoSetTarget( p.occupants, nil )
-					vsoUseLounge( false, "occupant"..p.occupants )
+					vsoUneat( "occupant"..i )
+					vsoSetTarget( i, nil )
+					vsoUseLounge( false, "occupant"..i )
 				end
 			end)
 		end
