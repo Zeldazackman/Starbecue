@@ -75,7 +75,7 @@ function p.updateOccupants()
 	p.occupants = 0
 	local lastFilled = true
 	for i = p.occupantOffset, p.maxOccupants do
-		if vehicle.entityLoungingIn( "occupant"..i ) then
+		if vsoGetTargetId( "occupant"..i ) then
 			p.occupants = p.occupants + 1
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
@@ -122,10 +122,10 @@ function p.occupantArray( maybearray )
 end
 
 function p.swapOccupants(a, b)
-	local A = vsoGetTargetId(a)
-	local B = vsoGetTargetId(b)
-	if B then vsoSetTarget( a, B ) end
-	if A then vsoSetTarget( b, A ) end
+	local A = vsoGetTargetId("occupant"..a)
+	local B = vsoGetTargetId("occupant"..b)
+	vsoSetTarget( "occupant"..a, B )
+	vsoSetTarget( "occupant"..b, A )
 
 	if A then vsoUneat( "occupant"..a ) end
 	if B then vsoUneat( "occupant"..b ) end
@@ -314,6 +314,7 @@ function p.eat( targetid, seatindex )
 		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
 			-- won't work with multiple loungeables near each other
 			vsoUseLounge( true, "occupant"..seatindex )
+			vsoSetTarget( "occupant"..seatindex, targetid)
 			vsoEat( targetid, "occupant"..seatindex )
 			p.justAte = true
 			return true -- not lounging
@@ -342,6 +343,7 @@ function p.uneat( seatindex )
 		p.smolpreyspecies[seatindex] = nil
 	end
 	p.smolprey( seatindex ) -- clear
+	vsoClearTarget( "occupant"..seatindex)
 	vsoUneat( "occupant"..seatindex )
 	vsoUseLounge( false, "occupant"..seatindex )
 end
@@ -1054,6 +1056,8 @@ function p.bellyEffects()
 	for i = p.occupantOffset, p.maxOccupants do
 		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 		local eid = vehicle.entityLoungingIn( "occupant"..i )
+		--local eid = vsoGetTargetId( "occupant"..i ) --If I do this for some reason the monster prey gets released
+
 		local driver = vehicle.entityLoungingIn( "driver")
 
 		if effect ~= 0 and eid and world.entityExists(eid) then
@@ -1071,7 +1075,7 @@ function p.bellyEffects()
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
 				if not still_alive then
 					vsoUneat( "occupant"..i )
-					vsoSetTarget( i, nil )
+					vsoSetTarget( "occupant"..i, nil )
 					vsoUseLounge( false, "occupant"..i )
 				end
 			end)

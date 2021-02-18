@@ -107,7 +107,9 @@ p.registerStateScript( "stand", "letout", function( args )
 		return false
 	end
 	local i = args.index
-	if not vehicle.entityLoungingIn( "occupant"..i ) then -- could be part of above but no need to log an error here
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
 		return false
 	end
 	vsoMakeInteractive( false )
@@ -116,20 +118,16 @@ p.registerStateScript( "stand", "letout", function( args )
 	return true, function()
 		vsoMakeInteractive( true )
 		p.uneat( i )
-		vsoSetTarget( i, nil )
-		if vsoGetTargetId( i ) ~= nil then
-			vsoApplyStatus( i, "droolsoaked", 5.0 );
-		end
+		vsoApplyStatus( victim, "droolsoaked", 5.0 );
 	end
 end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
 	if p.visualOccupants < p.maxOccupants then
-		local prey = world.playerQuery( position, 2 )
-		if #prey < 1 and p.control.standalone then
-			prey = world.npcQuery( position, 2 )
-		end
-
+		local prey = world.entityQuery(position, 2, {
+			withoutEntityId = entity.id(),
+			includedTypes = {"creature"}
+		})
 		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
 			withoutEntityId = entity.id(),
 			includedTypes = {"creature"}
