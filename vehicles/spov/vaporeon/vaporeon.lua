@@ -124,15 +124,23 @@ p.registerStateScript( "stand", "letout", function( args )
 end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
-	if p.visualOccupants < 2 then
+	if p.visualOccupants < p.maxOccupants then
 		local prey = world.playerQuery( position, 2 )
 		if #prey < 1 and p.control.standalone then
 			prey = world.npcQuery( position, 2 )
 		end
+
+		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
+			withoutEntityId = entity.id(),
+			includedTypes = {"creature"}
+		})
 		if #prey > 0 then
-			--animator.setGlobalTag( "bap", "" )
-			--vsoAnim( "bapState", "none" )
-			p.doTransition( "eat", {id=prey[1]} )
+			for i = 1, #prey do
+				if prey[i] == entityaimed[1] then
+					animator.setGlobalTag( "bap", "" )
+					p.doTransition( "eat", {id=prey[i]} )
+				end
+			end
 		end
 	end
 end)
