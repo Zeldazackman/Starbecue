@@ -1044,19 +1044,18 @@ function p.bellyEffects()
 		vsoSound( "digest" )
 	end
 	local effect = 0
+	local hungereffect = 0
 	if p.bellyeffect == "digest" or p.bellyeffect == "softdigest" then
 		effect = -1
 		hungereffect = 1
 	elseif p.bellyeffect == "heal" then
 		effect = 1
-		hungereffect = 0
 	end
 
 
 	for i = p.occupantOffset, p.maxOccupants do
 		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
-		local eid = vehicle.entityLoungingIn( "occupant"..i )
-		--local eid = vsoGetTargetId( "occupant"..i ) --If I do this for some reason the monster prey gets released
+		local eid = vsoGetTargetId( "occupant"..i ) --If I do this for some reason the monster prey gets released
 
 		local driver = vehicle.entityLoungingIn( "driver")
 
@@ -1069,11 +1068,10 @@ function p.bellyEffects()
 				hungereffect = 0
 			end
 
-			vsoResourceAddPercent( driver, "food", hunger_change, function(still_alive)
-			end)
+			vsoResourceAddPercent( driver, "food", hunger_change)
 
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
-				if not still_alive then
+				if not still_alive and world.entityHealth(eid) == 0 then
 					vsoUneat( "occupant"..i )
 					vsoSetTarget( "occupant"..i, nil )
 					vsoUseLounge( false, "occupant"..i )
