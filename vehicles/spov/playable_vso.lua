@@ -960,19 +960,21 @@ function p.control.airMovement( dx )
 end
 
 function p.control.projectile( projectiledata )
-	local position = p.localToGlobal( projectiledata.position )
-	local direction
 	local driver = vehicle.entityLoungingIn(p.control.driver)
-	if projectiledata.energy and driver then --I am at my wits end here
-		p.energy = true
-		vsoResourceAddPercent( driver, "energy", -0.01*projectiledata.cost, function(still_energy)
-			if not still_energy then
-				p.energy = false
+	if projectiledata.energy and driver then
+		vsoResourceAddPercent( driver, "energy", -0.01*projectiledata.cost, function(still_got_energy)
+			if still_got_energy then
+				p.control.shootProjectile( projectiledata )
 			end
 		end)
-		if not p.energy then return end
+	else
+		p.control.shootProjectile( projectiledata )
 	end
+end
 
+function p.control.shootProjectile( projectiledata )
+	local position = p.localToGlobal( projectiledata.position )
+	local direction
 	if projectiledata.aimable then
 		local aiming = vehicle.aimPosition( p.control.driver )
 		vsoFacePoint( aiming[1] )
