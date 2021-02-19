@@ -962,6 +962,17 @@ end
 function p.control.projectile( projectiledata )
 	local position = p.localToGlobal( projectiledata.position )
 	local direction
+	local driver = vehicle.entityLoungingIn(p.control.driver)
+	if projectiledata.energy and driver then --I am at my wits end here
+		p.energy = true
+		vsoResourceAddPercent( driver, "energy", -0.01*projectiledata.cost, function(still_energy)
+			if not still_energy then
+				p.energy = false
+			end
+		end)
+		if not p.energy then return end
+	end
+
 	if projectiledata.aimable then
 		local aiming = vehicle.aimPosition( p.control.driver )
 		vsoFacePoint( aiming[1] )
@@ -971,7 +982,11 @@ function p.control.projectile( projectiledata )
 	else
 		direction = { self.vsoCurrentDirection, 0 }
 	end
-	world.spawnProjectile( projectiledata.name, position, entity.id(), direction, true )
+	local projectilesource = vehicle.entityLoungingIn(p.control.driver)
+	if not projectilesource then
+		projectilesource = entity.Id()
+	end
+	world.spawnProjectile( projectiledata.name, position, projectilesource, direction, true )
 end
 
 -------------------------------------------------------------------------------
