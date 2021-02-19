@@ -452,6 +452,8 @@ function p.onBegin()
 	message.setHandler( "settingsMenuSet", function(_,_, key, val )
 		if key == "bellyeffect" then
 			p.bellyeffect = val
+		elseif key == "displaydamage" then
+			p.displaydamage = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
 				p.doTransition( "escape", {index = val} )

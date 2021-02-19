@@ -4,7 +4,7 @@ function init()
 end
 
 function update(dt)
-  status.modifyResourcePercentage("health", -1 * dt)
+  status.modifyResourcePercentage("health", -0.01 * dt)
 
 end
 
