@@ -1122,7 +1122,7 @@ function p.bellyEffects()
 				hungereffect = 0
 			end
 
-			vsoResourceAddPercent( driver, "food", hunger_change)
+			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
 
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
 				if not still_alive and not (world.entityHealth(eid)[1] > 0) and world.entityExists(eid) then
