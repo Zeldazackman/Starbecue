@@ -134,14 +134,16 @@
 				"default": "empty",
 				"states": {
 					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"occupant2state": {
 				"default": "empty",
 				"states": {
 					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			}
         },
@@ -209,7 +211,8 @@
                 },
                 "partStates": {
                     "occupant1state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } }
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
                     }
                 }
             },
@@ -222,7 +225,8 @@
                 },
                 "partStates": {
                     "occupant2state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } }
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
                     }
                 }
 			},
