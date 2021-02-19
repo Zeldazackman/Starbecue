@@ -299,6 +299,12 @@ function p.edible( targetid )
 	return p.stateconfig[p.state].edible
 end
 
+function p.isMonster( id )
+	if id == nil then return false end
+	if not world.entityExists(id) then return false end
+	return world.entityType(id) == "monster"
+end
+
 p.smolpreyspecies = {}
 
 function p.eat( targetid, seatindex )
@@ -313,8 +319,8 @@ function p.eat( targetid, seatindex )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
 			-- won't work with multiple loungeables near each other
-			vsoUseLounge( true, "occupant"..seatindex )
 			vsoSetTarget( "occupant"..seatindex, targetid)
+			p.smolprey( seatindex )
 			vsoEat( targetid, "occupant"..seatindex )
 			p.justAte = true
 			return true -- not lounging
@@ -324,10 +330,10 @@ function p.eat( targetid, seatindex )
 	end
 	-- lounging in edible smol thing
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
+	vsoSetTarget( "occupant"..seatindex, targetid)
 	p.smolpreyspecies[seatindex] = species
 	p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
-	vsoUseLounge( true, "occupant"..seatindex )
 	vsoEat( targetid, "occupant"..seatindex )
 	local invis = { "vsoinvisible" }
 	_ListAddStatus( invis, self.sv.va[ "occupant"..seatindex ].statuslist )
@@ -337,19 +343,27 @@ function p.eat( targetid, seatindex )
 end
 
 function p.uneat( seatindex )
+	local targetid = vsoGetTargetId( "occupant"..seatindex )
 	if p.smolpreyspecies[seatindex] ~= nil then
-		local targetid = vehicle.entityLoungingIn( "occupant"..seatindex )
 		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
 		p.smolpreyspecies[seatindex] = nil
 	end
-	p.smolprey( seatindex ) -- clear
 	vsoClearTarget( "occupant"..seatindex)
 	vsoUneat( "occupant"..seatindex )
-	vsoUseLounge( false, "occupant"..seatindex )
+	p.smolprey( seatindex ) -- clear
+	if p.isMonster(targetid) then
+		-- do something to move it forward a few blocks
+	end
 end
 
 function p.smolprey( seatindex )
-	if seatindex ~= nil and p.smolpreyspecies[seatindex] ~= nil then
+	if seatindex == nil then return end
+	local id = vsoGetTargetId("occupant"..seatindex)
+	if p.isMonster(id) then
+		local portrait = world.entityPortrait(id, "fullneutral") or {{image=""}}
+		animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
+		vsoAnim( "occupant"..seatindex.."state", "monster" )
+	elseif p.smolpreyspecies[seatindex] ~= nil then
 		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		vsoAnim( "occupant"..seatindex.."state", "smol" )
@@ -466,7 +480,7 @@ function p.onBegin()
 
 	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
 	vehicle.setLoungeStatusEffects = function(seatname, effects)
-		if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] then -- fix invis on smolprey too
+		if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] or p.isMonster(vsoGetTargetId(seatname)) then -- fix invis on smolprey too
 			local invis = false
 			local effects2 = {} -- don't touch outer table
 			for _,e in ipairs(effects) do
@@ -475,6 +489,9 @@ function p.onBegin()
 			end
 			if invis then
 				animator.setAnimationState( seatname.."state", "empty" )
+			elseif p.isMonster(vsoGetTargetId(seatname)) then
+				animator.setAnimationState( seatname.."state", "monster" )
+				table.insert(effects2, "vsoinvisible")
 			else
 				animator.setAnimationState( seatname.."state", "smol" )
 				table.insert(effects2, "vsoinvisible")
@@ -565,9 +582,9 @@ function p.control.updateDriving()
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			local occupants = {}
 			for i = 1, p.maxOccupants do -- using p.occupants has potential for issues if slots become empty
-				if vehicle.entityLoungingIn( "occupant"..i ) then
+				if vsoGetTargetId( "occupant"..i ) then
 					occupants[i] = {
-						id = vehicle.entityLoungingIn( "occupant"..i ),
+						id = vsoGetTargetId( "occupant"..i ),
 						species = p.smolpreyspecies[ i ]
 					}
 				else
