@@ -23,5 +23,5 @@
   "knockback" : 10,
   "knockbackDirectional" : true,
   "timeToLive" : 0,
-  "damagePoly" : [ [-8, -12], [16, -12], [16, 12], [-8, 12] ]
+  "damagePoly" : [ [-8, -24], [16, -24], [16, 24], [-8, 24] ]
 }

@@ -30,6 +30,8 @@ function init()
 	end
 	settings = player.getProperty("xeroniousSettings") or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
+	widget.setChecked( "displayDamage", settings.displaydamage or false )
+	widget.setChecked( "autoCrouch", settings.autocrouch or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
 end
@@ -52,6 +54,21 @@ function setBellyEffect()
 	settings.bellyeffect = bellyeffect
 	saveSettings()
 end
+
+function displayDamage()
+	local value = widget.getChecked( "displayDamage" )
+	world.sendEntityMessage( xeronious, "settingsMenuSet", "displaydamage", value )
+	settings.displaydamage = value
+	saveSettings()
+end
+
+function autoCrouch()
+	local value = widget.getChecked( "autoCrouch" )
+	world.sendEntityMessage( xeronious, "settingsMenuSet", "autocrouch", value )
+	settings.autocrouch = value
+	saveSettings()
+end
+
 function autoDeploy()
 	local value = widget.getChecked( "autoDeploy" )
 	settings.autodeploy = value

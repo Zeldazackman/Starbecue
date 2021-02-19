@@ -18,19 +18,13 @@ Scripts created by:
     Wasabi_Raptor#1533 		<-did debugs and copied scripts around for things
 
 TODO:
-	-Third belly slot sprites
 	-roaming behavior
-	-settings menu
-		-auto crouch option
-
-Pending features:
-
-	Vertical movement
 	-jump
 	-fly
 	-leg grab
 	-anal vore
 
+Pending features:
 	Extra functions
 	-digest anim
 	-egg lay
@@ -72,11 +66,11 @@ end
 
 p.registerStateScript( "stand", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.occupants == 3 then
+	if p.visualOccupants == p.maxOccupants then
 		sb.logError("[Xeronious] Can't eat more than two people!")
 		return false
 	end
-	local i = p.occupants + 1
+	local i = p.visualOccupants + 1
 	vsoSetTarget( i, args.id )
 	if p.eat( vsoGetTargetId( i ), i ) then
 		vsoMakeInteractive( false )
@@ -98,27 +92,40 @@ p.registerStateScript( "stand", "letout", function( args )
 		return false
 	end
 	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
 	vsoMakeInteractive( false )
 	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
 
 	return true, function()
 		vsoMakeInteractive( true )
 		p.uneat( i )
-		vsoSetTarget( i, nil )
-		if vsoGetTargetId( i ) ~= nil then
-			vsoApplyStatus( i, "droolsoaked", 5.0 );
-		end
+		vsoApplyStatus( victim, "droolsoaked", 5.0 );
 	end
 end)
+
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
-	if p.visualOccupants < 3 then
-		local prey = world.playerQuery( position, 2 )
-		if #prey < 1 and p.control.standalone then
-			prey = world.npcQuery( position, 2 )
-		end
+
+	if p.visualOccupants < p.maxOccupants then
+		local prey = world.entityQuery(position, 5, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
+		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
 		if #prey > 0 then
-			p.doTransition( "eat", {id=prey[1]} )
+			for i = 1, #prey do
+				if prey[i] == entityaimed[1] then
+					animator.setGlobalTag( "bap", "" )
+					p.doTransition( "eat", {id=prey[i]} )
+				end
+			end
 		end
 	end
 end)
@@ -135,7 +142,7 @@ function state_stand()
 		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
 		and vehicle.controlHeld( p.control.driver, "down") then
 			p.doTransition( "crouch" )
-		elseif not p.control.driving then
+		elseif p.autocrouch or not p.control.driving then
 			p.doTransition( "crouch" )
 		end
 	end
@@ -179,11 +186,11 @@ end
 
 p.registerStateScript( "sit", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.occupants == 3 then
-		sb.logError("[Xeronious] Can't eat more than three people!")
+	if p.visualOccupants == p.maxOccupants then
+		sb.logError("[Xeronious] Can't eat more than two people!")
 		return false
 	end
-	local i = p.occupants + 1
+	local i = p.visualOccupants + 1
 	vsoSetTarget( i, args.id )
 	if p.eat( vsoGetTargetId( i ), i ) then
 		vsoMakeInteractive( false )
@@ -199,23 +206,24 @@ p.registerStateScript( "sit", "eat", function( args )
 		return false
 	end
 end)
-
 p.registerStateScript( "sit", "letout", function( args )
 	if p.occupants == 0 then
 		sb.logError( "[Xeronious] No one to let out!" )
 		return false
 	end
 	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
 	vsoMakeInteractive( false )
 	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
 
 	return true, function()
 		vsoMakeInteractive( true )
 		p.uneat( i )
-		vsoSetTarget( i, nil )
-		if vsoGetTargetId( i ) ~= nil then
-			vsoApplyStatus( i, "droolsoaked", 5.0 );
-		end
+		vsoApplyStatus( victim, "droolsoaked", 5.0 );
 	end
 end)
 
@@ -274,7 +282,7 @@ function state_crouch()
 	p.control.updateDriving()
 
 	local position = mcontroller.position()
-	if not world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2]+0 }, { "Null", "block", "dynamic", "slippery"} )
+	if not world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2]+0 }, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.control.driver, "down")
 	then
 		--[[

@@ -428,6 +428,7 @@ function p.onBegin()
 		local settings = config.getParameter( "settings" )
 		p.bellyeffect = settings.bellyeffect
 		p.displaydamage = settings.displaydamage
+		p.autocrouch = settings.autocrouch
 	else
 		p.control.standalone = false
 		p.control.driver = "occupant1"
@@ -454,6 +455,8 @@ function p.onBegin()
 			p.bellyeffect = val
 		elseif key == "displaydamage" then
 			p.displaydamage = val
+		elseif key == "autocrouch" then
+			p.autocrouch = val
 		elseif key == "letout" then
 			if p.state == "stand" and p.occupants > 0 then
 				p.doTransition( "escape", {index = val} )
@@ -1100,10 +1103,19 @@ function p.bellyEffects()
 
 		if eid and world.entityExists(eid) then
 			if world.entityType(eid) ~= "monster" then -- this fucking thing reaks it with those commented out its this
-				vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
+				if status then
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
+				else
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"} )
+				end
 			else
-				vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", monsterstatus } )
+				if monsterstatus then
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", monsterstatus } )
+				else
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"} )
+				end
 			end
+
 			local health_change = effect * vsoDelta()
 			local hunger_change = hungereffect * vsoDelta()
 			local health = world.entityHealth(eid)

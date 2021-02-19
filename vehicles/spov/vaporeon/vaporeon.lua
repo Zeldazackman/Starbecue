@@ -81,7 +81,7 @@ end
 
 p.registerStateScript( "stand", "eat", function( args )
 	if p.entityLounging( args.id ) then return end
-	if p.visualOccupants == 2 then
+	if p.visualOccupants == p.maxOccupants then
 		sb.logError("[Vappy] Can't eat more than two people!")
 		return false
 	end
@@ -125,11 +125,11 @@ p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
 	if p.visualOccupants < p.maxOccupants then
 		local prey = world.entityQuery(position, 2, {
-			withoutEntityId = entity.id(),
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
 		})
 		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
-			withoutEntityId = entity.id(),
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
 		})
 		if #prey > 0 then
