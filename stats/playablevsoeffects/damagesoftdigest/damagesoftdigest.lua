@@ -5,7 +5,7 @@ end
 
 function update(dt)
   local health = world.entityHealth(entity.id())
-  if not health[1] < ( 1 * dt ) then
+  if health[1] > ( 1 * dt ) then
     status.modifyResourcePercentage("health", -1 * dt)
   end
 end

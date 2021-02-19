@@ -11,7 +11,7 @@ function update(dt)
   local damagecalc = math.floor(status.resourceMax("health") * self.tickDamagePercentage) + 1
   local health = world.entityHealth(entity.id())
 
-  if self.tickTimer <= 0 and not (health[1] < damagecalc) then
+  if self.tickTimer <= 0 and (health[1] > damagecalc) then
     self.tickTimer = self.tickTime
     status.applySelfDamageRequest({
         damageType = "IgnoresDef",

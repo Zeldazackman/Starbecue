@@ -1051,8 +1051,8 @@ function p.bellyEffects()
 	if p.bellyeffect == "digest" then
 		hungereffect = 1
 		if p.displaydamage then
-			local status = "displaydamagedigest"
-			local monsterstatus = "displaydamagedigest"
+			tatus = "displaydamagedigest"
+			monsterstatus = "displaydamagedigest"
 		else
 			effect = -1
 			monsterstatus = "damagedigest"
@@ -1060,8 +1060,8 @@ function p.bellyEffects()
 	elseif p.bellyeffect == "softdigest" then
 		hungereffect = 1
 		if p.displaydamage then
-			local status = "displaydamagesoftdigest"
-			local monsterstatus = "displaydamagesoftdigest"
+			status = "displaydamagesoftdigest"
+			monsterstatus = "displaydamagesoftdigest"
 		else
 			effect = -1
 			monsterstatus = "damagesoftdigest"
@@ -1077,13 +1077,14 @@ function p.bellyEffects()
 		local driver = vehicle.entityLoungingIn( "driver")
 
 		-- none of this WORKS AAAAAAAAA
-		if world.entityType(eid) ~= "monster" then -- this fucking thing reaks it with those commented out its this
-			--vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", "displaydamagedigest" }  ) --placeholder values because those break it too
-		else
-			--vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", "displaydamagesoftdigest" } )
-		end
 
-		if eid and world.entityExists(eid) and eid ~= nil then
+
+		if eid and world.entityExists(eid) then
+			if world.entityType(eid) ~= "monster" then -- this fucking thing reaks it with those commented out its this
+				vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
+			else
+				vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", monsterstatus } )
+			end
 			local health_change = effect * vsoDelta()
 			local hunger_change = hungereffect * vsoDelta()
 			local health = world.entityHealth(eid)
@@ -1095,7 +1096,7 @@ function p.bellyEffects()
 			vsoResourceAddPercent( driver, "food", hunger_change)
 
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
-				if not still_alive and not world.entityHealth(eid)[1] > 0 and world.entityExists(eid) then
+				if not still_alive and not (world.entityHealth(eid)[1] > 0) and world.entityExists(eid) then
 					vsoUneat( "occupant"..i )
 					vsoSetTarget( "occupant"..i, nil )
 					vsoUseLounge( false, "occupant"..i )
