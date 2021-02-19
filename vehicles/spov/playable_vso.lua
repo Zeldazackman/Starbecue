@@ -1066,14 +1066,14 @@ function p.bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
-	local status = ""
-	local monsterstatus = ""
+	local status = nil
+	local monsterstatus = nil
 	local effect = 0
 	local hungereffect = 0
 	if p.bellyeffect == "digest" then
 		hungereffect = 1
 		if p.displaydamage then
-			tatus = "displaydamagedigest"
+			status = "displaydamagedigest"
 			monsterstatus = "displaydamagedigest"
 		else
 			effect = -1
@@ -1106,13 +1106,13 @@ function p.bellyEffects()
 				if status then
 					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
 				else
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"} )
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 				end
 			else
 				if monsterstatus then
 					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", monsterstatus } )
 				else
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"} )
+					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 				end
 			end
 

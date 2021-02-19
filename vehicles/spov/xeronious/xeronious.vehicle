@@ -108,6 +108,7 @@
 					"timing": "legs",
 					"chance": 5 // percent, ignored when driver has control
 				},
+				// non directional = not accessible via controls, except from script
 				"crouch": {
 					"animation": {
 						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
@@ -119,8 +120,6 @@
 					},
 					"state": "crouch"
 				},
-
-				// non directional = not accessible via controls, except from script
 				"eat": [ // array depends on occupants
 					{ // 0 occupants
 						"animation": {
@@ -260,10 +259,10 @@
 				"walkSpeed": 10,
 				"runSpeed": 20,
 				"swimSpeed" : 15,
-				"jumpStrength": 0,
+				"jumpStrength": 50,
 				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 0,
-				"jumpCount": 0,
+				"fullJumpStrength": 15,
+				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"primaryAction": {
@@ -341,9 +340,9 @@
 				"walkSpeed": 7,
 				"runSpeed": 7,
 				"swimSpeed" : 15,
-				"jumpStrength": 0,
+				"jumpStrength": 1,
 				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 0,
+				"fullJumpStrength": 1,
 				"jumpCount": 0,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,

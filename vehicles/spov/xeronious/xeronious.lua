@@ -136,7 +136,8 @@ function state_stand()
 	p.handleBelly()
 
 	local position = mcontroller.position()
-	if world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
+	if p.control.probablyOnGround()
+	and world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
 	and not world.rectCollision( {position[1]-3.5, position[2]-6, position[1]+3.5, position[2]-1 }, { "Null", "block", "slippery"} )
 	then
 		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
@@ -285,13 +286,11 @@ function state_crouch()
 	if not world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2]+0 }, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.control.driver, "down")
 	then
-		--[[
 		if not p.control.probablyOnGround() then
 			p.setState( "stand" )
 		else
-		]]--
 			p.doTransition( "uncrouch" )
-		--end
+		end
 	end
 
 end
