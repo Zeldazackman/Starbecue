@@ -1,0 +1,16 @@
+{
+  "name" : "damagedigest",
+  "blockingStat" : "digestionImmunity",
+
+  "effectConfig" : {},
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "damagedigest.lua"
+  ],
+
+  "animationConfig" : "damagedigest.animation",
+
+  "label" : "Being Digested",
+  "icon" : "/stats/stomachacid/stomachacid.png"
+}

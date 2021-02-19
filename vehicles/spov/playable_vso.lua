@@ -413,6 +413,7 @@ function p.onBegin()
 
 		local settings = config.getParameter( "settings" )
 		p.bellyeffect = settings.bellyeffect
+		p.displaydamage = settings.displaydamage
 	else
 		p.control.standalone = false
 		p.control.driver = "occupant1"
@@ -1043,23 +1044,46 @@ function p.bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
+	local status = ""
+	local monsterstatus = ""
 	local effect = 0
 	local hungereffect = 0
-	if p.bellyeffect == "digest" or p.bellyeffect == "softdigest" then
-		effect = -1
+	if p.bellyeffect == "digest" then
 		hungereffect = 1
+		if p.displaydamage then
+			local status = "displaydamagedigest"
+			local monsterstatus = "displaydamagedigest"
+		else
+			effect = -1
+			monsterstatus = "damagedigest"
+		end
+	elseif p.bellyeffect == "softdigest" then
+		hungereffect = 1
+		if p.displaydamage then
+			local status = "displaydamagesoftdigest"
+			local monsterstatus = "displaydamagesoftdigest"
+		else
+			effect = -1
+			monsterstatus = "damagesoftdigest"
+		end
 	elseif p.bellyeffect == "heal" then
 		effect = 1
+		monsterstatus = "heal"
 	end
 
 
 	for i = p.occupantOffset, p.maxOccupants do
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 		local eid = vsoGetTargetId( "occupant"..i ) --If I do this for some reason the monster prey gets released
-
 		local driver = vehicle.entityLoungingIn( "driver")
 
-		if effect ~= 0 and eid and world.entityExists(eid) then
+		-- none of this WORKS AAAAAAAAA
+		--if world.entityType( eid ) ~= "monster" then
+			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"  }  )
+		--else
+		--	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", ..monsterstatus } )
+		--end
+
+		if eid and world.entityExists(eid) then
 			local health_change = effect * vsoDelta()
 			local hunger_change = hungereffect * vsoDelta()
 			local health = world.entityHealth(eid)
@@ -1071,7 +1095,7 @@ function p.bellyEffects()
 			vsoResourceAddPercent( driver, "food", hunger_change)
 
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
-				if not still_alive and world.entityHealth(eid) == 0 then
+				if not still_alive and not world.entityHealth(eid)[1] > 0 and world.entityExists(eid) then
 					vsoUneat( "occupant"..i )
 					vsoSetTarget( "occupant"..i, nil )
 					vsoUseLounge( false, "occupant"..i )
