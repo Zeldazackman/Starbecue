@@ -1095,14 +1095,12 @@ function p.bellyEffects()
 
 
 	for i = p.occupantOffset, p.maxOccupants do
-		local eid = vsoGetTargetId( "occupant"..i ) --If I do this for some reason the monster prey gets released
+		local eid = vsoGetTargetId( "occupant"..i )
 		local driver = vehicle.entityLoungingIn( "driver")
-
-		-- none of this WORKS AAAAAAAAA
 
 
 		if eid and world.entityExists(eid) then
-			if world.entityType(eid) ~= "monster" then -- this fucking thing reaks it with those commented out its this
+			if world.entityType(eid) ~= "monster" then
 				if status then
 					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
 				else
