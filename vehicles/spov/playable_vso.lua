@@ -1077,13 +1077,13 @@ function p.bellyEffects()
 		local driver = vehicle.entityLoungingIn( "driver")
 
 		-- none of this WORKS AAAAAAAAA
-		--if world.entityType( eid ) ~= "monster" then
-			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle"  }  )
-		--else
-		--	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", ..monsterstatus } )
-		--end
+		if world.entityType(eid) ~= "monster" then -- this fucking thing reaks it with those commented out its this
+			--vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", "displaydamagedigest" }  ) --placeholder values because those break it too
+		else
+			--vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", "displaydamagesoftdigest" } )
+		end
 
-		if eid and world.entityExists(eid) then
+		if eid and world.entityExists(eid) and eid ~= nil then
 			local health_change = effect * vsoDelta()
 			local hunger_change = hungereffect * vsoDelta()
 			local health = world.entityHealth(eid)
