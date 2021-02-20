@@ -27,8 +27,7 @@ function init()
 	end )
 
 	message.setHandler("useEnergy", function( _, _, energyUsed)
-		status.overConsumeResource("energy", energyUsed)
-		return not status.resourceLocked("energy")
+		return status.overConsumeResource("energy", energyUsed)
 	end )
 
 end

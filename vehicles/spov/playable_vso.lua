@@ -964,7 +964,7 @@ function p.control.airMovement( dx )
 end
 
 function useEnergy(eid, cost)
-	return world.sendEntityMessage(eid, "useEnergy", cost)
+	return _add_vso_rpc(world.sendEntityMessage(eid, "useEnergy", cost))
 end
 
 function p.control.projectile( projectiledata, isAltFire )
