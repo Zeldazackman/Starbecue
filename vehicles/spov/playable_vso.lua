@@ -1107,7 +1107,7 @@ function p.bellyEffects()
 		end
 	elseif p.bellyeffect == "heal" then
 		effect = 1
-		monsterstatus = "heal"
+		monsterstatus = "voreheal"
 	end
 
 
