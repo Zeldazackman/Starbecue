@@ -61,7 +61,6 @@ p.movement = {
 	wasE = false,
 	primaryCooldown = 0,
 	altCooldown = 0,
-	canUseEnergy = true,
 	lastYVelocity = 0
 }
 
@@ -964,19 +963,18 @@ function p.control.airMovement( dx )
 	p.movement.airframes = p.movement.airframes + 1
 end
 
-function useEnergy(eid, cost)
-	_add_vso_rpc( world.sendEntityMessage(eid, "useEnergy", cost), function(result)
-		p.movement.canUseEnergy = result
-	end)
-	return p.movement.canUseEnergy
+function useEnergy(eid, cost, callback)
+	_add_vso_rpc( world.sendEntityMessage(eid, "useEnergy", cost), callback)
 end
 
 function p.control.projectile( projectiledata )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		if useEnergy(driver, projectiledata.cost) then
-			p.control.fireProjectile( projectiledata )
-		end
+		useEnergy(driver, projectiledata.cost, function(canUseEnergy)
+			if canUseEnergy then
+				p.control.fireProjectile( projectiledata )
+			end
+		end)
 	else
 		p.control.fireProjectile( projectiledata )
 	end
