@@ -22,7 +22,7 @@
   "animationCycle" : 1,
   "frameNumber" : 4,
   "damageKind" : "default",
-  "power": 0.1,
+  "power": 0.5,
   "knockback" : 10,
   "knockbackDirectional" : true,
   "timeToLive" : 1,

@@ -771,7 +771,7 @@ function p.control.primaryAction()
 	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
 		if p.movement.primaryCooldown < 1 then
 			if control.primaryAction.projectile ~= nil then
-				p.control.projectile(control.primaryAction.projectile)
+				p.control.projectile(control.primaryAction.projectile, false)
 			end
 			if control.primaryAction.animation ~= nil then
 				p.doAnims( control.primaryAction.animation )
@@ -780,7 +780,9 @@ function p.control.primaryAction()
 				local statescript = p.statescripts[p.state][control.primaryAction.script]
 				statescript() -- what arguments might this need?
 			end
-			p.movement.primaryCooldown = control.primaryAction.cooldown
+			if 	p.movement.primaryCooldown < 1 then
+				p.movement.primaryCooldown = control.primaryAction.cooldown
+			end
 		end
 	end
 	p.movement.primaryCooldown = p.movement.primaryCooldown - 1
@@ -790,7 +792,7 @@ function p.control.altAction()
 	if control.altAction ~= nil and vehicle.controlHeld( p.control.driver, "altFire" ) then
 		if p.movement.altCooldown < 1 then
 			if control.altAction.projectile ~= nil then
-				p.control.projectile(control.altAction.projectile)
+				p.control.projectile(control.altAction.projectile, true)
 			end
 			if control.altAction.animation ~= nil then
 				p.doAnims( control.altAction.animation )
@@ -799,7 +801,9 @@ function p.control.altAction()
 				local statescript = p.statescripts[p.state][control.altAction.script]
 				statescript() -- what arguments might this need?
 			end
-			p.movement.altCooldown = control.altAction.cooldown
+			if 	p.movement.altCooldown < 1 then
+				p.movement.altCooldown = control.altAction.cooldown
+			end
 		end
 	end
 	p.movement.altCooldown = p.movement.altCooldown - 1
@@ -959,16 +963,26 @@ function p.control.airMovement( dx )
 	p.movement.airframes = p.movement.airframes + 1
 end
 
-function p.control.projectile( projectiledata )
+function p.control.projectile( projectiledata, isAltFire )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		vsoResourceAddPercent( driver, "energy", -0.01*projectiledata.cost, function(still_got_energy)
+		vsoResourceAddPercent( driver, "energy", -projectiledata.cost, function(still_got_energy)
 			if still_got_energy then
 				p.control.shootProjectile( projectiledata )
+			else
+				setCooldowns(isAltFire)
 			end
 		end)
 	else
 		p.control.shootProjectile( projectiledata )
+	end
+end
+
+function setCooldowns(isAltFire)
+	if isAltFire then
+		p.movement.altCooldown = 100
+	else
+		p.movement.primaryCooldown = 100
 	end
 end
 

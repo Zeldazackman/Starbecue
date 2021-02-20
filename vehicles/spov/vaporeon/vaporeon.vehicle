@@ -239,7 +239,7 @@
 						"position": [ 2.75, -0.125 ],
 						"aimable": true,
 						"energy": true,
-						"cost": 20
+						"cost": 1
 					},
 					"cooldown": 0
 				},
@@ -827,7 +827,10 @@
 					"projectile": {
 						"name": "vapwatergun",
 						"position": [ 1.5, -0.625 ],
-						"aimable": true
+						"aimable": true,
+						"energy": true,
+						"cost": 1
+
 					},
 					"cooldown": 0
 				},
