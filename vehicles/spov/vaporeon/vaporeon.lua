@@ -166,6 +166,7 @@ function state_stand()
 				vsoEffectWarpOut()
 				if p.visualOccupants < 2 then
 					p.setState( "smol" )
+					p.doAnims( p.stateconfig.smol.idle, true )
 				else
 					vsoNext( "state_chonk_ball" )
 				end
@@ -338,6 +339,7 @@ function state_smol()
 			-- vsoAnim( "bodyState", "unsmolify" )
 			vsoEffectWarpIn()
 			p.setState( "stand" )
+			p.doAnims( p.stateconfig.stand.idle, true )
 		end
 		p.movement.wasspecial1 = true
 	else

@@ -155,7 +155,7 @@ function p.entityLounging( entity )
 end
 
 p.currentTags = {}
-function p.doAnims( anims, restart )
+function p.doAnims( anims, force )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
 			p.headbob( anim )
@@ -173,7 +173,7 @@ function p.doAnims( anims, restart )
 					animator.setPartTag( tag.part, tag.name, tag.value )
 				end
 			end
-		elseif restart then
+		elseif force then
 			vsoAnimReplay( state.."State", anim ) -- force that animation to restart
 		else
 			local oldPriority = (p.animStateData[state.."State"].states[vsoAnimCurr(state.."State") or "idle"] or {}).priority or 0
