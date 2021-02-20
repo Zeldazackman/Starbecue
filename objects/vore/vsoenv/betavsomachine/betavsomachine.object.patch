@@ -1,0 +1,12 @@
+[
+	{
+		"op": "add",
+		"path": "/interactData/items/-",
+		"value": { "item" : { "name" : "spovpilldonut"} }
+	},
+	{
+		"op": "add",
+		"path": "/interactData/items/-",
+		"value": { "item" : { "name" : "spovpilldiet"} }
+	}
+]

@@ -17,7 +17,7 @@ This extra large fishcat can eat up to 2 people at once, and comes with extra fe
 - Rolling over and laying on top of you in return;
 - Using its fluid nature to suck you directly into its stomach!
 
-Additionally, you can feed it the standard easy/anti-escape and heal/digest pills, along with a new fattening donut to make its belly a bit bigger without needing anyone inside. The donut and a diet pill to reverse its effect are purchasable in the same place as the other pills, of course.
+Additionally, you can feed it the standard easy/anti-escape and heal/digest pills, along with a new fattening donut to make its belly a bit bigger without needing anyone inside. The donut and a diet pill to reverse its effect are purchasable in the same places as the other pills, of course.
 
 Last but not least, even more functionality can be unlocked through the Playable VSO system (detailed more below), including walking around, shrinking smaller to fit through tight gaps, spraying water at your enemies, and more!
 
@@ -31,7 +31,7 @@ Special items can be purchased from the vendor at the food hall under the VSO ta
 
 Full use of this system requires you to bind Tech Action 2 and 3 in the options if they aren't already bound. We recommend the G and H keyes respectively, because they're right by F, and that's what they were back in really old versions of the game when they were actually used in vanilla.
 
-To eat people or npcs, simply walk up to them and use left-click to swipe at and grab them. This same action will also do some damage to monsters.  
+To eat people, npcs, or monsters, simply walk up to them and left-click on them to swipe at and grab them. This same action will also do some damage to enemies.  
 The same movement keys are also used to transition between different poses, like standing or sitting or sleeping, etc.  
 To let people out that you previously ate, simply press Tech Action 2 (G). Alternatively, you can let them out via the menu, accessible by pressing Tech Action 3 (H). This menu also has settings to heal/digest your prey, as well as automatically activating the tech when you warp to a different world, and the button to deactivate it when you want to return to your normal self.
 
