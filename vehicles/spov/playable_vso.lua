@@ -972,15 +972,20 @@ function p.control.projectile( projectiledata )
 	if projectiledata.energy and driver then
 		useEnergy(driver, projectiledata.cost, function(canUseEnergy)
 			if canUseEnergy then
-				p.control.fireProjectile( projectiledata )
+				p.control.fireProjectile( projectiledata, driver )
 			end
 		end)
 	else
-		p.control.fireProjectile( projectiledata )
+		p.control.fireProjectile( projectiledata, driver )
 	end
 end
 
-function p.control.fireProjectile( projectiledata )
+function getDriverStat(eid, stat, callback)
+	_add_vso_rpc( world.sendEntityMessage(eid, "getDriverStat", stat), callback)
+end
+
+
+function p.control.fireProjectile( projectiledata, driver )
 	local position = p.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
@@ -992,11 +997,16 @@ function p.control.fireProjectile( projectiledata )
 	else
 		direction = { self.vsoCurrentDirection, 0 }
 	end
-	local projectilesource = vehicle.entityLoungingIn(p.control.driver)
-	if not projectilesource then
-		projectilesource = entity.Id()
+	local params = {}
+
+	if driver then
+		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+			params.powerMultiplier = powerMultiplier
+			world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
+		end)
+	else
+		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
 	end
-	world.spawnProjectile( projectiledata.name, position, projectilesource, direction, true )
 end
 
 -------------------------------------------------------------------------------

@@ -30,4 +30,8 @@ function init()
 		return status.overConsumeResource("energy", energyUsed)
 	end )
 
+	message.setHandler("getDriverStat", function( _, _, stat)
+		return status.stat(stat)
+	end )
+
 end
