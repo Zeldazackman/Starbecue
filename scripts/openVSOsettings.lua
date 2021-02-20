@@ -25,4 +25,10 @@ function init()
 		local settings = player.getProperty( species.."Settings" ) or {}
 		world.spawnVehicle( "spov"..species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true } )
 	end )
+
+	message.setHandler("useEnergy", function( _, _, energyUsed)
+		status.overConsumeResource("energy", energyUsed)
+		return not status.resourceLocked("energy")
+	end )
+
 end

@@ -963,30 +963,16 @@ function p.control.airMovement( dx )
 	p.movement.airframes = p.movement.airframes + 1
 end
 
+function useEnergy(eid, cost)
+	return world.sendEntityMessage(eid, "useEnergy", cost)
+end
+
 function p.control.projectile( projectiledata, isAltFire )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		vsoResourceAddPercent( driver, "energy", -projectiledata.cost, function(still_got_energy)
-			if still_got_energy then
-				p.control.shootProjectile( projectiledata )
-			else
-				setCooldowns(isAltFire)
-			end
-		end)
-	else
-		p.control.shootProjectile( projectiledata )
+		if not useEnergy(driver, projectiledata.cost) then return end
 	end
-end
 
-function setCooldowns(isAltFire)
-	if isAltFire then
-		p.movement.altCooldown = 100
-	else
-		p.movement.primaryCooldown = 100
-	end
-end
-
-function p.control.shootProjectile( projectiledata )
 	local position = p.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
