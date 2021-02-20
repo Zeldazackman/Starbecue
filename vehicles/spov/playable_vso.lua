@@ -61,6 +61,7 @@ p.movement = {
 	wasE = false,
 	primaryCooldown = 0,
 	altCooldown = 0,
+	canUseEnergy = true,
 	lastYVelocity = 0
 }
 
@@ -771,7 +772,7 @@ function p.control.primaryAction()
 	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
 		if p.movement.primaryCooldown < 1 then
 			if control.primaryAction.projectile ~= nil then
-				p.control.projectile(control.primaryAction.projectile, false)
+				p.control.projectile(control.primaryAction.projectile)
 			end
 			if control.primaryAction.animation ~= nil then
 				p.doAnims( control.primaryAction.animation )
@@ -792,7 +793,7 @@ function p.control.altAction()
 	if control.altAction ~= nil and vehicle.controlHeld( p.control.driver, "altFire" ) then
 		if p.movement.altCooldown < 1 then
 			if control.altAction.projectile ~= nil then
-				p.control.projectile(control.altAction.projectile, true)
+				p.control.projectile(control.altAction.projectile)
 			end
 			if control.altAction.animation ~= nil then
 				p.doAnims( control.altAction.animation )
@@ -964,15 +965,24 @@ function p.control.airMovement( dx )
 end
 
 function useEnergy(eid, cost)
-	return _add_vso_rpc(world.sendEntityMessage(eid, "useEnergy", cost))
+	_add_vso_rpc( world.sendEntityMessage(eid, "useEnergy", cost), function(result)
+		p.movement.canUseEnergy = result
+	end)
+	return p.movement.canUseEnergy
 end
 
-function p.control.projectile( projectiledata, isAltFire )
+function p.control.projectile( projectiledata )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		if not useEnergy(driver, projectiledata.cost) then return end
+		if useEnergy(driver, projectiledata.cost) then
+			p.control.fireProjectile( projectiledata )
+		end
+	else
+		p.control.fireProjectile( projectiledata )
 	end
+end
 
+function p.control.fireProjectile( projectiledata )
 	local position = p.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
