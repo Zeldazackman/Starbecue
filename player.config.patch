@@ -2,6 +2,6 @@
 	{
 		"op": "add",
 		"path": "/companionsConfig/scripts/-",
-		"value": "/scripts/openVSOsettings.lua"
+		"value": "/scripts/ZSSVMA_player.lua"
 	}
 ]

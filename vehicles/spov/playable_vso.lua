@@ -597,8 +597,8 @@ function p.control.updateDriving()
 				end
 			end
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), "openVSOsettings",
-				entity.id(), occupants, p.maxOccupants, p.vsoMenuName
+				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
+				{ vso = entity.id(), occupants = occupants, maxOccupants = p.maxOccupants }, false, entity.id()
 			)
 		end
 	elseif p.occupants >= 1 then
