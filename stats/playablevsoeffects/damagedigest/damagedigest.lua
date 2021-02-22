@@ -4,7 +4,9 @@ function init()
 end
 
 function update(dt)
-  status.modifyResourcePercentage("health", -0.01 * dt)
+  local powerMultiplier = status.statusProperty("statusDigestRate", 1)
+
+  status.modifyResourcePercentage("health", -0.01 * dt * powerMultiplier)
 
 end
 

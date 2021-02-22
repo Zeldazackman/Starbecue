@@ -7,10 +7,12 @@ function init()
 end
 
 function update(dt)
+  local powerMultiplier = status.statusProperty("statusDigestRate", 1)
+
   self.cdt = self.cdt + dt
   if self.cdt < self.tickTime then return end -- wait until at least 1 second has passed
 
-  local damagecalc = status.resourceMax("health") * 0.01 * self.cdt + self.cdamage
+  local damagecalc = status.resourceMax("health") * 0.01 * powerMultiplier * self.cdt + self.cdamage
   if damagecalc < 1 then return end -- wait until at least 1 damage will be dealt
 
   self.cdt = 0

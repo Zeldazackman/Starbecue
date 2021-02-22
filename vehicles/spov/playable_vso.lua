@@ -1101,6 +1101,11 @@ function p.bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
 		vsoSound( "digest" )
 	end
+	local driver = vehicle.entityLoungingIn( "driver")
+
+	getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+
+	local powerMultiplier = powerMultiplier
 	local status = nil
 	local monsterstatus = nil
 	local effect = 0
@@ -1131,10 +1136,9 @@ function p.bellyEffects()
 
 	for i = p.occupantOffset, p.maxOccupants do
 		local eid = vsoGetTargetId( "occupant"..i )
-		local driver = vehicle.entityLoungingIn( "driver")
-
 
 		if eid and world.entityExists(eid) then
+			world.sendEntityMessage(eid, "sendDigestPower", powerMultiplier)
 			if world.entityType(eid) ~= "monster" then
 				if status then
 					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
@@ -1149,12 +1153,12 @@ function p.bellyEffects()
 				end
 			end
 
-			local health_change = effect * vsoDelta()
-			local hunger_change = hungereffect * vsoDelta()
+			local health_change = effect * powerMultiplier * vsoDelta()
+			local hunger_change = hungereffect * powerMultiplier * vsoDelta()
 			local health = world.entityHealth(eid)
 			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
 				health_change = (1 - health[1]) / health[2]
-				hungereffect = 0
+				hunger_change = 0
 			end
 
 			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
@@ -1168,6 +1172,7 @@ function p.bellyEffects()
 			end)
 		end
 	end
+	end)
 end
 
 function p.handleStruggles()
