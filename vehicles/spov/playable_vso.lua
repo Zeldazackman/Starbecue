@@ -1105,7 +1105,6 @@ function p.bellyEffects()
 
 	getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
 
-	local powerMultiplier = powerMultiplier
 	local status = nil
 	local monsterstatus = nil
 	local effect = 0
@@ -1138,18 +1137,14 @@ function p.bellyEffects()
 		local eid = vsoGetTargetId( "occupant"..i )
 
 		if eid and world.entityExists(eid) then
-			world.sendEntityMessage(eid, "sendDigestPower", powerMultiplier)
+			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 			if world.entityType(eid) ~= "monster" then
 				if status then
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", status }  )
-				else
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
+					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, driver )
 				end
 			else
 				if monsterstatus then
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle", monsterstatus } )
-				else
-					vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
+					world.sendEntityMessage( eid, "applyStatusEffect", monsterstatus, powerMultiplier, driver )
 				end
 			end
 

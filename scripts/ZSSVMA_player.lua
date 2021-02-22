@@ -42,10 +42,6 @@ function init()
 		return status.stat(stat)
 	end )
 
-	message.setHandler("sendDigestPower", function( _, _, powerMultiplier)
-		status.setStatusProperty("statusDigestRate", powerMultiplier)
-	end )
-
 	message.setHandler("unlockVSO", function(_,_, name )
 		local settings = player.getProperty( "vsoSettings", {} )
 		if settings.vsos == nil then settings.vsos = {} end

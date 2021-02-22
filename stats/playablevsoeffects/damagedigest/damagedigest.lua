@@ -1,12 +1,16 @@
 function init()
   script.setUpdateDelta(5)
+  self.powerMultiplier = effect.duration()
+
+  status.removeEphemeralEffect("damagesoftdigest")
+  status.removeEphemeralEffect("displaydamagesoftdigest")
+  status.removeEphemeralEffect("displaydamagedigest")
 
 end
 
 function update(dt)
-  local powerMultiplier = status.statusProperty("statusDigestRate", 1)
 
-  status.modifyResourcePercentage("health", -0.01 * dt * powerMultiplier)
+  status.modifyResourcePercentage("health", -0.01 * dt * self.powerMultiplier)
 
 end
 
