@@ -75,13 +75,15 @@ function p.updateOccupants()
 	p.occupants = 0
 	local lastFilled = true
 	for i = p.occupantOffset, p.maxOccupants do
-		if vsoGetTargetId( "occupant"..i ) then
+		local targetid = vsoGetTargetId( "occupant"..i )
+		if targetid and world.entityExists(targetid) then
 			p.occupants = p.occupants + 1
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
 			end
 			lastFilled = true
 		else
+			vsoClearTarget( "occupant"..i)
 			lastFilled = false
 		end
 	end
@@ -1005,6 +1007,7 @@ function p.control.fireProjectile( projectiledata, driver )
 			world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
 		end)
 	else
+		params.powerMultiplier = p.standalonePowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
 	end
 end
@@ -1103,8 +1106,25 @@ function p.bellyEffects()
 	end
 	local driver = vehicle.entityLoungingIn( "driver")
 
-	getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+	if driver then
+		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+			p.doBellyEffects(driver, powerMultiplier)
+		end)
+	else
+		local powerMultiplier = p.standalonePowerLevel()
+		p.doBellyEffects(nil, powerMultiplier)
+	end
+end
 
+function p.standalonePowerLevel()
+	local powerMultiplier = world.threatLevel()
+	if powerMultiplier < 1 then
+		powerMultiplier = 1
+	end
+	return powerMultiplier
+end
+
+function p.doBellyEffects(driver, powerMultiplier)
 	local status = nil
 	local monsterstatus = nil
 	local effect = 0
@@ -1159,7 +1179,7 @@ function p.bellyEffects()
 			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
 
 			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
-				if not still_alive and not (world.entityHealth(eid)[1] > 0) and world.entityExists(eid) then
+				if world.entityExists(eid) and not (still_alive and (world.entityHealth(eid)[1] > 0)) then
 					vsoUneat( "occupant"..i )
 					vsoSetTarget( "occupant"..i, nil )
 					vsoUseLounge( false, "occupant"..i )
@@ -1167,7 +1187,6 @@ function p.bellyEffects()
 			end)
 		end
 	end
-	end)
 end
 
 function p.handleStruggles()
