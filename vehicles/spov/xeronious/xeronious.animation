@@ -41,6 +41,9 @@
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -59,6 +62,9 @@
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 
 				}
@@ -72,6 +78,9 @@
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
 					"crouch": { "frames": 1, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+                    "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -231,6 +240,9 @@
 						"crouch": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
 						"crawl": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
 
+						"jump": { "properties": { "image": "spov/arms/arms_fg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/arms/arms_fg.png:fall.<frame><directives>" } },
+
                         "none": { "properties": {} }
 					}
                 }
@@ -252,6 +264,9 @@
 
 						"crouch": { "properties": { "image": "spov/arms/arms_bg.png:crawl.4<directives>" } },
 						"crawl": { "properties": { "image": "spov/arms/arms_bg.png:crawl.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/arms/arms_bg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/arms/arms_bg.png:fall.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
@@ -276,6 +291,9 @@
 						"crouch": { "properties": { "image": "spov/legs/legs_fg.png:crawl.4<directives>" } },
 						"crawl": { "properties": { "image": "spov/legs/legs_fg.png:crawl.<frame><directives>" } },
 
+						"jump": { "properties": { "image": "spov/legs/legs_fg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/legs/legs_fg.png:fall.<frame><directives>" } },
+
                         "none": { "properties": {} }
 					}
                 }
@@ -298,6 +316,9 @@
 
 						"crouch": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
 						"crawl": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/legs/legs_bg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/legs/legs_bg.png:fall.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}

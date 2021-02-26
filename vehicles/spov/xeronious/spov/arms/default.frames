@@ -7,12 +7,27 @@
 			[],
 			[ "run.1", "run.2", "run.3", "run.4", "run.5"],
 			[ "crawl.1", "crawl.2", "crawl.3", "crawl.4", "crawl.5", "crawl.6", "crawl.7", "crawl.8"],
-			[]
+			[ "fly.1", "fly.2", "fly.3", "fly.4", "fly.5"]
 		]
 	},
 	"aliases" : {
 		"run.6" : "run.4",
 		"run.7" : "run.3",
-		"run.8" : "run.2"
+		"run.8" : "run.2",
+
+		"jump.1" : "fly.1",
+		"jump.2" : "fly.2",
+		"jump.3" : "fly.3",
+		"jump.4" : "fly.4",
+
+		"fall.1" : "fly.4",
+		"fall.2" : "fly.3",
+		"fall.3" : "fly.2",
+		"fall.4" : "fly.1",
+
+		"fly.6" : "fly.4",
+		"fly.7" : "fly.3",
+		"fly.8" : "fly.2"
+
 	}
 }

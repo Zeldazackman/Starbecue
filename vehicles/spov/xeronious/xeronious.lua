@@ -137,8 +137,8 @@ function state_stand()
 
 	local position = mcontroller.position()
 	if p.control.probablyOnGround()
-	and world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
-	and not world.rectCollision( {position[1]-3.5, position[2]-6, position[1]+3.5, position[2]-1 }, { "Null", "block", "slippery"} )
+	and world.rectCollision( {position[1]-3.5, position[2]+4, position[1]+3.5, position[2]+1 }, { "Null", "block", "slippery"} )
+	and not world.rectCollision( {position[1]-3.5, position[2]-5, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
 	then
 		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
 		and vehicle.controlHeld( p.control.driver, "down") then
@@ -283,7 +283,7 @@ function state_crouch()
 	p.control.updateDriving()
 
 	local position = mcontroller.position()
-	if not world.rectCollision( {position[1]-3.5, position[2]+3, position[1]+3.5, position[2]+0 }, { "Null", "block", "slippery"} )
+	if not world.rectCollision( {position[1]-3.5, position[2]+4, position[1]+3.5, position[2]+1 }, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.control.driver, "down")
 	then
 		if not p.control.probablyOnGround() then
