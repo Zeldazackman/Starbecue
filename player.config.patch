@@ -3,5 +3,10 @@
 		"op": "add",
 		"path": "/companionsConfig/scripts/-",
 		"value": "/scripts/ZSSVMA_player.lua"
+	},
+	{
+		"op": "add",
+		"path": "/deploymentConfig/scripts/-",
+		"value": "/scripts/ZSSVMA_player_deployment.lua"
 	}
 ]

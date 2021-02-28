@@ -466,6 +466,8 @@ function p.onBegin()
 		end
 	end )
 	message.setHandler( "despawn", function(_,_, nowarpout)
+		local driver = vehicle.entityLoungingIn(p.control.driver)
+		world.sendEntityMessage(driver, "PVSOClear")
 		p.nowarpout = nowarpout
 		_vsoOnDeath()
 	end )
@@ -583,6 +585,16 @@ end
 p.control = {}
 
 function p.control.updateDriving()
+	local driver = vehicle.entityLoungingIn(p.control.driver)
+	if driver then
+		world.sendEntityMessage( driver, "PVSONightVision")
+		local aim = vehicle.aimPosition(p.control.driver)
+		local cursor = "/cursors/cursors.png:pointer"
+
+		world.sendEntityMessage( driver, "PVSOCursor", aim, cursor)
+	end
+
+
 	if p.control.standalone then
 		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.control.driving = true
