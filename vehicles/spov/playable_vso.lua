@@ -1139,29 +1139,23 @@ end
 function p.doBellyEffects(driver, powerMultiplier)
 	local status = nil
 	local monsterstatus = nil
-	local effect = 0
 	local hungereffect = 0
 	if p.bellyeffect == "digest" then
 		hungereffect = 1
 		if p.displaydamage then
 			status = "displaydamagedigest"
-			monsterstatus = "displaydamagedigest"
 		else
-			effect = -1
-			monsterstatus = "damagedigest"
+			status = "damagedigest"
 		end
 	elseif p.bellyeffect == "softdigest" then
 		hungereffect = 1
 		if p.displaydamage then
 			status = "displaydamagesoftdigest"
-			monsterstatus = "displaydamagesoftdigest"
 		else
-			effect = -1
-			monsterstatus = "damagesoftdigest"
+			status = "damagesoftdigest"
 		end
 	elseif p.bellyeffect == "heal" then
-		effect = 1
-		monsterstatus = "voreheal"
+		status = "voreheal"
 	end
 
 
@@ -1170,33 +1164,24 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 		if eid and world.entityExists(eid) then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
-			if world.entityType(eid) ~= "monster" then
-				if status then
-					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, driver )
-				end
-			else
-				if monsterstatus then
-					world.sendEntityMessage( eid, "applyStatusEffect", monsterstatus, powerMultiplier, driver )
-				end
+			if status then
+				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, driver )
 			end
 
-			local health_change = effect * powerMultiplier * vsoDelta()
+
 			local hunger_change = hungereffect * powerMultiplier * vsoDelta()
 			local health = world.entityHealth(eid)
-			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -health_change then
-				health_change = (1 - health[1]) / health[2]
-				hunger_change = 0
+			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -hunger_change then
+				hunger_change = (1 - health[1]) / health[2]
 			end
 
 			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
 
-			vsoResourceAddPercent( eid, "health", health_change, function(still_alive)
-				if world.entityExists(eid) and not (still_alive and (world.entityHealth(eid)[1] > 0)) then
-					vsoUneat( "occupant"..i )
-					vsoSetTarget( "occupant"..i, nil )
-					vsoUseLounge( false, "occupant"..i )
-				end
-			end)
+			if world.entityExists(eid) and not (world.entityHealth(eid)[1] > 0) then
+				vsoUneat( "occupant"..i )
+				vsoSetTarget( "occupant"..i, nil )
+				vsoUseLounge( false, "occupant"..i )
+			end
 		end
 	end
 end
