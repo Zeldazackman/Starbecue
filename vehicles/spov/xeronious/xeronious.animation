@@ -21,6 +21,9 @@
                     "eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
                     "escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+                    "shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
                     "s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
                     "s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
                     "s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
@@ -195,6 +198,9 @@
 						"eat": { "properties": { "image": "spov/body.png:<occupants>.belly.eat.<frame><directives><bellycrop>" } },
 						"escape": { "properties": { "image": "spov/body.png:<occupants>.belly.escape.<frame><directives><bellycrop>" } },
 
+						"expand": { "properties": { "image": "spov/body.png:<occupants>.belly.expand.<frame><directives><bellycrop>" } },
+						"shrink": { "properties": { "image": "spov/body.png:<occupants>.belly.shrink.<frame><directives><bellycrop>" } },
+
 						"s_back": { "properties": { "image": "spov/body.png:<occupants>.belly.s_back.<frame><directives><bellycrop>" } },
 						"s_front": { "properties": { "image": "spov/body.png:<occupants>.belly.s_front.<frame><directives><bellycrop>" } },
 						"s_up": { "properties": { "image": "spov/body.png:<occupants>.belly.s_up.<frame><directives><bellycrop>" } },
@@ -218,6 +224,9 @@
 
 						"eat": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.eat.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.escape.<frame><directives>" } },
+
+						"expand": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.expand.<frame><directives>" } },
+						"shrink": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.shrink.<frame><directives>" } },
 
 						"s_back": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/body_fg.png:<occupants>.belly.s_front.<frame><directives>" } },

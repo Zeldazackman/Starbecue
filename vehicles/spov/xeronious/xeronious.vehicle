@@ -389,6 +389,71 @@
 		},
 		"fly": {
 			"transitions": {
+				"analvore": [ // array depends on occupants
+					{ // 0 occupants
+						"animation": {
+							"body": "expand",
+							"legs": "idle",
+							"tail": "idle"
+						},
+						"victimAnimation": "playeranalvore",
+						"state": "fly",
+						"script": "analvore"
+					},
+					{ // 1 occupants
+						"animation": {
+							"body": "expand",
+							"legs": "idle",
+							"tail": "idle"
+						},
+						"victimAnimation": "playeranalvore",
+						"state": "fly",
+						"script": "analvore"
+					},
+					{ // 2 occupants
+						"animation": {
+							"body": "expand",
+							"legs": "idle",
+							"tail": "idle"
+						},
+						"victimAnimation": "playeranalvore",
+						"state": "fly",
+						"script": "analvore"
+					},
+
+					{}// can't eat with 3
+				],
+				"escapeanalvore": [
+					{}, // can't escape from 0
+					{ // 1 occupant
+						"animation": {
+							"body": "shrink",
+							"tail": "idle"
+						},
+						"victimAnimation": "escapeanalvore",
+						"state": "fly",
+						"script": "escapeanalvore"
+					},
+					{ // 2 occupants
+						"animation": {
+							"body": "shrink",
+							"tail": "idle"
+						},
+						"victimAnimation": "escapeanalvore",
+						"state": "fly",
+						"script": "escapeanalvore"
+					},
+					{ // 3 occupants
+						"animation": {
+							"body": "shrink",
+							"tail": "idle"
+						},
+						"victimAnimation": "escapeanalvore",
+						"state": "fly",
+						"script": "escapeanalvore"
+					}
+
+				]
 			},
 			"idle": {
 				"body": "idle",
@@ -413,11 +478,23 @@
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"primaryAction": {
-
+					"projectile": {
+						"name": "xeroniousbap",
+						"position": [ 3, -1.5 ],
+						"aimable": false
+					},
+					"cooldown": 30,
+					"script": "grabanalvore"
 				},
 				"altAction": {
-
+					"projectile": {
+						"name": "xeroniousinhale",
+						"position": [ 2.75, -0.125 ],
+						"aimable": true
+					},
+					"cooldown": 0
 				},
+
 				"animations": {
 					"fly": {
 						"arms": "fly",

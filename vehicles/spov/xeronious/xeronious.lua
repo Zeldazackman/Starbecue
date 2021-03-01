@@ -311,12 +311,84 @@ end
 
 -------------------------------------------------------------------------------
 
+p.registerStateScript( "fly", "analvore", function( args )
+	if p.entityLounging( args.id ) then return end
+	if p.visualOccupants == p.maxOccupants then
+		sb.logError("[Xeronious] Can't eat more than two people!")
+		return false
+	end
+	local i = p.visualOccupants + 1
+	vsoSetTarget( i, args.id )
+	if p.eat( vsoGetTargetId( i ), i ) then
+		vsoMakeInteractive( false )
+		p.showEmote("emotehappy")
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+		return true, function()
+			vsoMakeInteractive( true )
+			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
+			vsoSound( "swallow" )
+		end
+	else
+		vsoSetTarget( i, nil )
+		return false
+	end
+end)
+
+p.registerStateScript( "fly", "escapeanalvore", function( args )
+	if p.occupants == 0 then
+		sb.logError( "[Xeronious] No one to let out!" )
+		return false
+	end
+	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+
+	return true, function()
+		vsoMakeInteractive( true )
+		p.uneat( i )
+		vsoApplyStatus( victim, "droolsoaked", 5.0 );
+	end
+end)
+
+p.registerStateScript( "fly", "grabanalvore", function()
+	local position = mcontroller.position()
+	position = {position[1], position[2]-3}
+
+	if p.visualOccupants < p.maxOccupants then
+		local prey = world.entityQuery(position, 3, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
+		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
+		if #prey > 0 then
+			for i = 1, #prey do
+				if prey[i] == entityaimed[1] then
+					animator.setGlobalTag( "bap", "" )
+					p.doTransition( "analvore", {id=prey[i]} )
+				end
+			end
+		end
+	end
+end)
+
+
 function state_fly()
+	p.doAnims(p.stateconfig[p.state].control.animations.fly)
 
 	p.idleStateChange()
 	p.handleBelly()
+	p.control.primaryAction()
+	p.control.altAction()
+	p.control.interact()
 
-	p.doAnims(p.stateconfig[p.state].control.animations.fly)
 
 	local control = p.stateconfig[p.state].control
 	local dx = 0
