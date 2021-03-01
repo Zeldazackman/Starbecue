@@ -165,14 +165,12 @@ function state_stand()
 		else
 			p.movement.wasspecial1 = false
 		end
-		if vehicle.controlHeld( p.control.driver, "jump" ) then
-			p.movement.spaceframes = p.movement.spaceframes +1
-		else
-			if p.movement.spaceframes > 0 and p.movement.spaceframes < 10 and not p.control.probablyOnGround() then
-				p.setState( "fly" )
-			end
-			p.movement.spaceframes = 0
+
+		if vehicle.controlHeld( p.control.driver, "jump" ) and p.movement.airframes > 10 and not p.movement.jumped then
+			p.movement.jumped = true
+			p.setState( "fly" )
 		end
+
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
 			if p.occupants > 0 then
 				p.doTransition( "escape", {index=p.occupants} ) -- last eaten
@@ -319,6 +317,49 @@ function state_fly()
 	p.handleBelly()
 
 	p.doAnims(p.stateconfig[p.state].control.animations.fly)
+
+	local control = p.stateconfig[p.state].control
+	local dx = 0
+	local dy = 0
+
+	if vehicle.controlHeld( p.control.driver, "left" ) then
+		dx = dx - 1
+	end
+	if vehicle.controlHeld( p.control.driver, "right" ) then
+		dx = dx + 1
+	end
+	if vehicle.controlHeld( p.control.driver, "up" ) then
+		dy = dy + 1
+	end
+	if vehicle.controlHeld( p.control.driver, "down" ) then
+		dy = dy - 1
+	end
+
+	local running = false
+	if p.visualOccupants < control.fullThreshold then --add walk control here when we have more controls
+		running = true
+	end
+	if dx ~= 0 then
+		vsoFaceDirection( dx )
+	end
+	local controlForce = 100
+	if running then
+		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
+		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
+	else
+		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
+		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
+	end
+
+
+	if vehicle.controlHeld( p.control.driver, "jump" ) then
+		if not p.movement.jumped then
+			p.setState( "stand" )
+		end
+		p.movement.jumped = true
+	else
+		p.movement.jumped = false
+	end
 
 	p.control.updateDriving()
 end

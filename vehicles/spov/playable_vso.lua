@@ -204,6 +204,7 @@ function p.headbob( data )
 		x = data and data.x or {0},
 		y = data and data.y or {0},
 		body = data and data.body or false,
+		legs = data and data.legs or false,
 		timing = data.timing or "body"
 	}
 	vsoTransAnimUpdate( "headbob", 0 )
@@ -267,6 +268,12 @@ function vsoTransAnimUpdate( transformname, dt )
 		else
 			vsoTransMoveTo( "bodybob", 0, 0 )
 		end
+		if p.headbobbing.legs then
+			vsoTransMoveTo( "legsbob", x / 8, y / 8 )
+		else
+			vsoTransMoveTo( "legsbob", 0, 0 )
+		end
+
 	elseif transformname == "rotation" then
 		if p.rotating == nil or not p.rotating.enabled then return end
 		local state = p.rotating.timing.."State"

@@ -53,6 +53,8 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"fly": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
@@ -74,6 +76,7 @@
                 "default": "idle",
                 "states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
                     "sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
@@ -279,11 +282,13 @@
                 "properties": {
                     "centered": true,
                     "zLevel": 3,
-                     "transformationGroups": ["flip"]
+                     "transformationGroups": ["flip", "legsbob"]
                 },
                 "partStates": {
                     "legsState": {
-                        "idle": { "properties": { "image": "spov/legs/legs_fg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/legs/legs_fg.png:idle.<frame><directives>" } },
+                        "sit": { "properties": { "image": "spov/legs/legs_fg.png:sit.<frame><directives>" } },
+                        "fly": { "properties": { "image": "spov/legs/legs_fg.png:fly.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/legs/legs_fg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_fg.png:standup.<frame><directives>" } },
@@ -305,11 +310,13 @@
                 "properties": {
                     "centered": true,
                     "zLevel": -2,
-                     "transformationGroups": ["flip"]
+                     "transformationGroups": ["flip", "legsbob"]
                 },
                 "partStates": {
                     "legsState": {
-                        "idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<frame><directives>" } },
+                        "sit": { "properties": { "image": "spov/legs/legs_bg.png:sit.<frame><directives>" } },
+                        "fly": { "properties": { "image": "spov/legs/legs_bg.png:fly.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/legs/legs_bg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_bg.png:standup.<frame><directives>" } },
@@ -336,8 +343,8 @@
                 "partStates": {
                     "tailState": {
                         "idle": { "properties": { "image": "spov/tail.png:idle.<frame><directives>" } },
-
                         "sit": { "properties": { "image": "spov/tail.png:sit.<frame><directives>" } },
+                        "fly": { "properties": { "image": "spov/tail.png:fly.<frame><directives>" } },
 
 						"crouch": { "properties": { "image": "spov/tail.png:crouch.<frame><directives>" } },
 
@@ -381,6 +388,9 @@
 			"interpolated": false
 		},
 		"bodybob": {
+			"interpolated": false
+		},
+		"legsbob": {
 			"interpolated": false
 		},
 		"frontarmrotation": {

@@ -130,8 +130,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -148,8 +148,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -166,8 +166,8 @@
 							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -260,7 +260,7 @@
 				"runSpeed": 20,
 				"swimSpeed" : 15,
 				"jumpStrength": 50,
-				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullThreshold": 3, // 3 (or more) occupants and it uses fulljumpstrength and can't run
 				"fullJumpStrength": 15,
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
@@ -391,10 +391,9 @@
 			"transitions": {
 			},
 			"idle": {
-				"offset": { "x": [0], "y": [0], "body": false },
 				"body": "idle",
 				"arms": "fly",
-				"legs": "idle",
+				"legs": "fly",
 				"head": "idle",
 				"tail": "idle"
 			},
@@ -403,12 +402,13 @@
 				{ "head": "idle" }
 			],
 			"control": {
-				"walkSpeed": 7,
-				"runSpeed": 7,
+				"walkSpeed": 10,
+				"runSpeed": 20,
 				"swimSpeed" : 15,
 				"jumpStrength": 1,
-				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullThreshold": 3, // 3 (or more) occupants and it uses fulljumpstrength and can't run
 				"fullJumpStrength": 1,
+				"fullWeights" : [1, 6, 11, 17],
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
@@ -420,12 +420,16 @@
 				},
 				"animations": {
 					"fly": {
-						"arms": "fly"
+						"arms": "fly",
+						"offset": {
+							"y": [1, 2, 3, 4, 3, 2, 1, 0],
+							"body": true,
+							"legs": true,
+							"timing": "arms" }
 					}
 				}
 			}
 		},
-
 		"sit": {
 			"transitions": {
 				"up": {
@@ -446,13 +450,11 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -464,13 +466,11 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -482,13 +482,11 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 								]
 							}
 						},
@@ -504,10 +502,7 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -516,10 +511,7 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -528,10 +520,7 @@
 					{ // 3 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -549,9 +538,9 @@
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
 				"body": "idle",
 				"arms": "idle",
-				"legs": "idle",
+				"legs": "sit",
 				"head": "idle",
-				"tail": "idle",
+				"tail": "sit",
 				"tags": [
 					{
 						"owner": "body",
@@ -610,9 +599,7 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
@@ -628,9 +615,7 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
@@ -646,9 +631,7 @@
 						"animation": {
 							"body": "eat",
 							"arms": "rotation",
-							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
@@ -667,10 +650,7 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -679,10 +659,7 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -691,10 +668,7 @@
 					{ // 3 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "sit",
@@ -707,9 +681,9 @@
 				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
 				"body": "idle",
 				"arms": "hug",
-				"legs": "idle",
+				"legs": "sit",
 				"head": "idle",
-				"tail": "idle",
+				"tail": "sit",
 				"tags": [
 					{
 						"owner": "body",

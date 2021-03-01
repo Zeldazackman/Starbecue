@@ -23,11 +23,7 @@
 		"fall.1" : "fly.3",
 		"fall.2" : "fly.2",
 		"fall.3" : "fly.1",
-		"fall.4" : "fly.8",
-
-		"fly.6" : "fly.4",
-		"fly.7" : "fly.3",
-		"fly.8" : "fly.2"
+		"fall.4" : "fly.8"
 
 	}
 }

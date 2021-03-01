@@ -430,6 +430,9 @@
 		},
 		"bodybob": {
 			"interpolated": false
+		},
+		"legsbob": {
+			"interpolated": false
 		}
 	},
 	"sounds": {
