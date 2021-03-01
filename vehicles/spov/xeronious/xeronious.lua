@@ -51,6 +51,8 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_sit", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
 
+	vsoOnInteract( "state_fly", p.onInteraction )
+
 	vsoOnBegin( "state_crouch", begin_state_crouch )
 	vsoOnEnd( "state_crouch", end_state_crouch )
 
@@ -162,6 +164,14 @@ function state_stand()
 			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
 		else
 			p.movement.wasspecial1 = false
+		end
+		if vehicle.controlHeld( p.control.driver, "jump" ) then
+			p.movement.spaceframes = p.movement.spaceframes +1
+		else
+			if p.movement.spaceframes > 0 and p.movement.spaceframes < 10 and not p.control.probablyOnGround() then
+				p.setState( "fly" )
+			end
+			p.movement.spaceframes = 0
 		end
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
 			if p.occupants > 0 then
@@ -299,6 +309,18 @@ function end_state_crouch()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 	p.movement.downframes = 11
 
+end
+
+-------------------------------------------------------------------------------
+
+function state_fly()
+
+	p.idleStateChange()
+	p.handleBelly()
+
+	p.doAnims(p.stateconfig[p.state].control.animations.fly)
+
+	p.control.updateDriving()
 end
 
 -------------------------------------------------------------------------------

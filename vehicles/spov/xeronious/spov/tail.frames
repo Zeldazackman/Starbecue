@@ -3,14 +3,11 @@
 		"size" : [96, 96],
 		"dimensions" : [8, 1],
 		"names" : [
-			[ "idle.stand.1", "idle.sit.1", "standup.1", "standup.2", "crouch.1", null, null, "empty.1" ]
+			[ "idle.1", "sit.1", "standup.1", "standup.2", "crouch.1", null, null, "empty.1" ]
 		]
 	},
 	"aliases" : {
 		"sitdown.1" : "standup.2",
-		"sitdown.2" : "standup.1",
-		"idle.hug.1" : "idle.sit.1",
-		"idle.crouch.1" : "idle.stand.1"
-
+		"sitdown.2" : "standup.1"
 	}
 }

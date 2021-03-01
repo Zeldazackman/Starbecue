@@ -43,6 +43,7 @@
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
                     "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"fly": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -242,6 +243,7 @@
 
 						"jump": { "properties": { "image": "spov/arms/arms_fg.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/arms/arms_fg.png:fall.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
@@ -267,6 +269,7 @@
 
 						"jump": { "properties": { "image": "spov/arms/arms_bg.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/arms/arms_bg.png:fall.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
@@ -332,7 +335,9 @@
                 },
                 "partStates": {
                     "tailState": {
-                        "idle": { "properties": { "image": "spov/tail.png:idle.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/tail.png:idle.<frame><directives>" } },
+
+                        "sit": { "properties": { "image": "spov/tail.png:sit.<frame><directives>" } },
 
 						"crouch": { "properties": { "image": "spov/tail.png:crouch.<frame><directives>" } },
 

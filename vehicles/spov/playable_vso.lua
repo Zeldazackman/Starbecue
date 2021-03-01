@@ -53,6 +53,7 @@ p.movement = {
 	waswater = false,
 	bapped = 0,
 	downframes = 0,
+	spaceframes = 0,
 	groundframes = 0,
 	airframes = 0,
 	run = false,

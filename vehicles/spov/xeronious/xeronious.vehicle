@@ -387,6 +387,45 @@
 				}
 			}
 		},
+		"fly": {
+			"transitions": {
+			},
+			"idle": {
+				"offset": { "x": [0], "y": [0], "body": false },
+				"body": "idle",
+				"arms": "fly",
+				"legs": "idle",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "idle" }
+			],
+			"control": {
+				"walkSpeed": 7,
+				"runSpeed": 7,
+				"swimSpeed" : 15,
+				"jumpStrength": 1,
+				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullJumpStrength": 1,
+				"jumpCount": 1,
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
+				"primaryAction": {
+
+				},
+				"altAction": {
+
+				},
+				"animations": {
+					"fly": {
+						"arms": "fly"
+					}
+				}
+			}
+		},
+
 		"sit": {
 			"transitions": {
 				"up": {
