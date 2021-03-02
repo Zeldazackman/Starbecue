@@ -258,7 +258,7 @@
 					"normal": { "min": 5, "max": 15 },
 					"antiescape": { "min": 10, "max": 20 }
 				},
-				"lookAnimation": true
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": [ // array depends on occupants
@@ -445,7 +445,8 @@
 						"animation": {
 							"body": "expand",
 							"arms": "fly2",
-							"legs": "idle",
+							"legs": "analvore",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "playeranalvore",
@@ -456,7 +457,8 @@
 						"animation": {
 							"body": "expand",
 							"arms": "fly2",
-							"legs": "idle",
+							"legs": "analvore",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "playeranalvore",
@@ -467,7 +469,8 @@
 						"animation": {
 							"body": "expand",
 							"arms": "fly2",
-							"legs": "idle",
+							"legs": "analvore",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "playeranalvore",
@@ -483,6 +486,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -493,6 +497,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -503,6 +508,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
+							"head": "AVlook",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -523,6 +529,19 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"struggle": {
+				"up": { "transition": "escape" },
+				"front": { "transition": "escape" },
+				"back": { "transition": "down" },
+				"down": { "transition": "escapeanalvore" },
+				"chances": {
+					"easyescape": { "min": 2, "max": 5 },
+					"normal": { "min": 5, "max": 15 },
+					"antiescape": { "min": 10, "max": 20 }
+				},
+				"animation": { "head": "look" }
+			},
+
 			"control": {
 				"walkSpeed": 10,
 				"runSpeed": 20,
@@ -817,7 +836,7 @@
 				"body": "idle",
 				"arms": "hug",
 				"legs": "sit",
-				"head": "idle",
+				"head": "look",
 				"tail": "sit",
 				"tags": [
 					{
@@ -831,7 +850,7 @@
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "head": "idle" }
+				{ "head": "look" }
 			],
 			"struggle": {
 				"up": { "transition": "up" },
@@ -843,7 +862,7 @@
 					"normal": { "min": 5, "max": 15 },
 					"antiescape": { "min": 10, "max": 20 }
 				},
-				"lookAnimation": true
+				"animation": { "head": "look" }
 			},
 			"interact": {
 				"front": [ // array depends on occupants

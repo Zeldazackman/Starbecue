@@ -63,6 +63,8 @@
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
+					"analvore": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
+
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
                     "run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
@@ -97,9 +99,10 @@
 			"headState": {
                 "default": "idle",
                 "states": {
-
-					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"blink": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1 },
+					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"blink": { "frames": 2, "cycle": 3, "mode": "end", "priority": 1 },
+					"look": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
+					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 1 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -302,6 +305,8 @@
                         "sit": { "properties": { "image": "spov/legs/legs_fg.png:sit.<frame><directives>" } },
                         "fly": { "properties": { "image": "spov/legs/legs_fg.png:fly.<frame><directives>" } },
 
+						"analvore": { "properties": { "image": "spov/legs/legs_fg.png:analvore.<frame><directives>" } },
+
 						"sitdown": { "properties": { "image": "spov/legs/legs_fg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_fg.png:standup.<frame><directives>" } },
 
@@ -329,6 +334,8 @@
                         "idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<frame><directives>" } },
                         "sit": { "properties": { "image": "spov/legs/legs_bg.png:sit.<frame><directives>" } },
                         "fly": { "properties": { "image": "spov/legs/legs_bg.png:fly.<frame><directives>" } },
+
+						"analvore": { "properties": { "image": "spov/legs/legs_bg.png:analvore.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/legs/legs_bg.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/legs/legs_bg.png:standup.<frame><directives>" } },
@@ -378,6 +385,8 @@
                     "headState": {
                         "idle": { "properties": { "image": "spov/head.png:idle.<frame><directives>" } },
                         "blink": { "properties": { "image": "spov/head.png:blink.<frame><directives>" } },
+                        "look": { "properties": { "image": "spov/head.png:look.<frame><directives>" } },
+						"AVlook": { "properties": { "image": "spov/head.png:AVlook.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
