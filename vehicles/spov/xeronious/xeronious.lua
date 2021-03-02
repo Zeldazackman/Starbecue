@@ -310,7 +310,7 @@ p.registerStateScript( "fly", "analvore", function( args )
 	if p.eat( vsoGetTargetId( i ), i ) then
 		vsoMakeInteractive( false )
 		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
 		return true, function()
 			vsoMakeInteractive( true )
 			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
@@ -334,7 +334,7 @@ p.registerStateScript( "fly", "escapeanalvore", function( args )
 		return false
 	end
 	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
+	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
 
 	return true, function()
 		vsoMakeInteractive( true )
