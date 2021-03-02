@@ -95,6 +95,15 @@
 				"ignorePlatformCollision" : false
 			}
 		},
+		"lights" : {
+			"driver" : {
+			"color" : [100, 100, 100]
+			},
+			"prey" : {
+			"color" : [50, 50, 50]
+			}
+		},
+
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config"
 	},
 

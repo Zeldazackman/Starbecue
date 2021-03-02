@@ -7,11 +7,11 @@ function init()
 		localAnimator.clearLightSources()
 	end)
 
-	message.setHandler("PVSONightVision", function(_,_)
+	message.setHandler("PVSONightVision", function(_,_, light)
 		localAnimator.clearLightSources()
 		localAnimator.addLightSource({
 			position = entity.position(),
-			color = {100, 100, 100},
+			color = light.color,
 			pointLight = true
 		  })
 	end)

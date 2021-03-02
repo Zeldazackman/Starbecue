@@ -359,6 +359,7 @@ function p.uneat( seatindex )
 		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
 		p.smolpreyspecies[seatindex] = nil
 	end
+	world.sendEntityMessage( targetid, "PVSOClear")
 	vsoClearTarget( "occupant"..seatindex)
 	vsoUneat( "occupant"..seatindex )
 	p.smolprey( seatindex ) -- clear
@@ -621,7 +622,7 @@ p.control = {}
 function p.control.updateDriving()
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if driver then
-		world.sendEntityMessage( driver, "PVSONightVision")
+		world.sendEntityMessage( driver, "PVSONightVision", self.cfgVSO.lights.driver)
 		local aim = vehicle.aimPosition(p.control.driver)
 		local cursor = "/cursors/cursors.png:pointer"
 
@@ -1198,6 +1199,8 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 		if eid and world.entityExists(eid) then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
+			world.sendEntityMessage( eid, "PVSONightVision", self.cfgVSO.lights.prey)
+
 			if status then
 				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() )
 			end

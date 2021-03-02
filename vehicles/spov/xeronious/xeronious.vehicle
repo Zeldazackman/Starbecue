@@ -103,6 +103,16 @@
 			}
 
 		},
+
+		"lights" : {
+			"driver" : {
+			"color" : [100, 100, 100]
+			},
+			"prey" : {
+			"color" : [50, 50, 50]
+			}
+		},
+
 		"victimAnimations": "/vehicles/spov/xeronious/victim_animations.config"
 	},
 
