@@ -23,7 +23,26 @@
 		"fall.1" : "fly.3",
 		"fall.2" : "fly.2",
 		"fall.3" : "fly.1",
-		"fall.4" : "fly.8"
+		"fall.4" : "fly.8",
+
+
+		"fly.9" : "fly.1",
+		"fly.10" : "fly.2",
+		"fly.11" : "fly.3",
+		"fly.12" : "fly.4",
+		"fly.13" : "fly.3",
+		"fly.14" : "fly.2",
+		"fly.15" : "fly.1",
+		"fly.16" : "fly.8",
+		"fly.17" : "fly.1",
+		"fly.18" : "fly.2",
+		"fly.19" : "fly.3",
+		"fly.20" : "fly.4",
+		"fly.21" : "fly.3",
+		"fly.22" : "fly.2",
+		"fly.23" : "fly.1",
+		"fly.24" : "fly.8"
+
 
 	}
 }

@@ -47,6 +47,7 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
                     "fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fly": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"fly2": { "frames": 16, "cycle": 1.5, "mode": "end", "priority": 0 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -256,6 +257,7 @@
 						"jump": { "properties": { "image": "spov/arms/arms_fg.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/arms/arms_fg.png:fall.<frame><directives>" } },
 						"fly": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
+						"fly2": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
@@ -282,6 +284,7 @@
 						"jump": { "properties": { "image": "spov/arms/arms_bg.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/arms/arms_bg.png:fall.<frame><directives>" } },
 						"fly": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
+						"fly2": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}

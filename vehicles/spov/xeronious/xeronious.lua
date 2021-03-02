@@ -156,8 +156,10 @@ function state_stand()
 		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
 		and vehicle.controlHeld( p.control.driver, "down") then
 			p.doTransition( "crouch" )
+			return
 		elseif p.autocrouch or not p.control.driving then
 			p.doTransition( "crouch" )
+			return
 		end
 	end
 
@@ -178,8 +180,8 @@ function state_stand()
 		end
 
 		if vehicle.controlHeld( p.control.driver, "jump" ) and p.movement.airframes > 10 and not p.movement.jumped then
-			p.movement.jumped = true
 			p.setState( "fly" )
+			return
 		end
 
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
@@ -271,8 +273,10 @@ function state_crouch()
 	then
 		if not p.control.probablyOnGround() then
 			p.setState( "stand" )
+			return
 		else
 			p.doTransition( "uncrouch" )
+			return
 		end
 	end
 
@@ -288,6 +292,7 @@ end
 
 function begin_state_fly()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.fly )
+	p.movement.jumped = true
 end
 
 p.registerStateScript( "fly", "letout", function( args )
@@ -369,6 +374,11 @@ function state_fly()
 	p.idleStateChange()
 	p.handleBelly()
 
+	if p.visualOccupants >= p.maxOccupants and p.control.probablyOnGround() then
+		p.setState( "stand" )
+		return
+	end
+
 
 	local control = p.stateconfig[p.state].control
 	local dx = 0
@@ -410,8 +420,8 @@ function state_fly()
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not p.movement.jumped then
 			p.setState( "stand" )
+			return
 		end
-		p.movement.jumped = true
 	else
 		p.movement.jumped = false
 	end
@@ -422,11 +432,11 @@ function state_fly()
 		end
 	end
 
-
 	p.control.updateDriving()
 end
 
-function end_state_crouch()
+function end_state_fly()
+	p.movement.jumped = true
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 end
 

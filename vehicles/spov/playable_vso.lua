@@ -585,7 +585,9 @@ function state__ptransition()
 			p.doAnims( p.stateconfig[p.state].idle )
 		end
 	end
-	p.control.doPhysics()
+	if not p.stateconfig[p.state].noPhysicsTransition then
+		p.control.doPhysics()
+	end
 end
 
 -------------------------------------------------------------------------------

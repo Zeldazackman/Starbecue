@@ -404,13 +404,14 @@
 			}
 		},
 		"fly": {
+			"noPhysicsTransition" : true,
 			"transitions": {
 				"escape": [
 					{}, // can't escape from 0
 					{ // 1 occupant
 						"animation": {
 							"body": "escape",
-							"arms": "fly",
+							"arms": "fly2",
 							"head": "none"
 						},
 						"victimAnimation": "escape",
@@ -420,7 +421,7 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "fly",
+							"arms": "fly2",
 							"head": "none"
 						},
 						"victimAnimation": "escape",
@@ -430,7 +431,7 @@
 					{ // 3 occupants
 						"animation": {
 							"body": "escape",
-							"arms": "fly",
+							"arms": "fly2",
 							"head": "none"
 						},
 						"victimAnimation": "escape",
@@ -443,7 +444,7 @@
 					{ // 0 occupants
 						"animation": {
 							"body": "expand",
-							"arms": "fly",
+							"arms": "fly2",
 							"legs": "idle",
 							"tail": "idle"
 						},
@@ -454,7 +455,7 @@
 					{ // 1 occupants
 						"animation": {
 							"body": "expand",
-							"arms": "fly",
+							"arms": "fly2",
 							"legs": "idle",
 							"tail": "idle"
 						},
@@ -465,7 +466,7 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "expand",
-							"arms": "fly",
+							"arms": "fly2",
 							"legs": "idle",
 							"tail": "idle"
 						},
@@ -481,7 +482,7 @@
 					{ // 1 occupant
 						"animation": {
 							"body": "shrink",
-							"arms": "fly",
+							"arms": "fly2",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -491,7 +492,7 @@
 					{ // 2 occupants
 						"animation": {
 							"body": "shrink",
-							"arms": "fly",
+							"arms": "fly2",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -501,7 +502,7 @@
 					{ // 3 occupants
 						"animation": {
 							"body": "shrink",
-							"arms": "fly",
+							"arms": "fly2",
 							"tail": "idle"
 						},
 						"victimAnimation": "escapeanalvore",
@@ -556,6 +557,7 @@
 						"arms": "fly",
 						"offset": {
 							"y": [1, 2, 3, 4, 3, 2, 1, 0],
+							"loop": true,
 							"body": true,
 							"legs": true,
 							"timing": "arms" }
