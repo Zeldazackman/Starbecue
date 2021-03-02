@@ -19,10 +19,7 @@ Scripts created by:
 
 TODO:
 	-roaming behavior
-	-jump
-	-fly
 	-leg grab
-	-anal vore
 
 Pending features:
 	Extra functions
@@ -56,6 +53,9 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnBegin( "state_crouch", begin_state_crouch )
 	vsoOnEnd( "state_crouch", end_state_crouch )
 
+	vsoOnBegin( "state_fly", begin_state_fly )
+	vsoOnEnd( "state_fly", end_state_fly )
+
 end
 
 function onEnd()
@@ -66,7 +66,7 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "eat", function( args )
+function eatOral(args)
 	if p.entityLounging( args.id ) then return end
 	if p.visualOccupants == p.maxOccupants then
 		sb.logError("[Xeronious] Can't eat more than two people!")
@@ -87,8 +87,9 @@ p.registerStateScript( "stand", "eat", function( args )
 		vsoSetTarget( i, nil )
 		return false
 	end
-end)
-p.registerStateScript( "stand", "letout", function( args )
+end
+
+function letOutOral( args )
 	if p.occupants == 0 then
 		sb.logError( "[Xeronious] No one to let out!" )
 		return false
@@ -107,6 +108,16 @@ p.registerStateScript( "stand", "letout", function( args )
 		p.uneat( i )
 		vsoApplyStatus( victim, "droolsoaked", 5.0 );
 	end
+end
+
+-------------------------------------------------------------------------------
+
+
+p.registerStateScript( "stand", "eat", function( args )
+	return eatOral(args)
+end)
+p.registerStateScript( "stand", "letout", function( args )
+	return letOutOral(args)
 end)
 
 p.registerStateScript( "stand", "bapeat", function()
@@ -194,46 +205,10 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "sit", "eat", function( args )
-	if p.entityLounging( args.id ) then return end
-	if p.visualOccupants == p.maxOccupants then
-		sb.logError("[Xeronious] Can't eat more than two people!")
-		return false
-	end
-	local i = p.visualOccupants + 1
-	vsoSetTarget( i, args.id )
-	if p.eat( vsoGetTargetId( i ), i ) then
-		vsoMakeInteractive( false )
-		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
-		return true, function()
-			vsoMakeInteractive( true )
-			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
-			vsoSound( "swallow" )
-		end
-	else
-		vsoSetTarget( i, nil )
-		return false
-	end
+	return eatOral(args)
 end)
 p.registerStateScript( "sit", "letout", function( args )
-	if p.occupants == 0 then
-		sb.logError( "[Xeronious] No one to let out!" )
-		return false
-	end
-	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
-
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
-	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
-
-	return true, function()
-		vsoMakeInteractive( true )
-		p.uneat( i )
-		vsoApplyStatus( victim, "droolsoaked", 5.0 );
-	end
+	return letOutOral(args)
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
@@ -311,6 +286,14 @@ end
 
 -------------------------------------------------------------------------------
 
+function begin_state_fly()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.fly )
+end
+
+p.registerStateScript( "fly", "letout", function( args )
+	return letOutOral(args)
+end)
+
 p.registerStateScript( "fly", "analvore", function( args )
 	if p.entityLounging( args.id ) then return end
 	if p.visualOccupants == p.maxOccupants then
@@ -385,9 +368,6 @@ function state_fly()
 
 	p.idleStateChange()
 	p.handleBelly()
-	p.control.primaryAction()
-	p.control.altAction()
-	p.control.interact()
 
 
 	local control = p.stateconfig[p.state].control
@@ -423,6 +403,9 @@ function state_fly()
 		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
 	end
 
+	p.control.primaryAction()
+	p.control.altAction()
+	p.control.interact()
 
 	if vehicle.controlHeld( p.control.driver, "jump" ) then
 		if not p.movement.jumped then
@@ -433,7 +416,18 @@ function state_fly()
 		p.movement.jumped = false
 	end
 
+	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+		if p.occupants > 0 then
+			p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+		end
+	end
+
+
 	p.control.updateDriving()
+end
+
+function end_state_crouch()
+	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
 end
 
 -------------------------------------------------------------------------------
