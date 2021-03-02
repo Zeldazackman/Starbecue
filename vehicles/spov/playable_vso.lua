@@ -43,6 +43,7 @@ p = {
 	occupantOffset = 1,
 	visualOccupants = 0,
 	justAte = false,
+	justLetout = false,
 	nextIdle = 0,
 	swapCooldown = 0
 }
@@ -480,6 +481,19 @@ function p.onBegin()
 		_vsoOnDeath()
 	end )
 	message.setHandler( "forcedsit", p.control.pressE )
+
+	message.setHandler( "digest", function(_,_, eid)
+		local i = p.occupantOffset -1
+		local targetid = nil
+		while targetid ~= eid and i < p.maxOccupants do
+			i = i + 1
+			targetid = vsoGetTargetId( "occupant"..i )
+		end
+
+		local location = "belly" -- to insert functionality for multiple stacks later
+		p.doTransition("digest"..location)
+		vsoClearTarget( "occupant"..i)
+	end )
 
 	p.stateconfig = config.getParameter("states")
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
@@ -1175,9 +1189,8 @@ function p.doBellyEffects(driver, powerMultiplier)
 		if eid and world.entityExists(eid) then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 			if status then
-				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, driver )
+				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() )
 			end
-
 
 			local hunger_change = hungereffect * powerMultiplier * vsoDelta()
 			local health = world.entityHealth(eid)
@@ -1186,12 +1199,6 @@ function p.doBellyEffects(driver, powerMultiplier)
 			end
 
 			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
-
-			if world.entityExists(eid) and not (world.entityHealth(eid)[1] > 0) then
-				vsoUneat( "occupant"..i )
-				vsoSetTarget( "occupant"..i, nil )
-				vsoUseLounge( false, "occupant"..i )
-			end
 		end
 	end
 end

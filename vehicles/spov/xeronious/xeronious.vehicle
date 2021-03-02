@@ -233,7 +233,13 @@
 						"script": "letout"
 					}
 
-				]
+				],
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink"
+					},
+					"state": "stand"
+				}
 			},
 			"idle": {
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
