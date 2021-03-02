@@ -483,17 +483,17 @@ function p.onBegin()
 	message.setHandler( "forcedsit", p.control.pressE )
 
 	message.setHandler( "digest", function(_,_, eid)
-		local i = p.occupantOffset -1
-		local targetid = nil
-		while targetid ~= eid and i < p.maxOccupants do
-			i = i + 1
-			targetid = vsoGetTargetId( "occupant"..i )
-		end
-
-		local location = "belly" -- to insert functionality for multiple stacks later
+		local i = getOccupantFromEid(eid)
+		local location = "belly"
 		p.doTransition("digest"..location)
-		vsoClearTarget( "occupant"..i)
 	end )
+
+	message.setHandler( "uneat", function(_,_, eid)
+		local i = getOccupantFromEid(eid)
+		vsoClearTarget( "occupant"..i)
+		vsoUneat( "occupant"..i)
+	end )
+
 
 	p.stateconfig = config.getParameter("states")
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
@@ -532,6 +532,16 @@ function p.onBegin()
 			v_status(seatname, effects)
 		end
 	end
+end
+
+function getOccupantFromEid(eid)
+	local i = p.occupantOffset -1
+	local targetid = nil
+	while targetid ~= eid and i < p.maxOccupants do
+		i = i + 1
+		targetid = vsoGetTargetId( "occupant"..i )
+	end
+	return i
 end
 
 function p.onEnd()
@@ -684,7 +694,7 @@ function p.control.doPhysics()
 		p.movement.falling = true
 		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
 			vsoUneat( "occupant1" )
-			vsoSetTarget( 1, nil )
+			vsoClearTarget( "occupant1" )
 			vsoUseLounge( false, "occupant1" )
 		end
 	end
