@@ -180,16 +180,27 @@ p.registerStateScript( "stand", "bapeat", function()
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
 		})
+		local aimednotlounging = checkAimed(entityaimed)
+
 		if #prey > 0 then
 			for i = 1, #prey do
-				if prey[i] == entityaimed[1] then
+				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
 					animator.setGlobalTag( "bap", "" )
 					p.doTransition( "eat", {id=prey[i]} )
+					return
 				end
 			end
 		end
 	end
 end)
+
+function checkAimed(entityaimed)
+	for i = 1, #entityaimed do
+		if not p.entityLounging(entityaimed[i]) then
+			return i
+		end
+	end
+end
 
 function state_stand()
 
