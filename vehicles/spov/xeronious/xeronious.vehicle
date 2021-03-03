@@ -714,9 +714,10 @@
 				"tags": [
 					{
 						"owner": "body",
-						"part": "body",
+						"part": "global",
 						"name": "bellycrop",
-						"value": "?crop=0;0;96;72"
+						"value": "?crop=0;8;96;96",
+						"reset": false
 					}
 				]
 
@@ -857,9 +858,10 @@
 				"tags": [
 					{
 						"owner": "body",
-						"part": "body",
+						"part": "global",
 						"name": "bellycrop",
-						"value": "?crop=0;0;96;80"
+						"value": "?crop=0;8;96;96",
+						"reset": false
 					}
 				]
 

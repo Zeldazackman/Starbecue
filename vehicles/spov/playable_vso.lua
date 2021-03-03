@@ -170,7 +170,8 @@ function p.doAnims( anims, force )
 			for _,tag in ipairs(anim) do
 				p.currentTags[tag.owner] = {
 					part = tag.part,
-					name = tag.name
+					name = tag.name,
+					reset = tag.reset or true
 				}
 				if tag.part == "global" then
 					animator.setGlobalTag( tag.name, tag.value )
@@ -475,9 +476,7 @@ function p.onBegin()
 		elseif key == "autocrouch" then
 			p.autocrouch = val
 		elseif key == "letout" then
-			if p.state == "stand" and p.occupants > 0 then
-				p.doTransition( "escape", {index = val} )
-			end
+			p.doTransition( "escape", {index = val} )
 		end
 	end )
 	message.setHandler( "despawn", function(_,_, nowarpout)
@@ -1081,12 +1080,14 @@ end
 function p.idleStateChange()
 	for owner,tag in pairs( p.currentTags ) do
 		if vsoAnimEnded( owner.."State" ) then
-			if tag.part == "global" then
-				animator.setGlobalTag( tag.name, "" )
-			else
-				animator.setPartTag( tag.part, tag.name, "" )
+			if tag.reset then
+				if tag.part == "global" then
+					animator.setGlobalTag( tag.name, "" )
+				else
+					animator.setPartTag( tag.part, tag.name, "" )
+				end
+				p.currentTags[owner] = nil
 			end
-			p.currentTags[owner] = nil
 		end
 	end
 
