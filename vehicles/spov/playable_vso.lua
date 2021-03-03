@@ -44,6 +44,7 @@ p = {
 	visualOccupants = 0,
 	justAte = false,
 	justLetout = false,
+	monstercoords = {0,0},
 	nextIdle = 0,
 	swapCooldown = 0
 }
@@ -365,6 +366,10 @@ function p.uneat( seatindex )
 	p.smolprey( seatindex ) -- clear
 	if p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
+		local x = (p.monstercoords[1] * self.vsoCurrentDirection) +1000
+		local y = p.monstercoords[2]
+		local hackposition = p.monstercoords[1] + p.monstercoords[2]
+		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove", x, y) --this is hacky as fuck I love it
 	end
 end
 

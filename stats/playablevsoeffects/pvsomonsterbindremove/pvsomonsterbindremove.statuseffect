@@ -1,0 +1,10 @@
+{
+  "name" : "pvsomonsterbindremove",
+  "effectConfig" : {},
+  "defaultDuration" : 1,
+
+  "scripts" : [
+    "pvsomonsterbindremove.lua"
+  ]
+
+}

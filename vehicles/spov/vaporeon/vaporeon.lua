@@ -102,6 +102,9 @@ p.registerStateScript( "stand", "eat", function( args )
 	end
 end)
 p.registerStateScript( "stand", "letout", function( args )
+	position = mcontroller.position()
+	p.monstercoords = {position[1]+3.5, position[2]-1.875}--same as last bit of escape anim
+
 	if p.occupants == 0 then
 		sb.logError( "[Vappy] No one to let out!" )
 		return false

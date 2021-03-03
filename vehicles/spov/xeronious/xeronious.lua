@@ -66,7 +66,7 @@ end
 
 -------------------------------------------------------------------------------
 
-function eatOral(args)
+function oralvore(args)
 	if p.entityLounging( args.id ) then return end
 	if p.visualOccupants == p.maxOccupants then
 		sb.logError("[Xeronious] Can't eat more than two people!")
@@ -89,7 +89,9 @@ function eatOral(args)
 	end
 end
 
-function letOutOral( args )
+function escapeoralvore( args )
+	position = mcontroller.position()
+	p.monstercoords = {position[1]+6, position[2]+1}--same as last bit of escape anim
 	if p.occupants == 0 then
 		sb.logError( "[Xeronious] No one to let out!" )
 		return false
@@ -110,14 +112,60 @@ function letOutOral( args )
 	end
 end
 
+function analvore(args)
+	if p.entityLounging( args.id ) then return end
+	if p.visualOccupants == p.maxOccupants then
+		sb.logError("[Xeronious] Can't eat more than two people!")
+		return false
+	end
+	local i = p.visualOccupants + 1
+	vsoSetTarget( i, args.id )
+	if p.eat( vsoGetTargetId( i ), i ) then
+		vsoMakeInteractive( false )
+		p.showEmote("emotehappy")
+		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
+		return true, function()
+			vsoMakeInteractive( true )
+			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
+			vsoSound( "swallow" )
+		end
+	else
+		vsoSetTarget( i, nil )
+		return false
+	end
+end
+
+function escapeanalvore(args)
+	position = mcontroller.position()
+	p.monstercoords = {position[1]-0.75, position[2]-5}--same as last bit of escape anim
+
+	if p.occupants == 0 then
+		sb.logError( "[Xeronious] No one to let out!" )
+		return false
+	end
+	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
+
+	return true, function()
+		vsoMakeInteractive( true )
+		p.uneat( i )
+		vsoApplyStatus( victim, "droolsoaked", 5.0 );
+	end
+end
 -------------------------------------------------------------------------------
 
 
 p.registerStateScript( "stand", "eat", function( args )
-	return eatOral(args)
+	return oralvore(args)
 end)
 p.registerStateScript( "stand", "letout", function( args )
-	return letOutOral(args)
+	return escapeoralvore(args)
 end)
 
 p.registerStateScript( "stand", "bapeat", function()
@@ -207,10 +255,10 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "sit", "eat", function( args )
-	return eatOral(args)
+	return oralvore(args)
 end)
 p.registerStateScript( "sit", "letout", function( args )
-	return letOutOral(args)
+	return escapeoralvore(args)
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
@@ -296,51 +344,15 @@ function begin_state_fly()
 end
 
 p.registerStateScript( "fly", "letout", function( args )
-	return letOutOral(args)
+	return escapeoralvore(args)
 end)
 
 p.registerStateScript( "fly", "analvore", function( args )
-	if p.entityLounging( args.id ) then return end
-	if p.visualOccupants == p.maxOccupants then
-		sb.logError("[Xeronious] Can't eat more than two people!")
-		return false
-	end
-	local i = p.visualOccupants + 1
-	vsoSetTarget( i, args.id )
-	if p.eat( vsoGetTargetId( i ), i ) then
-		vsoMakeInteractive( false )
-		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
-		return true, function()
-			vsoMakeInteractive( true )
-			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
-			vsoSound( "swallow" )
-		end
-	else
-		vsoSetTarget( i, nil )
-		return false
-	end
+	return analvore(args)
 end)
 
 p.registerStateScript( "fly", "escapeanalvore", function( args )
-	if p.occupants == 0 then
-		sb.logError( "[Xeronious] No one to let out!" )
-		return false
-	end
-	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
-
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
-	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
-
-	return true, function()
-		vsoMakeInteractive( true )
-		p.uneat( i )
-		vsoApplyStatus( victim, "droolsoaked", 5.0 );
-	end
+	return escapeanalvore(args)
 end)
 
 p.registerStateScript( "fly", "grabanalvore", function()
