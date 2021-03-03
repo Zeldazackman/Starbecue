@@ -286,6 +286,12 @@ end)
 function state_sit()
 	p.standardState()
 
+	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+		if p.occupants > 0 then
+			p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+		end
+	end
+
 	-- simulate npc interaction when nearby
 	if p.occupants == 0 and p.control.standalone then
 		if vsoChance(0.1) then -- every frame, we don't want it too often
@@ -379,11 +385,14 @@ p.registerStateScript( "fly", "grabanalvore", function()
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
 		})
+		local aimednotlounging = checkAimed(entityaimed)
+
 		if #prey > 0 then
 			for i = 1, #prey do
-				if prey[i] == entityaimed[1] then
+				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
 					animator.setGlobalTag( "bap", "" )
 					p.doTransition( "analvore", {id=prey[i]} )
+					return
 				end
 			end
 		end
@@ -397,27 +406,48 @@ function state_fly()
 	p.idleStateChange()
 	p.handleBelly()
 
+	p.control.primaryAction()
+	p.control.altAction()
+	p.control.interact()
+
 	if p.visualOccupants >= p.maxOccupants and p.control.probablyOnGround() then
 		p.setState( "stand" )
 		return
 	end
 
-
 	local control = p.stateconfig[p.state].control
 	local dx = 0
 	local dy = 0
+	local controlForce = 100
 
-	if vehicle.controlHeld( p.control.driver, "left" ) then
-		dx = dx - 1
-	end
-	if vehicle.controlHeld( p.control.driver, "right" ) then
-		dx = dx + 1
-	end
-	if vehicle.controlHeld( p.control.driver, "up" ) then
-		dy = dy + 1
-	end
-	if vehicle.controlHeld( p.control.driver, "down" ) then
-		dy = dy - 1
+	if p.control.driving then
+		if vehicle.controlHeld( p.control.driver, "left" ) then
+			dx = dx - 1
+		end
+		if vehicle.controlHeld( p.control.driver, "right" ) then
+			dx = dx + 1
+		end
+		if vehicle.controlHeld( p.control.driver, "up" ) then
+			dy = dy + 1
+		end
+		if vehicle.controlHeld( p.control.driver, "down" ) then
+			dy = dy - 1
+		end
+
+		if vehicle.controlHeld( p.control.driver, "jump" ) then
+			if not p.movement.jumped then
+				p.setState( "stand" )
+				return
+			end
+		else
+			p.movement.jumped = false
+		end
+
+		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+			if p.occupants > 0 then
+				p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+			end
+		end
 	end
 
 	local running = false
@@ -427,32 +457,12 @@ function state_fly()
 	if dx ~= 0 then
 		vsoFaceDirection( dx )
 	end
-	local controlForce = 100
 	if running then
 		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
 		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
 	else
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
 		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
-	end
-
-	p.control.primaryAction()
-	p.control.altAction()
-	p.control.interact()
-
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
-		if not p.movement.jumped then
-			p.setState( "stand" )
-			return
-		end
-	else
-		p.movement.jumped = false
-	end
-
-	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
-		if p.occupants > 0 then
-			p.doTransition( "escape", {index=p.occupants} ) -- last eaten
-		end
 	end
 
 	p.control.updateDriving()

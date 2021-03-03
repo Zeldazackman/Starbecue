@@ -609,7 +609,15 @@
 						"arms": "idle",
 						"legs": "standup",
 						"head": "idle",
-						"tail": "standup"
+						"tail": "standup",
+						"tags": [
+							{
+								"owner": "body",
+								"part": "global",
+								"name": "bellymask",
+								"value": ""
+							}
+						]
 					},
 					"state": "stand",
 					"timing": "legs",
@@ -715,9 +723,8 @@
 					{
 						"owner": "body",
 						"part": "global",
-						"name": "bellycrop",
-						"value": "?crop=0;8;96;96",
-						"reset": false
+						"name": "bellymask",
+						"value": "?addmask=/vehicles/spov/xeronious/spov/sit_belly_mask.png"
 					}
 				]
 
@@ -859,9 +866,8 @@
 					{
 						"owner": "body",
 						"part": "global",
-						"name": "bellycrop",
-						"value": "?crop=0;8;96;96",
-						"reset": false
+						"name": "bellymask",
+						"value": "?addmask=/vehicles/spov/xeronious/spov/sit_belly_mask.png"
 					}
 				]
 
