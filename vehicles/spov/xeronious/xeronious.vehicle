@@ -254,6 +254,19 @@
 					}
 
 				],
+				"taileat": [ // array depends on occupants
+					{ // 0 occupants
+						"animation": {
+							"tail": "eat",
+							"head": "AVlook"
+						},
+						"victimAnimation": "playereat",
+						"state": "stand",
+						"script": "taileat"
+					},
+					{}// can't eat with 1
+				],
+
 				"digestbelly" : {
 					"animation": {
 						"body": "shrink",
@@ -278,16 +291,32 @@
 			],
 
 			"struggle": {
-				"up": { "transition": "escape" },
-				"front": { "transition": "escape" },
-				"back": { "transition": "down" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "escape" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 15 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
 				},
-				"animation": { "head": "look" }
+				"tail" : {
+					"part" : "tail",
+					"up": { "transition": "escape" },
+					"front": { "transition": "escape" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 15 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				}
 			},
 			"interact": {
 				"front": [ // array depends on occupants

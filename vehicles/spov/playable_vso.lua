@@ -44,8 +44,10 @@ p = {
 		womb = 0,
 		shaft = 0,
 		knot = 0,
-		ballR = 0,
 		ballL = 0,
+		ballR = 0,
+		breastL = 0,
+		breastR = 0,
 		hug = 0,
 		tail = 0,
 		other = 0
@@ -59,6 +61,8 @@ p = {
 		knot = 0,
 		ballL = 0,
 		ballR = 0,
+		breastL = 0,
+		breastR = 0,
 		hug = 0,
 		tail = 0,
 		other = 0
@@ -119,6 +123,71 @@ function locationEmpty(location)
 	end
 end
 
+function dovore(args, location, statuses, sound )
+	if p.entityLounging( args.id ) then return false end
+	if locationFull(location) then return false end
+
+	local i = p.occupants.total + 1
+	if p.eat( args.id, i, location ) then
+		vsoMakeInteractive( false )
+		p.showEmote("emotehappy")
+		vsoVictimAnimSetStatus( "occupant"..i, statuses );
+		return true, function()
+			vsoMakeInteractive( true )
+			vsoVictimAnimReplay( "occupant"..i, location.."center", "bodyState")
+			vsoSound( sound )
+		end
+	else
+		return false
+	end
+end
+
+function doescape(args, location, monsteroffset, statuses, afterstatus )
+	local position = mcontroller.position()
+	p.monstercoords = {position[1]+monsteroffset[1], position[2]+monsteroffset[2]}--same as last bit of escape anim
+
+	if locationEmpty(location) then return false end
+	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
+	vsoMakeInteractive( false )
+	vsoVictimAnimSetStatus( "occupant"..i, statuses );
+
+	return true, function()
+		vsoMakeInteractive( true )
+		p.uneat( i )
+		vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
+	end
+end
+
+function checkEatPosition(position, location, transition)
+	if not locationFull(location) then
+		local prey = world.entityQuery(position, 2, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
+		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
+			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			includedTypes = {"creature"}
+		})
+		local aimednotlounging = checkAimed(entityaimed)
+
+		if #prey > 0 then
+			for i = 1, #prey do
+				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
+					animator.setGlobalTag( "bap", "" )
+					p.doTransition( transition, {id=prey[i]} )
+					return true
+				end
+			end
+		end
+		return false
+	end
+end
+
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
 	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
@@ -127,16 +196,20 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 end
 
 function p.updateOccupants()
-	p.occupants.total = 0
-	p.occupants.belly = 0
-	p.occupants.womb = 0
-	p.occupants.shaft = 0
-	p.occupants.knot = 0
-	p.occupants.ballL = 0
-	p.occupants.ballR = 0
-	p.occupants.hug = 0
-	p.occupants.tail = 0
-	p.occupants.other = 0
+	p.occupants = {
+		total = 0,
+		belly = 0,
+		womb = 0,
+		shaft = 0,
+		knot = 0,
+		ballL = 0,
+		ballR = 0,
+		breastL = 0,
+		breastR = 0,
+		hug = 0,
+		tail = 0,
+		other = 0
+	}
 
 	local lastFilled = true
 	for i = 1, p.maxOccupants.total do
@@ -162,12 +235,17 @@ function p.updateOccupants()
 	animator.setGlobalTag( "shaftoccupants", tostring(p.occupants.shaft) )
 	animator.setGlobalTag( "knotoccupants", tostring(p.occupants.knot) )
 
-	if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV cases stay on the side they were on instead of flipping
+	if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
 		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballL) )
 		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballR) )
+		animator.setGlobalTag( "breast1occupants", tostring(p.occupants.breastL) )
+		animator.setGlobalTag( "breast2occupants", tostring(p.occupants.breastR) )
 	else
 		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballR) )
 		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballL) )
+		animator.setGlobalTag( "breast1occupants", tostring(p.occupants.breastR) )
+		animator.setGlobalTag( "breast2occupants", tostring(p.occupants.breastL) )
+
 	end
 
 
@@ -1377,15 +1455,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 end
 
 function p.handleStruggles()
-	if not vsoAnimEnded( "bodyState" ) and (
-		vsoAnimIs( "bodyState", "s_up" ) or
-		vsoAnimIs( "bodyState", "s_front" ) or
-		vsoAnimIs( "bodyState", "s_back" ) or
-		vsoAnimIs( "bodyState", "s_down" )
-	) then
-		return -- already struggling
-	end
-	local struggler = 1 - 1
+	local struggler = 0
 	local movetype, movedir
 	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants.total do
 		struggler = struggler + 1
@@ -1397,8 +1467,17 @@ function p.handleStruggles()
 		return -- control vappy instead of struggling
 	end
 
-	local struggledata = p.stateconfig[p.state].struggle
+	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]
 	if struggledata == nil then return end
+
+	if not vsoAnimEnded( struggledata.part.."State" ) and (
+		vsoAnimIs( struggledata.part.."State", "s_up" ) or
+		vsoAnimIs( struggledata.part.."State", "s_front" ) or
+		vsoAnimIs( struggledata.part.."State", "s_back" ) or
+		vsoAnimIs( struggledata.part.."State", "s_down" )
+	) then
+		return -- already struggling
+	end
 
 	local dir = nil
 	if movedir == "B" then dir = "back" end
@@ -1434,13 +1513,14 @@ function p.handleStruggles()
 		p.doTransition( struggledata[dir].transition, {index=struggler} )
 	else
 		sb.setLogMap("b", "struggle")
-		p.doAnims( {
-			body = "s_"..dir,
-			offset = struggledata[dir].offset
-		} )
+		local animation = {offset = struggledata[dir].offset}
+		animation[struggledata.part] = "s_"..dir
+
+		p.doAnims(animation)
+
 		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
 		if struggledata[dir].victimAnimation then
-			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, "bodyState" )
+			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, struggledata.part.."State" )
 		end
 		vsoSound( "struggle" )
 		vsoCounterAdd( "struggleCount", 1 )

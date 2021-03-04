@@ -65,120 +65,26 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
-
-function oralvore(args)
-	if p.entityLounging( args.id ) then return false end
-	local location = "belly"
-	if locationFull(location) then return false end
-
-	local i = p.occupants.total + 1
-	if p.eat( args.id, i, location ) then
-		vsoMakeInteractive( false )
-		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
-		return true, function()
-			vsoMakeInteractive( true )
-			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
-			vsoSound( "swallow" )
-		end
-	else
-		return false
-	end
-end
-
-function escapeoralvore( args )
-	position = mcontroller.position()
-	p.monstercoords = {position[1]+6, position[2]+1}--same as last bit of escape anim
-	if locationEmpty("belly") then return false end
-	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
-
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
-	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
-
-	return true, function()
-		vsoMakeInteractive( true )
-		p.uneat( i )
-		vsoApplyStatus( victim, "droolsoaked", 5.0 );
-	end
-end
-
-function analvore(args)
-	if p.entityLounging( args.id ) then return false end
-	local location = "belly"
-	if locationFull(location) then return false end
-	local i = p.occupants.total + 1
-	if p.eat( args.id, i, location) then
-		vsoMakeInteractive( false )
-		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
-		return true, function()
-			vsoMakeInteractive( true )
-			vsoVictimAnimReplay( "occupant"..i, "center", "bodyState")
-			vsoSound( "swallow" )
-		end
-	else
-		return false
-	end
-end
-
-function escapeanalvore(args)
-	position = mcontroller.position()
-	p.monstercoords = {position[1]-0.75, position[2]-5}--same as last bit of escape anim
-
-	if locationEmpty("belly") then return false end
-	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
-
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
-	vsoMakeInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
-
-	return true, function()
-		vsoMakeInteractive( true )
-		p.uneat( i )
-		vsoApplyStatus( victim, "droolsoaked", 5.0 );
-	end
-end
 -------------------------------------------------------------------------------
 
 
 p.registerStateScript( "stand", "eat", function( args )
-	return oralvore(args)
+	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 p.registerStateScript( "stand", "letout", function( args )
-	return escapeoralvore(args)
+	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end)
+p.registerStateScript( "stand", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+p.registerStateScript( "stand", "tailletout", function( args )
+	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
+
 p.registerStateScript( "stand", "bapeat", function()
-	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
-
-	if not locationFull("belly") then
-		local prey = world.entityQuery(position, 5, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
-			includedTypes = {"creature"}
-		})
-		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
-			includedTypes = {"creature"}
-		})
-		local aimednotlounging = checkAimed(entityaimed)
-
-		if #prey > 0 then
-			for i = 1, #prey do
-				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
-					animator.setGlobalTag( "bap", "" )
-					p.doTransition( "eat", {id=prey[i]} )
-					return
-				end
-			end
-		end
-	end
+	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
 end)
 
 function checkAimed(entityaimed)
@@ -253,10 +159,10 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "sit", "eat", function( args )
-	return oralvore(args)
+	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 p.registerStateScript( "sit", "letout", function( args )
-	return escapeoralvore(args)
+	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
@@ -345,15 +251,15 @@ function begin_state_fly()
 end
 
 p.registerStateScript( "fly", "letout", function( args )
-	return escapeoralvore(args)
+	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "fly", "analvore", function( args )
-	return analvore(args)
+	return dovore(args, "belly", {"vsoindicateout"}, "swallow")
 end)
 
 p.registerStateScript( "fly", "escapeanalvore", function( args )
-	return escapeanalvore(args)
+	return doescape(args, "belly", {-0.75, -5}, {"vsoindicateout"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "fly", "grabanalvore", function()
