@@ -30,6 +30,12 @@
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
 		}
 	},
 

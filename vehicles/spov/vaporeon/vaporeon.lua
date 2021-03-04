@@ -82,7 +82,7 @@ end
 p.registerStateScript( "stand", "eat", function( args )
 	if p.entityLounging( args.id ) then return false end
 	local location = "belly"
-	if LocationFull(location) then return false end
+	if locationFull(location) then return false end
 
 	local i = p.occupants.total + 1
 	if p.eat( args.id, i, location ) then
@@ -121,7 +121,7 @@ end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
 
-	if not LocationFull("belly") then
+	if not locationFull("belly") then
 		local prey = world.entityQuery(position, 2, {
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}

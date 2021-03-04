@@ -50,7 +50,7 @@ p = {
 	},
 	occupantLocation = {},
 	occupantOffset = 1,
-	fattenBelly = 0
+	fattenBelly = 0,
 	justAte = false,
 	justLetout = false,
 	monstercoords = {0,0},
@@ -90,7 +90,7 @@ function locationFull(location)
 	end
 end
 
-function locationEmtpy(location)
+function locationEmpty(location)
 	if p.occupants.total == 0 then
 		sb.logError( "["..p.vsoMenuName.."] No one to let out!" )
 		return true
@@ -138,7 +138,7 @@ function p.updateOccupants()
 	p.occupants.womb = p.occupants.belly --womb is going to be one of those weird cases, as I'm not sure it would ever require a sprite differentiation so they count to the same total but are different locations for differentiaon of escape and effects later
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
 	for i = 1, #p.occupantLocation do
-		animator.setGlobalTag( p.occupantLocation[i].."occupants", tostring(p.occupants[p.occupantLocation[i]])
+		animator.setGlobalTag( p.occupantLocation[i].."occupants", tostring(p.occupants[p.occupantLocation[i]]))
 	end
 end
 

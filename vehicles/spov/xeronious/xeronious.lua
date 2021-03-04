@@ -69,7 +69,7 @@ end
 function oralvore(args)
 	if p.entityLounging( args.id ) then return false end
 	local location = "belly"
-	if LocationFull(location) then return false end
+	if locationFull(location) then return false end
 
 	local i = p.occupants.total + 1
 	if p.eat( args.id, i, location ) then
@@ -109,7 +109,7 @@ end
 function analvore(args)
 	if p.entityLounging( args.id ) then return false end
 	local location = "belly"
-	if LocationFull(location) then return false end
+	if locationFull(location) then return false end
 	local i = p.occupants.total + 1
 	if p.eat( args.id, i, location) then
 		vsoMakeInteractive( false )
