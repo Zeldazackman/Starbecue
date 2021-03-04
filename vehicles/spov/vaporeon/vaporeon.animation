@@ -1,6 +1,8 @@
 {
 	"globalTagDefaults" : {
-		"occupants" : "0",
+		"totaloccupants" : "0",
+		"bellyoccupants" : "0",
+		"hugoccupants" : "0",
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
@@ -145,7 +147,16 @@
 					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
+			},
+			"occupant3state": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
 			}
+
         },
         "parts": {
             "background": {
@@ -156,38 +167,38 @@
                 },
                 "partStates": {
                     "bodyState": {
-                        "idle": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
 
-						"laydown": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.laydown.<frame><directives>" } },
-						"pin": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.pin.<frame><directives>" } },
-						"situp": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.situp.<frame><directives>" } },
+						"laydown": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
+						"pin": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.pin.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
 
-						"fallasleep": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fallasleep.<frame><directives>" } },
-						"wakeup": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.wakeup.<frame><directives>" } },
+						"fallasleep": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>" } },
+						"wakeup": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.wakeup.<frame><directives>" } },
 
-						"rollover": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.rollover.<frame><directives>" } },
+						"rollover": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
 
-						"grab": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.grab.<frame><directives>" } },
+						"grab": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
 
-						"eat": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.eat.<frame><directives>" } },
-						"absorb": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.absorb.<frame><directives>" } },
-						"escape": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
+						"absorb": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
 
-						"s_back": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.s_down.<frame><directives>" } },
-						"look": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.look.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_down.<frame><directives>" } },
+						"look": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.look.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon.png:<occupants>.<state>.fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.fall.<frame><directives>" } },
 
-						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.idle.<frame><directives>" } },
-						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fall.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>" } },
 
 						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:<rotationFlip>.chonk_ball.<rotationFrame><directives>" } }
                     }
@@ -230,6 +241,20 @@
                     }
                 }
 			},
+            "occupant3": {
+                "properties": {
+                    "centered": true,
+                     "zLevel": 0,
+                     "transformationGroups": ["flip", "occupant3position"],
+                     "occupantPosition": [0.0, 0.0]
+                },
+                "partStates": {
+                    "occupant3state": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
+                    }
+                }
+			},
 
             "foreground": {
                 "properties": {
@@ -239,37 +264,37 @@
                 },
                 "partStates": {
                     "bodyState": {
-                        "idle": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.<frame><directives>" } },
+                        "idle": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
 
-						"laydown": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.laydown.<frame><directives>" } },
-						"pin": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.pin.<frame><directives>" } },
-						"situp": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.situp.<frame><directives>" } },
+						"laydown": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
+						"pin": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.pin.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
 
-						"fallasleep": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fallasleep.<frame><directives>" } },
-						"wakeup": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.wakeup.<frame><directives>" } },
+						"fallasleep": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>" } },
+						"wakeup": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.wakeup.<frame><directives>" } },
 
-						"rollover": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.rollover.<frame><directives>" } },
+						"rollover": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
 
-						"grab": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.grab.<frame><directives>" } },
+						"grab": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
 
-						"eat": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.eat.<frame><directives>" } },
-						"absorb": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.absorb.<frame><directives>" } },
-						"escape": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
+						"absorb": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
 
-						"s_back": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.s_down.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_down.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<occupants>.<state>.fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fall.<frame><directives>" } },
 
-						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.idle.<frame><directives>" } },
-						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<occupants>.fall.<frame><directives>" } }
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>" } }
 
 					}
                 }
@@ -423,6 +448,9 @@
 			"interpolated": true
 		},
 		"occupant2position": {
+			"interpolated": true
+		},
+		"occupant3position": {
 			"interpolated": true
 		},
 		"headbob": {

@@ -38,10 +38,19 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 end
 
 p = {
-	maxOccupants = 0,
-	occupants = 0,
+	maxOccupants = {
+		total = 0,
+		belly = 0,
+		womb = 0
+	},
+	occupants = {
+		total = 0,
+		belly = 0,
+		womb = 0
+	},
+	occupantLocation = {},
 	occupantOffset = 1,
-	visualOccupants = 0,
+	fattenBelly = 0
 	justAte = false,
 	justLetout = false,
 	monstercoords = {0,0},
@@ -67,6 +76,34 @@ p.movement = {
 	lastYVelocity = 0
 }
 
+function locationFull(location)
+	if p.occupants.total == p.maxOccupants.total then
+		sb.logError("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
+		return true
+	else
+		if p.occupants[location] == p.maxOccupants[location] then
+			sb.logError("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
+			return true
+		else
+			return false
+		end
+	end
+end
+
+function locationEmtpy(location)
+	if p.occupants.total == 0 then
+		sb.logError( "["..p.vsoMenuName.."] No one to let out!" )
+		return true
+	else
+		if p.occupants[location] == 0 then
+			sb.logError( "["..p.vsoMenuName.."] No one in "..location.."to let out!" )
+			return true
+		else
+			return false
+		end
+	end
+end
+
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
 	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
@@ -75,12 +112,18 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 end
 
 function p.updateOccupants()
-	p.occupants = 0
+	for i = 1, #p.occupantLocation do
+		p.occupants[p.occupantLocation[i]] = 0
+	end
+
+	p.occupants.total = 0
 	local lastFilled = true
-	for i = p.occupantOffset, p.maxOccupants do
+	for i = 1, p.maxOccupants.total do
 		local targetid = vsoGetTargetId( "occupant"..i )
 		if targetid and world.entityExists(targetid) then
-			p.occupants = p.occupants + 1
+			p.occupants.total = p.occupants.total + 1
+			p.occupants[p.occupantLocation[i]] = p.occupants[p.occupantLocation[i]] + 1
+
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
 			end
@@ -91,8 +134,12 @@ function p.updateOccupants()
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
-	p.visualOccupants = p.occupants + p.occupantOffset - 1 -- for pudge
-	animator.setGlobalTag( "occupants", tostring(p.visualOccupants) )
+	p.occupants.belly = p.occupants.belly + p.fattenBelly + p.occupants.womb
+	p.occupants.womb = p.occupants.belly --womb is going to be one of those weird cases, as I'm not sure it would ever require a sprite differentiation so they count to the same total but are different locations for differentiaon of escape and effects later
+	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
+	for i = 1, #p.occupantLocation do
+		animator.setGlobalTag( p.occupantLocation[i].."occupants", tostring(p.occupants[p.occupantLocation[i]])
+	end
 end
 
 function p.setState(state)
@@ -122,7 +169,7 @@ function p.occupantArray( maybearray )
 	if maybearray == nil or maybearray[1] == nil then -- not an array, no change
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[p.visualOccupants + 1]
+		return maybearray[(p.occupants.total + p.fattenBelly) + 1]
 	end
 end
 
@@ -131,6 +178,11 @@ function p.swapOccupants(a, b)
 	local B = vsoGetTargetId("occupant"..b)
 	vsoSetTarget( "occupant"..a, B )
 	vsoSetTarget( "occupant"..b, A )
+
+	local LocationA = p.occupantLocation[a]
+	local LocationB = p.occupantLocation[b]
+	p.occupantLocation[a] = LocationB
+	p.occupantLocation[b] = LocationA
 
 	if A then vsoUneat( "occupant"..a ) end
 	if B then vsoUneat( "occupant"..b ) end
@@ -153,7 +205,7 @@ end
 
 function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
-	for i = p.occupantOffset, p.maxOccupants do
+	for i = 1, p.maxOccupants.total do
 		if entity == vehicle.entityLoungingIn( "occupant"..i ) then return true end
 	end
 	return false
@@ -372,7 +424,7 @@ end
 
 function p.edible( targetid )
 	if vehicle.entityLoungingIn( "driver" ) ~= targetid then return false end
-	if p.occupants > 0 then return false end
+	if p.occupants.total > 0 then return false end
 	return p.stateconfig[p.state].edible
 end
 
@@ -384,7 +436,7 @@ end
 
 p.smolpreyspecies = {}
 
-function p.eat( targetid, seatindex )
+function p.eat( targetid, seatindex, location )
 	if targetid == nil or p.entityLounging(targetid) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" }
@@ -393,6 +445,8 @@ function p.eat( targetid, seatindex )
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
 		callScript = "p.edible", callScriptArgs = { targetid }
 	} )
+	p.occupantLocation[seatindex] = location
+
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
 			-- won't work with multiple loungeables near each other
@@ -469,9 +523,9 @@ function p.loadStoredData()
 		if vsoPill( "softdigest" ) then p.bellyeffect = "softdigest" end
 
 		if vsoPill( "fatten" ) then
-			p.occupantOffset = math.floor(vsoPillValue( "fatten" )) + 1
+			p.fattenBelly = math.floor(vsoPillValue( "fatten" )) + 1
 			if config.getParameter( "driver" ) == nil then
-				p.control.driver = "occupant"..p.occupantOffset
+				p.control.driver = "occupant1"
 			end
 		end
 	end )
@@ -479,7 +533,7 @@ end
 
 function p.onForcedReset()
 	vsoAnimSpeed( 1.0 );
-	for i = 1, p.maxOccupants do
+	for i = 1, p.maxOccupants.total do
 		vsoVictimAnimVisible( "occupant"..i, false )
 		vsoUseLounge( false, "occupant"..i )
 	end
@@ -553,7 +607,7 @@ function p.onBegin()
 
 	message.setHandler( "digest", function(_,_, eid)
 		local i = getOccupantFromEid(eid)
-		local location = "belly"
+		local location = p.occupantLocation[i]
 		p.doTransition("digest"..location)
 	end )
 
@@ -605,9 +659,9 @@ function p.onBegin()
 end
 
 function getOccupantFromEid(eid)
-	local i = p.occupantOffset -1
+	local i = 1 -1
 	local targetid = nil
-	while targetid ~= eid and i < p.maxOccupants do
+	while targetid ~= eid and i < p.maxOccupants.total do
 		i = i + 1
 		targetid = vsoGetTargetId( "occupant"..i )
 	end
@@ -656,7 +710,7 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.victimAnimation ~= nil then
 		local i = (scriptargs or {}).index
 		if i == nil then
-			i = p.visualOccupants
+			i = p.occupants.belly
 			if p.justAte then
 				i = i + 1
 				p.justAte = false
@@ -704,7 +758,7 @@ function p.control.updateDriving()
 		p.control.driving = true
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			local occupants = {}
-			for i = 1, p.maxOccupants do -- using p.occupants has potential for issues if slots become empty
+			for i = 1, p.maxOccupants.total do -- using p.occupants.total has potential for issues if slots become empty
 				if vsoGetTargetId( "occupant"..i ) then
 					occupants[i] = {
 						id = vsoGetTargetId( "occupant"..i ),
@@ -716,10 +770,10 @@ function p.control.updateDriving()
 			end
 			world.sendEntityMessage(
 				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = occupants, maxOccupants = p.maxOccupants }, false, entity.id()
+				{ vso = entity.id(), occupants = occupants, maxOccupants = p.maxOccupants.total }, false, entity.id()
 			)
 		end
-	elseif p.occupants >= 1 then
+	elseif p.occupants.total >= 1 then
 		if vehicle.controlHeld( p.control.driver, "Special1" ) then
 			p.control.driving = true
 		end
@@ -932,7 +986,7 @@ function p.control.groundMovement( dx )
 	local control = state.control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and p.visualOccupants < control.fullThreshold then
+	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly)< control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -963,7 +1017,7 @@ function p.control.groundMovement( dx )
 			if not p.movement.jumped then
 				p.doAnims( control.animations.jump )
 				p.movement.animating = true
-				if p.visualOccupants < control.fullThreshold then
+				if p.occupants.total + p.fattenBelly < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
 					mcontroller.setYVelocity( control.fullJumpStrength )
@@ -1020,7 +1074,7 @@ function p.control.airMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and p.visualOccupants < control.fullThreshold then
+	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly) < control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -1047,7 +1101,7 @@ function p.control.airMovement( dx )
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.doAnims( control.animations.jump )
 			p.movement.animating = true
-			if p.visualOccupants < control.fullThreshold then
+			if (p.occupants.total + p.fattenBelly) < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
@@ -1206,10 +1260,10 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
-	if p.occupants > 0 and p.stateconfig[p.state].bellyEffect ~= false then
+	if p.occupants.belly > 0 and p.stateconfig[p.state].bellyEffect ~= false then
 		p.bellyEffects()
 	else
-		for i = p.occupantOffset, p.maxOccupants do
+		for i = 1, p.maxOccupants.total do
 			vsoVictimAnimSetStatus( "occupant"..i, {} )
 		end
 	end
@@ -1265,10 +1319,10 @@ function p.doBellyEffects(driver, powerMultiplier)
 	end
 
 
-	for i = p.occupantOffset, p.maxOccupants do
+	for i = 1, p.maxOccupants.total do
 		local eid = vsoGetTargetId( "occupant"..i )
 
-		if eid and world.entityExists(eid) then
+		if eid and world.entityExists(eid) and p.occupantLocation[i] == "belly" then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 			world.sendEntityMessage( eid, "PVSONightVision", self.cfgVSO.lights.prey)
 
@@ -1296,9 +1350,9 @@ function p.handleStruggles()
 	) then
 		return -- already struggling
 	end
-	local struggler = p.occupantOffset - 1
+	local struggler = 1 - 1
 	local movetype, movedir
-	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants do
+	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants.total do
 		struggler = struggler + 1
 		movetype, movedir = vso4DirectionInput( "occupant"..struggler )
 	end

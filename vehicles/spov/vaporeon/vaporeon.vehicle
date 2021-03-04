@@ -107,7 +107,12 @@
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config"
 	},
 
-	"maxOccupants": 2,
+	"maxOccupants" : {
+		"total" : 3,
+		"belly" : 2,
+		"hug" : 1
+	},
+
 	"states": {
 		"stand": {
 			"transitions": {

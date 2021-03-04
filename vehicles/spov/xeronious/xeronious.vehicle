@@ -116,7 +116,13 @@
 		"victimAnimations": "/vehicles/spov/xeronious/victim_animations.config"
 	},
 
-	"maxOccupants": 3,
+	"maxOccupants" : {
+		"total" : 5,
+		"belly" : 3,
+		"hug" : 1,
+		"tail" : 1
+	},
+
 	"states": {
 		"stand": {
 			"transitions": {

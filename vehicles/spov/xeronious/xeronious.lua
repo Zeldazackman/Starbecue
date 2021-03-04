@@ -67,14 +67,12 @@ end
 -------------------------------------------------------------------------------
 
 function oralvore(args)
-	if p.entityLounging( args.id ) then return end
-	if p.visualOccupants == p.maxOccupants then
-		sb.logError("[Xeronious] Can't eat more than two people!")
-		return false
-	end
-	local i = p.visualOccupants + 1
-	vsoSetTarget( i, args.id )
-	if p.eat( vsoGetTargetId( i ), i ) then
+	if p.entityLounging( args.id ) then return false end
+	local location = "belly"
+	if LocationFull(location) then return false end
+
+	local i = p.occupants.total + 1
+	if p.eat( args.id, i, location ) then
 		vsoMakeInteractive( false )
 		p.showEmote("emotehappy")
 		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatemaw" } );
@@ -84,7 +82,6 @@ function oralvore(args)
 			vsoSound( "swallow" )
 		end
 	else
-		vsoSetTarget( i, nil )
 		return false
 	end
 end
@@ -92,10 +89,7 @@ end
 function escapeoralvore( args )
 	position = mcontroller.position()
 	p.monstercoords = {position[1]+6, position[2]+1}--same as last bit of escape anim
-	if p.occupants == 0 then
-		sb.logError( "[Xeronious] No one to let out!" )
-		return false
-	end
+	if locationEmpty("belly") then return false end
 	local i = args.index
 	local victim = vsoGetTargetId( "occupant"..i )
 
@@ -113,14 +107,11 @@ function escapeoralvore( args )
 end
 
 function analvore(args)
-	if p.entityLounging( args.id ) then return end
-	if p.visualOccupants == p.maxOccupants then
-		sb.logError("[Xeronious] Can't eat more than two people!")
-		return false
-	end
-	local i = p.visualOccupants + 1
-	vsoSetTarget( i, args.id )
-	if p.eat( vsoGetTargetId( i ), i ) then
+	if p.entityLounging( args.id ) then return false end
+	local location = "belly"
+	if LocationFull(location) then return false end
+	local i = p.occupants.total + 1
+	if p.eat( args.id, i, location) then
 		vsoMakeInteractive( false )
 		p.showEmote("emotehappy")
 		vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicateout" } );
@@ -130,7 +121,6 @@ function analvore(args)
 			vsoSound( "swallow" )
 		end
 	else
-		vsoSetTarget( i, nil )
 		return false
 	end
 end
@@ -139,10 +129,7 @@ function escapeanalvore(args)
 	position = mcontroller.position()
 	p.monstercoords = {position[1]-0.75, position[2]-5}--same as last bit of escape anim
 
-	if p.occupants == 0 then
-		sb.logError( "[Xeronious] No one to let out!" )
-		return false
-	end
+	if locationEmpty("belly") then return false end
 	local i = args.index
 	local victim = vsoGetTargetId( "occupant"..i )
 
@@ -171,7 +158,7 @@ end)
 p.registerStateScript( "stand", "bapeat", function()
 	local position = p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position )
 
-	if p.visualOccupants < p.maxOccupants then
+	if not locationFull("belly") then
 		local prey = world.entityQuery(position, 5, {
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
@@ -244,8 +231,8 @@ function state_stand()
 		end
 
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
-			if p.occupants > 0 then
-				p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+			if p.occupants.total > 0 then
+				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
 		end
 		p.control.drive()
@@ -273,12 +260,10 @@ p.registerStateScript( "sit", "letout", function( args )
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
-	vsoSetTarget( 1, args.id )
-	if p.eat( vsoGetTargetId( 1 ), 1 ) then
+	if p.eat( args.id, 1, "hug") then
 		vsoVictimAnimSetStatus( "occupant1", {} );
 		return true
 	else
-		vsoSetTarget( 1, nil )
 		return false
 	end
 end)
@@ -287,13 +272,13 @@ function state_sit()
 	p.standardState()
 
 	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
-		if p.occupants > 0 then
-			p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+		if p.occupants.total > 0 then
+			p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 		end
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants == 0 and p.control.standalone then
+	if p.occupants.total == 0 and p.control.standalone then
 		if vsoChance(0.1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
@@ -306,8 +291,7 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "hug", "unhug", function()
-	vsoSetTarget( 1, nil )
-	p.uneat( 1 )
+	p.uneat( "Occupant1" )
 	return true
 end)
 
@@ -376,7 +360,7 @@ p.registerStateScript( "fly", "grabanalvore", function()
 	local position = mcontroller.position()
 	position = {position[1], position[2]-3}
 
-	if p.visualOccupants < p.maxOccupants then
+	if not locationFull("belly") then
 		local prey = world.entityQuery(position, 3, {
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
@@ -410,12 +394,13 @@ function state_fly()
 	p.control.altAction()
 	p.control.interact()
 
-	if p.visualOccupants >= p.maxOccupants and p.control.probablyOnGround() then
+	local control = p.stateconfig[p.state].control
+
+	if p.occupants.total >= control.fullThreshold and p.control.probablyOnGround() then
 		p.setState( "stand" )
 		return
 	end
 
-	local control = p.stateconfig[p.state].control
 	local dx = 0
 	local dy = 0
 	local controlForce = 100
@@ -444,14 +429,14 @@ function state_fly()
 		end
 
 		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
-			if p.occupants > 0 then
-				p.doTransition( "escape", {index=p.occupants} ) -- last eaten
+			if p.occupants.total > 0 then
+				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
 		end
 	end
 
 	local running = false
-	if p.visualOccupants < control.fullThreshold then --add walk control here when we have more controls
+	if (p.occupants.total + p.fattenBelly) < control.fullThreshold then --add walk control here when we have more controls
 		running = true
 	end
 	if dx ~= 0 then
@@ -459,10 +444,10 @@ function state_fly()
 	end
 	if running then
 		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.total + p.fattenBelly) +1], controlForce )
 	else
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[p.visualOccupants +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.fattenBelly) +1], controlForce )
 	end
 
 	p.control.updateDriving()
