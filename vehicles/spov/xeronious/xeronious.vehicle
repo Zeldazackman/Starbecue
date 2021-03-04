@@ -126,9 +126,7 @@
 						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true, "timing": "legs"},
 						"body": "idle",
 						"arms": "idle",
-						"legs": "sitdown",
-						"head": "idle",
-						"tail": "sitdown"
+						"legs": "sitdown"
 					},
 					"state": "sit",
 					"timing": "legs",
@@ -138,11 +136,10 @@
 				"crouch": {
 					"animation": {
 						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
+						"offset2": { "x": [-6], "y": [2], "tail": true },
 						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "crouch",
-						"head": "idle",
-						"tail": "idle"
+						"legs": "crouch"
 					},
 					"state": "crouch"
 				},
@@ -153,7 +150,6 @@
 							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
@@ -171,7 +167,6 @@
 							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
@@ -189,7 +184,6 @@
 							"arms": "rotation",
 							"legs": "idle",
 							"head": "none",
-							"tail": "idle",
 							"rotate": {
 								"parts": [
 									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
@@ -211,8 +205,7 @@
 							"body": "escape",
 							"arms": "idle",
 							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "stand",
@@ -223,8 +216,7 @@
 							"body": "escape",
 							"arms": "idle",
 							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "stand",
@@ -235,8 +227,7 @@
 							"body": "escape",
 							"arms": "idle",
 							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
+							"head": "none"
 						},
 						"victimAnimation": "escape",
 						"state": "stand",
@@ -246,13 +237,16 @@
 				],
 				"digestbelly" : {
 					"animation": {
-						"body": "shrink"
+						"body": "shrink",
+						"head": "burp"
 					},
 					"state": "stand"
 				}
 			},
 			"idle": {
 				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"offset2": { "x": [0], "y": [0], "tail": false },
+
 				"body": "idle",
 				"arms": "idle",
 				"legs": "idle",
@@ -319,7 +313,6 @@
 						"arms": "idle",
 						"legs": "walk",
 						"body": "idle",
-						"tail": "idle",
 						"offset": {
 							"y": [2, 2, 1, 1, 0, 0, 1, 1],
 							"body": true,
@@ -332,7 +325,6 @@
 						"arms": "run",
 						"legs": "run",
 						"body": "idle",
-						"tail": "idle",
 						"offset": {
 							"y": [2, 3, 2, 1, 2, 3, 2, 1],
 							"body": true,
@@ -344,7 +336,6 @@
 						"legs": "jump",
 						"arms": "jump",
 						"body": "idle",
-						"tail": "idle",
 						"offset": {
 							"y": [0, 1, 2, 3, 3],
 							"body": true
@@ -354,7 +345,6 @@
 						"legs": "fall",
 						"arms": "fall",
 						"body": "idle",
-						"tail": "idle",
 						"offset": {
 							"y": [3, 2, 1, 0, 0],
 							"body": true
@@ -368,21 +358,22 @@
 				"uncrouch": {
 					"animation": {
 						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
+						"offset2": { "x": [-6], "y": [2], "tail": true },
 						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "crouch",
-						"tail": "idle"
+						"legs": "crouch"
 					},
 					"state": "stand"
 				}
 			},
 			"idle": {
 				"offset": { "x": [12], "y": [-27], "body": false },
+				"offset2": { "x": [-8], "y": [-12], "tail": true },
 				"body": "crouch",
 				"arms": "crouch",
 				"legs": "crouch",
 				"head": "idle",
-				"tail": "crouch"
+				"tail": "idle"
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -462,8 +453,7 @@
 							"body": "expand",
 							"arms": "fly2",
 							"legs": "analvore",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "playeranalvore",
 						"state": "fly",
@@ -474,8 +464,7 @@
 							"body": "expand",
 							"arms": "fly2",
 							"legs": "analvore",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "playeranalvore",
 						"state": "fly",
@@ -486,8 +475,7 @@
 							"body": "expand",
 							"arms": "fly2",
 							"legs": "analvore",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "playeranalvore",
 						"state": "fly",
@@ -502,8 +490,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "escapeanalvore",
 						"state": "fly",
@@ -513,8 +500,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "escapeanalvore",
 						"state": "fly",
@@ -524,8 +510,7 @@
 						"animation": {
 							"body": "shrink",
 							"arms": "fly2",
-							"head": "AVlook",
-							"tail": "idle"
+							"head": "AVlook"
 						},
 						"victimAnimation": "escapeanalvore",
 						"state": "fly",
@@ -608,8 +593,6 @@
 						"body": "idle",
 						"arms": "idle",
 						"legs": "standup",
-						"head": "idle",
-						"tail": "standup",
 						"tags": [
 							{
 								"owner": "body",
@@ -718,7 +701,7 @@
 				"arms": "idle",
 				"legs": "sit",
 				"head": "idle",
-				"tail": "sit",
+				"tail": "idle",
 				"tags": [
 					{
 						"owner": "body",
@@ -861,7 +844,7 @@
 				"arms": "hug",
 				"legs": "sit",
 				"head": "look",
-				"tail": "sit",
+				"tail": "idle",
 				"tags": [
 					{
 						"owner": "body",

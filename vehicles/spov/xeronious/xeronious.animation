@@ -2,6 +2,7 @@
 	"globalTagDefaults" : {
 		"occupants" : "0",
 		"hugoccupants": "0",
+		"tailoccupants": "0",
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
@@ -103,6 +104,8 @@
 					"blink": { "frames": 2, "cycle": 3, "mode": "end", "priority": 1 },
 					"look": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
 					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 1 },
+					"burp": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -185,6 +188,37 @@
                     }
                 }
 			},
+			"occupant4": {
+                "properties": {
+                    "centered": true,
+                     "zLevel": 0,
+                     "transformationGroups": ["flip", "occupant4position", "bodybob"],
+                     "occupantPosition": [0.0, 0.0]
+                },
+                "partStates": {
+                    "occupant3state": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<occupant2species>/spov/<occupant2species>_small.png:smolprey<occupant2directives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
+
+                    }
+                }
+			},
+			"occupant5": {
+                "properties": {
+                    "centered": true,
+                     "zLevel": 0,
+                     "transformationGroups": ["flip", "occupant5position", "bodybob"],
+                     "occupantPosition": [0.0, 0.0]
+                },
+                "partStates": {
+                    "occupant3state": {
+						"smol": { "properties" : { "image": "/vehicles/spov/<occupant2species>/spov/<occupant2species>_small.png:smolprey<occupant2directives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
+
+                    }
+                }
+			},
+
 
             "background": {
                 "properties": {
@@ -357,18 +391,16 @@
                 "properties": {
                     "centered": true,
                     "zLevel": 2,
-                     "transformationGroups": ["flip", "bodybob"]
+                     "transformationGroups": ["flip", "bodybob", "tailbob"]
                 },
                 "partStates": {
                     "tailState": {
                         "idle": { "properties": { "image": "spov/tail.png:idle.<frame><directives>" } },
-                        "sit": { "properties": { "image": "spov/tail.png:sit.<frame><directives>" } },
-                        "fly": { "properties": { "image": "spov/tail.png:fly.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/tail.png:crouch.<frame><directives>" } },
-
-						"sitdown": { "properties": { "image": "spov/tail.png:sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/tail.png:standup.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/tail.png:<tailoccupants>.tail.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/tail.png:<tailoccupants>.tail.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/tail.png:<tailoccupants>.tail.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/tail.png:<tailoccupants>.tail.s_down.<frame><directives><bellymask>" } },
 
                         "none": { "properties": {} }
 					}
@@ -387,6 +419,7 @@
                         "blink": { "properties": { "image": "spov/head.png:blink.<frame><directives>" } },
                         "look": { "properties": { "image": "spov/head.png:look.<frame><directives>" } },
 						"AVlook": { "properties": { "image": "spov/head.png:AVlook.<frame><directives>" } },
+						"burp": { "properties": { "image": "spov/head.png:burp.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}
@@ -405,6 +438,12 @@
 		"occupant3position": {
 			"interpolated": true
 		},
+		"occupant4position": {
+			"interpolated": true
+		},
+		"occupant5position": {
+			"interpolated": true
+		},
 		"headbob": {
 			"interpolated": false
 		},
@@ -412,6 +451,9 @@
 			"interpolated": false
 		},
 		"legsbob": {
+			"interpolated": false
+		},
+		"tailbob": {
 			"interpolated": false
 		},
 		"frontarmrotation": {

@@ -15,12 +15,13 @@ end
 
 function update(dt)
   local health = world.entityHealth(entity.id())
-  if health[1] > ( 0.01 * dt * self.powerMultiplier) then
+  local damagecalc = status.resourceMax("health") * 0.01 * self.powerMultiplier * self.cdt + self.cdamage
+
+  if health[1] > damagecalc then
 
     self.cdt = self.cdt + dt
     --if self.cdt < self.tickTime then return end -- wait until at least 1 second has passed
 
-    local damagecalc = status.resourceMax("health") * 0.01 * self.powerMultiplier * self.cdt + self.cdamage
     if damagecalc < 1 then return end -- wait until at least 1 damage will be dealt
 
     self.cdt = 0

@@ -164,6 +164,8 @@ function p.doAnims( anims, force )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
 			p.headbob( anim )
+		elseif state == "offset2" then
+			p.otherbob( anim )
 		elseif state == "rotate" then
 			p.rotate( anim )
 		elseif state == "tags" then
@@ -213,6 +215,30 @@ function p.headbob( data )
 	vsoTransAnimUpdate( "headbob", 0 )
 	if #p.headbobbing.x == 1 and #p.headbobbing.y == 1 then
 		p.headbobbing.enabled = false
+	end
+end
+
+p.otherbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
+function p.otherbob( data )
+	if data == p.otherbobbing.data then
+		if not p.otherbobbing.enabled then p.otherbobbing.time = 0 p.otherbobbing.enabled = true end
+		return
+	end
+	p.otherbobbing = {
+		enabled = data ~= nil,
+		data = data,
+		time = 0,
+		loop = data.loop or false,
+		x = data and data.x or {0},
+		y = data and data.y or {0},
+		body = data and data.body or false,
+		legs = data and data.legs or false,
+		tail = data and data.tail or false,
+		timing = data.timing or "body"
+	}
+	vsoTransAnimUpdate( "otherbob", 0 )
+	if #p.otherbobbing.x == 1 and #p.otherbobbing.y == 1 then
+		p.otherbobbing.enabled = false
 	end
 end
 
@@ -268,13 +294,51 @@ function vsoTransAnimUpdate( transformname, dt )
 		vsoTransMoveTo( "headbob", x / 8, y / 8 )
 		if p.headbobbing.body then
 			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
-		else
+		elseif not p.otherbobbing.body then
 			vsoTransMoveTo( "bodybob", 0, 0 )
 		end
 		if p.headbobbing.legs then
 			vsoTransMoveTo( "legsbob", x / 8, y / 8 )
-		else
+		elseif not p.otherbobbing.legs then
 			vsoTransMoveTo( "legsbob", 0, 0 )
+		end
+		if p.headbobbing.tail then
+			vsoTransMoveTo( "tailbob", x / 8, y / 8 )
+		elseif not p.otherbobbing.tail then
+			vsoTransMoveTo( "tailbob", 0, 0 )
+		end
+
+	elseif transformname == "otherbob" then
+		if p.otherbobbing == nil or not p.otherbobbing.enabled then return end
+		local state = p.otherbobbing.timing.."State"
+		local animdata = self.vsoAnimStateData[state][vsoAnimCurr(state) or "idle"] or {}
+		local cycle = animdata.cycle or 1
+		local frames = animdata.frames or 1
+		local speed = frames / cycle
+		p.otherbobbing.time = p.otherbobbing.time + dt * speed;
+		if p.otherbobbing.time >= frames then
+			if p.otherbobbing.loop then
+				p.otherbobbing.time = p.otherbobbing.time - frames
+			else
+				p.otherbobbing.enabled = false
+			end
+		end
+		local x = p.otherbobbing.x[ math.floor( p.otherbobbing.time ) + 1 ] or p.otherbobbing.x[#p.otherbobbing.x] or 0
+		local y = p.otherbobbing.y[ math.floor( p.otherbobbing.time ) + 1 ] or p.otherbobbing.y[#p.otherbobbing.y] or 0
+		if p.otherbobbing.body then
+			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
+		elseif not p.headbobbing.body then
+			vsoTransMoveTo( "bodybob", 0, 0 )
+		end
+		if p.otherbobbing.legs then
+			vsoTransMoveTo( "legsbob", x / 8, y / 8 )
+		elseif not p.headbobbing.legs then
+			vsoTransMoveTo( "legsbob", 0, 0 )
+		end
+		if p.otherbobbing.tail then
+			vsoTransMoveTo( "tailbob", x / 8, y / 8 )
+		elseif not p.headbobbing.tail then
+			vsoTransMoveTo( "tailbob", 0, 0 )
 		end
 
 	elseif transformname == "rotation" then
@@ -504,6 +568,7 @@ function p.onBegin()
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
+	self.sv.ta.otherbob = { visible = false } -- and another bob for other things to be seperate
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
 
 	if not config.getParameter( "uneaten" ) then

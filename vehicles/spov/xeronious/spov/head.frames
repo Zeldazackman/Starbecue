@@ -1,13 +1,21 @@
 {
 	"frameGrid" : {
 		"size" : [96, 96],
-		"dimensions" : [8, 1],
+		"dimensions" : [8, 2],
 		"names" : [
-			[ "idle.1", "blink.1", "look.1", "AVlook.1", "AVlook.2", null, null, "empty.1" ]
+			[ "idle.1", "blink.1", "look.1", "AVlook.1", "AVlook.2", null, null, "empty.1" ],
+			[ "burp.5", "burp.6", "burp.7", "burp.8"]
 		]
 	},
 	"aliases" : {
 		"blink.2" : "idle.1",
-		"AVlook.3" : "AVlook.1"
+		"AVlook.3" : "AVlook.1",
+
+		"burp.1" : "look.1",
+		"burp.2" : "look.1",
+		"burp.3" : "look.1",
+		"burp.4" : "look.1"
+
+
 	}
 }
