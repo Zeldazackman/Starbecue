@@ -38,15 +38,30 @@ function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods
 end
 
 p = {
-	maxOccupants = {
+	maxOccupants = { --basically everything I think we'd need
 		total = 0,
 		belly = 0,
-		womb = 0
+		womb = 0,
+		shaft = 0,
+		knot = 0,
+		ballR = 0,
+		ballL = 0,
+		hug = 0,
+		tail = 0,
+		other = 0
+
 	},
 	occupants = {
 		total = 0,
 		belly = 0,
-		womb = 0
+		womb = 0,
+		shaft = 0,
+		knot = 0,
+		ballL = 0,
+		ballR = 0,
+		hug = 0,
+		tail = 0,
+		other = 0
 	},
 	occupantLocation = {},
 	occupantOffset = 1,
@@ -112,11 +127,17 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 end
 
 function p.updateOccupants()
-	for i = 1, #p.occupantLocation do
-		p.occupants[p.occupantLocation[i]] = 0
-	end
-
 	p.occupants.total = 0
+	p.occupants.belly = 0
+	p.occupants.womb = 0
+	p.occupants.shaft = 0
+	p.occupants.knot = 0
+	p.occupants.ballL = 0
+	p.occupants.ballR = 0
+	p.occupants.hug = 0
+	p.occupants.tail = 0
+	p.occupants.other = 0
+
 	local lastFilled = true
 	for i = 1, p.maxOccupants.total do
 		local targetid = vsoGetTargetId( "occupant"..i )
@@ -137,9 +158,23 @@ function p.updateOccupants()
 	p.occupants.belly = p.occupants.belly + p.fattenBelly + p.occupants.womb
 	p.occupants.womb = p.occupants.belly --womb is going to be one of those weird cases, as I'm not sure it would ever require a sprite differentiation so they count to the same total but are different locations for differentiaon of escape and effects later
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
-	for i = 1, #p.occupantLocation do
-		animator.setGlobalTag( p.occupantLocation[i].."occupants", tostring(p.occupants[p.occupantLocation[i]]))
+	animator.setGlobalTag( "bellyoccupants", tostring(p.occupants.belly) )-- womb counts to this total so no womb tag
+	animator.setGlobalTag( "shaftoccupants", tostring(p.occupants.shaft) )
+	animator.setGlobalTag( "knotoccupants", tostring(p.occupants.knot) )
+
+	if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV cases stay on the side they were on instead of flipping
+		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballL) )
+		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballR) )
+	else
+		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballR) )
+		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballL) )
 	end
+
+
+	animator.setGlobalTag( "hugoccupants", tostring(p.occupants.hug) )
+	animator.setGlobalTag( "tailoccupants", tostring(p.occupants.tail) )
+	animator.setGlobalTag( "otheroccupants", tostring(p.occupants.other) )
+
 end
 
 function p.setState(state)
