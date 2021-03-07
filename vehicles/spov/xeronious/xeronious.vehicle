@@ -142,7 +142,12 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
-						"offset": { "x": [-3, -6], "y": [-5, -11], "body": true, "timing": "legs"},
+						"offset": {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-3, -6], "y": [-5, -11], "head": true, "body": true}
+							]
+						},
 						"body": "idle",
 						"arms": "idle",
 						"legs": "sitdown"
@@ -154,8 +159,12 @@
 				// non directional = not accessible via controls, except from script
 				"crouch": {
 					"animation": {
-						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
-						"offset2": { "x": [-6], "y": [2], "tail": true },
+						"offset": {
+							"parts" : [
+								{"x": [1], "y": [-11], "head": true, "body": true},
+								{"x": [-6], "y": [2], "tail": true }
+							]
+						},
 						"body": "crouchdown",
 						"arms": "idle",
 						"legs": "crouch"
@@ -276,9 +285,11 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
-				"offset2": { "x": [0], "y": [0], "tail": false },
-
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				},
 				"body": "idle",
 				"arms": "idle",
 				"legs": "idle",
@@ -295,24 +306,24 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "escape" },
-					"back": { "transition": "down" },
+					"back": { "transition": "bellytotail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 15 },
+						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" }
 				},
 				"tail" : {
 					"part" : "tail",
-					"up": { "transition": "escape" },
-					"front": { "transition": "escape" },
-					"back": { "transition": "down" },
+					"up": { "transition": "up" },
+					"front": { "transition": "tailtobelly" },
+					"back": { "transition": "tailescape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 15 },
+						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" }
@@ -362,10 +373,11 @@
 						"legs": "walk",
 						"body": "idle",
 						"offset": {
-							"y": [2, 2, 1, 1, 0, 0, 1, 1],
-							"body": true,
+							"timing": "legs",
 							"loop": true,
-							"timing": "legs"
+							"parts" : [
+								{"y": [2, 2, 1, 1, 0, 0, 1, 1], "head": true, "body": true}
+							]
 						}
 
 					},
@@ -374,10 +386,11 @@
 						"legs": "run",
 						"body": "idle",
 						"offset": {
-							"y": [2, 3, 2, 1, 2, 3, 2, 1],
-							"body": true,
+							"timing": "legs",
 							"loop": true,
-							"timing": "legs"
+							"parts" : [
+								{"y": [2, 3, 2, 1, 2, 3, 2, 1], "head": true, "body": true}
+							]
 						}
 					},
 					"jump": {
@@ -385,8 +398,10 @@
 						"arms": "jump",
 						"body": "idle",
 						"offset": {
-							"y": [0, 1, 2, 3, 3],
-							"body": true
+							"timing": "legs",
+							"parts" : [
+								{"y": [0, 1, 2, 3, 3], "head": true, "body": true}
+							]
 						}
 					},
 					"fall": {
@@ -394,8 +409,10 @@
 						"arms": "fall",
 						"body": "idle",
 						"offset": {
-							"y": [3, 2, 1, 0, 0],
-							"body": true
+							"timing": "legs",
+							"parts" : [
+								{"y": [3, 2, 1, 0, 0], "head": true, "body": true}
+							]
 						}
 					}
 				}
@@ -405,8 +422,12 @@
 			"transitions": {
 				"uncrouch": {
 					"animation": {
-						"offset": { "x": [1], "y": [-11], "body": true, "timing": "body"},
-						"offset2": { "x": [-6], "y": [2], "tail": true },
+						"offset" : {
+							"parts" : [
+								{"x": [1], "y": [-11], "head": true, "body": true},
+								{"x": [-6], "y": [2], "tail": true }
+							]
+						},
 						"body": "crouchdown",
 						"arms": "idle",
 						"legs": "crouch"
@@ -415,8 +436,12 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [12], "y": [-27], "body": false },
-				"offset2": { "x": [-8], "y": [-12], "tail": true },
+				"offset" : {
+					"parts" : [
+						{"x": [12], "y": [-27], "head": true },
+						{"x": [-8], "y": [-12], "tail": true }
+					]
+				},
 				"body": "crouch",
 				"arms": "crouch",
 				"legs": "crouch",
@@ -427,6 +452,22 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"struggle": {
+				"tail" : {
+					"part" : "tail",
+					"up": { "transition": "up" },
+					"front": { "transition": "tailtobelly" },
+					"back": { "transition": "tailescape" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				}
+			},
+
 			"control": {
 				"walkSpeed": 7,
 				"runSpeed": 7,
@@ -447,13 +488,22 @@
 					"walk": {
 						"arms": "crawl",
 						"legs": "crawl",
-						"offset": { "x": [12], "y": [-27], "body": false }
-
+						"offset" : {
+							"parts" : [
+								{"x": [12], "y": [-27], "head": true },
+								{"x": [-8], "y": [-12], "tail": true }
+							]
+						}
 					},
 					"run": {
 						"arms": "crawl",
 						"legs": "crawl",
-						"offset": { "x": [12], "y": [-27], "body": false }
+						"offset" : {
+							"parts" : [
+								{"x": [12], "y": [-27], "head": true },
+								{"x": [-8], "y": [-12], "tail": true }
+							]
+						}
 					}
 				}
 			}
@@ -579,16 +629,32 @@
 				{ "head": "idle" }
 			],
 			"struggle": {
-				"up": { "transition": "escape" },
-				"front": { "transition": "escape" },
-				"back": { "transition": "down" },
-				"down": { "transition": "escapeanalvore" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "escape" },
+					"back": { "transition": "bellytotail" },
+					"down": { "transition": "escapeanalvore" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
 				},
-				"animation": { "head": "look" }
+				"tail" : {
+					"part" : "tail",
+					"up": { "transition": "up" },
+					"front": { "transition": "tailtobelly" },
+					"back": { "transition": "tailescape" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				}
 			},
 
 			"control": {
@@ -623,12 +689,13 @@
 				"animations": {
 					"fly": {
 						"arms": "fly",
-						"offset": {
-							"y": [1, 2, 3, 4, 3, 2, 1, 0],
+						"offset" : {
+							"timing": "arms",
 							"loop": true,
-							"body": true,
-							"legs": true,
-							"timing": "arms" }
+							"parts" : [
+								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "head": true, "body": true, "legs": true}
+							]
+						}
 					}
 				}
 			}
@@ -637,7 +704,12 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [-6, -3], "y": [-11, -5], "body": true, "timing": "legs" },
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-6, -3], "y": [-11, -5], "head": true, "body": true }
+							]
+						},
 						"body": "idle",
 						"arms": "idle",
 						"legs": "standup",
@@ -744,7 +816,11 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "head": true, "body": true }
+					]
+				},
 				"body": "idle",
 				"arms": "idle",
 				"legs": "sit",
@@ -765,16 +841,33 @@
 				{ "head": "idle" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "down" },
-				"back": { "transition": "up" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "down" },
+					"back": { "transition": "bellytotail" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
 				},
-				"lookAnimation": true
+				"tail" : {
+					"part" : "tail",
+					"up": { "transition": "up" },
+					"front": { "transition": "tailtobelly" },
+					"back": { "transition": "tailescape" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				}
+
 			},
 			"interact": {
 				"front": [ // array depends on occupants
@@ -796,7 +889,7 @@
 		},
 		"hug": {
 			"transitions": {
-				"up": {
+				"unhug": {
 					"animation": {
 						"arms": "idle"
 					},
@@ -887,7 +980,11 @@
 				]
 			},
 			"idle": {
-				"offset": { "x": [-10, -10], "y": [-17, -17], "body": true },
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "head": true, "body": true }
+					]
+				},
 				"body": "idle",
 				"arms": "hug",
 				"legs": "sit",
@@ -908,16 +1005,45 @@
 				{ "head": "look" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "down" },
-				"back": { "transition": "up" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
+				"hug" : {
+					"part" : "body", // can be an arms struggle anim later maybe
+					"up": { "transition": "unhug" },
+					"front": { "transition": "down" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 1, "max": 1 },
+						"normal": { "min": 1, "max": 1 },
+						"antiescape": { "min": 1, "max": 1 }
+					},
+					"animation": { "head": "look" }
 				},
-				"animation": { "head": "look" }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "down" },
+					"back": { "transition": "bellytotail" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				},
+				"tail" : {
+					"part" : "tail",
+					"up": { "transition": "up" },
+					"front": { "transition": "tailtobelly" },
+					"back": { "transition": "tailescape" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+				}
 			},
 			"interact": {
 				"front": [ // array depends on occupants

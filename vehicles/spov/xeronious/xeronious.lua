@@ -81,19 +81,10 @@ p.registerStateScript( "stand", "tailletout", function( args )
 	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
-
 p.registerStateScript( "stand", "bapeat", function()
 	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
 end)
-
-function checkAimed(entityaimed)
-	for i = 1, #entityaimed do
-		if not p.entityLounging(entityaimed[i]) then
-			return i
-		end
-	end
-end
 
 function state_stand()
 

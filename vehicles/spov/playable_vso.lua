@@ -188,6 +188,14 @@ function checkEatPosition(position, location, transition)
 	end
 end
 
+function checkAimed(entityaimed)
+	for i = 1, #entityaimed do
+		if not p.entityLounging(entityaimed[i]) then
+			return i
+		end
+	end
+end
+
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
 	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
@@ -360,7 +368,7 @@ function p.doAnims( anims, force )
 	end
 end
 
-p.headbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
+p.headbobbing = {enabled = false, time = 0, parts = {}}
 function p.headbob( data )
 	if data == p.headbobbing.data then
 		if not p.headbobbing.enabled then p.headbobbing.time = 0 p.headbobbing.enabled = true end
@@ -370,44 +378,36 @@ function p.headbob( data )
 		enabled = data ~= nil,
 		data = data,
 		time = 0,
+		parts = {},
 		loop = data.loop or false,
-		x = data and data.x or {0},
-		y = data and data.y or {0},
-		body = data and data.body or false,
-		legs = data and data.legs or false,
 		timing = data.timing or "body"
 	}
+	local continue = false
+	for _,r in ipairs(data.parts or {}) do
+		table.insert(p.headbobbing.parts, {
+			x = r.x or {0},
+			y = r.y or {0},
+			head = r.head or false,
+			body = r.body or false,
+			legs = r.legs or false,
+			tail = r.tail or false,
+			})
+		if (r.x and #r.x > 1) or (r.y and #r.y > 1) then
+			continue = true
+		end
+	end
+
 	vsoTransAnimUpdate( "headbob", 0 )
-	if #p.headbobbing.x == 1 and #p.headbobbing.y == 1 then
+	if not continue then
 		p.headbobbing.enabled = false
+		p.headbobbing.head = false
+		p.headbobbing.body = false
+		p.headbobbing.legs = false
+		p.headbobbing.tail = false
 	end
 end
 
-p.otherbobbing = {enabled = false, time = 0, x = {0}, y = {0}}
-function p.otherbob( data )
-	if data == p.otherbobbing.data then
-		if not p.otherbobbing.enabled then p.otherbobbing.time = 0 p.otherbobbing.enabled = true end
-		return
-	end
-	p.otherbobbing = {
-		enabled = data ~= nil,
-		data = data,
-		time = 0,
-		loop = data.loop or false,
-		x = data and data.x or {0},
-		y = data and data.y or {0},
-		body = data and data.body or false,
-		legs = data and data.legs or false,
-		tail = data and data.tail or false,
-		timing = data.timing or "body"
-	}
-	vsoTransAnimUpdate( "otherbob", 0 )
-	if #p.otherbobbing.x == 1 and #p.otherbobbing.y == 1 then
-		p.otherbobbing.enabled = false
-	end
-end
-
-p.rotating = {enabled = false, time = 0, rotations = {}}
+p.rotating = {enabled = false, time = 0, parts = {}}
 function p.rotate( data )
 	if data == p.rotating.data then
 		if not p.rotating.enabled then p.rotating.time = 0 p.rotating.enabled = true end
@@ -452,58 +452,39 @@ function vsoTransAnimUpdate( transformname, dt )
 				p.headbobbing.time = p.headbobbing.time - frames
 			else
 				p.headbobbing.enabled = false
+				p.headbobbing.head = false
+				p.headbobbing.body = false
+				p.headbobbing.legs = false
+				p.headbobbing.tail = false
 			end
 		end
-		local x = p.headbobbing.x[ math.floor( p.headbobbing.time ) + 1 ] or p.headbobbing.x[#p.headbobbing.x] or 0
-		local y = p.headbobbing.y[ math.floor( p.headbobbing.time ) + 1 ] or p.headbobbing.y[#p.headbobbing.y] or 0
-		vsoTransMoveTo( "headbob", x / 8, y / 8 )
-		if p.headbobbing.body then
-			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
-		elseif not p.otherbobbing.body then
-			vsoTransMoveTo( "bodybob", 0, 0 )
-		end
-		if p.headbobbing.legs then
-			vsoTransMoveTo( "legsbob", x / 8, y / 8 )
-		elseif not p.otherbobbing.legs then
-			vsoTransMoveTo( "legsbob", 0, 0 )
-		end
-		if p.headbobbing.tail then
-			vsoTransMoveTo( "tailbob", x / 8, y / 8 )
-		elseif not p.otherbobbing.tail then
-			vsoTransMoveTo( "tailbob", 0, 0 )
-		end
-
-	elseif transformname == "otherbob" then
-		if p.otherbobbing == nil or not p.otherbobbing.enabled then return end
-		local state = p.otherbobbing.timing.."State"
-		local animdata = self.vsoAnimStateData[state][vsoAnimCurr(state) or "idle"] or {}
-		local cycle = animdata.cycle or 1
-		local frames = animdata.frames or 1
-		local speed = frames / cycle
-		p.otherbobbing.time = p.otherbobbing.time + dt * speed;
-		if p.otherbobbing.time >= frames then
-			if p.otherbobbing.loop then
-				p.otherbobbing.time = p.otherbobbing.time - frames
-			else
-				p.otherbobbing.enabled = false
+		for _,r in ipairs(p.headbobbing.parts) do
+			local x = r.x[ math.floor( p.headbobbing.time ) + 1 ] or r.x[#r.x] or 0
+			local y = r.y[ math.floor( p.headbobbing.time ) + 1 ] or r.y[#r.y] or 0
+			if r.head then
+				p.headbobbing.head = true
+				vsoTransMoveTo( "headbob", x / 8, y / 8 )
+			elseif not p.headbobbing.head then
+				vsoTransMoveTo( "headbob", 0, 0 )
 			end
-		end
-		local x = p.otherbobbing.x[ math.floor( p.otherbobbing.time ) + 1 ] or p.otherbobbing.x[#p.otherbobbing.x] or 0
-		local y = p.otherbobbing.y[ math.floor( p.otherbobbing.time ) + 1 ] or p.otherbobbing.y[#p.otherbobbing.y] or 0
-		if p.otherbobbing.body then
-			vsoTransMoveTo( "bodybob", x / 8, y / 8 )
-		elseif not p.headbobbing.body then
-			vsoTransMoveTo( "bodybob", 0, 0 )
-		end
-		if p.otherbobbing.legs then
-			vsoTransMoveTo( "legsbob", x / 8, y / 8 )
-		elseif not p.headbobbing.legs then
-			vsoTransMoveTo( "legsbob", 0, 0 )
-		end
-		if p.otherbobbing.tail then
-			vsoTransMoveTo( "tailbob", x / 8, y / 8 )
-		elseif not p.headbobbing.tail then
-			vsoTransMoveTo( "tailbob", 0, 0 )
+			if r.body then
+				p.headbobbing.body = true
+				vsoTransMoveTo( "bodybob", x / 8, y / 8 )
+			elseif not p.headbobbing.body then
+				vsoTransMoveTo( "bodybob", 0, 0 )
+			end
+			if r.legs then
+				p.headbobbing.legs = true
+				vsoTransMoveTo( "legsbob", x / 8, y / 8 )
+			elseif not p.headbobbing.legs then
+				vsoTransMoveTo( "legsbob", 0, 0 )
+			end
+			if r.tail then
+				p.headbobbing.tail = true
+				vsoTransMoveTo( "tailbob", x / 8, y / 8 )
+			elseif not p.headbobbing.tail then
+				vsoTransMoveTo( "tailbob", 0, 0 )
+			end
 		end
 
 	elseif transformname == "rotation" then

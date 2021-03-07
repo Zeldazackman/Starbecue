@@ -461,7 +461,11 @@
 		},
 		"legsbob": {
 			"interpolated": false
+		},
+		"tailbob": {
+			"interpolated": false
 		}
+
 	},
 	"sounds": {
 		"swallow": ["/sfx/objects/gulp.ogg"]

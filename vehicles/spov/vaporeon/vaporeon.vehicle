@@ -125,7 +125,11 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
-						"offset": { "x": [0, 0], "y": [0, 2], "body": false },
+						"offset" : {
+							"parts" : [
+								{"y": [0, 2], "head": true }
+							]
+						},
 						"body": "sitdown",
 						"legs": "none",
 						"bap": "none",
@@ -190,7 +194,11 @@
 				]
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				},
 				"body": "idle",
 				"legs": "idle",
 				"head": "idle",
@@ -202,16 +210,20 @@
 			],
 
 			"struggle": {
-				"up": { "transition": "escape" },
-				"front": { "transition": "escape" },
-				"back": { "transition": "down" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
-				},
-				"animation": { "head": "look" }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "escape" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+
+				}
 			},
 			"interact": {
 				"front": [ // array depends on occupants
@@ -278,40 +290,37 @@
 					"walk": {
 						"legs": "walk",
 						"body": "idle",
-						"tail": "walk",
-						"offset": {
-							"y": [0, 0, 0, 0, 0, 0, 0, 0],
-							"body": true,
-							"loop": true,
-							"timing": "legs"
-						}
-
+						"tail": "walk"
 					},
 					"run": {
 						"legs": "run",
 						"body": "idle",
 						"tail": "run",
-						"offset": {
-							"y": [0, 0, 1, 1, 0, 0, -1, -1],
-							"body": true,
-							"loop": true,
-							"timing": "legs"
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "head": true, "body": true }
+							]
 						}
 					},
 					"jump": {
 						"legs": "jump",
 						"body": "jump",
 						"tail": "jump",
-						"offset": {
-							"y": [1, 2, 3, 4]
+						"offset" : {
+							"parts" : [
+								{"y": [1, 2, 3, 4], "head": true }
+							]
 						}
 					},
 					"fall": {
 						"legs": "fall",
 						"body": "fall",
 						"tail": "fall",
-						"offset": {
-							"y": [4, 3, 2, 1]
+						"offset" : {
+							"parts" : [
+								{"y": [4, 3, 2, 1], "head": true }
+							]
 						}
 					}
 				}
@@ -321,7 +330,11 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [0, 0], "y": [2, 0], "body": false },
+						"offset" : {
+							"parts" : [
+								{"y": [2, 0], "head": true }
+							]
+						},
 						"body": "standup",
 						"legs": "none",
 						"head": "idle",
@@ -333,7 +346,11 @@
 				"down": [
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
+							"offset" : {
+								"parts" : [
+									{ "x": [4, 10], "y": [4, -11], "head": true }
+								]
+							},
 							"body": "pin",
 							"legs": "none",
 							"head": "idle",
@@ -346,7 +363,11 @@
 					},
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
+							"offset" : {
+								"parts" : [
+									{ "x": [4, 10], "y": [4, -11], "head": true }
+								]
+							},
 							"body": "laydown",
 							"legs": "none",
 							"head": "idle",
@@ -357,7 +378,11 @@
 					},
 					{
 						"animation": {
-							"offset": { "x": [4, 10], "y": [4, -11], "body": false },
+							"offset" : {
+								"parts" : [
+									{ "x": [4, 10], "y": [4, -11], "head": true }
+								]
+							},
 							"body": "laydown",
 							"legs": "none",
 							"head": "idle",
@@ -369,7 +394,11 @@
 				]
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [4, 4], "body": false },
+				"offset" : {
+					"parts" : [
+						{ "y": [4], "head": true }
+					]
+				},
 				"body": "idle",
 				"legs": "none",
 				"head": "idle",
@@ -380,16 +409,20 @@
 				{ "tail": "sitlayflick" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "down" },
-				"back": { "transition": "up" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 5 },
-					"normal": { "min": 5, "max": 15 },
-					"antiescape": { "min": 10, "max": 20 }
-				},
-				"animation": { "head": "look" }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "down" },
+					"back": { "transition": "up" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" }
+
+				}
 			},
 			"interact": {
 				"front": { "transition": "down", "chance": 20 },
@@ -402,7 +435,11 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
+						"offset" : {
+							"parts" : [
+								{ "x": [10, 4], "y": [-11, 4], "head": true }
+							]
+						},
 						"body": "situp",
 						"legs": "none",
 						"head": "idle",
@@ -446,7 +483,11 @@
 				]
 			},
 			"idle": {
-				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
+				"offset" : {
+					"parts" : [
+						{ "x": [12], "y": [-15], "head": true }
+					]
+				},
 				"body": "idle",
 				"legs": "none",
 				"head": "idle",
@@ -457,16 +498,20 @@
 				{ "tail": "sitlayflick" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "down" },
-				"back": { "transition": "up" },
-				"down": { "transition": "down" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 10 },
-					"normal": { "min": 10, "max": 20 },
-					"antiescape": { "min": 20, "max": 40 }
-				},
-				"animation": { "head": "look" }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "down" },
+					"back": { "transition": "up" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					},
+					"animation": { "head": "look" }
+
+				}
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
@@ -493,7 +538,6 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
 				"head": "none",
@@ -501,14 +545,18 @@
 			},
 			"idleAnimations": [],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "up" },
-				"back": { "transition": "up" },
-				"down": { "transition": "up" },
-				"chances": {
-					"easyescape": { "min": 5, "max": 15 },
-					"normal": { "min": 20, "max": 40 },
-					"antiescape": { "min": 40, "max": 80 }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "up" },
+					"back": { "transition": "up" },
+					"down": { "transition": "up" },
+					"chances": {
+						"easyescape": { "min": 5, "max": 15 },
+						"normal": { "min": 20, "max": 40 },
+						"antiescape": { "min": 40, "max": 80 }
+					}
+
 				}
 			},
 			"interact": {
@@ -536,7 +584,6 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
 				"head": "none",
@@ -546,14 +593,18 @@
 				{ "tail": "backflick" }
 			],
 			"struggle": {
-				"up": { "transition": "side" },
-				"front": { "transition": "side" },
-				"back": { "transition": "side" },
-				"down": { "transition": "side" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 10 },
-					"normal": { "min": 10, "max": 20 },
-					"antiescape": { "min": 20, "max": 40 }
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "side" },
+					"front": { "transition": "side" },
+					"back": { "transition": "side" },
+					"down": { "transition": "side" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+
 				}
 			},
 			"interact": {
@@ -596,7 +647,6 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
 				"head": "none",
@@ -606,14 +656,18 @@
 				{ "tail": "backflick" }
 			],
 			"struggle": {
-				"up": { "transition": "up" },
-				"front": { "transition": "up" },
-				"back": { "transition": "up" },
-				"down": { "transition": "up" },
-				"chances": {
-					"easyescape": { "min": 0, "max": 0 },
-					"normal": { "min": 0, "max": 0 },
-					"antiescape": { "min": 0, "max": 0 }
+				"hug" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "up" },
+					"back": { "transition": "up" },
+					"down": { "transition": "up" },
+					"chances": {
+						"easyescape": { "min": 0, "max": 0 },
+						"normal": { "min": 0, "max": 0 },
+						"antiescape": { "min": 0, "max": 0 }
+					}
+
 				}
 			},
 			"interact": {
@@ -650,7 +704,6 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
 				"head": "none",
@@ -660,14 +713,18 @@
 				{ "tail": "backflick" }
 			],
 			"struggle": {
-				"up": { "transition": "up", "victimAnimation": "hug.s_up" },
-				"front": { "transition": "up", "victimAnimation": "hug.s_front" },
-				"back": { "transition": "up", "victimAnimation": "hug.s_back" },
-				"down": { "transition": "up", "victimAnimation": "hug.s_down" },
-				"chances": {
-					"easyescape": { "min": 0, "max": 2 },
-					"normal": { "min": 5, "max": 10 },
-					"antiescape": { "min": 15, "max": 25 }
+				"hug" : {
+					"part" : "body",
+					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
+					"front": { "transition": "up", "victimAnimation": "hug.s_front" },
+					"back": { "transition": "up", "victimAnimation": "hug.s_back" },
+					"down": { "transition": "up", "victimAnimation": "hug.s_down" },
+					"chances": {
+						"easyescape": { "min": 0, "max": 2 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 15, "max": 25 }
+					}
+
 				}
 			},
 			"interact": {
@@ -681,7 +738,11 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset": { "x": [10, 4], "y": [-11, 4], "body": false },
+						"offset" : {
+							"parts" : [
+								{ "x": [10, 4], "y": [-11, 4], "head": true }
+							]
+						},
 						"body": "situp",
 						"legs": "none",
 						"head": "none",
@@ -715,7 +776,11 @@
 				},
 				"absorb": {
 					"animation": {
-						"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
+						"offset" : {
+							"parts" : [
+								{ "x": [12], "y": [-15], "head": true }
+							]
+						},
 						"body": "absorb",
 						"legs": "none",
 						"head": "pinlook",
@@ -728,7 +793,11 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [12, 12], "y": [-15, -15], "body": false },
+				"offset" : {
+					"parts" : [
+						{ "x": [12], "y": [-15], "head": true }
+					]
+				},
 				"body": "idle",
 				"legs": "none",
 				"head": "pinlook",
@@ -739,13 +808,17 @@
 				{ "tail": "sitlayflick" }
 			],
 			"struggle": {
-				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
-				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
-				"back": { "transition": "side", "victimAnimation": "pinned.s_back" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 10 },
-					"normal": { "min": 10, "max": 20 },
-					"antiescape": { "min": 20, "max": 40 }
+				"hug" : {
+					"part" : "body",
+					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
+					"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
+					"back": { "transition": "side", "victimAnimation": "pinned.s_back" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+
 				}
 			},
 			"interact": {
@@ -778,7 +851,6 @@
 				}
 			},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
 				"body": "idle",
 				"legs": "none",
 				"head": "none",
@@ -786,13 +858,17 @@
 			},
 			"idleAnimations": [],
 			"struggle": {
-				"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
-				"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
-				"back": { "transition": "up", "victimAnimation": "pinned.s_back" },
-				"chances": {
-					"easyescape": { "min": 2, "max": 10 },
-					"normal": { "min": 10, "max": 20 },
-					"antiescape": { "min": 20, "max": 40 }
+				"hug" : {
+					"part" : "body",
+					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
+					"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
+					"back": { "transition": "up", "victimAnimation": "pinned.s_back" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+
 				}
 			},
 			"interact": {
@@ -805,7 +881,11 @@
 		"smol": {
 			"transitions": {},
 			"idle": {
-				"offset": { "x": [0, 0], "y": [0, 0], "body": false },
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				},
 				"body": "smol.idle",
 				"legs": "smol.idle",
 				"head": "smol.idle",
@@ -859,37 +939,44 @@
 						"legs": "smol.walk",
 						"body": "smol.idle",
 						"tail": "none",
-						"offset": {
-							"y" : [ 0, 0, 1, 1, 0, 0, 1, 1 ],
-							"timing": "legs"
+						"offset" : {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{ "y" : [ 0, 0, 1, 1, 0, 0, 1, 1 ], "head": true }
+							]
 						}
-
 					},
 					"run": {
 						"legs": "smol.run",
 						"body": "smol.idle",
 						"tail": "none",
-						"offset": {
-							"y": [ 1, 2, 1, 0, 1, 2, 1, 0 ],
-							"body": true,
+						"offset" : {
+							"timing": "legs",
 							"loop": true,
-							"timing": "legs"
+							"parts" : [
+								{ "y" : [ 1, 2, 1, 0, 1, 2, 1, 0 ], "head": true }
+							]
 						}
 					},
 					"jump": {
 						"legs": "smol.jump",
 						"body": "smol.jump",
 						"tail": "none",
-						"offset": {
-							"y": [0, 1, 2, 2]
+						"offset" : {
+							"parts" : [
+								{ "y": [0, 1, 2, 2], "head": true }
+							]
 						}
 					},
 					"fall": {
 						"legs": "smol.fall",
 						"body": "smol.fall",
 						"tail": "none",
-						"offset": {
-							"y": [2, 2, 1, 0]
+						"offset" : {
+							"parts" : [
+								{ "y": [2, 2, 1, 0], "head": true }
+							]
 						}
 					},
 					"swimidle": {
@@ -901,8 +988,10 @@
 						"legs": "smol.swim",
 						"body": "smol.idle",
 						"tail": "none",
-						"offset": {
-							"y": [ 0, -1, -2, 0 ]
+						"offset" : {
+							"parts" : [
+								{ "y": [ 0, -1, -2, 0 ], "head": true }
+							]
 						}
 					}
 				}
