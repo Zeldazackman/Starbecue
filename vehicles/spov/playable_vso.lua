@@ -609,9 +609,11 @@ function p.smolprey( seatindex )
 	if seatindex == nil then return end
 	local id = vsoGetTargetId("occupant"..seatindex)
 	if p.isMonster(id) then
-		local portrait = world.entityPortrait(id, "fullneutral") or {{image=""}}
-		animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
-		vsoAnim( "occupant"..seatindex.."state", "monster" )
+		local portrait = world.entityPortrait(id, "fullneutral")
+		if portrait and portrait[1] and portrait[1].image then
+			animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
+			vsoAnim( "occupant"..seatindex.."state", "monster" )
+		end
 	elseif p.smolpreyspecies[seatindex] ~= nil then
 		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
