@@ -1,34 +1,17 @@
 local settings
-local current
-local canvas
 local options
+
+local canvas
 
 function init()
 	settings = config.getParameter( "settings", {} )
-	current = config.getParameter( "current" )
+	options = config.getParameter( "options" )
+	if not options then
+		pane.dismiss() -- empty radial menu, uh oh
+	end
+
 	canvas = widget.bindCanvas( "canvas" )
 	widget.focus("canvas")
-
-
-	options = {{
-		name = "settings",
-		icon = "/interface/title/modsover.png"
-	}}
-	if settings and settings.vsos then
-		for k, v in pairs(settings.vsos) do
-			if k == current then
-				table.insert(options, {
-					name = "despawn",
-					icon = "/interface/bookmarks/icons/beamparty.png"
-				})
-			elseif v.enabled ~= false then -- treat nil as true
-				table.insert(options, {
-					name = k,
-					icon = "/vehicles/spov/"..k.."/"..k.."icon.png"
-				})
-			end
-		end
-	end
 end
 
 function radialPoint(theta, radius)
@@ -95,10 +78,13 @@ function update( dt )
 
 	-- mouse handling
 	local mpos = canvas:mousePosition()
+	if mpos[1] == 0 and mpos[2] == 0 then mpos = {100, 100} end -- mouse position assumes {0, 0} until it is moved
 	mpos = {mpos[1] - 100, mpos[2] - 100} -- move (0, 0) to center instead of corner
 	local mouseAngle = math.atan(mpos[1], mpos[2]) * 180/math.pi + 180
 	local activeSegment = (math.floor(mouseAngle / segmentSize + 0.5) + segments) % segments + 1
-	sb.setLogMap("activeSegment", activeSegment)
+	if math.sqrt(mpos[1]*mpos[1] + mpos[2]*mpos[2]) < 0.9*innerRadius then
+		activeSegment = -1 -- no selection in middle
+	end
 
 	-- drawing
 	canvas:clear()
@@ -126,8 +112,9 @@ function update( dt )
 	end
 
 	-- save selection
-	if settings.selected ~= options[activeSegment].name then
-		settings.selected = options[activeSegment].name
-		player.setProperty( "vsoSettings", settings )
+	if activeSegment == -1 then
+		player.setProperty( "radialSelection", "cancel")
+	else
+		player.setProperty( "radialSelection", options[activeSegment].name )
 	end
 end

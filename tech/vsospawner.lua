@@ -1,27 +1,35 @@
 local pressedTime = 0
-local rpcSettings = "send"
+local rpc
+local rpcCallback
 local activated = false
 local radialMenuOpen = false
 local settings
+local inited = false
 
 function update(args)
-	if rpcSettings == "send" then
-		rpcSettings = world.sendEntityMessage( entity.id(), "loadVSOsettings" )
-	elseif rpcSettings ~= nil and rpcSettings:finished() then
-		if rpcSettings:succeeded() then
-			local result = rpcSettings:result()
+	if not inited then
+		inited = true
+		rpc = world.sendEntityMessage( entity.id(), "loadVSOsettings" )
+		rpcCallback = function(result)
+			settings = result
+			if settings.autodeploy then
+				spawnVSO(settings.selected)
+				activated = false
+			end
+		end
+	end
+	if rpc ~= nil and rpc:finished() then
+		if rpc:succeeded() then
+			local result = rpc:result()
 			if result ~= nil then
-				settings = result
-				if settings.autodeploy or activated then
-					activate()
-					activated = false
-				end
+				rpcCallback(result)
 			end
 		else
 			sb.logError( "Couldn't load VSO settings." )
-			sb.logError( rpcSettings:error() )
+			sb.logError( rpc:error() )
 		end
-		rpcSettings = nil
+		rpc = nil
+		rpcType = nil
 	end
 	if args.moves["special1"] then
 		sb.setLogMap("pressedTime", pressedTime)
@@ -35,24 +43,49 @@ function update(args)
 		closeMenu()
 		radialMenuOpen = false
 		activated = true
-		rpcSettings = "send" -- update selection
+		rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
+		rpcCallback = function(result)
+			if result == "cancel" then
+				-- do nothing
+			elseif result == "settings" then
+				openSettingsMenu()
+			else -- any other selection
+				spawnVSO()
+			end
+		end
 	end
 	pressed = args.moves["special1"]
 end
 
-function activate()
-	if not settings or settings.selected == "despawn" then return end
-	if not settings.selected or settings.selected == "settings" then
-		openSettingsMenu()
-		return
-	end
-
+function spawnVSO(type)
+	settings.selected = type
+	world.sendEntityMessage( entity.id(), "saveVSOsettings", settings )
 	local position = mcontroller.position()
-	world.spawnVehicle( "spov"..settings.selected, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings.vsos[settings.selected] } )
+	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings.vsos[type] } )
 end
 
 function openRadialMenu()
-	world.sendEntityMessage( entity.id(), "openInterface", "vsoRadialMenu", {}, true )
+	local options = {{
+		name = "settings",
+		icon = "/interface/title/modsover.png"
+	}}
+	if settings and settings.vsos then
+		for k, v in pairs(settings.vsos) do
+			-- if k == current then
+			-- 	table.insert(options, {
+			-- 		name = "despawn",
+			-- 		icon = "/interface/bookmarks/icons/beamparty.png"
+			-- 	})
+			if v.enabled ~= false then -- treat nil as true
+				table.insert(options, {
+					name = k,
+					icon = "/vehicles/spov/"..k.."/"..k.."icon.png"
+				})
+			end
+		end
+	end
+
+	world.sendEntityMessage( entity.id(), "openInterface", "vsoRadialMenu", {options = options}, true )
 end
 function openSettingsMenu()
 	-- world.sendEntityMessage( entity.id(), "openInterface", "vsoSpawnerSettings" )
