@@ -2,9 +2,12 @@ local oldinit = init
 function init()
 	oldinit()
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
-		local settings = player.getProperty( "vsoSettings", {} )
+		local settings = player.getProperty( "vsoSettings" ) or {}
 		if vsoMenuName then return settings[vsoMenuName] or {} end
 		return settings
+	end)
+	message.setHandler( "saveVSOsettings", function(_,_, settings )
+		player.setProperty( "vsoSettings", settings )
 	end)
 	message.setHandler( "openInterface", function(_,_, name, args, appendSettings, sourceEntity)
 		local pane = root.assetJson("/interface/scripted/"..name.."/"..name..".config")
@@ -43,7 +46,7 @@ function init()
 	end )
 
 	message.setHandler("unlockVSO", function(_,_, name )
-		local settings = player.getProperty( "vsoSettings", {} )
+		local settings = player.getProperty( "vsoSettings" ) or {}
 		if settings.vsos == nil then settings.vsos = {} end
 		if not settings.vsos[name] then
 			settings.vsos[name] = {}
@@ -51,4 +54,7 @@ function init()
 		player.setProperty( "vsoSettings", settings )
 	end)
 
+	message.setHandler("getRadialSelection", function(_,_, stat)
+		return player.getProperty("radialSelection")
+	end)
 end
