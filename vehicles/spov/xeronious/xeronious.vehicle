@@ -186,20 +186,18 @@
 						}
 					},
 					"victimAnimation": "playereat",
-					"state": "stand",
 					"script": "eat"
 				},
-				"escape": { // 2 occupants
-					"location" : "tail",
+				"escapeoral": { // 3 occupants
+					"location" : "belly",
 					"animation": {
 						"body": "escape",
 						"head": "none"
 					},
 					"victimAnimation": "escape",
-					"state": "stand",
 					"script": "letout"
 				},
-				"taileat": { // 0 occupants
+				"taileat": { // 1 occupant
 					"location" : "tail",
 					"eating" : true,
 					"animation": {
@@ -207,28 +205,43 @@
 						"head": "AVlook"
 					},
 					"victimAnimation": "playereat",
-					"state": "stand",
 					"script": "taileat",
 					"timing": "tail"
 				},
-				"tailescape": { // 1 occupant
+				"escapetail": { // 1 occupant
 					"location" : "tail",
 					"animation": {
 						"tail": "eat",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"state": "stand",
 					"script": "tailletout",
 					"timing": "tail"
+				},
+				"escapeanalvore": { // 3 occupants
+					"animation": {
+						"body": "shrink",
+						"head": "AVlook"
+					},
+					"victimAnimation": "escapeanalvore",
+					"script": "escapeanalvore"
 				},
 				"digestbelly" : {
 					"animation": {
 						"body": "shrink",
 						"head": "burp"
-					},
-					"state": "stand"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"escape" : {
+					"script": "checkletout"
 				}
+
 			},
 			"idle": {
 				"offset" : {
@@ -251,9 +264,9 @@
 				"belly" : {
 					"part" : "body",
 					"up": { "transition": "escape" },
-					"front": { "transition": "escape" },
+					"front": { "transition": "down" },
 					"back": { "transition": "bellytotail" },
-					"down": { "transition": "down" },
+					"down": { "transition": "escapeanalvore" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -265,7 +278,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "tailescape" },
+					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -379,7 +392,40 @@
 						"legs": "crouch"
 					},
 					"state": "stand"
+				},
+				"taileat": { // 1 occupant
+					"location" : "tail",
+					"eating" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playereat",
+					"script": "taileat",
+					"timing": "tail"
+				},
+				"escapetail": { // 1 occupant
+					"location" : "tail",
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "escape",
+					"script": "tailletout",
+					"timing": "tail"
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"digestbelly" : {
+					"animation": {
+						"head": "burp"
+					}
 				}
+
 			},
 			"idle": {
 				"offset" : {
@@ -403,7 +449,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "tailescape" },
+					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -457,111 +503,72 @@
 		"fly": {
 			"noPhysicsTransition" : true,
 			"transitions": {
-				"escape": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "escape",
-							"arms": "fly2",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "fly",
-						"script": "letout"
+				"escapeoral": { // 3 occupants
+					"location" : "belly",
+					"animation": {
+						"body": "escape",
+						"arms": "fly2",
+						"head": "none"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "escape",
-							"arms": "fly2",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "fly",
-						"script": "letout"
+					"victimAnimation": "escape",
+					"script": "letout"
+				},
+				"taileat": { // 1 occupant
+					"location" : "tail",
+					"eating" : true,
+					"animation": {
+						"tail": "eat",
+						"arms": "fly2",
+						"head": "AVlook"
 					},
-					{ // 3 occupants
-						"animation": {
-							"body": "escape",
-							"arms": "fly2",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "fly",
-						"script": "letout"
+					"victimAnimation": "playereat",
+					"script": "taileat",
+					"timing": "tail"
+				},
+				"escapetail": { // 1 occupant
+					"location" : "tail",
+					"animation": {
+						"tail": "eat",
+						"arms": "fly2",
+						"head": "AVlook"
+					},
+					"victimAnimation": "escape",
+					"script": "tailletout",
+					"timing": "tail"
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"arms": "fly2",
+						"head": "burp"
 					}
-
-				],
-				"analvore": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"body": "expand",
-							"arms": "fly2",
-							"legs": "analvore",
-							"head": "AVlook"
-						},
-						"victimAnimation": "playeranalvore",
-						"state": "fly",
-						"script": "analvore"
-					},
-					{ // 1 occupants
-						"animation": {
-							"body": "expand",
-							"arms": "fly2",
-							"legs": "analvore",
-							"head": "AVlook"
-						},
-						"victimAnimation": "playeranalvore",
-						"state": "fly",
-						"script": "analvore"
-					},
-					{ // 2 occupants
-						"animation": {
-							"body": "expand",
-							"arms": "fly2",
-							"legs": "analvore",
-							"head": "AVlook"
-						},
-						"victimAnimation": "playeranalvore",
-						"state": "fly",
-						"script": "analvore"
-					},
-
-					{}// can't eat with 3
-				],
-				"escapeanalvore": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "shrink",
-							"arms": "fly2",
-							"head": "AVlook"
-						},
-						"victimAnimation": "escapeanalvore",
-						"state": "fly",
-						"script": "escapeanalvore"
-					},
-					{ // 2 occupants
-						"animation": {
-							"body": "shrink",
-							"arms": "fly2",
-							"head": "AVlook"
-						},
-						"victimAnimation": "escapeanalvore",
-						"state": "fly",
-						"script": "escapeanalvore"
-					},
-					{ // 3 occupants
-						"animation": {
-							"body": "shrink",
-							"arms": "fly2",
-							"head": "AVlook"
-						},
-						"victimAnimation": "escapeanalvore",
-						"state": "fly",
-						"script": "escapeanalvore"
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"arms": "fly2",
+						"head": "burp"
 					}
-
-				]
+				},
+				"analvore": { // 3 occupants
+					"animation": {
+						"body": "expand",
+						"arms": "fly2",
+						"legs": "analvore",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playeranalvore",
+					"script": "analvore"
+				},
+				"escapeanalvore": { // 3 occupants
+					"animation": {
+						"body": "shrink",
+						"arms": "fly2",
+						"head": "AVlook"
+					},
+					"victimAnimation": "escapeanalvore",
+					"script": "escapeanalvore"
+				}
 			},
 			"idle": {
 				"body": "idle",
@@ -592,7 +599,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "tailescape" },
+					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -672,89 +679,65 @@
 					"timing": "legs",
 					"chance": 5
 				},
-				"eat": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+				"eat": { // 3 occupants
+					"location" : "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "rotation",
+						"head": "none",
+						"rotate": {
+							"parts": [
+								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+							]
+						}
 					},
-					{ // 1 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+				"escapeoral": { // 3 occupants
+					"location" : "belly",
+					"animation": {
+						"body": "escape",
+						"head": "none"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+					"victimAnimation": "escape",
+					"script": "letout"
+				},
+				"taileat": { // 1 occupant
+					"location" : "tail",
+					"eating" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-
-					{}// can't eat with 3
-				],
-				"escape": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
+					"victimAnimation": "playereat",
+					"script": "taileat",
+					"timing": "tail"
+				},
+				"escapetail": { // 1 occupant
+					"location" : "tail",
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
-					},
-					{ // 3 occupants
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
+					"victimAnimation": "escape",
+					"script": "tailletout",
+					"timing": "tail"
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"head": "burp"
 					}
-
-				],
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
 				"hug": {
 					"state": "hug",
 					"victimAnimation": "hug",
@@ -804,7 +787,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "tailescape" },
+					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -842,88 +825,65 @@
 					"state": "sit",
 					"script": "unhug"
 				},
-				"eat": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+				"eat": { // 3 occupants
+					"location" : "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "rotation",
+						"head": "none",
+						"rotate": {
+							"parts": [
+								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+							]
+						}
 					},
-					{ // 1 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+				"escapeoral": { // 3 occupants
+					"location" : "belly",
+					"animation": {
+						"body": "escape",
+						"head": "none"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]},
-									{ "group": "backarmrotation", "center": [1.75,0.25], "rotation": [1,45, 70, 70, 45, 1, -45, -70]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "sit",
-						"script": "eat"
+					"victimAnimation": "escape",
+					"script": "letout"
+				},
+				"taileat": { // 1 occupant
+					"location" : "tail",
+					"eating" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-					{}// can't eat with 3
-				],
-				"escape": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
+					"victimAnimation": "playereat",
+					"script": "taileat",
+					"timing": "tail"
+				},
+				"escapetail": { // 1 occupant
+					"location" : "tail",
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
-					},
-					{ // 3 occupants
-						"animation": {
-							"body": "escape",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "sit",
-						"script": "letout"
+					"victimAnimation": "escape",
+					"script": "tailletout",
+					"timing": "tail"
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"head": "burp"
 					}
-
-				]
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				}
 			},
 			"idle": {
 				"offset" : {
@@ -981,7 +941,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "tailescape" },
+					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },

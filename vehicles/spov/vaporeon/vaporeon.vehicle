@@ -140,58 +140,32 @@
 					"chance": 5 // percent, ignored when driver has control
 				},
 				// non directional = not accessible via controls, except from script
-				"eat": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"body": "eat",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "eat"
+				"eat": { // 2 occupants
+					"location": "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"legs": "idle",
+						"head": "none",
+						"tail": "idle"
 					},
-					{ // 1 occupant
-						"animation": {
-							"body": "eat",
-							"legs": "idle",
-							"head": "none",
-							"tail": "idle"
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "eat"
-					}
-					// can't eat with 2
-				],
-				"escape": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "escape",
-							"legs": "idle",
-							"bap": "none",
-							"head": "none",
-							"tail": "idle"
-						},
-						"victimAnimation": "escape",
-						"state": "stand",
-						"script": "letout"
+					"victimAnimation": "playereat",
+					"state": "stand",
+					"script": "eat"
+				},
+				"escape": { // 2 occupants
+					"location": "belly",
+					"animation": {
+						"body": "escape",
+						"legs": "idle",
+						"bap": "none",
+						"head": "none",
+						"tail": "idle"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "escape",
-							"legs": "idle",
-							"bap": "none",
-							"head": "none",
-							"tail": "idle"
-						},
-						"victimAnimation": "escape",
-						"state": "stand",
-						"script": "letout"
-					}
-				]
+					"victimAnimation": "escape",
+					"state": "stand",
+					"script": "letout"
+				}
 			},
 			"idle": {
 				"offset" : {
@@ -345,6 +319,7 @@
 				},
 				"down": [
 					{
+						"location" : "belly",
 						"animation": {
 							"offset" : {
 								"parts" : [
@@ -460,6 +435,7 @@
 				},
 				"side": [
 					{
+						"location": "belly",
 						"animation": {
 							"body": "rollover",
 							"legs": "none",

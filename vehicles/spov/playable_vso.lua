@@ -805,7 +805,7 @@ function p.doTransition( direction, scriptargs )
 	end
 	if not continue then return end
 	_ptransition.after = after
-	_ptransition.state = tconfig.state
+	_ptransition.state = tconfig.state or p.state
 	_ptransition.timing = tconfig.timing or "body"
 	if tconfig.animation ~= nil then
 		p.doAnims( tconfig.animation )
@@ -813,7 +813,7 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.victimAnimation ~= nil then
 		local i = (scriptargs or {}).index
 		if i == nil then
-			i = p.occupants.belly
+			i = p.occupants.total
 			if p.justAte then
 				i = i + 1
 				p.justAte = false

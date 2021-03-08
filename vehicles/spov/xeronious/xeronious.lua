@@ -19,13 +19,7 @@ Scripts created by:
 
 TODO:
 	-roaming behavior
-	-leg grab
-
-Pending features:
-	Extra functions
-	-digest anim
 	-egg lay
-	-tail vore
 	-ranged inhale
 
 ]]--
@@ -67,6 +61,11 @@ end
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
+p.registerStateScript( "stand", "checkletout", function( args )
+	local location = p.occupantLocation[args.index]
+	if location == "belly" then p.doTransition("escapeoral", args) return true end
+	if location == "tail" then p.doTransition("escapetail", args) return true end
+end)
 
 p.registerStateScript( "stand", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
@@ -149,11 +148,23 @@ end
 
 -------------------------------------------------------------------------------
 
+p.registerStateScript( "sit", "checkletout", function( args )
+	local location = p.occupantLocation[args.index]
+	if location == "belly" then return p.doTransition("escapeoral", args) end
+	if location == "tail" then return p.doTransition("escapetail", args) end
+end)
+
 p.registerStateScript( "sit", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 p.registerStateScript( "sit", "letout", function( args )
 	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end)
+p.registerStateScript( "sit", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+p.registerStateScript( "sit", "tailletout", function( args )
+	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
@@ -241,43 +252,34 @@ function begin_state_fly()
 	p.movement.jumped = true
 end
 
+p.registerStateScript( "fly", "checkletout", function( args )
+	local location = p.occupantLocation[args.index]
+	if location == "belly" then return p.doTransition("escapeoral", args) end
+	if location == "tail" then return p.doTransition("escapetail", args) end
+end)
+
+p.registerStateScript( "fly", "eat", function( args )
+	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end)
 p.registerStateScript( "fly", "letout", function( args )
 	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
-
+p.registerStateScript( "fly", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+p.registerStateScript( "fly", "tailletout", function( args )
+	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end)
 p.registerStateScript( "fly", "analvore", function( args )
 	return dovore(args, "belly", {"vsoindicateout"}, "swallow")
 end)
-
 p.registerStateScript( "fly", "escapeanalvore", function( args )
 	return doescape(args, "belly", {-0.75, -5}, {"vsoindicateout"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "fly", "grabanalvore", function()
-	local position = mcontroller.position()
-	position = {position[1], position[2]-3}
-
-	if not locationFull("belly") then
-		local prey = world.entityQuery(position, 3, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
-			includedTypes = {"creature"}
-		})
-		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
-			includedTypes = {"creature"}
-		})
-		local aimednotlounging = checkAimed(entityaimed)
-
-		if #prey > 0 then
-			for i = 1, #prey do
-				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
-					animator.setGlobalTag( "bap", "" )
-					p.doTransition( "analvore", {id=prey[i]} )
-					return
-				end
-			end
-		end
-	end
+	if checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore") then return end
+	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
 end)
 
 
