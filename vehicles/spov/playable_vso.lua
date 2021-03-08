@@ -173,7 +173,7 @@ function checkEatPosition(position, location, transition)
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
 		})
-		local aimednotlounging = checkAimed(entityaimed)
+		local aimednotlounging = p.firstNotLounging(entityaimed)
 
 		if #prey > 0 then
 			for i = 1, #prey do
@@ -188,7 +188,7 @@ function checkEatPosition(position, location, transition)
 	end
 end
 
-function checkAimed(entityaimed)
+function p.firstNotLounging(entityaimed)
 	for i = 1, #entityaimed do
 		if not p.entityLounging(entityaimed[i]) then
 			return i
