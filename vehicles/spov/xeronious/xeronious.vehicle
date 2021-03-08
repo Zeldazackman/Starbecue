@@ -194,8 +194,7 @@
 						"body": "escape",
 						"head": "none"
 					},
-					"victimAnimation": "escape",
-					"script": "letout"
+					"victimAnimation": "escape"
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
@@ -211,11 +210,10 @@
 				"escapetail": { // 1 occupant
 					"location" : "tail",
 					"animation": {
-						"tail": "eat",
+						"tail": "escape",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"script": "tailletout",
 					"timing": "tail"
 				},
 				"escapeanalvore": { // 3 occupants
@@ -223,8 +221,7 @@
 						"body": "shrink",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escapeanalvore",
-					"script": "escapeanalvore"
+					"victimAnimation": "escapeanalvore"
 				},
 				"digestbelly" : {
 					"animation": {
@@ -266,7 +263,7 @@
 					"up": { "transition": "escape" },
 					"front": { "transition": "down" },
 					"back": { "transition": "bellytotail" },
-					"down": { "transition": "escapeanalvore" },
+					"down": { "transition": "escape" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -278,7 +275,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "escapetail" },
+					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -407,11 +404,10 @@
 				"escapetail": { // 1 occupant
 					"location" : "tail",
 					"animation": {
-						"tail": "eat",
+						"tail": "escape",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"script": "tailletout",
 					"timing": "tail"
 				},
 				"digesttail" : {
@@ -424,6 +420,9 @@
 					"animation": {
 						"head": "burp"
 					}
+				},
+				"escape" : {
+					"script": "checkletout"
 				}
 
 			},
@@ -449,7 +448,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly" },
-					"back": { "transition": "escapetail" },
+					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -510,8 +509,7 @@
 						"arms": "fly2",
 						"head": "none"
 					},
-					"victimAnimation": "escape",
-					"script": "letout"
+					"victimAnimation": "escape"
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
@@ -533,7 +531,6 @@
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"script": "tailletout",
 					"timing": "tail"
 				},
 				"digestbelly" : {
@@ -566,9 +563,12 @@
 						"arms": "fly2",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escapeanalvore",
-					"script": "escapeanalvore"
+					"victimAnimation": "escapeanalvore"
+				},
+				"escape" : {
+					"script": "checkletout"
 				}
+
 			},
 			"idle": {
 				"body": "idle",
@@ -702,8 +702,7 @@
 						"body": "escape",
 						"head": "none"
 					},
-					"victimAnimation": "escape",
-					"script": "letout"
+					"victimAnimation": "escape"
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
@@ -719,11 +718,10 @@
 				"escapetail": { // 1 occupant
 					"location" : "tail",
 					"animation": {
-						"tail": "eat",
+						"tail": "escape",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"script": "tailletout",
 					"timing": "tail"
 				},
 				"digestbelly" : {
@@ -737,6 +735,9 @@
 						"tail": "shrink",
 						"head": "burp"
 					}
+				},
+				"escape" : {
+					"script": "checkletout"
 				},
 				"hug": {
 					"state": "hug",
@@ -848,8 +849,7 @@
 						"body": "escape",
 						"head": "none"
 					},
-					"victimAnimation": "escape",
-					"script": "letout"
+					"victimAnimation": "escape"
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
@@ -865,11 +865,10 @@
 				"escapetail": { // 1 occupant
 					"location" : "tail",
 					"animation": {
-						"tail": "eat",
+						"tail": "escape",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escape",
-					"script": "tailletout",
 					"timing": "tail"
 				},
 				"digestbelly" : {
@@ -883,6 +882,9 @@
 						"tail": "shrink",
 						"head": "burp"
 					}
+				},
+				"escape" : {
+					"script": "checkletout"
 				}
 			},
 			"idle": {

@@ -59,25 +59,34 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
+function checkEscapes(args)
+	local location = p.occupantLocation[args.index]
+	local returnval = {}
+	local direction = "escapeoral"
+
+	if location == "tail" then
+		direction = "escapetail"
+	end
+
+	if not p.doTransition(direction, args) then return false end
+
+	returnval[1], returnval[2] = doescape(args, location, {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5})
+
+	returnval[3] = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
+
+	return returnval[1], returnval[2], returnval[3]
+end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "stand", "checkletout", function( args )
-	local location = p.occupantLocation[args.index]
-	if location == "belly" then p.doTransition("escapeoral", args) return true end
-	if location == "tail" then p.doTransition("escapetail", args) return true end
+	return checkEscapes(args)
 end)
 
 p.registerStateScript( "stand", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
-p.registerStateScript( "stand", "letout", function( args )
-	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
-end)
 p.registerStateScript( "stand", "taileat", function( args )
 	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "stand", "tailletout", function( args )
-	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "stand", "bapeat", function()
@@ -149,22 +158,14 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "sit", "checkletout", function( args )
-	local location = p.occupantLocation[args.index]
-	if location == "belly" then return p.doTransition("escapeoral", args) end
-	if location == "tail" then return p.doTransition("escapetail", args) end
+	return checkEscapes(args)
 end)
 
 p.registerStateScript( "sit", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
-p.registerStateScript( "sit", "letout", function( args )
-	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
-end)
 p.registerStateScript( "sit", "taileat", function( args )
 	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "sit", "tailletout", function( args )
-	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
@@ -253,16 +254,11 @@ function begin_state_fly()
 end
 
 p.registerStateScript( "fly", "checkletout", function( args )
-	local location = p.occupantLocation[args.index]
-	if location == "belly" then return p.doTransition("escapeoral", args) end
-	if location == "tail" then return p.doTransition("escapetail", args) end
+	return checkEscapes(args)
 end)
 
 p.registerStateScript( "fly", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "fly", "letout", function( args )
-	return doescape(args, "belly", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 p.registerStateScript( "fly", "taileat", function( args )
 	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
@@ -272,9 +268,6 @@ p.registerStateScript( "fly", "tailletout", function( args )
 end)
 p.registerStateScript( "fly", "analvore", function( args )
 	return dovore(args, "belly", {"vsoindicateout"}, "swallow")
-end)
-p.registerStateScript( "fly", "escapeanalvore", function( args )
-	return doescape(args, "belly", {-0.75, -5}, {"vsoindicateout"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "fly", "grabanalvore", function()

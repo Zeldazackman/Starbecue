@@ -796,12 +796,12 @@ function p.doTransition( direction, scriptargs )
 	if tconfig == nil then return end
 	local continue = true
 	local after = function() end
-	if tconfig.script ~= nil then
+	if tconfig.script then
 		local statescript = p.statescripts[p.state][tconfig.script]
 		local _continue, _after, _tconfig = statescript( scriptargs or {} )
-		if _continue ~= nil then continue = _continue end
-		if _after ~= nil then after = _after end
-		if _tconfig ~= nil then tconfig = _tconfig end
+		if _continue then continue = _continue end
+		if _after then after = _after end
+		if _tconfig then tconfig = _tconfig end
 	end
 	if not continue then return end
 	_ptransition.after = after
@@ -822,6 +822,7 @@ function p.doTransition( direction, scriptargs )
 		vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" )
 	end
 	vsoNext( "state__ptransition" )
+	return true
 end
 
  -- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
