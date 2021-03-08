@@ -287,10 +287,17 @@ function p.globalToLocal( position )
 end
 
 function p.occupantArray( maybearray )
-	if maybearray == nil or maybearray[1] == nil then -- not an array, no change
+	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
+		if maybearray.location then
+			if maybearray.eating then
+				if locationFull(maybearray.location) then return maybearray.failTransition end
+			else
+				if locationEmpty(maybearray.location) then return maybearray.failTransition end
+			end
+		end
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[(p.occupants.total + p.fattenBelly) + 1]
+		return maybearray[(p.occupants[maybearray[1].location]) + 1]
 	end
 end
 
@@ -812,7 +819,7 @@ function p.doTransition( direction, scriptargs )
 				p.justAte = false
 			end
 		end
-		vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, "bodyState" )
+		vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" )
 	end
 	vsoNext( "state__ptransition" )
 end
@@ -1154,7 +1161,7 @@ function p.control.waterMovement( dx )
 		p.doAnims( control.animations.swim )
 
 		p.movement.animating = true
-	elseif not p.struggling then
+	else
 		p.doAnims( control.animations.swimIdle )
 		p.movement.animating = true
 	end
@@ -1440,6 +1447,9 @@ end
 function p.handleStruggles()
 	local struggler = 0
 	local movetype, movedir
+
+	::NextStuggler::
+
 	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants.total do
 		struggler = struggler + 1
 		movetype, movedir = vso4DirectionInput( "occupant"..struggler )
@@ -1459,7 +1469,8 @@ function p.handleStruggles()
 		vsoAnimIs( struggledata.part.."State", "s_back" ) or
 		vsoAnimIs( struggledata.part.."State", "s_down" )
 	) then
-		return -- already struggling
+		movetype = nil
+		goto NextStuggler -- already struggling
 	end
 
 	local dir = nil

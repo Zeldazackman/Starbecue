@@ -171,111 +171,57 @@
 					},
 					"state": "crouch"
 				},
-				"eat": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"legs": "idle",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "eat"
+				"eat": { // 3 occupants
+					"location" : "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "rotation",
+						"head": "none",
+						"rotate": {
+							"parts": [
+								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+							]
+						}
 					},
-					{ // 1 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"legs": "idle",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "eat"
+					"victimAnimation": "playereat",
+					"state": "stand",
+					"script": "eat"
+				},
+				"escape": { // 2 occupants
+					"location" : "tail",
+					"animation": {
+						"body": "escape",
+						"head": "none"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "eat",
-							"arms": "rotation",
-							"legs": "idle",
-							"head": "none",
-							"rotate": {
-								"parts": [
-									{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-									{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-								]
-							}
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "eat"
+					"victimAnimation": "escape",
+					"state": "stand",
+					"script": "letout"
+				},
+				"taileat": { // 0 occupants
+					"location" : "tail",
+					"eating" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-
-					{}// can't eat with 3
-				],
-				"escape": [
-					{}, // can't escape from 0
-					{ // 1 occupant
-						"animation": {
-							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "stand",
-						"script": "letout"
+					"victimAnimation": "playereat",
+					"state": "stand",
+					"script": "taileat",
+					"timing": "tail"
+				},
+				"tailescape": { // 1 occupant
+					"location" : "tail",
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
 					},
-					{ // 2 occupants
-						"animation": {
-							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "stand",
-						"script": "letout"
-					},
-					{ // 3 occupants
-						"animation": {
-							"body": "escape",
-							"arms": "idle",
-							"legs": "idle",
-							"head": "none"
-						},
-						"victimAnimation": "escape",
-						"state": "stand",
-						"script": "letout"
-					}
-
-				],
-				"taileat": [ // array depends on occupants
-					{ // 0 occupants
-						"animation": {
-							"tail": "eat",
-							"head": "AVlook"
-						},
-						"victimAnimation": "playereat",
-						"state": "stand",
-						"script": "taileat"
-					},
-					{}// can't eat with 1
-				],
-
+					"victimAnimation": "escape",
+					"state": "stand",
+					"script": "tailletout",
+					"timing": "tail"
+				},
 				"digestbelly" : {
 					"animation": {
 						"body": "shrink",
