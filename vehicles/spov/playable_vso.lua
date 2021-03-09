@@ -143,8 +143,7 @@ function dovore(args, location, statuses, sound )
 end
 
 function doescape(args, location, monsteroffset, statuses, afterstatus )
-	local position = mcontroller.position()
-	p.monstercoords = {position[1]+monsteroffset[1], position[2]+monsteroffset[2]}--same as last bit of escape anim
+	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
 
 	if locationEmpty(location) then return false end
 	local i = args.index
@@ -592,10 +591,7 @@ function p.uneat( seatindex )
 	p.smolprey( seatindex ) -- clear
 	if p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
-		local x = (p.monstercoords[1] * self.vsoCurrentDirection) +1000
-		local y = p.monstercoords[2]
-		local hackposition = p.monstercoords[1] + p.monstercoords[2]
-		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove", x, y) --this is hacky as fuck I love it
+		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove",  p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
 end
 

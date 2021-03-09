@@ -2,7 +2,7 @@
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @ ZMakesThingsGo & Sheights
 
 function init()
-	local x = effect.duration() -1000
+	local x = effect.duration()
 	local y = effect.sourceEntity()
 	self.position = { x, y } --WE DOING SOME WONKY SHIT HERE TO CHEAT HAHAHAHAHAHA
 	status.removeEphemeralEffect( "vsomonsterbind" );

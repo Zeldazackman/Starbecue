@@ -107,11 +107,15 @@ function state_stand()
 
 	p.idleStateChange()
 	p.handleBelly()
+	local pos1 = p.localToGlobal({3.5, 4})
+	local pos2 = p.localToGlobal({-3.5, 1})
 
-	local position = mcontroller.position()
+	local pos3 = p.localToGlobal({3.5, -5})
+	local pos4 = p.localToGlobal({-3.5, 0})
+
 	if p.control.probablyOnGround()
-	and world.rectCollision( {position[1]-3.5, position[2]+4, position[1]+3.5, position[2]+1 }, { "Null", "block", "slippery"} )
-	and not world.rectCollision( {position[1]-3.5, position[2]-5, position[1]+3.5, position[2] }, { "Null", "block", "slippery"} )
+	and world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
+	and not world.rectCollision( {pos3[1], pos3[2], pos4[1], pos4[2] }, { "Null", "block", "slippery"} )
 	then
 		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
 		and vehicle.controlHeld( p.control.driver, "down") then
@@ -271,8 +275,10 @@ function state_crouch()
 
 	p.control.updateDriving()
 
-	local position = mcontroller.position()
-	if not world.rectCollision( {position[1]-3.5, position[2]+4, position[1]+3.5, position[2]+1 }, { "Null", "block", "slippery"} )
+	local pos1 = p.localToGlobal({3.5, 4})
+	local pos2 = p.localToGlobal({-3.5, 1})
+
+	if not world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.control.driver, "down")
 	then
 		if not p.control.probablyOnGround() then
