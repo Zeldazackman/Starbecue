@@ -31,8 +31,8 @@ Special items can be purchased from the vendor at the food hall under the VSO ta
 
 Full use of this system requires you to bind Tech Action 2 and 3 in the options if they aren't already bound. We recommend the G and H keyes respectively, because they're right by F, and that's what they were back in really old versions of the game when they were actually used in vanilla.
 
-To eat people, npcs, or monsters, simply walk up to them and left-click on them to swipe at and grab them. This same action will also do some damage to enemies.  
-The same movement keys are also used to transition between different poses, like standing or sitting or sleeping, etc.  
+To eat people, npcs, or monsters, simply walk up to them and left-click on them to swipe at and grab them. This same action will also do some damage to enemies.
+The same movement keys are also used to transition between different poses, like standing or sitting or sleeping, etc.
 To let people out that you previously ate, simply press Tech Action 2 (G). Alternatively, you can let them out via the menu, accessible by pressing Tech Action 3 (H). This menu also has settings to heal/digest your prey, as well as automatically activating the tech when you warp to a different world, and the button to deactivate it when you want to return to your normal self.
 
 ## Credits
@@ -50,12 +50,13 @@ Edited and animated some of the Vaporeon sprite, and created the Xeronious sprit
 Helps out with debugging and coding a little here and there.
 
 > I take commissions! contact me if I am open!
-> 
-> https://www.furaffinity.net/user/lokithevulpix/  
+>
+> https://www.furaffinity.net/user/lokithevulpix/
 > https://twitter.com/LokiVulpix
 
 # Support Us!
 
+https://www.patreon.com/LokiVulpix
 https://www.subscribestar.com/lokivulpix
 
-Currently no incentives other than to support us in these creations, but with your support there's more likely to be more of them, and faster!
+Vote on what should be the next playable VSO! with your support there's more likely to be more of them!

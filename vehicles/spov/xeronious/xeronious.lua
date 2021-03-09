@@ -82,6 +82,13 @@ p.registerStateScript( "stand", "checkletout", function( args )
 	return checkEscapes(args)
 end)
 
+p.registerStateScript( "stand", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "stand", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
+
 p.registerStateScript( "stand", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
@@ -160,6 +167,12 @@ end
 p.registerStateScript( "sit", "checkletout", function( args )
 	return checkEscapes(args)
 end)
+p.registerStateScript( "sit", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "sit", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
 
 p.registerStateScript( "sit", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
@@ -199,6 +212,23 @@ end
 
 -------------------------------------------------------------------------------
 
+p.registerStateScript( "hug", "checkletout", function( args )
+	return checkEscapes(args)
+end)
+p.registerStateScript( "hug", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "hug", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
+p.registerStateScript( "hug", "eat", function( args )
+	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end)
+p.registerStateScript( "hug", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+
+
 p.registerStateScript( "hug", "unhug", function()
 	p.uneat( "Occupant1" )
 	return true
@@ -207,6 +237,20 @@ end)
 state_hug = p.standardState
 
 -------------------------------------------------------------------------------
+
+p.registerStateScript( "crouch", "checkletout", function( args )
+	return checkEscapes(args)
+end)
+p.registerStateScript( "crouch", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "crouch", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
+p.registerStateScript( "crouch", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+
 
 function begin_state_crouch()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.crouch )
@@ -256,15 +300,18 @@ end
 p.registerStateScript( "fly", "checkletout", function( args )
 	return checkEscapes(args)
 end)
+p.registerStateScript( "fly", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "fly", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
 
 p.registerStateScript( "fly", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 p.registerStateScript( "fly", "taileat", function( args )
 	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "fly", "tailletout", function( args )
-	return doescape(args, "tail", {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 p.registerStateScript( "fly", "analvore", function( args )
 	return dovore(args, "belly", {"vsoindicateout"}, "swallow")

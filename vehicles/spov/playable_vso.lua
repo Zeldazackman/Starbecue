@@ -196,6 +196,12 @@ function p.firstNotLounging(entityaimed)
 	end
 end
 
+function moveOccupantLocation(args, location1, location2)
+	if locationEmpty(location1) then return false end
+	if locationFull(location2) then return false end
+	p.occupantLocation[args.index] = location2
+end
+
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
 	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
@@ -799,9 +805,9 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.script then
 		local statescript = p.statescripts[p.state][tconfig.script]
 		local _continue, _after, _tconfig = statescript( scriptargs or {} )
-		if _continue then continue = _continue end
-		if _after then after = _after end
-		if _tconfig then tconfig = _tconfig end
+		if _continue ~= nil then continue = _continue end
+		if _after ~= nil then after = _after end
+		if _tconfig ~= nil then tconfig = _tconfig end
 	end
 	if not continue then return end
 	_ptransition.after = after
@@ -1501,7 +1507,7 @@ function p.handleStruggles()
 	end
 
 	if chance ~= nil and ( chance.max == 0 or (
-		not p.control.driving
+		(not p.control.driving or struggledata[dir].controlled)
 		and vsoCounterValue( "struggleCount" ) >= chance.min
 		and vsoCounterChance( "struggleCount", chance.min, chance.max )
 	) ) then

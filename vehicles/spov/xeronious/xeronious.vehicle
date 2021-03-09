@@ -235,6 +235,21 @@
 						"head": "burp"
 					}
 				},
+				"bellytotail" : {
+					"script": "bellytotail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailtobelly" : {
+					"script": "tailtobelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				},
+
 				"escape" : {
 					"script": "checkletout"
 				}
@@ -262,7 +277,7 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "down" },
-					"back": { "transition": "bellytotail" },
+					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "escape" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -274,7 +289,7 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly" },
+					"front": { "transition": "tailtobelly", "controlled" : true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
@@ -421,6 +436,19 @@
 						"head": "burp"
 					}
 				},
+				"bellytotail" : {
+					"script": "bellytotail",
+					"animation": {
+						"tail": "expand"
+					}
+				},
+				"tailtobelly" : {
+					"script": "tailtobelly",
+					"animation": {
+						"tail": "shrink"
+					}
+				},
+
 				"escape" : {
 					"script": "checkletout"
 				}
@@ -447,7 +475,7 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly" },
+					"front": { "transition": "tailtobelly", "controlled" : true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
@@ -565,6 +593,20 @@
 					},
 					"victimAnimation": "escapeanalvore"
 				},
+				"bellytotail" : {
+					"script": "bellytotail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailtobelly" : {
+					"script": "tailtobelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				},
 				"escape" : {
 					"script": "checkletout"
 				}
@@ -586,7 +628,7 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "escape" },
-					"back": { "transition": "bellytotail" },
+					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "escapeanalvore" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -598,7 +640,7 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly" },
+					"front": { "transition": "tailtobelly", "controlled" : true },
 					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
@@ -739,6 +781,20 @@
 				"escape" : {
 					"script": "checkletout"
 				},
+				"bellytotail" : {
+					"script": "bellytotail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailtobelly" : {
+					"script": "tailtobelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				},
 				"hug": {
 					"state": "hug",
 					"victimAnimation": "hug",
@@ -775,7 +831,7 @@
 					"part" : "body",
 					"up": { "transition": "up" },
 					"front": { "transition": "down" },
-					"back": { "transition": "bellytotail" },
+					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -787,7 +843,7 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly" },
+					"front": { "transition": "tailtobelly", "controlled" : true },
 					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
@@ -883,6 +939,20 @@
 						"head": "burp"
 					}
 				},
+				"bellytotail" : {
+					"script": "bellytotail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailtobelly" : {
+					"script": "tailtobelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				},
 				"escape" : {
 					"script": "checkletout"
 				}
@@ -930,7 +1000,7 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "down" },
-					"back": { "transition": "bellytotail" },
+					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -942,7 +1012,7 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly" },
+					"front": { "transition": "tailtobelly", "controlled" : true },
 					"back": { "transition": "escapetail" },
 					"down": { "transition": "down" },
 					"chances": {
