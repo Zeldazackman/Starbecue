@@ -203,7 +203,7 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playertaileat",
 					"script": "taileat",
 					"timing": "tail"
 				},
@@ -213,7 +213,7 @@
 						"tail": "escape",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escape",
+					"victimAnimation": "tailescape",
 					"timing": "tail"
 				},
 				"escapeanalvore": { // 3 occupants
@@ -412,7 +412,7 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playertaileat",
 					"script": "taileat",
 					"timing": "tail"
 				},
@@ -422,7 +422,7 @@
 						"tail": "escape",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escape",
+					"victimAnimation": "tailescape",
 					"timing": "tail"
 				},
 				"digesttail" : {
@@ -497,12 +497,8 @@
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
-				"primaryAction": {
-
-				},
-				"altAction": {
-
-				},
+				//"primaryAction": {},
+				//"altAction": {},
 				"animations": {
 					"walk": {
 						"arms": "crawl",
@@ -547,7 +543,7 @@
 						"arms": "fly2",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playertaileat",
 					"script": "taileat",
 					"timing": "tail"
 				},
@@ -558,7 +554,7 @@
 						"arms": "fly2",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escape",
+					"victimAnimation": "tailescape",
 					"timing": "tail"
 				},
 				"digestbelly" : {
@@ -596,6 +592,7 @@
 				"bellytotail" : {
 					"script": "bellytotail",
 					"animation": {
+						"arms": "fly2",
 						"tail": "expand",
 						"body": "shrink"
 					}
@@ -603,6 +600,7 @@
 				"tailtobelly" : {
 					"script": "tailtobelly",
 					"animation": {
+						"arms": "fly2",
 						"tail": "shrink",
 						"body": "expand"
 					}
@@ -659,7 +657,7 @@
 				"jumpStrength": 1,
 				"fullThreshold": 3, // 3 (or more) occupants and it uses fulljumpstrength and can't run
 				"fullJumpStrength": 1,
-				"fullWeights" : [1, 6, 11, 17],
+				"fullWeights" : [1, 6, 11, 17, 23],
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
@@ -753,7 +751,7 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playertaileat",
 					"script": "taileat",
 					"timing": "tail"
 				},
@@ -763,7 +761,7 @@
 						"tail": "escape",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escape",
+					"victimAnimation": "tailescape",
 					"timing": "tail"
 				},
 				"digestbelly" : {
@@ -914,7 +912,7 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playertaileat",
 					"script": "taileat",
 					"timing": "tail"
 				},
@@ -924,7 +922,7 @@
 						"tail": "escape",
 						"head": "AVlook"
 					},
-					"victimAnimation": "escape",
+					"victimAnimation": "tailescape",
 					"timing": "tail"
 				},
 				"digestbelly" : {

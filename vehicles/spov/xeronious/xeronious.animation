@@ -407,7 +407,7 @@
 					}
                 }
 			},
-			"tail": {
+			"tail_fg": {
                 "properties": {
                     "centered": true,
                     "zLevel": 2,
@@ -415,18 +415,43 @@
                 },
                 "partStates": {
                     "tailState": {
-                        "idle": { "properties": { "image": "spov/tail.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+                        "idle": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/tail.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/tail.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "spov/tail.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "spov/tail.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/tail.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/tail.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/tail.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/tail.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+
+                        "none": { "properties": {} }
+					}
+                }
+			},
+			"tail_bg": {
+                "properties": {
+                    "centered": true,
+                    "zLevel": -1,
+                     "transformationGroups": ["flip", "bodybob", "tailbob"]
+                },
+                "partStates": {
+                    "tailState": {
+                        "idle": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+
+						"eat": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+
+						"expand": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
+
+						"s_back": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
 
                         "none": { "properties": {} }
 					}
