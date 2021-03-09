@@ -303,7 +303,7 @@ function p.occupantArray( maybearray )
 		end
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[(p.occupants[maybearray[1].location]) + 1]
+		return maybearray[(p.occupants[maybearray[1].location or "total"] or 0) + 1]
 	end
 end
 
