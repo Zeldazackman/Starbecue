@@ -63,14 +63,16 @@ function checkEscapes(args)
 	local location = p.occupantLocation[args.index]
 	local returnval = {}
 	local direction = "escapeoral"
+	local monstercoords = {6, 1} -- same as last coords of escape anim
 
 	if location == "tail" then
 		direction = "escapetail"
+		monstercoords = {-6, -2}
 	end
 
 	if not p.doTransition(direction, args) then return false end
 
-	returnval[1], returnval[2] = doescape(args, location, {6, 1}, {"vsoindicatemaw"}, {"droolsoaked", 5})
+	returnval[1], returnval[2] = doescape(args, location, monstercoords, {"vsoindicatemaw"}, {"droolsoaked", 5})
 
 	returnval[3] = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 
