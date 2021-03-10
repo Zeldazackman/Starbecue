@@ -45,6 +45,18 @@ function init()
 		return status.stat(stat)
 	end )
 
+	message.setHandler("addHungerHealth", function( _, _, amount)
+		if status.resourcePercentage("food") < 1 then
+			status.modifyResourcePercentage( "food", amount)
+			return 1
+		elseif status.resourcePercentage("health") < 1 then
+			status.modifyResourcePercentage( "health", amount)
+			return 2
+		else
+			return 3
+		end
+	end )
+
 	message.setHandler("unlockVSO", function(_,_, name )
 		local settings = player.getProperty( "vsoSettings" ) or {}
 		if settings.vsos == nil then settings.vsos = {} end

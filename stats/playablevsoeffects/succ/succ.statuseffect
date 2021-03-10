@@ -1,0 +1,10 @@
+{
+  "name" : "succ",
+  "effectConfig" : {},
+  "defaultDuration" : 10,
+
+  "scripts" : [
+    "succ.lua"
+  ]
+
+}

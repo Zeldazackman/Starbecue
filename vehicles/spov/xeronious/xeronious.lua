@@ -83,14 +83,12 @@ end
 p.registerStateScript( "stand", "checkletout", function( args )
 	return checkEscapes(args)
 end)
-
 p.registerStateScript( "stand", "bellytotail", function( args )
 	return moveOccupantLocation(args, "belly", "tail")
 end)
 p.registerStateScript( "stand", "tailtobelly", function( args )
 	return moveOccupantLocation(args, "tail", "belly")
 end)
-
 p.registerStateScript( "stand", "eat", function( args )
 	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
@@ -102,6 +100,20 @@ p.registerStateScript( "stand", "bapeat", function()
 	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
 end)
+
+p.registerStateScript( "stand", "succ", function( args )
+	local pos1 = p.localToGlobal({3,5})
+	local pos2 = p.localToGlobal({3,-5})
+	local entities =  world.entityQuery(pos1, pos2, {
+		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+		includedTypes = {"creature"}
+	})
+	for i = 1, #entities do
+		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ",  1, entity.id())
+	end
+	if checkEatPosition(p.localToGlobal({3, 0}), "belly", "eat") then return end
+end)
+
 
 function state_stand()
 

@@ -331,12 +331,8 @@
 					"script": "bapeat"
 				},
 				"altAction": {
-					"projectile": {
-						"name": "xeroniousinhale",
-						"position": [ 2.75, -0.125 ],
-						"aimable": true
-					},
-					"cooldown": 0
+					"cooldown": 1,
+					"script": "succ"
 				},
 				"animations": {
 					"walk": {
@@ -671,12 +667,8 @@
 					"script": "grabanalvore"
 				},
 				"altAction": {
-					"projectile": {
-						"name": "xeroniousinhale",
-						"position": [ 2.75, -0.125 ],
-						"aimable": true
-					},
-					"cooldown": 0
+					"cooldown": 1,
+					"script": "succ"
 				},
 
 				"animations": {

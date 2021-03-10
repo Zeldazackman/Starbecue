@@ -57,6 +57,5 @@ Helps out with debugging and coding a little here and there.
 # Support Us!
 
 https://www.patreon.com/LokiVulpix
-https://www.subscribestar.com/lokivulpix
 
 Vote on what should be the next playable VSO! with your support there's more likely to be more of them!

@@ -1389,8 +1389,7 @@ function p.bellyEffects()
 			p.doBellyEffects(driver, powerMultiplier)
 		end)
 	else
-		local powerMultiplier = p.standalonePowerLevel()
-		p.doBellyEffects(nil, powerMultiplier)
+		p.doBellyEffects(nil, p.standalonePowerLevel())
 	end
 end
 
@@ -1442,9 +1441,13 @@ function p.doBellyEffects(driver, powerMultiplier)
 				hunger_change = (1 - health[1]) / health[2]
 			end
 
-			if driver then vsoResourceAddPercent( driver, "food", hunger_change) end
+			if driver then addHungerHealth( driver, hunger_change) end
 		end
 	end
+end
+
+function addHungerHealth(eid, amount, callback)
+	_add_vso_rpc( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
 
 function p.handleStruggles()
