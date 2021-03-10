@@ -102,12 +102,23 @@ p.registerStateScript( "stand", "bapeat", function()
 end)
 
 p.registerStateScript( "stand", "succ", function( args )
-	local pos1 = p.localToGlobal({3,5})
-	local pos2 = p.localToGlobal({3,-5})
+	--local pos1 = p.localToGlobal({3,5})
+	--local pos2 = p.localToGlobal({13,-5})
+
+	local pos1 = p.localToGlobal({13,0})
+
+	--[[
 	local entities =  world.entityQuery(pos1, pos2, {
 		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 		includedTypes = {"creature"}
 	})
+	]]
+
+	local entities =  world.entityQuery(pos1, 10, {
+		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+		includedTypes = {"creature"}
+	})
+
 	for i = 1, #entities do
 		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ",  1, entity.id())
 	end
