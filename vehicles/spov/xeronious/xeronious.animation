@@ -106,7 +106,10 @@
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"blink": { "frames": 2, "cycle": 3, "mode": "end", "priority": 1 },
 					"look": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
-					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 1 },
+					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 2 },
+					"lookBack": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
+
+					"succ": { "frames": 1, "cycle": 3, "mode": "end", "priority": 3 },
 					"burp": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 
@@ -471,6 +474,8 @@
                         "look": { "properties": { "image": "spov/head.png:look.<frame><directives>" } },
 						"AVlook": { "properties": { "image": "spov/head.png:AVlook.<frame><directives>" } },
 						"burp": { "properties": { "image": "spov/head.png:burp.<frame><directives>" } },
+						"lookBack": { "properties": { "image": "spov/head.png:lookBack.<frame><directives>" } },
+						"succ": { "properties": { "image": "spov/head.png:succ.<frame><directives>" } },
 
                         "none": { "properties": {} }
 					}

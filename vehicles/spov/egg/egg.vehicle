@@ -1,0 +1,106 @@
+{
+	"name" : "spovegg",
+	"script" : "egg.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/spov/egg/",
+	"animation" : "egg.animation",
+
+	"loungePositions" : {
+		"driver" : {
+			"part" : "driver",
+			"partAnchor" : "driverPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ "voreheal" ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ "voreheal" ]
+		}
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"vso" : {
+		"useAnimatorFirst":0,
+		"spawnOwnerState":"faint",
+		"movementSettingsFlipPoly" : 0,
+		"movementSettings" : {
+			"default":{
+				"collisionPoly" : [
+					[-1, -2], [1, -2],
+					[2, -1], [2, 1],
+					[1, 2], [-1, 2],
+					[-2, 1], [-2, -1]
+				],
+				"gravityMultiplier" : 0.0,
+				"liquidBuoyancy" : 0.0,
+				"airBuoyancy" : 0.0,
+				"bounceFactor" : 0.0,
+				"collisionEnabled" : true,
+				"frictionEnabled" : true,
+				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"ignorePlatformCollision" : false
+			}
+		},
+
+		"lights" : {
+			"driver" : {
+			"color" : [50, 50, 50]
+			}
+		},
+
+		"victimAnimations": "/vehicles/spov/egg/victim_animations.config"
+	},
+
+	"maxOccupants" : {
+		"total" : 1,
+		"other" : 1
+	},
+
+	"states": {
+		"stand": {
+			"edible": true,
+			"transitions": {
+				// directional = driver can press that direction to transition
+				"crack" : {
+					"script" : "crack"
+				}
+			},
+			"idle": {
+			},
+			"idleAnimations": [
+			],
+			"struggle": {
+				"other" : {
+					"part" : "body",
+					"up": { "transition": "crack" },
+					"front": { "transition": "crack" },
+					"back": { "transition": "crack" },
+					"down": { "transition": "crack" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					}
+				}
+			},
+			"interact": {
+			}
+		}
+	}
+}

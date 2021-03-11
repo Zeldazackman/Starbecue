@@ -297,7 +297,7 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "lookBack" }
 				}
 			},
 			"interact": {
@@ -331,6 +331,7 @@
 					"script": "bapeat"
 				},
 				"altAction": {
+					"animation": {"head": "succ"},
 					"cooldown": 1,
 					"script": "succ"
 				},
@@ -479,7 +480,7 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "lookBack" }
 				}
 			},
 
@@ -642,7 +643,7 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "lookBack" }
 				}
 			},
 
@@ -667,6 +668,7 @@
 					"script": "grabanalvore"
 				},
 				"altAction": {
+					"animation": {"head": "succ"},
 					"cooldown": 1,
 					"script": "succ"
 				},
@@ -841,7 +843,7 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "lookBack" }
 				}
 
 			},
@@ -1010,7 +1012,7 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "lookBack" }
 				}
 			},
 			"interact": {
