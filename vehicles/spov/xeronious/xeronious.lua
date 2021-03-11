@@ -78,6 +78,20 @@ function checkEscapes(args)
 
 	return returnval[1], returnval[2], returnval[3]
 end
+
+function extraBellyEffects()
+	for i = 1, p.occupants.total do
+		local eid = vsoGetTargetId( "occupant"..i )
+		local health = world.entityHealth(eid)
+
+		if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.bellyeffect == "softdigest" then
+			p.smolpreyspecies[i] = "egg"
+			if p.doTransition("escapeanalvore", {index=i}) then
+
+			end
+		end
+	end
+end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "stand", "checkletout", function( args )
@@ -130,6 +144,7 @@ function state_stand()
 
 	p.idleStateChange()
 	p.handleBelly()
+	extraBellyEffects()
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3.5, 1})
 
@@ -359,6 +374,7 @@ function state_fly()
 
 	p.idleStateChange()
 	p.handleBelly()
+	extraBellyEffects()
 
 	p.control.primaryAction()
 	p.control.altAction()
