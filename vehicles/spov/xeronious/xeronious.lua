@@ -68,6 +68,9 @@ function checkEscapes(args)
 	if location == "tail" then
 		direction = "escapetail"
 		monstercoords = {-6, -2}
+	elseif location == "belly" and args.direction == "down" then
+		direction = "escapeanalvore"
+		monstercoords = {-0.75, -5}
 	end
 
 	if not p.doTransition(direction, args) then return false end
@@ -86,7 +89,7 @@ function extraBellyEffects()
 
 		if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.bellyeffect == "softdigest" then
 			p.smolpreyspecies[i] = "egg"
-			if p.doTransition("escapeanalvore", {index=i}) then
+			if p.doTransition("escape", {index=i, direction="down"}) then
 
 			end
 		end

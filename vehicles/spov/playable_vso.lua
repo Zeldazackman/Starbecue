@@ -1510,7 +1510,7 @@ function p.handleStruggles()
 		and vsoCounterValue( "struggleCount" ) >= chance.min
 		and vsoCounterChance( "struggleCount", chance.min, chance.max )
 	) ) then
-		p.doTransition( struggledata[dir].transition, {index=struggler} )
+		p.doTransition( struggledata[dir].transition, {index=struggler, direction=dir} )
 	else
 		sb.setLogMap("b", "struggle")
 		local animation = {offset = struggledata[dir].offset}
