@@ -5,8 +5,8 @@
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
-		"smolprey": "egg",
-		"eggtype" : "spov/egg_small.png"
+		"smolprey": "xeronious_egg",
+		"eggtype" : "spov/xeronious_egg_small.png"
 
 	},
     "animatedParts": {

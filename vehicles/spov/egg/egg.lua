@@ -16,12 +16,25 @@ function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, 
 end
 
 function onBegin()	--This sets up the VSO ONCE.
+	p.control.standalone = false
+	p.control.driver = "occupant1"
+	p.control.driving = false
+	local driver = config.getParameter( "driver" )
+	storage._vsoSpawnOwner = driver
+	storage._vsoSpawnOwnerName = world.entityName( driver )
+	vsoEat( driver, "occupant1" )
+	vsoSetTarget( "occupant1", driver )
+	vsoVictimAnimVisible( "occupant1", false )
+	p.occupantLocation[1] = "other"
+	p.occupants.total = 1
+	p.occupants.other = 1
 
-	p.onBegin()
+	message.setHandler( "forcedsit", p.control.pressE )
 
-	vsoOnInteract( "state_stand", p.onInteraction )
-	vsoOnBegin( "state_stand", begin_state_stand )
+	p.stateconfig = config.getParameter("states")
+	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 
+	p.setState( "stand" )
 end
 
 function onEnd()
@@ -31,23 +44,75 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
+function p.handleStruggles()
+	local movetype, movedir
 
-function begin_state_standl()
-	local driver = vehicle.entityLoungingIn(p.control.driver) --smolprey puts the occupant in driver, we need to move them to an occupant so they can struggle
-	vsoUneat("driver")
-	p.control.standalone = false
-	p.control.driver = "occupant1"
-	p.control.driving = false
-	vsoUseLounge( false, "driver" )
+	movetype, movedir = vso4DirectionInput( "occupant1" )
 
-	p.eat( driver, 1, "other")
+	if movetype == nil or movetype == 0 then return end
+
+	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[1]]
+	if struggledata == nil then return end
+
+	if not vsoAnimEnded( struggledata.part.."State" ) and (
+		vsoAnimIs( struggledata.part.."State", "s_up" ) or
+		vsoAnimIs( struggledata.part.."State", "s_front" ) or
+		vsoAnimIs( struggledata.part.."State", "s_back" ) or
+		vsoAnimIs( struggledata.part.."State", "s_down" )
+	) then return end
+
+	local dir = nil
+	if movedir == "B" then dir = "back" end
+	if movedir == "F" then dir = "front" end
+	if movedir == "U" then dir = "up" end
+	if movedir == "D" then dir = "down" end
+
+	if dir == nil then return end -- invalid struggle
+	if struggledata[dir] == nil then return end
+
+	if struggledata.script ~= nil then
+		local statescript = p.statestripts[p.state][struggledata.script]
+		statescript( 1, dir )
+	end
+
+	local chance = struggledata.chances
+	if struggledata[dir].chances ~= nil then
+		chance = struggledata[dir].chances
+	end
+	if vsoPill( "easyescape" ) then
+		chance = chance.easyescape
+	elseif vsoPill( "antiescape" ) then
+		chance = chance.antiescape
+	else
+		chance = chance.normal
+	end
+
+	if chance ~= nil and ( chance.max == 0 or (
+		(not p.control.driving or struggledata[dir].controlled)
+		and vsoCounterValue( "struggleCount" ) >= chance.min
+		and vsoCounterChance( "struggleCount", chance.min, chance.max )
+	) ) then
+		p.doTransition( struggledata[dir].transition, {index=1, direction=dir} )
+	else
+		sb.setLogMap("b", "struggle")
+		local animation = {offset = struggledata[dir].offset}
+		animation[struggledata.part] = "s_"..dir
+
+		p.doAnims(animation)
+
+		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
+		if struggledata[dir].victimAnimation then
+			vsoVictimAnimReplay( "occupant1", struggledata[dir].victimAnimation, struggledata.part.."State" )
+		end
+		vsoCounterAdd( "struggleCount", 1 )
+	end
 end
-
 
 function state_stand()
-	p.handleStruggles()
 	p.control.doPhysics()
+	p.handleStruggles()
 end
+
 
 p.cracks = 0
 
