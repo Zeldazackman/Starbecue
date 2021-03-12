@@ -581,8 +581,13 @@ end
 
 function p.uneat( seatindex )
 	local targetid = vsoGetTargetId( "occupant"..seatindex )
-	if p.smolpreyspecies[seatindex] ~= nil then
-		world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
+	if p.smolpreyspecies[seatindex] then
+		if world.entityType(targetid) == "player" then
+			world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
+		else
+			local position = world.entityPosition( targetid )
+			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { position[1], position[2] + 1.5 }, { driver = targetid, settings = {}, uneaten = true } )
+		end
 		p.smolpreyspecies[seatindex] = nil
 	end
 	world.sendEntityMessage( targetid, "PVSOClear")
@@ -1448,20 +1453,30 @@ function p.doBellyEffects(driver, powerMultiplier)
 end
 
 randomDirections = { "B", "F", "U", "D", "J", nil}
+p.monsterstrugglecooldown = {}
 
 local _vso4DirectionInput = vso4DirectionInput
 function vso4DirectionInput(seatname)
-	if world.entityType( vsoGetTargetId(seatname) ) == "monster" then
-		local movedir = randomDirections[math.random(1,6)]
-		local movetype = 0
-		if movedir then
-			if movedir == "J" then
-				movetype = 3
-			else
-				movetype = math.random(1,2)
+	local targetid = vsoGetTargetId(seatname)
+	if not targetid or not world.entityExists(targetid) then return end
+
+	if world.entityType( targetid ) == "monster" then
+		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] < 1 then
+			local movedir = randomDirections[math.random(1,6)]
+			local movetype = 0
+			if movedir then
+				if movedir == "J" then
+					movetype = 3
+				else
+					movetype = math.random(1,2)
+				end
 			end
+			p.monsterstrugglecooldown[seatname] = math.random(1, 30)
+			return movetype, movedir
+		else
+			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - 1
+			return
 		end
-		return movetype, movedir
 	else
 		return _vso4DirectionInput(seatname)
 	end

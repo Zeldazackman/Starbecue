@@ -85,12 +85,13 @@ end
 function extraBellyEffects()
 	for i = 1, p.occupants.total do
 		local eid = vsoGetTargetId( "occupant"..i )
-		local health = world.entityHealth(eid)
-
-		if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.bellyeffect == "softdigest" then
-			p.smolpreyspecies[i] = "xeronious_egg"
-			p.smolprey( i )
-			p.doTransition("escape", {index=i, direction="down"})
+		if eid and world.entityExists(eid) then
+			local health = world.entityHealth(eid)
+			if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.bellyeffect == "softdigest" then
+				p.smolpreyspecies[i] = "xeronious_egg"
+				p.smolprey( i )
+				p.doTransition("escape", {index=i, direction="down"})
+			end
 		end
 	end
 end
