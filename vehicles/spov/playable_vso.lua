@@ -1447,6 +1447,26 @@ function p.doBellyEffects(driver, powerMultiplier)
 	end
 end
 
+randomDirections = { "B", "F", "U", "D", "J", nil}
+
+local _vso4DirectionInput = vso4DirectionInput
+function vso4DirectionInput(seatname)
+	if world.entityType( vsoGetTargetId(seatname) ) == "monster" then
+		local movedir = randomDirections[math.random(1,6)]
+		local movetype = 0
+		if movedir then
+			if movedir == "J" then
+				movetype = 3
+			else
+				movetype = math.random(1,2)
+			end
+		end
+		return movetype, movedir
+	else
+		return _vso4DirectionInput(seatname)
+	end
+end
+
 function addHungerHealth(eid, amount, callback)
 	_add_vso_rpc( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
