@@ -20,6 +20,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.onBegin()
 
 	vsoOnInteract( "state_stand", p.onInteraction )
+	vsoOnBegin( "state_stand", begin_state_stand )
 
 end
 
@@ -31,8 +32,21 @@ end
 
 -------------------------------------------------------------------------------
 
+function begin_state_standl()
+	local driver = vehicle.entityLoungingIn(p.control.driver) --smolprey puts the occupant in driver, we need to move them to an occupant so they can struggle
+	vsoUneat("driver")
+	p.control.standalone = false
+	p.control.driver = "occupant1"
+	p.control.driving = false
+	vsoUseLounge( false, "driver" )
+
+	p.eat( driver, 1, "other")
+end
+
+
 function state_stand()
 	p.handleStruggles()
+	p.control.doPhysics()
 end
 
 p.cracks = 0

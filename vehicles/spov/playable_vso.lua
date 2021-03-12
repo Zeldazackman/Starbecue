@@ -586,9 +586,10 @@ function p.uneat( seatindex )
 		p.smolpreyspecies[seatindex] = nil
 	end
 	world.sendEntityMessage( targetid, "PVSOClear")
-	vsoClearTarget( "occupant"..seatindex)
 	vsoUneat( "occupant"..seatindex )
 	p.smolprey( seatindex ) -- clear
+	vsoClearTarget( "occupant"..seatindex)
+
 	if p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
 		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove",  p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
