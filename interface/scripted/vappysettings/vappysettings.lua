@@ -49,7 +49,6 @@ end
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = bellyeffects[value]
-	world.sendEntityMessage( vappy, "settingsMenuSet", "bellyeffect", bellyeffect )
 	settings.bellyeffect = bellyeffect
 	saveSettings()
 end
@@ -61,7 +60,6 @@ end
 
 function displayDamage()
 	local value = widget.getChecked( "displayDamage" )
-	world.sendEntityMessage( vappy, "settingsMenuSet", "displaydamage", value )
 	settings.displaydamage = value
 	saveSettings()
 end
@@ -89,5 +87,6 @@ function letOut(_, which )
 end
 
 function saveSettings()
+	world.sendEntityMessage( vappy, "settingsMenuSet", "saveSettings", settings )
 	player.setProperty( "vappySettings", settings )
 end

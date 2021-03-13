@@ -87,7 +87,7 @@ function extraBellyEffects()
 		local eid = vsoGetTargetId( "occupant"..i )
 		if eid and world.entityExists(eid) then
 			local health = world.entityHealth(eid)
-			if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.bellyeffect == "softdigest" then
+			if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.settings.bellyeffect == "softdigest" then
 				p.smolpreyspecies[i] = "xeronious_egg"
 				p.smolprey( i )
 				p.doTransition("escape", {index=i, direction="down"})
@@ -162,7 +162,7 @@ function state_stand()
 		and vehicle.controlHeld( p.control.driver, "down") then
 			p.doTransition( "crouch" )
 			return
-		elseif p.autocrouch or not p.control.driving then
+		elseif p.settings.autocrouch or not p.control.driving then
 			p.doTransition( "crouch" )
 			return
 		end

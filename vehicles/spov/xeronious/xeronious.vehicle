@@ -821,8 +821,8 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "down" },
+					"up": { "transition": "escape" },
+					"front": { "transition": "up" },
 					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "down" },
 					"chances": {
@@ -991,7 +991,7 @@
 				"belly" : {
 					"part" : "body",
 					"up": { "transition": "escape" },
-					"front": { "transition": "down" },
+					"front": { "transition": "up" },
 					"back": { "transition": "bellytotail", "controlled" : true },
 					"down": { "transition": "down" },
 					"chances": {

@@ -50,21 +50,18 @@ end
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = bellyeffects[value]
-	world.sendEntityMessage( xeronious, "settingsMenuSet", "bellyeffect", bellyeffect )
 	settings.bellyeffect = bellyeffect
 	saveSettings()
 end
 
 function displayDamage()
 	local value = widget.getChecked( "displayDamage" )
-	world.sendEntityMessage( xeronious, "settingsMenuSet", "displaydamage", value )
 	settings.displaydamage = value
 	saveSettings()
 end
 
 function autoCrouch()
 	local value = widget.getChecked( "autoCrouch" )
-	world.sendEntityMessage( xeronious, "settingsMenuSet", "autocrouch", value )
 	settings.autocrouch = value
 	saveSettings()
 end
@@ -97,5 +94,6 @@ function letOut(_, which )
 end
 
 function saveSettings()
+	world.sendEntityMessage( xeronious, "settingsMenuSet", "saveSettings", settings )
 	player.setProperty( "xeroniousSettings", settings )
 end

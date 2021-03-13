@@ -76,6 +76,7 @@ p = {
 	nextIdle = 0,
 	swapCooldown = 0
 }
+p.settings = {}
 
 p.movement = {
 	jumps = 0,
@@ -629,9 +630,9 @@ function p.loadStoredData()
 			vsoSetDirectives( vsoMakeColorReplaceDirectiveString( storage.colorReplaceMap ) );
 		end
 
-		if vsoPill( "heal" ) then p.bellyeffect = "heal" end
-		if vsoPill( "digest" ) then p.bellyeffect = "digest" end
-		if vsoPill( "softdigest" ) then p.bellyeffect = "softdigest" end
+		if vsoPill( "heal" ) then p.settings.bellyeffect = "heal" end
+		if vsoPill( "digest" ) then p.settings.bellyeffect = "digest" end
+		if vsoPill( "softdigest" ) then p.settings.bellyeffect = "softdigest" end
 
 		if vsoPill( "fatten" ) then
 			p.fattenBelly = math.floor(vsoPillValue( "fatten" )) + 1
@@ -673,9 +674,7 @@ function p.onBegin()
 		vsoVictimAnimVisible( "driver", false )
 
 		local settings = config.getParameter( "settings" )
-		p.bellyeffect = settings.bellyeffect
-		p.displaydamage = settings.displaydamage
-		p.autocrouch = settings.autocrouch
+		p.settings = settings
 	else
 		p.control.standalone = false
 		p.control.driver = "occupant1"
@@ -691,19 +690,15 @@ function p.onBegin()
 
 	-- message.setHandler( "settingsMenuGet", function settingsMenuGet()
 	-- 	return {
-	-- 		bellyeffect = p.bellyeffect,
+	-- 		bellyeffect = p.settings.bellyeffect,
 	-- 		clickmode = "attack", -- todo
 	-- 		firstOccupant = vsoGetTargetId( "food" ),
 	-- 		secondOccupant = vsoGetTargetId( "dessert" ),
 	-- 	}
 	-- end )
 	message.setHandler( "settingsMenuSet", function(_,_, key, val )
-		if key == "bellyeffect" then
-			p.bellyeffect = val
-		elseif key == "displaydamage" then
-			p.displaydamage = val
-		elseif key == "autocrouch" then
-			p.autocrouch = val
+		if key == "saveSettings" then
+			p.settings = val
 		elseif key == "letout" then
 			p.doTransition( "escape", {index = val} )
 		end
@@ -1411,21 +1406,21 @@ function p.doBellyEffects(driver, powerMultiplier)
 	local status = nil
 	local monsterstatus = nil
 	local hungereffect = 0
-	if p.bellyeffect == "digest" then
+	if p.settings.bellyeffect == "digest" then
 		hungereffect = 1
-		if p.displaydamage then
+		if p.settings.displaydamage then
 			status = "displaydamagedigest"
 		else
 			status = "damagedigest"
 		end
-	elseif p.bellyeffect == "softdigest" then
+	elseif p.settings.bellyeffect == "softdigest" then
 		hungereffect = 1
-		if p.displaydamage then
+		if p.settings.displaydamage then
 			status = "displaydamagesoftdigest"
 		else
 			status = "damagesoftdigest"
 		end
-	elseif p.bellyeffect == "heal" then
+	elseif p.settings.bellyeffect == "heal" then
 		status = "voreheal"
 	end
 
@@ -1443,8 +1438,8 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 			local hunger_change = hungereffect * powerMultiplier * vsoDelta()
 			local health = world.entityHealth(eid)
-			if p.bellyeffect == "softdigest" and health[1]/health[2] <= -hunger_change then
-				hunger_change = (1 - health[1]) / health[2]
+			if p.settings.bellyeffect == "softdigest" and health[1] <= 1 then
+				hunger_change = 0
 			end
 
 			if driver then addHungerHealth( driver, hunger_change) end
