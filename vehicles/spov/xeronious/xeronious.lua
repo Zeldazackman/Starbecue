@@ -143,15 +143,15 @@ p.registerStateScript( "stand", "succ", function( args )
 	for i = 1, #entities do
 		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ",  1, entity.id())
 	end
-	if checkEatPosition(p.localToGlobal({3, 0}), "belly", "eat") then return end
+	if checkEatPosition(p.localToGlobal({3, 0}), "belly", "eat", true) then return end
 end)
 
 
 function state_stand()
 
 	p.idleStateChange()
-	p.handleBelly()
 	extraBellyEffects()
+	p.handleBelly()
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3.5, 1})
 

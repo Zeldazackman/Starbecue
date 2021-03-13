@@ -163,7 +163,7 @@ function doescape(args, location, monsteroffset, statuses, afterstatus )
 	end
 end
 
-function checkEatPosition(position, location, transition)
+function checkEatPosition(position, location, transition, noaim)
 	if not locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
@@ -177,7 +177,7 @@ function checkEatPosition(position, location, transition)
 
 		if #prey > 0 then
 			for i = 1, #prey do
-				if prey[i] == entityaimed[aimednotlounging] and not p.entityLounging(prey[i]) then
+				if (prey[i] == entityaimed[aimednotlounging] or noaim) and not p.entityLounging(prey[i]) then
 					animator.setGlobalTag( "bap", "" )
 					p.doTransition( transition, {id=prey[i]} )
 					return true
@@ -237,10 +237,10 @@ function p.updateOccupants()
 			end
 			lastFilled = true
 		else
-			animator.setAnimationState( "occupant"..i.."state", "empty" )
 			vsoClearTarget( "occupant"..i)
 			lastFilled = false
 		end
+		animator.setAnimationState( "occupant"..i.."state", "empty" )
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 	p.occupants.belly = p.occupants.belly + p.fattenBelly + p.occupants.womb
@@ -583,6 +583,8 @@ end
 
 function p.uneat( seatindex )
 	local targetid = vsoGetTargetId( "occupant"..seatindex )
+	world.sendEntityMessage( targetid, "PVSOClear")
+	vsoUneat( "occupant"..seatindex )
 	if p.smolpreyspecies[seatindex] then
 		if world.entityType(targetid) == "player" then
 			world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
@@ -591,16 +593,13 @@ function p.uneat( seatindex )
 			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { p.monstercoords[1], p.monstercoords[2]}, { driver = targetid, settings = {}, uneaten = true } )
 		end
 		p.smolpreyspecies[seatindex] = nil
-	end
-	world.sendEntityMessage( targetid, "PVSOClear")
-	vsoUneat( "occupant"..seatindex )
-	p.smolprey( seatindex ) -- clear
-	vsoClearTarget( "occupant"..seatindex)
-
-	if p.isMonster(targetid) then
+	elseif p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
 		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove",  p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
+	p.smolprey( seatindex ) -- clear
+	vsoClearTarget( "occupant"..seatindex)
+
 end
 
 function p.smolprey( seatindex )

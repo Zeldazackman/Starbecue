@@ -188,6 +188,17 @@
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
+				"succeat": { // 3 occupants
+					"location" : "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"head": "none"
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+
 				"escapeoral": { // 3 occupants
 					"location" : "belly",
 					"animation": {
