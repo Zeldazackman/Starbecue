@@ -123,25 +123,30 @@ p.registerStateScript( "stand", "bapeat", function()
 end)
 
 p.registerStateScript( "stand", "succ", function( args )
-	--local pos1 = p.localToGlobal({3,5})
-	--local pos2 = p.localToGlobal({13,-5})
+	local pos1 = p.localToGlobal({-5,-8})
+	local pos2 = p.localToGlobal({30,8})
+	if pos1[1] > pos2[1] then
+		pos1[1], pos2[1] = pos2[1], pos1[1]
+	end
 
-	local pos1 = p.localToGlobal({13,0})
+	-- local pos1 = p.localToGlobal({9,0})
 
-	--[[
 	local entities =  world.entityQuery(pos1, pos2, {
 		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 		includedTypes = {"creature"}
 	})
-	]]
 
-	local entities =  world.entityQuery(pos1, 10, {
-		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
-		includedTypes = {"creature"}
-	})
+	-- local entities =  world.entityQuery(pos1, 10, {
+	-- 	withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+	-- 	includedTypes = {"creature"}
+	-- })
+
+	local dest = p.localToGlobal({3, 2.5})
 
 	for i = 1, #entities do
-		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ",  1, entity.id())
+		local pos = world.distance(dest, world.entityPosition(entities[i]))
+		local offset = math.floor(pos[2] + 0.5) * 1000 + math.floor(pos[1] + 500.5)
+		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ", 1, offset)
 	end
 	if checkEatPosition(p.localToGlobal({3, 0}), "belly", "eat") then return end
 end)

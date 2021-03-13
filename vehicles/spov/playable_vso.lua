@@ -1059,7 +1059,11 @@ function p.control.primaryAction()
 			end
 			if control.primaryAction.script ~= nil then
 				local statescript = p.statescripts[p.state][control.primaryAction.script]
-				statescript() -- what arguments might this need?
+				if statescript then
+					statescript() -- what arguments might this need?
+				else
+					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
+				end
 			end
 			if 	p.movement.primaryCooldown < 1 then
 				p.movement.primaryCooldown = control.primaryAction.cooldown
@@ -1080,7 +1084,11 @@ function p.control.altAction()
 			end
 			if control.altAction.script ~= nil then
 				local statescript = p.statescripts[p.state][control.altAction.script]
-				statescript() -- what arguments might this need?
+				if statescript then
+					statescript() -- what arguments might this need?
+				else
+					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
+				end
 			end
 			if 	p.movement.altCooldown < 1 then
 				p.movement.altCooldown = control.altAction.cooldown
