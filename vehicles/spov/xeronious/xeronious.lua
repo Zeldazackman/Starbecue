@@ -70,7 +70,7 @@ function checkEscapes(args)
 
 	if location == "tail" then
 		direction = "escapetail"
-		monstercoords = {-6, -2}
+		monstercoords = {-6, 0}
 	elseif location == "belly" and move == "down" then
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
