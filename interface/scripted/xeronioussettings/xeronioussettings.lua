@@ -1,6 +1,7 @@
 local xeronious
 local occupants
 local maxOccupants
+local vsosettings
 local settings
 local bellyeffects = {
 	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
@@ -28,7 +29,8 @@ function init()
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
-	settings = player.getProperty("xeroniousSettings") or {}
+	vsosettings = player.getProperty("vsoSettings") or {}
+	settings = vsosettings["xeronious"] or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "autoCrouch", settings.autocrouch or false )
@@ -95,5 +97,6 @@ end
 
 function saveSettings()
 	world.sendEntityMessage( xeronious, "settingsMenuSet", "saveSettings", settings )
-	player.setProperty( "xeroniousSettings", settings )
+	vsosettings["xeronious"] = settings
+	player.setProperty( "vsoSettings", vsosettings )
 end

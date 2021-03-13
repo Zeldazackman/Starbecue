@@ -2,6 +2,7 @@ local vappy
 local occupants
 local maxOccupants
 local settings
+local vsosettings
 local bellyeffects = {
 	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
 	[""] = -1, ["heal"] = 0, ["digest"] = 1, ["softdigest"] = 2 -- reverse lookup
@@ -28,7 +29,8 @@ function init()
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
-	settings = player.getProperty("vappySettings") or {}
+	vsosettings = player.getProperty("vsoSettings") or {}
+	settings = vsosettings["vappy"] or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
@@ -88,5 +90,6 @@ end
 
 function saveSettings()
 	world.sendEntityMessage( vappy, "settingsMenuSet", "saveSettings", settings )
-	player.setProperty( "vappySettings", settings )
+	vsosettings["vappy"] = settings
+	player.setProperty( "vsoSettings", vsosettings )
 end
