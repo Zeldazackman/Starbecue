@@ -17,14 +17,14 @@ end
 
 function onBegin()	--This sets up the VSO ONCE.
 	p.control.standalone = false
-	p.control.driver = "driver"
+	p.control.driver = "occupant1"
 	p.control.driving = false
 	local driver = config.getParameter( "driver" )
 	storage._vsoSpawnOwner = driver
 	storage._vsoSpawnOwnerName = world.entityName( driver )
-	vsoEat( driver, "driver" )
-	vsoSetTarget( "driver", driver )
-	vsoVictimAnimVisible( "driver", false )
+	vsoEat( driver, "occupant1" )
+	vsoSetTarget( "occupant1", driver )
+	vsoVictimAnimVisible( "occupant1", false )
 	p.occupantLocation[1] = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1
@@ -44,10 +44,16 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
+function p.edible( targetid )
+	if vehicle.entityLoungingIn( "occupant1" ) ~= targetid then return false end
+	return p.stateconfig[p.state].edible
+end
+
+
 function p.handleStruggles()
 	local movetype, movedir
 
-	movetype, movedir = vso4DirectionInput( "driver" )
+	movetype, movedir = vso4DirectionInput( "occupant1" )
 
 	if movetype == nil or movetype == 0 then return end
 
@@ -102,7 +108,7 @@ function p.handleStruggles()
 
 		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
 		if struggledata[dir].victimAnimation then
-			vsoVictimAnimReplay( "driver", struggledata[dir].victimAnimation, struggledata.part.."State" )
+			vsoVictimAnimReplay( "occupant1", struggledata[dir].victimAnimation, struggledata.part.."State" )
 		end
 		vsoCounterAdd( "struggleCount", 1 )
 	end

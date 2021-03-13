@@ -34,6 +34,7 @@ function init()
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "autoCrouch", settings.autocrouch or false )
+	widget.setChecked( "autoEggLay", settings.autoegglay or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", bellyeffects[settings.bellyeffect or ""] )
 end
@@ -65,6 +66,12 @@ end
 function autoCrouch()
 	local value = widget.getChecked( "autoCrouch" )
 	settings.autocrouch = value
+	saveSettings()
+end
+
+function autoEggLay()
+	local value = widget.getChecked( "autoEggLay" )
+	settings.autoegglay = value
 	saveSettings()
 end
 

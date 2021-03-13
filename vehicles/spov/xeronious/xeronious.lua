@@ -64,11 +64,14 @@ function checkEscapes(args)
 	local returnval = {}
 	local direction = "escapeoral"
 	local monstercoords = {6, 1} -- same as last coords of escape anim
+	local move = args.direction or "up"
+
+	if p.smolpreyspecies[args.index] == "xeronious_egg" then move = "down" end
 
 	if location == "tail" then
 		direction = "escapetail"
 		monstercoords = {-6, -2}
-	elseif location == "belly" and args.direction == "down" then
+	elseif location == "belly" and move == "down" then
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
 	end
@@ -87,10 +90,11 @@ function extraBellyEffects()
 		local eid = vsoGetTargetId( "occupant"..i )
 		if eid and world.entityExists(eid) then
 			local health = world.entityHealth(eid)
-			if p.occupantLocation[i] == "belly" and health[1] <= 1 and p.settings.bellyeffect == "softdigest" then
+			if p.occupantLocation[i] == "belly" and health[1] == 1 and p.settings.bellyeffect == "softdigest" then
 				p.smolpreyspecies[i] = "xeronious_egg"
 				p.smolprey( i )
-				p.doTransition("escape", {index=i, direction="down"})
+				if p.settings.autoegglay or not p.control.driving then p.doTransition("escape", {index=i, direction="down"}) end
+				return
 			end
 		end
 	end
