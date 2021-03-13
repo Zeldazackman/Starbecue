@@ -587,7 +587,7 @@ function p.uneat( seatindex )
 			world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
 		else
 			local position = world.entityPosition( targetid )
-			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { position[1], position[2] + 1.5 }, { driver = targetid, settings = {}, uneaten = true } )
+			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { p.monstercoords[1], p.monstercoords[2]}, { driver = targetid, settings = {}, uneaten = true } )
 		end
 		p.smolpreyspecies[seatindex] = nil
 	end
@@ -605,16 +605,16 @@ end
 function p.smolprey( seatindex )
 	if seatindex == nil then return end
 	local id = vsoGetTargetId("occupant"..seatindex)
-	if p.isMonster(id) then
+	if p.smolpreyspecies[seatindex] ~= nil then
+		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
+		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
+		vsoAnim( "occupant"..seatindex.."state", "smol" )
+	elseif p.isMonster(id) then
 		local portrait = world.entityPortrait(id, "fullneutral")
 		if portrait and portrait[1] and portrait[1].image then
 			animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
 			vsoAnim( "occupant"..seatindex.."state", "monster" )
 		end
-	elseif p.smolpreyspecies[seatindex] ~= nil then
-		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
-		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
-		vsoAnim( "occupant"..seatindex.."state", "smol" )
 	else
 		animator.setPartTag( "occupant"..seatindex, "smolspecies", "" )
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" )
