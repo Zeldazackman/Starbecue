@@ -237,6 +237,7 @@ function p.updateOccupants()
 			end
 			lastFilled = true
 		else
+			animator.setAnimationState( "occupant"..i.."state", "empty" )
 			vsoClearTarget( "occupant"..i)
 			lastFilled = false
 		end
@@ -729,7 +730,6 @@ function p.onBegin()
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
-	self.sv.ta.otherbob = { visible = false } -- and another bob for other things to be seperate
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
 
 	if not config.getParameter( "uneaten" ) then
@@ -742,7 +742,8 @@ function p.onBegin()
 
 	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
 	vehicle.setLoungeStatusEffects = function(seatname, effects)
-		if p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))] or p.isMonster(vsoGetTargetId(seatname)) then -- fix invis on smolprey too
+		local smolprey = p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))]
+		if smolprey or p.isMonster(vsoGetTargetId(seatname)) then -- fix invis on smolprey too
 			local invis = false
 			local effects2 = {} -- don't touch outer table
 			for _,e in ipairs(effects) do
@@ -751,11 +752,11 @@ function p.onBegin()
 			end
 			if invis then
 				animator.setAnimationState( seatname.."state", "empty" )
+			elseif smolprey then
+				animator.setAnimationState( seatname.."state", "smol" )
+				table.insert(effects2, "vsoinvisible")
 			elseif p.isMonster(vsoGetTargetId(seatname)) then
 				animator.setAnimationState( seatname.."state", "monster" )
-				table.insert(effects2, "vsoinvisible")
-			else
-				animator.setAnimationState( seatname.."state", "smol" )
 				table.insert(effects2, "vsoinvisible")
 			end
 			v_status(seatname, effects2)
