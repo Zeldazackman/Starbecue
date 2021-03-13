@@ -177,7 +177,7 @@ function checkEatPosition(position, location, transition, noaim)
 
 		if #prey > 0 then
 			for i = 1, #prey do
-				if (prey[i] == entityaimed[aimednotlounging] or noaim) and not p.entityLounging(prey[i]) then
+				if ((prey[i] == entityaimed[aimednotlounging]) or noaim) and not p.entityLounging(prey[i]) then
 					animator.setGlobalTag( "bap", "" )
 					p.doTransition( transition, {id=prey[i]} )
 					return true

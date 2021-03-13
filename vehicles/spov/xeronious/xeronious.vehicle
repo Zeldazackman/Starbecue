@@ -195,7 +195,7 @@
 						"body": "eat",
 						"head": "none"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "playersucc",
 					"script": "eat"
 				},
 
@@ -534,6 +534,16 @@
 		"fly": {
 			"noPhysicsTransition" : true,
 			"transitions": {
+				"succeat": { // 3 occupants
+					"location" : "belly",
+					"eating" : true,
+					"animation": {
+						"body": "eat",
+						"head": "none"
+					},
+					"victimAnimation": "playersucc",
+					"script": "eat"
+				},
 				"escapeoral": { // 3 occupants
 					"location" : "belly",
 					"animation": {
