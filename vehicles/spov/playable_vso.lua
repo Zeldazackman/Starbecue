@@ -1352,7 +1352,7 @@ end
 function p.driverStateChange()
 	local transitions = p.stateconfig[p.state].transitions
 	local movetype, movedir = vso4DirectionInput( p.control.driver )
-	if movetype > 0 then
+	if movetype and movetype > 0 then
 		if movedir == "U" and transitions.up ~= nil then
 			p.doTransition("up")
 		end
