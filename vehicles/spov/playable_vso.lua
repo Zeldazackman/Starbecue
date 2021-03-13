@@ -670,6 +670,7 @@ function p.onBegin()
 		local driver = config.getParameter( "driver" )
 		storage._vsoSpawnOwner = driver
 		storage._vsoSpawnOwnerName = world.entityName( driver )
+		vsoSetTarget( "driver", driver )
 		vsoEat( driver, "driver" )
 		vsoVictimAnimVisible( "driver", false )
 
