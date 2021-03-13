@@ -1,11 +1,21 @@
+local x, y, distance
+
 function init()
-	script.setUpdateDelta(1)
+	local destination = effect.sourceEntity()
+	x = (destination % 1000) - 500
+	y = math.floor(destination / 1000)
+	distance = math.sqrt(x^2 + y^2)
+
+	effect.expire()
 end
 
 function update(dt)
-	local distanceVector = entity.distanceToEntity(effect.sourceEntity())
-	local angle = math.atan(distanceVector[1], distanceVector[2])
-	mcontroller.controlApproachVelocityAlongAngle(angle, 100, 100, true)
+	if not distance then return end
+	if distance > 1 then
+		mcontroller.controlApproachVelocity({50 * x/distance, 50 * y/distance}, 650/(distance^0.5))
+	else
+		mcontroller.setVelocity({10 * x, 10 * y})
+	end
 end
 
 function uninit()

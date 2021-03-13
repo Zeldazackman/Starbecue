@@ -109,7 +109,7 @@
 					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"lookBack": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
 
-					"succ": { "frames": 1, "cycle": 3, "mode": "end", "priority": 3 },
+					"succ": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"burp": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 
