@@ -1369,7 +1369,7 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
-	if p.occupants.belly > 0 and p.stateconfig[p.state].bellyEffect ~= false then
+	if p.occupants.belly + p.occupants.tail > 0 and p.stateconfig[p.state].bellyEffect ~= false then
 		p.bellyEffects()
 	else
 		for i = 1, p.maxOccupants.total do
@@ -1430,7 +1430,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 	for i = 1, p.maxOccupants.total do
 		local eid = vsoGetTargetId( "occupant"..i )
 
-		if eid and world.entityExists(eid) and p.occupantLocation[i] == "belly" then
+		if eid and world.entityExists(eid) and (p.occupantLocation[i] == "belly" or p.occupantLocation[i] == "tail") then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 			world.sendEntityMessage( eid, "PVSONightVision", self.cfgVSO.lights.prey)
 
