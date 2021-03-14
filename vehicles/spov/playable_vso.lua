@@ -703,6 +703,11 @@ function p.onBegin()
 			p.doTransition( "escape", {index = val} )
 		end
 	end )
+
+	message.setHandler( "settingsMenuRefresh", function(_,_)
+		return getSettingsMenuInfo()
+	end )
+
 	message.setHandler( "despawn", function(_,_, nowarpout)
 		local driver = vehicle.entityLoungingIn(p.control.driver)
 		world.sendEntityMessage(driver, "PVSOClear")
@@ -864,20 +869,9 @@ function p.control.updateDriving()
 		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.control.driving = true
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
-			local occupants = {}
-			for i = 1, p.maxOccupants.total do -- using p.occupants.total has potential for issues if slots become empty
-				if vsoGetTargetId( "occupant"..i ) then
-					occupants[i] = {
-						id = vsoGetTargetId( "occupant"..i ),
-						species = p.smolpreyspecies[ i ]
-					}
-				else
-					occupants[i] = {}
-				end
-			end
 			world.sendEntityMessage(
 				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = occupants, maxOccupants = p.maxOccupants.total }, false, entity.id()
+				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.maxOccupants.total }, false, entity.id()
 			)
 		end
 	elseif p.occupants.total >= 1 then
@@ -890,6 +884,21 @@ function p.control.updateDriving()
 	else
 		p.control.driving = false
 	end
+end
+
+function getSettingsMenuInfo()
+	local occupants = {}
+	for i = 1, p.maxOccupants.total do -- using p.occupants.total has potential for issues if slots become empty
+		if vsoGetTargetId( "occupant"..i ) then
+			occupants[i] = {
+				id = vsoGetTargetId( "occupant"..i ),
+				species = p.smolpreyspecies[ i ]
+			}
+		else
+			occupants[i] = {}
+		end
+	end
+	return occupants
 end
 
 function p.control.probablyOnGround() -- check number of frames -> ceiling isn't ground
