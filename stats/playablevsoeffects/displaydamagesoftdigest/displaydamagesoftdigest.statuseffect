@@ -1,16 +1,16 @@
 {
-  "name" : "displaydamagesoftdigest",
-  "blockingStat" : "digestionImmunity",
+	"name" : "displaydamagesoftdigest",
+	"blockingStat" : "digestionImmunity",
 
-  "effectConfig" : {},
-  "defaultDuration" : 5,
+	"effectConfig" : {},
+	"defaultDuration" : 5,
 
-  "scripts" : [
-    "displaydamagesoftdigest.lua"
-  ],
+	"scripts" : [
+	"displaydamagesoftdigest.lua"
+	],
 
-  "animationConfig" : "displaydamagesoftdigest.animation",
+	"animationConfig" : "displaydamagesoftdigest.animation",
 
-  "label" : "Being Digested",
-  "icon" : "/stats/stomachacid/stomachacid.png"
+	"label" : "Being Digested",
+	"icon" : "/stats/stomachacid/stomachacid.png"
 }

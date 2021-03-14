@@ -5,17 +5,17 @@ p.bellyeffects = {
 }
 
 function onInit()
-    p.vso = config.getParameter( "vso" )
+	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	readOccupantData()
-    p.vsosettings = player.getProperty("vsoSettings") or {}
+	p.vsosettings = player.getProperty("vsoSettings") or {}
 	settings = p.vsosettings[p.vsoname] or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", p.bellyeffects[settings.bellyeffect or ""] )
-    p.refreshed = true
+	p.refreshed = true
 end
 
 function readOccupantData()
@@ -42,29 +42,29 @@ p.refreshframes = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-    if p.refreshframes >= 180 and p.rpc == nil then
+	if p.refreshframes >= 180 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
 			local result = p.rpc:result()
 			if result ~= nil then
-                p.occupants = result
-                readOccupantData()
-                p.refreshframes = 0
-                p.refreshed = true
+				p.occupants = result
+				readOccupantData()
+				p.refreshframes = 0
+				p.refreshed = true
 			end
 		else
 			sb.logError( "Couldn't refresh settings." )
 			sb.logError( p.rpc:error() )
 		end
 		p.rpc = nil
-    else
-        p.refreshframes = p.refreshframes + dt
+	else
+		p.refreshframes = p.refreshframes + dt
 	end
 end
 
 function updateHPbars()
-    for i = 1, p.maxOccupants do
+	for i = 1, p.maxOccupants do
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local health = world.entityHealth( p.occupants[i].id )
 			widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
@@ -82,7 +82,7 @@ function setBellyEffect()
 end
 
 function changeSetting(settingname)
-    local value = widget.getChecked( settingname )
+	local value = widget.getChecked( settingname )
 	settings[string.lower(settingname)] = value
 	saveSettings()
 end
@@ -117,8 +117,8 @@ function setPortrait( canvasName, data )
 	end
 end
 function letOut(_, which )
-    if p.refreshed then
-        p.refreshed = false
-        world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
-    end
+	if p.refreshed then
+		p.refreshed = false
+		world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
+	end
 end

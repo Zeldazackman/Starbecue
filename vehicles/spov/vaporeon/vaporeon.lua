@@ -8,17 +8,17 @@ require("/vehicles/spov/playable_vso.lua")
 vaporeon plan:
 
 	state chart:
-		0   *          sleep
-		|   V            |
-		0  idle - sit - lay - back
-		|   :         \        :
-		0   :   sleep - pin - bed - hug
-		·   :            V         L
-		1  idle - sit - lay - back
-		|   :            |
-		1   :          sleep
-		·   :
-		2  idle - sit - lay - sleep
+		0	 *			sleep
+		|	 V			|
+		0	idle - sit - lay - back
+		|	 :		 \		:
+		0	 :	 sleep - pin - bed - hug
+		·	 :			V		 L
+		1	idle - sit - lay - back
+		|	 :			|
+		1	 :			sleep
+		·	 :
+		2	idle - sit - lay - sleep
 
 	(struggling not included in chart, everything in full has it)
 
@@ -32,7 +32,7 @@ vaporeon plan:
 	- eat automatically if low health, to protect (and heal w/ pill)
 	- attack enemies
 	- ride on back to control
-	  - shlorp in from back -> control from inside?
+		- shlorp in from back -> control from inside?
 
 ]]--
 
@@ -123,7 +123,7 @@ function state_stand()
 		else
 			p.movement.wasspecial1 = false
 		end
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
 			if p.occupants.belly > 0 then
 				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
 			end

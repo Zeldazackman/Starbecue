@@ -1,19 +1,19 @@
 {
-  "kind" : "vapwatergunsplash",
-  "definition" : {
-    "type" : "ember",
-    "color" : [60, 150, 224, 150],
-    "initialVelocity" : [0.0, -0.2],
-    "finalVelocity" : [0, -10],
-    "approach" : [5, 5],
-    "destructionAction" : "shrink",
-    "destructionTime" : 0.2,
-    "size" : 2,
-    "layer" : "front",
-    "timeToLive" : 0.25,
-    "variance" : {
-      "size" : 1.0,
-      "initialVelocity" : [5.0, 5.0]
-    }
-  }
+	"kind" : "vapwatergunsplash",
+	"definition" : {
+	"type" : "ember",
+	"color" : [60, 150, 224, 150],
+	"initialVelocity" : [0.0, -0.2],
+	"finalVelocity" : [0, -10],
+	"approach" : [5, 5],
+	"destructionAction" : "shrink",
+	"destructionTime" : 0.2,
+	"size" : 2,
+	"layer" : "front",
+	"timeToLive" : 0.25,
+	"variance" : {
+		"size" : 1.0,
+		"initialVelocity" : [5.0, 5.0]
+	}
+	}
 }

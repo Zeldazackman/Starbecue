@@ -1,69 +1,143 @@
 {
-	"globalTagDefaults" : {
-		"totaloccupants" : "0",
-		"cracks" : "0",
-		"state" : "stand",
-		"frame" : "1",
-		"directives" : "",
+	"globalTagDefaults": {
+		"totaloccupants": "0",
+		"cracks": "0",
+		"state": "stand",
+		"frame": "1",
+		"directives": "",
 		"smolprey": "xeronious_egg",
-		"eggtype" : "spov/xeronious_egg_small.png"
-
+		"eggtype": "spov/xeronious_egg_small.png"
 	},
-    "animatedParts": {
-        "stateTypes": {
+	"animatedParts": {
+		"stateTypes": {
 			"bodyState": {
-                "default": "idle",
-                "states": {
-					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-
-                    "s_back": { "frames": 2, "cycle": 0.25, "mode": "end", "priority": 1 },
-                    "s_front": { "frames": 2, "cycle": 0.25, "mode": "end", "priority": 1 },
-                    "s_up": { "frames": 2, "cycle": 0.25, "mode": "end", "priority": 1 },
-                    "s_down": { "frames": 2, "cycle": 0.25, "mode": "end", "priority": 1 }
-                }
-            }
-        },
+				"default": "idle",
+				"states": {
+					"idle": {
+						"frames": 1,
+						"cycle": 3,
+						"mode": "end",
+						"priority": 0
+					},
+					"s_back": {
+						"frames": 2,
+						"cycle": 0.25,
+						"mode": "end",
+						"priority": 1
+					},
+					"s_front": {
+						"frames": 2,
+						"cycle": 0.25,
+						"mode": "end",
+						"priority": 1
+					},
+					"s_up": {
+						"frames": 2,
+						"cycle": 0.25,
+						"mode": "end",
+						"priority": 1
+					},
+					"s_down": {
+						"frames": 2,
+						"cycle": 0.25,
+						"mode": "end",
+						"priority": 1
+					}
+				}
+			}
+		},
 		"occupant1state": {
 			"default": "empty",
 			"states": {
-				"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-				"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-				"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				"empty": {
+					"frames": 1,
+					"cycle": 1,
+					"mode": "end",
+					"priority": 0
+				},
+				"smol": {
+					"frames": 1,
+					"cycle": 1,
+					"mode": "end",
+					"priority": 0
+				},
+				"monster": {
+					"frames": 1,
+					"cycle": 1,
+					"mode": "end",
+					"priority": 0
+				}
 			}
 		},
-        "parts": {
-            "background": {
-                "properties": {
-                    "centered": true,
-                     "zLevel": -1,
-					 "transformationGroups": ["flip"]
-                },
-                "partStates": {
-                    "bodyState": {
-                        "idle": { "properties": { "image": "<eggtype>:<cracks>.idle.<frame><directives>" } },
-
-						"s_back": { "properties": { "image": "<eggtype>:<cracks>.left.<frame><directives>" } },
-						"s_front": { "properties": { "image": "<eggtype>:<cracks>.right.<frame><directives>" } },
-						"s_up": { "properties": { "image": "<eggtype>:<cracks>.left.<frame><directives>" } },
-						"s_down": { "properties": { "image": "<eggtype>:<cracks>.right.<frame><directives>" } }
-                    }
-                }
-            },
+		"parts": {
+			"background": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1,
+					"transformationGroups": [
+						"flip"
+					]
+				},
+				"partStates": {
+					"bodyState": {
+						"idle": {
+							"properties": {
+								"image": "<eggtype>:<cracks>.idle.<frame><directives>"
+							}
+						},
+						"s_back": {
+							"properties": {
+								"image": "<eggtype>:<cracks>.left.<frame><directives>"
+							}
+						},
+						"s_front": {
+							"properties": {
+								"image": "<eggtype>:<cracks>.right.<frame><directives>"
+							}
+						},
+						"s_up": {
+							"properties": {
+								"image": "<eggtype>:<cracks>.left.<frame><directives>"
+							}
+						},
+						"s_down": {
+							"properties": {
+								"image": "<eggtype>:<cracks>.right.<frame><directives>"
+							}
+						}
+					}
+				}
+			},
 			"occupant1": {
-                "properties": {
-                    "centered": true,
-                     "zLevel": 0,
-                     "transformationGroups": ["flip", "occupant1position", "bodybob"],
-                     "occupantPosition": [0.0, 0.0]
-                },
-                "partStates": {
-                    "occupant1state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
-						"monster": { "properties" : { "image": "<monster>" } }
-                    }
-                }
-            }
-        }
+				"properties": {
+					"centered": true,
+					"zLevel": 0,
+					"transformationGroups": [
+						"flip",
+						"occupant1position",
+						"bodybob"
+					],
+					"occupantPosition": [
+						0.0,
+						0.0
+					]
+				},
+				"partStates": {
+					"occupant1state": {
+						"smol": {
+							"properties": {
+								"image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>"
+							}
+						},
+						"monster": {
+							"properties": {
+								"image": "<monster>"
+							}
+						}
+					}
+				}
+			}
+		}
 	},
 	"transformationGroups": {
 		"flip": {},
@@ -84,192 +158,339 @@
 		}
 	},
 	"sounds": {
-		"swallow": ["/sfx/objects/gulp.ogg"]
-		, "digest": [ "/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg" ]
-		, "lay": ["/sfx/objects/eggLay.ogg"]
-		, "struggle": ["/sfx/vore/struggle/burbslosh.ogg","/sfx/vore/struggle/blurbsquish2.ogg","/sfx/vore/struggle/blorbsquish.ogg","/sfx/vore/swallow/swallow (11).ogg"]
-		, "slurp" : [ "/sfx/vore/common/slurp.ogg" ]
-		, "doublejump" : [ "/sfx/tech/tech_doublejump.ogg" ]
+		"swallow": [
+			"/sfx/objects/gulp.ogg"
+		],
+		"digest": [
+			"/sfx/vore/digest/digest (17).ogg",
+			"/sfx/vore/digest/digest (18).ogg",
+			"/sfx/vore/digest/digest (25).ogg",
+			"/sfx/vore/digest/digest (11).ogg",
+			"/sfx/vore/digest/digest (13).ogg",
+			"/sfx/vore/digest/digest (15).ogg",
+			"/sfx/vore/digest/digest (16).ogg",
+			"/sfx/vore/digest/digest (19).ogg",
+			"/sfx/vore/digest/digest (20).ogg",
+			"/sfx/vore/digest/digest (3).ogg",
+			"/sfx/vore/digest/digest (31).ogg",
+			"/sfx/vore/digest/digest (36).ogg",
+			"/sfx/vore/digest/digest (37).ogg",
+			"/sfx/vore/digest/digest (9).ogg"
+		],
+		"lay": [
+			"/sfx/objects/eggLay.ogg"
+		],
+		"struggle": [
+			"/sfx/vore/struggle/burbslosh.ogg",
+			"/sfx/vore/struggle/blurbsquish2.ogg",
+			"/sfx/vore/struggle/blorbsquish.ogg",
+			"/sfx/vore/swallow/swallow (11).ogg"
+		],
+		"slurp": [
+			"/sfx/vore/common/slurp.ogg"
+		],
+		"doublejump": [
+			"/sfx/tech/tech_doublejump.ogg"
+		]
 	},
 	"particleEmitters": {
-		"emotehappy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/emotes/happy.animation",
-				"position" : [-0.2, 3.3],
-				"finalVelocity" : [0, 0],
-				"initialVelocity" : [0, 0],
-				"destructionTime" : 0.2,
-				"destructionAction" : "shrink",
-				"layer" : "front",
-				"timeToLive" : 0.8,
-				"flippable" : false
-			  }
-			}
-		  ]
-		},
-
-		"emotesad" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/emotes/sad.animation",
-				"position" : [-0.2, 3.3],
-				"finalVelocity" : [0, 0],
-				"initialVelocity" : [0, 0],
-				"destructionTime" : 0.2,
-				"destructionAction" : "shrink",
-				"layer" : "front",
-				"timeToLive" : 0.8,
-				"flippable" : false
-			  }
-			}
-		  ]
-		},
-
-		"emoteconfused" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/emotes/confused.animation",
-				"position" : [-0.2, 3.3],
-				"finalVelocity" : [0, 0],
-				"initialVelocity" : [0, 0],
-				"destructionTime" : 0.2,
-				"destructionAction" : "shrink",
-				"layer" : "front",
-				"timeToLive" : 0.8,
-				"flippable" : false
-			  }
-			}
-		  ]
-		},
-
-		"emotesleepy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/emotes/sleepy.animation",
-				"position" : [-0.2, 3.3],
-				"finalVelocity" : [0, 0],
-				"initialVelocity" : [0, 0],
-				"destructionTime" : 0.2,
-				"destructionAction" : "shrink",
-				"layer" : "front",
-				"timeToLive" : 0.8,
-				"flippable" : false
-			  }
-			}
-		  ]
-		},
-
-		"drips" : {
-		  "emissionRate" : 15,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "ember",
-				"layer" : "front",
-				"size" : 1.0,
-				"color" : [120, 221, 254, 230],
-				"fade" : 0.9,
-				"destructionAction" : "shrink",
-				"destructionTime" : 0.8,
-				"position" : [0.5, 0.9],
-				"offsetRegion" : [0, 0, 0, 0],
-				"initialVelocity" : [0, 0.0],
-				"finalVelocity" : [0, -1],
-				"approach" : [3, 10],
-				"timeToLive" : 0.5,
-				"variance" : {
-				  "initialVelocity" : [0.2, 0.0],
-				  "size" : 0.5,
-				  "position" : [0.3, 0]
-				},
-				"flippable" : true
-			  }
-			}
-		  ]
-		},
-
-		"doublejump" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/doublejump/doublejump.animation",
-				"position" : [0, -5],
-				"finalVelocity" : [0, 0],
-				"approach" : [0, 50],
-				"size" : 2.0,
-				"timeToLive" : 0.85,
-				"layer" : "back",
-				"light" : [70, 100, 140],
-				"fade" : 0.5,
-				"variance" : {
-				  "initialVelocity" : [0.0, 0.0]
+		"emotehappy": {
+			"emissionRate": 1,
+			"particles": [
+				{
+					"particle": {
+						"type": "animated",
+						"animation": "/animations/emotes/happy.animation",
+						"position": [
+							-0.2,
+							3.3
+						],
+						"finalVelocity": [
+							0,
+							0
+						],
+						"initialVelocity": [
+							0,
+							0
+						],
+						"destructionTime": 0.2,
+						"destructionAction": "shrink",
+						"layer": "front",
+						"timeToLive": 0.8,
+						"flippable": false
+					}
 				}
-			  }
-			}
-		  ]
+			]
 		},
-		"defaultblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "ember",
-				"size" : 1.0,
-				"color" : [49, 166, 255, 255],
-				"fade" : 0.9,
-				"position" : [0, -3],
-				"initialVelocity" : [-2, -3.0],
-				"finalVelocity" : [-2, -3.0],
-				"approach" : [0, 20],
-				"timeToLive" : 0.8,
-				"layer" : "middle",
-				"variance" : {
-				  "initialVelocity" : [2, 3.0],
-				  "size" : 0.5
+		"emotesad": {
+			"emissionRate": 1,
+			"particles": [
+				{
+					"particle": {
+						"type": "animated",
+						"animation": "/animations/emotes/sad.animation",
+						"position": [
+							-0.2,
+							3.3
+						],
+						"finalVelocity": [
+							0,
+							0
+						],
+						"initialVelocity": [
+							0,
+							0
+						],
+						"destructionTime": 0.2,
+						"destructionAction": "shrink",
+						"layer": "front",
+						"timeToLive": 0.8,
+						"flippable": false
+					}
 				}
-			  }
-			}
-		  ]
+			]
 		},
-		"defaultlightblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "ember",
-				"size" : 1.0,
-				"color" : [155, 212, 255, 255],
-				"fade" : 0.9,
-				"position" : [0, -3],
-				"destructionAction" : "shrink",
-				"destructionTime" : 1,
-				"initialVelocity" : [-2, -6.0],
-				"finalVelocity" : [-2, -6.0],
-				"approach" : [0, 20],
-				"timeToLive" : 0.8,
-				"light" : [46, 63, 76],
-				"layer" : "back",
-				"variance" : {
-				  "initialVelocity" : [6, 6.0]
+		"emoteconfused": {
+			"emissionRate": 1,
+			"particles": [
+				{
+					"particle": {
+						"type": "animated",
+						"animation": "/animations/emotes/confused.animation",
+						"position": [
+							-0.2,
+							3.3
+						],
+						"finalVelocity": [
+							0,
+							0
+						],
+						"initialVelocity": [
+							0,
+							0
+						],
+						"destructionTime": 0.2,
+						"destructionAction": "shrink",
+						"layer": "front",
+						"timeToLive": 0.8,
+						"flippable": false
+					}
 				}
-			  }
-			}
-		  ]
+			]
+		},
+		"emotesleepy": {
+			"emissionRate": 1,
+			"particles": [
+				{
+					"particle": {
+						"type": "animated",
+						"animation": "/animations/emotes/sleepy.animation",
+						"position": [
+							-0.2,
+							3.3
+						],
+						"finalVelocity": [
+							0,
+							0
+						],
+						"initialVelocity": [
+							0,
+							0
+						],
+						"destructionTime": 0.2,
+						"destructionAction": "shrink",
+						"layer": "front",
+						"timeToLive": 0.8,
+						"flippable": false
+					}
+				}
+			]
+		},
+		"drips": {
+			"emissionRate": 15,
+			"particles": [
+				{
+					"particle": {
+						"type": "ember",
+						"layer": "front",
+						"size": 1.0,
+						"color": [
+							120,
+							221,
+							254,
+							230
+						],
+						"fade": 0.9,
+						"destructionAction": "shrink",
+						"destructionTime": 0.8,
+						"position": [
+							0.5,
+							0.9
+						],
+						"offsetRegion": [
+							0,
+							0,
+							0,
+							0
+						],
+						"initialVelocity": [
+							0,
+							0.0
+						],
+						"finalVelocity": [
+							0,
+							-1
+						],
+						"approach": [
+							3,
+							10
+						],
+						"timeToLive": 0.5,
+						"variance": {
+							"initialVelocity": [
+								0.2,
+								0.0
+							],
+							"size": 0.5,
+							"position": [
+								0.3,
+								0
+							]
+						},
+						"flippable": true
+					}
+				}
+			]
+		},
+		"doublejump": {
+			"emissionRate": 1,
+			"particles": [
+				{
+					"particle": {
+						"type": "animated",
+						"animation": "/animations/doublejump/doublejump.animation",
+						"position": [
+							0,
+							-5
+						],
+						"finalVelocity": [
+							0,
+							0
+						],
+						"approach": [
+							0,
+							50
+						],
+						"size": 2.0,
+						"timeToLive": 0.85,
+						"layer": "back",
+						"light": [
+							70,
+							100,
+							140
+						],
+						"fade": 0.5,
+						"variance": {
+							"initialVelocity": [
+								0.0,
+								0.0
+							]
+						}
+					}
+				}
+			]
+		},
+		"defaultblue": {
+			"emissionRate": 6,
+			"particles": [
+				{
+					"particle": {
+						"type": "ember",
+						"size": 1.0,
+						"color": [
+							49,
+							166,
+							255,
+							255
+						],
+						"fade": 0.9,
+						"position": [
+							0,
+							-3
+						],
+						"initialVelocity": [
+							-2,
+							-3.0
+						],
+						"finalVelocity": [
+							-2,
+							-3.0
+						],
+						"approach": [
+							0,
+							20
+						],
+						"timeToLive": 0.8,
+						"layer": "middle",
+						"variance": {
+							"initialVelocity": [
+								2,
+								3.0
+							],
+							"size": 0.5
+						}
+					}
+				}
+			]
+		},
+		"defaultlightblue": {
+			"emissionRate": 6,
+			"particles": [
+				{
+					"particle": {
+						"type": "ember",
+						"size": 1.0,
+						"color": [
+							155,
+							212,
+							255,
+							255
+						],
+						"fade": 0.9,
+						"position": [
+							0,
+							-3
+						],
+						"destructionAction": "shrink",
+						"destructionTime": 1,
+						"initialVelocity": [
+							-2,
+							-6.0
+						],
+						"finalVelocity": [
+							-2,
+							-6.0
+						],
+						"approach": [
+							0,
+							20
+						],
+						"timeToLive": 0.8,
+						"light": [
+							46,
+							63,
+							76
+						],
+						"layer": "back",
+						"variance": {
+							"initialVelocity": [
+								6,
+								6.0
+							]
+						}
+					}
+				}
+			]
 		}
 	}
 }

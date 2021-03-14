@@ -1,13 +1,13 @@
 {
-  "itemName" : "spovpilldiet",
-  "price" : 10,
-  "rarity" : "Uncommon",
-  "category" : "craftingMaterial",
-  "inventoryIcon" : "spovpilldiet.png",
-  "description" : "A pill that helps SPOVs get rid of excess fat.",
-  "shortdescription" : "Diet Pill",
-  "itemTags" : [ "reagent", "vsopill" ],
+	"itemName" : "spovpilldiet",
+	"price" : 10,
+	"rarity" : "Uncommon",
+	"category" : "craftingMaterial",
+	"inventoryIcon" : "spovpilldiet.png",
+	"description" : "A pill that helps SPOVs get rid of excess fat.",
+	"shortdescription" : "Diet Pill",
+	"itemTags" : [ "reagent", "vsopill" ],
 
-  "pillAdd" : {},
-  "pillRemove" : ["fatten"]
+	"pillAdd" : {},
+	"pillRemove" : ["fatten"]
 }

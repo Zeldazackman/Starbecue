@@ -1,51 +1,51 @@
 {
-    "objectName": "spovspawnerxeronious"
-    , "colonyTags": ["vore"]
-    , "rarity": "Rare"
-    , "shortdescription": "Xeronious"
-    , "race": "generic"
-    , "category": "other"
-    , "price": 500
+	"objectName": "spovspawnerxeronious"
+	, "colonyTags": ["vore"]
+	, "rarity": "Rare"
+	, "shortdescription": "Xeronious"
+	, "race": "generic"
+	, "category": "other"
+	, "price": 500
 	, "health" : 5
 
 	, "tooltipKind" : "vso"
 	, "objectImage" : "/vehicles/spov/xeronious/spov/body.png:idle.1"
-    , "description": "xeronious [WIP]"
+	, "description": "xeronious [WIP]"
 	, "tooltipFields": {
 		"statusLabel": "xeronious"
 	}
 	, "tooltipSubtitle" : "xeronious"
 
-    , "orientations": [{
-            "image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
-            , "imagePosition": [-64, 0]
-            , "direction": "left"
-            , "flipImages": true
-            , "spaceScan": 0.1
-            , "anchors": ["bottom"]
-        }, {
-            "image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
-            , "imagePosition": [-64, 0]
-            , "direction": "right"
-            , "spaceScan": 0.1
-            , "anchors": ["bottom"]
-        }]
+	, "orientations": [{
+			"image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+			, "imagePosition": [-64, 0]
+			, "direction": "left"
+			, "flipImages": true
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+		}, {
+			"image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+			, "imagePosition": [-64, 0]
+			, "direction": "right"
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+		}]
 
-    , "inventoryIcon": "/vehicles/spov/xeronious/xeroniousicon.png"
+	, "inventoryIcon": "/vehicles/spov/xeronious/xeroniousicon.png"
 
-    , "animation": "spovspawner.animation"
+	, "animation": "spovspawner.animation"
 	, "animationParts" : {
-        "bg": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+		"bg": "/vehicles/spov/xeronious/spov/body.png:idle.1"
 	}
 	, "animationPosition" : [0, 32]
 	, "animationCustom" : {}
 
-    , "spov": {
-        "types": ["spovxeronious"]
-        , "position": [0.0, 4, 0.0, 4]
-        , "template": {}
+	, "spov": {
+		"types": ["spovxeronious"]
+		, "position": [0.0, 4, 0.0, 4]
+		, "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
-    }
+	}
 
 	, "retainObjectParametersInItem" : true
 	, "isWired" : false
@@ -56,7 +56,7 @@
 	, "allowScanning" : false
 	, "isContainer" : false
 	, "builder" : "/scripts/vore/spovitembuilder.lua"
-    , "scripts": [
-        "/scripts/vore/spovspawner.lua", "/vehicles/spov/xeronious/xeroniousitemscript.lua"
-    ]
+	, "scripts": [
+		"/scripts/vore/spovspawner.lua", "/vehicles/spov/xeronious/xeroniousitemscript.lua"
+	]
 }

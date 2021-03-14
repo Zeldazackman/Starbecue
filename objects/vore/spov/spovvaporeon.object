@@ -1,57 +1,57 @@
 {
-    "objectName": "spovspawnervaporeon"
-    , "colonyTags": ["vore"]
-    , "rarity": "Rare"
-    , "shortdescription": "Vaporeon"
-    , "race": "generic"
-    , "category": "other"
-    , "price": 500
+	"objectName": "spovspawnervaporeon"
+	, "colonyTags": ["vore"]
+	, "rarity": "Rare"
+	, "shortdescription": "Vaporeon"
+	, "race": "generic"
+	, "category": "other"
+	, "price": 500
 	, "health" : 5
 
 	, "tooltipKind" : "vso"
 	, "objectImage" : "/vehicles/spov/vaporeon/vaporeon.png:normal"
-    , "description": "A big, lovable vaporeon of your very own!"
+	, "description": "A big, lovable vaporeon of your very own!"
 	, "tooltipFields": {
 		"statusLabel": "A big, lovable vaporeon of your very own!"
 	}
 	, "tooltipSubtitle" : "fishcat"
 
-    , "orientations": [{
-            "imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
-            , "imagePosition": [-64, 0]
-            , "direction": "left"
-            , "flipImages": true
-            , "spaceScan": 0.1
-            , "anchors": ["bottom"]
-            , "collision" : "platform"
-            , "collisionSpaces" : [ [7, 0], [6, 0], [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0], [-1, 0], [-2, 0], [-3, 0], [-4, 0] ]
+	, "orientations": [{
+			"imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
+			, "imagePosition": [-64, 0]
+			, "direction": "left"
+			, "flipImages": true
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+			, "collision" : "platform"
+			, "collisionSpaces" : [ [7, 0], [6, 0], [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0], [-1, 0], [-2, 0], [-3, 0], [-4, 0] ]
 
-        }, {
-            "imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
-            , "imagePosition": [-64, 0]
-            , "direction": "right"
-            , "spaceScan": 0.1
-            , "anchors": ["bottom"]
-            , "collision" : "platform"
-            , "collisionSpaces" : [ [-8, 0], [-7, 0], [-6, 0], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+		}, {
+			"imageLayers" : [ { "image" : "/vehicles/spov/vaporeon/vaporeonbed.png" }, { "image" : "/vehicles/spov/vaporeon/vaporeon.png:normal" } ]
+			, "imagePosition": [-64, 0]
+			, "direction": "right"
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+			, "collision" : "platform"
+			, "collisionSpaces" : [ [-8, 0], [-7, 0], [-6, 0], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
 
-        }]
+		}]
 
-    , "inventoryIcon": "/vehicles/spov/vaporeon/vaporeonicon.png"
+	, "inventoryIcon": "/vehicles/spov/vaporeon/vaporeonicon.png"
 
-    , "animation": "visiblespovnest.animation"
+	, "animation": "visiblespovnest.animation"
 	, "animationParts" : {
-        "bg": "/vehicles/spov/vaporeon/vaporeonbed.png"
+		"bg": "/vehicles/spov/vaporeon/vaporeonbed.png"
 	}
 	, "animationPosition" : [0, 32]
 	, "animationCustom" : {}
 
-    , "spov": {
-        "types": ["spovvaporeon"]
-        , "position": [-1.5, 5, -1.5, 5]  // in blocks
-        , "template": {}
+	, "spov": {
+		"types": ["spovvaporeon"]
+		, "position": [-1.5, 5, -1.5, 5]	// in blocks
+		, "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
-    }
+	}
 
 	, "retainObjectParametersInItem" : true
 	, "isWired" : false
@@ -62,7 +62,7 @@
 	, "allowScanning" : false
 	, "isContainer" : false
 	, "builder" : "/scripts/vore/spovitembuilder.lua"
-    , "scripts": [
-        "/scripts/vore/spovspawner.lua", "/vehicles/spov/vaporeon/vaporeonitemscript.lua"
-    ]
+	, "scripts": [
+		"/scripts/vore/spovspawner.lua", "/vehicles/spov/vaporeon/vaporeonitemscript.lua"
+	]
 }

@@ -8,14 +8,14 @@ require("/vehicles/spov/playable_vso.lua")
 --[[
 
 Commissioned by:
-    -xeronious#8891			https://www.furaffinity.net/user/xeronious/
+	-xeronious#8891			https://www.furaffinity.net/user/xeronious/
 
 Sprites created by:
-    -Wasabi_Raptor#1533		https://www.furaffinity.net/user/lokithevulpix/
+	-Wasabi_Raptor#1533		https://www.furaffinity.net/user/lokithevulpix/
 
 Scripts created by:
-    Zygan#0404 				<-did like 99% of the scripts
-    Wasabi_Raptor#1533 		<-did debugs and copied scripts around for things
+	Zygan#0404 				<-did like 99% of the scripts
+	Wasabi_Raptor#1533 		<-did debugs and copied scripts around for things
 
 TODO:
 	-roaming behavior
@@ -131,12 +131,12 @@ p.registerStateScript( "stand", "succ", function( args )
 
 	-- local pos1 = p.localToGlobal({9,0})
 
-	local entities =  world.entityQuery(pos1, pos2, {
+	local entities = world.entityQuery(pos1, pos2, {
 		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 		includedTypes = {"creature"}
 	})
 
-	-- local entities =  world.entityQuery(pos1, 10, {
+	-- local entities = world.entityQuery(pos1, 10, {
 	-- 	withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 	-- 	includedTypes = {"creature"}
 	-- })
@@ -198,7 +198,7 @@ function state_stand()
 			return
 		end
 
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
@@ -249,7 +249,7 @@ end)
 function state_sit()
 	p.standardState()
 
-	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
 		if p.occupants.total > 0 then
 			p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 		end
@@ -426,7 +426,7 @@ function state_fly()
 			p.movement.jumped = false
 		end
 
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" )  then
+		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end

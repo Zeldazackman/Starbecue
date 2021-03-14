@@ -1,12 +1,17 @@
 {
-  "animatedParts" : {
-    "parts" : {
-      "potion" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [-0.125, 0.125],
-          "transformationGroups": ["potion"],
-          "image" : "vappypotion.png"
+  "animatedParts": {
+    "parts": {
+      "potion": {
+        "properties": {
+          "centered": true,
+          "offset": [
+            -0.125,
+            0.125
+          ],
+          "transformationGroups": [
+            "potion"
+          ],
+          "image": "vappypotion.png"
         }
       }
     }
@@ -14,8 +19,12 @@
   "transformationGroups": {
     "potion": {}
   },
-  "sounds" : {
-    "drink" : ["/sfx/humanoid/drink.ogg"],
-    "activate" : ["/sfx/tech/mech_activate4.ogg"]
+  "sounds": {
+    "drink": [
+      "/sfx/humanoid/drink.ogg"
+    ],
+    "activate": [
+      "/sfx/tech/mech_activate4.ogg"
+    ]
   }
 }

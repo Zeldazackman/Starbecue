@@ -13,7 +13,7 @@ function init()
 			position = entity.position(),
 			color = light.color,
 			pointLight = true
-		  })
+		})
 	end)
 
 	message.setHandler("PVSOCursor", function(_,_, aim, cursor)

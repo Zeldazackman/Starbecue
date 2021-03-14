@@ -1,13 +1,13 @@
 {
-  "name" : "vappy",
-  "type" : "head",
+	"name" : "vappy",
+	"type" : "head",
 
-  "scripts" : ["vappy.lua"],
+	"scripts" : ["vappy.lua"],
 
-  "description" : "Turn into a big vaporeon that can eat people! ^green;[F]",
-  "shortDescription" : "Vappy",
-  "rarity" : "Uncommon",
-  "icon" : "/vehicles/spov/vaporeon/vaporeonicon.png",
+	"description" : "Turn into a big vaporeon that can eat people! ^green;[F]",
+	"shortDescription" : "Vappy",
+	"rarity" : "Uncommon",
+	"icon" : "/vehicles/spov/vaporeon/vaporeonicon.png",
 
-  "chipCost" : 8
+	"chipCost" : 8
 }

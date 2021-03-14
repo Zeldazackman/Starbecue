@@ -29,8 +29,8 @@ function generateSegment(size, angle, sides, spacingOffset, inner, outer)
 	for j = 1, (sides + 1) do
 		local sideAngle = angle + sideSize * (j - 1)
 		-- add points at *
-		--   *---*---* outer
-		--   |\ / \ /|
+		--	 *---*---* outer
+		--	 |\ / \ /|
 		-- * o-*---*-o inner
 		table.insert(innerpoints, radialPoint(sideAngle - sideSize/2, inner))
 		table.insert(outerpoints, radialPoint(sideAngle, outer))
@@ -55,7 +55,7 @@ end
 function update( dt )
 
 	if options == nil then return end
-	
+
 	local segments = #options
 	local segmentSpacing = 3
 	local spacingOffset = 1 -- difference from segmentSpacing

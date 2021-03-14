@@ -1,13 +1,13 @@
 {
-  "name" : "xeronious",
-  "type" : "head",
+	"name" : "xeronious",
+	"type" : "head",
 
-  "scripts" : ["xeronious.lua"],
+	"scripts" : ["xeronious.lua"],
 
-  "description" : "Turn into a kaiju that can eat people! ^green;[F]",
-  "shortDescription" : "Xeronious",
-  "rarity" : "Uncommon",
-  "icon" : "/vehicles/spov/xeronious/xeroniousicon.png",
+	"description" : "Turn into a kaiju that can eat people! ^green;[F]",
+	"shortDescription" : "Xeronious",
+	"rarity" : "Uncommon",
+	"icon" : "/vehicles/spov/xeronious/xeroniousicon.png",
 
-  "chipCost" : 8
+	"chipCost" : 8
 }

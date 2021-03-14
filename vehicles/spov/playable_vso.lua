@@ -594,7 +594,7 @@ function p.uneat( seatindex )
 		p.smolpreyspecies[seatindex] = nil
 	elseif p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
-		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove",  p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
+		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
 	p.smolprey( seatindex ) -- clear
 	vsoClearTarget( "occupant"..seatindex)
@@ -1373,7 +1373,7 @@ function p.driverStateChange()
 		if movedir == "U" and transitions.up ~= nil then
 			p.doTransition("up")
 		end
-		if (movedir == "F" or movedir == "B")  and transitions.side ~= nil then
+		if (movedir == "F" or movedir == "B") and transitions.side ~= nil then
 			p.doTransition("side")
 		end
 		if movedir == "D" and transitions.down ~= nil then
