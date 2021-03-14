@@ -66,12 +66,15 @@ function checkEscapes(args)
 	local monstercoords = {6, 1} -- same as last coords of escape anim
 	local move = args.direction or "up"
 
-	if p.smolpreyspecies[args.index] == "xeronious_egg" then move = "down" end
+	if p.smolpreyspecies[args.index] == "xeronious_egg"
+	or vehicle.controlHeld(p.control.driver, "down") then
+		move = "down"
+	end
 
 	if location == "tail" then
 		direction = "escapetail"
 		monstercoords = {-6, 0}
-	elseif location == "belly" and move == "down" then
+	elseif location == "belly" and move == "down" and p.stateconfig[p.state].transitions.escapeanalvore then
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
 	end
