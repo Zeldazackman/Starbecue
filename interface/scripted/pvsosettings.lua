@@ -32,7 +32,13 @@ function readOccupantData()
 				}})
 			end
 			widget.setText( "occupant"..i..".name", world.entityName( id ) )
+			widget.setButtonEnabled( "occupant"..i..".letOut", true )
 		else
+			--[[setPortrait( "occupant"..i, {{
+					image = "/assetmissing.png",
+					position = {13, 19}
+			}})]]
+			widget.setText( "occupant"..i..".name", "" )
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
@@ -42,7 +48,7 @@ p.refreshframes = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-	if p.refreshframes >= 180 and p.rpc == nil then
+	if p.refreshframes >= 3 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
@@ -52,13 +58,20 @@ function checkRefresh(dt)
 				readOccupantData()
 				p.refreshframes = 0
 				p.refreshed = true
+				--sb.logInfo( "Refreshed Settings Menu" )
 			end
 		else
 			sb.logError( "Couldn't refresh settings." )
 			sb.logError( p.rpc:error() )
 		end
+		--sb.logInfo( "Reset Settings Menu RPC" )
 		p.rpc = nil
 	else
+		--[[if p.rpc then
+			sb.logInfo( "Waiting for RPC" )
+		else
+			sb.logInfo( "Waiting for refresh for"..p.refreshframes )
+		end]]
 		p.refreshframes = p.refreshframes + dt
 	end
 end
@@ -119,6 +132,9 @@ end
 function letOut(_, which )
 	if p.refreshed then
 		p.refreshed = false
+		for i = 1, p.maxOccupants do
+			widget.setButtonEnabled( "occupant"..i..".letOut", false )
+		end
 		world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
 	end
 end

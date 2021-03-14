@@ -1407,7 +1407,7 @@ function p.bellyEffects()
 			p.doBellyEffects(driver, powerMultiplier)
 		end)
 	else
-		p.doBellyEffects(nil, p.standalonePowerLevel())
+		p.doBellyEffects(false, p.standalonePowerLevel())
 	end
 end
 
