@@ -9,22 +9,22 @@
 	, "health" : 5
 
 	, "tooltipKind" : "vso"
-	, "objectImage" : "/vehicles/spov/xeronious/spov/body.png:idle.1"
-	, "description": "xeronious [WIP]"
+	, "objectImage" : "/vehicles/spov/xeronious/xeronious.png:normal"
+	, "description": "A fluffy kaiju who can eat you in several ways!"
 	, "tooltipFields": {
-		"statusLabel": "xeronious"
+		"statusLabel": "A fluffy kaiju who can eat you in several ways!"
 	}
-	, "tooltipSubtitle" : "xeronious"
+	, "tooltipSubtitle" : "fluffy kaiju"
 
 	, "orientations": [{
-			"image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
 			, "imagePosition": [-64, 0]
 			, "direction": "left"
 			, "flipImages": true
 			, "spaceScan": 0.1
 			, "anchors": ["bottom"]
 		}, {
-			"image": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
 			, "imagePosition": [-64, 0]
 			, "direction": "right"
 			, "spaceScan": 0.1
@@ -35,14 +35,14 @@
 
 	, "animation": "spovspawner.animation"
 	, "animationParts" : {
-		"bg": "/vehicles/spov/xeronious/spov/body.png:idle.1"
+		"bg": "/vehicles/spov/xeronious/xeronious.png:normal"
 	}
-	, "animationPosition" : [0, 32]
+	, "animationPosition" : [0, 48]
 	, "animationCustom" : {}
 
 	, "spov": {
 		"types": ["spovxeronious"]
-		, "position": [0.0, 4, 0.0, 4]
+		, "position": [0.0, 5, 0.0, 5]
 		, "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
 	}

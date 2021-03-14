@@ -7,7 +7,7 @@ defaultDescription = "xeronious"
 
 defaultIcon = "/vehicles/spov/xeronious/xeroniousicon.png"
 
-defaultFrame = "/vehicles/spov/xeronious/spov/body.png:idle.1"
+defaultFrame = "/vehicles/spov/xeronious/xeronious.png:normal"
 
 defaultValues = {
 	name = "xeronious"
@@ -33,9 +33,12 @@ function getRecolorDirectives()	--Get the current recolor directive string
 end
 
 function getItemStatusString()	--Get the current item status message string
-	local R = tostring( storage.vso.name )
-	R = R..defaultDescription
-	return R;
+	if not storage.vso.pills.fatten then return R; end
+
+	local fatten = storage.vso.pills.fatten.value +1
+	if fatten > 4 then fatten = 4 end
+	local chonks = { "", "chubby ", "chonky ", "chunky "}
+	return "A "..chonks[fatten].."fluffy kaiju who can eat you in several ways!"
 end
 
 function getItemCurrentPrice()	--Get the current sell price for this item
@@ -52,6 +55,14 @@ function buildIcon()	--Build a CUSTOM icon for this item
 	return R;
 end
 
+function largeImageFrame()
+	if not storage.vso.pills.fatten then return defaultFrame..":normal" end
+	local fatten = storage.vso.pills.fatten.value +1
+	if fatten > 4 then fatten = 4 end
+	local chonks = { defaultFrame..":normal", defaultFrame..":chubby", defaultFrame..":chonky", defaultFrame..":chunky"}
+	return chonks[fatten]
+end
+
 function spovSpawnerItemGenerateCallback()	--THIS function is used to create the ITEM data when the object is broken. Very important. This is also a good way to test your storage.
 
 	--this sets our storage defaults, very important if we want to track things or change colors.
@@ -62,7 +73,7 @@ function spovSpawnerItemGenerateCallback()	--THIS function is used to create the
 
 	storage.vso.itemConfigOverride = {
 		inventoryIcon = buildIcon()
-		,largeImage = defaultFrame.."?"..directivestring
+		,largeImage = largeImageFrame().."?"..directivestring
 		,subtitle = storage.vso.name
 		,price = getItemCurrentPrice()
 		,description = getItemStatusString()

@@ -200,11 +200,7 @@
 				}
 			},
 			"interact": {
-				"front": [ // array depends on occupants
-					{ "transition": "eat", "chance": 100 }, // 0 occupants
-					{ "transition": "eat", "chance": 50 }, // 1 occupant
-					{ "transition": "down", "chance": 20 } // 2 occupants
-				],
+				"front": { "transition": "eat", "chance": 100, "location":"belly", "eating":true},
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 },
 				"animation": { "head": "pet" }
@@ -492,7 +488,7 @@
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
 				"side": [
-					{ "transition": "side", "chance": 25 },
+					{ "transition": "side", "chance": 25, "location":"belly" },
 					{ "transition": "side", "chance": 15 }
 					// no side transition with 2 occupants
 				],
@@ -586,7 +582,7 @@
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": [
-					{ "transition": "bed", "chance": 100, "controlled": true }, // possible even for player vappy
+					{ "transition": "bed", "chance": 100, "controlled": true, "location":"belly" }, // possible even for player vappy
 					{ "transition": "side", "chance": 20 }
 					// can't get to this state with 2 occupants
 				],

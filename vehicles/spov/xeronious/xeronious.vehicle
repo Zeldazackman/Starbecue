@@ -312,14 +312,9 @@
 				}
 			},
 			"interact": {
-				"front": [ // array depends on occupants
-					{ "transition": "eat", "chance": 100 }, // 0 occupants
-					{ "transition": "eat", "chance": 50 }, // 1 occupant
-					{ "transition": "eat", "chance": 50 }, // 2 occupant
-					{ "transition": "down", "chance": 20 } // 3 occupants
-				],
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "down", "chance": 20 },
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
 				"petAnimation": true
 			},
 			"control": {
@@ -809,8 +804,13 @@
 					}
 				},
 				"hug": {
+					"location" : "hug",
+					"eating" : true,
+					"animation": {
+						"arms": "hug"
+					},
 					"state": "hug",
-					"victimAnimation": "hug",
+					"victimAnimation": "hugcenter",
 					"script": "hug"
 				}
 			},
@@ -869,20 +869,9 @@
 
 			},
 			"interact": {
-				"front": [ // array depends on occupants
-					{ "transition": "eat", "chance": 100 }, // 0 occupants
-					{ "transition": "eat", "chance": 50 }, // 1 occupant
-					{ "transition": "eat", "chance": 50 }, // 2 occupant
-					{ "transition": "down", "chance": 20 } // 3 occupants
-				],
-				"side": [
-					{ "transition": "hug", "chance": 100, "controlled": true },
-					{ "transition": "eat", "chance": 50 }, // 1 occupants
-					{ "transition": "eat", "chance": 50 }, // 2 occupants
-					{ "transition": "side", "chance": 20 }
-					// can't get to this state with 3 occupants
-				],
-				"back": { "transition": "up", "chance": 20 },
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
+				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "eating": true},
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
 				"petAnimation": true
 			}
 		},
@@ -1037,14 +1026,9 @@
 				}
 			},
 			"interact": {
-				"front": [ // array depends on occupants
-					{ "transition": "eat", "chance": 100 }, // 0 occupants
-					{ "transition": "eat", "chance": 50 }, // 1 occupant
-					{ "transition": "eat", "chance": 50 }, // 2 occupants
-					{ "transition": "down", "chance": 20 } // 3 occupants
-				],
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "down", "chance": 20 },
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
 				"petAnimation": true
 			}
 		}

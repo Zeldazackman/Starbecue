@@ -116,7 +116,7 @@ function locationEmpty(location)
 		return true
 	else
 		if p.occupants[location] == 0 then
-			sb.logError( "["..p.vsoMenuName.."] No one in "..location.."to let out!" )
+			sb.logError( "["..p.vsoMenuName.."] No one in "..location.." to let out!" )
 			return true
 		else
 			return false
@@ -136,7 +136,7 @@ function dovore(args, location, statuses, sound )
 		return true, function()
 			vsoMakeInteractive( true )
 			vsoVictimAnimReplay( "occupant"..i, location.."center", "bodyState")
-			vsoSound( sound )
+			if sound then vsoSound( sound ) end
 		end
 	else
 		return false

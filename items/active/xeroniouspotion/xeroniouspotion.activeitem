@@ -1,0 +1,21 @@
+{
+	"itemName" : "xeroniouspotion",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A decorated bottle of thick blue liquid...",
+	"shortdescription" : "Vaporeon Goo",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+
+	"inventoryIcon" : "xeroniouspotion.png",
+	"largeImage" : "xeroniouspotionlarge.png",
+
+	"animation" : "xeroniouspotion.animation",
+
+	"scripts" : ["xeroniouspotion.lua"],
+	"tech" : "xeronious",
+	"vehicle" : "spovxeronious"
+}

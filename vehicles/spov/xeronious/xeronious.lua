@@ -38,11 +38,8 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.onBegin()
 
 	vsoOnInteract( "state_stand", interact_state_stand )
-	vsoOnInteract( "state_crouch", p.onInteraction )
 	vsoOnInteract( "state_sit", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
-
-	vsoOnInteract( "state_fly", p.onInteraction )
 
 	vsoOnBegin( "state_crouch", begin_state_crouch )
 	vsoOnEnd( "state_crouch", end_state_crouch )
@@ -63,6 +60,7 @@ function checkEscapes(args)
 	local location = p.occupantLocation[args.index]
 	local returnval = {}
 	local direction = "escapeoral"
+	local status = {"vsoindicatemaw"}
 	local monstercoords = {6, 1} -- same as last coords of escape anim
 	local move = args.direction or "up"
 
@@ -72,13 +70,14 @@ function checkEscapes(args)
 		direction = "escapetail"
 		monstercoords = {-6, 0}
 	elseif location == "belly" and move == "down" then
+		status = {"vsoindicateout"}
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
 	end
 
 	if not p.doTransition(direction, args) then return false end
 
-	returnval[1], returnval[2] = doescape(args, location, monstercoords, {"vsoindicatemaw"}, {"droolsoaked", 5})
+	returnval[1], returnval[2] = doescape(args, location, monstercoords, status, {"droolsoaked", 5})
 
 	returnval[3] = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 
@@ -99,30 +98,8 @@ function extraBellyEffects()
 		end
 	end
 end
--------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "stand", "bellytotail", function( args )
-	return moveOccupantLocation(args, "belly", "tail")
-end)
-p.registerStateScript( "stand", "tailtobelly", function( args )
-	return moveOccupantLocation(args, "tail", "belly")
-end)
-p.registerStateScript( "stand", "eat", function( args )
-	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "stand", "taileat", function( args )
-	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-
-p.registerStateScript( "stand", "bapeat", function()
-	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
-	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
-end)
-
-p.registerStateScript( "stand", "succ", function( args )
+function succ(args)
 	local pos1 = p.localToGlobal({-5,-8})
 	local pos2 = p.localToGlobal({30,8})
 	if pos1[1] > pos2[1] then
@@ -149,6 +126,33 @@ p.registerStateScript( "stand", "succ", function( args )
 		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ", 1, offset)
 	end
 	checkEatPosition( dest, "belly", "succeat", true)
+end
+
+-------------------------------------------------------------------------------
+
+p.registerStateScript( "stand", "checkletout", function( args )
+	return checkEscapes(args)
+end)
+p.registerStateScript( "stand", "bellytotail", function( args )
+	return moveOccupantLocation(args, "belly", "tail")
+end)
+p.registerStateScript( "stand", "tailtobelly", function( args )
+	return moveOccupantLocation(args, "tail", "belly")
+end)
+p.registerStateScript( "stand", "eat", function( args )
+	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end)
+p.registerStateScript( "stand", "taileat", function( args )
+	return dovore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end)
+
+p.registerStateScript( "stand", "bapeat", function()
+	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
+end)
+
+p.registerStateScript( "stand", "succ", function( args )
+	succ(args)
 end)
 
 
@@ -238,12 +242,7 @@ p.registerStateScript( "sit", "taileat", function( args )
 end)
 
 p.registerStateScript( "sit", "hug", function( args )
-	if p.eat( args.id, 1, "hug") then
-		vsoVictimAnimSetStatus( "occupant1", {} );
-		return true
-	else
-		return false
-	end
+	return dovore(args, "hug", {})
 end)
 
 function state_sit()
@@ -285,9 +284,8 @@ p.registerStateScript( "hug", "taileat", function( args )
 end)
 
 
-p.registerStateScript( "hug", "unhug", function()
-	p.uneat( "Occupant1" )
-	return true
+p.registerStateScript( "hug", "unhug", function( args )
+	doescape(args, "hug", {2.5,0}, {}, {})
 end)
 
 state_hug = p.standardState
@@ -379,6 +377,11 @@ p.registerStateScript( "fly", "grabanalvore", function()
 	if checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore") then return end
 	if checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
 end)
+
+p.registerStateScript( "fly", "succ", function( args )
+	succ(args)
+end)
+
 
 
 function state_fly()
