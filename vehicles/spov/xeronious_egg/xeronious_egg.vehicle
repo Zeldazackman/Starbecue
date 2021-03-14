@@ -69,6 +69,12 @@
 	"states": {
 		"stand": {
 			"edible": true,
+			"ediblepath":[
+				"/vehicles/spov/xeronious_egg/spov/xeronious_egg_small.png:0.idle.1",
+				"/vehicles/spov/xeronious_egg/spov/xeronious_egg_small.png:1.idle.1",
+				"/vehicles/spov/xeronious_egg/spov/xeronious_egg_small.png:2.idle.1",
+				"/vehicles/spov/xeronious_egg/spov/xeronious_egg_small.png:3.idle.1"
+			],
 			"transitions": {
 				// directional = driver can press that direction to transition
 				"crack" : {

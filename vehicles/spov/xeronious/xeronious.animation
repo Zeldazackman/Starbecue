@@ -177,7 +177,7 @@
 				},
 				"partStates": {
 					"occupant1state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } },
 						"monster": { "properties" : { "image": "<monster>" } }
 					}
 				}
@@ -191,7 +191,7 @@
 				},
 				"partStates": {
 					"occupant2state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } },
 						"monster": { "properties" : { "image": "<monster>" } }
 					}
 				}
@@ -205,7 +205,7 @@
 				},
 				"partStates": {
 					"occupant3state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } },
 						"monster": { "properties" : { "image": "<monster>" } }
 
 					}
@@ -220,7 +220,7 @@
 				},
 				"partStates": {
 					"occupant4state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } },
 						"monster": { "properties" : { "image": "<monster>" } }
 
 					}
@@ -235,7 +235,7 @@
 				},
 				"partStates": {
 					"occupant5state": {
-						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } },
 						"monster": { "properties" : { "image": "<monster>" } }
 
 					}

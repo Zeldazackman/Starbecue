@@ -33,8 +33,8 @@ function init()
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )
 		local position = world.entityPosition( entity.id() )
-		local settings = player.getProperty( "vsoSettings", {} )[species] or {}
-		world.spawnVehicle( "spov"..species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true } )
+		local settings = player.getProperty( "vsoSettings", {} )[species.species] or {}
+		world.spawnVehicle( "spov"..species.species, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, uneaten = true, data = species } )
 	end )
 
 	message.setHandler("useEnergy", function( _, _, energyUsed)

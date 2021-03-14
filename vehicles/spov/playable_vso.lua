@@ -328,6 +328,10 @@ function p.swapOccupants(a, b)
 	p.smolpreyspecies[a] = p.smolpreyspecies[b]
 	p.smolpreyspecies[b] = t
 
+	t = p.smolpreyfilepath[a]
+	p.smolpreyfilepath[a] = p.smolpreyfilepath[b]
+	p.smolpreyfilepath[b] = t
+
 	t = self.sv.va["occupant"..a] -- victim animations
 	self.sv.va["occupant"..a] = self.sv.va["occupant"..b]
 	self.sv.va["occupant"..b] = t
@@ -530,10 +534,23 @@ function vsoTransAnimUpdate( transformname, dt )
 	end
 end
 
-function p.edible( targetid )
+function p.edible( targetid, seatindex, source )
 	if vehicle.entityLoungingIn( "driver" ) ~= targetid then return false end
 	if p.occupants.total > 0 then return false end
-	return p.stateconfig[p.state].edible
+	if p.stateconfig[p.state].edible then
+		if p.stateconfig[p.state].ediblePath then
+			world.sendEntityMessage( source, "smolPreyPath", seatindex, p.stateconfig[p.state].ediblePath )
+		end
+		return true
+	end
+end
+
+function p.isThisPreyYours( targetid )
+	for i = 1, p.occupants.total do
+		if targetid == vsoGetTargetId("Occupant"..i) then
+			return true
+		end
+	end
 end
 
 function p.isMonster( id )
@@ -543,21 +560,22 @@ function p.isMonster( id )
 end
 
 p.smolpreyspecies = {}
+p.smolpreyfilepath = {}
 
 function p.eat( targetid, seatindex, location )
 	if targetid == nil or p.entityLounging(targetid) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
-		withoutEntityId = entity.id(), includedTypes = { "vehicle" }
+		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
+		callScript = "p.isThisPreyYours", callScriptArgs = { targetid }
 	} )
 	local edibles = world.entityQuery( world.entityPosition(targetid), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { targetid }
+		callScript = "p.edible", callScriptArgs = { targetid, seatindex, entity.id() }
 	} )
 	p.occupantLocation[seatindex] = location
 
 	if edibles[1] == nil then
-		if loungeables[1] == nil then -- or not world.loungeableOccupied( loungeables[1] ) then
-			-- won't work with multiple loungeables near each other
+		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			vsoSetTarget( "occupant"..seatindex, targetid)
 			p.smolprey( seatindex )
 			vsoEat( targetid, "occupant"..seatindex )
@@ -605,7 +623,11 @@ function p.smolprey( seatindex )
 	if seatindex == nil then return end
 	local id = vsoGetTargetId("occupant"..seatindex)
 	if p.smolpreyspecies[seatindex] ~= nil then
-		animator.setPartTag( "occupant"..seatindex, "smolspecies", p.smolpreyspecies[seatindex] )
+		if p.smolpreyfilepath[seatindex] then
+			animator.setPartTag( "occupant"..seatindex, "smolpath", p.smolpreyfilepath[seatindex])
+		else
+			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.smolpreyspecies[seatindex].."/spov/"..p.smolpreyspecies[seatindex].."_small.png:smolprey")
+		end
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		vsoAnim( "occupant"..seatindex.."state", "smol" )
 	elseif p.isMonster(id) then
@@ -726,6 +748,10 @@ function p.onBegin()
 		local i = getOccupantFromEid(eid)
 		vsoClearTarget( "occupant"..i)
 		vsoUneat( "occupant"..i)
+	end )
+
+	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
+		p.smolpreyfilepath[seatindex] = path
 	end )
 
 
@@ -857,7 +883,9 @@ p.control = {}
 function p.control.updateDriving()
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if driver then
-		world.sendEntityMessage( driver, "PVSONightVision", self.cfgVSO.lights.driver)
+		local light = self.cfgVSO.lights.driver
+		light.position = world.entityPosition( driver )
+		world.sendEntityMessage( driver, "PVSOAddLocalLight", light )
 		local aim = vehicle.aimPosition(p.control.driver)
 		local cursor = "/cursors/cursors.png:pointer"
 
@@ -1447,7 +1475,9 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 		if eid and world.entityExists(eid) and (p.occupantLocation[i] == "belly" or p.occupantLocation[i] == "tail") then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
-			world.sendEntityMessage( eid, "PVSONightVision", self.cfgVSO.lights.prey)
+			local light = self.cfgVSO.lights.prey
+			light.position = world.entityPosition( eid )
+			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
 			if status then
 				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() )
@@ -1511,7 +1541,8 @@ function p.handleStruggles()
 	if movetype == nil or movetype == 0 then return end
 
 	if p.control.driving and struggler == 1 and not p.control.standalone then
-		return -- control vappy instead of struggling
+		movetype = nil
+		goto NextStuggler -- control vappy instead of struggling
 	end
 
 	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]

@@ -126,7 +126,7 @@
 					"occupant1state": {
 						"smol": {
 							"properties": {
-								"image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>"
+								"image": "<smolpath><smoldirectives>"
 							}
 						},
 						"monster": {

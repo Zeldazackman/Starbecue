@@ -119,10 +119,14 @@
 
 		"lights" : {
 			"driver" : {
-			"color" : [100, 100, 100]
+				"color" : [100, 100, 100],
+				"position" : [0,0],
+				"pointLight" : true
 			},
 			"prey" : {
-			"color" : [50, 50, 50]
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
 			}
 		},
 
