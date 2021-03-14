@@ -589,7 +589,6 @@ function p.uneat( seatindex )
 		if world.entityType(targetid) == "player" then
 			world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
 		else
-			local position = world.entityPosition( targetid )
 			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { p.monstercoords[1], p.monstercoords[2]}, { driver = targetid, settings = {}, uneaten = true } )
 		end
 		p.smolpreyspecies[seatindex] = nil

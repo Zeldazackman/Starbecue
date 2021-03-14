@@ -148,7 +148,7 @@ p.registerStateScript( "stand", "succ", function( args )
 		local offset = math.floor(pos[2] + 0.5) * 1000 + math.floor(pos[1] + 500.5)
 		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ", 1, offset)
 	end
-	if checkEatPosition( dest, "belly", "succeat", true) then return end
+	checkEatPosition( dest, "belly", "succeat", true)
 end)
 
 

@@ -13,12 +13,6 @@
 	"animation" : "xeronious_egg.animation",
 
 	"loungePositions" : {
-		"driver" : {
-			"part" : "driver",
-			"partAnchor" : "driverPosition",
-			"orientation" : "stand",
-			"statusEffects" : [ "voreheal" ]
-		},
 		"occupant1" : {
 			"part" : "occupant1",
 			"partAnchor" : "occupantPosition",
