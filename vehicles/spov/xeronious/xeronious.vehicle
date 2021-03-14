@@ -881,6 +881,7 @@
 					"animation": {
 						"arms": "idle"
 					},
+					"timing": "arms",
 					"state": "sit",
 					"script": "unhug"
 				},

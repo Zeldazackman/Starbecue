@@ -288,7 +288,7 @@ end)
 
 
 p.registerStateScript( "hug", "unhug", function( args )
-	doescape(args, "hug", {2.5,0}, {}, {})
+	return doescape(args, "hug", {2.5,0}, {}, {})
 end)
 
 state_hug = p.standardState

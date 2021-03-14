@@ -1,933 +1,338 @@
 {
-	"globalTagDefaults": {
-		"totaloccupants": "0",
-		"bellyoccupants": "0",
-		"hugoccupants": "0",
-		"state": "stand",
-		"frame": "1",
-		"directives": "",
-		"rotationFrame": "0",
-		"rotationFlip": "0",
+	"globalTagDefaults" : {
+		"totaloccupants" : "0",
+		"bellyoccupants" : "0",
+		"hugoccupants" : "0",
+		"state" : "stand",
+		"frame" : "1",
+		"directives" : "",
+		"rotationFrame" : "0",
+		"rotationFlip" : "0",
 		"smolprey": "vaporeon",
-		"bap": ""
+		"bap" : ""
 	},
 	"animatedParts": {
 		"stateTypes": {
 			"bodyState": {
 				"default": "idle",
 				"states": {
-					"idle": {
-						"frames": 2,
-						"cycle": 3,
-						"mode": "end",
-						"priority": 0
-					},
-					"sitdown": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"standup": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"laydown": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"pin": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"situp": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"fallasleep": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"wakeup": {
-						"frames": 2,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"rollover": {
-						"frames": 5,
-						"cycle": 1.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"grab": {
-						"frames": 1,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 3
-					},
-					"eat": {
-						"frames": 8,
-						"cycle": 1.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"absorb": {
-						"frames": 4,
-						"cycle": 1.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"escape": {
-						"frames": 8,
-						"cycle": 1.5,
-						"mode": "end",
-						"priority": 3
-					},
-					"s_back": {
-						"frames": 5,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 1
-					},
-					"s_front": {
-						"frames": 5,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 1
-					},
-					"s_up": {
-						"frames": 5,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 1
-					},
-					"s_down": {
-						"frames": 5,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 1
-					},
-					"jump": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"fall": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"smol.idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.jump": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"smol.fall": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
+					"idle": { "frames": 2, "cycle": 3, "mode": "end", "priority": 0 },
+
+					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
+					"laydown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"pin": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
+					"fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"wakeup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
+					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
+
+					"grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					// "smol.duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"chonk_ball": {
-						"frames": 1,
-						"cycle": 0.1,
-						"mode": "end",
-						"priority": 0
-					}
+
+					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 0 }
 				}
 			},
 			"legsState": {
 				"default": "idle",
 				"states": {
-					"none": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": -1
-					},
-					"idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"walk": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"run": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"jump": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"fall": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"swimidle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"swim": {
-						"frames": 4,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.walk": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.run": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.jump": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 1
-					},
-					"smol.fall": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 1
-					},
-					"smol.swimidle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.swim": {
-						"frames": 4,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					}
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 1 },
+					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 1 },
+
+					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 }
+
 				}
 			},
 			"bapState": {
 				"default": "none",
 				"states": {
-					"none": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": -1
-					},
-					"bap": {
-						"frames": 3,
-						"cycle": 0.3,
-						"mode": "end",
-						"priority": 1
-					},
-					"smol.bap": {
-						"frames": 3,
-						"cycle": 0.3,
-						"mode": "end",
-						"priority": 1
-					}
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 },
+					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 }
 				}
 			},
+
 			"tailState": {
 				"default": "idle",
 				"states": {
-					"idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"flick": {
-						"frames": 1,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 1
-					},
-					"sitlay": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"sitlayflick": {
-						"frames": 1,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 1
-					},
-					"back": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"backflick": {
-						"frames": 1,
-						"cycle": 0.5,
-						"mode": "end",
-						"priority": 1
-					},
-					"walk": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"run": {
-						"frames": 8,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 0
-					},
-					"jump": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"fall": {
-						"frames": 4,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 2
-					},
-					"swimidle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"swim": {
-						"frames": 8,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"none": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": -1
-					}
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"flick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"sitlay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"sitlayflick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"backflick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
+
 			"headState": {
 				"default": "idle",
 				"states": {
-					"none": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": -1
-					},
-					"idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"blink": {
-						"frames": 1,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 1
-					},
-					"pet": {
-						"frames": 1,
-						"cycle": 1.5,
-						"mode": "end",
-						"priority": 2
-					},
-					"look": {
-						"frames": 1,
-						"cycle": 2,
-						"mode": "end",
-						"priority": 2
-					},
-					"pinlook": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"lick": {
-						"frames": 5,
-						"cycle": 0.75,
-						"mode": "end",
-						"priority": 3
-					},
-					"smol.idle": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol.blink": {
-						"frames": 1,
-						"cycle": 0.25,
-						"mode": "end",
-						"priority": 1
-					}
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
+					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
+					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 },
+					"pinlook": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3 },
+
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 }
 				}
 			},
 			"occupant1state": {
 				"default": "empty",
 				"states": {
-					"empty": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"monster": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					}
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"occupant2state": {
 				"default": "empty",
 				"states": {
-					"empty": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"monster": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					}
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"occupant3state": {
 				"default": "empty",
 				"states": {
-					"empty": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"smol": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					},
-					"monster": {
-						"frames": 1,
-						"cycle": 1,
-						"mode": "end",
-						"priority": 0
-					}
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"monster": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			}
+
 		},
 		"parts": {
 			"background": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
-					"transformationGroups": [
-						"flip",
-						"bodybob"
-					]
+					 "zLevel": -1,
+					 "transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.<frame><directives>"
-							}
-						},
-						"sitdown": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.sitdown.<frame><directives>"
-							}
-						},
-						"standup": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.standup.<frame><directives>"
-							}
-						},
-						"laydown": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.laydown.<frame><directives>"
-							}
-						},
-						"pin": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.pin.<frame><directives>"
-							}
-						},
-						"situp": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.situp.<frame><directives>"
-							}
-						},
-						"fallasleep": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>"
-							}
-						},
-						"wakeup": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.wakeup.<frame><directives>"
-							}
-						},
-						"rollover": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.rollover.<frame><directives>"
-							}
-						},
-						"grab": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.grab.<frame><directives>"
-							}
-						},
-						"eat": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.eat.<frame><directives>"
-							}
-						},
-						"absorb": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.absorb.<frame><directives>"
-							}
-						},
-						"escape": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.escape.<frame><directives>"
-							}
-						},
-						"s_back": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_back.<frame><directives>"
-							}
-						},
-						"s_front": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_front.<frame><directives>"
-							}
-						},
-						"s_up": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_up.<frame><directives>"
-							}
-						},
-						"s_down": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_down.<frame><directives>"
-							}
-						},
-						"look": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.look.<frame><directives>"
-							}
-						},
-						"jump": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.jump.<frame><directives>"
-							}
-						},
-						"fall": {
-							"properties": {
-								"image": "spov/vaporeon.png:<bellyoccupants>.<state>.fall.<frame><directives>"
-							}
-						},
-						"smol.idle": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>"
-							}
-						},
-						"smol.jump": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>"
-							}
-						},
-						"smol.fall": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>"
-							}
-						},
-						"chonk_ball": {
-							"properties": {
-								"image": "spov/vaporeon_ball.png:<rotationFlip>.chonk_ball.<rotationFrame><directives>"
-							}
-						}
+						"idle": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.<frame><directives>" } },
+
+						"sitdown": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
+
+						"laydown": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
+						"pin": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.pin.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
+
+						"fallasleep": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>" } },
+						"wakeup": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.wakeup.<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
+
+						"grab": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
+						"absorb": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
+
+						"s_back": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.s_down.<frame><directives>" } },
+						"look": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.look.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon.png:<bellyoccupants>.<state>.fall.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>" } },
+
+						"chonk_ball": { "properties" : { "image": "spov/vaporeon_ball.png:<rotationFlip>.chonk_ball.<rotationFrame><directives>" } }
 					}
 				}
 			},
+
 			"driver": {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
-					"transformationGroups": [
-						"flip"
-					],
-					"driverPosition": [
-						0.0,
-						-1.0
-					] // only used for standalone
+					 "zLevel": 0,
+					 "transformationGroups": ["flip"],
+					 "driverPosition": [0.0, -1.0] // only used for standalone
 				}
 			},
 			"occupant1": {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
-					"transformationGroups": [
-						"flip",
-						"occupant1position"
-					],
-					"occupantPosition": [
-						0.0,
-						0.0
-					]
+					 "zLevel": 0,
+					 "transformationGroups": ["flip", "occupant1position"],
+					 "occupantPosition": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant1state": {
-						"smol": {
-							"properties": {
-								"image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>"
-							}
-						},
-						"monster": {
-							"properties": {
-								"image": "<monster>"
-							}
-						}
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
 					}
 				}
 			},
 			"occupant2": {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
-					"transformationGroups": [
-						"flip",
-						"occupant2position"
-					],
-					"occupantPosition": [
-						0.0,
-						0.0
-					]
+					 "zLevel": 0,
+					 "transformationGroups": ["flip", "occupant2position"],
+					 "occupantPosition": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant2state": {
-						"smol": {
-							"properties": {
-								"image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>"
-							}
-						},
-						"monster": {
-							"properties": {
-								"image": "<monster>"
-							}
-						}
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
 					}
 				}
 			},
 			"occupant3": {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
-					"transformationGroups": [
-						"flip",
-						"occupant3position"
-					],
-					"occupantPosition": [
-						0.0,
-						0.0
-					]
+					 "zLevel": 0,
+					 "transformationGroups": ["flip", "occupant3position"],
+					 "occupantPosition": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant3state": {
-						"smol": {
-							"properties": {
-								"image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>"
-							}
-						},
-						"monster": {
-							"properties": {
-								"image": "<monster>"
-							}
-						}
+						"smol": { "properties" : { "image": "/vehicles/spov/<smolspecies>/spov/<smolspecies>_small.png:smolprey<smoldirectives>" } },
+						"monster": { "properties" : { "image": "<monster>" } }
 					}
 				}
 			},
+
 			"foreground": {
 				"properties": {
 					"centered": true,
 					"zLevel": 1,
-					"transformationGroups": [
-						"flip",
-						"bodybob"
-					]
+					 "transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.<frame><directives>"
-							}
-						},
-						"sitdown": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.sitdown.<frame><directives>"
-							}
-						},
-						"standup": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.standup.<frame><directives>"
-							}
-						},
-						"laydown": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.laydown.<frame><directives>"
-							}
-						},
-						"pin": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.pin.<frame><directives>"
-							}
-						},
-						"situp": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.situp.<frame><directives>"
-							}
-						},
-						"fallasleep": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>"
-							}
-						},
-						"wakeup": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.wakeup.<frame><directives>"
-							}
-						},
-						"rollover": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.rollover.<frame><directives>"
-							}
-						},
-						"grab": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.grab.<frame><directives>"
-							}
-						},
-						"eat": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.eat.<frame><directives>"
-							}
-						},
-						"absorb": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.absorb.<frame><directives>"
-							}
-						},
-						"escape": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.escape.<frame><directives>"
-							}
-						},
-						"s_back": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_back.<frame><directives>"
-							}
-						},
-						"s_front": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_front.<frame><directives>"
-							}
-						},
-						"s_up": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_up.<frame><directives>"
-							}
-						},
-						"s_down": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_down.<frame><directives>"
-							}
-						},
-						"jump": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.jump.<frame><directives>"
-							}
-						},
-						"fall": {
-							"properties": {
-								"image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fall.<frame><directives>"
-							}
-						},
-						"smol.idle": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>"
-							}
-						},
-						"smol.jump": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>"
-							}
-						},
-						"smol.fall": {
-							"properties": {
-								"image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>"
-							}
-						}
+						"idle": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.<frame><directives>" } },
+
+						"sitdown": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
+
+						"laydown": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
+						"pin": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.pin.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
+
+						"fallasleep": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fallasleep.<frame><directives>" } },
+						"wakeup": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.wakeup.<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
+
+						"grab": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
+						"absorb": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
+
+						"s_back": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.s_down.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon-fg.png:<bellyoccupants>.<state>.fall.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/vaporeon_small.png:<bellyoccupants>.fall.<frame><directives>" } }
+
 					}
 				}
 			},
+
 			"frontlegs": {
 				"properties": {
 					"centered": true,
 					"zLevel": 3,
-					"transformationGroups": [
-						"flip"
-					]
+					 "transformationGroups": ["flip"]
 				},
 				"partStates": {
 					"legsState": {
-						"none": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:empty.<frame><directives>"
-							}
-						},
-						"idle": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:idle.<frame><directives>"
-							}
-						},
-						"walk": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:walk.<frame><directives>"
-							}
-						},
-						"run": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:run.<frame><directives>"
-							}
-						},
-						"jump": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:jump.<frame><directives>"
-							}
-						},
-						"fall": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:fall.<frame><directives>"
-							}
-						},
-						"swimidle": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:swimidle.<frame><directives>"
-							}
-						},
-						"swim": {
-							"properties": {
-								"image": "spov/legs/legs_fg.png:swim.<frame><directives>"
-							}
-						},
-						"smol.idle": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:idle.<frame><directives>"
-							}
-						},
-						"smol.walk": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:walk.<frame><directives>"
-							}
-						},
-						"smol.run": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:run.<frame><directives>"
-							}
-						},
-						"smol.jump": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:jump.<frame><directives>"
-							}
-						},
-						"smol.fall": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:fall.<frame><directives>"
-							}
-						},
-						"smol.swimidle": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:swimidle.<frame><directives>"
-							}
-						},
-						"smol.swim": {
-							"properties": {
-								"image": "spov/smol_legs/legs_fg.png:swim.<frame><directives>"
-							}
-						}
+						"none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
+
+
+						"idle": { "properties": { "image": "spov/legs/legs_fg.png:idle.<frame><directives>" } },
+
+						"walk": { "properties": { "image": "spov/legs/legs_fg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/legs/legs_fg.png:run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/legs/legs_fg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/legs/legs_fg.png:fall.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/legs/legs_fg.png:swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/legs/legs_fg.png:swim.<frame><directives>" } },
+
+
+						"smol.idle": { "properties": { "image": "spov/smol_legs/legs_fg.png:idle.<frame><directives>" } },
+
+						"smol.walk": { "properties": { "image": "spov/smol_legs/legs_fg.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/smol_legs/legs_fg.png:run.<frame><directives>" } },
+
+						"smol.jump": { "properties": { "image": "spov/smol_legs/legs_fg.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/smol_legs/legs_fg.png:fall.<frame><directives>" } },
+
+						"smol.swimidle": { "properties": { "image": "spov/smol_legs/legs_fg.png:swimidle.<frame><directives>" } },
+						"smol.swim": { "properties": { "image": "spov/smol_legs/legs_fg.png:swim.<frame><directives>" } }
 					}
 				}
 			},
@@ -935,87 +340,35 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -2,
-					"transformationGroups": [
-						"flip"
-					]
+					 "transformationGroups": ["flip"]
 				},
 				"partStates": {
 					"legsState": {
-						"none": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:empty.<frame><directives>"
-							}
-						},
-						"idle": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:idle.<frame><directives>"
-							}
-						},
-						"walk": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:walk.<frame><directives>"
-							}
-						},
-						"run": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:run.<frame><directives>"
-							}
-						},
-						"jump": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:jump.<frame><directives>"
-							}
-						},
-						"fall": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:fall.<frame><directives>"
-							}
-						},
-						"swimidle": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:swimidle.<frame><directives>"
-							}
-						},
-						"swim": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:swim.<frame><directives>"
-							}
-						},
-						"smol.idle": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:idle.<frame><directives>"
-							}
-						},
-						"smol.walk": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:walk.<frame><directives>"
-							}
-						},
-						"smol.run": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:run.<frame><directives>"
-							}
-						},
-						"smol.jump": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:jump.<frame><directives>"
-							}
-						},
-						"smol.fall": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:fall.<frame><directives>"
-							}
-						},
-						"smol.swimidle": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:swimidle.<frame><directives>"
-							}
-						},
-						"smol.swim": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:swim.<frame><directives>"
-							}
-						}
+						"none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } },
+
+
+						"idle": { "properties": { "image": "spov/legs/legs_<bap>bg.png:idle.<frame><directives>" } },
+
+						"walk": { "properties": { "image": "spov/legs/legs_<bap>bg.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/legs/legs_<bap>bg.png:run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/legs/legs_<bap>bg.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/legs/legs_<bap>bg.png:fall.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/legs/legs_<bap>bg.png:swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/legs/legs_<bap>bg.png:swim.<frame><directives>" } },
+
+
+						"smol.idle": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:idle.<frame><directives>" } },
+
+						"smol.walk": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:run.<frame><directives>" } },
+
+						"smol.jump": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:fall.<frame><directives>" } },
+
+						"smol.swimidle": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:swimidle.<frame><directives>" } },
+						"smol.swim": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:swim.<frame><directives>" } }
 					}
 				}
 			},
@@ -1023,28 +376,14 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -2,
-					"transformationGroups": [
-						"flip",
-						"headbob"
-					]
+					 "transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"bapState": {
-						"none": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:none<directives>"
-							}
-						},
-						"bap": {
-							"properties": {
-								"image": "spov/legs/legs_<bap>bg.png:bap.<frame><directives>"
-							}
-						},
-						"smol.bap": {
-							"properties": {
-								"image": "spov/smol_legs/legs_<bap>bg.png:bap.<frame><directives>"
-							}
-						}
+						"none": { "properties": { "image": "spov/legs/legs_<bap>bg.png:none<directives>" } },
+
+						"bap": { "properties": { "image": "spov/legs/legs_<bap>bg.png:bap.<frame><directives>" } },
+						"smol.bap": { "properties": { "image": "spov/smol_legs/legs_<bap>bg.png:bap.<frame><directives>" } }
 					}
 				}
 			},
@@ -1052,135 +391,52 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 2,
-					"transformationGroups": [
-						"flip",
-						"bodybob"
-					]
+					 "transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"tailState": {
-						"idle": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:stand.<frame><directives>"
-							}
-						},
-						"flick": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:stand.flick.<frame><directives>"
-							}
-						},
-						"sitlay": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:sit.<frame><directives>"
-							}
-						},
-						"sitlayflick": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:sit.flick.<frame><directives>"
-							}
-						},
-						"back": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:back.<frame><directives>"
-							}
-						},
-						"backflick": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:back.flick.<frame><directives>"
-							}
-						},
-						"walk": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:walk.<frame><directives>"
-							}
-						},
-						"run": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:run.<frame><directives>"
-							}
-						},
-						"jump": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:jump.<frame><directives>"
-							}
-						},
-						"fall": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:fall.<frame><directives>"
-							}
-						},
-						"swimidle": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:swimidle.<frame><directives>"
-							}
-						},
-						"swim": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:swim.<frame><directives>"
-							}
-						},
-						"none": {
-							"properties": {
-								"image": "spov/vaporeon_tail.png:empty.<frame><directives>"
-							}
-						}
+						"idle": { "properties": { "image": "spov/vaporeon_tail.png:stand.<frame><directives>" } },
+						"flick": { "properties": { "image": "spov/vaporeon_tail.png:stand.flick.<frame><directives>" } },
+
+						"sitlay": { "properties": { "image": "spov/vaporeon_tail.png:sit.<frame><directives>" } },
+						"sitlayflick": { "properties": { "image": "spov/vaporeon_tail.png:sit.flick.<frame><directives>" } },
+
+						"back": { "properties": { "image": "spov/vaporeon_tail.png:back.<frame><directives>" } },
+						"backflick": { "properties": { "image": "spov/vaporeon_tail.png:back.flick.<frame><directives>" } },
+
+						"walk": { "properties": { "image": "spov/vaporeon_tail.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/vaporeon_tail.png:run.<frame><directives>" } },
+
+						"jump": { "properties": { "image": "spov/vaporeon_tail.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/vaporeon_tail.png:fall.<frame><directives>" } },
+
+						"swimidle": { "properties": { "image": "spov/vaporeon_tail.png:swimidle.<frame><directives>" } },
+						"swim": { "properties": { "image": "spov/vaporeon_tail.png:swim.<frame><directives>" } },
+
+						"none": { "properties": { "image": "spov/vaporeon_tail.png:empty.<frame><directives>" } }
 					}
 				}
 			},
+
 			"head": {
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					"transformationGroups": [
-						"flip",
-						"headbob"
-					]
+					 "transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
-						"none": {
-							"properties": {}
-						},
-						"idle": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:idle.<frame><directives>"
-							}
-						},
-						"blink": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:blink.<frame><directives>"
-							}
-						},
-						"pet": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:blink.<frame><directives>"
-							}
-						},
-						"look": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:look.<frame><directives>"
-							}
-						},
-						"pinlook": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:pinlook.<frame><directives>"
-							}
-						},
-						"lick": {
-							"properties": {
-								"image": "spov/vaporeon_head.png:lick.<frame><directives>"
-							}
-						},
-						"smol.idle": {
-							"properties": {
-								"image": "spov/vaporeon_small_head.png:idle.<frame><directives>"
-							}
-						},
-						"smol.blink": {
-							"properties": {
-								"image": "spov/vaporeon_small_head.png:blink.<frame><directives>"
-							}
-						}
+						"none": { "properties": {} },
+
+						"idle": { "properties": { "image": "spov/vaporeon_head.png:idle.<frame><directives>" } },
+						"blink": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "spov/vaporeon_head.png:blink.<frame><directives>" } },
+						"look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
+						"pinlook": { "properties": { "image": "spov/vaporeon_head.png:pinlook.<frame><directives>" } },
+						"lick": { "properties": { "image": "spov/vaporeon_head.png:lick.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
+						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }
 					}
 				}
 			}
@@ -1209,379 +465,218 @@
 		"tailbob": {
 			"interpolated": false
 		}
+
 	},
 	"sounds": {
-		"swallow": [
-			"/sfx/objects/gulp.ogg"
-		],
-		"digest": [
-			"/sfx/vore/digest/digest (17).ogg",
-			"/sfx/vore/digest/digest (18).ogg",
-			"/sfx/vore/digest/digest (25).ogg",
-			"/sfx/vore/digest/digest (11).ogg",
-			"/sfx/vore/digest/digest (13).ogg",
-			"/sfx/vore/digest/digest (15).ogg",
-			"/sfx/vore/digest/digest (16).ogg",
-			"/sfx/vore/digest/digest (19).ogg",
-			"/sfx/vore/digest/digest (20).ogg",
-			"/sfx/vore/digest/digest (3).ogg",
-			"/sfx/vore/digest/digest (31).ogg",
-			"/sfx/vore/digest/digest (36).ogg",
-			"/sfx/vore/digest/digest (37).ogg",
-			"/sfx/vore/digest/digest (9).ogg"
-		],
-		"lay": [
-			"/sfx/objects/eggLay.ogg"
-		],
-		"struggle": [
-			"/sfx/vore/struggle/burbslosh.ogg",
-			"/sfx/vore/struggle/blurbsquish2.ogg",
-			"/sfx/vore/struggle/blorbsquish.ogg",
-			"/sfx/vore/swallow/swallow (11).ogg"
-		],
-		"slurp": [
-			"/sfx/vore/common/slurp.ogg"
-		],
-		"doublejump": [
-			"/sfx/tech/tech_doublejump.ogg"
-		]
+		"swallow": ["/sfx/objects/gulp.ogg"]
+		, "digest": [ "/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg" ]
+		, "lay": ["/sfx/objects/eggLay.ogg"]
+		, "struggle": ["/sfx/vore/struggle/burbslosh.ogg","/sfx/vore/struggle/blurbsquish2.ogg","/sfx/vore/struggle/blorbsquish.ogg","/sfx/vore/swallow/swallow (11).ogg"]
+		, "slurp" : [ "/sfx/vore/common/slurp.ogg" ]
+		, "doublejump" : [ "/sfx/tech/tech_doublejump.ogg" ]
 	},
 	"particleEmitters": {
-		"emotehappy": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/emotes/happy.animation",
-						"position": [
-							-0.2,
-							3.3
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"initialVelocity": [
-							0,
-							0
-						],
-						"destructionTime": 0.2,
-						"destructionAction": "shrink",
-						"layer": "front",
-						"timeToLive": 0.8,
-						"flippable": false
-					}
-				}
-			]
+		"emotehappy" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/happy.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
 		},
-		"emotesad": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/emotes/sad.animation",
-						"position": [
-							-0.2,
-							3.3
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"initialVelocity": [
-							0,
-							0
-						],
-						"destructionTime": 0.2,
-						"destructionAction": "shrink",
-						"layer": "front",
-						"timeToLive": 0.8,
-						"flippable": false
-					}
-				}
-			]
+
+		"emotesad" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/sad.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
 		},
-		"emoteconfused": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/emotes/confused.animation",
-						"position": [
-							-0.2,
-							3.3
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"initialVelocity": [
-							0,
-							0
-						],
-						"destructionTime": 0.2,
-						"destructionAction": "shrink",
-						"layer": "front",
-						"timeToLive": 0.8,
-						"flippable": false
-					}
-				}
-			]
+
+		"emoteconfused" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/confused.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
 		},
-		"emotesleepy": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/emotes/sleepy.animation",
-						"position": [
-							-0.2,
-							3.3
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"initialVelocity": [
-							0,
-							0
-						],
-						"destructionTime": 0.2,
-						"destructionAction": "shrink",
-						"layer": "front",
-						"timeToLive": 0.8,
-						"flippable": false
-					}
-				}
-			]
+
+		"emotesleepy" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/emotes/sleepy.animation",
+				"position" : [-0.2, 3.3],
+				"finalVelocity" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"destructionTime" : 0.2,
+				"destructionAction" : "shrink",
+				"layer" : "front",
+				"timeToLive" : 0.8,
+				"flippable" : false
+			  }
+			}
+		  ]
 		},
-		"drips": {
-			"emissionRate": 15,
-			"particles": [
-				{
-					"particle": {
-						"type": "ember",
-						"layer": "front",
-						"size": 1.0,
-						"color": [
-							120,
-							221,
-							254,
-							230
-						],
-						"fade": 0.9,
-						"destructionAction": "shrink",
-						"destructionTime": 0.8,
-						"position": [
-							0.5,
-							0.9
-						],
-						"offsetRegion": [
-							0,
-							0,
-							0,
-							0
-						],
-						"initialVelocity": [
-							0,
-							0.0
-						],
-						"finalVelocity": [
-							0,
-							-1
-						],
-						"approach": [
-							3,
-							10
-						],
-						"timeToLive": 0.5,
-						"variance": {
-							"initialVelocity": [
-								0.2,
-								0.0
-							],
-							"size": 0.5,
-							"position": [
-								0.3,
-								0
-							]
-						},
-						"flippable": true
-					}
-				}
-			]
+
+		"drips" : {
+		  "emissionRate" : 15,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"layer" : "front",
+				"size" : 1.0,
+				"color" : [120, 221, 254, 230],
+				"fade" : 0.9,
+				"destructionAction" : "shrink",
+				"destructionTime" : 0.8,
+				"position" : [0.5, 0.9],
+				"offsetRegion" : [0, 0, 0, 0],
+				"initialVelocity" : [0, 0.0],
+				"finalVelocity" : [0, -1],
+				"approach" : [3, 10],
+				"timeToLive" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.2, 0.0],
+				  "size" : 0.5,
+				  "position" : [0.3, 0]
+				},
+				"flippable" : true
+			  }
+			}
+		  ]
 		},
-		"doublejump": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/doublejump/doublejump.animation",
-						"position": [
-							0,
-							-3
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"approach": [
-							0,
-							50
-						],
-						"size": 2.0,
-						"timeToLive": 0.85,
-						"layer": "back",
-						"light": [
-							70,
-							100,
-							140
-						],
-						"fade": 0.5,
-						"variance": {
-							"initialVelocity": [
-								0.0,
-								0.0
-							]
-						}
-					}
+
+		"doublejump" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/doublejump/doublejump.animation",
+				"position" : [0, -3],
+				"finalVelocity" : [0, 0],
+				"approach" : [0, 50],
+				"size" : 2.0,
+				"timeToLive" : 0.85,
+				"layer" : "back",
+				"light" : [70, 100, 140],
+				"fade" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.0, 0.0]
 				}
-			]
+			  }
+			}
+		  ]
 		},
-		"defaultblue": {
-			"emissionRate": 6,
-			"particles": [
-				{
-					"particle": {
-						"type": "ember",
-						"size": 1.0,
-						"color": [
-							49,
-							166,
-							255,
-							255
-						],
-						"fade": 0.9,
-						"position": [
-							0,
-							-3
-						],
-						"initialVelocity": [
-							-2,
-							-3.0
-						],
-						"finalVelocity": [
-							-2,
-							-3.0
-						],
-						"approach": [
-							0,
-							20
-						],
-						"timeToLive": 0.8,
-						"layer": "middle",
-						"variance": {
-							"initialVelocity": [
-								2,
-								3.0
-							],
-							"size": 0.5
-						}
-					}
+		"defaultblue" : {
+		  "emissionRate" : 6,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [49, 166, 255, 255],
+				"fade" : 0.9,
+				"position" : [0, -3],
+				"initialVelocity" : [-2, -3.0],
+				"finalVelocity" : [-2, -3.0],
+				"approach" : [0, 20],
+				"timeToLive" : 0.8,
+				"layer" : "middle",
+				"variance" : {
+				  "initialVelocity" : [2, 3.0],
+				  "size" : 0.5
 				}
-			]
+			  }
+			}
+		  ]
 		},
-		"defaultlightblue": {
-			"emissionRate": 6,
-			"particles": [
-				{
-					"particle": {
-						"type": "ember",
-						"size": 1.0,
-						"color": [
-							155,
-							212,
-							255,
-							255
-						],
-						"fade": 0.9,
-						"position": [
-							0,
-							-3
-						],
-						"destructionAction": "shrink",
-						"destructionTime": 1,
-						"initialVelocity": [
-							-2,
-							-6.0
-						],
-						"finalVelocity": [
-							-2,
-							-6.0
-						],
-						"approach": [
-							0,
-							20
-						],
-						"timeToLive": 0.8,
-						"light": [
-							46,
-							63,
-							76
-						],
-						"layer": "back",
-						"variance": {
-							"initialVelocity": [
-								6,
-								6.0
-							]
-						}
-					}
+		"defaultlightblue" : {
+		  "emissionRate" : 6,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [155, 212, 255, 255],
+				"fade" : 0.9,
+				"position" : [0, -3],
+				"destructionAction" : "shrink",
+				"destructionTime" : 1,
+				"initialVelocity" : [-2, -6.0],
+				"finalVelocity" : [-2, -6.0],
+				"approach" : [0, 20],
+				"timeToLive" : 0.8,
+				"light" : [46, 63, 76],
+				"layer" : "back",
+				"variance" : {
+				  "initialVelocity" : [6, 6.0]
 				}
-			]
+			  }
+			}
+		  ]
 		},
-		"smoldoublejump": {
-			"emissionRate": 1,
-			"particles": [
-				{
-					"particle": {
-						"type": "animated",
-						"animation": "/animations/doublejump/doublejump.animation",
-						"position": [
-							0,
-							-1
-						],
-						"finalVelocity": [
-							0,
-							0
-						],
-						"approach": [
-							0,
-							50
-						],
-						"size": 1.0,
-						"timeToLive": 0.85,
-						"layer": "back",
-						"light": [
-							70,
-							100,
-							140
-						],
-						"fade": 0.5,
-						"variance": {
-							"initialVelocity": [
-								0.0,
-								0.0
-							]
-						}
-					}
+
+		"smoldoublejump" : {
+		  "emissionRate" : 1,
+		  "particles" : [
+			{
+			  "particle" : {
+				"type" : "animated",
+				"animation" : "/animations/doublejump/doublejump.animation",
+				"position" : [0, -1],
+				"finalVelocity" : [0, 0],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85,
+				"layer" : "back",
+				"light" : [70, 100, 140],
+				"fade" : 0.5,
+				"variance" : {
+				  "initialVelocity" : [0.0, 0.0]
 				}
-			]
+			  }
+			}
+		  ]
 		}
 	}
 }
