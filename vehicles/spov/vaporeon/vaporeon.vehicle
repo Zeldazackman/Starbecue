@@ -114,7 +114,7 @@
 	},
 
 	"maxOccupants" : {
-		"total" : 3,
+		"total" : 2, // could potentially be 3 but making it so I don't have ot fuck with the menu
 		"belly" : 2,
 		"hug" : 1
 	},

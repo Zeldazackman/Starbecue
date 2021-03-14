@@ -34,21 +34,18 @@ function readOccupantData()
 			widget.setText( "occupant"..i..".name", world.entityName( id ) )
 			widget.setButtonEnabled( "occupant"..i..".letOut", true )
 		else
-			--[[setPortrait( "occupant"..i, {{
-					image = "/assetmissing.png",
-					position = {13, 19}
-			}})]]
+			clearPortrait( "occupant"..i )
 			widget.setText( "occupant"..i..".name", "" )
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 	end
 end
 
-p.refreshframes = 0
+p.refreshtime = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-	if p.refreshframes >= 3 and p.rpc == nil then
+	if p.refreshtime >= 3 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
@@ -56,7 +53,7 @@ function checkRefresh(dt)
 			if result ~= nil then
 				p.occupants = result
 				readOccupantData()
-				p.refreshframes = 0
+				p.refreshtime = 0
 				p.refreshed = true
 				--sb.logInfo( "Refreshed Settings Menu" )
 			end
@@ -70,9 +67,9 @@ function checkRefresh(dt)
 		--[[if p.rpc then
 			sb.logInfo( "Waiting for RPC" )
 		else
-			sb.logInfo( "Waiting for refresh for"..p.refreshframes )
+			sb.logInfo( "Waiting for refresh for"..p.refreshtime )
 		end]]
-		p.refreshframes = p.refreshframes + dt
+		p.refreshtime = p.refreshtime + dt
 	end
 end
 
@@ -120,6 +117,10 @@ end
 function despawn()
 	world.sendEntityMessage( p.vso, "despawn" )
 end
+function clearPortrait(canvasName)
+	local canvas = widget.bindCanvas( canvasName..".portrait" )
+	canvas:clear()
+end
 
 function setPortrait( canvasName, data )
 	local canvas = widget.bindCanvas( canvasName..".portrait" )
@@ -132,6 +133,7 @@ end
 function letOut(_, which )
 	if p.refreshed then
 		p.refreshed = false
+		p.refreshtime = 0
 		for i = 1, p.maxOccupants do
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
