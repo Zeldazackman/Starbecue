@@ -32,7 +32,7 @@ function update(dt, fireMode, shiftHeld)
 
 		player.radioMessage({
 		messageId = "xeroniouspotion", unique = false,
-		text = "It seems that the potion you just drank transformed you into a vaporeon. Scans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons will be helpful in this form. ^#555;(You may have to go into settings and bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys first.)^reset;"
+		text = "It seems that the potion you just drank transformed you into a kaiju of some sort. Scans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons will be helpful in this form. ^#555;(You may have to go into settings and bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys first.)^reset; I also am detecting a handy instruction manual for your new form came with that potion you drank."
 		}, 1)
 
 		item.consume(1)

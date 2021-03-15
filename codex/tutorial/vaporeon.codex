@@ -1,0 +1,79 @@
+{
+	"id" : "vaporeoncodex",
+	"species" : "other",
+	"title" : "Guide to all things Vappy",
+	"description" : "So you've been turned into a Vaporeon...",
+	"icon" : "vaporeonbook.png",
+	"itemConfig" : {
+		"rarity" : "common",
+		"price" : 200
+	},
+	"contentPages" : [
+"So you've been turned into a Vaporeon...
+
+Vappy can be in several states each explained on its own page, but there is a menu accessible in all states, accessible via tech action 3 (H)
+
+This menu allows you to select from various effects applied to your food, Player, NPC, and Monster alike, digesting will restore your hunger, and if that is full, restore your health as well
+
+Stand -> pg.2
+Smol -> pg.3
+Sit -> pg.4
+Lay -> pg.5
+Sleep -pg.6
+Back -pg.7 ",
+
+"Stand State
+
+In this state you can walk and jump around as you would expect!
+Holding down allows vappy to walk at a slower pace, if you get too full, you are also forced to walk, and your jump height is nerfed, which happens at two prey total, fatty
+
+If you just tap down, you can sit down pg.4
+
+Primary fire lets you bap with your foreleg, if you are hovering your cursor over an edible creature when you do so, you can eat them! Your belly has enough space for two prey
+
+Alt fire allows you to shoot a stream of water, however this consumes energy
+
+Sometimes being big is inconvenient, pressing tech action 1 (F) allows one to become smol pg.3
+
+If you want to let prey out, you must be in this state and use the menu, or press tech action 2 (G)",
+
+"Smol State
+
+The smol state has two versions!
+If you had 0-1 occupants, you'll be a generally normal fishcat able to jump and walk around bapping and spraying water same as the Stand State, but unable to eat more prey
+
+However if you had 2 occupants, you'll become a chonk ball with a belly too big to walk with, and will have to roll around to move
+
+Being smol has its consequences, as while you are smol, if you don't have any occupants in your belly, you can be eaten by other PVSOs
+
+Pressing tech action 1 (F) will return you to your normal size pg.2",
+
+"Sit State
+
+In the sit state, you can tap down again to lay down, if your belly is empty, and if someone is standing in the right place just in front of you, you'll pin them underneath you pg.5
+
+You can also tap up to stand back up pg.2",
+
+"Lay State
+
+if you have pinned someone under you, you can lick them with primary fire, and then absorb them into your belly by pressing space!
+
+You can tap down again to go to sleep pg.6
+
+Or you can tap up to sit back up, freeing anyone pinned under you pg.4
+
+Or you can press the directions to either side to roll over, as long as you have less than 2 occupants, you'd be too fat to do so if you tried pg.7",
+
+"Sleep State
+
+If you have someone pinned beneath you, you can press space to absorb them into your belly
+
+You can wake up and go back to the lay state by pressing up Pg.5",
+
+"Back State
+
+While laying on your back, as long as you have an empty belly people can lay on top of you like a bed! if they do so you can press down to hug them, keeping them from getting off when they struggle, and while you're hugged you can press space to absorb them as well!
+
+You can press to either side to roll back over, taking anyone on your belly and pinning them beneath you pg.5"
+	]
+}

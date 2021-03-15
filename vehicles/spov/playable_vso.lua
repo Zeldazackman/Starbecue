@@ -610,6 +610,7 @@ function p.uneat( seatindex )
 			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { p.monstercoords[1], p.monstercoords[2]}, { driver = targetid, settings = {}, uneaten = true } )
 		end
 		p.smolpreyspecies[seatindex] = nil
+		p.smolpreyfilepath[seatindex] = nil
 	elseif p.isMonster(targetid) then
 		-- do something to move it forward a few blocks
 		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it

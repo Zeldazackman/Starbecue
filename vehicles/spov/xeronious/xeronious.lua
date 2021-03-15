@@ -165,10 +165,10 @@ function state_stand()
 	extraBellyEffects()
 	p.handleBelly()
 	local pos1 = p.localToGlobal({3.5, 4})
-	local pos2 = p.localToGlobal({-3.5, 1})
+	local pos2 = p.localToGlobal({-3, 1})
 
 	local pos3 = p.localToGlobal({3.5, -5})
-	local pos4 = p.localToGlobal({-3.5, 0})
+	local pos4 = p.localToGlobal({-3, 0})
 
 	if p.control.probablyOnGround()
 	and world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
@@ -327,7 +327,7 @@ function state_crouch()
 	p.control.updateDriving()
 
 	local pos1 = p.localToGlobal({3.5, 4})
-	local pos2 = p.localToGlobal({-3.5, 1})
+	local pos2 = p.localToGlobal({-3, 1})
 
 	if not world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.control.driver, "down")
