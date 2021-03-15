@@ -3,7 +3,7 @@
 	"species" : "other",
 	"title" : "Guide to being a Fluffy Kaiju",
 	"description" : "So you've been turned into a Kaiju...",
-	"icon" : "vaporeonbook.png",
+	"icon" : "xeroniousbook.png",
 	"itemConfig" : {
 		"rarity" : "common",
 		"price" : 200
