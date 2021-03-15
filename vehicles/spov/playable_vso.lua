@@ -753,6 +753,7 @@ function p.onBegin()
 
 	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
 		p.smolpreyfilepath[seatindex] = path
+		p.smolprey()
 	end )
 
 
