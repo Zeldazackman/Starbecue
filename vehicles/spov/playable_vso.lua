@@ -1559,6 +1559,16 @@ function p.handleStruggles()
 		goto NextStuggler -- already struggling
 	end
 
+	local StrugglesDisabled = root.assetJson( "/vehicles/spov/pvso_general.config:speciesStrugglesDisabled")
+	for i = 1, #StrugglesDisabled do
+		if p.smolpreyspecies[struggler] == StrugglesDisabled[i] then
+			movetype = nil
+			goto NextStuggler -- eggs should not be able to struggle
+		end
+	end
+
+
+
 	local dir = nil
 	if movedir == "B" then dir = "back" end
 	if movedir == "F" then dir = "front" end

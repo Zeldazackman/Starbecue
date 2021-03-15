@@ -1,7 +1,7 @@
 {
 	"id" : "xeroniouscodex",
 	"species" : "other",
-	"title" : "Guide to becoming a Fluffy Kaiju",
+	"title" : "Guide to being a Fluffy Kaiju",
 	"description" : "So you've been turned into a Kaiju...",
 	"icon" : "vaporeonbook.png",
 	"itemConfig" : {
@@ -15,33 +15,36 @@ Xeronious can be in several states each explained on its own page, but there is 
 
 This menu allows you to select from various effects applied to your food, Player, NPC, and Monster alike, digesting will restore your hunger, and if that is full, restore your health as well
 
-If you have selected soft digest, upon reaching 1HP occupants of your belly will be put into eggs, which can then be laid if you can release the occupant in your current state, after getting released, those in the eggs can struggle to escape them, or you could just eat the eggs again before they do that
+If you have selected soft digest, upon reaching 1HP occupants of your belly will be put into eggs, which can then be laid if you can release the occupant in your current state
 
-Stand -> pg.2
+Xeronious has space for three prey in their belly, and one in the tail, prey can struggle back and forth between these locations
+
+Stand -> pg.2-3
 Crouch -> pg.3
 Fly -> pg.4
 Sit -> pg.5",
 
 "State Stand
 
-In this state you can walk and jump around as you would expect!
-Holding down allows vappy to walk at a slower pace, if you get too full, you are also forced to walk, and your jump height is nerfed and you become unable to fly, which happens at three prey total, fatty
+In this state you can walk and jump around as you would expect! and you can fly if you press space in the air! pg.4
 
-Pressing space while in the air lets you fly pg.4
+Holding down allows you to walk at a slower pace, if you get too full you are also forced to walk, and your jump height is nerfed and you become unable to fly, fatty
 
-Primary fire lets you bap, if you are hovering your cursor over an edible creature when you do so, you can eat them! Your belly has enough space for three prey
-(there is no animation for when *not* eating currently)
-If the prey you clicked on happens to be near your tail, you can eat them with that as well! your tail only has space for one prey
+Pressing space while in the air lets you fly
 
-prey in the belly can struggle back and forth between them as long as they're stuggling towards the respective space, and theres space inside it to get into!
+Primary fire lets you bap, if you are hovering your cursor over an edible creature when you do so, you can eat them! (there is no animation for when *not* eating currently)
 
-you can tap down to sit down pg.5
+If the prey you clicked on is near your tail, you can eat them with that as well!
+
+Alt fire lets you inhale and succ nearby creatures in to eat as long as you have space!",
+
+"you can tap down to sit down pg.5
 
 If you apporach a space you are too tall to fit through, you can hold down and attempt to crawl into it, or have it automatically triggered via a menu option pg.3
 
-If you want to let prey out, you can use the menu, or press tech action 2 (G), if you are holding down then it will release them anally if they were in the belly",
+If you want to let prey out, you can use the menu, or press tech action 2 (G), if you are holding down then it will release them anally if they were in the belly
 
-"State Crouch
+State Crouch
 
 This state lets one crawl around through small spaces, it can only be exited if there is enough space to stand up, and if down is no longer held pg.2
 
@@ -52,6 +55,10 @@ Prey can only be let out via the tail in this state",
 In this state you can fly around freely! but the more prey in you, the more you're weighed down, if you're carrying three prey or more you'll drop like a rock and be unable to fly pg.2
 
 If you hover over some prey and Primary Fire click on them, you may be able to grab them with your feet and shove them up your butt and into your belly!
+
+If the prey you clicked on is near your tail, you can eat them with that as well!
+
+Alt fire lets you inhale and succ nearby creatures in to eat!
 
 If you want to let prey out, you can use the menu, or press tech action 2 (G), if you are holding down then it will release them anally if they were in the belly",
 

@@ -15,6 +15,8 @@ Vappy can be in several states each explained on its own page, but there is a me
 
 This menu allows you to select from various effects applied to your food, Player, NPC, and Monster alike, digesting will restore your hunger, and if that is full, restore your health as well
 
+Vappy has space for two prey in their belly
+
 Stand -> pg.2
 Smol -> pg.3
 Sit -> pg.4
@@ -24,8 +26,7 @@ Back -pg.7 ",
 
 "Stand State
 
-In this state you can walk and jump around as you would expect!
-Holding down allows vappy to walk at a slower pace, if you get too full, you are also forced to walk, and your jump height is nerfed, which happens at two prey total, fatty
+In this state you can walk and jump around as you would expect! Holding down allows you to walk at a slower pace, if you get too full you are also forced to walk, and your jump height is nerfed, fatty
 
 If you just tap down, you can sit down pg.4
 
