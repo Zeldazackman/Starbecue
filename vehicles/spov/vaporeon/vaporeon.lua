@@ -200,19 +200,19 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "bed", "unbed", function()
-	p.uneat( "occupant1" )
-	return true
+p.registerStateScript( "bed", "unbed", function(args)
+	return doescape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
 end)
 
 state_bed = p.standardState
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "hug", "absorb", function()
+p.registerStateScript( "hug", "absorb", function(args)
 	vsoSound( "slurp" )
 	return true, function()
-		vsoVictimAnimReplay( "occupant1", "center", "bodyState")
+		p.occupantLocation[1] = "belly"
+		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
 	end
 end)
 
@@ -228,15 +228,15 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "pinned", "unpin", function()
-	return true, function()
-		p.uneat( "occupant1" )
-	end
+p.registerStateScript( "pinned", "unpin", function(args)
+	return doescape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
 end)
-p.registerStateScript( "pinned", "absorb", function()
+
+p.registerStateScript( "pinned", "absorb", function(args)
 	vsoSound( "slurp" )
 	return true, function()
-		vsoVictimAnimReplay( "occupant", "center", "bodyState")
+		p.occupantLocation[1] = "belly"
+		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
 	end
 end)
 
