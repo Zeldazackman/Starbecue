@@ -302,7 +302,11 @@ end)
 
 
 p.registerStateScript( "hug", "unhug", function( args )
-	return doescape(args, "hug", {2.5,0}, {}, {})
+	for i = 1, p.occupants.total do
+		if p.occupantLocation[i] == "hug" then
+			return doescape({index = i}, "hug", {2.5,0}, {}, {})
+		end
+	end
 end)
 
 state_hug = p.standardState
