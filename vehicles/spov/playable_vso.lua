@@ -603,6 +603,7 @@ end
 function p.uneat( seatindex )
 	local targetid = vsoGetTargetId( "occupant"..seatindex )
 	world.sendEntityMessage( targetid, "PVSOClear")
+	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoremovebellyeffects")
 	vsoUneat( "occupant"..seatindex )
 	if p.smolpreyspecies[seatindex] then
 		if world.entityType(targetid) == "player" then
