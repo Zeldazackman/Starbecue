@@ -1606,9 +1606,15 @@ function p.handleStruggles()
 		local animation = {offset = struggledata[dir].offset}
 		animation[struggledata.part] = "s_"..dir
 
+
 		p.doAnims(animation)
 
-		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
+		if p.control.notMoving() then
+			p.doAnims( struggledata[dir].animation or struggledata.animation, true )
+		else
+			p.doAnims( struggledata[dir].animationWhenMoving or struggledata.animationWhenMoving, true )
+		end
+
 		if struggledata[dir].victimAnimation then
 			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, struggledata.part.."State" )
 		end

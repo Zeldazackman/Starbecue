@@ -199,7 +199,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 
 				}
 			},
@@ -395,7 +396,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 
 				}
 			},
@@ -485,7 +487,8 @@
 						"normal": { "min": 10, "max": 20 },
 						"antiescape": { "min": 20, "max": 40 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 
 				}
 			},

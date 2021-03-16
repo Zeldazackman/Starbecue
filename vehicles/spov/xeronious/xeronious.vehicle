@@ -299,7 +299,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
 					"part" : "tail",
@@ -312,7 +313,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "lookBack" }
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 			},
 			"interact": {
@@ -490,7 +492,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "lookBack" }
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 			},
 
@@ -651,7 +654,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
 					"part" : "tail",
@@ -664,7 +668,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "lookBack" }
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 			},
 
@@ -859,7 +864,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
 					"part" : "tail",
@@ -872,7 +878,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "lookBack" }
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 
 			},
@@ -1005,7 +1012,8 @@
 						"normal": { "min": 1, "max": 1 },
 						"antiescape": { "min": 1, "max": 1 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"belly" : {
 					"part" : "body",
@@ -1018,7 +1026,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "look" }
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
 					"part" : "tail",
@@ -1031,7 +1040,8 @@
 						"normal": { "min": 5, "max": 10 },
 						"antiescape": { "min": 10, "max": 20 }
 					},
-					"animation": { "head": "lookBack" }
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 			},
 			"interact": {
