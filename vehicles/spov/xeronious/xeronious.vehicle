@@ -538,6 +538,7 @@
 					"eating" : true,
 					"animation": {
 						"body": "eat",
+						"arms": "fly2",
 						"head": "none"
 					},
 					"victimAnimation": "playersucc",
@@ -688,7 +689,10 @@
 					"script": "grabanalvore"
 				},
 				"altAction": {
-					"animation": {"head": "succ"},
+					"animation": {
+						"head": "succ",
+						"arms": "fly"
+					},
 					"cooldown": 1,
 					"script": "succ"
 				},

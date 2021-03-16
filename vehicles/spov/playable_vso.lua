@@ -1476,7 +1476,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() )
 			end
 
-			local hunger_change = hungereffect * powerMultiplier * vsoDelta()
+			local hunger_change = (hungereffect * powerMultiplier * vsoDelta())/100
 			local health = world.entityHealth(eid)
 			if p.settings.bellyeffect == "softdigest" and health[1] <= 1 then
 				hunger_change = 0
