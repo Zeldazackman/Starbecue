@@ -56,6 +56,20 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
+
+function p.whenFalling()
+	if p.state ~= ("stand" or "fly") and mcontroller.yVelocity() < -5 then
+		p.setState( "stand" )
+		p.doAnims( p.stateconfig[p.state].control.animations.fall )
+		p.movement.falling = true
+		for i = 1, p.occupants.total do
+			if p.occupantLocation[i] == "hug" then
+				p.uneat(i)
+			end
+		end
+	end
+end
+
 function checkEscapes(args)
 	local location = p.occupantLocation[args.index]
 	local returnval = {}

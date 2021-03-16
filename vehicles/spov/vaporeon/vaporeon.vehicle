@@ -855,6 +855,7 @@
 			"bellyEffect": false
 		},
 		"smol": {
+			"edible": true,
 			"transitions": {},
 			"idle": {
 				"offset" : {
@@ -870,6 +871,7 @@
 			"idleAnimations": [
 				{ "head": "smol.blink" }
 			],
+			"struggle" : {},
 			"control": {
 				"walkSpeed": 10,
 				"runSpeed": 20,
@@ -971,9 +973,29 @@
 						}
 					}
 				}
+			}
+		},
+		"chonk_ball": {
+			"transitions": {},
+			"idle": {
+				"body": "chonk_ball",
+				"legs": "none",
+				"head": "none",
+				"tail": "none"
 			},
-			"edible": true
+			"idleAnimations": [],
+			"struggle" : {},
+			"control": {
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpStrength": 50,
+				"fullThreshold": 1,
+				"fullJumpStrength": 20,
+				"jumpCount": 2,
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3
+			}
 		}
-
 	}
 }

@@ -77,6 +77,28 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
+
+function p.whenFalling()
+	if p.state ~= ("stand" or "smol" or "chonk_ball") and mcontroller.yVelocity() < -5 then
+		p.setState( "stand" )
+		p.doAnims( p.stateconfig[p.state].control.animations.fall )
+		p.movement.falling = true
+		for i = 1, p.occupants.total do
+			if p.occupantLocation[i] == "hug" then
+				p.uneat(i)
+			end
+		end
+	end
+end
+
+function fixOccupantCenters(location, anim, part)
+	for i = 1, p.occupants.total do
+		if p.occupantLocation[i] == location then
+			vsoVictimAnimReplay( "occupant"..i, anim, part.."State")
+		end
+	end
+end
+
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "stand", "eat", function( args )
@@ -110,16 +132,17 @@ function state_stand()
 			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
 		elseif p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
 			if not p.movement.wasspecial1 then
-				-- vsoAnim( "bodyState", "smolify" )
+				p.movement.wasspecial1 = true
 				vsoEffectWarpOut()
 				if p.occupants.belly < 2 then
 					p.setState( "smol" )
 					p.doAnims( p.stateconfig.smol.idle, true )
 				else
-					vsoNext( "state_chonk_ball" )
+					p.setState( "chonk_ball" )
+					p.doAnims( p.stateconfig.chonk_ball.idle, true )
 				end
+				return
 			end
-			p.movement.wasspecial1 = true
 		else
 			p.movement.wasspecial1 = false
 		end
@@ -263,19 +286,13 @@ state_pinnedsleep = p.standardState
 
 function begin_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
+	fixOccupantCenters("belly", "smolbellycenter", "body")
 end
 
 function state_smol()
 
 	p.idleStateChange()
-
-	-- p.handleBelly()
-	if p.occupants.total > 0 then
-		p.bellyEffects()
-	end
-	-- if p.control.probablyOnGround() and p.control.notMoving() then
-	-- 	p.handleStruggles()
-	-- end
+	p.handleBelly()
 
 	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
 		if not p.movement.wasspecial1 then
@@ -296,21 +313,26 @@ end
 
 function end_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+
+	fixOccupantCenters("belly", "bellycenter", "body")
 end
 
 -------------------------------------------------------------------------------
 
-local CurBallFrame
-function roll_chonk_ball()
-	if CurBallFrame > 11 then
-		CurBallFrame = 0
-	elseif CurBallFrame < 0 then
-		CurBallFrame = 11
+local CurBallFrame = 0
+function roll_chonk_ball(dx, control)
+	mcontroller.setXVelocity( dx * control.walkSpeed)
+	if dx ~= 0 and vsoAnimEnd( "bodyState" ) then
+		CurBallFrame = CurBallFrame + dx
+		if CurBallFrame > 11 then
+			CurBallFrame = 0
+		elseif CurBallFrame < 0 then
+			CurBallFrame = 11
+		end
+		animator.setGlobalTag("rotationFrame", CurBallFrame)
+		vsoAnim( "bodyState", "chonk_ball" )
 	end
-	animator.setGlobalTag("rotationFrame", CurBallFrame)
-	vsoAnim( "bodyState", "chonk_ball" )
 end
-
 
 function begin_state_chonk_ball()
 	animator.setGlobalTag("rotationFlip", self.vsoCurrentDirection)
@@ -318,115 +340,70 @@ function begin_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
 	CurBallFrame = 0
 	BallLastPosition = mcontroller.position()
-	vsoAnim( "bodyState", "chonk_ball" )
-	--initCommonParameters()
+
+	fixOccupantCenters("belly", "center", "body")
 end
 
 function state_chonk_ball()
-
-	vsoAnim( "legsState", "none" )
-	vsoAnim( "tailState", "none" )
-	vsoAnim( "headState", "none" )
-
-	if p.occupants.total > 0 then
-		p.bellyEffects()
-		-- if not stateQueued() and probablyOnGround() and notMoving() then
-		-- 	local escape, who = handleStruggles{ {2, 5}, {5, 15}, {10, 20} }
-		-- 	-- local escape, who = handleStruggles{ {1, 1}, {1, 1}, {1, 1} } -- guarantee escape for testing
-		-- 	if escape then
-		-- 		if p.occupants.total == 1 then
-		-- 			letout( 1 )
-		-- 		else
-		-- 			if who == 1 then
-		-- 				swapOccupants()
-		-- 			end
-		-- 			letout( 2 )
-		-- 		end
-		-- 	end
-		-- end
+	p.handleBelly()
+	p.control.doPhysics()
+	if p.occupants.belly < 2 then
+		vsoEffectWarpIn()
+		p.setState( "smol" )
+		p.doAnims( p.stateconfig.smol.idle, true )
 	end
+
+	local control = p.stateconfig[p.state].control
 
 	local dx = 0
-	local speed = 20
-	if p.occupants.total > 0 then
-		speed = 10
-	end
-	if vehicle.controlHeld( p.control.driver, "down" ) then
-		p.movement.downframes = p.movement.downframes + 1
-	else
-		-- if p.movement.downframes > 0 and p.movement.downframes < 10 and notMoving() and probablyOnGround() then
-		-- 	vsoAnim( "bodyState", "sitdown" )
-		-- 	nextState( "sit" )
-		-- end
-		p.movement.downframes = 0
-	end
-	if vehicle.controlHeld( p.control.driver, "Special1" ) then
-		if not p.movement.wasspecial1 then
-			-- vsoAnim( "bodyState", "unsmolify" )
-			vsoEffectWarpIn()
-			vsoNext( "state_stand" )
-		end
-		p.movement.wasspecial1 = true
-	else
-		p.movement.wasspecial1 = false
-	end
-	if vehicle.controlHeld( p.control.driver, "Special2" ) then
-		if p.occupants.total > 0 then
-			-- letout( p.occupants.total ) -- last eaten
-		end
-	end
+	local dy = 0
 
-	-- p.movement controls, use vanilla methods because they need to be held
-	if vehicle.controlHeld( p.control.driver, "left" ) then
-		dx = dx - 1
-		if vsoAnimEnd( "bodyState" ) then
-			CurBallFrame = CurBallFrame - 1
-			roll_chonk_ball()
-		end
-	end
-	if vehicle.controlHeld( p.control.driver, "right" ) then
-		dx = dx + 1
-		if vsoAnimEnd( "bodyState" ) then
-			CurBallFrame = CurBallFrame + 1
-			roll_chonk_ball()
-		end
-	end
-
-	if not p.control.underWater() then
-		if vehicle.controlHeld( p.control.driver, "down" ) then
-			speed = 10
-			if not probablyOnGround() then
-				mcontroller.applyParameters{ ignorePlatformCollision = true }
+	if p.control.driving then
+		if vehicle.controlHeld( p.control.driver, "Special1" ) then
+			if not p.movement.wasspecial1 then
+				p.movement.wasspecial1 = true
+				vsoEffectWarpIn()
+				p.setState( "stand" )
+				p.doAnims( p.stateconfig.stand.idle, true )
+				return
 			end
 		else
-			mcontroller.applyParameters{ ignorePlatformCollision = false }
+			p.movement.wasspecial1 = false
 		end
-	else
-		p.movement.jumped = false
-		if p.occupants.belly == 2 then
-			speed = 10
+		if vehicle.controlHeld( p.control.driver, "left" ) then
+			dx = dx - 1
+		end
+		if vehicle.controlHeld( p.control.driver, "right" ) then
+			dx = dx + 1
+		end
+		if vehicle.controlHeld( p.control.driver, "up" ) then
+			dy = dy + 1
+		end
+		if vehicle.controlHeld( p.control.driver, "down" ) then
+			dy = dy - 1
 		end
 		if vehicle.controlHeld( p.control.driver, "jump" ) then
-			mcontroller.approachYVelocity( 10, 50 )
-		else
-			mcontroller.approachYVelocity( -10, 50 )
+			p.movement.jumped = true
 		end
 	end
-	if not p.control.underWater() then
-		p.movement.waswater = false
-		mcontroller.setXVelocity( dx * speed )
-		if mcontroller.yVelocity() > 0 and vehicle.controlHeld( p.control.driver, "jump" )  then
-			mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
-		else
-			mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
-		end
+
+	if dy == -1 and p.movement.jumped then
+		mcontroller.applyParameters{ ignorePlatformCollision = true }
 	else
-		p.movement.waswater = true
-		mcontroller.approachXVelocity( dx * speed, 50 )
+		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
+
+	if p.control.underWater() then
+		mcontroller.approachYVelocity( 11, 50 ) --this should make ball vappy float on the surface of water haha
+	end
+
+	roll_chonk_ball(dx, control)
+
 	p.control.updateDriving()
 end
 
 function end_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+
+	fixOccupantCenters("belly", "bellycenter", "body")
 end

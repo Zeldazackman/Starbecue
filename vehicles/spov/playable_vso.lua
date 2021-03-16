@@ -828,6 +828,7 @@ local _ptransition = {}
 
 function p.doTransition( direction, scriptargs )
 	vsoCounterReset( "struggleCount" )
+	if not p.stateconfig[p.state].transitions[direction] then return end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return end
 	local continue = true
@@ -955,18 +956,8 @@ function p.control.doPhysics()
 		mcontroller.setXVelocity( 0 )
 		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
 	else
-		mcontroller.approachYVelocity( 0, 50 )
+		mcontroller.approachXVelocity( 0, 50 )
 		mcontroller.approachYVelocity( -10, 50 )
-	end
-	if p.state ~= "stand" and mcontroller.yVelocity() < -5 then
-		p.setState( "stand" )
-		p.doAnims( p.stateconfig[p.state].control.animations.fall )
-		p.movement.falling = true
-		if p.state == "bed" or p.state == "hug" or p.state == "pinned" or p.state == "pinned_sleep" then
-			vsoUneat( "occupant1" )
-			vsoClearTarget( "occupant1" )
-			vsoUseLounge( false, "occupant1" )
-		end
 	end
 end
 
@@ -1347,7 +1338,10 @@ function p.standardState()
 	p.handleBelly()
 	p.control.doPhysics()
 	p.control.updateDriving()
+	p.whenFalling()
+end
 
+function p.whenFalling() -- an empty function here, meant to be overwritten in other things to return you to stand
 end
 
 function p.idleStateChange()
@@ -1421,9 +1415,7 @@ function p.handleBelly()
 			vsoVictimAnimSetStatus( "occupant"..i, {} )
 		end
 	end
-	if p.control.probablyOnGround() and p.control.notMoving() then
-		p.handleStruggles()
-	end
+	p.handleStruggles()
 end
 
 function p.bellyEffects()
@@ -1442,11 +1434,7 @@ function p.bellyEffects()
 end
 
 function p.standalonePowerLevel()
-	local powerMultiplier = world.threatLevel()
-	if powerMultiplier < 1 then
-		powerMultiplier = 1
-	end
-	return powerMultiplier
+	return world.threatLevel() or 1
 end
 
 function p.doBellyEffects(driver, powerMultiplier)
@@ -1548,7 +1536,10 @@ function p.handleStruggles()
 	end
 
 	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]
-	if struggledata == nil then return end
+	if not struggledata then
+		movetype = nil
+		goto NextStuggler -- no struggles in that location
+	end
 
 	if not vsoAnimEnded( struggledata.part.."State" ) and (
 		vsoAnimIs( struggledata.part.."State", "s_up" ) or
