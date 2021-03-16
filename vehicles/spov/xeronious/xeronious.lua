@@ -19,9 +19,6 @@ Scripts created by:
 
 TODO:
 	-roaming behavior
-	-egg lay
-	-ranged inhale
-
 ]]--
 -------------------------------------------------------------------------------
 
