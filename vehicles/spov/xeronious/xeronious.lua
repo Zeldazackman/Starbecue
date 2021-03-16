@@ -90,6 +90,9 @@ function checkEscapes(args)
 		status = {"vsoindicateout"}
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
+	elseif location == "hug" then
+		p.setState("sit")
+		return doescape(args.index, "hug", {2.5,0}, {}, {})
 	end
 
 	if not p.doTransition(direction, args) then return false end
@@ -317,6 +320,10 @@ end)
 function state_hug()
 	p.standardState()
 	checkEggSitup()
+
+	if p.occupants.hug < 1 then
+		p.setState("sit")
+	end
 end
 
 -------------------------------------------------------------------------------

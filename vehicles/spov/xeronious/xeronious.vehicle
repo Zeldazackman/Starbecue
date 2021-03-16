@@ -995,7 +995,7 @@
 			],
 			"struggle": {
 				"hug" : {
-					"part" : "body", // can be an arms struggle anim later maybe
+					"part" : "arms", // can be an arms struggle anim later maybe
 					"up": { "transition": "up" },
 					"front": { "transition": "down" },
 					"back": { "transition": "down" },

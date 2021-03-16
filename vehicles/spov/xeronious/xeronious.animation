@@ -51,6 +51,11 @@
 					"fly": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 					"fly2": { "frames": 16, "cycle": 1.5, "mode": "end", "priority": 0 },
 
+					"s_back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 }, // temporary dummy ones
+					"s_front": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -319,6 +324,12 @@
 						"fly": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 						"fly2": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 
+						"s_back": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
+
+
 						"none": { "properties": {} }
 					}
 				}
@@ -345,6 +356,11 @@
 						"fall": { "properties": { "image": "spov/arms/arms_bg.png:fall.<frame><directives>" } },
 						"fly": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
 						"fly2": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
+
+						"s_back": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
