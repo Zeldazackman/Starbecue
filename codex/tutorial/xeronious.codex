@@ -9,65 +9,59 @@
 		"price" : 200
 	},
 	"contentPages" : [
-"So you've been turned into a Kaiju...
+"^cyan;So you've been turned into a Kaiju...^reset;
 
-Xeronious can be in several states each explained on its own page, but there is a menu accessible in all states, accessible via tech action 3 (H)
+First off, if you want to turn back, there is a menu accessible via the ^green;Tech Action 3^reset; keybind. This must be bound manually in the settings menu, recommended keybind is ^green;[H]^reset;. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu has other settings too.
 
-This menu allows you to select from various effects applied to your food, Player, NPC, and Monster alike, digesting will restore your hunger, and if that is full, restore your health as well
+If you have selected ^yellow;soft digest^reset;, prey that get brought to 1HP will be put into ^cyan;eggs^reset;, which can then be laid when you let them out.
 
-If you have selected soft digest, upon reaching 1HP occupants of your belly will be put into eggs, which can then be laid if you can release the occupant in your current state
+Xeronious has space for ^cyan;three prey in their belly, and one in the tail^reset;. Prey can struggle back and forth between these locations at any time.
 
-Xeronious has space for three prey in their belly, and one in the tail, prey can struggle back and forth between these locations
+Xeronious can be positioned in ^cyan;several different states^reset;, each explained on its own page:
 
 Stand -> pg.2-3
 Crouch -> pg.3
 Fly -> pg.4
 Sit -> pg.5",
 
-"State Stand
+"^cyan;Stand State^reset;
 
-In this state you can walk and jump around as you would expect! and you can fly if you press space in the air! pg.4
+In this state you can walk and jump around as you would expect! You can also ^cyan;fly (see pg.4)^reset; if you press ^green;space in the air^reset;!
+^green;Holding down^reset; allows you to walk at a slower pace. If you get ^cyan;too full^reset; you are also forced to walk, your jump height is nerfed, and you become unable to fly, ^darkgray;fatty~^reset;
 
-Holding down allows you to walk at a slower pace, if you get too full you are also forced to walk, and your jump height is nerfed and you become unable to fly, fatty
+^green;Primary fire^reset;, if you are hovering your cursor over an edible creature, lets you ^cyan;eat them^reset;! (There is no animation for when *not* eating currently.)
+If the prey you clicked on is ^green;near your tail^reset;, you can eat them ^cyan;with that as well^reset;!
+^green;Alt fire^reset; lets you inhale and ^cyan;succ nearby creatures in to eat^reset; as long as you have space!
 
-Pressing space while in the air lets you fly
+If you want to let prey out, you can either open the menu and press ^yellow;[Let Out]^reset;, or press ^green;Tech Action 2^reset; (same story here, recommended key is ^green;[G]^reset;). If you are ^green;holding down^reset; then it will ^cyan;release them anally^reset; if they were in the belly.",
 
-Primary fire lets you bap, if you are hovering your cursor over an edible creature when you do so, you can eat them! (there is no animation for when *not* eating currently)
+"You can tap ^green;down^reset; to ^cyan;sit down (see pg.5)^reset;.
 
-If the prey you clicked on is near your tail, you can eat them with that as well!
+If you approach a space you are ^cyan;too tall to fit through^reset;, you can ^green;hold down^reset; and attempt to ^cyan;crawl into it (see pg.3)^reset;, or have it ^yellow;automatically triggered^reset; via a menu option.
 
-Alt fire lets you inhale and succ nearby creatures in to eat as long as you have space!",
 
-"you can tap down to sit down pg.5
+^cyan;Crouch State^reset;
 
-If you apporach a space you are too tall to fit through, you can hold down and attempt to crawl into it, or have it automatically triggered via a menu option pg.3
+This state lets you crawl around through small spaces. it can only be exited if there is enough space to ^cyan;stand up (see pg.2)^reset;, and if ^green;down is no longer held^reset;.
 
-If you want to let prey out, you can use the menu, or press tech action 2 (G), if you are holding down then it will release them anally if they were in the belly
+Prey can only be ^cyan;let out via the tail^reset; in this state.",
 
-State Crouch
+"^cyan;Fly State^reset;
 
-This state lets one crawl around through small spaces, it can only be exited if there is enough space to stand up, and if down is no longer held pg.2
+In this state you can fly around freely! But the more prey in you, the more you're weighed down. If you're carrying ^cyan;three prey or more^reset; you'll drop like a rock and be ^cyan;unable to fly (see pg.2)^reset;.
 
-Prey can only be let out via the tail in this state",
+If you hover over some prey and ^green;Primary Fire^reset; click on them, you may be able to grab them with your feet and shove them ^cyan;up your butt and into your belly^reset;!
+If the prey you clicked on is ^green;near your tail^reset;, you can eat them ^cyan;with that as well^reset;!
+^green;Alt fire^reset; lets you inhale and ^cyan;succ nearby creatures in to eat^reset;!
 
-"State Fly
+If you want to let prey out, you can either open the menu and press ^yellow;[Let Out]^reset;, or press ^green;Tech Action 2^reset; (same story here, recommended key is ^green;[G]^reset;). If you are ^green;holding down^reset; then it will ^cyan;release them anally^reset; if they were in the belly.",
 
-In this state you can fly around freely! but the more prey in you, the more you're weighed down, if you're carrying three prey or more you'll drop like a rock and be unable to fly pg.2
+"^cyan;Sit State^reset;
 
-If you hover over some prey and Primary Fire click on them, you may be able to grab them with your feet and shove them up your butt and into your belly!
+While sitting, people can ^green;interact^reset; with you to let you ^cyan;hug them^reset;!
 
-If the prey you clicked on is near your tail, you can eat them with that as well!
+You can tap ^green;up^reset; to ^cyan;stand back up (see pg.2)^reset;.
 
-Alt fire lets you inhale and succ nearby creatures in to eat!
-
-If you want to let prey out, you can use the menu, or press tech action 2 (G), if you are holding down then it will release them anally if they were in the belly",
-
-"State Sit
-
-While sitting, people can interact with you to let you hug them!
-
-You can tap up to stand back up pg.2
-
-You cannot lay eggs or release people anally while sitting, but you can let them out of the tail, and orally"
+You ^red;cannot lay eggs or release people anally^reset; while sitting, but you can still let them out of the ^cyan;tail, and orally^reset;."
 	]
 }
