@@ -23,7 +23,10 @@ Last but not least, even more functionality can be unlocked through the Playable
 
 ### Xeronious
 
-This commissioned kaiju is heavily a work in progress. Currently it can eat up to 3 people at once, sit down, and hug you, and the playable version can walk around and crawl through shorter spaces.
+This commissioned kaiju is able to fit a total of three prey in his belly! he can also eat one with his tail
+- Sitting down and hugging you
+- Letting you struggle and between the belly and tail
+- Soft digest putting you in an egg they can lay
 
 ### Playable VSOs
 

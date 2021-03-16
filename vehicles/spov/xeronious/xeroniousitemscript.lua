@@ -7,7 +7,7 @@ defaultDescription = "xeronious"
 
 defaultIcon = "/vehicles/spov/xeronious/xeroniousicon.png"
 
-defaultFrame = "/vehicles/spov/xeronious/xeronious.png:normal"
+defaultFrame = "/vehicles/spov/xeronious/xeronious.png"
 
 defaultValues = {
 	name = "xeronious"

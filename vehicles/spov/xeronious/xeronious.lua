@@ -86,7 +86,7 @@ function checkEscapes(args)
 	if location == "tail" then
 		direction = "escapetail"
 		monstercoords = {-6, 0}
-	elseif location == "belly" and move == "down" and p.stateconfig[p.state].transitions.escapeanalvore then
+	elseif location == "belly" and move == "down" then
 		status = {"vsoindicateout"}
 		direction = "escapeanalvore"
 		monstercoords = {-0.75, -3}
@@ -101,16 +101,20 @@ function checkEscapes(args)
 	return returnval[1], returnval[2], returnval[3]
 end
 
-function extraBellyEffects()
-	for i = 1, p.occupants.total do
-		local eid = vsoGetTargetId( "occupant"..i )
-		if eid and world.entityExists(eid) then
-			local health = world.entityHealth(eid)
-			if p.occupantLocation[i] == "belly" and health[1] == 1 and p.settings.bellyeffect == "softdigest" then
-				p.smolpreyspecies[i] = "xeronious_egg"
-				p.smolprey( i )
-				if p.settings.autoegglay or not p.control.driving then p.doTransition("escape", {index=i, direction="down"}) end
-				return
+function p.extraBellyEffects(i, eid, health)
+	if p.occupantLocation[i] == "belly" and health[1] == 1 and p.settings.bellyeffect == "softdigest" then
+		p.smolpreyspecies[i] = "xeronious_egg"
+		p.smolprey( i )
+		if p.settings.autoegglay or not p.control.driving then p.doTransition("escape", {index=i, direction="down"}) end
+		return
+	end
+end
+
+function checkEggSitup()
+	if not p.control.driving then
+		for i = 1, p.occupants.total do
+			if p.smolpreyspecies[i] == "xeronious_egg" then
+				return p.doTransition("up")
 			end
 		end
 	end
@@ -176,8 +180,8 @@ end)
 function state_stand()
 
 	p.idleStateChange()
-	extraBellyEffects()
 	p.handleBelly()
+
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3, 1})
 
@@ -264,6 +268,7 @@ end)
 
 function state_sit()
 	p.standardState()
+	checkEggSitup()
 
 	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
 		if p.occupants.total > 0 then
@@ -309,7 +314,10 @@ p.registerStateScript( "hug", "unhug", function( args )
 	end
 end)
 
-state_hug = p.standardState
+function state_hug()
+	p.standardState()
+	checkEggSitup()
+end
 
 -------------------------------------------------------------------------------
 
@@ -410,7 +418,7 @@ function state_fly()
 
 	p.idleStateChange()
 	p.handleBelly()
-	extraBellyEffects()
+
 
 	p.control.primaryAction()
 	p.control.altAction()

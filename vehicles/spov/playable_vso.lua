@@ -1408,7 +1408,7 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
-	if p.occupants.belly + p.occupants.tail > 0 and p.stateconfig[p.state].bellyEffect ~= false then
+	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= false then
 		p.bellyEffects()
 	else
 		for i = 1, p.maxOccupants.total do
@@ -1480,8 +1480,13 @@ function p.doBellyEffects(driver, powerMultiplier)
 			end
 
 			if driver then addHungerHealth( driver, hunger_change) end
+
+			p.extraBellyEffects(i, eid, health)
 		end
 	end
+end
+
+function p.extraBellyEffects() -- something for the PVSOs to replace
 end
 
 randomDirections = { "B", "F", "U", "D", "J", nil}
