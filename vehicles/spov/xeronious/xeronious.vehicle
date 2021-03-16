@@ -661,7 +661,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly", "controlled" : true },
-					"back": { "transition": "escapetail" },
+					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -871,7 +871,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly", "controlled" : true },
-					"back": { "transition": "escapetail" },
+					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },
@@ -1033,7 +1033,7 @@
 					"part" : "tail",
 					"up": { "transition": "up" },
 					"front": { "transition": "tailtobelly", "controlled" : true },
-					"back": { "transition": "escapetail" },
+					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 5 },

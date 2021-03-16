@@ -196,10 +196,11 @@ function p.firstNotLounging(entityaimed)
 	end
 end
 
-function moveOccupantLocation(args, location1, location2)
-	if locationEmpty(location1) then return false end
-	if locationFull(location2) then return false end
-	p.occupantLocation[args.index] = location2
+function moveOccupantLocation(args, part, location)
+	if locationFull(location) then return false end
+	vsoVictimAnimReplay( "occupant"..args.index, location.."center", part.."State")
+	p.occupantLocation[args.index] = location
+	return true
 end
 
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
