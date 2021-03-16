@@ -14,18 +14,18 @@
 	, "tooltipFields": {
 		"statusLabel": "A fluffy kaiju who can eat you in several ways!"
 	}
-	, "tooltipSubtitle" : "fluffy kaiju"
+	, "tooltipSubtitle" : "xeronious"
 
 	, "orientations": [{
 			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
-			, "imagePosition": [-64, 0]
+			, "imagePosition": [-48, 0]
 			, "direction": "left"
 			, "flipImages": true
 			, "spaceScan": 0.1
 			, "anchors": ["bottom"]
 		}, {
 			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
-			, "imagePosition": [-64, 0]
+			, "imagePosition": [-48, 0]
 			, "direction": "right"
 			, "spaceScan": 0.1
 			, "anchors": ["bottom"]

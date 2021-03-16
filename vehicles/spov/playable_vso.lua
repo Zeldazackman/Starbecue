@@ -652,6 +652,8 @@ function p.loadStoredData()
 			vsoSetDirectives( vsoMakeColorReplaceDirectiveString( storage.colorReplaceMap ) );
 		end
 
+		sb.logInfo("Loaded VSO data")
+
 		if vsoPill( "heal" ) then p.settings.bellyeffect = "heal" end
 		if vsoPill( "digest" ) then p.settings.bellyeffect = "digest" end
 		if vsoPill( "softdigest" ) then p.settings.bellyeffect = "softdigest" end
@@ -1434,12 +1436,13 @@ function p.bellyEffects()
 end
 
 function p.standalonePowerLevel()
-	return world.threatLevel() or 1
+	local power = world.threatLevel()
+	if type(power) ~= "number" or power < 1 then return 1 end
+	return power
 end
 
 function p.doBellyEffects(driver, powerMultiplier)
 	local status = nil
-	local monsterstatus = nil
 	local hungereffect = 0
 	if p.settings.bellyeffect == "digest" then
 		hungereffect = 1
