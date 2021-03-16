@@ -9,72 +9,70 @@
 		"price" : 200
 	},
 	"contentPages" : [
-"So you've been turned into a Vaporeon...
+"^cyan;So you've been turned into a Vaporeon...^reset;
 
-Vappy can be in several states each explained on its own page, but there is a menu accessible in all states, accessible via tech action 3 (H)
+First off, if you want to turn back, there is a menu accessible via the ^green;Tech Action 3^reset; keybind. This must be bound manually in the settings menu, recommended keybind is ^green;[H]^reset;. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu also allows you to select from various belly effects applied to your food, Player, NPC, and Monster alike. Digesting will restore your hunger, and if that is full, it'll restore your health as well.
 
-This menu allows you to select from various effects applied to your food, Player, NPC, and Monster alike, digesting will restore your hunger, and if that is full, restore your health as well
+Vappy has space for two prey in their belly.
 
-Vappy has space for two prey in their belly
+Vappy can be positioned in ^cyan;several different states^reset;, each explained on its own page:
 
 Stand -> pg.2
 Smol -> pg.3
 Sit -> pg.4
 Lay -> pg.5
-Sleep -pg.6
-Back -pg.7 ",
+Sleep -> pg.6
+Back -> pg.7 ",
 
-"Stand State
+"^cyan;Stand State^reset;
 
-In this state you can walk and jump around as you would expect! Holding down allows you to walk at a slower pace, if you get too full you are also forced to walk, and your jump height is nerfed, fatty
+In this state you can walk and jump around as you would expect! ^green;Holding down^reset; allows you to walk at a slower pace. If you get ^cyan;too full^reset; you are also forced to walk, and your jump height is nerfed, ^darkgray;fatty~^reset;
 
-If you just tap down, you can sit down pg.4
+If you just ^green;tap down^reset;, you can ^cyan;sit down (see pg.4)^reset;.
 
-Primary fire lets you bap with your foreleg, if you are hovering your cursor over an edible creature when you do so, you can eat them! Your belly has enough space for two prey
+^green;Primary fire^reset; lets you bap with your foreleg. If you are hovering your cursor over an edible creature when you do so, you can ^cyan;eat them^reset;! Otherwise it does some damage to enemies that it hits.
+^green;Alt fire^reset; allows you to shoot a stream of water, however this consumes energy.
 
-Alt fire allows you to shoot a stream of water, however this consumes energy
+But sometimes being this big is inconvenient, huh? Luckily, pressing ^green;[F]^reset; allows one to become ^cyan;smol (see pg.3)^reset;.
 
-Sometimes being big is inconvenient, pressing tech action 1 (F) allows one to become smol pg.3
+If you want to let prey out, you must be in this state. Either open the menu and press ^yellow;[Let Out]^reset;, or press ^green;Tech Action 2^reset; (same story here, recommended key is ^green;[G]^reset;).",
 
-If you want to let prey out, you must be in this state and use the menu, or press tech action 2 (G)",
-
-"Smol State
+"^cyan;Smol State^reset;
 
 The smol state has two versions!
-If you had 0-1 occupants, you'll be a generally normal fishcat able to jump and walk around bapping and spraying water same as the Stand State, but unable to eat more prey
+If you have 0 or 1 occupants, you'll be a generally normal fishcat able to jump and walk around bapping and spraying water same as the ^cyan;Stand State^reset;, but unable to eat more prey.
 
-However if you had 2 occupants, you'll become a chonk ball with a belly too big to walk with, and will have to roll around to move
+However if you had 2 occupants, you'll become a ^cyan;chonk ball with a belly too big to walk with^reset;, and will have to ^green;roll around to move.^reset;
 
-Being smol has its consequences, as while you are smol, if you don't have any occupants in your belly, you can be eaten by other PVSOs
+Being smol has its consequences though, as while you are smol, if you don't have any occupants in your belly, you can be ^cyan;eaten by other PVSOs^reset;!
 
-Pressing tech action 1 (F) will return you to your normal size pg.2",
+Pressing ^green;[F]^reset; will return you to your ^cyan;normal size (see pg.2)^reset;",
 
-"Sit State
+"^cyan;Sit State^reset;
 
-In the sit state, you can tap down again to lay down, if your belly is empty, and if someone is standing in the right place just in front of you, you'll pin them underneath you pg.5
+In the sit state, you can tap ^green;down^reset; again to ^cyan;lay down (see pg.5)^reset;. If your belly is empty, and someone is standing in the right place just in front of you, you'll ^cyan;pin them underneath you^reset;.
 
-You can also tap up to stand back up pg.2",
+You can also tap ^green;up^reset; to ^cyan;stand back up (see pg.2)^reset;.",
 
-"Lay State
+"^cyan;Lay State^reset;
 
-if you have pinned someone under you, you can lick them with primary fire, and then absorb them into your belly by pressing space!
+if you have pinned someone under you, you can ^cyan;lick^reset; them with ^green;primary fire^reset;, and then ^cyan;absorb them into your belly^reset; by pressing ^green;space^reset;!
 
-You can tap down again to go to sleep pg.6
+You can tap ^green;down^reset; again to ^cyan;fall asleep (see pg.6)^reset;.
 
-Or you can tap up to sit back up, freeing anyone pinned under you pg.4
+Or you can tap ^green;up^reset; to ^cyan;sit back up (see pg.4)^reset;, freeing anyone pinned under you.
 
-Or you can press the directions to either side to roll over, as long as you have less than 2 occupants, you'd be too fat to do so if you tried pg.7",
+As long as you have less than 2 occupants, you can also press ^green;either left or right^reset; to ^cyan;roll over (see pg.7)^reset;. If you do have 2 occupants, you'd be too fat to do so if you tried.",
 
-"Sleep State
+"^cyan;Sleep State^reset;
 
-If you have someone pinned beneath you, you can press space to absorb them into your belly
+Pretty much all you can do here is ^cyan;wake up (see pg.5)^reset; by pressing ^green;up^reset;.",
 
-You can wake up and go back to the lay state by pressing up Pg.5",
+"^cyan;Back State^reset;
 
-"Back State
+While laying on your back, as long as you have an empty belly people can ^cyan;lay on top of you like a bed^reset;!
+If they do so you can press ^green;down^reset; to hug them, keeping them from getting off when they struggle, and while you're hugging someone you can press ^green;space^reset; to ^cyan;absorb them^reset; as well!
 
-While laying on your back, as long as you have an empty belly people can lay on top of you like a bed! if they do so you can press down to hug them, keeping them from getting off when they struggle, and while you're hugged you can press space to absorb them as well!
-
-You can press to either side to roll back over, taking anyone on your belly and pinning them beneath you pg.5"
+You can press to ^green;either side^reset; to ^cyan;roll back over (see pg.5)^reset;, taking anyone on your belly and ^cyan;pinning them beneath you^reset;."
 	]
 }
