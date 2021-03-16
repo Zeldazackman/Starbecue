@@ -12,5 +12,5 @@
 	"animationConfig" : "damagesoftdigest.animation",
 
 	"label" : "Being Soft Digested",
-	"icon" : "/stats/stomachacid/stomachacid.png"
+	"icon" : "/stats/playablevsoeffects/softdigest.png"
 }

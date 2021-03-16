@@ -1443,7 +1443,7 @@ function p.standalonePowerLevel()
 end
 
 function p.doBellyEffects(driver, powerMultiplier)
-	local status = nil
+	local status = "pvsoremovebellyeffects"
 	local hungereffect = 0
 	if p.settings.bellyeffect == "digest" then
 		hungereffect = 1
@@ -1460,7 +1460,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 			status = "damagesoftdigest"
 		end
 	elseif p.settings.bellyeffect == "heal" then
-		status = "voreheal"
+		status = "pvsovoreheal"
 	end
 
 

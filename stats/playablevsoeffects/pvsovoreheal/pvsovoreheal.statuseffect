@@ -1,0 +1,16 @@
+{
+	"name" : "pvsovoreheal",
+	"blockingStat" : "digestionImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"pvsovoreheal.lua"
+	],
+
+	"animationConfig" : "pvsovoreheal.animation",
+
+	"label" : "Healing Vore",
+	"icon" : "/stats/playablevsoeffects/voreheal.png"
+}

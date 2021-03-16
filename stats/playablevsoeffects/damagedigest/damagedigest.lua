@@ -3,6 +3,7 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
+	status.removeEphemeralEffect("pvsovoreheal")
 	status.removeEphemeralEffect("damagesoftdigest")
 	status.removeEphemeralEffect("displaydamagesoftdigest")
 	status.removeEphemeralEffect("displaydamagedigest")

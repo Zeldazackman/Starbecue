@@ -12,5 +12,5 @@
 	"animationConfig" : "damagedigest.animation",
 
 	"label" : "Being Digested",
-	"icon" : "/stats/stomachacid/stomachacid.png"
+	"icon" : "/stats/playablevsoeffects/digest.png"
 }
