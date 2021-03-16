@@ -1430,7 +1430,7 @@ function p.bellyEffects()
 
 	if driver then
 		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-			p.doBellyEffects(driver, powerMultiplier)
+			p.doBellyEffects(driver, math.log(powerMultiplier))
 		end)
 	else
 		p.doBellyEffects(false, p.standalonePowerLevel())
