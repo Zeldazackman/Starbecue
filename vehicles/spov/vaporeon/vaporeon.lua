@@ -102,15 +102,15 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "stand", "eat", function( args )
-	return dovore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 
 p.registerStateScript( "stand", "letout", function( args )
-	return doescape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end)
 
 p.registerStateScript( "stand", "bapeat", function()
-	if checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 end)
 
 function state_stand()
@@ -224,7 +224,7 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "bed", "unbed", function(args)
-	return doescape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
+	return p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
 end)
 
 state_bed = p.standardState
@@ -252,7 +252,7 @@ end
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "pinned", "unpin", function(args)
-	return doescape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
+	return p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
 end)
 
 p.registerStateScript( "pinned", "absorb", function(args)

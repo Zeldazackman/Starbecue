@@ -96,13 +96,13 @@ p.movement = {
 	lastYVelocity = 0
 }
 
-function locationFull(location)
+function p.locationFull(location)
 	if p.occupants.total == p.maxOccupants.total then
-		sb.logError("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
+		sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
 		return true
 	else
 		if p.occupants[location] == p.maxOccupants[location] then
-			sb.logError("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
+			sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
 			return true
 		else
 			return false
@@ -110,13 +110,13 @@ function locationFull(location)
 	end
 end
 
-function locationEmpty(location)
+function p.locationEmpty(location)
 	if p.occupants.total == 0 then
-		sb.logError( "["..p.vsoMenuName.."] No one to let out!" )
+		sb.logInfo( "["..p.vsoMenuName.."] No one to let out!" )
 		return true
 	else
 		if p.occupants[location] == 0 then
-			sb.logError( "["..p.vsoMenuName.."] No one in "..location.." to let out!" )
+			sb.logInfo( "["..p.vsoMenuName.."] No one in "..location.." to let out!" )
 			return true
 		else
 			return false
@@ -124,10 +124,7 @@ function locationEmpty(location)
 	end
 end
 
-function dovore(args, location, statuses, sound )
-	if p.entityLounging( args.id ) then return false end
-	if locationFull(location) then return false end
-
+function p.doVore(args, location, statuses, sound )
 	local i = p.occupants.total + 1
 	if p.eat( args.id, i, location ) then
 		vsoMakeInteractive( false )
@@ -143,10 +140,10 @@ function dovore(args, location, statuses, sound )
 	end
 end
 
-function doescape(args, location, monsteroffset, statuses, afterstatus )
+function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
 
-	if locationEmpty(location) then return false end
+	if p.locationEmpty(location) then return false end
 	local i = args.index
 	local victim = vsoGetTargetId( "occupant"..i )
 
@@ -163,8 +160,8 @@ function doescape(args, location, monsteroffset, statuses, afterstatus )
 	end
 end
 
-function checkEatPosition(position, location, transition, noaim)
-	if not locationFull(location) then
+function p.checkEatPosition(position, location, transition, noaim)
+	if not p.locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
 			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
 			includedTypes = {"creature"}
@@ -196,8 +193,8 @@ function p.firstNotLounging(entityaimed)
 	end
 end
 
-function moveOccupantLocation(args, part, location)
-	if locationFull(location) then return false end
+function p.moveOccupantLocation(args, part, location)
+	if p.locationFull(location) then return false end
 	vsoVictimAnimReplay( "occupant"..args.index, location.."center", part.."State")
 	p.occupantLocation[args.index] = location
 	return true
@@ -298,9 +295,9 @@ function p.occupantArray( maybearray )
 	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
 		if maybearray.location then
 			if maybearray.eating then
-				if locationFull(maybearray.location) then return maybearray.failTransition end
+				if p.locationFull(maybearray.location) then return maybearray.failTransition end
 			else
-				if locationEmpty(maybearray.location) then return maybearray.failTransition end
+				if p.locationEmpty(maybearray.location) then return maybearray.failTransition end
 			end
 		end
 		return maybearray
@@ -563,8 +560,16 @@ end
 p.smolpreyspecies = {}
 p.smolpreyfilepath = {}
 
+function p.inedible(targetid)
+	local inedibleCreatures = root.assetJson( "/vehicles/spov/pvso_general.config:inedibleCreatures")
+	for i = 1, #inedibleCreatures do
+		if world.entityType(targetid) == inedibleCreatures[i] then return true end
+	end
+	return false
+end
+
 function p.eat( targetid, seatindex, location )
-	if targetid == nil or p.entityLounging(targetid) then return false end -- don't eat self
+	if targetid == nil or p.entityLounging(targetid) or p.inedible(targetid) or p.locationFull(location) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
 		callScript = "p.isThisPreyYours", callScriptArgs = { targetid }
