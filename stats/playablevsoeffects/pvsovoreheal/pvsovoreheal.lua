@@ -11,7 +11,7 @@ function init()
 end
 
 function update(dt)
-	status.giveResource("health", 0.01 * dt * self.powerMultiplier)
+	status.modifyResourcePercentage("health", 0.01 * dt * self.powerMultiplier)
 end
 
 function uninit()
