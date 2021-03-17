@@ -343,7 +343,7 @@ end
 function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
 	for i = 1, p.maxOccupants.total do
-		if entity == vehicle.entityLoungingIn( "occupant"..i ) then return true end
+		if entity == (vehicle.entityLoungingIn( "occupant"..i ) or vsoGetTargetId( "occupant"..i )) then return true end
 	end
 	return false
 end
@@ -543,14 +543,6 @@ function p.edible( targetid, seatindex, source )
 	end
 end
 
-function p.isThisPreyYours( targetid )
-	for i = 1, p.occupants.total do
-		if targetid == vsoGetTargetId("Occupant"..i) then
-			return true
-		end
-	end
-end
-
 function p.isMonster( id )
 	if id == nil then return false end
 	if not world.entityExists(id) then return false end
@@ -572,7 +564,7 @@ function p.eat( targetid, seatindex, location )
 	if targetid == nil or p.entityLounging(targetid) or p.inedible(targetid) or p.locationFull(location) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.isThisPreyYours", callScriptArgs = { targetid }
+		callScript = "p.entityLounging", callScriptArgs = { targetid }
 	} )
 	local edibles = world.entityQuery( world.entityPosition(targetid), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
