@@ -11,10 +11,7 @@ function init()
 end
 
 function update(dt)
-	local health = world.entityHealth(entity.id())
-	if health[1] > ( 0.01 * dt * self.powerMultiplier) then
-		status.giveResource("health", 0.01 * dt * self.powerMultiplier)
-	end
+	status.giveResource("health", 0.01 * dt * self.powerMultiplier)
 end
 
 function uninit()

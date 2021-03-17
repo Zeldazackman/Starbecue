@@ -238,7 +238,9 @@ function p.updateOccupants()
 			vsoClearTarget( "occupant"..i)
 			lastFilled = false
 		end
-		animator.setAnimationState( "occupant"..i.."state", "empty" )
+		if not self.sv.va[ "occupant"..i ].visible then
+			animator.setAnimationState( "occupant"..i.."state", "empty" )
+		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 	p.occupants.belly = p.occupants.belly + p.fattenBelly + p.occupants.womb
