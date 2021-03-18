@@ -237,6 +237,7 @@ function p.updateOccupants()
 		else
 			vsoClearTarget( "occupant"..i)
 			lastFilled = false
+			animator.setAnimationState( "occupant"..i.."state", "empty" )
 		end
 		if not self.sv.va[ "occupant"..i ].visible then
 			animator.setAnimationState( "occupant"..i.."state", "empty" )
