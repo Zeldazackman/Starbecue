@@ -4,12 +4,12 @@
 require("/scripts/vore/vsosimple.lua")
 
 function vsoEat( targetid, seatname ) -- overwriting this function from vsosimple with a fixed version
-	
+
 	if world.entityExists( targetid ) then
-	
+
 		vehicle.setLoungeEnabled( seatname, true )
 		--mcontroller.setAnchorState( self.vsoLoungeNameToIndex[ seatname ], true );
-		
+
 		local eatst = self.sv.eaten[ seatname ];
 		if eatst ~= nil
 		and eatst.id ~= nil -- this is the fix!
@@ -24,9 +24,9 @@ function vsoEat( targetid, seatname ) -- overwriting this function from vsosimpl
 		else
 			self.sv.eaten[ seatname ] = { id=targetid, success=false }
 		end
-		
+
 		vsoEatForce( targetid, self.vsoLoungeNameToIndex[ seatname ] )
-		
+
 		return true;
 	end
 	return false;
@@ -1459,7 +1459,7 @@ function p.bellyEffects()
 
 	if driver then
 		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-			p.doBellyEffects(driver, math.log(powerMultiplier))
+			p.doBellyEffects(driver, math.log(powerMultiplier)+1)
 		end)
 	else
 		p.doBellyEffects(false, p.standalonePowerLevel())
