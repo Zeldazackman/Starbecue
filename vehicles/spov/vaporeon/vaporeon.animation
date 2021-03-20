@@ -127,6 +127,7 @@
 					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 },
 					"pinlook": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3 },
+					"waterspray": { "frames": 1, "cycle": 1, "mode": "end", "priority": 3 },
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 }
@@ -434,6 +435,7 @@
 						"look": { "properties": { "image": "spov/vaporeon_head.png:look.<frame><directives>" } },
 						"pinlook": { "properties": { "image": "spov/vaporeon_head.png:pinlook.<frame><directives>" } },
 						"lick": { "properties": { "image": "spov/vaporeon_head.png:lick.<frame><directives>" } },
+						"waterspray": { "properties": { "image": "spov/vaporeon_head.png:waterspray.<frame><directives>" } },
 
 						"smol.idle": { "properties": { "image": "spov/vaporeon_small_head.png:idle.<frame><directives>" } },
 						"smol.blink": { "properties": { "image": "spov/vaporeon_small_head.png:blink.<frame><directives>" } }

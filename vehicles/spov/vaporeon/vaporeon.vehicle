@@ -241,6 +241,7 @@
 					"script": "bapeat"
 				},
 				"altAction": {
+					"animation": { "head" : "waterspray"},
 					"projectile": {
 						"name": "vapwatergun",
 						"position": [ 2.75, -0.125 ],
