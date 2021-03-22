@@ -658,7 +658,7 @@ function p.smolprey( seatindex )
 		if p.smolpreyfilepath[seatindex] then
 			animator.setPartTag( "occupant"..seatindex, "smolpath", p.smolpreyfilepath[seatindex])
 		else
-			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.smolpreyspecies[seatindex].."/spov/default/smol/body.png:smolprey")
+			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.smolpreyspecies[seatindex].."/spov/default/smol/smol_body.png:smolprey")
 		end
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		vsoAnim( "occupant"..seatindex.."state", "smol" )
