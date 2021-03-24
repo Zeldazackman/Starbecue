@@ -866,7 +866,7 @@
 				"body": "smol.idle",
 				"legs": "smol.idle",
 				"head": "smol.idle",
-				"tail": "none"
+				"tail": "smol.idle"
 			},
 			"idleAnimations": [
 				{ "head": "smol.blink" }
@@ -916,7 +916,7 @@
 					"walk": {
 						"legs": "smol.walk",
 						"body": "smol.idle",
-						"tail": "none",
+						"tail": "smol.walk",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -928,7 +928,7 @@
 					"run": {
 						"legs": "smol.run",
 						"body": "smol.idle",
-						"tail": "none",
+						"tail": "smol.run",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -940,7 +940,7 @@
 					"jump": {
 						"legs": "smol.jump",
 						"body": "smol.jump",
-						"tail": "none",
+						"tail": "smol.jump",
 						"offset" : {
 							"parts" : [
 								{ "y": [0, 1, 2, 2], "head": true }
@@ -950,7 +950,7 @@
 					"fall": {
 						"legs": "smol.fall",
 						"body": "smol.fall",
-						"tail": "none",
+						"tail": "smol.fall",
 						"offset" : {
 							"parts" : [
 								{ "y": [2, 2, 1, 0], "head": true }
@@ -960,12 +960,12 @@
 					"swimidle": {
 						"legs": "smol.swimidle",
 						"body": "smol.idle",
-						"tail": "none"
+						"tail": "smol.swimidle"
 					},
 					"swim": {
 						"legs": "smol.swim",
 						"body": "smol.idle",
-						"tail": "none",
+						"tail": "smol.swim",
 						"offset" : {
 							"parts" : [
 								{ "y": [ 0, -1, -2, 0 ], "head": true }

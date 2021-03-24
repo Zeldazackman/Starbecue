@@ -113,6 +113,17 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+
+					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol.swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -414,6 +425,17 @@
 
 						"swimidle": { "properties": { "image": "spov/<skin>/tail.png:swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/<skin>/tail.png:swim.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:stand.<frame><directives>" } },
+
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:run.<frame><directives>" } },
+
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:fall.<frame><directives>" } },
+
+						"smol.swimidle": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:swimidle.<frame><directives>" } },
+						"smol.swim": { "properties": { "image": "spov/<skin>/smol/smol_tail.png:swim.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
