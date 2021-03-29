@@ -116,7 +116,20 @@
 
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config"
 	},
-
+	"locations" :{
+		"regular" :[
+			"belly",
+			"hug",
+			"shaft",
+			"knot"
+		],
+		"sided" : [
+			"ball"
+		],
+		"combine" :[
+			["belly", "fatten"]
+		]
+	},
 	"maxOccupants" : {
 		"total" : 2, // could potentially be 3 but making it so I don't have ot fuck with the menu
 		"belly" : 2,

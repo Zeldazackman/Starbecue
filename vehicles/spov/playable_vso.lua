@@ -68,33 +68,10 @@ end
 
 p = {
 	maxOccupants = { --basically everything I think we'd need
-		total = 0,
-		belly = 0,
-		womb = 0,
-		shaft = 0,
-		knot = 0,
-		ballL = 0,
-		ballR = 0,
-		breastL = 0,
-		breastR = 0,
-		hug = 0,
-		tail = 0,
-		other = 0
-
+		total = 0
 	},
 	occupants = {
-		total = 0,
-		belly = 0,
-		womb = 0,
-		shaft = 0,
-		knot = 0,
-		ballL = 0,
-		ballR = 0,
-		breastL = 0,
-		breastR = 0,
-		hug = 0,
-		tail = 0,
-		other = 0
+		total = 0
 	},
 	occupantLocation = {},
 	occupantOffset = 1,
@@ -235,22 +212,19 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 		animator.burstParticleEmitter( emotename )
 	end
 end
+function p.ressetOccupantCount()
+	p.occupants.total = 0
+	for i = 1, #p.locations.regular do
+		p.occupants[p.locations.regular[i]] = 0
+	end
+	for i = 1, #p.locations.sided do
+		p.occupants[p.locations.sided[i].."R"] = 0
+		p.occupants[p.locations.sided[i].."L"] = 0
+	end
+end
 
 function p.updateOccupants()
-	p.occupants = {
-		total = 0,
-		belly = 0,
-		womb = 0,
-		shaft = 0,
-		knot = 0,
-		ballL = 0,
-		ballR = 0,
-		breastL = 0,
-		breastR = 0,
-		hug = 0,
-		tail = 0,
-		other = 0
-	}
+	p.ressetOccupantCount()
 
 	local lastFilled = true
 	for i = 1, p.maxOccupants.total do
@@ -273,31 +247,34 @@ function p.updateOccupants()
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
-	p.occupants.belly = p.occupants.belly + p.fattenBelly + p.occupants.womb
-	p.occupants.womb = p.occupants.belly --womb is going to be one of those weird cases, as I'm not sure it would ever require a sprite differentiation so they count to the same total but are different locations for differentiaon of escape and effects later
-	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
-	animator.setGlobalTag( "bellyoccupants", tostring(p.occupants.belly) )-- womb counts to this total so no womb tag
-	animator.setGlobalTag( "shaftoccupants", tostring(p.occupants.shaft) )
-	animator.setGlobalTag( "knotoccupants", tostring(p.occupants.knot) )
 
-	if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballL) )
-		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballR) )
-		animator.setGlobalTag( "breast1occupants", tostring(p.occupants.breastL) )
-		animator.setGlobalTag( "breast2occupants", tostring(p.occupants.breastR) )
-	else
-		animator.setGlobalTag( "ball1occupants", tostring(p.occupants.ballR) )
-		animator.setGlobalTag( "ball2occupants", tostring(p.occupants.ballL) )
-		animator.setGlobalTag( "breast1occupants", tostring(p.occupants.breastR) )
-		animator.setGlobalTag( "breast2occupants", tostring(p.occupants.breastL) )
+	p.occupants.fatten = p.fattenBelly
 
+	for i = 1, #p.locations.combine do
+		local a = 0
+		for j = 1, #p.locations.combine[i] do
+			a = a + p.occupants[p.locations.combine[i][j]]
+			--sb.logInfo("added "..p.occupants[p.locations.combine[i][j]].." from "..p.locations.combine[i][j])
+		end
+		for j = 1, #p.locations.combine[i] do
+			p.occupants[p.locations.combine[i][j]] = a
+		end
 	end
 
+	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
+	for i = 1, #p.locations.regular do
+		animator.setGlobalTag( p.locations.regular[i].."occupants", tostring(p.occupants[p.locations.regular[i]]) )
+	end
 
-	animator.setGlobalTag( "hugoccupants", tostring(p.occupants.hug) )
-	animator.setGlobalTag( "tailoccupants", tostring(p.occupants.tail) )
-	animator.setGlobalTag( "otheroccupants", tostring(p.occupants.other) )
-
+	for i = 1, #p.locations.sided do
+		if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
+			animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
+			animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+		else
+			animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
+			animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+		end
+	end
 end
 
 function p.setState(state)
@@ -690,7 +667,7 @@ function p.loadStoredData()
 		if vsoPill( "softdigest" ) then p.settings.bellyeffect = "softdigest" end
 
 		if vsoPill( "fatten" ) then
-			p.fattenBelly = math.floor(vsoPillValue( "fatten" )) + 1
+			p.fattenBelly = math.floor(vsoPillValue( "fatten" ))
 			if config.getParameter( "driver" ) == nil then
 				p.control.driver = "occupant1"
 			end
@@ -738,11 +715,14 @@ function p.onBegin()
 		vsoUseLounge( false, "driver" )
 	end
 
+	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
+	p.locations = config.getParameter( "locations", 0 )
+	p.ressetOccupantCount()
+
 	onForcedReset();	--Do a forced reset once.
 
 	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
 
-	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
 
 	-- message.setHandler( "settingsMenuGet", function settingsMenuGet()
 	-- 	return {
