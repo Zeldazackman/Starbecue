@@ -148,9 +148,8 @@
 							]
 						},
 						"body": "sitdown",
-						"legs": "none",
-						"bap": "none",
-						"head": "none",
+						"legs": "sitdown",
+						"head": "idle",
 						"tail": "none"
 					},
 					"state": "sit",
@@ -325,7 +324,7 @@
 							]
 						},
 						"body": "standup",
-						"legs": "none",
+						"legs": "standup",
 						"head": "idle",
 						"tail": "none"
 					},
@@ -359,7 +358,7 @@
 								]
 							},
 							"body": "laydown",
-							"legs": "none",
+							"legs": "laydown",
 							"head": "idle",
 							"tail": "sitlay"
 						},
@@ -374,7 +373,7 @@
 								]
 							},
 							"body": "laydown",
-							"legs": "none",
+							"legs": "laydown",
 							"head": "idle",
 							"tail": "sitlay"
 						},
@@ -389,8 +388,8 @@
 						{ "y": [4], "head": true }
 					]
 				},
-				"body": "idle",
-				"legs": "none",
+				"body": "sit",
+				"legs": "sit",
 				"head": "idle",
 				"tail": "sitlay"
 			},
@@ -432,7 +431,7 @@
 							]
 						},
 						"body": "situp",
-						"legs": "none",
+						"legs": "situp",
 						"head": "idle",
 						"tail": "sitlay"
 					},
@@ -480,8 +479,8 @@
 						{ "x": [12], "y": [-15], "head": true }
 					]
 				},
-				"body": "idle",
-				"legs": "none",
+				"body": "lay",
+				"legs": "lay",
 				"head": "idle",
 				"tail": "sitlay"
 			},
@@ -735,7 +734,7 @@
 							]
 						},
 						"body": "situp",
-						"legs": "none",
+						"legs": "situp",
 						"head": "none",
 						"tail": "sitlay"
 					},
