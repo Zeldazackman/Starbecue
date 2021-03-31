@@ -150,7 +150,7 @@
 						"body": "sitdown",
 						"legs": "sitdown",
 						"head": "idle",
-						"tail": "none"
+						"tail": "sitdown"
 					},
 					"state": "sit",
 					"chance": 5 // percent, ignored when driver has control
@@ -326,7 +326,7 @@
 						"body": "standup",
 						"legs": "standup",
 						"head": "idle",
-						"tail": "none"
+						"tail": "standup"
 					},
 					"state": "stand",
 					"chance": 5

@@ -110,6 +110,9 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"flick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
 
+					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
+
 					"sitlay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"sitlayflick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
 
@@ -392,6 +395,9 @@
 					"tailState": {
 						"idle": { "properties": { "image": "spov/<skin>/tail.png:stand.<frame><directives>" } },
 						"flick": { "properties": { "image": "spov/<skin>/tail.png:stand.flick.<frame><directives>" } },
+
+						"sitdown": { "properties": { "image": "spov/<skin>/tail.png:sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/<skin>/tail.png:standup.<frame><directives>" } },
 
 						"sitlay": { "properties": { "image": "spov/<skin>/tail.png:sit.<frame><directives>" } },
 						"sitlayflick": { "properties": { "image": "spov/<skin>/tail.png:sit.flick.<frame><directives>" } },

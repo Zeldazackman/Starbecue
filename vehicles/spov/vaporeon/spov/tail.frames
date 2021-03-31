@@ -6,12 +6,15 @@
 			[ "stand.1", "stand.flick.1", "sit.1", "sit.flick.1", "back.1", "back.flick.1", null, "empty.1"],
 			[ "walk.1", "walk.2", "walk.3", "walk.4", "walk.5", "walk.6", "walk.7", "walk.8"],
 			[ "jump.1", "jump.2", "jump.3", "jump.4", "fall.1", "fall.2", "fall.3", "fall.4"],
-			[]
+			[ "sitdown.1", "sitdown.2"]
 		]
 	},
 	"aliases" : {
 		"lay.1" : "sit.1",
 		"lay.flick.1" : "sit.flick.1",
+
+		"standup.1" : "sitdown.2",
+		"standup.2" : "sitdown.1",
 
 		"pinned.1" : "lay.1",
 		"pinned.flick.1" : "lay.flick.1",
