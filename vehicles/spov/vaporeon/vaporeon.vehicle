@@ -342,8 +342,7 @@
 							},
 							"body": "pin",
 							"legs": "none",
-							"head": "idle",
-							"tail": "sitlay"
+							"head": "idle"
 						},
 						"victimAnimation": "sitpinned",
 						"state": "pinned",
@@ -359,8 +358,7 @@
 							},
 							"body": "laydown",
 							"legs": "laydown",
-							"head": "idle",
-							"tail": "sitlay"
+							"head": "idle"
 						},
 						"state": "lay",
 						"chance": 7
@@ -374,8 +372,7 @@
 							},
 							"body": "laydown",
 							"legs": "laydown",
-							"head": "idle",
-							"tail": "sitlay"
+							"head": "idle"
 						},
 						"state": "lay",
 						"chance": 7
@@ -391,11 +388,11 @@
 				"body": "sit",
 				"legs": "sit",
 				"head": "idle",
-				"tail": "sitlay"
+				"tail": "sit"
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "tail": "sitlayflick" }
+				{ "tail": "sit.flick" }
 			],
 			"struggle": {
 				"belly" : {
@@ -433,7 +430,7 @@
 						"body": "situp",
 						"legs": "situp",
 						"head": "idle",
-						"tail": "sitlay"
+						"tail": "sit"
 					},
 					"state": "sit",
 					"chance": 5
@@ -482,11 +479,11 @@
 				"body": "lay",
 				"legs": "lay",
 				"head": "idle",
-				"tail": "sitlay"
+				"tail": "lay"
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "tail": "sitlayflick" }
+				{ "tail": "lay.flick" }
 			],
 			"struggle": {
 				"belly" : {
@@ -531,7 +528,7 @@
 			},
 			"idle": {
 				"body": "idle",
-				"legs": "none",
+				"legs": "lay",
 				"head": "none",
 				"tail": "none"
 			},
@@ -736,7 +733,7 @@
 						"body": "situp",
 						"legs": "situp",
 						"head": "none",
-						"tail": "sitlay"
+						"tail": "sit"
 					},
 					"victimAnimation": "situnpin",
 					"state": "sit",
@@ -746,7 +743,7 @@
 				"down": {
 					"animation": {
 						"body": "fallasleep",
-						"legs": "none",
+						"legs": "lay",
 						"head": "none",
 						"tail": "none"
 					},
@@ -773,8 +770,7 @@
 						},
 						"body": "absorb",
 						"legs": "none",
-						"head": "pinlook",
-						"tail": "sitlay"
+						"head": "pinlook"
 					},
 					"victimAnimation": "absorbpinned",
 					"state": "lay",
@@ -791,11 +787,11 @@
 				"body": "idle",
 				"legs": "none",
 				"head": "pinlook",
-				"tail": "sitlay"
+				"tail": "lay"
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "tail": "sitlayflick" }
+				{ "tail": "lay.flick" }
 			],
 			"struggle": {
 				"hug" : {
