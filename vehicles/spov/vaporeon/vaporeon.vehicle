@@ -245,7 +245,7 @@
 								"owner": "bap",
 								"part": "global",
 								"name": "bap",
-								"value": "bappy_"
+								"value": "bap/"
 							}
 						]
 					},
@@ -907,7 +907,7 @@
 								"owner": "bap",
 								"part": "global",
 								"name": "bap",
-								"value": "bappy_"
+								"value": "bap/"
 							}
 						]
 					},
