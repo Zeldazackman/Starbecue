@@ -4,10 +4,12 @@
 		"dimensions" : [8, 2],
 		"names" : [
 			[ "idle.1", "blink.1", "look.1", "lick.1", "lick.2", "lick.3", "lick.4", "pinlook.1" ],
-			[ "waterspray.1"]
+			[ "waterspray.1", "fallasleep.1", "fallasleep.2"]
 		]
 	},
 	"aliases" : {
-		"lick.5" : "pinlook.1"
+		"lick.5" : "pinlook.1",
+		"wakeup.1" : "fallasleep.2",
+		"wakeup.2" : "fallasleep.1"
 	}
 }

@@ -58,7 +58,6 @@ function onBegin()	--This sets up the VSO ONCE.
 	vsoOnInteract( "state_back", p.onInteraction )
 	vsoOnInteract( "state_bed", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
-	vsoOnInteract( "state_pinned", p.onInteraction )
 	vsoOnInteract( "state_pinned_sleep", p.onInteraction )
 
 	vsoOnBegin( "state_smol", begin_state_smol )
@@ -180,17 +179,40 @@ p.registerStateScript( "sit", "pin", function( args )
 	end
 	if #pinnable >= 1 and p.eat( pinnable[1], 1, "hug" ) then
 		vsoVictimAnimSetStatus( "occupant1", {} )
-		return true
-	else
-		return true, nil, p.stateconfig.sit.transitions.down[2] -- normal laydown
 	end
+	return true
 end)
 
 state_sit = p.standardState
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-state_lay = p.standardState
+p.registerStateScript( "lay", "unpin", function(args)
+	local returnval = {}
+	returnval[1], returnval[2], returnval[3] = p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
+	return true, returnval[2], returnval[3]
+end)
+
+p.registerStateScript( "lay", "absorb", function(args)
+	vsoSound( "slurp" )
+	return true, function()
+		p.occupantLocation[1] = "belly"
+		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
+	end
+end)
+
+function state_lay()
+
+	p.standardState()
+	if p.control.driving then
+		p.control.primaryAction() -- lick
+	end
+
+	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
+		p.doTransition( "absorb" )
+	end
+
+end
 
 -------------------------------------------------------------------------------
 
@@ -242,33 +264,6 @@ end)
 function state_hug()
 
 	p.standardState()
-
-	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
-		p.doTransition( "absorb" )
-	end
-
-end
-
--------------------------------------------------------------------------------
-
-p.registerStateScript( "pinned", "unpin", function(args)
-	return p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
-end)
-
-p.registerStateScript( "pinned", "absorb", function(args)
-	vsoSound( "slurp" )
-	return true, function()
-		p.occupantLocation[1] = "belly"
-		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
-	end
-end)
-
-function state_pinned()
-
-	p.standardState()
-	if p.control.driving then
-		p.control.primaryAction() -- lick
-	end
 
 	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
 		p.doTransition( "absorb" )
