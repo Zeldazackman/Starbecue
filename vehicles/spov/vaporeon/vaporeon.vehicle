@@ -407,6 +407,7 @@
 					"script": "unpin"
 				},
 				"down": {
+					"timing" : "tail",
 					"animation": {
 						"head": "fallasleep",
 						"tail": "fallasleep"
@@ -422,7 +423,7 @@
 						"tail": "none"
 					},
 					"victimAnimation": "unpin",
-					"state": "hug",
+					"state": "back",
 					"chance": 10
 				},
 				"absorb": {
@@ -488,6 +489,7 @@
 		"sleep": {
 			"transitions": {
 				"up": {
+					"timing" : "tail",
 					"animation": {
 						"head": "wakeup",
 						"tail": "wakeup"
@@ -532,61 +534,14 @@
 						"head": "none",
 						"tail": "none"
 					},
+					"victimAnimation": "pinned",
 					"state": "lay",
 					"chance": 10
 				},
 				"bed": {
-					"state": "bed",
 					"victimAnimation": "bellybed",
 					"script": "bed"
-				}
-			},
-			"idle": {
-				"body": "idle",
-				"legs": "none",
-				"head": "none",
-				"tail": "back"
-			},
-			"idleAnimations": [
-				{ "tail": "backflick" }
-			],
-			"struggle": {
-				"belly" : {
-					"part" : "body",
-					"up": { "transition": "side" },
-					"front": { "transition": "side" },
-					"back": { "transition": "side" },
-					"down": { "transition": "side" },
-					"chances": {
-						"easyescape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiescape": { "min": 20, "max": 40 }
-					}
 
-				}
-			},
-			"interact": {
-				"front": { "transition": "side", "chance": 20 },
-				"side": [
-					{ "transition": "bed", "chance": 100, "controlled": true, "location":"belly" }, // possible even for player vappy
-					{ "transition": "side", "chance": 20 }
-					// can't get to this state with 2 occupants
-				],
-				"back": { "transition": "side", "chance": 20 }
-			}
-		},
-		"bed": {
-			"transitions": {
-				"side": {
-					"animation": {
-						"body": "rollover",
-						"legs": "none",
-						"head": "none",
-						"tail": "none"
-					},
-					"victimAnimation": "pinned",
-					"state": "pinned",
-					"chance": 10
 				},
 				"down": {
 					"animation": {
@@ -611,7 +566,7 @@
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "backflick" }
+				{ "tail": "back.flick" }
 			],
 			"struggle": {
 				"hug" : {
@@ -629,7 +584,7 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 20 },
+				"front": { "transition": "bed", "chance": 100 },
 				"side": { "transition": "side", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
 			}
@@ -644,7 +599,7 @@
 						"tail": "back"
 					},
 					"victimAnimation": "bellybed",
-					"state": "bed",
+					"state": "back",
 					"chance": 10
 				},
 				"absorb": {
@@ -667,7 +622,7 @@
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "backflick" }
+				{ "tail": "back.flick" }
 			],
 			"struggle": {
 				"hug" : {

@@ -243,13 +243,9 @@ function state_back()
 	end
 end
 
--------------------------------------------------------------------------------
-
-p.registerStateScript( "bed", "unbed", function(args)
+p.registerStateScript( "back", "unbed", function(args)
 	return p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
 end)
-
-state_bed = p.standardState
 
 -------------------------------------------------------------------------------
 
