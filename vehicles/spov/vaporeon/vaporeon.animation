@@ -69,6 +69,8 @@
 					"laydown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
+					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
+
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
@@ -263,6 +265,8 @@
 						"laydown": { "properties": { "image": "spov/<skin>/foreground/legs.png:laydown.<frame><directives>" } },
 						"situp": { "properties": { "image": "spov/<skin>/foreground/legs.png:situp.<frame><directives>" } },
 
+						"rollover": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.rollover.<frame><directives>" } },
+
 						"s_back": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.s_front.<frame><directives>" } },
 						"s_up": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.s_up.<frame><directives>" } },
@@ -310,6 +314,13 @@
 
 						"laydown": { "properties": { "image": "spov/<skin>/<bap>legs.png:laydown.<frame><directives>" } },
 						"situp": { "properties": { "image": "spov/<skin>/<bap>legs.png:situp.<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "spov/<skin>/legs.png:<state>.rollover.<frame><directives>" } },
+
+						"s_back": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_down.<frame><directives>" } },
 
 						"walk": { "properties": { "image": "spov/<skin>/<bap>legs.png:walk.<frame><directives>" } },
 						"run": { "properties": { "image": "spov/<skin>/<bap>legs.png:run.<frame><directives>" } },

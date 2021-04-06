@@ -38,6 +38,12 @@ To eat people, npcs, or monsters, simply walk up to them and left-click on them 
 The same movement keys are also used to transition between different poses, like standing or sitting or sleeping, etc.
 To let people out that you previously ate, simply press Tech Action 2 (G). Alternatively, you can let them out via the menu, accessible by pressing Tech Action 3 (H). This menu also has settings to heal/digest your prey, as well as automatically activating the tech when you warp to a different world, and the button to deactivate it when you want to return to your normal self.
 
+# Support Us!
+
+https://www.patreon.com/LokiVulpix
+
+Vote on what should be the next playable VSO! with your support there's more likely to be more of them!
+
 ## Credits
 
 ### Zygan (Zygahedron)

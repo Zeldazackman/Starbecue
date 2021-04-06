@@ -418,7 +418,7 @@
 				"side": {
 					"animation": {
 						"body": "rollover",
-						"legs": "none",
+						"legs": "rollover",
 						"head": "none",
 						"tail": "none"
 					},
@@ -530,7 +530,7 @@
 				"side": {
 					"animation": {
 						"body": "rollover",
-						"legs": "none",
+						"legs": "rollover",
 						"head": "none",
 						"tail": "none"
 					},
@@ -605,7 +605,7 @@
 				"absorb": {
 					"animation": {
 						"body": "absorb",
-						"legs": "none",
+						"legs": "hug",
 						"head": "none",
 						"tail": "back"
 					},
@@ -617,7 +617,7 @@
 			},
 			"idle": {
 				"body": "idle",
-				"legs": "none",
+				"legs": "hug",
 				"head": "none",
 				"tail": "back"
 			},
@@ -626,7 +626,7 @@
 			],
 			"struggle": {
 				"hug" : {
-					"part" : "body",
+					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
 					"front": { "transition": "up", "victimAnimation": "hug.s_front" },
 					"back": { "transition": "up", "victimAnimation": "hug.s_back" },
