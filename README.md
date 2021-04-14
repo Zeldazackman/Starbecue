@@ -63,8 +63,47 @@ Helps out with debugging and coding a little here and there.
 > https://www.furaffinity.net/user/lokithevulpix/
 > https://twitter.com/LokiVulpix
 
-# Support Us!
 
-https://www.patreon.com/LokiVulpix
+## Potential Future Additions
 
-Vote on what should be the next playable VSO! with your support there's more likely to be more of them!
+From Scratch
+- Eevee
+- Flareon
+- Jolteon
+- Espeon
+- Umbreon
+- Leafeon
+- Glaceon
+- Sylveon
+- Yoshi
+- Masotan
+- Protogen
+
+Vanilla Races
+- Humans
+- Avian
+- Apex
+- Floran
+- Hylotl
+- Glitch
+- Novakid
+
+Modded Races
+- Avali (Forum page gives permssion to use assets)
+- Crylan (Permission granted by Crescent)
+- Hibani (Premission granted by htfcuddles and Sheights)
+- Rodent (Premission granted by Sheights)
+- Draikin (Abandoned by creator)
+
+### Do Not Ask/Contact
+
+People who were previously asked about compatibilty and requested not to be contacted further
+
+Bun (Protogen Race Mod)
+- There is to be no compatibility
+- Nobody is to extract assets to modify
+- Do not contact or ask further
+
+Crescent (Crylan Race Mod)
+- Permission granted to use assets
+- Do not contact or ask further

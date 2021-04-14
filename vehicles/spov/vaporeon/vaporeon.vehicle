@@ -407,8 +407,14 @@
 					"script": "unpin"
 				},
 				"down": {
-					"timing" : "tail",
+					"timing" : "head",
 					"animation": {
+						"offset" : {
+							"timing": "head",
+							"parts" : [
+								{ "x": [12, 14], "y": [-16, -18], "head": true }
+							]
+						},
 						"head": "fallasleep",
 						"tail": "fallasleep"
 					},
@@ -489,8 +495,14 @@
 		"sleep": {
 			"transitions": {
 				"up": {
-					"timing" : "tail",
+					"timing" : "head",
 					"animation": {
+						"offset" : {
+							"timing": "head",
+							"parts" : [
+								{ "x": [14, 12], "y": [-18, -16], "head": true }
+							]
+						},
 						"head": "wakeup",
 						"tail": "wakeup"
 					},
@@ -499,6 +511,11 @@
 				}
 			},
 			"idle": {
+				"offset" : {
+					"parts" : [
+						{ "x": [16], "y": [-21], "head": true }
+					]
+				},
 				"body": "lay",
 				"legs": "lay",
 				"head": "blink",
@@ -541,15 +558,12 @@
 				"bed": {
 					"victimAnimation": "bellybed",
 					"script": "bed"
-
 				},
 				"down": {
 					"animation": {
-						"body": "grab",
-						"legs": "none",
-						"head": "none",
-						"tail": "back"
+						"legs": "grab"
 					},
+					"timing" : "legs",
 					"victimAnimation": "bellyhug",
 					"state": "hug",
 					"chance": 10
@@ -560,8 +574,8 @@
 				}
 			},
 			"idle": {
-				"body": "idle",
-				"legs": "none",
+				"body": "back",
+				"legs": "back",
 				"head": "none",
 				"tail": "back"
 			},
@@ -593,21 +607,17 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"body": "grab",
-						"legs": "none",
-						"head": "none",
-						"tail": "back"
+						"legs": "grab"
 					},
 					"victimAnimation": "bellybed",
+					"timing" : "legs",
 					"state": "back",
 					"chance": 10
 				},
 				"absorb": {
 					"animation": {
 						"body": "absorb",
-						"legs": "hug",
-						"head": "none",
-						"tail": "back"
+						"legs": "hug"
 					},
 					"victimAnimation": "absorbback",
 					"state": "back",
@@ -616,7 +626,7 @@
 				}
 			},
 			"idle": {
-				"body": "idle",
+				"body": "back",
 				"legs": "hug",
 				"head": "none",
 				"tail": "back"

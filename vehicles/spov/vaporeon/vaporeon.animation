@@ -21,6 +21,7 @@
 
 					"sit": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"lay": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"back": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
@@ -30,8 +31,6 @@
 					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
 					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
-
-					"grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -62,6 +61,8 @@
 
 					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"hug": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
@@ -70,6 +71,8 @@
 					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
 					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
+
+					"grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
@@ -212,6 +215,7 @@
 
 						"sit": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.sit.<frame><directives>" } },
 						"lay": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.lay.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
@@ -258,6 +262,8 @@
 						"idle": { "properties": { "image": "spov/<skin>/foreground/legs.png:idle.<frame><directives>" } },
 						"sit": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.<frame><directives>" } },
 						"lay": { "properties": { "image": "spov/<skin>/foreground/legs.png:lay.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/<skin>/foreground/legs.png:back.<frame><directives>" } },
+						"hug": { "properties": { "image": "spov/<skin>/foreground/legs.png:hug.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/<skin>/foreground/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/foreground/legs.png:standup.<frame><directives>" } },
@@ -266,6 +272,8 @@
 						"situp": { "properties": { "image": "spov/<skin>/foreground/legs.png:situp.<frame><directives>" } },
 
 						"rollover": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.rollover.<frame><directives>" } },
+
+						"grab": { "properties": { "image": "spov/<skin>/foreground/legs.png:grab.<frame><directives>" } },
 
 						"s_back": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/<skin>/foreground/legs.png:<state>.s_front.<frame><directives>" } },
@@ -308,6 +316,8 @@
 						"idle": { "properties": { "image": "spov/<skin>/<bap>legs.png:idle.<frame><directives>" } },
 						"sit": { "properties": { "image": "spov/<skin>/<bap>legs.png:sit.<frame><directives>" } },
 						"lay": { "properties": { "image": "spov/<skin>/<bap>legs.png:lay.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/<skin>/legs.png:back.<frame><directives>" } },
+						"hug": { "properties": { "image": "spov/<skin>/legs.png:hug.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/<skin>/<bap>legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/<bap>legs.png:standup.<frame><directives>" } },
@@ -316,6 +326,8 @@
 						"situp": { "properties": { "image": "spov/<skin>/<bap>legs.png:situp.<frame><directives>" } },
 
 						"rollover": { "properties": { "image": "spov/<skin>/legs.png:<state>.rollover.<frame><directives>" } },
+
+						"grab": { "properties": { "image": "spov/<skin>/legs.png:grab.<frame><directives>" } },
 
 						"s_back": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/<skin>/legs.png:<state>.s_front.<frame><directives>" } },
