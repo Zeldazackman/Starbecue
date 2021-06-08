@@ -83,6 +83,11 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
 					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },

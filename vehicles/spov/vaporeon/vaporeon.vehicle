@@ -343,6 +343,7 @@
 						"head": "idle"
 					},
 					"victimAnimation": "sitpinned",
+					"victimAnimLocation": "hug",
 					"state": "lay",
 					"chance": 7,
 					"script": "pin" // may override animation/state
@@ -402,6 +403,7 @@
 						"tail": "sit"
 					},
 					"victimAnimation": "situnpin",
+					"victimAnimLocation": "hug",
 					"state": "sit",
 					"chance": 5,
 					"script": "unpin"
@@ -429,6 +431,7 @@
 						"tail": "none"
 					},
 					"victimAnimation": "unpin",
+					"victimAnimLocation": "hug",
 					"state": "back",
 					"chance": 10
 				},
@@ -444,6 +447,7 @@
 						"head": "pinlook"
 					},
 					"victimAnimation": "absorbpinned",
+					"victimAnimLocation": "hug",
 					"chance": 10,
 					"script": "absorb"
 				}
@@ -552,6 +556,7 @@
 						"tail": "none"
 					},
 					"victimAnimation": "pinned",
+					"victimAnimLocation": "hug",
 					"state": "lay",
 					"chance": 10
 				},
@@ -565,6 +570,7 @@
 					},
 					"timing" : "legs",
 					"victimAnimation": "bellyhug",
+					"victimAnimLocation": "hug",
 					"state": "hug",
 					"chance": 10
 				},
@@ -610,6 +616,7 @@
 						"legs": "grab"
 					},
 					"victimAnimation": "bellybed",
+					"victimAnimLocation": "hug",
 					"timing" : "legs",
 					"state": "back",
 					"chance": 10
@@ -620,6 +627,7 @@
 						"legs": "hug"
 					},
 					"victimAnimation": "absorbback",
+					"victimAnimLocation": "hug",
 					"state": "back",
 					"chance": 10,
 					"script": "absorb"

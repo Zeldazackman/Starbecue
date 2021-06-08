@@ -181,7 +181,7 @@ p.registerStateScript( "sit", "pin", function( args )
 	if #pinnable >= 1 and p.eat( pinnable[1], index, "hug" ) then
 		vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
-	return true, nil, {index = index}
+	return true
 end)
 
 state_sit = p.standardState

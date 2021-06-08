@@ -876,9 +876,11 @@ function p.doTransition( direction, scriptargs )
 			if p.justAte then
 				i = i + 1
 				p.justAte = false
+			elseif tconfig.victimAnimLocation ~= nil then
+				i = p.findFirstIndexForLocation(tconfig.victimAnimLocation)
 			end
 		end
-		vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" )
+		if i then vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" ) end
 	end
 	vsoNext( "state__ptransition" )
 	return true
