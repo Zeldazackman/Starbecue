@@ -177,10 +177,11 @@ p.registerStateScript( "sit", "pin", function( args )
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	if #pinnable >= 1 and p.eat( pinnable[1], 1, "hug" ) then
-		vsoVictimAnimSetStatus( "occupant1", {} )
+	local index = p.occupants.total + 1
+	if #pinnable >= 1 and p.eat( pinnable[1], index, "hug" ) then
+		vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
-	return true
+	return true, nil, {index = index}
 end)
 
 state_sit = p.standardState
@@ -189,15 +190,18 @@ state_sit = p.standardState
 
 p.registerStateScript( "lay", "unpin", function(args)
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
+	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
 	return true, returnval[2], returnval[3]
 end)
 
 p.registerStateScript( "lay", "absorb", function(args)
+	local index = p.findFirstIndexForLocation("hug")
+	if not index then return end
+
 	vsoSound( "slurp" )
 	return true, function()
-		p.occupantLocation[1] = "belly"
-		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
+		p.occupantLocation[index] = "belly"
+		vsoVictimAnimReplay( "occupant"..index, "bellycenter", "bodyState")
 	end
 end)
 
@@ -221,9 +225,11 @@ state_sleep = p.standardState
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "back", "bed", function( args )
-	if p.eat( args.id, 1, "hug" ) then
-		vsoVictimAnimSetStatus( "occupant1", {} );
-		return true
+	local index = p.occupants.total + 1
+
+	if p.eat( args.id, index, "hug" ) then
+		vsoVictimAnimSetStatus( "occupant"..index, {} );
+		return true, nil, {index = index}
 	else
 		return false
 	end
@@ -244,16 +250,19 @@ function state_back()
 end
 
 p.registerStateScript( "back", "unbed", function(args)
-	return p.doEscape({index = 1}, "hug", {1.3125, -2.0}, {}, {})
+	return p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
 end)
 
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "hug", "absorb", function(args)
+	local index = p.findFirstIndexForLocation("hug")
+	if not index then return end
+
 	vsoSound( "slurp" )
 	return true, function()
-		p.occupantLocation[1] = "belly"
-		vsoVictimAnimReplay( "occupant1", "bellycenter", "bodyState")
+		p.occupantLocation[index] = "belly"
+		vsoVictimAnimReplay( "occupant"..index, "bellycenter", "bodyState")
 	end
 end)
 

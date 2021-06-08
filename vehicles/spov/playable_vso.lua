@@ -206,6 +206,15 @@ function p.moveOccupantLocation(args, part, location)
 	return true
 end
 
+function p.findFirstIndexForLocation(location)
+	for i = 1, p.occupants.total do
+		if p.occupantLocation[i] == location then
+			return i
+		end
+	end
+	return
+end
+
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
 	if vsoTimeDelta( "emoteblock" ) > 0.2 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
