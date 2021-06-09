@@ -61,7 +61,6 @@ function onBegin()	--This sets up the VSO ONCE.
 
 	vsoOnInteract( "state_sleep", p.onInteraction )
 	vsoOnInteract( "state_back", p.onInteraction )
-	vsoOnInteract( "state_bed", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
 	vsoOnInteract( "state_pinned_sleep", p.onInteraction )
 

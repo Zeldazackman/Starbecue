@@ -1,0 +1,62 @@
+{
+	"objectName": "spovspawnercharem"
+	, "colonyTags": ["vore"]
+	, "rarity": "Rare"
+	, "shortdescription": "Charem"
+	, "race": "generic"
+	, "category": "other"
+	, "price": 500
+	, "health" : 5
+
+	, "tooltipKind" : "vso"
+	, "objectImage" : "/vehicles/spov/charem/charem.png:normal"
+	, "description": "A lazy hungry shadox."
+	, "tooltipFields": {
+		"statusLabel": "A lazy hungry shadox, why don't you bring him something to eat?"
+	}
+	, "tooltipSubtitle" : "charem"
+
+	, "orientations": [{
+			"image": "/vehicles/spov/charem/charem.png:normal"
+			, "imagePosition": [-64, 0]
+			, "direction": "left"
+			, "flipImages": true
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+		}, {
+			"image": "/vehicles/spov/charem/charem.png:normal"
+			, "imagePosition": [-64, 0]
+			, "direction": "right"
+			, "spaceScan": 0.1
+			, "anchors": ["bottom"]
+		}]
+
+	, "inventoryIcon": "/vehicles/spov/charem/charemicon.png"
+
+	, "animation": "spovspawner.animation"
+	, "animationParts" : {
+		"bg": "/vehicles/spov/charem/charem.png:normal"
+	}
+	, "animationPosition" : [0, 48]
+	, "animationCustom" : {}
+
+	, "spov": {
+		"types": ["spovcharem"]
+		, "position": [0.0, 5, 0.0, 5]
+		, "template": {}
+		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
+	}
+
+	, "retainObjectParametersInItem" : true
+	, "isWired" : false
+	, "printable" : false
+	, "scannable" : false
+	, "interactive" : false
+	, "inspectable" : false
+	, "allowScanning" : false
+	, "isContainer" : false
+	, "builder" : "/scripts/vore/spovitembuilder.lua"
+	, "scripts": [
+		"/scripts/vore/spovspawner.lua", "/vehicles/spov/charem/charemitemscript.lua"
+	]
+}

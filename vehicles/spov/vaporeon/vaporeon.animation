@@ -230,8 +230,6 @@
 
 						"rollover": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
 
-						"grab": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
-
 						"eat": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
 						"absorb": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
 						"escape": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
@@ -273,8 +271,6 @@
 						"situp": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
 
 						"rollover": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
-
-						"grab": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.grab.<frame><directives>" } },
 
 						"eat": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
 						"absorb": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },

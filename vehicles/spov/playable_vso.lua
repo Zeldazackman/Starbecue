@@ -787,8 +787,11 @@ function p.onBegin()
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
 
 	if not config.getParameter( "uneaten" ) then
-		p.setState( "stand" )
-		p.doAnims( p.stateconfig.stand.idle, true )
+		if not p.startState then
+			p.startState = "stand"
+		end
+		p.setState( p.startState )
+		p.doAnims( p.stateconfig[p.startState].idle, true )
 	else -- released from larger pred
 		p.setState( "smol" )
 		p.doAnims( p.stateconfig.smol.idle, true )
