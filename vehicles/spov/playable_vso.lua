@@ -312,8 +312,9 @@ end
 function p.occupantArray( maybearray )
 	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
 		if maybearray.location then
-			if maybearray.eating then
-				if p.locationFull(maybearray.location) then return maybearray.failTransition end
+			if maybearray.failOnFull then
+				if (maybearray.failOnFull ~= true) and (p.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
+				elseif p.locationFull(maybearray.location) then return maybearray.failTransition end
 			else
 				if p.locationEmpty(maybearray.location) then return maybearray.failTransition end
 			end

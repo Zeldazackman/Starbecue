@@ -188,7 +188,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"arms": "rotation",
@@ -205,7 +205,7 @@
 				},
 				"succeat": { // 3 occupants
 					"location" : "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"head": "none"
@@ -224,7 +224,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
 						"head": "AVlook"
@@ -329,9 +329,9 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
 			"control": {
@@ -427,7 +427,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
 						"head": "AVlook"
@@ -549,7 +549,7 @@
 			"transitions": {
 				"succeat": { // 3 occupants
 					"location" : "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"arms": "fly2",
@@ -569,7 +569,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
 						"arms": "fly2",
@@ -755,7 +755,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"arms": "rotation",
@@ -780,7 +780,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
 						"head": "AVlook"
@@ -829,7 +829,7 @@
 				},
 				"hug": {
 					"location" : "hug",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"arms": "hug"
 					},
@@ -895,9 +895,9 @@
 
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
-				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "eating": true},
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
+				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "failOnFull": true},
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			}
 		},
@@ -913,7 +913,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"arms": "rotation",
@@ -938,7 +938,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
 						"head": "AVlook"
@@ -1056,9 +1056,9 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100, "location": "belly", "eating": true },
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "eating": true},
+				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			}
 		}

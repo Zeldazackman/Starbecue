@@ -131,7 +131,7 @@
 		]
 	},
 	"maxOccupants" : {
-		"total" : 2, // could potentially be 3 but making it so I don't have ot fuck with the menu
+		"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu
 		"belly" : 2,
 		"hug" : 1
 	},
@@ -158,7 +158,7 @@
 				// non directional = not accessible via controls, except from script
 				"eat": { // 2 occupants
 					"location": "belly",
-					"eating" : true,
+					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
 						"legs": "idle",
@@ -217,7 +217,7 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100, "location":"belly", "eating":true},
+				"front": { "transition": "eat", "chance": 100, "location":"belly", "failOnFull":true},
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 },
 				"animation": { "head": "pet" }
@@ -335,7 +335,7 @@
 					"animation": {
 						"offset" : {
 							"parts" : [
-								{ "x": [4, 10], "y": [4, -11], "head": true }
+								{ "x": [4, 10], "y": [0, -11], "head": true }
 							]
 						},
 						"body": "laydown",
@@ -394,7 +394,7 @@
 					"animation": {
 						"offset" : {
 							"parts" : [
-								{ "x": [10, 4], "y": [-11, 4], "head": true }
+								{ "x": [10, 4], "y": [-11, 0], "head": true }
 							]
 						},
 						"body": "situp",
@@ -424,6 +424,8 @@
 					"chance": 5
 				},
 				"side": {
+					"location": "belly",
+					"failOnFull": true,
 					"animation": {
 						"body": "rollover",
 						"legs": "rollover",
@@ -468,6 +470,21 @@
 				{ "tail": "lay.flick" }
 			],
 			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "down" },
+					"back": { "transition": "up" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					},
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+
+				},
 				"hug" : {
 					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
@@ -477,8 +494,9 @@
 						"easyescape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
 						"antiescape": { "min": 20, "max": 40 }
-					}
-
+					},
+					"animation": { "head": "pinlook" },
+					"animationWhenMoving": { "head": "pinlook" }
 				}
 			},
 			"interact": {
@@ -527,6 +545,18 @@
 			},
 			"idleAnimations": [],
 			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "up" },
+					"front": { "transition": "down" },
+					"back": { "transition": "up" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+				},
 				"hug" : {
 					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
@@ -589,6 +619,18 @@
 				{ "tail": "back.flick" }
 			],
 			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "side" },
+					"front": { "transition": "side" },
+					"back": { "transition": "side" },
+					"down": { "transition": "side" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+				},
 				"hug" : {
 					"part" : "body",
 					"up": { "transition": "up" },
@@ -622,6 +664,8 @@
 					"chance": 10
 				},
 				"absorb": {
+					"location": "belly",
+					"failOnFull": 1,
 					"animation": {
 						"body": "absorb",
 						"legs": "hug"
@@ -643,6 +687,18 @@
 				{ "tail": "back.flick" }
 			],
 			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "side" },
+					"front": { "transition": "side" },
+					"back": { "transition": "side" },
+					"down": { "transition": "side" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 10 },
+						"normal": { "min": 10, "max": 20 },
+						"antiescape": { "min": 20, "max": 40 }
+					}
+				},
 				"hug" : {
 					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
