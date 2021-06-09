@@ -50,10 +50,15 @@ function onBegin()	--This sets up the VSO ONCE.
 
 	p.onBegin()
 
+	vsoOnBegin( "state_stand", begin_state_stand )
 	vsoOnInteract( "state_stand", interact_state_stand )
 
+	vsoOnBegin( "state_sit", begin_state_sit )
 	vsoOnInteract( "state_sit", p.onInteraction )
+
+	vsoOnBegin( "state_lay", begin_state_lay )
 	vsoOnInteract( "state_lay", p.onInteraction )
+
 	vsoOnInteract( "state_sleep", p.onInteraction )
 	vsoOnInteract( "state_back", p.onInteraction )
 	vsoOnInteract( "state_bed", p.onInteraction )
@@ -111,6 +116,10 @@ end)
 p.registerStateScript( "stand", "bapeat", function()
 	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 end)
+
+function begin_state_stand()
+	fixOccupantCenters("belly", "bellycenter", "body")
+end
 
 function state_stand()
 
@@ -184,6 +193,10 @@ p.registerStateScript( "sit", "pin", function( args )
 	return true
 end)
 
+function begin_state_sit()
+	fixOccupantCenters("belly", "bellycentersit", "body")
+end
+
 state_sit = p.standardState
 
 -------------------------------------------------------------------------------
@@ -195,19 +208,27 @@ p.registerStateScript( "lay", "unpin", function(args)
 end)
 
 p.registerStateScript( "lay", "absorb", function(args)
+	return LayAbsorb()
+end)
+
+function LayAbsorb()
 	local index = p.findFirstIndexForLocation("hug")
 	if not index then return end
 
 	vsoSound( "slurp" )
 	return true, function()
 		p.occupantLocation[index] = "belly"
-		vsoVictimAnimReplay( "occupant"..index, "bellycenter", "bodyState")
+		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
-end)
+end
+
+function begin_state_lay()
+	fixOccupantCenters("belly", "bellycenterlay", "body")
+end
 
 function state_lay()
-
 	p.standardState()
+
 	if p.control.driving then
 		p.control.primaryAction() -- lick
 	end
@@ -220,7 +241,13 @@ end
 
 -------------------------------------------------------------------------------
 
-state_sleep = p.standardState
+function state_sleep()
+	p.standardState()
+
+	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
+		p.doTransition( "absorb" )
+	end
+end
 
 -------------------------------------------------------------------------------
 
@@ -262,7 +289,7 @@ p.registerStateScript( "hug", "absorb", function(args)
 	vsoSound( "slurp" )
 	return true, function()
 		p.occupantLocation[index] = "belly"
-		vsoVictimAnimReplay( "occupant"..index, "bellycenter", "bodyState")
+		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
 end)
 
@@ -313,8 +340,6 @@ end
 
 function end_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
-
-	fixOccupantCenters("belly", "bellycenter", "body")
 end
 
 -------------------------------------------------------------------------------
@@ -404,6 +429,4 @@ end
 
 function end_state_chonk_ball()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
-
-	fixOccupantCenters("belly", "bellycenter", "body")
 end

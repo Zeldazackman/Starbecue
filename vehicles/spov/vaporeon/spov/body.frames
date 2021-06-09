@@ -5,7 +5,7 @@
 		"names" : [
 			[ "0.stand.1", "0.stand.2", "0.stand.sitdown.1", "0.stand.sitdown.2", "0.sit.1", "0.sit.2", "0.sit.laydown.1", "0.sit.laydown.2"],
 			[ "0.lay.1", "0.lay.2", "0.lay.rollover.1", "0.lay.rollover.2", "0.lay.rollover.3", "0.lay.rollover.4", "0.lay.rollover.5"],
-			[ "0.back.1", "0.back.2", "0.back.absorb.1", "0.back.absorb.2", "0.back.absorb.3", "0.lay.absorb.1", "0.lay.absorb.2", "0.lay.absorb.3" ],
+			[ "0.back.1", "0.back.2", "0.hug.absorb.1", "0.hug.absorb.2", "0.hug.absorb.3", "0.lay.absorb.1", "0.lay.absorb.2", "0.lay.absorb.3" ],
 			[ "0.stand.jump.1", "0.stand.jump.2", "0.stand.jump.3", "0.stand.jump.4", "0.stand.fall.1", "0.stand.fall.2", "0.stand.fall.3", "0.stand.fall.4" ],
 			[ "0.stand.eat.1", "0.stand.eat.2", "0.stand.eat.3", "0.stand.eat.4", "0.stand.eat.5", "0.stand.eat.6", "0.stand.eat.7", "0.stand.eat.8" ],
 			[],
@@ -39,7 +39,9 @@
 			[]
 		]
 	},
-	"aliases" : {"idle.default" : "0.stand.1", "idle.1" : "0.stand.1",
+	"aliases" : {
+		"idle.default" : "0.stand.1",
+		"idle.1" : "0.stand.1",
 		"0.stand.2" : "0.stand.1",
 
 		"0.sit.standup.1" : "0.stand.sitdown.2",
@@ -54,6 +56,14 @@
 		"0.back.rollover.4" : "0.lay.rollover.2",
 		"0.back.rollover.5" : "0.lay.rollover.1",
 
+		"0.lay.absorb.4" : "1.lay.1",
+		"0.hug.absorb.4" : "1.back.1",
+
+		"0.sleep.absorb.1" : "0.lay.absorb.1",
+		"0.sleep.absorb.2" : "0.lay.absorb.2",
+		"0.sleep.absorb.3" : "0.lay.absorb.3",
+		"0.sleep.absorb.4" : "0.lay.absorb.4",
+
 		// belly 1
 
 		"1.sit.standup.1" : "1.stand.sitdown.2",
@@ -67,6 +77,13 @@
 		"1.back.rollover.3" : "1.lay.rollover.3",
 		"1.back.rollover.4" : "1.lay.rollover.2",
 		"1.back.rollover.5" : "1.lay.rollover.1",
+
+		"1.lay.absorb.4" : "2.lay.1",
+
+		"1.sleep.absorb.1" : "1.lay.absorb.1",
+		"1.sleep.absorb.2" : "1.lay.absorb.2",
+		"1.sleep.absorb.3" : "1.lay.absorb.3",
+		"1.sleep.absorb.4" : "1.lay.absorb.4",
 
 		"1.stand.s_back.5" : "1.stand.1",
 		"1.stand.s_front.5" : "1.stand.1",

@@ -438,14 +438,10 @@
 					"chance": 10
 				},
 				"absorb": {
+					"location" :"belly",
+					"failOnFull" : 1,
 					"animation": {
-						"offset" : {
-							"parts" : [
-								{ "x": [12], "y": [-15], "head": true }
-							]
-						},
 						"body": "absorb",
-						"legs": "none",
 						"head": "pinlook"
 					},
 					"victimAnimation": "absorbpinned",
@@ -530,6 +526,17 @@
 					},
 					"state": "lay",
 					"chance": 5
+				},
+				"absorb": {
+					"location" :"belly",
+					"failOnFull" : 1,
+					"animation": {
+						"body": "absorb"
+					},
+					"victimAnimation": "absorbpinned",
+					"victimAnimLocation": "hug",
+					"chance": 10,
+					"script": "absorb"
 				}
 			},
 			"idle": {
