@@ -226,9 +226,11 @@ function p.ressetOccupantCount()
 	for i = 1, #p.locations.regular do
 		p.occupants[p.locations.regular[i]] = 0
 	end
-	for i = 1, #p.locations.sided do
-		p.occupants[p.locations.sided[i].."R"] = 0
-		p.occupants[p.locations.sided[i].."L"] = 0
+	if p.locations.sided then
+		for i = 1, #p.locations.sided do
+			p.occupants[p.locations.sided[i].."R"] = 0
+			p.occupants[p.locations.sided[i].."L"] = 0
+		end
 	end
 end
 
@@ -275,13 +277,15 @@ function p.updateOccupants()
 		animator.setGlobalTag( p.locations.regular[i].."occupants", tostring(p.occupants[p.locations.regular[i]]) )
 	end
 
-	for i = 1, #p.locations.sided do
-		if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-			animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
-			animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
-		else
-			animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
-			animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+	if p.locations.sided then
+		for i = 1, #p.locations.sided do
+			if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
+				animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
+				animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+			else
+				animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
+				animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+			end
 		end
 	end
 end

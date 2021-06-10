@@ -653,8 +653,8 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "bed", "chance": 100 },
-				"side": { "transition": "side", "chance": 20 },
+				"front": { "transition": "side", "chance": 100 },
+				"side": { "transition": "bed", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
 			}
 		},

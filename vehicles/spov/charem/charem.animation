@@ -60,6 +60,7 @@
 				"states": {
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
+					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
 
 					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
@@ -202,6 +203,8 @@
 				"partStates": {
 					"headState": {
 						"none": { "properties": {} },
+						"back": { "properties": { "image": "spov/<skin>/head.png:back.<frame><directives>" } },
+
 						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
 						"pet": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
 
