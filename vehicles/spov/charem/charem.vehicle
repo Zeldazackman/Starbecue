@@ -148,7 +148,7 @@
 					"up": { "transition": "up" },
 					"front": { "transition": "up" },
 					"back": { "transition": "up" },
-					"down": { "transition": "up" },
+					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 0, "max": 0 },
 						"normal": { "min": 0, "max": 0 },
@@ -172,8 +172,7 @@
 					"victimAnimation": "bellybed",
 					"victimAnimLocation": "hug",
 					"timing" : "legs",
-					"state": "back",
-					"chance": 10
+					"state": "back"
 				}
 			},
 			"idle": {
@@ -201,9 +200,9 @@
 				"hug" : {
 					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
-					"front": { "transition": "up", "victimAnimation": "hug.s_front" },
-					"back": { "transition": "up", "victimAnimation": "hug.s_back" },
-					"down": { "transition": "up", "victimAnimation": "hug.s_down" },
+					"front": { "transition": "side", "victimAnimation": "hug.s_front" },
+					"back": { "transition": "side", "victimAnimation": "hug.s_back" },
+					"down": { "transition": "down", "victimAnimation": "hug.s_down" },
 					"chances": {
 						"easyescape": { "min": 0, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
@@ -214,7 +213,7 @@
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
-				"side": { "transition": "side", "chance": 20 },
+				"side": { "transition": "up", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
 			}
 		}
