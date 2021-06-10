@@ -3,7 +3,7 @@
 		"size" : [128, 64],
 		"dimensions" : [8, 2],
 		"names" : [
-			[ "back.1"],
+			[ "back.1", "back.blink.1"],
 			[ "back.eat.1", "back.eat.2", "back.eat.3", "back.eat.4", "back.eat.5", "back.eat.6", "back.eat.7", "back.eat.8" ]
 		]
 	},

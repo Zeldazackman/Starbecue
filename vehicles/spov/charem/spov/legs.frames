@@ -15,7 +15,7 @@
 		"hug.s_back.5" : "hug.1",
 		"hug.s_front.3" : "hug.s_front.2",
 		"hug.s_front.4" : "hug.s_front.1",
-		"hug.s_front.5" : "back.1",
+		"hug.s_front.5" : "hug.1",
 		"hug.s_up.3" : "hug.s_up.2",
 		"hug.s_up.4" : "hug.s_up.1",
 		"hug.s_up.5" : "hug.1",

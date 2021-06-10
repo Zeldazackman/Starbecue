@@ -128,7 +128,8 @@
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "back.wag" }
+				{ "tail": "back.wag" },
+				{ "head": "back.blink" }
 			],
 			"struggle": {
 				"belly" : {
@@ -182,7 +183,8 @@
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "back.wag" }
+				{ "tail": "back.wag" },
+				{ "head": "back.blink" }
 			],
 			"struggle": {
 				"belly" : {

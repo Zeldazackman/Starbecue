@@ -49,7 +49,7 @@
 				"states": {
 
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"back.wag": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"back.wag": { "frames": 4, "cycle": 1, "mode": "end", "priority": 1 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -61,7 +61,7 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
+					"back.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
 
 					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 }
@@ -134,8 +134,6 @@
 					}
 				}
 			},
-
-
 			"frontlegs": {
 				"properties": {
 					"centered": true,
@@ -204,8 +202,7 @@
 					"headState": {
 						"none": { "properties": {} },
 						"back": { "properties": { "image": "spov/<skin>/head.png:back.<frame><directives>" } },
-
-						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
+						"back.blink": { "properties": { "image": "spov/<skin>/head.png:back.blink.<frame><directives>" } },
 						"pet": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
 
 						"look": { "properties": { "image": "spov/<skin>/head.png:look.<frame><directives>" } }

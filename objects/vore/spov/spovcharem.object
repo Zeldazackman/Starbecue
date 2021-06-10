@@ -42,7 +42,7 @@
 
 	, "spov": {
 		"types": ["spovcharem"]
-		, "position": [-1.5, 5, -1.5, 5]	// in blocks
+		, "position": [0, 4, 0, 4]	// in blocks
 		, "template": {}
 		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
 	}
