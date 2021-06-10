@@ -49,7 +49,7 @@
 				"states": {
 
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"back.wag": { "frames": 4, "cycle": 1, "mode": "end", "priority": 1 },
+					"back.wag": { "frames": 8, "cycle": 1, "mode": "end", "priority": 1 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}

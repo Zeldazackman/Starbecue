@@ -3,12 +3,16 @@
 		"size" : [128, 64],
 		"dimensions" : [8, 1],
 		"names" : [
-			[ "back.1", "back.wag.1", "back.wag.2", "back.wag.3"]
+			[ "back.1", "back.wag.1", "back.wag.2", "back.wag.5", "back.wag.6"]
 		]
 	},
 	"aliases" : {
 		"idle.default" : "back.1",
 		"idle.1" : "back.1",
-		"back.wag.4" : "back.1"
+		"back.wag.3" : "back.wag.1",
+		"back.wag.4" : "back.1",
+		"back.wag.7" : "back.wag.5",
+		"back.wag.8" : "back.1"
+
 	}
 }
