@@ -172,7 +172,8 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					 "transformationGroups": ["flip"]
+					"fullbright" : true,
+					"transformationGroups": ["flip"]
 				},
 				"partStates": {
 					"legsState": {
@@ -275,7 +276,8 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 5,
-					 "transformationGroups": ["flip", "headbob"]
+					"fullbright" : true,
+					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
