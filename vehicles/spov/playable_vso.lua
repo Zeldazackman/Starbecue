@@ -104,15 +104,16 @@ p.movement = {
 
 function p.locationFull(location)
 	if p.occupants.total == p.maxOccupants.total then
-		sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
+		--sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
 		return true
 	else
-		if p.occupants[location] == p.maxOccupants[location] then
-			sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
+		return p.occupants[location] == p.maxOccupants[location]
+		--[[if p.occupants[location] == p.maxOccupants[location] then
+			--sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
 			return true
 		else
 			return false
-		end
+		end]]
 	end
 end
 
