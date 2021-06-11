@@ -324,10 +324,10 @@
 						"fly": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 						"fly2": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
 
-						"s_back": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
 
 
 						"none": { "properties": {} }
