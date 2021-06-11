@@ -653,23 +653,35 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 100 },
-				"side": { "transition": "bed", "chance": 20 },
+				"front": { "transition": "side", "chance": 20 },
+				"side": { "transition": "bed", "chance": 100 },
 				"back": { "transition": "side", "chance": 20 }
 			}
 		},
 		"hug": {
 			"transitions": {
-				"up": {
-					"animation": {
-						"legs": "grab"
+				"up": [
+					{
+						"location": "hug",
+						"animation": {
+							"legs": "grab"
+						},
+						"victimAnimation": "bellybed",
+						"victimAnimLocation": "hug",
+						"timing" : "legs",
+						"state": "back",
+						"chance": 10
 					},
-					"victimAnimation": "bellybed",
-					"victimAnimLocation": "hug",
-					"timing" : "legs",
-					"state": "back",
-					"chance": 10
-				},
+					{
+						"animation": {
+							"legs": "grab"
+						},
+						"victimAnimation": "bellybed",
+						"victimAnimLocation": "hug",
+						"timing" : "legs",
+						"state": "back"
+					}
+				],
 				"absorb": {
 					"location": "belly",
 					"failOnFull": 1,
@@ -722,7 +734,7 @@
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
-				"side": { "transition": "side", "chance": 20 },
+				"side": { "transition": "up", "chance": 20 },
 				"back": { "transition": "side", "chance": 20 }
 			}
 		},

@@ -276,7 +276,7 @@ function state_back()
 end
 
 p.registerStateScript( "back", "unbed", function(args)
-	return p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
+	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {})
 end)
 
 -------------------------------------------------------------------------------

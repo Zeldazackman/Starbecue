@@ -166,6 +166,23 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	end
 end
 
+function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
+	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
+
+	if p.locationEmpty(location) then return false end
+	local i = args.index
+	local victim = vsoGetTargetId( "occupant"..i )
+
+	if not victim then -- could be part of above but no need to log an error here
+		return false
+	end
+
+	vsoMakeInteractive( true )
+	p.uneat( i )
+	vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
+end
+
+
 function p.checkEatPosition(position, location, transition, noaim)
 	if not p.locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
