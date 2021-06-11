@@ -32,9 +32,9 @@ end
 
 function getItemStatusString()	--Get the current item status message string
 	if storage.vso.pills.fatten and storage.vso.pills.fatten.value > 0 then
-		return "A lazy hungry shadox, why don't you bring him something to eat?"
-	else
 		return "A lazy, fat, and hungry shadox, why don't you give his belly some rubs?"
+	else
+		return "A lazy hungry shadox, why don't you bring him something to eat?"
 	end
 	return R;
 end
