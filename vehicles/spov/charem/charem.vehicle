@@ -102,6 +102,37 @@
 	"states": {
 		"back": {
 			"transitions": {
+				"eat":{
+					"location" : "belly",
+					"failOnFull" : true,
+					"animation": {
+						"head": "eat",
+						"body": "eat",
+						"tail": "back.wag2"
+					},
+					"script": "eat",
+					"victimAnimation": "backeat"
+				},
+				"anal":{
+					"location" : "belly",
+					"failOnFull" : true,
+					"animation": {
+						"body": "anal",
+						"tail": "back.wag2"
+					},
+					"script": "anal",
+					"victimAnimation": "backanal"
+				},
+				"analescape":{
+					"location" : "belly",
+					"animation": {
+						"body": "analescape",
+						"tail": "back.wag2"
+					},
+					"script": "analescape",
+					"victimAnimation": "backanalescape"
+				},
+
 				"bed": {
 					"victimAnimation": "bellybed",
 					"script": "bed"
@@ -136,7 +167,7 @@
 					"part" : "body",
 					"up": { "transition": "side" },
 					"front": { "transition": "side" },
-					"back": { "transition": "side" },
+					"back": { "transition": "analescape" },
 					"down": { "transition": "side" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 10 },
@@ -159,22 +190,67 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 100 },
-				"side": { "transition": "bed", "chance": 20 },
-				"back": { "transition": "side", "chance": 20 }
+				"front": { "transition": "eat", "chance": 100 },
+				"side": { "transition": "bed", "chance": 100 },
+				"back": { "transition": "anal", "chance": 100 }
 			}
 		},
 		"hug": {
 			"transitions": {
-				"up": {
+				"eat":{
+					"location" : "belly",
+					"failOnFull" : true,
 					"animation": {
-						"legs": "grab"
+						"head": "eat",
+						"body": "eat",
+						"tail": "back.wag2"
 					},
-					"victimAnimation": "bellybed",
-					"victimAnimLocation": "hug",
-					"timing" : "legs",
-					"state": "back"
-				}
+					"script": "eat",
+					"victimAnimation": "backeat"
+				},
+				"anal":{
+					"location" : "belly",
+					"failOnFull" : true,
+					"animation": {
+						"body": "anal",
+						"tail": "back.wag2"
+					},
+					"script": "anal",
+					"victimAnimation": "backanal"
+				},
+				"analescape":{
+					"location" : "belly",
+					"animation": {
+						"body": "analescape",
+						"tail": "back.wag2"
+					},
+					"script": "analescape",
+					"victimAnimation": "backanalescape"
+				},
+
+				"up": [
+					{
+						"location" : "hug",
+						"chance": 10,
+						"animation": {
+							"legs": "grab"
+						},
+						"victimAnimation": "bellybed",
+						"victimAnimLocation": "hug",
+						"timing" : "legs",
+						"state": "back"
+					},
+					{
+						"location" : "hug",
+						"animation": {
+							"legs": "grab"
+						},
+						"victimAnimation": "bellybed",
+						"victimAnimLocation": "hug",
+						"timing" : "legs",
+						"state": "back"
+					}
+				]
 			},
 			"idle": {
 				"body": "back",
@@ -191,7 +267,7 @@
 					"part" : "body",
 					"up": { "transition": "side" },
 					"front": { "transition": "side" },
-					"back": { "transition": "side" },
+					"back": { "transition": "analescape" },
 					"down": { "transition": "side" },
 					"chances": {
 						"easyescape": { "min": 2, "max": 10 },
@@ -214,9 +290,9 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 20 },
+				"front": { "transition": "eat", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "side", "chance": 20 }
+				"back": { "transition": "anal", "chance": 20 }
 			}
 		}
 	}

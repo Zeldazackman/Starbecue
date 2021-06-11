@@ -22,6 +22,9 @@
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
@@ -50,6 +53,7 @@
 
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"back.wag": { "frames": 8, "cycle": 1, "mode": "end", "priority": 1 },
+					"back.wag2": { "frames": 16, "cycle": 2, "mode": "end", "priority": 1 },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -59,6 +63,9 @@
 				"default": "back",
 				"states": {
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"back.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
@@ -104,8 +111,11 @@
 					"bodyState": {
 						"back": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.<frame><directives>" } },
 
-						"eat": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.escape.<frame><directives>" } },
+
+						"anal": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.anal.<frame><directives>" } },
+						"analescape": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.analescape.<frame><directives>" } },
 
 						"s_back": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
@@ -124,8 +134,11 @@
 					"bodyState": {
 						"back": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.<frame><directives>" } },
 
-						"eat": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.escape.<frame><directives>" } },
+
+						"anal": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.anal.<frame><directives>" } },
+						"analescape": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.analescape.<frame><directives>" } },
 
 						"s_back": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
@@ -155,6 +168,27 @@
 					}
 				}
 			},
+			"frontlegsFullbright": {
+				"properties": {
+					"centered": true,
+					"zLevel": 4,
+					 "transformationGroups": ["flip"]
+				},
+				"partStates": {
+					"legsState": {
+						"none": { "properties": {} },
+						"back": { "properties": { "image": "spov/<skin>/fullbright/legs.png:back.<frame><directives>" } },
+						"hug": { "properties": { "image": "spov/<skin>/fullbright/legs.png:hug.<frame><directives>" } },
+
+						"grab": { "properties": { "image": "spov/<skin>/fullbright/legs.png:grab.<frame><directives>" } },
+
+						"s_back": { "properties": { "image": "spov/<skin>/fullbright/legs.png:<state>.s_back.<frame><directives>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/fullbright/legs.png:<state>.s_front.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/fullbright/legs.png:<state>.s_up.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/fullbright/legs.png:<state>.s_down.<frame><directives>" } }
+					}
+				}
+			},
 			"backlegs": {
 				"properties": {
 					"centered": true,
@@ -179,20 +213,20 @@
 			"tail": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1,
+					"zLevel": -1,
 					 "transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"tailState": {
 						"back": { "properties": { "image": "spov/<skin>/tail.png:back.<frame><directives>" } },
 						"back.wag": { "properties": { "image": "spov/<skin>/tail.png:back.wag.<frame><directives>" } },
+						"back.wag2": { "properties": { "image": "spov/<skin>/tail.png:back.wag.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
 				}
 			},
-
-			"head": {
+			"headForeground": {
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
@@ -201,14 +235,65 @@
 				"partStates": {
 					"headState": {
 						"none": { "properties": {} },
+
+						"back": { "properties": { "image": "spov/<skin>/foreground/head.png:back.<frame><directives>" } },
+						"back.blink": { "properties": { "image": "spov/<skin>/foreground/head.png:back.blink.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/foreground/head.png:back.eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/head.png:back.escape.<frame><directives>" } },
+
+						"pet": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><directives>" } },
+
+						"look": { "properties": { "image": "spov/<skin>/foreground/head.png:look.<frame><directives>" } }
+					}
+				}
+			},
+
+			"head": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1,
+					 "transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"none": { "properties": {} },
+
 						"back": { "properties": { "image": "spov/<skin>/head.png:back.<frame><directives>" } },
 						"back.blink": { "properties": { "image": "spov/<skin>/head.png:back.blink.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/head.png:back.eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/head.png:back.escape.<frame><directives>" } },
+
 						"pet": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
 
 						"look": { "properties": { "image": "spov/<skin>/head.png:look.<frame><directives>" } }
 					}
 				}
 			},
+			"headFullbright": {
+				"properties": {
+					"centered": true,
+					"zLevel": 5,
+					 "transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"none": { "properties": {} },
+
+						"back": { "properties": { "image": "spov/<skin>/fullbright/head.png:back.<frame><directives>" } },
+						"back.blink": { "properties": { "image": "spov/<skin>/fullbright/head.png:back.blink.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/fullbright/head.png:back.eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/fullbright/head.png:back.escape.<frame><directives>" } },
+
+						"pet": { "properties": { "image": "spov/<skin>/fullbright/head.png:blink.<frame><directives>" } },
+
+						"look": { "properties": { "image": "spov/<skin>/fullbright/head.png:look.<frame><directives>" } }
+					}
+				}
+			},
+
 			"driver": {
 				"properties": {
 					"centered": true,

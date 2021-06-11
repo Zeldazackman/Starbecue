@@ -20,6 +20,19 @@ function onEnd()
 	p.onEnd()
 end
 
+p.registerStateScript( "back", "eat", function( args )
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end)
+
+p.registerStateScript( "back", "anal", function( args )
+	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
+end)
+
+p.registerStateScript( "back", "analescape", function( args )
+	return p.doEscape(args, "belly", {-3, -3.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
+end)
+
+
 p.registerStateScript( "back", "bed", function( args )
 	local index = p.occupants.total + 1
 
@@ -50,3 +63,15 @@ p.registerStateScript( "back", "unbed", function(args)
 end)
 
 state_hug = p.standardState
+
+p.registerStateScript( "hug", "eat", function( args )
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end)
+
+p.registerStateScript( "hug", "anal", function( args )
+	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
+end)
+
+p.registerStateScript( "hug", "analescape", function( args )
+	return p.doEscape(args, "belly", {-3, -2.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
+end)

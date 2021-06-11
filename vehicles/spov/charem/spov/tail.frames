@@ -12,7 +12,16 @@
 		"back.wag.3" : "back.wag.1",
 		"back.wag.4" : "back.1",
 		"back.wag.7" : "back.wag.5",
-		"back.wag.8" : "back.1"
+		"back.wag.8" : "back.1",
+
+		"back.wag.9" : "back.wag.1",
+		"back.wag.10" : "back.wag.2",
+		"back.wag.11" : "back.wag.3",
+		"back.wag.12" : "back.wag.4",
+		"back.wag.13" : "back.wag.5",
+		"back.wag.14" : "back.wag.6",
+		"back.wag.15" : "back.wag.7",
+		"back.wag.16" : "back.wag.8"
 
 	}
 }
