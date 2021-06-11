@@ -30,7 +30,7 @@
 					"pin": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -70,7 +70,7 @@
 					"laydown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"situp": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-					"rollover": { "frames": 5, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
 
 					"grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 

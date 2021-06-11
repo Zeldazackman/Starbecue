@@ -212,7 +212,7 @@ end)
 
 function LayAbsorb()
 	local index = p.findFirstIndexForLocation("hug")
-	if not index then return end
+	if not index then return false end
 
 	vsoSound( "slurp" )
 	return true, function()
@@ -239,6 +239,10 @@ function state_lay()
 end
 
 -------------------------------------------------------------------------------
+
+p.registerStateScript( "sleep", "absorb", function(args)
+	return LayAbsorb()
+end)
 
 function state_sleep()
 	p.standardState()
@@ -283,7 +287,7 @@ end)
 
 p.registerStateScript( "hug", "absorb", function(args)
 	local index = p.findFirstIndexForLocation("hug")
-	if not index then return end
+	if not index then return false end
 
 	vsoSound( "slurp" )
 	return true, function()
