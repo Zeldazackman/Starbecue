@@ -641,9 +641,9 @@
 				"hug" : {
 					"part" : "body",
 					"up": { "transition": "up" },
-					"front": { "transition": "up" },
-					"back": { "transition": "up" },
-					"down": { "transition": "up" },
+					"front": { "transition": "side" },
+					"back": { "transition": "side" },
+					"down": { "transition": "down" },
 					"chances": {
 						"easyescape": { "min": 0, "max": 0 },
 						"normal": { "min": 0, "max": 0 },
@@ -721,9 +721,9 @@
 				"hug" : {
 					"part" : "legs",
 					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
-					"front": { "transition": "up", "victimAnimation": "hug.s_front" },
-					"back": { "transition": "up", "victimAnimation": "hug.s_back" },
-					"down": { "transition": "up", "victimAnimation": "hug.s_down" },
+					"front": { "transition": "side", "victimAnimation": "hug.s_front" },
+					"back": { "transition": "side", "victimAnimation": "hug.s_back" },
+					"down": { "transition": "down", "victimAnimation": "hug.s_down" },
 					"chances": {
 						"easyescape": { "min": 0, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
