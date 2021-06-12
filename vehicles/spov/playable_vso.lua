@@ -119,15 +119,16 @@ end
 
 function p.locationEmpty(location)
 	if p.occupants.total == 0 then
-		sb.logInfo( "["..p.vsoMenuName.."] No one to let out!" )
+		--sb.logInfo( "["..p.vsoMenuName.."] No one to let out!" )
 		return true
 	else
-		if p.occupants[location] == 0 then
+		return p.occupants[location] == 0
+		--[[if p.occupants[location] == 0 then
 			sb.logInfo( "["..p.vsoMenuName.."] No one in "..location.." to let out!" )
 			return true
 		else
 			return false
-		end
+		end]]
 	end
 end
 
