@@ -6,7 +6,7 @@
 		"frame": "1",
 		"directives": "",
 		"smolprey": "xeronious_egg",
-		"eggtype": "spov/default/smol/body.png"
+		"eggtype": "spov/default/smol/smol_body.png"
 	},
 	"animatedParts": {
 		"stateTypes": {
