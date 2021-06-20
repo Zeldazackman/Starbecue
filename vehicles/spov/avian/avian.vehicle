@@ -1,0 +1,300 @@
+{
+	"name" : "spovavian",
+	"script" : "avian.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/spov/avian/",
+	"animation" : "avian.animation",
+
+	"loungePositions" : {
+		"driver" : {
+			"part" : "driver",
+			"partAnchor" : "driverPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupantPosition",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		}
+
+
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"vso" : {
+		"useAnimatorFirst":0,
+		"spawnOwnerState":"faint",
+		"movementSettingsFlipPoly" : 0,
+		"movementSettings" : {
+			"default":{
+				"collisionPoly" : [
+					[-2,-5], [2, -5],
+					[3,-4], [3, 2.5],
+					[2, 3.5], [-2, 3.5],
+					[-3, 2.5], [-3, -4]
+				],
+				"gravityMultiplier" : 0.0,
+				"liquidBuoyancy" : 0.0,
+				"airBuoyancy" : 0.0,
+				"bounceFactor" : 0.0,
+				"collisionEnabled" : true,
+				"frictionEnabled" : true,
+				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"ignorePlatformCollision" : false
+			}
+		},
+
+		"lights" : {
+			"driver" : {
+				"color" : [100, 100, 100],
+				"position" : [0,0],
+				"pointLight" : true
+			},
+			"prey" : {
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
+			}
+		},
+
+		"victimAnimations": "/vehicles/spov/avian/victim_animations.config"
+	},
+
+	"locations" :{
+		"regular" :[
+			"belly",
+			"shaft"
+		],
+		"sided" : [
+			"balls"
+		],
+		"combine" :[
+			["belly", "fatten"]
+		]
+	},
+
+	"maxOccupants" : {
+		"total" : 4,
+		"belly" : 1,
+		"shaft" : 1,
+		"ballsL" : 1,
+		"ballsR" : 1
+	},
+
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+				"eat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "rotation",
+						"head": "eat",
+						"rotate": {
+							"parts": [
+								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+							]
+						}
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+
+				"escapeoral": { // 1 occupants
+					"location" : "belly",
+					"animation": {
+						"body": "escape",
+						"head": "escape"
+					},
+					"victimAnimation": "escape"
+				},
+
+				"escape" : {
+					"script": "checkletout"
+				}
+
+			},
+			"idle": {
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				},
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle"
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+
+			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "down" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyescape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiescape": { "min": 10, "max": 20 }
+					}
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"interact": {
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
+				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
+			},
+			"control": {
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpStrength": 50,
+				"fullThreshold": 5, // 3 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullJumpStrength": 15,
+				"jumpCount": 2,
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
+				"primaryAction": {
+				},
+				"altAction": {
+				},
+				"animations": {
+					"walk": {
+						"arms": "walk",
+						"legs": "walk",
+						"body": "idle"
+					},
+					"run": {
+						"arms": "run",
+						"legs": "run",
+						"body": "idle"
+					},
+					"jump": {
+						"legs": "jump",
+						"arms": "jump",
+						"body": "idle"
+					},
+					"fall": {
+						"legs": "fall",
+						"arms": "fall",
+						"body": "idle"
+					}
+				}
+			}
+		},
+		"smol": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+			},
+			"idle": {
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				},
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle"
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+
+			"interact": {
+				"petAnimation": true
+			},
+			"control": {
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpStrength": 50,
+				"fullThreshold": 5, // 3 (or more) occupants and it uses fulljumpstrength and can't run
+				"fullJumpStrength": 15,
+				"jumpCount": 2,
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
+				"primaryAction": {
+				},
+				"altAction": {
+				},
+				"animations": {
+					"walk": {
+						"arms": "smol.walk",
+						"legs": "smol.walk",
+						"body": "smol.idle"
+					},
+					"run": {
+						"arms": "smol.run",
+						"legs": "smol.run",
+						"body": "smol.idle"
+					},
+					"jump": {
+						"legs": "smol.jump",
+						"arms": "smol.jump",
+						"body": "smol.idle"
+					},
+					"fall": {
+						"legs": "smol.fall",
+						"arms": "smol.fall",
+						"body": "smol.idle"
+					}
+				}
+			}
+		}
+	}
+}
