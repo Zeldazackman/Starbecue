@@ -312,8 +312,6 @@ state_pinnedsleep = p.standardState
 
 -------------------------------------------------------------------------------
 
--- stuff after this point hasn't been migrated yet, only the bare minimum to make things not completely break
-
 function begin_state_smol()
 	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
 	fixOccupantCenters("belly", "smolbellycenter", "body")

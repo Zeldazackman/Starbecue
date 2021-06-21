@@ -344,13 +344,13 @@
 						"jump": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:fall.<frame><directives>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/legs.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:idle.<frame><directives>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/legs.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/legs.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:run.<frame><directives>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/legs.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/legs.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:fall.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -372,13 +372,13 @@
 						"jump": { "properties": { "image": "spov/<skin>/macro/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/macro/legs.png:fall.<frame><directives>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/legs.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:idle.<frame><directives>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/legs.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/legs.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:walk.<frame><directives>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:run.<frame><directives>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/legs.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/legs.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:fall.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -394,12 +394,28 @@
 				"partStates": {
 					"headState": {
 						"idle": { "properties": { "image": "spov/<skin>/macro/head.png:idle.<frame><directives>" } },
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/head.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_head.png:idle.<frame><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"beak": {
+				"properties": {
+					"centered": true,
+					"zLevel": 3,
+					 "transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"idle": { "properties": { "image": "spov/<skin>/macro/beak/head.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/beak/smol_head.png:idle.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
 				}
 			}
+
 		}
 	},
 	"transformationGroups": {

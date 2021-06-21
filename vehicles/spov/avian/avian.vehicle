@@ -68,10 +68,26 @@
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
-					[-2,-5], [2, -5],
-					[3,-4], [3, 2.5],
-					[2, 3.5], [-2, 3.5],
-					[-3, 2.5], [-3, -4]
+					[-1,-6], [1, -6],
+					[2,-5], [2, 1],
+					[1, 2], [-1, 2],
+					[-2, 1], [-2, -5]
+				],
+				"gravityMultiplier" : 0.0,
+				"liquidBuoyancy" : 0.0,
+				"airBuoyancy" : 0.0,
+				"bounceFactor" : 0.0,
+				"collisionEnabled" : true,
+				"frictionEnabled" : true,
+				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"ignorePlatformCollision" : false
+			},
+			"smol":{
+				"collisionPoly" : [
+					[-0.5,-3], [0.5, -3],
+					[1,-2], [1, 0.5],
+					[0.5, 1], [-0.5, 1],
+					[-1, 0.5], [-1, -2]
 				],
 				"gravityMultiplier" : 0.0,
 				"liquidBuoyancy" : 0.0,
@@ -214,22 +230,51 @@
 					"walk": {
 						"arms": "walk",
 						"legs": "walk",
-						"body": "idle"
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-2, -4, -2, 0, -2, -4, -2, 0], "head": true, "body": true}
+							]
+						}
 					},
 					"run": {
 						"arms": "run",
 						"legs": "run",
-						"body": "idle"
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [0, 2, 0, -2, 0, 2, 0, -2], "head": true, "body": true}
+							]
+						}
 					},
 					"jump": {
 						"legs": "jump",
 						"arms": "jump",
-						"body": "idle"
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [4, 4, 4, 4], "head": true, "body": true}
+							]
+						}
 					},
 					"fall": {
 						"legs": "fall",
 						"arms": "fall",
-						"body": "idle"
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [4, 4, 4, 4], "head": true, "body": true}
+							]
+						}
+
 					}
 				}
 			}
@@ -276,22 +321,51 @@
 					"walk": {
 						"arms": "smol.walk",
 						"legs": "smol.walk",
-						"body": "smol.idle"
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "head": true, "body": true}
+							]
+						}
+
 					},
 					"run": {
 						"arms": "smol.run",
 						"legs": "smol.run",
-						"body": "smol.idle"
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "head": true, "body": true}
+							]
+						}
 					},
 					"jump": {
 						"legs": "smol.jump",
 						"arms": "smol.jump",
-						"body": "smol.idle"
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 2, 2, 2], "head": true, "body": true}
+							]
+						}
 					},
 					"fall": {
 						"legs": "smol.fall",
 						"arms": "smol.fall",
-						"body": "smol.idle"
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 2, 2, 2], "head": true, "body": true}
+							]
+						}
 					}
 				}
 			}

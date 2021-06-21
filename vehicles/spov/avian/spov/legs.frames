@@ -1,7 +1,7 @@
 {
 	"frameGrid" : {
 		"size" : [96, 96],
-		"dimensions" : [8, 2],
+		"dimensions" : [8, 5],
 		"names" : [
 			[ "idle.1"],
 			[ "walk.1", "walk.2", "walk.3", "walk.4", "walk.5", "walk.6", "walk.7", "walk.8"],
