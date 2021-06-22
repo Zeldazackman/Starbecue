@@ -1657,7 +1657,7 @@ function p.handleStruggles()
 	if chance ~= nil and ( chance.max == 0 or (
 		(not p.control.driving or struggledata[movedir].controlled)
 		and (math.random(chance.min, chance.max) <= p.struggleCount))
-	) ) then
+	) then
 		p.struggleCount = 0
 		p.doTransition( struggledata[movedir].transition, {index=struggler, direction=movedir} )
 	else
