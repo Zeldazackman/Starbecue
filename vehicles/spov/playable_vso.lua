@@ -1410,10 +1410,12 @@ function p.idleStateChange()
 	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions
 		if not p.control.driving then
+			local percent = math.random(100)
 			for name, t in pairs(transitions) do
 				local transition = p.occupantArray( t )
 				if transition and transition.chance and transition.chance > 0 then
-					if p.randomChance(transition.chance) then
+					percent = percent - transition.chance
+					if percent <= 0 then
 						p.doTransition( name )
 						return
 					end
