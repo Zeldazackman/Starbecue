@@ -1,6 +1,5 @@
 
 
-require("/scripts/vore/vsosimple.lua")
 require("/vehicles/spov/playable_vso.lua")
 
 p.vsoMenuName = "charem"
@@ -49,7 +48,7 @@ function state_back()
 
 	-- simulate npc interaction when nearby
 	if p.occupants.total == 0 and p.control.standalone then
-		if vsoChance(0.1) then -- every frame, we don't want it too often
+		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
 				p.doTransition( "bed", {id=npcs[1]} )

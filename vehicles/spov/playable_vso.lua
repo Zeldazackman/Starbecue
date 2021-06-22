@@ -135,13 +135,13 @@ end
 function p.doVore(args, location, statuses, sound )
 	local i = p.occupants.total + 1
 	if p.eat( args.id, i, location ) then
-		vsoMakeInteractive( false )
+		vehicle.setInteractive( false )
 		p.showEmote("emotehappy")
 		vsoVictimAnimSetStatus( "occupant"..i, statuses );
 		return true, function()
-			vsoMakeInteractive( true )
+			vehicle.setInteractive( true )
 			vsoVictimAnimReplay( "occupant"..i, location.."center", "bodyState")
-			if sound then vsoSound( sound ) end
+			if sound then animator.playSound( sound ) end
 		end
 	else
 		return false
@@ -158,11 +158,11 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	if not victim then -- could be part of above but no need to log an error here
 		return false
 	end
-	vsoMakeInteractive( false )
+	vehicle.setInteractive( false )
 	vsoVictimAnimSetStatus( "occupant"..i, statuses );
 
 	return true, function()
-		vsoMakeInteractive( true )
+		vehicle.setInteractive( true )
 		p.uneat( i )
 		vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
 	end
@@ -179,7 +179,7 @@ function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
 		return false
 	end
 
-	vsoMakeInteractive( true )
+	vehicle.setInteractive( true )
 	p.uneat( i )
 	vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
 end
@@ -395,8 +395,6 @@ function p.doAnims( anims, force )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
 			p.headbob( anim )
-		elseif state == "offset2" then
-			p.otherbob( anim )
 		elseif state == "rotate" then
 			p.rotate( anim )
 		elseif state == "tags" then
@@ -593,11 +591,9 @@ end
 
 p.smolpreyspecies = {}
 p.smolpreyfilepath = {}
-
 function p.inedible(targetid)
-	local inedibleCreatures = root.assetJson( "/vehicles/spov/pvso_general.config:inedibleCreatures")
-	for i = 1, #inedibleCreatures do
-		if world.entityType(targetid) == inedibleCreatures[i] then return true end
+	for i = 1, #p.config.inedibleCreatures do
+		if world.entityType(targetid) == p.config.inedibleCreatures[i] then return true end
 	end
 	return false
 end
@@ -716,7 +712,7 @@ function p.onForcedReset()
 	end
 	vsoUseSolid( false )
 
-	vsoMakeInteractive( true )
+	vehicle.setInteractive( true )
 
 	vsoTimeDelta( "emoteblock" ) -- without this, the first call to showEmote() does nothing
 end
@@ -805,6 +801,7 @@ function p.onBegin()
 
 	p.stateconfig = config.getParameter("states")
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
+	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
@@ -876,7 +873,6 @@ end
 local _ptransition = {}
 
 function p.doTransition( direction, scriptargs )
-	vsoCounterReset( "struggleCount" )
 	if not p.stateconfig[p.state].transitions[direction] then return end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return end
@@ -1310,7 +1306,7 @@ function p.control.airMovement( dx )
 					animator.burstParticleEmitter( "defaultblue" )
 					animator.burstParticleEmitter( "defaultlightblue" )
 				end
-				vsoSound( "doublejump" )
+				animator.playSound( "doublejump" )
 			end
 		end
 		p.movement.jumped = true
@@ -1414,12 +1410,10 @@ function p.idleStateChange()
 	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions
 		if not p.control.driving then
-			local percent = vsoRand(100)
 			for name, t in pairs(transitions) do
 				local transition = p.occupantArray( t )
 				if transition and transition.chance and transition.chance > 0 then
-					percent = percent - transition.chance
-					if percent < 0 then
+					if p.randomChance(transition.chance) then
 						p.doTransition( name )
 						return
 					end
@@ -1443,16 +1437,12 @@ end
 
 function p.driverStateChange()
 	local transitions = p.stateconfig[p.state].transitions
-	local movetype, movedir = vso4DirectionInput( p.control.driver )
-	if movetype and movetype > 0 then
-		if movedir == "U" and transitions.up ~= nil then
-			p.doTransition("up")
-		end
-		if (movedir == "F" or movedir == "B") and transitions.side ~= nil then
+	local movedir = p.getSeatDirections( p.control.driver )
+	if movedir ~= nil then
+		if transitions[movedir] ~= nil then
+			p.doTransition(movedir)
+		elseif (movedir == "front" or movedir == "back") and transitions.side ~= nil then
 			p.doTransition("side")
-		end
-		if movedir == "D" and transitions.down ~= nil then
-			p.doTransition("down")
 		end
 	end
 end
@@ -1471,7 +1461,7 @@ end
 
 function p.bellyEffects()
 	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
-		vsoSound( "digest" )
+		animator.playSound( "digest" )
 	end
 	local driver = vehicle.entityLoungingIn( "driver")
 
@@ -1541,33 +1531,59 @@ end
 function p.extraBellyEffects() -- something for the PVSOs to replace
 end
 
-randomDirections = { "B", "F", "U", "D", "J", nil}
+randomDirections = { "back", "front", "up", "down", "jump", nil}
 p.monsterstrugglecooldown = {}
 
-local _vso4DirectionInput = vso4DirectionInput
-function vso4DirectionInput(seatname)
+function p.getSeatDirections(seatname)
 	local targetid = vsoGetTargetId(seatname)
 	if not targetid or not world.entityExists(targetid) then return end
 
-	if world.entityType( targetid ) == "monster" then
+	if world.entityType( targetid ) ~= "player" then
 		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] < 1 then
 			local movedir = randomDirections[math.random(1,6)]
-			local movetype = 0
-			if movedir then
-				if movedir == "J" then
-					movetype = 3
-				else
-					movetype = math.random(1,2)
-				end
-			end
 			p.monsterstrugglecooldown[seatname] = math.random(1, 30)
-			return movetype, movedir
+			return movedir
 		else
 			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - 1
 			return
 		end
 	else
-		return _vso4DirectionInput(seatname)
+		local dx = 0
+		local dy = 0
+		if vehicle.controlHeld( seatname, "left" ) then
+			dx = dx - 1
+		end
+		if vehicle.controlHeld( seatname, "right" ) then
+			dx = dx + 1
+		end
+		if vehicle.controlHeld( seatname, "down" ) then
+			dy = dy - 1
+		end
+		if vehicle.controlHeld( seatname, "up" ) then
+			dy = dy + 1
+		end
+
+		dx = dx * self.vsoCurrentDirection
+
+		if dx ~= 0 then
+			if dx >= 1 then
+				return "front"
+			else
+				return "back"
+			end
+		end
+
+		if dy ~= 0 then
+			if dy >= 1 then
+				return "up"
+			else
+				return "down"
+			end
+		end
+
+		if vehicle.controlHeld( seatname, "jump" ) then
+			return "jump"
+		end
 	end
 end
 
@@ -1575,66 +1591,60 @@ function addHungerHealth(eid, amount, callback)
 	_add_vso_rpc( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
 
+p.struggleCount = 0
+p.bellySettleDownTimer = 3
+
 function p.handleStruggles()
-	local struggler = 0
-	local movetype, movedir
-
-	::NextStuggler::
-
-	while (movetype == nil or movetype == 0) and struggler < p.maxOccupants.total do
-		struggler = struggler + 1
-		movetype, movedir = vso4DirectionInput( "occupant"..struggler )
-	end
-	if movetype == nil or movetype == 0 then return end
-
-	if p.control.driving and struggler == 1 and not p.control.standalone then
-		movetype = nil
-		goto NextStuggler -- control vappy instead of struggling
-	end
-
-	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]
-	if not struggledata then
-		movetype = nil
-		goto NextStuggler -- no struggles in that location
-	end
-
-	if not vsoAnimEnded( struggledata.part.."State" ) and (
-		vsoAnimIs( struggledata.part.."State", "s_up" ) or
-		vsoAnimIs( struggledata.part.."State", "s_front" ) or
-		vsoAnimIs( struggledata.part.."State", "s_back" ) or
-		vsoAnimIs( struggledata.part.."State", "s_down" )
-	) then
-		movetype = nil
-		goto NextStuggler -- already struggling
-	end
-
-	local StrugglesDisabled = root.assetJson( "/vehicles/spov/pvso_general.config:speciesStrugglesDisabled")
-	for i = 1, #StrugglesDisabled do
-		if p.smolpreyspecies[struggler] == StrugglesDisabled[i] then
-			movetype = nil
-			goto NextStuggler -- eggs should not be able to struggle
+	p.bellySettleDownTimer = p.bellySettleDownTimer - vsoDelta()
+	if p.bellySettleDownTimer <= 0 then
+		if p.struggleCount > 0 then
+			p.struggleCount = p.struggleCount - 1
+			p.bellySettleDownTimer = 3
 		end
 	end
 
+	local struggler = 0
+	local struggledata
+	if p.control.driving and not p.control.standalone then
+		struggler = 1
+	end
 
+	local movedir = nil
 
-	local dir = nil
-	if movedir == "B" then dir = "back" end
-	if movedir == "F" then dir = "front" end
-	if movedir == "U" then dir = "up" end
-	if movedir == "D" then dir = "down" end
-
-	if dir == nil then return end -- invalid struggle
-	if struggledata[dir] == nil then return end
+	while (movedir == nil) and struggler < p.maxOccupants.total do
+		struggler = struggler + 1
+		movedir = p.getSeatDirections( "occupant"..struggler )
+		struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]
+		if movedir then
+			if (struggledata == nil) or (struggledata[movedir] == nil) then
+				movedir = nil
+			elseif not vsoAnimEnded( struggledata.part.."State" )
+			and (
+				vsoAnimIs( struggledata.part.."State", "s_up" ) or
+				vsoAnimIs( struggledata.part.."State", "s_front" ) or
+				vsoAnimIs( struggledata.part.."State", "s_back" ) or
+				vsoAnimIs( struggledata.part.."State", "s_down" )
+			)then
+				movedir = nil
+			else
+				for i = 1, #p.config.speciesStrugglesDisabled do
+					if p.smolpreyspecies[struggler] == p.config.speciesStrugglesDisabled[i] then
+						movedir = nil
+					end
+				end
+			end
+		end
+	end
+	if movedir == nil then return end -- invalid struggle
 
 	if struggledata.script ~= nil then
 		local statescript = p.statestripts[p.state][struggledata.script]
-		statescript( struggler, dir )
+		statescript( struggler, movedir )
 	end
 
 	local chance = struggledata.chances
-	if struggledata[dir].chances ~= nil then
-		chance = struggledata[dir].chances
+	if struggledata[movedir].chances ~= nil then
+		chance = struggledata[movedir].chances
 	end
 	if vsoPill( "easyescape" ) then
 		chance = chance.easyescape
@@ -1645,30 +1655,32 @@ function p.handleStruggles()
 	end
 
 	if chance ~= nil and ( chance.max == 0 or (
-		(not p.control.driving or struggledata[dir].controlled)
-		and vsoCounterValue( "struggleCount" ) >= chance.min
-		and vsoCounterChance( "struggleCount", chance.min, chance.max )
+		(not p.control.driving or struggledata[movedir].controlled)
+		and (math.random(chance.min, chance.max) <= p.struggleCount))
 	) ) then
-		p.doTransition( struggledata[dir].transition, {index=struggler, direction=dir} )
+		p.struggleCount = 0
+		p.doTransition( struggledata[movedir].transition, {index=struggler, direction=movedir} )
 	else
+		p.struggleCount = p.struggleCount + 1
+		p.bellySettleDownTimer = 5
+
 		sb.setLogMap("b", "struggle")
-		local animation = {offset = struggledata[dir].offset}
-		animation[struggledata.part] = "s_"..dir
+		local animation = {offset = struggledata[movedir].offset}
+		animation[struggledata.part] = "s_"..movedir
 
 
 		p.doAnims(animation)
 
 		if p.control.notMoving() then
-			p.doAnims( struggledata[dir].animation or struggledata.animation, true )
+			p.doAnims( struggledata[movedir].animation or struggledata.animation, true )
 		else
-			p.doAnims( struggledata[dir].animationWhenMoving or struggledata.animationWhenMoving, true )
+			p.doAnims( struggledata[movedir].animationWhenMoving or struggledata.animationWhenMoving, true )
 		end
 
-		if struggledata[dir].victimAnimation then
-			vsoVictimAnimReplay( "occupant"..struggler, struggledata[dir].victimAnimation, struggledata.part.."State" )
+		if struggledata[movedir].victimAnimation then
+			vsoVictimAnimReplay( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
 		end
-		vsoSound( "struggle" )
-		vsoCounterAdd( "struggleCount", 1 )
+		animator.playSound( "struggle" )
 	end
 end
 
@@ -1685,7 +1697,7 @@ function p.onInteraction( targetid )
 		interact = p.occupantArray( state.interact.side )
 	end
 	if not p.control.driving or interact.controlled then
-		if interact.chance > 0 and vsoChance( interact.chance ) then
+		if interact.chance > 0 and p.randomChance( interact.chance ) then
 			p.doTransition( interact.transition, {id=targetid} )
 			return
 		end
@@ -1695,4 +1707,8 @@ function p.onInteraction( targetid )
 		p.doAnims( state.interact.animation )
 	end
 	p.showEmote( "emotehappy" )
+end
+
+function p.randomChance(percent)
+	return math.random() <= (percent/100)
 end

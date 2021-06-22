@@ -1,7 +1,6 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
-require("/scripts/vore/vsosimple.lua")
 require("/vehicles/spov/playable_vso.lua")
 --[[
 
@@ -214,7 +213,7 @@ function LayAbsorb()
 	local index = p.findFirstIndexForLocation("hug")
 	if not index then return false end
 
-	vsoSound( "slurp" )
+	animator.playSound( "slurp" )
 	return true, function()
 		p.occupantLocation[index] = "belly"
 		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
@@ -270,7 +269,7 @@ function state_back()
 
 	-- simulate npc interaction when nearby
 	if p.occupants.total == 0 and p.control.standalone then
-		if vsoChance(0.1) then -- every frame, we don't want it too often
+		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
 				p.doTransition( "bed", {id=npcs[1]} )
@@ -289,7 +288,7 @@ p.registerStateScript( "hug", "absorb", function(args)
 	local index = p.findFirstIndexForLocation("hug")
 	if not index then return false end
 
-	vsoSound( "slurp" )
+	animator.playSound( "slurp" )
 	return true, function()
 		p.occupantLocation[index] = "belly"
 		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")

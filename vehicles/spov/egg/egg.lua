@@ -1,7 +1,6 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
-require("/scripts/vore/vsosimple.lua")
 require("/vehicles/spov/playable_vso.lua")
 
 -------------------------------------------------------------------------------
@@ -61,11 +60,9 @@ end
 
 
 function p.handleStruggles()
-	local movetype, movedir
+	local movedir = p.getSeatDirections( "occupant1" )
 
-	movetype, movedir = vso4DirectionInput( "occupant1" )
-
-	if movetype == nil or movetype == 0 then return end
+	if movedir == nil then return end -- invalid struggle
 
 	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[1]]
 	if struggledata == nil then return end
@@ -77,23 +74,14 @@ function p.handleStruggles()
 		vsoAnimIs( struggledata.part.."State", "s_down" )
 	) then return end
 
-	local dir = nil
-	if movedir == "B" then dir = "back" end
-	if movedir == "F" then dir = "front" end
-	if movedir == "U" then dir = "up" end
-	if movedir == "D" then dir = "down" end
-
-	if dir == nil then return end -- invalid struggle
-	if struggledata[dir] == nil then return end
-
 	if struggledata.script ~= nil then
 		local statescript = p.statestripts[p.state][struggledata.script]
-		statescript( 1, dir )
+		statescript( struggler, movedir )
 	end
 
 	local chance = struggledata.chances
-	if struggledata[dir].chances ~= nil then
-		chance = struggledata[dir].chances
+	if struggledata[movedir].chances ~= nil then
+		chance = struggledata[movedir].chances
 	end
 	if vsoPill( "easyescape" ) then
 		chance = chance.easyescape
@@ -104,23 +92,25 @@ function p.handleStruggles()
 	end
 
 	if chance ~= nil and ( chance.max == 0 or (
-		(not p.control.driving or struggledata[dir].controlled)
-		and vsoCounterValue( "struggleCount" ) >= chance.min
-		and vsoCounterChance( "struggleCount", chance.min, chance.max )
+		(not p.control.driving or struggledata[movedir].controlled)
+		and (math.random(chance.min, chance.max) <= p.struggleCount))
 	) ) then
-		p.doTransition( struggledata[dir].transition, {index=1, direction=dir} )
+		p.struggleCount = 0
+		p.doTransition( struggledata[movedir].transition, {index=struggler, direction=movedir} )
 	else
+		p.struggleCount = p.struggleCount + 1
+		p.bellySettleDownTimer = 5
+
 		sb.setLogMap("b", "struggle")
-		local animation = {offset = struggledata[dir].offset}
-		animation[struggledata.part] = "s_"..dir
+		local animation = {offset = struggledata[movedir].offset}
+		animation[struggledata.part] = "s_"..movedir
 
 		p.doAnims(animation)
 
-		p.doAnims( struggledata[dir].animation or struggledata.animation, true )
-		if struggledata[dir].victimAnimation then
-			vsoVictimAnimReplay( "occupant1", struggledata[dir].victimAnimation, struggledata.part.."State" )
+		if struggledata[movedir].victimAnimation then
+			vsoVictimAnimReplay( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
 		end
-		vsoCounterAdd( "struggleCount", 1 )
+		--animator.playSound( "struggle" )
 	end
 end
 
