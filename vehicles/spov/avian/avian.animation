@@ -9,6 +9,9 @@
 		"skin" : "default",
 		"frame" : "1",
 		"directives" : "",
+		"replaceColor1" : "?replace;ffca8a=f0608b;e0975c=cd5061;a85636=95484c;6f2919=6a3836",
+		"replaceColor2" : "?replace;f32200=f6fbfb;dc1f00=d7e8e8;be1b00=8fa7a3;951500=5d6d69",
+		"replaceColor3" : "?replace;d9c189=eacf60;a38d59=c1a24e;735e3a=977841",
 		"bellymask" : "",
 		"smolprey": "avian"
 	},
@@ -237,17 +240,17 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.idle.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.eat.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.escape.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_back.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_front.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_up.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/macro/body.png:<bellyoccupants>.stand.s_down.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_body.png:<bellyoccupants>.idle.<frame><directives><bellymask>" } }
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_body.png:<bellyoccupants>.idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3><bellymask>" } }
 					}
 				}
 			},
@@ -260,30 +263,30 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"rotation": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:rotation.<frame><directives>" } },
+						"rotation": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:rotation.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"run": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"fall": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"s_back": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/macro/foreground/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.rotation": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:rotation.<frame><directives>" } },
+						"smol.rotation": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:rotation.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_arms.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 
 						"none": { "properties": {} }
@@ -298,30 +301,30 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/arms.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/arms.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"rotation": { "properties": { "image": "spov/<skin>/macro/arms.png:rotation.<frame><directives>" } },
+						"rotation": { "properties": { "image": "spov/<skin>/macro/arms.png:rotation.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/macro/arms.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/macro/arms.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/macro/arms.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"run": { "properties": { "image": "spov/<skin>/macro/arms.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/macro/arms.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/macro/arms.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/macro/arms.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"fall": { "properties": { "image": "spov/<skin>/macro/arms.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"s_back": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/macro/arms.png:hug.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.rotation": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:rotation.<frame><directives>" } },
+						"smol.rotation": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:rotation.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_arms.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 
 						"none": { "properties": {} }
@@ -336,21 +339,21 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"run": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"fall": { "properties": { "image": "spov/<skin>/macro/foreground/legs.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_legs.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 						"none": { "properties": {} }
 					}
@@ -364,21 +367,21 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/legs.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/legs.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/macro/legs.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/macro/legs.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/macro/legs.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"run": { "properties": { "image": "spov/<skin>/macro/legs.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/macro/legs.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/macro/legs.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/macro/legs.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"fall": { "properties": { "image": "spov/<skin>/macro/legs.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:idle.<frame><directives>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:walk.<frame><directives>" } },
-						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:run.<frame><directives>" } },
+						"smol.walk": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:walk.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.run": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:run.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
-						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:jump.<frame><directives>" } },
-						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:fall.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:jump.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/smol_legs.png:fall.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 						"none": { "properties": {} }
 					}
@@ -393,8 +396,8 @@
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/head.png:idle.<frame><directives>" } },
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_head.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/head.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/smol_head.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 						"none": { "properties": {} }
 					}
@@ -408,8 +411,8 @@
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "spov/<skin>/macro/beak/head.png:idle.<frame><directives>" } },
-						"smol.idle": { "properties": { "image": "spov/<skin>/smol/beak/smol_head.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/macro/beak/head.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/beak/smol_head.png:idle.<frame><directives><replaceColor1><replaceColor2><replaceColor3>" } },
 
 						"none": { "properties": {} }
 					}

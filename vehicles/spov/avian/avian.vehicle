@@ -113,6 +113,43 @@
 			}
 		},
 
+		"replaceColors" : [
+			[
+				["ffca8a", "e0975c", "a85636", "6f2919"], // the first entry in these lists will be the color to replace
+				["f0608b", "cd5061", "95484c", "6a3836"],
+				["7fdadd", "61aebf", "4e7a90", "3f566e"],
+				["add068", "85ac1b", "6e8210", "596809"],
+				["f3efa3", "e3d965", "baa94a", "98832d"],
+				["998779", "836752", "625244", "4e3b2e"],
+				["737275", "595760", "3f3e43", "212123"],
+				["eebfea", "de8ddd", "c060bb", "9a4b9c"],
+				["d18bd5", "a766bc", "814797", "693367"],
+				["f3c873", "db9c38", "b17628", "89561f"],
+				["deeded", "c5d8d8", "96aba9", "6f807e"], // last "canon" color option
+				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"] // lets give them a white option that matches the belly for fun
+			],
+			[
+				["f32200", "dc1f00", "be1b00", "951500"], // colors to be replaced
+				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"], // last "canon" color option
+				["f0608b", "cd5061", "95484c", "6a3836"], // lets give them the same options as the main feathers, birds are colorful!
+				["7fdadd", "61aebf", "4e7a90", "3f566e"],
+				["add068", "85ac1b", "6e8210", "596809"],
+				["f3efa3", "e3d965", "baa94a", "98832d"],
+				["998779", "836752", "625244", "4e3b2e"],
+				["737275", "595760", "3f3e43", "212123"],
+				["eebfea", "de8ddd", "c060bb", "9a4b9c"],
+				["d18bd5", "a766bc", "814797", "693367"],
+				["f3c873", "db9c38", "b17628", "89561f"],
+				["deeded", "c5d8d8", "96aba9", "6f807e"]
+			],
+			[
+				["d9c189", "a38d59", "735e3a"], // first is color to replace
+				["eacf60", "c1a24e", "977841"],
+				["efad56", "c5813e", "9b6638"],
+				["eae660", "c1b54e", "978841"] // last "canon" color option
+			]
+		],
+
 		"victimAnimations": "/vehicles/spov/avian/victim_animations.config"
 	},
 
@@ -299,6 +336,8 @@
 			//	{ "head": "blink" },
 			//	{ "head": "idle" }
 			],
+			"struggle": {
+			},
 
 			"interact": {
 				"petAnimation": true
