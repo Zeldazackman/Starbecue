@@ -272,7 +272,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [-2, -4, -2, 0, -2, -4, -2, 0], "head": true, "body": true}
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "head": true, "body": true}
 							]
 						}
 					},
