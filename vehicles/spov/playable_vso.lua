@@ -949,7 +949,7 @@ function p.control.updateDriving()
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			world.sendEntityMessage(
 				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.maxOccupants.total }, false, entity.id()
+				{ vso = entity.id(), occupants = getSettingsMenuInfo() }, false, entity.id()
 			)
 		end
 	elseif p.occupants.total >= 1 then
@@ -966,7 +966,7 @@ end
 
 function getSettingsMenuInfo()
 	local occupants = {}
-	for i = 1, p.maxOccupants.total do -- using p.occupants.total has potential for issues if slots become empty
+	for i = 1, p.occupants.total do
 		if vsoGetTargetId( "occupant"..i ) then
 			occupants[i] = {
 				id = vsoGetTargetId( "occupant"..i ),

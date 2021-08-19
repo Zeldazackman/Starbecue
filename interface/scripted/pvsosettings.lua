@@ -8,7 +8,6 @@ function onInit()
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
-	p.maxOccupants = config.getParameter( "maxOccupants" )
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	settings = p.vsoSettings[p.vsoname] or {}
@@ -21,29 +20,23 @@ end
 
 function readOccupantData()
 	widget.clearListItems(p.occupantList)
-
 	for i = 1, #p.occupants do
-		widget.addListItem(p.occupantList)
-		--[[
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
+			local listItem = widget.addListItem(p.occupantList)
 			local id = p.occupants[i].id
 			local species = p.occupants[i].species
 			if species == nil then
-				setPortrait( "occupant"..i, world.entityPortrait( id, "bust" ) )
+				setPortrait(p.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
 			else
-				setPortrait( "occupant"..i, {{
+				setPortrait(p.occupantList.."."..listItem, {{
 					image = "/vehicles/spov/"..species.."/"..species.."icon.png",
-					position = {13, 19}
+					position = {13, 12}
 				}})
 			end
-			widget.setText( "occupant"..i..".name", world.entityName( id ) )
-			widget.setButtonEnabled( "occupant"..i..".letOut", true )
-		else
-			clearPortrait( "occupant"..i )
-			widget.setText( "occupant"..i..".name", "" )
-			widget.setButtonEnabled( "occupant"..i..".letOut", false )
+			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
 		end
-		]]
+		widget.setButtonEnabled( "letOut", true )
+		widget.setButtonEnabled( "transform", true )
 	end
 end
 
@@ -140,9 +133,8 @@ function letOut(_, which )
 	if p.refreshed then
 		p.refreshed = false
 		p.refreshtime = 0
-		for i = 1, #p.occupants do
-			--widget.setButtonEnabled( "occupant"..i..".letOut", false )
-		end
+		widget.setButtonEnabled( "letOut", false )
+		widget.setButtonEnabled( "transform", false )
 		world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
 	end
 end
