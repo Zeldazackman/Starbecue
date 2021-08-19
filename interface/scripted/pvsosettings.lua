@@ -22,7 +22,8 @@ end
 function readOccupantData()
 	widget.clearListItems(p.occupantList)
 
-	for i = 1, p.occupants do
+	for i = 1, #p.occupants do
+		widget.addListItem(p.occupantList)
 		--[[
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local id = p.occupants[i].id
@@ -47,7 +48,7 @@ function readOccupantData()
 end
 
 function updateHPbars()
-	for i = 1, p.occupants do
+	for i = 1, #p.occupants do
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local health = world.entityHealth( p.occupants[i].id )
 			--widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
@@ -139,8 +140,8 @@ function letOut(_, which )
 	if p.refreshed then
 		p.refreshed = false
 		p.refreshtime = 0
-		for i = 1, p.maxOccupants do
-			widget.setButtonEnabled( "occupant"..i..".letOut", false )
+		for i = 1, #p.occupants do
+			--widget.setButtonEnabled( "occupant"..i..".letOut", false )
 		end
 		world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
 	end
