@@ -5,12 +5,13 @@ p.bellyeffects = {
 }
 
 function onInit()
+	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	readOccupantData()
-	p.vsosettings = player.getProperty("vsoSettings") or {}
-	settings = p.vsosettings[p.vsoname] or {}
+	p.vsoSettings = player.getProperty("vsoSettings") or {}
+	settings = p.vsoSettings[p.vsoname] or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
 	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
@@ -19,7 +20,10 @@ function onInit()
 end
 
 function readOccupantData()
-	for i = 1, p.maxOccupants do
+	widget.clearListItems(p.occupantList)
+
+	for i = 1, p.occupants do
+		--[[
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local id = p.occupants[i].id
 			local species = p.occupants[i].species
@@ -37,6 +41,18 @@ function readOccupantData()
 			clearPortrait( "occupant"..i )
 			widget.setText( "occupant"..i..".name", "" )
 			widget.setButtonEnabled( "occupant"..i..".letOut", false )
+		end
+		]]
+	end
+end
+
+function updateHPbars()
+	for i = 1, p.occupants do
+		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
+			local health = world.entityHealth( p.occupants[i].id )
+			--widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
+		else
+			--widget.setProgress( "occupant"..i..".healthbar", 0)
 		end
 	end
 end
@@ -73,17 +89,6 @@ function checkRefresh(dt)
 	end
 end
 
-function updateHPbars()
-	for i = 1, p.maxOccupants do
-		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
-			local health = world.entityHealth( p.occupants[i].id )
-			widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
-		else
-			widget.setProgress( "occupant"..i..".healthbar", 0)
-		end
-	end
-end
-
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyeffect = p.bellyeffects[value]
@@ -110,8 +115,8 @@ end
 
 function saveSettings()
 	world.sendEntityMessage( p.vso, "settingsMenuSet", "saveSettings", settings )
-	p.vsosettings[p.vsoname] = settings
-	player.setProperty( "vsoSettings", p.vsosettings )
+	p.vsoSettings[p.vsoname] = settings
+	player.setProperty( "vsoSettings", p.vsoSettings )
 end
 
 function despawn()
