@@ -4,32 +4,8 @@
 require("/scripts/vore/vsosimple.lua")
 
 function vsoEat( targetid, seatname ) -- overwriting this function from vsosimple with a fixed version
-
-	if world.entityExists( targetid ) then
-
-		vehicle.setLoungeEnabled( seatname, true )
-		--mcontroller.setAnchorState( self.vsoLoungeNameToIndex[ seatname ], true );
-
-		local eatst = self.sv.eaten[ seatname ];
-		if eatst ~= nil
-		and eatst.id ~= nil -- this is the fix!
-		then
-			if eatst.id == targetid then
-				--Fine
-			else
-				--Make sure THIS id is UNSAT. from a specific seat. Until eaten again?
-				self.sv.vsoEatenEject[ seatname ][ eatst.id ] = 1;
-			end
-			self.sv.eaten[ seatname ] = { id=targetid, success=false }
-		else
-			self.sv.eaten[ seatname ] = { id=targetid, success=false }
-		end
-
-		vsoEatForce( targetid, self.vsoLoungeNameToIndex[ seatname ] )
-
-		return true;
-	end
-	return false;
+	vehicle.setLoungeEnabled(seatname, true)
+	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", 0+1, entity.id())
 end
 
 function vsoNotnil( val, msg ) -- HACK: intercept self.cfgVSO to inject things from other files

@@ -10,17 +10,19 @@ function init()
 end
 
 function update(dt)
+	if world.entityExists(effect.sourceEntity()) then
+		local health = world.entityHealth(entity.id())
 
-	local health = world.entityHealth(entity.id())
+		if health[1] <= 1 then
+			status.setResource("health", 1)
+			return
+		end
 
-	if health[1] <= 1 then
-	status.setResource("health", 1)
-	return
-	end
-
-
-	if health[1] > ( 0.01 * dt * self.powerMultiplier) then
-	status.modifyResourcePercentage("health", -0.01 * dt * self.powerMultiplier)
+		if health[1] > ( 0.01 * dt * self.powerMultiplier) then
+			status.modifyResourcePercentage("health", -0.01 * dt * self.powerMultiplier)
+		end
+	else
+		effect.expire()
 	end
 end
 
