@@ -25,11 +25,6 @@ function init()
 	message.setHandler( "isLounging", function()
 		return player.isLounging(), player.loungingIn()
 	end)
-	-- override handler from ssvm maybe?? we'll see
-	message.setHandler("vsoForcePlayerSit", function( _, _, sourceEntityId, seatindex )
-		world.sendEntityMessage( sourceEntityId, "forcedsit", seatindex )
-		return player.lounge( sourceEntityId, seatindex );
-	end )
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )
 		local position = world.entityPosition( entity.id() )
@@ -69,4 +64,20 @@ function init()
 	message.setHandler("getRadialSelection", function(_,_, stat)
 		return player.getProperty("radialSelection")
 	end)
+
+	message.setHandler("pvsoApplyStatusEffects", function(_,_, effects, source)
+		status.addEphemeralEffects(effects, source)
+	end)
+
+	message.setHandler("pvsoRemoveStatusEffect", function(_,_, effect)
+		status.removeEphemeralEffect(effect)
+	end)
+
+	message.setHandler("pvsoRemoveStatusEffects", function(_,_, effects)
+		for i = 1, #effects do
+			status.removeEphemeralEffect(effect[i])
+		end
+	end)
+
+
 end

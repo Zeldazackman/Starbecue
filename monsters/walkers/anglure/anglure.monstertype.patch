@@ -1,0 +1,7 @@
+[
+	{
+		"op": "add",
+		"path": "/baseParameters/statusSettings/primaryScriptSources/-",
+		"value": "/scripts/ZSSVMA_monster.lua"
+	}
+]
