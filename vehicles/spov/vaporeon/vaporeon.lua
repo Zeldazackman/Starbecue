@@ -86,7 +86,7 @@ function p.whenFalling()
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
 		p.movement.falling = true
 		for i = 1, p.occupants.total do
-			if p.occupantLocation[i] == "hug" then
+			if p.occupant[i].location == "hug" then
 				p.uneat(i)
 			end
 		end
@@ -95,7 +95,7 @@ end
 
 function fixOccupantCenters(location, anim, part)
 	for i = 1, p.occupants.total do
-		if p.occupantLocation[i] == location then
+		if p.occupant[i].location == location then
 			vsoVictimAnimReplay( "occupant"..i, anim, part.."State")
 		end
 	end
@@ -166,9 +166,9 @@ function state_stand()
 
 end
 
-function interact_state_stand( targetid )
+function interact_state_stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
-		p.onInteraction( targetid )
+		p.onInteraction( occupantId )
 	end
 end
 
@@ -215,7 +215,7 @@ function LayAbsorb()
 
 	animator.playSound( "slurp" )
 	return true, function()
-		p.occupantLocation[index] = "belly"
+		p.occupant[index].location = "belly"
 		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
 end
@@ -290,7 +290,7 @@ p.registerStateScript( "hug", "absorb", function(args)
 
 	animator.playSound( "slurp" )
 	return true, function()
-		p.occupantLocation[index] = "belly"
+		p.occupant[index].location = "belly"
 		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
 end)

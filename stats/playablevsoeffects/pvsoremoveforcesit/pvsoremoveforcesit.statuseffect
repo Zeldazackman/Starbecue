@@ -1,0 +1,10 @@
+{
+	"name" : "pvsoremoveforcesit",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+	"pvsoremoveforcesit.lua"
+	]
+
+}

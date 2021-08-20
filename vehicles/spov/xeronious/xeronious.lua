@@ -59,7 +59,7 @@ function p.whenFalling()
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
 		p.movement.falling = true
 		for i = 1, p.occupants.total do
-			if p.occupantLocation[i] == "hug" then
+			if p.occupant[i].location == "hug" then
 				p.uneat(i)
 			end
 		end
@@ -67,14 +67,14 @@ function p.whenFalling()
 end
 
 function checkEscapes(args)
-	local location = p.occupantLocation[args.index]
+	local location = p.occupant[args.index].location
 	local returnval = {}
 	local direction = "escapeoral"
 	local status = {"vsoindicatemaw"}
 	local monstercoords = {6, 1} -- same as last coords of escape anim
 	local move = args.direction or "up"
 
-	if (p.smolpreyspecies[args.index] == "xeronious_egg"
+	if (p.occupant[args.index].species == "xeronious_egg"
 	or vehicle.controlHeld(p.control.driver, "down")) and location ~= "tail" then
 		move = "down"
 	end
@@ -101,8 +101,8 @@ function checkEscapes(args)
 end
 
 function p.extraBellyEffects(i, eid, health)
-	if p.occupantLocation[i] == "belly" and health[1] == 1 and p.settings.bellyeffect == "softdigest" then
-		p.smolpreyspecies[i] = "xeronious_egg"
+	if p.occupant[i].location == "belly" and health[1] == 1 and p.settings.bellyeffect == "softdigest" then
+		p.occupant[i].species = "xeronious_egg"
 		p.smolprey( i )
 		if p.settings.autoegglay or not p.control.driving then p.doTransition("escape", {index=i, direction="down"}) end
 		return
@@ -112,7 +112,7 @@ end
 function checkEggSitup()
 	if not p.control.driving then
 		for i = 1, p.occupants.total do
-			if p.smolpreyspecies[i] == "xeronious_egg" then
+			if p.occupant[i].species == "xeronious_egg" then
 				return p.doTransition("up")
 			end
 		end
@@ -236,9 +236,9 @@ function state_stand()
 
 end
 
-function interact_state_stand( targetid )
+function interact_state_stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
-		p.onInteraction( targetid )
+		p.onInteraction( occupantId )
 	end
 end
 
@@ -307,7 +307,7 @@ end)
 
 p.registerStateScript( "hug", "unhug", function( args )
 	for i = 1, p.occupants.total do
-		if p.occupantLocation[i] == "hug" then
+		if p.occupant[i].location == "hug" then
 			return p.doEscape({index = i}, "hug", {2.5,0}, {}, {})
 		end
 	end

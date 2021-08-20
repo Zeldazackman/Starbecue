@@ -21,7 +21,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.driver = config.getParameter( "driver" )
 	storage._vsoSpawnOwner = p.driver
 	storage._vsoSpawnOwnerName = world.entityName( p.driver )
-	p.occupantLocation[1] = "other"
+	p.occupant[1].location = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1
 	p.nowarpout = nowarpout
@@ -48,8 +48,8 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
-function p.edible( targetid )
-	if vehicle.entityLoungingIn( "occupant1" ) ~= targetid then return false end
+function p.edible( occupantId )
+	if vehicle.entityLoungingIn( "occupant1" ) ~= occupantId then return false end
 	if p.stateconfig[p.state].edible then
 		if p.stateconfig[p.state].ediblePath then
 			world.sendEntityMessage( source, "smolPreyPath", seatindex, p.stateconfig[p.state].ediblePath[p.cracks] )
@@ -64,7 +64,7 @@ function p.handleStruggles()
 
 	if movedir == nil then return end -- invalid struggle
 
-	local struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[1]]
+	local struggledata = p.stateconfig[p.state].struggle[p.occupant[1].location]
 	if struggledata == nil then return end
 
 	if not vsoAnimEnded( struggledata.part.."State" ) and (
@@ -115,7 +115,7 @@ function p.handleStruggles()
 end
 
 function begin_state_stand()
-	vsoSetTarget( "occupant1", p.driver )
+	p.occupant[1].id = p.driver
 	p.forceSeat( p.driver, "occupant1" )
 	vsoVictimAnimVisible( "occupant1", false )
 	vsoVictimAnimReplay( "occupant1", "othercenter", "bodyState" )

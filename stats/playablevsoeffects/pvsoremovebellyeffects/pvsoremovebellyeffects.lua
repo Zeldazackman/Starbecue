@@ -4,9 +4,11 @@ function init()
 	status.removeEphemeralEffect("displaydamagesoftdigest")
 	status.removeEphemeralEffect("displaydamagedigest")
 	status.removeEphemeralEffect("pvsovoreheal")
+	effect.expire()
 end
 
 function update(dt)
+	effect.expire()
 end
 
 function uninit()

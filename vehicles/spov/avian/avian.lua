@@ -72,9 +72,9 @@ function state_stand()
 
 end
 
-function interact_state_stand( targetid )
+function interact_state_stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
-		p.onInteraction( targetid )
+		p.onInteraction( occupantId )
 	end
 end
 

@@ -44,7 +44,7 @@ p = {
 	occupants = {
 		total = 0
 	},
-	occupantLocation = {},
+	occupant = {},
 	occupantOffset = 1,
 	fattenBelly = 0,
 	justAte = false,
@@ -73,13 +73,25 @@ p.movement = {
 	lastYVelocity = 0
 }
 
-function p.forceSeat( targetid, seatname )
-	vehicle.setLoungeEnabled(seatname, true)
-	local seat = 0
-	if seatname ~= "driver" then
-		seat = tonumber(seatname:sub(-1))
+function p.forceSeat( occupantId, seatname )
+	if occupantId then
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremoveforcesit", 1, entity.id())
+
+		vehicle.setLoungeEnabled(seatname, true)
+		local seat = 0
+		if seatname ~= "driver" then
+			seat = tonumber(seatname:sub(-1))
+		end
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoforcesit", seat + 1, entity.id())
 	end
-	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", seat + 1, entity.id())
+end
+
+function p.unForceSeat(seatname)
+	local occupantId = vehicle.entityLoungingIn( seatname )
+	vehicle.setLoungeEnabled(seatname, false)
+	if occupantId then
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremoveforcesit", 1, entity.id())
+	end
 end
 
 function p.locationFull(location)
@@ -133,7 +145,7 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 
 	if p.locationEmpty(location) then return false end
 	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
+	local victim = p.occupant[i].id
 
 	if not victim then -- could be part of above but no need to log an error here
 		return false
@@ -153,7 +165,7 @@ function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
 
 	if p.locationEmpty(location) then return false end
 	local i = args.index
-	local victim = vsoGetTargetId( "occupant"..i )
+	local victim = p.occupant[i].id
 
 	if not victim then -- could be part of above but no need to log an error here
 		return false
@@ -201,13 +213,13 @@ end
 function p.moveOccupantLocation(args, part, location)
 	if p.locationFull(location) then return false end
 	vsoVictimAnimReplay( "occupant"..args.index, location.."center", part.."State")
-	p.occupantLocation[args.index] = location
+	p.occupant[args.index].location = location
 	return true
 end
 
 function p.findFirstIndexForLocation(location)
 	for i = 1, p.occupants.total do
-		if p.occupantLocation[i] == location then
+		if p.occupant[i].location == location then
 			return i
 		end
 	end
@@ -238,17 +250,22 @@ function p.updateOccupants()
 
 	local lastFilled = true
 	for i = 1, p.maxOccupants.total do
-		local targetid = vsoGetTargetId( "occupant"..i )
-		if targetid and world.entityExists(targetid) then
+		local occupantId = p.occupant[i].id
+		if occupantId and world.entityExists(occupantId) then
 			p.occupants.total = p.occupants.total + 1
-			p.occupants[p.occupantLocation[i]] = p.occupants[p.occupantLocation[i]] + 1
+			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
 
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
 			end
 			lastFilled = true
 		else
-			vsoClearTarget( "occupant"..i)
+			p.occupant[i] = {
+				id = nil,
+				location = nil,
+				species = nil,
+				filepath = nil
+			}
 			lastFilled = false
 			animator.setAnimationState( "occupant"..i.."state", "empty" )
 		end
@@ -329,28 +346,15 @@ function p.occupantArray( maybearray )
 end
 
 function p.swapOccupants(a, b)
-	local A = vsoGetTargetId("occupant"..a)
-	local B = vsoGetTargetId("occupant"..b)
-	vsoSetTarget( "occupant"..a, B )
-	vsoSetTarget( "occupant"..b, A )
+	local A = p.occupant[a]
+	local B = p.occupant[b]
+	p.occupant[a] = b
+	p.occupant[b] = A
 
-	local LocationA = p.occupantLocation[a]
-	local LocationB = p.occupantLocation[b]
-	p.occupantLocation[a] = LocationB
-	p.occupantLocation[b] = LocationA
-
-	if A then vsoUneat( "occupant"..a ) end
-	if B then vsoUneat( "occupant"..b ) end
+	if A then p.unForceSeat( "occupant"..a ) end
+	if B then p.unForceSeat( "occupant"..b ) end
 	if B then p.forceSeat( B, "occupant"..a ) end
 	if A then p.forceSeat( A, "occupant"..b ) end
-
-	local t = p.smolpreyspecies[a]
-	p.smolpreyspecies[a] = p.smolpreyspecies[b]
-	p.smolpreyspecies[b] = t
-
-	t = p.smolpreyfilepath[a]
-	p.smolpreyfilepath[a] = p.smolpreyfilepath[b]
-	p.smolpreyfilepath[b] = t
 
 	t = self.sv.va["occupant"..a] -- victim animations
 	self.sv.va["occupant"..a] = self.sv.va["occupant"..b]
@@ -359,13 +363,13 @@ function p.swapOccupants(a, b)
 	self.sv.va["occupant"..a].playing = true
 	self.sv.va["occupant"..b].playing = true
 
-	p.swapCooldown = 100 -- vsoUneat and vsoEat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
+	p.swapCooldown = 100 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
 
 function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
 	for i = 1, p.maxOccupants.total do
-		if entity == (vehicle.entityLoungingIn( "occupant"..i ) or vsoGetTargetId( "occupant"..i )) then return true end
+		if entity == (vehicle.entityLoungingIn( "occupant"..i ) or p.occupant[i].id) then return true end
 	end
 	return false
 end
@@ -552,8 +556,8 @@ function vsoTransAnimUpdate( transformname, dt )
 	end
 end
 
-function p.edible( targetid, seatindex, source )
-	if vehicle.entityLoungingIn( "driver" ) ~= targetid then return false end
+function p.edible( occupantId, seatindex, source )
+	if vehicle.entityLoungingIn( "driver" ) ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
 		if p.stateconfig[p.state].ediblePath then
@@ -569,32 +573,30 @@ function p.isMonster( id )
 	return world.entityType(id) == "monster"
 end
 
-p.smolpreyspecies = {}
-p.smolpreyfilepath = {}
-function p.inedible(targetid)
+function p.inedible(occupantId)
 	for i = 1, #p.config.inedibleCreatures do
-		if world.entityType(targetid) == p.config.inedibleCreatures[i] then return true end
+		if world.entityType(occupantId) == p.config.inedibleCreatures[i] then return true end
 	end
 	return false
 end
 
-function p.eat( targetid, seatindex, location )
-	if targetid == nil or p.entityLounging(targetid) or p.inedible(targetid) or p.locationFull(location) then return false end -- don't eat self
-	local loungeables = world.entityQuery( world.entityPosition(targetid), 5, {
+function p.eat( occupantId, seatindex, location )
+	if occupantId == nil or p.entityLounging(occupantId) or p.inedible(occupantId) or p.locationFull(location) then return false end -- don't eat self
+	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.entityLounging", callScriptArgs = { targetid }
+		callScript = "p.entityLounging", callScriptArgs = { occupantId }
 	} )
-	local edibles = world.entityQuery( world.entityPosition(targetid), 2, {
+	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { targetid, seatindex, entity.id() }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id() }
 	} )
-	p.occupantLocation[seatindex] = location
+	p.occupant[seatindex].location = location
 
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
-			vsoSetTarget( "occupant"..seatindex, targetid)
+			p.occupant[seatindex].id = occupantId
 			p.smolprey( seatindex )
-			p.forceSeat( targetid, "occupant"..seatindex )
+			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.justAte = true
 			return true -- not lounging
 		else
@@ -603,11 +605,11 @@ function p.eat( targetid, seatindex, location )
 	end
 	-- lounging in edible smol thing
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
-	vsoSetTarget( "occupant"..seatindex, targetid)
-	p.smolpreyspecies[seatindex] = species
+	p.occupant[seatindex].id = occupantId
+	p.occupant[seatindex].species = species
 	p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
-	p.forceSeat( targetid, "occupant"..seatindex )
+	p.forceSeat( occupantId, "occupant"..seatindex )
 	local invis = { "vsoinvisible" }
 	_ListAddStatus( invis, self.sv.va[ "occupant"..seatindex ].statuslist )
 	vehicle.setLoungeStatusEffects( "occupant"..seatindex, invis );
@@ -616,35 +618,34 @@ function p.eat( targetid, seatindex, location )
 end
 
 function p.uneat( seatindex )
-	local targetid = vsoGetTargetId( "occupant"..seatindex )
-	world.sendEntityMessage( targetid, "PVSOClear")
-	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoremovebellyeffects")
-	vsoUneat( "occupant"..seatindex )
-	if p.smolpreyspecies[seatindex] then
-		if world.entityType(targetid) == "player" then
-			world.sendEntityMessage( targetid, "spawnSmolPrey", p.smolpreyspecies[seatindex] )
+	local occupantId = p.occupant[seatindex].id
+	world.sendEntityMessage( occupantId, "PVSOClear")
+	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremovebellyeffects")
+	p.unForceSeat( "occupant"..seatindex )
+	if p.occupant[seatindex].species then
+		if world.entityType(occupantId) == "player" then
+			world.sendEntityMessage( occupantId, "spawnSmolPrey", p.occupant[seatindex].species )
 		else
-			world.spawnVehicle( "spov"..p.smolpreyspecies[seatindex], { p.monstercoords[1], p.monstercoords[2]}, { driver = targetid, settings = {}, uneaten = true } )
+			world.spawnVehicle( "spov"..p.occupant[seatindex].species, { p.monstercoords[1], p.monstercoords[2]}, { driver = occupantId, settings = {}, uneaten = true } )
 		end
-		p.smolpreyspecies[seatindex] = nil
-		p.smolpreyfilepath[seatindex] = nil
-	elseif p.isMonster(targetid) then
+		p.occupant[seatindex].species = nil
+		p.occupant[seatindex].filepath = nil
+	elseif p.isMonster(occupantId) then
 		-- do something to move it forward a few blocks
-		world.sendEntityMessage( targetid, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
 	p.smolprey( seatindex ) -- clear
-	vsoClearTarget( "occupant"..seatindex)
-
+	p.occupant[seatindex].id = nil
 end
 
 function p.smolprey( seatindex )
 	if seatindex == nil then return end
-	local id = vsoGetTargetId("occupant"..seatindex)
-	if p.smolpreyspecies[seatindex] ~= nil then
-		if p.smolpreyfilepath[seatindex] then
-			animator.setPartTag( "occupant"..seatindex, "smolpath", p.smolpreyfilepath[seatindex])
+	local id = p.occupant[seatindex].id
+	if p.occupant[seatindex].species ~= nil then
+		if p.occupant[seatindex].filepath then
+			animator.setPartTag( "occupant"..seatindex, "smolpath", p.occupant[seatindex].filepath)
 		else
-			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.smolpreyspecies[seatindex].."/spov/default/smol/smol_body.png:smolprey")
+			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.occupant[seatindex].species.."/spov/default/smol/smol_body.png:smolprey")
 		end
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		vsoAnim( "occupant"..seatindex.."state", "smol" )
@@ -711,7 +712,6 @@ function p.onBegin()
 		local driver = config.getParameter( "driver" )
 		storage._vsoSpawnOwner = driver
 		storage._vsoSpawnOwnerName = world.entityName( driver )
-		vsoSetTarget( "driver", driver )
 		p.forceSeat( driver, "driver" )
 		vsoVictimAnimVisible( "driver", false )
 
@@ -728,19 +728,19 @@ function p.onBegin()
 	p.locations = config.getParameter( "locations", 0 )
 	p.ressetOccupantCount()
 
+	for i = 1, p.maxOccupants.total do
+		p.occupant[i] = {
+			id = nil,
+			location = nil,
+			species = nil,
+			filepath = nil
+		}
+	end
+
 	onForcedReset();	--Do a forced reset once.
 
 	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
 
-
-	-- message.setHandler( "settingsMenuGet", function settingsMenuGet()
-	-- 	return {
-	-- 		bellyeffect = p.settings.bellyeffect,
-	-- 		clickmode = "attack", -- todo
-	-- 		firstOccupant = vsoGetTargetId( "food" ),
-	-- 		secondOccupant = vsoGetTargetId( "dessert" ),
-	-- 	}
-	-- end )
 	message.setHandler( "settingsMenuSet", function(_,_, val )
 		p.settings = val
 	end )
@@ -763,18 +763,18 @@ function p.onBegin()
 
 	message.setHandler( "digest", function(_,_, eid)
 		local i = getOccupantFromEid(eid)
-		local location = p.occupantLocation[i]
+		local location = p.occupant[i].location
 		p.doTransition("digest"..location)
 	end )
 
 	message.setHandler( "uneat", function(_,_, eid)
 		local i = getOccupantFromEid(eid)
-		vsoClearTarget( "occupant"..i)
-		vsoUneat( "occupant"..i)
+		p.occupant[i].id = nil
+		p.unForceSeat( "occupant"..i)
 	end )
 
 	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
-		p.smolpreyfilepath[seatindex] = path
+		p.occupant[seatindex].filepath = path
 		p.smolprey()
 	end )
 
@@ -799,8 +799,13 @@ function p.onBegin()
 
 	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
 	vehicle.setLoungeStatusEffects = function(seatname, effects)
-		local smolprey = p.smolpreyspecies[tonumber(seatname:sub(#"occupant" + 1))]
-		if smolprey or p.isMonster(vsoGetTargetId(seatname)) then -- fix invis on smolprey too
+		local eid = vehicle.entityLoungingIn(seatname)
+		local seatindex = getOccupantFromEid(eid)
+		local smolprey
+		if seatname ~= "driver" then
+			smolprey = p.occupant[seatindex].species
+		end
+		if smolprey or p.isMonster(eid) then -- fix invis on smolprey too
 			local invis = false
 			local effects2 = {} -- don't touch outer table
 			for _,e in ipairs(effects) do
@@ -812,7 +817,7 @@ function p.onBegin()
 			elseif smolprey then
 				animator.setAnimationState( seatname.."state", "smol" )
 				table.insert(effects2, "vsoinvisible")
-			elseif p.isMonster(vsoGetTargetId(seatname)) then
+			elseif p.isMonster(eid) then
 				animator.setAnimationState( seatname.."state", "monster" )
 				table.insert(effects2, "vsoinvisible")
 			end
@@ -824,13 +829,11 @@ function p.onBegin()
 end
 
 function getOccupantFromEid(eid)
-	local i = 1 -1
-	local targetid = nil
-	while targetid ~= eid and i < p.maxOccupants.total do
-		i = i + 1
-		targetid = vsoGetTargetId( "occupant"..i )
+	for i = 1, p.maxOccupants.total do
+		if eid == p.occupant[i].id then
+			return i
+		end
 	end
-	return i
 end
 
 function p.onEnd()
@@ -947,10 +950,10 @@ end
 function getSettingsMenuInfo()
 	local occupants = {}
 	for i = 1, p.occupants.total do
-		if vsoGetTargetId( "occupant"..i ) then
+		if p.occupant[i].id then
 			occupants[i] = {
-				id = vsoGetTargetId( "occupant"..i ),
-				species = p.smolpreyspecies[ i ]
+				id = p.occupant[i].id,
+				species = p.occupant[i].species
 			}
 		else
 			occupants[i] = {}
@@ -1404,9 +1407,9 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 
 	for i = 1, p.maxOccupants.total do
-		local eid = vsoGetTargetId( "occupant"..i )
+		local eid = p.occupant[i].id
 
-		if eid and world.entityExists(eid) and (p.occupantLocation[i] == "belly" or p.occupantLocation[i] == "tail") then
+		if eid and world.entityExists(eid) and (p.occupant[i].location == "belly" or p.occupant[i].location == "tail") then
 			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
 			local light = self.cfgVSO.lights.prey
 			light.position = world.entityPosition( eid )
@@ -1436,10 +1439,10 @@ randomDirections = { "back", "front", "up", "down", "jump", nil}
 p.monsterstrugglecooldown = {}
 
 function p.getSeatDirections(seatname)
-	local targetid = vsoGetTargetId(seatname)
-	if not targetid or not world.entityExists(targetid) then return end
+	local occupantId = vehicle.entityLoungingIn(seatname)
+	if not occupantId or not world.entityExists(occupantId) then return end
 
-	if world.entityType( targetid ) ~= "player" then
+	if world.entityType( occupantId ) ~= "player" then
 		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] < 1 then
 			local movedir = randomDirections[math.random(1,6)]
 			p.monsterstrugglecooldown[seatname] = math.random(1, 30)
@@ -1515,7 +1518,7 @@ function p.handleStruggles()
 	while (movedir == nil) and struggler < p.maxOccupants.total do
 		struggler = struggler + 1
 		movedir = p.getSeatDirections( "occupant"..struggler )
-		struggledata = p.stateconfig[p.state].struggle[p.occupantLocation[struggler]]
+		struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 		if movedir then
 			if (struggledata == nil) or (struggledata[movedir] == nil) then
 				movedir = nil
@@ -1529,7 +1532,7 @@ function p.handleStruggles()
 				movedir = nil
 			else
 				for i = 1, #p.config.speciesStrugglesDisabled do
-					if p.smolpreyspecies[struggler] == p.config.speciesStrugglesDisabled[i] then
+					if p.occupant[struggler].species == p.config.speciesStrugglesDisabled[i] then
 						movedir = nil
 					end
 				end
@@ -1585,10 +1588,10 @@ function p.handleStruggles()
 	end
 end
 
-function p.onInteraction( targetid )
+function p.onInteraction( occupantId )
 	local state = p.stateconfig[p.state]
 
-	local position = p.globalToLocal( world.entityPosition( targetid ) )
+	local position = p.globalToLocal( world.entityPosition( occupantId ) )
 	local interact
 	if position[1] > 3 then
 		interact = p.occupantArray( state.interact.front )
@@ -1599,7 +1602,7 @@ function p.onInteraction( targetid )
 	end
 	if not p.control.driving or interact.controlled then
 		if interact.chance > 0 and p.randomChance( interact.chance ) then
-			p.doTransition( interact.transition, {id=targetid} )
+			p.doTransition( interact.transition, {id=occupantId} )
 			return
 		end
 	end

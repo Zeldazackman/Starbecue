@@ -6,11 +6,6 @@ a somewhat long task that will grant more freedom and make future creations a lo
 
 init and update hold a whole lot of stuff so I'm not going to bother with them yet
 
-vsoEat
-	vsoEatForce
-
-vsoUneat
-
 vsoNotnil
 
 vsoVictimAnimUpdate
@@ -29,12 +24,6 @@ vsoVictimAnimReplay
 			vsoAnim
 				vsoTTCheck
 				vsoTT
-
-vsoSetTarget
-
-vsoGetTargetId
-
-vsoClearTarget
 
 vsoApplyStatus
 	vsoApplyStatusList
