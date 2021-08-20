@@ -9,6 +9,7 @@ function onInit()
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
+	enableActionButtons(false)
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	settings = p.vsoSettings[p.vsoname] or {}
@@ -17,6 +18,10 @@ function onInit()
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
 	widget.setSelectedOption( "bellyEffect", p.bellyeffects[settings.bellyeffect or ""] )
 	p.refreshed = true
+end
+
+function enableActionButtons(enable) -- replace function on the specific settings menu if extra buttons are added
+	widget.setButtonEnabled( "letOut", enable )
 end
 
 p.listItems = {}
@@ -31,6 +36,7 @@ function checkIfIdListed(id, species)
 end
 
 function readOccupantData()
+	enableActionButtons(false)
 	for i = 1, #p.occupants do
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local id = p.occupants[i].id
@@ -54,10 +60,8 @@ function readOccupantData()
 			end
 			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
 		end
+		enableActionButtons(true)
 	end
-
-	widget.setButtonEnabled( "letOut", true )
-	widget.setButtonEnabled( "transform", true )
 end
 
 function updateHPbars()
@@ -71,8 +75,22 @@ function updateHPbars()
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local health = world.entityHealth( p.occupants[i].id )
 			widget.setProgress( p.occupantList.."."..listItem..".healthbar", health[1] / health[2] )
+
+			secondaryBar(i, listItem)
 		else
 			p.refreshList = true
+		end
+	end
+end
+
+function secondaryBar(occupant, listItem)
+end
+
+function getSelectedId()
+	local selected = widget.getListSelected(p.occupantList)
+	for j = 1, #p.listItems do
+		if p.listItems[j].listItem == selected then
+			p.selectedId = p.listItems[j].id
 		end
 	end
 end
@@ -81,12 +99,8 @@ function refreshListData()
 	if not p.refreshList then return end
 	p.refreshList = false
 
-	local selected = widget.getListSelected(p.occupantList)
-	for j = 1, #p.listItems do
-		if p.listItems[j].listItem == selected then
-			p.selectedId = p.listItems[j].id
-		end
-	end
+	getSelectedId()
+
 	p.listItems = {}
 	widget.clearListItems(p.occupantList)
 end
@@ -149,7 +163,7 @@ function defaultSmall()
 end
 
 function saveSettings()
-	world.sendEntityMessage( p.vso, "settingsMenuSet", "saveSettings", settings )
+	world.sendEntityMessage( p.vso, "settingsMenuSet", settings )
 	p.vsoSettings[p.vsoname] = settings
 	player.setProperty( "vsoSettings", p.vsoSettings )
 end
@@ -170,12 +184,24 @@ function setPortrait( canvasName, data )
 		canvas:drawImage(v.image, { -7 + pos[1], -19 + pos[2] } )
 	end
 end
-function letOut(_, which )
+
+function getWhich()
+	getSelectedId()
+	for i = 1, #p.occupants do
+		if p.selectedId == p.occupants[i].id then
+			return i
+		end
+	end
+	return #p.occupants
+end
+
+function letOut()
 	if p.refreshed then
 		p.refreshed = false
 		p.refreshtime = 0
-		widget.setButtonEnabled( "letOut", false )
-		widget.setButtonEnabled( "transform", false )
-		world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
+		p.refreshList = true
+		local which = getWhich()
+		enableActionButtons(false)
+		world.sendEntityMessage( p.vso, "letout", which )
 	end
 end

@@ -761,12 +761,12 @@ function p.onBegin()
 	-- 		secondOccupant = vsoGetTargetId( "dessert" ),
 	-- 	}
 	-- end )
-	message.setHandler( "settingsMenuSet", function(_,_, key, val )
-		if key == "saveSettings" then
-			p.settings = val
-		elseif key == "letout" then
-			p.doTransition( "escape", {index = val} )
-		end
+	message.setHandler( "settingsMenuSet", function(_,_, val )
+		p.settings = val
+	end )
+
+	message.setHandler( "letout", function(_,_, val )
+		p.doTransition( "escape", {index = val} )
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
