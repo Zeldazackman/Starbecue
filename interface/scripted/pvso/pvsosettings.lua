@@ -8,6 +8,7 @@ function onInit()
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
+	p.maxOccupants = config.getParameter( "maxOccupants" )
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	settings = p.vsoSettings[p.vsoname] or {}
@@ -18,19 +19,31 @@ function onInit()
 	p.refreshed = true
 end
 
-p.lastOccupants = {}
+p.listItems = {}
+
+function checkIfIdListed(id, species)
+	for i = 1, #p.listItems do
+		if p.listItems[i].id == id then
+			return i, p.listItems[i].listItem
+		end
+	end
+	return #p.listItems+1, widget.addListItem(p.occupantList)
+end
 
 function readOccupantData()
-	if p.lastOccupants == p.occupants then return end
-
-	p.lastOccupants = p.occupants
-
-	widget.clearListItems(p.occupantList)
 	for i = 1, #p.occupants do
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
-			local listItem = widget.addListItem(p.occupantList)
 			local id = p.occupants[i].id
 			local species = p.occupants[i].species
+			local listEntry, listItem = checkIfIdListed(id, species)
+
+			p.listItems[listEntry] = {
+				id = id,
+				listItem = listItem
+			}
+			if id == p.selectedId then
+				widget.setListSelected(p.occupantList, listItem)
+			end
 			if species == nil then
 				setPortrait(p.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
 			else
@@ -41,20 +54,41 @@ function readOccupantData()
 			end
 			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
 		end
-		widget.setButtonEnabled( "letOut", true )
-		widget.setButtonEnabled( "transform", true )
 	end
+
+	widget.setButtonEnabled( "letOut", true )
+	widget.setButtonEnabled( "transform", true )
 end
 
 function updateHPbars()
+	local listItem
 	for i = 1, #p.occupants do
+		for j = 1, #p.listItems do
+			if p.listItems[j].id == p.occupants[i].id then
+				listItem = p.listItems[j].listItem
+			end
+		end
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
 			local health = world.entityHealth( p.occupants[i].id )
-			--widget.setProgress( "occupant"..i..".healthbar", health[1] / health[2] )
+			widget.setProgress( p.occupantList.."."..listItem..".healthbar", health[1] / health[2] )
 		else
-			--widget.setProgress( "occupant"..i..".healthbar", 0)
+			p.refreshList = true
 		end
 	end
+end
+
+function refreshListData()
+	if not p.refreshList then return end
+	p.refreshList = false
+
+	local selected = widget.getListSelected(p.occupantList)
+	for j = 1, #p.listItems do
+		if p.listItems[j].listItem == selected then
+			p.selectedId = p.listItems[j].id
+		end
+	end
+	p.listItems = {}
+	widget.clearListItems(p.occupantList)
 end
 
 p.refreshtime = 0
@@ -68,6 +102,7 @@ function checkRefresh(dt)
 			local result = p.rpc:result()
 			if result ~= nil then
 				p.occupants = result
+				refreshListData()
 				readOccupantData()
 				p.refreshtime = 0
 				p.refreshed = true

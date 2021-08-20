@@ -949,7 +949,7 @@ function p.control.updateDriving()
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			world.sendEntityMessage(
 				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = getSettingsMenuInfo() }, false, entity.id()
+				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.maxOccupants.total }, false, entity.id()
 			)
 		end
 	elseif p.occupants.total >= 1 then
