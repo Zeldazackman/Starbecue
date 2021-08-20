@@ -2,7 +2,7 @@ p = {}
 
 p.vsoname = "xeronious"
 
-require("/interface/scripted/pvsosettings.lua")
+require("/interface/scripted/pvso/pvsosettings.lua")
 
 function init()
 	onInit()

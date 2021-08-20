@@ -10,7 +10,7 @@ function init()
 		player.setProperty( "vsoSettings", settings )
 	end)
 	message.setHandler( "openInterface", function(_,_, name, args, appendSettings, sourceEntity)
-		local pane = root.assetJson("/interface/scripted/"..name.."/"..name..".config")
+		local pane = root.assetJson("/interface/scripted/pvso/"..name.."/"..name..".config")
 		if args then
 			pane = sb.jsonMerge(pane, args)
 		end

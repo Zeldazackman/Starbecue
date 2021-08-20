@@ -18,7 +18,13 @@ function onInit()
 	p.refreshed = true
 end
 
+p.lastOccupants = {}
+
 function readOccupantData()
+	if p.lastOccupants == p.occupants then return end
+
+	p.lastOccupants = p.occupants
+
 	widget.clearListItems(p.occupantList)
 	for i = 1, #p.occupants do
 		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then

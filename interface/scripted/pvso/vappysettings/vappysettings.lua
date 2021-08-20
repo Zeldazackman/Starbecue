@@ -2,7 +2,7 @@ p = {}
 
 p.vsoname = "vappy"
 
-require("/interface/scripted/pvsosettings.lua")
+require("/interface/scripted/pvso/pvsosettings.lua")
 
 function init()
 	onInit()
