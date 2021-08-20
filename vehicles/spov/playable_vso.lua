@@ -5,7 +5,7 @@ require("/scripts/vore/vsosimple.lua")
 
 function vsoEat( targetid, seatname ) -- overwriting this function from vsosimple with a fixed version
 	vehicle.setLoungeEnabled(seatname, true)
-	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", 0+1, entity.id())
+	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", 0 + 1, entity.id())
 end
 
 function vsoNotnil( val, msg ) -- HACK: intercept self.cfgVSO to inject things from other files

@@ -15,7 +15,7 @@ function init()
 end
 
 function update(dt)
-	if world.entityExists(effect.sourceEntity()) then
+	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= -65536) then
 		local health = world.entityHealth(entity.id())
 		local damagecalc = status.resourceMax("health") * 0.01 * self.powerMultiplier * self.cdt + self.cdamage
 

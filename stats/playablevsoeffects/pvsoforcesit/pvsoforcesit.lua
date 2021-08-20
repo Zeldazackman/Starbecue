@@ -4,7 +4,7 @@ function init()
 end
 
 function update(dt)
-	if world.entityExists(effect.sourceEntity()) then
+	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= -65536) then
 		effect.modifyDuration(1)
 
 		mcontroller.setVelocity({0, 0})
