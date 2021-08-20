@@ -116,7 +116,7 @@ end
 
 function begin_state_stand()
 	vsoSetTarget( "occupant1", p.driver )
-	vsoEat( p.driver, "occupant1" )
+	p.forceSeat( p.driver, "occupant1" )
 	vsoVictimAnimVisible( "occupant1", false )
 	vsoVictimAnimReplay( "occupant1", "othercenter", "bodyState" )
 end

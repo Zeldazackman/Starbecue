@@ -3,11 +3,6 @@
 
 require("/scripts/vore/vsosimple.lua")
 
-function vsoEat( targetid, seatname ) -- overwriting this function from vsosimple with a fixed version
-	vehicle.setLoungeEnabled(seatname, true)
-	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", 0 + 1, entity.id())
-end
-
 function vsoNotnil( val, msg ) -- HACK: intercept self.cfgVSO to inject things from other files
 	if val == nil then vsoError( msg ) end
 	if msg == "missing vso in config file" and type(val.victimAnimations) == "string" then
@@ -77,6 +72,15 @@ p.movement = {
 	altCooldown = 0,
 	lastYVelocity = 0
 }
+
+function p.forceSeat( targetid, seatname )
+	vehicle.setLoungeEnabled(seatname, true)
+	local seat = 0
+	if seatname ~= "driver" then
+		seat = tonumber(seatname:sub(-1))
+	end
+	world.sendEntityMessage( targetid, "applyStatusEffect", "pvsoforcesit", seat + 1, entity.id())
+end
 
 function p.locationFull(location)
 	if p.occupants.total == p.maxOccupants.total then
@@ -337,8 +341,8 @@ function p.swapOccupants(a, b)
 
 	if A then vsoUneat( "occupant"..a ) end
 	if B then vsoUneat( "occupant"..b ) end
-	if B then vsoEat( B, "occupant"..a ) end
-	if A then vsoEat( A, "occupant"..b ) end
+	if B then p.forceSeat( B, "occupant"..a ) end
+	if A then p.forceSeat( A, "occupant"..b ) end
 
 	local t = p.smolpreyspecies[a]
 	p.smolpreyspecies[a] = p.smolpreyspecies[b]
@@ -590,7 +594,7 @@ function p.eat( targetid, seatindex, location )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			vsoSetTarget( "occupant"..seatindex, targetid)
 			p.smolprey( seatindex )
-			vsoEat( targetid, "occupant"..seatindex )
+			p.forceSeat( targetid, "occupant"..seatindex )
 			p.justAte = true
 			return true -- not lounging
 		else
@@ -603,7 +607,7 @@ function p.eat( targetid, seatindex, location )
 	p.smolpreyspecies[seatindex] = species
 	p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
-	vsoEat( targetid, "occupant"..seatindex )
+	p.forceSeat( targetid, "occupant"..seatindex )
 	local invis = { "vsoinvisible" }
 	_ListAddStatus( invis, self.sv.va[ "occupant"..seatindex ].statuslist )
 	vehicle.setLoungeStatusEffects( "occupant"..seatindex, invis );
@@ -708,7 +712,7 @@ function p.onBegin()
 		storage._vsoSpawnOwner = driver
 		storage._vsoSpawnOwnerName = world.entityName( driver )
 		vsoSetTarget( "driver", driver )
-		vsoEat( driver, "driver" )
+		p.forceSeat( driver, "driver" )
 		vsoVictimAnimVisible( "driver", false )
 
 		local settings = config.getParameter( "settings" )
