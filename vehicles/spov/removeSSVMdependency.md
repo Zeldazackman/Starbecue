@@ -6,8 +6,6 @@ a somewhat long task that will grant more freedom and make future creations a lo
 
 init and update hold a whole lot of stuff so I'm not going to bother with them yet
 
-vsoNotnil
-
 vsoVictimAnimUpdate
 	_ListAddStatus
 	_animArrayGetRange
@@ -24,9 +22,6 @@ vsoVictimAnimReplay
 			vsoAnim
 				vsoTTCheck
 				vsoTT
-
-vsoApplyStatus
-	vsoApplyStatusList
 
 vsoTimeDelta
 

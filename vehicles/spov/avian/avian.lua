@@ -17,8 +17,6 @@ end
 
 function onBegin()	--This sets up the VSO ONCE.
 
-	p.onBegin()
-
 	vsoOnInteract( "state_stand", interact_state_stand )
 
 	vsoOnBegin( "state_smol", begin_state_smol )

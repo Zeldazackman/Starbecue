@@ -48,6 +48,7 @@
 	},
 
 	"vso" : {
+		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
 		"useAnimatorFirst":0,
 		"spawnOwnerState":"faint",
 		"movementSettingsFlipPoly" : 0,
@@ -112,9 +113,7 @@
 				"position" : [0,0],
 				"pointLight" : true
 			}
-		},
-
-		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config"
+		}
 	},
 	"locations" :{
 		"regular" :[

@@ -1,42 +1,6 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
-require("/scripts/vore/vsosimple.lua")
-
-function vsoNotnil( val, msg ) -- HACK: intercept self.cfgVSO to inject things from other files
-	if val == nil then vsoError( msg ) end
-	if msg == "missing vso in config file" and type(val.victimAnimations) == "string" then
-		val.victimAnimations = root.assetJson( val.victimAnimations )
-	end
-	return val;
-end
-
-local _oldVictimAnimUpdate = vsoVictimAnimUpdate
-function vsoVictimAnimUpdate( seatname, dt ) -- HACK: intercept animator methods to change transformation group name based on seatname
-	-- check if patch is needed
-	if seatname:sub(1, #"occupant") ~= "occupant" then
-		return _oldVictimAnimUpdate( seatname, dt )
-	end
-	-- store real methods
-	local a_reset = animator.resetTransformationGroup
-	local a_scale = animator.scaleTransformationGroup
-	local a_rotate = animator.rotateTransformationGroup
-	local a_translate = animator.translateTransformationGroup
-	-- apply patch
-	animator.resetTransformationGroup = function(group, ...) a_reset(seatname.."position", ...) end
-	animator.scaleTransformationGroup = function(group, ...) a_scale(seatname.."position", ...) end
-	animator.rotateTransformationGroup = function(group, ...) a_rotate(seatname.."position", ...) end
-	animator.translateTransformationGroup = function(group, ...) a_translate(seatname.."position", ...) end
-	-- call original function
-	local ret = _oldVictimAnimUpdate( seatname, dt )
-	-- revert patch
-	animator.resetTransformationGroup = a_reset
-	animator.scaleTransformationGroup = a_scale
-	animator.rotateTransformationGroup = a_rotate
-	animator.translateTransformationGroup = a_translate
-	return ret
-end
-
 p = {
 	maxOccupants = { --basically everything I think we'd need
 		total = 0
@@ -72,6 +36,190 @@ p.movement = {
 	altCooldown = 0,
 	lastYVelocity = 0
 }
+
+p.clearOccupant = {
+	id = nil,
+	statList = {},
+	statPower = {},
+	visible = nil,
+	location = nil,
+	species = nil,
+	filepath = nil
+}
+
+function init()
+
+
+	if not config.getParameter( "uneaten" ) then
+		vsoEffectWarpIn();	--Play warp in effect
+	end
+
+	vsoUseLounge( false )
+
+	if config.getParameter( "driver" ) ~= nil then
+		p.control.standalone = true
+		p.control.driver = "driver"
+		p.control.driving = true
+		local driver = config.getParameter( "driver" )
+		storage._vsoSpawnOwner = driver
+		storage._vsoSpawnOwnerName = world.entityName( driver )
+		p.forceSeat( driver, "driver" )
+		vsoVictimAnimVisible( "driver", false )
+
+		local settings = config.getParameter( "settings" )
+		p.settings = settings
+	else
+		p.control.standalone = false
+		p.control.driver = "occupant1"
+		p.control.driving = false
+		vsoUseLounge( false, "driver" )
+	end
+
+	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
+	p.locations = config.getParameter( "locations", 0 )
+	p.ressetOccupantCount()
+
+	for i = 1, p.maxOccupants.total do
+		p.occupant[i] = p.clearOccupant
+	end
+
+	onForcedReset();	--Do a forced reset once.
+
+	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
+
+	message.setHandler( "settingsMenuSet", function(_,_, val )
+		p.settings = val
+	end )
+
+	message.setHandler( "letout", function(_,_, val )
+		p.doTransition( "escape", {index = val} )
+	end )
+
+	message.setHandler( "settingsMenuRefresh", function(_,_)
+		return getSettingsMenuInfo()
+	end )
+
+	message.setHandler( "despawn", function(_,_, nowarpout)
+		local driver = vehicle.entityLoungingIn(p.control.driver)
+		world.sendEntityMessage(driver, "PVSOClear")
+		p.nowarpout = nowarpout
+		_vsoOnDeath()
+	end )
+	message.setHandler( "forcedsit", p.control.pressE )
+
+	message.setHandler( "digest", function(_,_, eid)
+		local i = getOccupantFromEid(eid)
+		local location = p.occupant[i].location
+		p.doTransition("digest"..location)
+	end )
+
+	message.setHandler( "uneat", function(_,_, eid)
+		local i = getOccupantFromEid(eid)
+		p.occupant[i] = p.clearOccupant
+		p.unForceSeat( "occupant"..i)
+	end )
+
+	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
+		p.occupant[seatindex].filepath = path
+		p.smolprey()
+	end )
+
+
+	p.stateconfig = config.getParameter("states")
+	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
+	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+
+	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
+	self.sv.ta.rotation = { visible = false } -- and rotation animation
+
+	if not config.getParameter( "uneaten" ) then
+		if not p.startState then
+			p.startState = "stand"
+		end
+		p.setState( p.startState )
+		p.doAnims( p.stateconfig[p.startState].idle, true )
+	else -- released from larger pred
+		p.setState( "smol" )
+		p.doAnims( p.stateconfig.smol.idle, true )
+	end
+
+	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
+	vehicle.setLoungeStatusEffects = function(seatname, effects)
+		local eid = vehicle.entityLoungingIn(seatname)
+		local seatindex = getOccupantFromEid(eid)
+		local smolprey
+		if seatname ~= "driver" then
+			smolprey = p.occupant[seatindex].species
+		end
+		if smolprey or p.isMonster(eid) then -- fix invis on smolprey too
+			local invis = false
+			local effects2 = {} -- don't touch outer table
+			for _,e in ipairs(effects) do
+				if e == "vsoinvisible" then invis = true end
+				table.insert(effects2, e)
+			end
+			if invis then
+				animator.setAnimationState( seatname.."state", "empty" )
+			elseif smolprey then
+				animator.setAnimationState( seatname.."state", "smol" )
+				table.insert(effects2, "vsoinvisible")
+			elseif p.isMonster(eid) then
+				animator.setAnimationState( seatname.."state", "monster" )
+				table.insert(effects2, "vsoinvisible")
+			end
+			v_status(seatname, effects2)
+		else
+			v_status(seatname, effects)
+		end
+	end
+
+	onBegin()
+end
+
+function update()
+
+	p.applyStatusLists()
+end
+
+function uninit()
+end
+
+function p.applyStatusLists()
+	for i = 1, p.occupants.total then
+		for j = 1, #p.occupant[i].statList[j] then
+			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", p.occupant[i].statList[j], p.occupant[i].statPower[j], entity.id() )
+		end
+	end
+end
+
+function p.addStatusToList(index, status, power)
+	local power = power
+	local firstnil = #p.occupant[index].statList+1
+	for i = 1, #p.occupant[index].statList then
+		if p.occupant[index].statList[i] == status then
+			if power then
+				p.occupant[index].statPower[i] = power
+			end
+			return
+		elseif p.occupant[index].statList[i] == nil then
+			firstnil = i
+		end
+	end
+	if not power then
+		power = 1
+	end
+	p.occupant[index].statPower[firstnil] = power
+	p.occupant[index].statList[firstnil] = status
+end
+
+function p.removeStatusFromList(index, status)
+	for i = 1, #p.occupant[index].statList then
+		if p.occupant[index].statList[i] == status then
+			p.occupant[index].statList[i] = nil
+			p.occupant[index].statPower[i] = nil
+		end
+	end
+end
 
 function p.forceSeat( occupantId, seatname )
 	if occupantId then
@@ -140,6 +288,8 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
+function p.victimSetStatus()
+
 function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
 
@@ -156,7 +306,7 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	return true, function()
 		vehicle.setInteractive( true )
 		p.uneat( i )
-		vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
+		world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
 	end
 end
 
@@ -173,7 +323,7 @@ function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
 
 	vehicle.setInteractive( true )
 	p.uneat( i )
-	vsoApplyStatus( victim, afterstatus.status, afterstatus.duration );
+	world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
 end
 
 
@@ -260,12 +410,7 @@ function p.updateOccupants()
 			end
 			lastFilled = true
 		else
-			p.occupant[i] = {
-				id = nil,
-				location = nil,
-				species = nil,
-				filepath = nil
-			}
+			p.occupant[i] = p.clearOccupant
 			lastFilled = false
 			animator.setAnimationState( "occupant"..i.."state", "empty" )
 		end
@@ -355,13 +500,6 @@ function p.swapOccupants(a, b)
 	if B then p.unForceSeat( "occupant"..b ) end
 	if B then p.forceSeat( B, "occupant"..a ) end
 	if A then p.forceSeat( A, "occupant"..b ) end
-
-	t = self.sv.va["occupant"..a] -- victim animations
-	self.sv.va["occupant"..a] = self.sv.va["occupant"..b]
-	self.sv.va["occupant"..b] = t
-
-	self.sv.va["occupant"..a].playing = true
-	self.sv.va["occupant"..b].playing = true
 
 	p.swapCooldown = 100 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
@@ -635,7 +773,7 @@ function p.uneat( seatindex )
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
 	p.smolprey( seatindex ) -- clear
-	p.occupant[seatindex].id = nil
+	p.occupant[seatindex] = p.clearOccupant
 end
 
 function p.smolprey( seatindex )
@@ -696,136 +834,6 @@ function p.onForcedReset()
 	vehicle.setInteractive( true )
 
 	vsoTimeDelta( "emoteblock" ) -- without this, the first call to showEmote() does nothing
-end
-
-function p.onBegin()
-	if not config.getParameter( "uneaten" ) then
-		vsoEffectWarpIn();	--Play warp in effect
-	end
-
-	vsoUseLounge( false )
-
-	if config.getParameter( "driver" ) ~= nil then
-		p.control.standalone = true
-		p.control.driver = "driver"
-		p.control.driving = true
-		local driver = config.getParameter( "driver" )
-		storage._vsoSpawnOwner = driver
-		storage._vsoSpawnOwnerName = world.entityName( driver )
-		p.forceSeat( driver, "driver" )
-		vsoVictimAnimVisible( "driver", false )
-
-		local settings = config.getParameter( "settings" )
-		p.settings = settings
-	else
-		p.control.standalone = false
-		p.control.driver = "occupant1"
-		p.control.driving = false
-		vsoUseLounge( false, "driver" )
-	end
-
-	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
-	p.locations = config.getParameter( "locations", 0 )
-	p.ressetOccupantCount()
-
-	for i = 1, p.maxOccupants.total do
-		p.occupant[i] = {
-			id = nil,
-			location = nil,
-			species = nil,
-			filepath = nil
-		}
-	end
-
-	onForcedReset();	--Do a forced reset once.
-
-	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
-
-	message.setHandler( "settingsMenuSet", function(_,_, val )
-		p.settings = val
-	end )
-
-	message.setHandler( "letout", function(_,_, val )
-		p.doTransition( "escape", {index = val} )
-	end )
-
-	message.setHandler( "settingsMenuRefresh", function(_,_)
-		return getSettingsMenuInfo()
-	end )
-
-	message.setHandler( "despawn", function(_,_, nowarpout)
-		local driver = vehicle.entityLoungingIn(p.control.driver)
-		world.sendEntityMessage(driver, "PVSOClear")
-		p.nowarpout = nowarpout
-		_vsoOnDeath()
-	end )
-	message.setHandler( "forcedsit", p.control.pressE )
-
-	message.setHandler( "digest", function(_,_, eid)
-		local i = getOccupantFromEid(eid)
-		local location = p.occupant[i].location
-		p.doTransition("digest"..location)
-	end )
-
-	message.setHandler( "uneat", function(_,_, eid)
-		local i = getOccupantFromEid(eid)
-		p.occupant[i].id = nil
-		p.unForceSeat( "occupant"..i)
-	end )
-
-	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
-		p.occupant[seatindex].filepath = path
-		p.smolprey()
-	end )
-
-
-	p.stateconfig = config.getParameter("states")
-	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
-	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
-
-	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
-	self.sv.ta.rotation = { visible = false } -- and rotation animation
-
-	if not config.getParameter( "uneaten" ) then
-		if not p.startState then
-			p.startState = "stand"
-		end
-		p.setState( p.startState )
-		p.doAnims( p.stateconfig[p.startState].idle, true )
-	else -- released from larger pred
-		p.setState( "smol" )
-		p.doAnims( p.stateconfig.smol.idle, true )
-	end
-
-	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
-	vehicle.setLoungeStatusEffects = function(seatname, effects)
-		local eid = vehicle.entityLoungingIn(seatname)
-		local seatindex = getOccupantFromEid(eid)
-		local smolprey
-		if seatname ~= "driver" then
-			smolprey = p.occupant[seatindex].species
-		end
-		if smolprey or p.isMonster(eid) then -- fix invis on smolprey too
-			local invis = false
-			local effects2 = {} -- don't touch outer table
-			for _,e in ipairs(effects) do
-				if e == "vsoinvisible" then invis = true end
-				table.insert(effects2, e)
-			end
-			if invis then
-				animator.setAnimationState( seatname.."state", "empty" )
-			elseif smolprey then
-				animator.setAnimationState( seatname.."state", "smol" )
-				table.insert(effects2, "vsoinvisible")
-			elseif p.isMonster(eid) then
-				animator.setAnimationState( seatname.."state", "monster" )
-				table.insert(effects2, "vsoinvisible")
-			end
-			v_status(seatname, effects2)
-		else
-			v_status(seatname, effects)
-		end
-	end
 end
 
 function getOccupantFromEid(eid)

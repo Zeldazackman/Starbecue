@@ -10,7 +10,6 @@ function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, 
 end
 
 function onBegin()	--This sets up the VSO ONCE.
-	p.onBegin()
 	vsoOnInteract( "state_back", p.onInteraction )
 	vsoOnInteract( "state_hug", p.onInteraction )
 end
