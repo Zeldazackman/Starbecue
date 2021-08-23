@@ -35,7 +35,7 @@ p.registerStateScript( "back", "bed", function( args )
 	local index = p.occupants.total + 1
 
 	if p.eat( args.id, index, "hug" ) then
-		vsoVictimAnimSetStatus( "occupant"..index, {} );
+		--vsoVictimAnimSetStatus( "occupant"..index, {} );
 		return true
 	else
 		return false

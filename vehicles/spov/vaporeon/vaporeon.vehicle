@@ -144,15 +144,15 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
-						"offset" : {
-							"parts" : [
-								{"y": [0, 2], "head": true }
-							]
-						},
 						"body": "sitdown",
 						"legs": "sitdown",
 						"head": "idle",
-						"tail": "sitdown"
+						"tail": "sitdown",
+						"offset" : {
+							"parts" : [
+								{"y": [0, 2], "groups": ["headbob"] }
+							]
+						}
 					},
 					"state": "sit",
 					"chance": 5 // percent, ignored when driver has control
@@ -186,15 +186,15 @@
 				}
 			},
 			"idle": {
+				"body": "idle",
+				"legs": "idle",
+				"head": "idle",
+				"tail": "idle",
 				"offset" : {
 					"parts" : [
 						{}
 					]
-				},
-				"body": "idle",
-				"legs": "idle",
-				"head": "idle",
-				"tail": "idle"
+				}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -289,7 +289,7 @@
 						"offset" : {
 							"timing": "legs",
 							"parts" : [
-								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "head": true, "body": true }
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["headbob", "bodybob"] }
 							]
 						}
 					},
@@ -299,7 +299,7 @@
 						"tail": "jump",
 						"offset" : {
 							"parts" : [
-								{"y": [1, 2, 3, 4], "head": true }
+								{"y": [1, 2, 3, 4], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -309,7 +309,7 @@
 						"tail": "fall",
 						"offset" : {
 							"parts" : [
-								{"y": [4, 3, 2, 1], "head": true }
+								{"y": [4, 3, 2, 1], "groups": ["headbob"] }
 							]
 						}
 					}
@@ -320,15 +320,15 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset" : {
-							"parts" : [
-								{"y": [2, 0], "head": true }
-							]
-						},
 						"body": "standup",
 						"legs": "standup",
 						"head": "idle",
-						"tail": "standup"
+						"tail": "standup",
+						"offset" : {
+							"parts" : [
+								{"y": [2, 0], "groups": ["headbob"] }
+							]
+						}
 					},
 					"state": "stand",
 					"chance": 5
@@ -337,7 +337,7 @@
 					"animation": {
 						"offset" : {
 							"parts" : [
-								{ "x": [4, 10], "y": [0, -11], "head": true }
+								{ "x": [4, 10], "y": [0, -11], "groups": ["headbob"] }
 							]
 						},
 						"body": "laydown",
@@ -352,15 +352,15 @@
 				}
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{ "y": [4], "head": true }
-					]
-				},
 				"body": "sit",
 				"legs": "sit",
 				"head": "idle",
-				"tail": "sit"
+				"tail": "sit",
+				"offset" : {
+					"parts" : [
+						{ "y": [4], "groups": ["headbob"] }
+					]
+				}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -394,15 +394,15 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset" : {
-							"parts" : [
-								{ "x": [10, 4], "y": [-11, 0], "head": true }
-							]
-						},
 						"body": "situp",
 						"legs": "situp",
 						"head": "idle",
-						"tail": "sit"
+						"tail": "sit",
+						"offset" : {
+							"parts" : [
+								{ "x": [10, 4], "y": [-11, 0], "groups": ["headbob"] }
+							]
+						}
 					},
 					"victimAnimation": "situnpin",
 					"victimAnimLocation": "hug",
@@ -413,14 +413,14 @@
 				"down": {
 					"timing" : "head",
 					"animation": {
+						"head": "fallasleep",
+						"tail": "fallasleep",
 						"offset" : {
 							"timing": "head",
 							"parts" : [
-								{ "x": [12, 14], "y": [-16, -18], "head": true }
+								{ "x": [12, 14], "y": [-16, -18], "groups": ["headbob"] }
 							]
-						},
-						"head": "fallasleep",
-						"tail": "fallasleep"
+						}
 					},
 					"state": "sleep",
 					"chance": 5
@@ -453,15 +453,15 @@
 				}
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{ "x": [12], "y": [-15], "head": true }
-					]
-				},
 				"body": "lay",
 				"legs": "lay",
 				"head": "pinlook",
-				"tail": "lay"
+				"tail": "lay",
+				"offset" : {
+					"parts" : [
+						{ "x": [12], "y": [-15], "groups": ["headbob"] }
+					]
+				}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -517,14 +517,14 @@
 				"up": {
 					"timing" : "head",
 					"animation": {
+						"head": "wakeup",
+						"tail": "wakeup",
 						"offset" : {
 							"timing": "head",
 							"parts" : [
-								{ "x": [14, 12], "y": [-18, -16], "head": true }
+								{ "x": [14, 12], "y": [-18, -16], "groups": ["headbob"] }
 							]
-						},
-						"head": "wakeup",
-						"tail": "wakeup"
+						}
 					},
 					"state": "lay",
 					"chance": 5
@@ -542,15 +542,15 @@
 				}
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{ "x": [16], "y": [-21], "head": true }
-					]
-				},
 				"body": "lay",
 				"legs": "lay",
 				"head": "blink",
-				"tail": "asleep"
+				"tail": "asleep",
+				"offset" : {
+					"parts" : [
+						{ "x": [16], "y": [-21], "groups": ["headbob"] }
+					]
+				}
 			},
 			"idleAnimations": [],
 			"struggle": {
@@ -744,15 +744,15 @@
 			"edible": true,
 			"transitions": {},
 			"idle": {
+				"body": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"tail": "smol.idle",
 				"offset" : {
 					"parts" : [
 						{}
 					]
-				},
-				"body": "smol.idle",
-				"legs": "smol.idle",
-				"head": "smol.idle",
-				"tail": "smol.idle"
+				}
 			},
 			"idleAnimations": [
 				{ "head": "smol.blink" }
@@ -807,7 +807,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{ "y" : [ 0, 0, 1, 1, 0, 0, 1, 1 ], "head": true }
+								{ "y" : [ 0, 0, 1, 1, 0, 0, 1, 1 ], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -819,7 +819,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{ "y" : [ 1, 2, 1, 0, 1, 2, 1, 0 ], "head": true }
+								{ "y" : [ 1, 2, 1, 0, 1, 2, 1, 0 ], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -829,7 +829,7 @@
 						"tail": "smol.jump",
 						"offset" : {
 							"parts" : [
-								{ "y": [0, 1, 2, 2], "head": true }
+								{ "y": [0, 1, 2, 2], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -839,7 +839,7 @@
 						"tail": "smol.fall",
 						"offset" : {
 							"parts" : [
-								{ "y": [2, 2, 1, 0], "head": true }
+								{ "y": [2, 2, 1, 0], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -854,7 +854,7 @@
 						"tail": "smol.swim",
 						"offset" : {
 							"parts" : [
-								{ "y": [ 0, -1, -2, 0 ], "head": true }
+								{ "y": [ 0, -1, -2, 0 ], "groups": ["headbob"] }
 							]
 						}
 					}

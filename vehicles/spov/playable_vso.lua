@@ -129,19 +129,19 @@ function init()
 	p.stateconfig = config.getParameter("states")
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.animPartLists = root.assetJson(root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animationPartLists)
 
-	for i = 1, #p.animStateData.list do
-		p.animationState[p.animStateData.list[i]] = {
-			anim = p.animStateData[p.animStateData.list[i]].default,
-			priority = 0,
-			cycle = 0,
+	for i = 1, #p.animPartLists.stateTypes do
+		local state = p.animPartLists.stateTypes[i]
+		p.animationState[state] = {
+			anim = p.animStateData[state].default,
+			priority = p.animStateData[state].states[p.animStateData[state].default].priority,
+			cycle = p.animStateData[state].states[p.animStateData[state].default].cycle,
+			frames = p.animStateData[state].states[p.animStateData[state].default].frames,
 			time = 0,
 			queue = {}
 		}
 	end
-
-	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
-	self.sv.ta.rotation = { visible = false } -- and rotation animation
 
 	if not config.getParameter( "uneaten" ) then
 		if not p.startState then
@@ -204,15 +204,15 @@ function uninit()
 end
 
 function p.updateAnims(dt)
-	for i = 1, #p.animStateData.list do
-		p.animationState[p.animStateData.list[i]].time = p.animationState[p.animStateData.list[i]].time + dt
-		if p.animationState[p.animStateData.list[i]].time >= p.animationState[p.animStateData.list[i]].cycle then -- anim end stuff here
+	for i = 1, #p.animPartLists.stateTypes do
+		p.animationState[p.animPartLists.stateTypes[i]].time = p.animationState[p.animPartLists.stateTypes[i]].time + dt
+		if p.animationState[p.animPartLists.stateTypes[i]].time >= p.animationState[p.animPartLists.stateTypes[i]].cycle then -- anim end stuff here
 
-			for j = 1, #p.animationState[p.animStateData.list[i]].queue[j] do -- end of anim function queue
-				local func = p.animationState[p.animStateData.list[i]].queue[j]
+			for j = 1, #p.animationState[p.animPartLists.stateTypes[i]].queue[j] do -- end of anim function queue
+				local func = p.animationState[p.animPartLists.stateTypes[i]].queue[j]
 				func()
 			end
-			p.animationState[p.animStateData.list[i]].queue = {}
+			p.animationState[p.animPartLists.stateTypes[i]].queue = {}
 		end
 	end
 	for owner,tag in pairs( p.currentTags ) do
@@ -247,6 +247,7 @@ function p.doAnim( state, anim, force)
 			anim = anim,
 			priority = newPriority,
 			cycle = p.animStateData[state].states[anim].cycle,
+			frames = p.animStateData[state].states[anim].frames,
 			time = 0,
 			queue = {}
 		}
@@ -353,7 +354,7 @@ function p.doVore(args, location, statuses, sound )
 	if p.eat( args.id, i, location ) then
 		vehicle.setInteractive( false )
 		p.showEmote("emotehappy")
-		vsoVictimAnimSetStatus( "occupant"..i, statuses );
+		--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 		return true, function()
 			vehicle.setInteractive( true )
 			vsoVictimAnimReplay( "occupant"..i, location.."center", "bodyState")
@@ -375,7 +376,7 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 		return false
 	end
 	vehicle.setInteractive( false )
-	vsoVictimAnimSetStatus( "occupant"..i, statuses );
+	--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 
 	return true, function()
 		vehicle.setInteractive( true )
@@ -590,7 +591,7 @@ p.currentTags = {}
 function p.doAnims( anims, force )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then
-			p.headbob( anim )
+			p.offsetAnim( anim )
 		elseif state == "rotate" then
 			p.rotate( anim )
 		elseif state == "tags" then
@@ -612,62 +613,52 @@ function p.doAnims( anims, force )
 	end
 end
 
-p.headbobbing = {enabled = false, time = 0, parts = {}}
-function p.headbob( data )
-	if data == p.headbobbing.data then
-		if not p.headbobbing.enabled then p.headbobbing.time = 0 p.headbobbing.enabled = true end
+p.offsets = {enabled = false, parts = {}}
+function p.offsetAnim( data )
+	if data == p.offsets.data then
+		if not p.offsets.enabled then p.offsets.time = 0 p.offsets.enabled = true end
 		return
 	end
-	p.headbobbing = {
+	p.offsets = {
 		enabled = data ~= nil,
 		data = data,
-		time = 0,
 		parts = {},
 		loop = data.loop or false,
 		timing = data.timing or "body"
 	}
 	local continue = false
 	for _,r in ipairs(data.parts or {}) do
-		table.insert(p.headbobbing.parts, {
+		table.insert(p.offsets.parts, {
 			x = r.x or {0},
 			y = r.y or {0},
-			head = r.head or false,
-			body = r.body or false,
-			legs = r.legs or false,
-			tail = r.tail or false,
+			groups = r.groups or {"headbob"},
 			})
 		if (r.x and #r.x > 1) or (r.y and #r.y > 1) then
 			continue = true
 		end
-	end
-
-	vsoTransAnimUpdate( "headbob", 0 )
+	End
 	if not continue then
-		p.headbobbing.enabled = false
-		p.headbobbing.head = false
-		p.headbobbing.body = false
-		p.headbobbing.legs = false
-		p.headbobbing.tail = false
+		p.offsets.enabled = false
 	end
 end
 
-p.rotating = {enabled = false, time = 0, parts = {}}
+p.rotating = {enabled = false, parts = {}}
 function p.rotate( data )
 	if data == p.rotating.data then
-		if not p.rotating.enabled then p.rotating.time = 0 p.rotating.enabled = true end
+		if not p.rotating.enabled then p.rotating.enabled = true end
 		return
 	end
 	p.rotating = {
 		enabled = data ~= nil,
 		data = data,
-		time = 0,
 		parts = {},
+		loop = data.loop or false
 		timing = data.timing or "body"
 	}
 	local continue = false
 	for _,r in ipairs(data.parts or {}) do
 		table.insert(p.rotating.parts, {
-			group = r.group or "frontarmrotation",
+			groups = r.groups or {"frontarmrotation"},
 			center = r.center or {0,0},
 			rotation = r.rotation or {0}
 		})
@@ -675,62 +666,37 @@ function p.rotate( data )
 			continue = true
 		end
 	end
-	vsoTransAnimUpdate( "rotation", 0 )
 	if not continue then
 		p.rotating.enabled = false
 	end
 end
 
 local _vsoTransAnimUpdate = vsoTransAnimUpdate
-function vsoTransAnimUpdate( transformname, dt )
+function vsoTransAnimUpdate( transformname, dt ) --very incomplete rewrite here
 	if transformname == "headbob" then
-		if p.headbobbing == nil or not p.headbobbing.enabled then return end
-		local state = p.headbobbing.timing.."State"
-		local animdata = self.vsoAnimStateData[state][animator.animationState(state) or "idle"] or {}
-		local cycle = animdata.cycle or 1
-		local frames = animdata.frames or 1
+		if p.offsets == nil or not p.offsets.enabled then return end
+		local state = p.offsets.timing.."State"
+		local cycle = p.animationState[state].cycle or 1
+		local frames = p.animationState[state].frames or 1
+		local time = p.animationState[state].time
 		local speed = frames / cycle
-		p.headbobbing.time = p.headbobbing.time + dt * speed;
-		if p.headbobbing.time >= frames then
-			if p.headbobbing.loop then
-				p.headbobbing.time = p.headbobbing.time - frames
+		if time >= cycle then
+			if p.offsets.loop then
+				p.offsets.time = p.offsets.time - frames
 			else
-				p.headbobbing.enabled = false
-				p.headbobbing.head = false
-				p.headbobbing.body = false
-				p.headbobbing.legs = false
-				p.headbobbing.tail = false
+				p.offsets.enabled = false
 			end
 		end
-		for _,r in ipairs(p.headbobbing.parts) do
-			local x = r.x[ math.floor( p.headbobbing.time ) + 1 ] or r.x[#r.x] or 0
-			local y = r.y[ math.floor( p.headbobbing.time ) + 1 ] or r.y[#r.y] or 0
+		for _,r in ipairs(p.offsets.parts) do
+			local x = r.x[ math.floor( time ) + 1 ] or r.x[#r.x] or 0
+			local y = r.y[ math.floor( time ) + 1 ] or r.y[#r.y] or 0
 			if r.head then
-				p.headbobbing.head = true
+				p.offsets.head = true
 				vsoTransMoveTo( "headbob", x / 8, y / 8 )
-			elseif not p.headbobbing.head then
+			elseif not p.offsets.head then
 				vsoTransMoveTo( "headbob", 0, 0 )
 			end
-			if r.body then
-				p.headbobbing.body = true
-				vsoTransMoveTo( "bodybob", x / 8, y / 8 )
-			elseif not p.headbobbing.body then
-				vsoTransMoveTo( "bodybob", 0, 0 )
-			end
-			if r.legs then
-				p.headbobbing.legs = true
-				vsoTransMoveTo( "legsbob", x / 8, y / 8 )
-			elseif not p.headbobbing.legs then
-				vsoTransMoveTo( "legsbob", 0, 0 )
-			end
-			if r.tail then
-				p.headbobbing.tail = true
-				vsoTransMoveTo( "tailbob", x / 8, y / 8 )
-			elseif not p.headbobbing.tail then
-				vsoTransMoveTo( "tailbob", 0, 0 )
-			end
 		end
-
 	elseif transformname == "rotation" then
 		if p.rotating == nil or not p.rotating.enabled then return end
 		local state = p.rotating.timing.."State"
@@ -1000,7 +966,7 @@ function p.updateDriving()
 
 
 	if p.control.standalone then
-		vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
+		--vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.control.driving = true
 		if vehicle.controlHeld( p.control.driver, "Special3" ) then
 			world.sendEntityMessage(
@@ -1417,7 +1383,7 @@ function p.handleBelly()
 		p.bellyEffects()
 	else
 		for i = 1, p.maxOccupants.total do
-			vsoVictimAnimSetStatus( "occupant"..i, {} )
+			--vsoVictimAnimSetStatus( "occupant"..i, {} )
 		end
 	end
 	p.handleStruggles()

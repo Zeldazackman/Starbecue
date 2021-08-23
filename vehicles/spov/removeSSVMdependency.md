@@ -12,10 +12,6 @@ vsoVictimAnimUpdate
 	_animArrayGetListClamp
 	_ListRemoveStatus
 
-vsoVictimAnimSetStatus
-	_ListAddStatus
-	_ListRemoveStatus
-
 vsoVictimAnimReplay
 	vsoVictimAnimPlay
 		vsoVictimAnim

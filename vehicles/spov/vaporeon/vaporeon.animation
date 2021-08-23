@@ -12,18 +12,30 @@
 		"skin" : "default",
 		"bap" : ""
 	},
+	"animationPartLists" : {
+		"stateTypes" : [
+			"bodyState",
+			"legsState",
+			"bapState",
+			"tailState",
+			"headState",
+			"occupant1state",
+			"occupant2state",
+			"occupant3state"
+		],
+		"transformationGroups" : [
+			"flip",
+			"occupant1position",
+			"occupant2position",
+			"occupant3position",
+			"headbob",
+			"bodybob",
+			"legsbob",
+			"tailbob"
+		]
+	},
 	"animatedParts": {
 		"stateTypes": {
-			"list" : [
-				"bodyState",
-				"legsState",
-				"bapState",
-				"tailState",
-				"headState",
-				"occupant1state",
-				"occupant2state",
-				"occupant3state"
-			],
 			"bodyState": {
 				"default": "idle",
 				"states": {

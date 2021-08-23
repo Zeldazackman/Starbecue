@@ -161,15 +161,15 @@
 				// directional = driver can press that direction to transition
 				"down": {
 					"animation": {
+						"body": "idle",
+						"arms": "idle",
+						"legs": "sitdown",
 						"offset": {
 							"timing": "legs",
 							"parts" : [
-								{"x": [-3, -6], "y": [-5, -11], "head": true, "body": true}
+								{"x": [-3, -6], "y": [-5, -11], "groups": ["headbob", "bodybob"]}
 							]
-						},
-						"body": "idle",
-						"arms": "idle",
-						"legs": "sitdown"
+						}
 					},
 					"state": "sit",
 					"timing": "legs",
@@ -178,15 +178,15 @@
 				// non directional = not accessible via controls, except from script
 				"crouch": {
 					"animation": {
-						"offset": {
-							"parts" : [
-								{"x": [1], "y": [-11], "head": true, "body": true},
-								{"x": [-6], "y": [2], "tail": true }
-							]
-						},
 						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "crouch"
+						"legs": "crouch",
+						"offset": {
+							"parts" : [
+								{"x": [1], "y": [-11], "groups": ["headbob", "bodybob"]},
+								{"x": [-6], "y": [2], "groups": ["tailbob"] }
+							]
+						}
 					},
 					"state": "crouch"
 				},
@@ -199,8 +199,8 @@
 						"head": "none",
 						"rotate": {
 							"parts": [
-								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 							]
 						}
 					},
@@ -286,16 +286,16 @@
 
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				},
 				"body": "idle",
 				"arms": "idle",
 				"legs": "idle",
 				"head": "idle",
-				"tail": "idle"
+				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -371,7 +371,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 2, 1, 1, 0, 0, 1, 1], "head": true, "body": true}
+								{"y": [2, 2, 1, 1, 0, 0, 1, 1], "groups": ["headbob", "bodybob"]}
 							]
 						}
 
@@ -384,7 +384,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 3, 2, 1, 2, 3, 2, 1], "head": true, "body": true}
+								{"y": [2, 3, 2, 1, 2, 3, 2, 1], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -395,7 +395,7 @@
 						"offset": {
 							"timing": "legs",
 							"parts" : [
-								{"y": [0, 1, 2, 3, 3], "head": true, "body": true}
+								{"y": [0, 1, 2, 3, 3], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -406,7 +406,7 @@
 						"offset": {
 							"timing": "legs",
 							"parts" : [
-								{"y": [3, 2, 1, 0, 0], "head": true, "body": true}
+								{"y": [3, 2, 1, 0, 0], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					}
@@ -417,15 +417,15 @@
 			"transitions": {
 				"uncrouch": {
 					"animation": {
-						"offset" : {
-							"parts" : [
-								{"x": [1], "y": [-11], "head": true, "body": true},
-								{"x": [-6], "y": [2], "tail": true }
-							]
-						},
 						"body": "crouchdown",
 						"arms": "idle",
-						"legs": "crouch"
+						"legs": "crouch",
+						"offset" : {
+							"parts" : [
+								{"x": [1], "y": [-11], "groups": ["headbob", "bodybob"]},
+								{"x": [-6], "y": [2], "groups": ["tailbob"] }
+							]
+						}
 					},
 					"state": "stand"
 				},
@@ -479,17 +479,17 @@
 
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{"x": [12], "y": [-27], "head": true },
-						{"x": [-8], "y": [-12], "tail": true }
-					]
-				},
 				"body": "crouch",
 				"arms": "crouch",
 				"legs": "crouch",
 				"head": "idle",
-				"tail": "idle"
+				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [12], "y": [-27], "groups": ["headbob"] },
+						{"x": [-8], "y": [-12], "groups": ["tailbob"] }
+					]
+				}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -530,8 +530,8 @@
 						"legs": "crawl",
 						"offset" : {
 							"parts" : [
-								{"x": [12], "y": [-27], "head": true },
-								{"x": [-8], "y": [-12], "tail": true }
+								{"x": [12], "y": [-27], "groups": ["headbob"] },
+								{"x": [-8], "y": [-12], "groups": ["tailbob"] }
 							]
 						}
 					},
@@ -540,8 +540,8 @@
 						"legs": "crawl",
 						"offset" : {
 							"parts" : [
-								{"x": [12], "y": [-27], "head": true },
-								{"x": [-8], "y": [-12], "tail": true }
+								{"x": [12], "y": [-27], "groups": ["headbob"] },
+								{"x": [-8], "y": [-12], "groups": ["tailbob"] }
 							]
 						}
 					}
@@ -724,7 +724,7 @@
 							"timing": "arms",
 							"loop": true,
 							"parts" : [
-								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "head": true, "body": true, "legs": true}
+								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "groups": ["headbob", "bodybob"], "legs": true}
 							]
 						}
 					}
@@ -735,15 +735,15 @@
 			"transitions": {
 				"up": {
 					"animation": {
-						"offset" : {
-							"timing": "legs",
-							"parts" : [
-								{"x": [-6, -3], "y": [-11, -5], "head": true, "body": true }
-							]
-						},
 						"body": "idle",
 						"arms": "idle",
 						"legs": "standup",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-6, -3], "y": [-11, -5], "groups": ["headbob", "bodybob"] }
+							]
+						},
 						"tags": [
 							{
 								"owner": "body",
@@ -766,8 +766,8 @@
 						"head": "none",
 						"rotate": {
 							"parts": [
-								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 							]
 						}
 					},
@@ -843,16 +843,16 @@
 				}
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{"x": [-10], "y": [-17], "head": true, "body": true }
-					]
-				},
 				"body": "idle",
 				"arms": "idle",
 				"legs": "sit",
 				"head": "idle",
 				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "groups": ["headbob", "bodybob"] }
+					]
+				},
 				"tags": [
 					{
 						"owner": "body",
@@ -924,8 +924,8 @@
 						"head": "none",
 						"rotate": {
 							"parts": [
-								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 							]
 						}
 					},
@@ -991,16 +991,16 @@
 				}
 			},
 			"idle": {
-				"offset" : {
-					"parts" : [
-						{"x": [-10], "y": [-17], "head": true, "body": true }
-					]
-				},
 				"body": "idle",
 				"arms": "hug",
 				"legs": "sit",
 				"head": "look",
 				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "groups": ["headbob", "bodybob"] }
+					]
+				},
 				"tags": [
 					{
 						"owner": "body",

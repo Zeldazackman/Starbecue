@@ -177,7 +177,7 @@ p.registerStateScript( "sit", "pin", function( args )
 	end
 	local index = p.occupants.total + 1
 	if #pinnable >= 1 and p.eat( pinnable[1], index, "hug" ) then
-		vsoVictimAnimSetStatus( "occupant"..index , {} )
+		--vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
 	return true
 end)
@@ -248,7 +248,7 @@ p.registerStateScript( "back", "bed", function( args )
 	local index = p.occupants.total + 1
 
 	if p.eat( args.id, index, "hug" ) then
-		vsoVictimAnimSetStatus( "occupant"..index, {} );
+		--vsoVictimAnimSetStatus( "occupant"..index, {} );
 		return true
 	else
 		return false

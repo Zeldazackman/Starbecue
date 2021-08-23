@@ -191,8 +191,8 @@
 						"head": "eat",
 						"rotate": {
 							"parts": [
-								{ "group": "frontarmrotation", "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "group": "backarmrotation", "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
 							]
 						}
 					},
@@ -215,15 +215,15 @@
 
 			},
 			"idle": {
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle",
 				"offset" : {
 					"parts" : [
 						{}
 					]
-				},
-				"body": "idle",
-				"arms": "idle",
-				"legs": "idle",
-				"head": "idle"
+				}
 			},
 			"idleAnimations": [
 			//	{ "head": "blink" },
@@ -275,7 +275,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "head": true, "body": true}
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -287,7 +287,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "head": true, "body": true}
+								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -299,7 +299,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [4, 4, 4, 4], "head": true, "body": true}
+								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -311,7 +311,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [4, 4, 4, 4], "head": true, "body": true}
+								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
 							]
 						}
 
@@ -325,15 +325,15 @@
 				// non directional = not accessible via controls, except from script
 			},
 			"idle": {
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
 				"offset" : {
 					"parts" : [
 						{}
 					]
-				},
-				"body": "smol.idle",
-				"arms": "smol.idle",
-				"legs": "smol.idle",
-				"head": "smol.idle"
+				}
 			},
 			"idleAnimations": [
 			//	{ "head": "blink" },
@@ -368,7 +368,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "head": true, "body": true}
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob"]}
 							]
 						}
 
@@ -381,7 +381,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "head": true, "body": true}
+								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -393,7 +393,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 2, 2, 2], "head": true, "body": true}
+								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					},
@@ -405,7 +405,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 2, 2, 2], "head": true, "body": true}
+								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
 							]
 						}
 					}
