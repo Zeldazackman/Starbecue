@@ -294,8 +294,6 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
-function p.victimSetStatus()
-
 function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
 
@@ -1378,11 +1376,7 @@ function p.handleBelly()
 end
 
 function p.bellyEffects()
-	if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then
-		animator.playSound( "digest" )
-	end
 	local driver = vehicle.entityLoungingIn( "driver")
-
 	if driver then
 		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
 			p.doBellyEffects(driver, math.log(powerMultiplier)+1)
@@ -1418,35 +1412,42 @@ function p.doBellyEffects(driver, powerMultiplier)
 	elseif p.settings.bellyeffect == "heal" then
 		status = "pvsovoreheal"
 	end
-
-
 	for i = 1, p.maxOccupants.total do
 		local eid = p.occupant[i].id
 
-		if eid and world.entityExists(eid) and (p.occupant[i].location == "belly" or p.occupant[i].location == "tail") then
-			vsoVictimAnimSetStatus( "occupant"..i, { "vsoindicatebelly", "breathprotectionvehicle" } )
+		if eid and world.entityExists(eid) then
+			local health = world.entityHealth(eid)
 			local light = self.cfgVSO.lights.prey
 			light.position = world.entityPosition( eid )
 			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
-			if status then
-				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() )
+			if p.isLocationDigest(p.occupant[i].location) then
+				if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
+				local hunger_change = (hungereffect * powerMultiplier * vsoDelta())/100
+				if status then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
+				if p.settings.bellyeffect == "softdigest" and health[1] <= 1 then hunger_change = 0 end
+				if driver then addHungerHealth( driver, hunger_change) end
+				p.extraBellyEffects(i, eid, health, status)
+			else
+				p.otherLocationEffects()
 			end
-
-			local hunger_change = (hungereffect * powerMultiplier * vsoDelta())/100
-			local health = world.entityHealth(eid)
-			if p.settings.bellyeffect == "softdigest" and health[1] <= 1 then
-				hunger_change = 0
-			end
-
-			if driver then addHungerHealth( driver, hunger_change) end
-
-			p.extraBellyEffects(i, eid, health)
 		end
 	end
 end
 
-function p.extraBellyEffects() -- something for the PVSOs to replace
+function p.isLocationDigest(location)
+	for i = 1, #p.locations.digest then
+		if #p.locations.digest[i] == location then
+			return true
+		end
+	end
+	return false
+end
+
+function p.extraBellyEffects(i, eid, health, status) -- something for the PVSOs to replace
+end
+
+function p.otherLocationEffects(i, eid, health, status)
 end
 
 randomDirections = { "back", "front", "up", "down", "jump", nil}

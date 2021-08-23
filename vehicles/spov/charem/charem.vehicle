@@ -89,6 +89,9 @@
 			"belly",
 			"hug"
 		],
+		"digest" : [
+			"belly"
+		],
 		"combine" :[
 			["belly", "fatten"]
 		]

@@ -161,6 +161,9 @@
 		"sided" : [
 			"balls"
 		],
+		"digest" : [
+			"belly"
+		],
 		"combine" :[
 			["belly", "fatten"]
 		]
