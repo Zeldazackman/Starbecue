@@ -50,7 +50,7 @@ function state_stand()
 
 			if vehicle.controlHeld( p.control.driver, "Special1" ) then
 				if not p.movement.wasspecial1 then
-					-- vsoAnim( "bodyState", "unsmolify" )
+					-- p.doAnim( "bodyState", "unsmolify" )
 					vsoEffectWarpIn()
 					p.setState( "smol" )
 					p.doAnims( p.stateconfig.smol.idle, true )
@@ -90,7 +90,7 @@ function state_smol()
 
 	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
 		if not p.movement.wasspecial1 then
-			-- vsoAnim( "bodyState", "unsmolify" )
+			-- p.doAnim( "bodyState", "unsmolify" )
 			vsoEffectWarpIn()
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )

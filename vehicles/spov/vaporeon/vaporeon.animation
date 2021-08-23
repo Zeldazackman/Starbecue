@@ -14,6 +14,16 @@
 	},
 	"animatedParts": {
 		"stateTypes": {
+			"list" : [
+				"bodyState",
+				"legsState",
+				"bapState",
+				"tailState",
+				"headState",
+				"occupant1state",
+				"occupant2state",
+				"occupant3state"
+			],
 			"bodyState": {
 				"default": "idle",
 				"states": {

@@ -314,7 +314,7 @@ function state_smol()
 
 	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
 		if not p.movement.wasspecial1 then
-			-- vsoAnim( "bodyState", "unsmolify" )
+			-- p.doAnim( "bodyState", "unsmolify" )
 			vsoEffectWarpIn()
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )
@@ -346,7 +346,7 @@ function roll_chonk_ball(dx, control)
 			CurBallFrame = 11
 		end
 		animator.setGlobalTag("rotationFrame", CurBallFrame)
-		vsoAnim( "bodyState", "chonk_ball" )
+		p.doAnim( "bodyState", "chonk_ball" )
 	end
 end
 

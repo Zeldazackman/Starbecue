@@ -67,11 +67,11 @@ function p.handleStruggles()
 	local struggledata = p.stateconfig[p.state].struggle[p.occupant[1].location]
 	if struggledata == nil then return end
 
-	if not vsoAnimEnded( struggledata.part.."State" ) and (
-		vsoAnimIs( struggledata.part.."State", "s_up" ) or
-		vsoAnimIs( struggledata.part.."State", "s_front" ) or
-		vsoAnimIs( struggledata.part.."State", "s_back" ) or
-		vsoAnimIs( struggledata.part.."State", "s_down" )
+	if not p.hasAnimEnded( struggledata.part.."State" ) and (
+		p.animationIs( struggledata.part.."State", "s_up" ) or
+		p.animationIs( struggledata.part.."State", "s_front" ) or
+		p.animationIs( struggledata.part.."State", "s_back" ) or
+		p.animationIs( struggledata.part.."State", "s_down" )
 	) then return end
 
 	if struggledata.script ~= nil then

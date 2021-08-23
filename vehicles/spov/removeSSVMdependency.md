@@ -32,15 +32,10 @@ vsoAnimReplay
 		vsoTTCheck
 		vsoTT
 
-vsoAnimIs
-
-vsoAnimEnded
-	vsoTTCheck
-
 vsoTransAnimUpdate
 	_animArrayGetRange
 	vsoTransMoveTo
-	vsoAnimCurr
+	animator.animationState
 
 _ListAddStatus
 

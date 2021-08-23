@@ -47,8 +47,9 @@ p.clearOccupant = {
 	filepath = nil
 }
 
-function init()
+p.animationState = {}
 
+function init()
 
 	if not config.getParameter( "uneaten" ) then
 		vsoEffectWarpIn();	--Play warp in effect
@@ -129,6 +130,16 @@ function init()
 	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 
+	for i = 1, #p.animStateData.list do
+		p.animationState[p.animStateData.list[i]] = {
+			anim = p.animStateData[p.animStateData.list[i]].default,
+			priority = 0,
+			cycle = 0,
+			time = 0,
+			queue = {}
+		}
+	end
+
 	self.sv.ta.headbob = { visible = false } -- hack: intercept vsoTransAnimUpdate for our own headbob system
 	self.sv.ta.rotation = { visible = false } -- and rotation animation
 
@@ -155,7 +166,7 @@ function init()
 			local invis = false
 			local effects2 = {} -- don't touch outer table
 			for _,e in ipairs(effects) do
-				if e == "vsoinvisible" then invis = true end
+				if e == "pvsoinvisible" then invis = true end
 				table.insert(effects2, e)
 			end
 			if invis then
@@ -176,7 +187,8 @@ function init()
 	onBegin()
 end
 
-function update()
+function update(dt)
+	p.updateAnims(dt)
 
 	p.idleStateChange()
 
@@ -185,14 +197,74 @@ function update()
 
 	p.handleBelly()
 	p.applyStatusLists()
+
 end
 
 function uninit()
 end
 
+function p.updateAnims(dt)
+	for i = 1, #p.animStateData.list do
+		p.animationState[p.animStateData.list[i]].time = p.animationState[p.animStateData.list[i]].time + dt
+		if p.animationState[p.animStateData.list[i]].time >= p.animationState[p.animStateData.list[i]].cycle then -- anim end stuff here
+
+			for j = 1, #p.animationState[p.animStateData.list[i]].queue[j] do -- end of anim function queue
+				local func = p.animationState[p.animStateData.list[i]].queue[j]
+				func()
+			end
+			p.animationState[p.animStateData.list[i]].queue = {}
+		end
+	end
+	for owner,tag in pairs( p.currentTags ) do
+		if p.animationState[owner.."State"].ended then
+			if tag.reset then
+				if tag.part == "global" then
+					animator.setGlobalTag( tag.name, "" )
+				else
+					animator.setPartTag( tag.part, tag.name, "" )
+				end
+				p.currentTags[owner] = nil
+			end
+		end
+	end
+end
+
+function p.queueAnimEndFunction(state, func, newPriority)
+	if newPriority then
+		p.animationState[state].priority = newPriority
+	end
+	table.insert(p.animationState[state].queue, nil, func)
+end
+
+function p.doAnim( state, anim, force)
+	local oldPriority = p.animationState[state].priority
+	local newPriority = (p.animStateData[state].states[anim] or {}).priority or 0
+	local isSame = p.animationIs( state, anim )
+	local force = force
+	local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
+	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
+		p.animationState[state] = {
+			anim = anim,
+			priority = newPriority,
+			cycle = p.animStateData[state].states[anim].cycle,
+			time = 0,
+			queue = {}
+		}
+		animator.setAnimationState(state, anim, force)
+	end
+end
+
+function p.hasAnimEnded(state)
+	return (p.animationState[state].time >= p.animationState[state].cycle), math.floor(p.animationState[state].time/p.animationState[state].cycle)
+end
+
+function p.animationIs(state, anim)
+	return animator.animationState(state) == anim
+end
+
 function p.applyStatusLists()
-	for i = 1, p.occupants.total then
-		for j = 1, #p.occupant[i].statList[j] then
+	for i = 1, p.occupants.total do
+		for j = 1, #p.occupant[i].statList[j] do
 			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", p.occupant[i].statList[j], p.occupant[i].statPower[j], entity.id() )
 		end
 	end
@@ -200,29 +272,27 @@ end
 
 function p.addStatusToList(index, status, power)
 	local power = power
-	local firstnil = #p.occupant[index].statList+1
-	for i = 1, #p.occupant[index].statList then
+	for i = 1, #p.occupant[index].statList do
 		if p.occupant[index].statList[i] == status then
 			if power then
 				p.occupant[index].statPower[i] = power
 			end
 			return
-		elseif p.occupant[index].statList[i] == nil then
-			firstnil = i
 		end
 	end
 	if not power then
 		power = 1
 	end
-	p.occupant[index].statPower[firstnil] = power
-	p.occupant[index].statList[firstnil] = status
+	table.insert(p.occupant[index].statList, nil, status)
+	table.insert(p.occupant[index].statPower, nil, power)
 end
 
 function p.removeStatusFromList(index, status)
-	for i = 1, #p.occupant[index].statList then
+	for i = 1, #p.occupant[index].statList do
 		if p.occupant[index].statList[i] == status then
-			p.occupant[index].statList[i] = nil
-			p.occupant[index].statPower[i] = nil
+			table.remove(p.occupant[index].statList, i)
+			table.remove(p.occupant[index].statPower, i)
+			return
 		end
 	end
 end
@@ -536,16 +606,8 @@ function p.doAnims( anims, force )
 					animator.setPartTag( tag.part, tag.name, tag.value )
 				end
 			end
-		elseif force then
-			vsoAnimReplay( state.."State", anim ) -- force that animation to restart
 		else
-			local oldPriority = (p.animStateData[state.."State"].states[vsoAnimCurr(state.."State") or "idle"] or {}).priority or 0
-			local newPriority = (p.animStateData[state.."State"].states[anim] or {}).priority or 0
-			local isSame = vsoAnimIs( state.."State", anim )
-			local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
-			if (not isSame and priorityHigher) or vsoAnimEnded( state.."State" ) then
-				vsoAnim( state.."State", anim )
-			end
+			p.doAnim( state.."State", anim, force)
 		end
 	end
 end
@@ -624,7 +686,7 @@ function vsoTransAnimUpdate( transformname, dt )
 	if transformname == "headbob" then
 		if p.headbobbing == nil or not p.headbobbing.enabled then return end
 		local state = p.headbobbing.timing.."State"
-		local animdata = self.vsoAnimStateData[state][vsoAnimCurr(state) or "idle"] or {}
+		local animdata = self.vsoAnimStateData[state][animator.animationState(state) or "idle"] or {}
 		local cycle = animdata.cycle or 1
 		local frames = animdata.frames or 1
 		local speed = frames / cycle
@@ -672,7 +734,7 @@ function vsoTransAnimUpdate( transformname, dt )
 	elseif transformname == "rotation" then
 		if p.rotating == nil or not p.rotating.enabled then return end
 		local state = p.rotating.timing.."State"
-		local animdata = self.vsoAnimStateData[state][vsoAnimCurr(state) or "idle"] or {}
+		local animdata = self.vsoAnimStateData[state][animator.animationState(state) or "idle"] or {}
 		local cycle = animdata.cycle or 1
 		local frames = animdata.frames or 1
 		local speed = frames / cycle
@@ -752,8 +814,7 @@ function p.eat( occupantId, seatindex, location )
 	p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.forceSeat( occupantId, "occupant"..seatindex )
-	local invis = { "vsoinvisible" }
-	_ListAddStatus( invis, self.sv.va[ "occupant"..seatindex ].statuslist )
+	p.addStatusToList(seatindex, "vsoinvisible")
 	vehicle.setLoungeStatusEffects( "occupant"..seatindex, invis );
 	p.justAte = true
 	return true
@@ -790,17 +851,17 @@ function p.smolprey( seatindex )
 			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.occupant[seatindex].species.."/spov/default/smol/smol_body.png:smolprey")
 		end
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
-		vsoAnim( "occupant"..seatindex.."state", "smol" )
+		p.doAnim( "occupant"..seatindex.."state", "smol" )
 	elseif p.isMonster(id) then
 		local portrait = world.entityPortrait(id, "fullneutral")
 		if portrait and portrait[1] and portrait[1].image then
 			animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
-			vsoAnim( "occupant"..seatindex.."state", "monster" )
+			p.doAnim( "occupant"..seatindex.."state", "monster" )
 		end
 	else
 		animator.setPartTag( "occupant"..seatindex, "smolspecies", "" )
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" )
-		vsoAnim( "occupant"..seatindex.."state", "empty" )
+		p.doAnim( "occupant"..seatindex.."state", "empty" )
 	end
 end
 
@@ -907,7 +968,7 @@ end
  -- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
 local _endedframes = 0
 function state__ptransition()
-	if vsoAnimEnded( _ptransition.timing.."State" ) then
+	if p.hasAnimEnded( _ptransition.timing.."State" ) then
 		_endedframes = _endedframes + 1
 		if _endedframes > 2 then
 			_endedframes = 0
@@ -1306,19 +1367,6 @@ function p.whenFalling() -- an empty function here, meant to be overwritten in o
 end
 
 function p.idleStateChange()
-	for owner,tag in pairs( p.currentTags ) do
-		if vsoAnimEnded( owner.."State" ) then
-			if tag.reset then
-				if tag.part == "global" then
-					animator.setGlobalTag( tag.name, "" )
-				else
-					animator.setPartTag( tag.part, tag.name, "" )
-				end
-				p.currentTags[owner] = nil
-			end
-		end
-	end
-
 	if not p.control.probablyOnGround() or not p.control.notMoving() or p.movement.animating then return end
 
 	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
@@ -1436,7 +1484,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 end
 
 function p.isLocationDigest(location)
-	for i = 1, #p.locations.digest then
+	for i = 1, #p.locations.digest do
 		if #p.locations.digest[i] == location then
 			return true
 		end
@@ -1537,12 +1585,12 @@ function p.handleStruggles()
 		if movedir then
 			if (struggledata == nil) or (struggledata[movedir] == nil) then
 				movedir = nil
-			elseif not vsoAnimEnded( struggledata.part.."State" )
+			elseif not p.hasAnimEnded( struggledata.part.."State" )
 			and (
-				vsoAnimIs( struggledata.part.."State", "s_up" ) or
-				vsoAnimIs( struggledata.part.."State", "s_front" ) or
-				vsoAnimIs( struggledata.part.."State", "s_back" ) or
-				vsoAnimIs( struggledata.part.."State", "s_down" )
+				p.animationIs( struggledata.part.."State", "s_up" ) or
+				p.animationIs( struggledata.part.."State", "s_front" ) or
+				p.animationIs( struggledata.part.."State", "s_back" ) or
+				p.animationIs( struggledata.part.."State", "s_down" )
 			)then
 				movedir = nil
 			else
