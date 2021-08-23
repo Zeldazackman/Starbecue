@@ -63,10 +63,10 @@ function state_stand()
 
 		p.control.drive()
 	else
-		p.control.doPhysics()
+		p.doPhysics()
 	end
 
-	p.control.updateDriving()
+	p.updateDriving()
 
 end
 
@@ -101,7 +101,7 @@ function state_smol()
 	end
 	p.control.drive()
 
-	p.control.updateDriving()
+	p.updateDriving()
 
 end
 

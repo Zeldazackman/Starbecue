@@ -123,7 +123,7 @@ end
 
 
 function state_stand()
-	p.control.doPhysics()
+	p.doPhysics()
 	p.handleStruggles()
 end
 

@@ -119,9 +119,6 @@ end
 
 function state_stand()
 
-	p.idleStateChange()
-	p.handleBelly()
-
 	if p.control.driving then
 		if vehicle.controlHeld( p.control.driver, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
@@ -156,11 +153,7 @@ function state_stand()
 			end
 		end
 		p.control.drive()
-	else
-		p.control.doPhysics()
 	end
-
-	p.control.updateDriving()
 
 end
 
@@ -332,7 +325,7 @@ function state_smol()
 	end
 	p.control.drive()
 
-	p.control.updateDriving()
+	p.updateDriving()
 
 end
 
@@ -369,7 +362,7 @@ end
 
 function state_chonk_ball()
 	p.handleBelly()
-	p.control.doPhysics()
+	p.doPhysics()
 	if p.occupants.belly < 2 then
 		vsoEffectWarpIn()
 		p.setState( "smol" )
@@ -422,7 +415,7 @@ function state_chonk_ball()
 
 	roll_chonk_ball(dx, control)
 
-	p.control.updateDriving()
+	p.updateDriving()
 end
 
 function end_state_chonk_ball()

@@ -227,10 +227,10 @@ function state_stand()
 		end
 		p.control.drive()
 	else
-		p.control.doPhysics()
+		p.doPhysics()
 	end
 
-	p.control.updateDriving()
+	p.updateDriving()
 
 end
 
@@ -348,10 +348,10 @@ function state_crouch()
 	if p.control.driving then
 		p.control.drive()
 	else
-		p.control.doPhysics()
+		p.doPhysics()
 	end
 
-	p.control.updateDriving()
+	p.updateDriving()
 
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3, 1})
@@ -481,7 +481,7 @@ function state_fly()
 		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.fattenBelly) +1], controlForce )
 	end
 
-	p.control.updateDriving()
+	p.updateDriving()
 end
 
 function end_state_fly()

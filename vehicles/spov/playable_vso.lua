@@ -178,6 +178,12 @@ end
 
 function update()
 
+	p.idleStateChange()
+
+	p.updateDriving()
+	p.doPhysics()
+
+	p.handleBelly()
 	p.applyStatusLists()
 end
 
@@ -913,7 +919,7 @@ function state__ptransition()
 		end
 	end
 	if not p.stateconfig[p.state].noPhysicsTransition then
-		p.control.doPhysics()
+		p.doPhysics()
 	end
 end
 
@@ -921,7 +927,7 @@ end
 
 p.control = {}
 
-function p.control.updateDriving()
+function p.updateDriving()
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if driver then
 		local light = self.cfgVSO.lights.driver
@@ -989,7 +995,7 @@ function p.control.underWater()
 	return mcontroller.liquidPercentage() >= 0.2
 end
 
-function p.control.doPhysics()
+function p.doPhysics()
 	if not p.control.underWater() then
 		mcontroller.setXVelocity( 0 )
 		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
@@ -1293,8 +1299,8 @@ function p.standardState()
 		p.driverStateChange()
 	end
 	p.handleBelly()
-	p.control.doPhysics()
-	p.control.updateDriving()
+	p.doPhysics()
+	p.updateDriving()
 	p.whenFalling()
 end
 
