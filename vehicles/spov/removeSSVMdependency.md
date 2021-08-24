@@ -19,8 +19,6 @@ vsoVictimAnimReplay
 				vsoTTCheck
 				vsoTT
 
-vsoTimeDelta
-
 vsoNext
 
 vsoAnimReplay
@@ -45,19 +43,7 @@ vsoPill
 
 vsoPillValue
 
-vsoAnimSpeed
-
 vsoUseSolid
-
-vsoUseLounge
-
-vsoEffectWarpIn
-	vsoEffectProjectile
-		vsoEffectProjectile
-
-vsoEffectWarpOut
-	vsoEffectProjectile
-		vsoEffectProjectile
 
 vsoStorageLoad
 	vsoStorageLoadData

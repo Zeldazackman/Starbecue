@@ -52,10 +52,10 @@ p.animationState = {}
 function init()
 
 	if not config.getParameter( "uneaten" ) then
-		vsoEffectWarpIn();	--Play warp in effect
+		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 	end
 
-	vsoUseLounge( false )
+	-- vsoUseLounge( false ) -- is this needed here?
 
 	if config.getParameter( "driver" ) ~= nil then
 		p.control.standalone = true
@@ -65,7 +65,7 @@ function init()
 		storage._vsoSpawnOwner = driver
 		storage._vsoSpawnOwnerName = world.entityName( driver )
 		p.forceSeat( driver, "driver" )
-		vsoVictimAnimVisible( "driver", false )
+		-- vsoVictimAnimVisible( "driver", false )
 
 		local settings = config.getParameter( "settings" )
 		p.settings = settings
@@ -73,12 +73,12 @@ function init()
 		p.control.standalone = false
 		p.control.driver = "occupant1"
 		p.control.driving = false
-		vsoUseLounge( false, "driver" )
+		vehicle.setLoungeEnabled( "driver", false )
 	end
 
 	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
 	p.locations = config.getParameter( "locations", 0 )
-	p.ressetOccupantCount()
+	p.resetOccupantCount()
 
 	for i = 1, p.maxOccupants.total do
 		p.occupant[i] = p.clearOccupant
@@ -86,7 +86,8 @@ function init()
 
 	onForcedReset();	--Do a forced reset once.
 
-	vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
+	-- TODO: redo storage loading to use spawn config instead of entity messaging
+	-- vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
 
 	message.setHandler( "settingsMenuSet", function(_,_, val )
 		p.settings = val
@@ -198,6 +199,7 @@ function update(dt)
 	p.handleBelly()
 	p.applyStatusLists()
 
+	p.emoteCooldown = p.emoteCooldown - dt;
 end
 
 function uninit()
@@ -452,12 +454,13 @@ function p.findFirstIndexForLocation(location)
 end
 
 function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
-	if vsoTimeDelta( "emoteblock" ) > 0.2 then
+	if p.emoteCooldown < 0 then
 		animator.setParticleEmitterBurstCount( emotename, 1 );
 		animator.burstParticleEmitter( emotename )
+		p.emoteCooldown = 0.2; -- seconds
 	end
 end
-function p.ressetOccupantCount()
+function p.resetOccupantCount()
 	p.occupants.total = 0
 	for i = 1, #p.locations.regular do
 		p.occupants[p.locations.regular[i]] = 0
@@ -471,7 +474,7 @@ function p.ressetOccupantCount()
 end
 
 function p.updateOccupants()
-	p.ressetOccupantCount()
+	p.resetOccupantCount()
 
 	local lastFilled = true
 	for i = 1, p.maxOccupants.total do
@@ -636,7 +639,7 @@ function p.offsetAnim( data )
 		if (r.x and #r.x > 1) or (r.y and #r.y > 1) then
 			continue = true
 		end
-	End
+	end
 	if not continue then
 		p.offsets.enabled = false
 	end
@@ -652,7 +655,7 @@ function p.rotate( data )
 		enabled = data ~= nil,
 		data = data,
 		parts = {},
-		loop = data.loop or false
+		loop = data.loop or false,
 		timing = data.timing or "body"
 	}
 	local continue = false
@@ -855,16 +858,16 @@ function p.loadStoredData()
 end
 
 function p.onForcedReset()
-	vsoAnimSpeed( 1.0 );
+	animator.setAnimationRate( 1.0 );
 	for i = 1, p.maxOccupants.total do
-		vsoVictimAnimVisible( "occupant"..i, false )
-		vsoUseLounge( false, "occupant"..i )
+		-- vsoVictimAnimVisible( "occupant"..i, false )
+		vehicle.setLoungeEnabled( "occupant"..i, false )
 	end
-	vsoUseSolid( false )
+	-- vsoUseSolid( false ) -- is this needed?
 
 	vehicle.setInteractive( true )
 
-	vsoTimeDelta( "emoteblock" ) -- without this, the first call to showEmote() does nothing
+	p.emoteCooldown = 0
 end
 
 function getOccupantFromEid(eid)
@@ -877,7 +880,7 @@ end
 
 function p.onEnd()
 	if not p.nowarpout then
-		vsoEffectWarpOut();
+		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true);
 	end
 end
 
