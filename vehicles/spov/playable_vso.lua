@@ -49,6 +49,8 @@ p.clearOccupant = {
 
 p.animationState = {}
 
+require("/vehicles/spov/pvso_animation.lua")
+
 function init()
 
 	if not config.getParameter( "uneaten" ) then
@@ -203,66 +205,6 @@ function update(dt)
 end
 
 function uninit()
-end
-
-function p.updateAnims(dt)
-	for i = 1, #p.animPartLists.stateTypes do
-		p.animationState[p.animPartLists.stateTypes[i]].time = p.animationState[p.animPartLists.stateTypes[i]].time + dt
-		if p.animationState[p.animPartLists.stateTypes[i]].time >= p.animationState[p.animPartLists.stateTypes[i]].cycle then -- anim end stuff here
-
-			for j = 1, #p.animationState[p.animPartLists.stateTypes[i]].queue[j] do -- end of anim function queue
-				local func = p.animationState[p.animPartLists.stateTypes[i]].queue[j]
-				func()
-			end
-			p.animationState[p.animPartLists.stateTypes[i]].queue = {}
-		end
-	end
-	for owner,tag in pairs( p.currentTags ) do
-		if p.animationState[owner.."State"].ended then
-			if tag.reset then
-				if tag.part == "global" then
-					animator.setGlobalTag( tag.name, "" )
-				else
-					animator.setPartTag( tag.part, tag.name, "" )
-				end
-				p.currentTags[owner] = nil
-			end
-		end
-	end
-end
-
-function p.queueAnimEndFunction(state, func, newPriority)
-	if newPriority then
-		p.animationState[state].priority = newPriority
-	end
-	table.insert(p.animationState[state].queue, nil, func)
-end
-
-function p.doAnim( state, anim, force)
-	local oldPriority = p.animationState[state].priority
-	local newPriority = (p.animStateData[state].states[anim] or {}).priority or 0
-	local isSame = p.animationIs( state, anim )
-	local force = force
-	local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
-	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
-		p.animationState[state] = {
-			anim = anim,
-			priority = newPriority,
-			cycle = p.animStateData[state].states[anim].cycle,
-			frames = p.animStateData[state].states[anim].frames,
-			time = 0,
-			queue = {}
-		}
-		animator.setAnimationState(state, anim, force)
-	end
-end
-
-function p.hasAnimEnded(state)
-	return (p.animationState[state].time >= p.animationState[state].cycle), math.floor(p.animationState[state].time/p.animationState[state].cycle)
-end
-
-function p.animationIs(state, anim)
-	return animator.animationState(state) == anim
 end
 
 function p.applyStatusLists()
@@ -590,145 +532,6 @@ function p.entityLounging( entity )
 	return false
 end
 
-p.currentTags = {}
-function p.doAnims( anims, force )
-	for state,anim in pairs( anims or {} ) do
-		if state == "offset" then
-			p.offsetAnim( anim )
-		elseif state == "rotate" then
-			p.rotate( anim )
-		elseif state == "tags" then
-			for _,tag in ipairs(anim) do
-				p.currentTags[tag.owner] = {
-					part = tag.part,
-					name = tag.name,
-					reset = tag.reset or true
-				}
-				if tag.part == "global" then
-					animator.setGlobalTag( tag.name, tag.value )
-				else
-					animator.setPartTag( tag.part, tag.name, tag.value )
-				end
-			end
-		else
-			p.doAnim( state.."State", anim, force)
-		end
-	end
-end
-
-p.offsets = {enabled = false, parts = {}}
-function p.offsetAnim( data )
-	if data == p.offsets.data then
-		if not p.offsets.enabled then p.offsets.time = 0 p.offsets.enabled = true end
-		return
-	end
-	p.offsets = {
-		enabled = data ~= nil,
-		data = data,
-		parts = {},
-		loop = data.loop or false,
-		timing = data.timing or "body"
-	}
-	local continue = false
-	for _,r in ipairs(data.parts or {}) do
-		table.insert(p.offsets.parts, {
-			x = r.x or {0},
-			y = r.y or {0},
-			groups = r.groups or {"headbob"},
-			})
-		if (r.x and #r.x > 1) or (r.y and #r.y > 1) then
-			continue = true
-		end
-	end
-	if not continue then
-		p.offsets.enabled = false
-	end
-end
-
-p.rotating = {enabled = false, parts = {}}
-function p.rotate( data )
-	if data == p.rotating.data then
-		if not p.rotating.enabled then p.rotating.enabled = true end
-		return
-	end
-	p.rotating = {
-		enabled = data ~= nil,
-		data = data,
-		parts = {},
-		loop = data.loop or false,
-		timing = data.timing or "body"
-	}
-	local continue = false
-	for _,r in ipairs(data.parts or {}) do
-		table.insert(p.rotating.parts, {
-			groups = r.groups or {"frontarmrotation"},
-			center = r.center or {0,0},
-			rotation = r.rotation or {0}
-		})
-		if r.rotation and #r.rotation > 1 then
-			continue = true
-		end
-	end
-	if not continue then
-		p.rotating.enabled = false
-	end
-end
-
-local _vsoTransAnimUpdate = vsoTransAnimUpdate
-function vsoTransAnimUpdate( transformname, dt ) --very incomplete rewrite here
-	if transformname == "headbob" then
-		if p.offsets == nil or not p.offsets.enabled then return end
-		local state = p.offsets.timing.."State"
-		local cycle = p.animationState[state].cycle or 1
-		local frames = p.animationState[state].frames or 1
-		local time = p.animationState[state].time
-		local speed = frames / cycle
-		if time >= cycle then
-			if p.offsets.loop then
-				p.offsets.time = p.offsets.time - frames
-			else
-				p.offsets.enabled = false
-			end
-		end
-		for _,r in ipairs(p.offsets.parts) do
-			local x = r.x[ math.floor( time ) + 1 ] or r.x[#r.x] or 0
-			local y = r.y[ math.floor( time ) + 1 ] or r.y[#r.y] or 0
-			if r.head then
-				p.offsets.head = true
-				vsoTransMoveTo( "headbob", x / 8, y / 8 )
-			elseif not p.offsets.head then
-				vsoTransMoveTo( "headbob", 0, 0 )
-			end
-		end
-	elseif transformname == "rotation" then
-		if p.rotating == nil or not p.rotating.enabled then return end
-		local state = p.rotating.timing.."State"
-		local animdata = self.vsoAnimStateData[state][animator.animationState(state) or "idle"] or {}
-		local cycle = animdata.cycle or 1
-		local frames = animdata.frames or 1
-		local speed = frames / cycle
-		p.rotating.time = p.rotating.time + dt * speed;
-		if p.rotating.time >= frames then
-			if p.rotating.loop then
-				p.rotating.time = p.rotating.time - frames
-			else
-				p.rotating.enabled = false
-			end
-		end
-		for _,r in ipairs(p.rotating.parts) do
-
-			local previousRotation = r.rotation[math.floor(p.rotating.time) + 1] or 0
-			local nextRotation = r.rotation[math.floor(p.rotating.time) + 2] or 0
-			local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
-
-			animator.resetTransformationGroup( r.group )
-			animator.rotateTransformationGroup(r.group, (rotation * math.pi/180), r.center)
-		end
-	else
-		_vsoTransAnimUpdate( transformname, dt )
-	end
-end
-
 function p.edible( occupantId, seatindex, source )
 	if vehicle.entityLoungingIn( "driver" ) ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
@@ -935,6 +738,8 @@ function p.doTransition( direction, scriptargs )
 end
 
  -- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
+
+ -- this itself as well as the _ptransition.after() thing should be changed to use p.queueAnimEndFunction
 local _endedframes = 0
 function state__ptransition()
 	if p.hasAnimEnded( _ptransition.timing.."State" ) then
