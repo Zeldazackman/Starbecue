@@ -198,16 +198,22 @@ end
 
 function update(dt)
 	p.updateAnims(dt)
-
 	p.idleStateChange()
-
+	if p.control.driving then
+		p.driverStateChange()
+	end
 	p.updateDriving()
 	p.doPhysics()
-
+	p.whenFalling()
 	p.handleBelly()
 	p.applyStatusLists()
 
-	p.emoteCooldown = p.emoteCooldown - dt;
+	p.emoteCooldown = p.emoteCooldown - dt
+
+	p.update(dt)
+end
+
+function p.update(dt) -- another thing for someone to replace in the pvso itself to be able to put things in the main update loop rather than just the states
 end
 
 function uninit()
@@ -692,10 +698,8 @@ end
 function p.onForcedReset()
 	animator.setAnimationRate( 1.0 );
 	for i = 1, p.maxOccupants.total do
-		-- vsoVictimAnimVisible( "occupant"..i, false )
 		vehicle.setLoungeEnabled( "occupant"..i, false )
 	end
-	-- vsoUseSolid( false ) -- is this needed?
 
 	vehicle.setInteractive( true )
 
@@ -1155,15 +1159,6 @@ end
 -------------------------------------------------------------------------------
 
 function p.standardState()
-
-	p.idleStateChange()
-	if p.control.driving then
-		p.driverStateChange()
-	end
-	p.handleBelly()
-	p.doPhysics()
-	p.updateDriving()
-	p.whenFalling()
 end
 
 function p.whenFalling() -- an empty function here, meant to be overwritten in other things to return you to stand
@@ -1216,25 +1211,17 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
-	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= false then
-		p.bellyEffects()
-	else
-		for i = 1, p.maxOccupants.total do
-			--vsoVictimAnimSetStatus( "occupant"..i, {} )
+	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= nil then
+		local driver = vehicle.entityLoungingIn( "driver")
+		if driver ~= nil then
+			getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+				p.doBellyEffects(driver, math.log(powerMultiplier)+1)
+			end)
+		else
+			p.doBellyEffects(false, p.standalonePowerLevel())
 		end
 	end
 	p.handleStruggles()
-end
-
-function p.bellyEffects()
-	local driver = vehicle.entityLoungingIn( "driver")
-	if driver then
-		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-			p.doBellyEffects(driver, math.log(powerMultiplier)+1)
-		end)
-	else
-		p.doBellyEffects(false, p.standalonePowerLevel())
-	end
 end
 
 function p.standalonePowerLevel()
@@ -1280,7 +1267,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 				if driver then addHungerHealth( driver, hunger_change) end
 				p.extraBellyEffects(i, eid, health, status)
 			else
-				p.otherLocationEffects()
+				p.otherLocationEffects(i, eid, health, status)
 			end
 		end
 	end

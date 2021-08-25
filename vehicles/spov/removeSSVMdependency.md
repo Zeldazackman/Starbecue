@@ -8,16 +8,6 @@ init and update hold a whole lot of stuff so I'm not going to bother with them y
 
 vsoNext
 
-vsoAnimReplay
-	vsoAnim
-		vsoTTCheck
-		vsoTT
-
-vsoTransAnimUpdate
-	_animArrayGetRange
-	vsoTransMoveTo
-	animator.animationState
-
 vsoStorageSaveAndLoad
 	vsoStorageSave
 		vsoStorageSaveData
@@ -27,8 +17,6 @@ vsoStorageSaveAndLoad
 vsoPill
 
 vsoPillValue
-
-vsoUseSolid
 
 vsoStorageLoad
 	vsoStorageLoadData
