@@ -25,6 +25,90 @@ function p.updateAnims(dt)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
+	p.victimAnimUpdate()
+end
+
+function p.victimAnimUpdate()
+	local seat = p.victimAnim.seat
+	local state = p.victimAnim.state
+	local ended, times, time = p.hasAnimEnded(state)
+	local anim = p.victimAnimations[anim]
+	if ended and not anim.loop then p.victimAnim.enabled = false
+	else
+		local eid = vehicle.entityLoungingIn(seat)
+		local occupantIndex = tonumber(seat:sub(#"occupant"+1))
+		local speed = p.animationState[state].frames / p.animationState[state].cycle
+		local frame = math.floor(time * speed)
+		local nextFrame = frame + 1
+		local nextFrameIndex = nextFrame + 1
+
+		if p.victimAnim.prevFrame ~= frame then
+			if anim.frames then
+				for i = 1, #anim.frames do
+					if (anim.frames[i] == frame) and (i ~= #anim.frames) then
+						nextFrame = anim.frames[i + 1]
+						nextFrameIndex = i + 1
+					end
+					if anim.loop and (i == #anim.frames) then
+						nextFrame = 0
+						nextFrameIndex = 1
+					end
+				end
+			end
+			p.victimAnim.prevFrame = p.victimAnim.frame
+			p.victimAnim.frame = nextFrame
+
+			p.victimAnim.prevIndex = p.victimAnim.index
+			p.victimAnim.index = nextFrameIndex
+
+			if anim.e ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
+				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[p.victimAnim.prevIndex], (p.victimAnim.frame - p.victimAnim.prevFrame) * (p.animationState[state].cycle / p.animationState[state].frames) + 0.1, entity.id())
+			end
+			if anim.invis ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
+				if anim.e[p.victimAnim.prevIndex] == 0 then
+					p.removeLoungeStatusFromList(occupantIndex, "pvsoinvisible")
+				else
+					p.addLoungeStatusToList(occupantIndex, "pvsoinvisible")
+				end
+			end
+			if anim.sitpos ~= nil and anim.sitpos[p.victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeOrientation(anim.sitpos[p.victimAnim.prevIndex])
+			end
+			if anim.emote ~= nil and anim.emote[p.victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeEmote(anim.emote[p.victimAnim.prevIndex])
+			end
+			if anim.dance ~= nil and anim.dance[p.victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeDance(anim.dance[p.victimAnim.prevIndex])
+			end
+		end
+
+		local timeMod = time % (p.victimAnim.frame - p.victimAnim.prevFrame)
+		local transformGroup = p.victimAnim.seat.."Position"
+		local scale = {(anim[p.victimAnim.prevIndex].xs + (anim[p.victimAnim.index].xs - anim[p.victimAnim.prevIndex].xs) * timeMod), (anim[p.victimAnim.prevIndex].ys + (anim[p.victimAnim.index].ys - anim[p.victimAnim.prevIndex].ys) * timeMod)}
+		local rotation = anim[p.victimAnim.prevIndex].r + (anim[p.victimAnim.index].r - anim[p.victimAnim.prevIndex].r) * timeMod
+		local translation = {(anim[p.victimAnim.prevIndex].x + (anim[p.victimAnim.index].x - anim[p.victimAnim.prevIndex].x) * timeMod), (anim[p.victimAnim.prevIndex].y + (anim[p.victimAnim.index].y - anim[p.victimAnim.prevIndex].y) * timeMod)}
+
+		animator.resetTransformationGroup(transformGroup)
+		--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
+		animator.scaleTransformationGroup(transformGroup, scale)
+		animator.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
+		animator.translateTransformationGroup(transformGroup, translation)
+	end
+end
+
+p.victimAnim = { enabled = false }
+function p.doVictimAnim(seatname, anim, state)
+	p.victimAnim = {
+		enabled = true,
+		seatname = seatname,
+		state = state,
+		anim = anim,
+		frame = 0,
+		index = 1,
+		prevFrame = 0,
+		prevIndex = 1,
+	}
+	p.victimAnimUpdate()
 end
 
 function p.offsetAnimUpdate()
@@ -33,11 +117,11 @@ function p.offsetAnimUpdate()
 	local ended, times, time = p.hasAnimEnded(state)
 	if ended and not p.offsets.loop then p.offsets.enabled = false end
 	local speed = p.animationState[state].frames / p.animationState[state].cycle
-	time = time * speed
+	local frame = math.floor(time * speed) + 1
 
 	for _,r in ipairs(p.offsets.parts) do
-		local x = r.x[ math.floor( time ) + 1 ] or r.x[#r.x] or 0
-		local y = r.y[ math.floor( time ) + 1 ] or r.y[#r.y] or 0
+		local x = r.x[ frame ] or r.x[#r.x] or 0
+		local y = r.y[ frame ] or r.y[#r.y] or 0
 		for i = 1, #r.groups do
 			animator.resetTransformationGroup( r.groups[i] )
 			animator.translateTransformationGroup( r.groups[i], { x / 8, y / 8 } )
@@ -51,11 +135,12 @@ function p.rotationAnimUpdate()
 	local ended, times, time = p.hasAnimEnded(state)
 	if ended and not p.rotating.loop then p.rotating.enabled = false end
 	local speed = p.animationState[state].frames / p.animationState[state].cycle
-	time = time * speed
+	local frame = math.floor(time * speed) + 1
+
 	for _,r in ipairs(p.rotating.parts) do
-		local previousRotation = r.rotation[math.floor(p.rotating.time) + 1] or 0
-		local nextRotation = r.rotation[math.floor(p.rotating.time) + 2] or 0
-		local rotation = previousRotation + (nextRotation - previousRotation) * (p.rotating.time % 1)
+		local previousRotation = r.rotation[frame] or 0
+		local nextRotation = r.rotation[frame + 1] or previousRotation
+		local rotation = previousRotation + (nextRotation - previousRotation) * (time % 1)
 		for i = 1, #r.groups do
 			animator.resetTransformationGroup( r.groups[i] )
 			animator.rotateTransformationGroup(r.groups[i], (rotation * math.pi/180), r.center)
@@ -67,7 +152,7 @@ function p.queueAnimEndFunction(state, func, newPriority)
 	if newPriority then
 		p.animationState[state].priority = newPriority
 	end
-	table.insert(p.animationState[state].queue, nil, func)
+	table.insert(p.animationState[state].queue, func)
 end
 
 function p.doAnim( state, anim, force)

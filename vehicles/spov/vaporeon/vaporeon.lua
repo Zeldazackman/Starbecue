@@ -47,13 +47,10 @@ end
 
 function onBegin()	--This sets up the VSO ONCE.
 
-	vsoOnBegin( "state_stand", begin_state_stand )
 	vsoOnInteract( "state_stand", interact_state_stand )
 
-	vsoOnBegin( "state_sit", begin_state_sit )
 	vsoOnInteract( "state_sit", p.onInteraction )
 
-	vsoOnBegin( "state_lay", begin_state_lay )
 	vsoOnInteract( "state_lay", p.onInteraction )
 
 	vsoOnInteract( "state_sleep", p.onInteraction )
@@ -91,14 +88,6 @@ function p.whenFalling()
 	end
 end
 
-function fixOccupantCenters(location, anim, part)
-	for i = 1, p.occupants.total do
-		if p.occupant[i].location == location then
-			vsoVictimAnimReplay( "occupant"..i, anim, part.."State")
-		end
-	end
-end
-
 -------------------------------------------------------------------------------
 
 p.registerStateScript( "stand", "eat", function( args )
@@ -112,10 +101,6 @@ end)
 p.registerStateScript( "stand", "bapeat", function()
 	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 end)
-
-function begin_state_stand()
-	fixOccupantCenters("belly", "bellycenter", "body")
-end
 
 function state_stand()
 
@@ -182,9 +167,6 @@ p.registerStateScript( "sit", "pin", function( args )
 	return true
 end)
 
-function begin_state_sit()
-	fixOccupantCenters("belly", "bellycentersit", "body")
-end
 
 state_sit = p.standardState
 
@@ -207,12 +189,7 @@ function LayAbsorb()
 	animator.playSound( "slurp" )
 	return true, function()
 		p.occupant[index].location = "belly"
-		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
-end
-
-function begin_state_lay()
-	fixOccupantCenters("belly", "bellycenterlay", "body")
 end
 
 function state_lay()
@@ -282,7 +259,6 @@ p.registerStateScript( "hug", "absorb", function(args)
 	animator.playSound( "slurp" )
 	return true, function()
 		p.occupant[index].location = "belly"
-		vsoVictimAnimReplay( "occupant"..index, "bellycenterlay", "bodyState")
 	end
 end)
 
@@ -303,8 +279,7 @@ state_pinnedsleep = p.standardState
 -------------------------------------------------------------------------------
 
 function begin_state_smol()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
-	fixOccupantCenters("belly", "smolbellycenter", "body")
+	mcontroller.applyParameters( p.vso.movementSettings.smol )
 end
 
 function state_smol()
@@ -330,7 +305,7 @@ function state_smol()
 end
 
 function end_state_smol()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	mcontroller.applyParameters( p.vso.movementSettings.default )
 end
 
 -------------------------------------------------------------------------------
@@ -353,11 +328,10 @@ end
 function begin_state_chonk_ball()
 	animator.setGlobalTag("rotationFlip", self.vsoCurrentDirection)
 
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.chonk_ball )
+	mcontroller.applyParameters( p.vso.movementSettings.chonk_ball )
 	CurBallFrame = 0
 	BallLastPosition = mcontroller.position()
 
-	fixOccupantCenters("belly", "center", "body")
 end
 
 function state_chonk_ball()
@@ -419,5 +393,5 @@ function state_chonk_ball()
 end
 
 function end_state_chonk_ball()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	mcontroller.applyParameters( p.vso.movementSettings.default )
 end

@@ -337,7 +337,7 @@ end)
 
 
 function begin_state_crouch()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.crouch )
+	mcontroller.applyParameters( p.vso.movementSettings.crouch )
 end
 
 function state_crouch()
@@ -371,7 +371,7 @@ function state_crouch()
 end
 
 function end_state_crouch()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	mcontroller.applyParameters( p.vso.movementSettings.default )
 	p.movement.downframes = 11
 
 end
@@ -379,7 +379,7 @@ end
 -------------------------------------------------------------------------------
 
 function begin_state_fly()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.fly )
+	mcontroller.applyParameters( p.vso.movementSettings.fly )
 	p.movement.jumped = true
 end
 
@@ -486,7 +486,7 @@ end
 
 function end_state_fly()
 	p.movement.jumped = true
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	mcontroller.applyParameters( p.vso.movementSettings.default )
 end
 
 -------------------------------------------------------------------------------

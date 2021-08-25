@@ -79,8 +79,7 @@ end
 -------------------------------------------------------------------------------
 
 function begin_state_smol()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.smol )
-	--fixOccupantCenters("belly", "smolbellycenter", "body")
+	mcontroller.applyParameters( p.vso.movementSettings.smol )
 end
 
 function state_smol()
@@ -106,7 +105,7 @@ function state_smol()
 end
 
 function end_state_smol()
-	mcontroller.applyParameters( self.cfgVSO.movementSettings.default )
+	mcontroller.applyParameters( p.vso.movementSettings.default )
 end
 
 -------------------------------------------------------------------------------

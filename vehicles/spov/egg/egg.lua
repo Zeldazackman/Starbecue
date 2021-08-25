@@ -34,7 +34,7 @@ function onBegin()	--This sets up the VSO ONCE.
 	end )
 
 	p.stateconfig = config.getParameter("states")
-	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
+	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 
 	vsoOnBegin( "state_stand", begin_state_stand)
 
@@ -108,7 +108,7 @@ function p.handleStruggles()
 		p.doAnims(animation)
 
 		if struggledata[movedir].victimAnimation then
-			vsoVictimAnimReplay( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
+			p.doVictimAnim( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
 		end
 		--animator.playSound( "struggle" )
 	end
@@ -117,8 +117,6 @@ end
 function begin_state_stand()
 	p.occupant[1].id = p.driver
 	p.forceSeat( p.driver, "occupant1" )
-	vsoVictimAnimVisible( "occupant1", false )
-	vsoVictimAnimReplay( "occupant1", "othercenter", "bodyState" )
 end
 
 

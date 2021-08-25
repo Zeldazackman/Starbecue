@@ -39,6 +39,7 @@ p.movement = {
 
 p.clearOccupant = {
 	id = nil,
+	loungeStatList = {},
 	statList = {},
 	statPower = {},
 	visible = nil,
@@ -52,6 +53,36 @@ p.animationState = {}
 require("/vehicles/spov/pvso_animation.lua")
 
 function init()
+	p.vso = config.getParameter("vso")
+	p.directoryPath = config.getParameter("directoryPath")
+	p.cfgAnimationFile = config.getParameter("animation")
+	p.victimAnimations = root.assetJson(p.vso.victimAnimations)
+	p.stateconfig = config.getParameter("states")
+	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
+	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.animPartLists = root.assetJson(p.directoryPath .. p.cfgAnimationFile ).animationPartLists
+	p.maxOccupants = config.getParameter( "maxOccupants")
+	p.locations = config.getParameter( "locations")
+	p.resetOccupantCount()
+
+	for i = 1, p.maxOccupants.total do
+		p.occupant[i] = p.clearOccupant
+	end
+
+	for i = 1, #p.animPartLists.stateTypes do
+		local state = p.animPartLists.stateTypes[i]
+		p.animationState[state] = {
+			anim = p.animStateData[state].default,
+			priority = p.animStateData[state].states[p.animStateData[state].default].priority,
+			cycle = p.animStateData[state].states[p.animStateData[state].default].cycle,
+			frames = p.animStateData[state].states[p.animStateData[state].default].frames,
+			time = 0,
+			queue = {}
+		}
+		p.victimAnims[state] = {
+			done = true
+		}
+	end
 
 	if not config.getParameter( "uneaten" ) then
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
@@ -78,13 +109,6 @@ function init()
 		vehicle.setLoungeEnabled( "driver", false )
 	end
 
-	p.maxOccupants = config.getParameter( "maxOccupants", 0 )
-	p.locations = config.getParameter( "locations", 0 )
-	p.resetOccupantCount()
-
-	for i = 1, p.maxOccupants.total do
-		p.occupant[i] = p.clearOccupant
-	end
 
 	onForcedReset();	--Do a forced reset once.
 
@@ -127,24 +151,6 @@ function init()
 		p.occupant[seatindex].filepath = path
 		p.smolprey()
 	end )
-
-
-	p.stateconfig = config.getParameter("states")
-	p.animStateData = root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animatedParts.stateTypes
-	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
-	p.animPartLists = root.assetJson(root.assetJson( self.directoryPath .. self.cfgAnimationFile ).animationPartLists)
-
-	for i = 1, #p.animPartLists.stateTypes do
-		local state = p.animPartLists.stateTypes[i]
-		p.animationState[state] = {
-			anim = p.animStateData[state].default,
-			priority = p.animStateData[state].states[p.animStateData[state].default].priority,
-			cycle = p.animStateData[state].states[p.animStateData[state].default].cycle,
-			frames = p.animStateData[state].states[p.animStateData[state].default].frames,
-			time = 0,
-			queue = {}
-		}
-	end
 
 	if not config.getParameter( "uneaten" ) then
 		if not p.startState then
@@ -212,6 +218,13 @@ function p.applyStatusLists()
 		for j = 1, #p.occupant[i].statList[j] do
 			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", p.occupant[i].statList[j], p.occupant[i].statPower[j], entity.id() )
 		end
+		vehicle.setLoungeStatusEffects( "occupant"..i, p.occupant[i].loungeStatList )
+	end
+end
+
+function p.applyStatusEffects(eid, statuses)
+	for i = 1, #statuses do
+		world.sendEntityMessage(eid, "applyStatusEffect", statuses[i][1], statuses[i][2], entity.id())
 	end
 end
 
@@ -228,8 +241,26 @@ function p.addStatusToList(index, status, power)
 	if not power then
 		power = 1
 	end
-	table.insert(p.occupant[index].statList, nil, status)
-	table.insert(p.occupant[index].statPower, nil, power)
+	table.insert(p.occupant[index].statList, status)
+	table.insert(p.occupant[index].statPower, power)
+end
+
+function p.addLoungeStatusToList(index, status)
+	for i = 1, #p.occupant[index].loungeStatList do
+		if p.occupant[index].loungeStatList[i] == status then
+			return
+		end
+	end
+	table.insert(p.occupant[index].loungeStatList, status)
+end
+
+function p.removeLoungeStatusFromList(index, status)
+	for i = 1, #p.occupant[index].loungeStatList do
+		if p.occupant[index].loungeStatList[i] == status then
+			table.remove(p.occupant[index].loungeStatList, i)
+			return
+		end
+	end
 end
 
 function p.removeStatusFromList(index, status)
@@ -249,7 +280,7 @@ function p.forceSeat( occupantId, seatname )
 		vehicle.setLoungeEnabled(seatname, true)
 		local seat = 0
 		if seatname ~= "driver" then
-			seat = tonumber(seatname:sub(-1))
+			seat = tonumber(seatname:sub(#"occupant"+1))
 		end
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoforcesit", seat + 1, entity.id())
 	end
@@ -301,7 +332,6 @@ function p.doVore(args, location, statuses, sound )
 		--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 		return true, function()
 			vehicle.setInteractive( true )
-			vsoVictimAnimReplay( "occupant"..i, location.."center", "bodyState")
 			if sound then animator.playSound( sound ) end
 		end
 	else
@@ -381,7 +411,6 @@ end
 
 function p.moveOccupantLocation(args, part, location)
 	if p.locationFull(location) then return false end
-	vsoVictimAnimReplay( "occupant"..args.index, location.."center", part.."State")
 	p.occupant[args.index].location = location
 	return true
 end
@@ -731,7 +760,7 @@ function p.doTransition( direction, scriptargs )
 				i = p.findFirstIndexForLocation(tconfig.victimAnimLocation)
 			end
 		end
-		if i then vsoVictimAnimReplay( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" ) end
+		if i then p.doVictimAnim( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" ) end
 	end
 	vsoNext( "state__ptransition" )
 	return true
@@ -763,7 +792,7 @@ p.control = {}
 function p.updateDriving()
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if driver then
-		local light = self.cfgVSO.lights.driver
+		local light = p.vso.lights.driver
 		light.position = world.entityPosition( driver )
 		world.sendEntityMessage( driver, "PVSOAddLocalLight", light )
 		local aim = vehicle.aimPosition(p.control.driver)
@@ -1239,7 +1268,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 		if eid and world.entityExists(eid) then
 			local health = world.entityHealth(eid)
-			local light = self.cfgVSO.lights.prey
+			local light = p.vso.lights.prey
 			light.position = world.entityPosition( eid )
 			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
@@ -1419,7 +1448,7 @@ function p.handleStruggles()
 		end
 
 		if struggledata[movedir].victimAnimation then
-			vsoVictimAnimReplay( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
+			p.doVictimAnim( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
 		end
 		animator.playSound( "struggle" )
 	end

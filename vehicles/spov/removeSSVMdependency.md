@@ -6,19 +6,6 @@ a somewhat long task that will grant more freedom and make future creations a lo
 
 init and update hold a whole lot of stuff so I'm not going to bother with them yet
 
-vsoVictimAnimUpdate
-	_ListAddStatus
-	_animArrayGetRange
-	_animArrayGetListClamp
-	_ListRemoveStatus
-
-vsoVictimAnimReplay
-	vsoVictimAnimPlay
-		vsoVictimAnim
-			vsoAnim
-				vsoTTCheck
-				vsoTT
-
 vsoNext
 
 vsoAnimReplay
@@ -30,8 +17,6 @@ vsoTransAnimUpdate
 	_animArrayGetRange
 	vsoTransMoveTo
 	animator.animationState
-
-_ListAddStatus
 
 vsoStorageSaveAndLoad
 	vsoStorageSave
