@@ -4,8 +4,6 @@ a somewhat long task that will grant more freedom and make future creations a lo
 
 ## functions to replace
 
-init and update hold a whole lot of stuff so I'm not going to bother with them yet
-
 vsoNext
 
 vsoStorageSaveAndLoad
@@ -20,13 +18,6 @@ vsoPillValue
 
 vsoStorageLoad
 	vsoStorageLoadData
-
-_add_vso_rpc
-
-vsoTimerEvery
-	vsoTimerSet
-		vsoTT
-	vsoTTCheck
 
 vsoFacePoint
 	vsoFaceDirection

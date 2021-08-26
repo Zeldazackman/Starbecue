@@ -1,0 +1,16 @@
+{
+	"name" : "pvsoSoftDigest",
+	"blockingStat" : "digestionImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"pvsoSoftDigest.lua"
+	],
+
+	"animationConfig" : "pvsoSoftDigest.animation",
+
+	"label" : "Being Soft Digested",
+	"icon" : "/stats/playablevsoeffects/softDigest.png"
+}

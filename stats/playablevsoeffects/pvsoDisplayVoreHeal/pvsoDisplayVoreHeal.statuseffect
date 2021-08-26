@@ -1,5 +1,5 @@
 {
-	"name" : "pvsoVoreHeal",
+	"name" : "pvsoDisplayVoreHeal",
 	"blockingStat" : "digestionImmunity",
 
 	"effectConfig" : {},
@@ -9,8 +9,8 @@
 	"pvsoVoreHeal.lua"
 	],
 
-	"animationConfig" : "pvsoVoreHeal.animation",
+	"animationConfig" : "pvsoDisplayVoreHeal.animation",
 
 	"label" : "Healing Vore",
-	"icon" : "/stats/playablevsoeffects/voreheal.png"
+	"icon" : "/stats/playablevsoeffects/voreHeal.png"
 }

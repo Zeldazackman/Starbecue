@@ -51,6 +51,8 @@ p.clearOccupant = {
 p.animationState = {}
 
 require("/vehicles/spov/pvso_animation.lua")
+require("/vehicles/spov/pvso_state_control.lua")
+require("/vehicles/spov/pvso_replaceable_functions.lua")
 
 function init()
 	p.vso = config.getParameter("vso")
@@ -87,8 +89,6 @@ function init()
 	if not config.getParameter( "uneaten" ) then
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 	end
-
-	-- vsoUseLounge( false ) -- is this needed here?
 
 	if config.getParameter( "driver" ) ~= nil then
 		p.control.standalone = true
@@ -133,16 +133,15 @@ function init()
 		p.nowarpout = nowarpout
 		_vsoOnDeath()
 	end )
-	message.setHandler( "forcedsit", p.control.pressE )
 
 	message.setHandler( "digest", function(_,_, eid)
-		local i = getOccupantFromEid(eid)
+		local i = p.getOccupantFromEid(eid)
 		local location = p.occupant[i].location
 		p.doTransition("digest"..location)
 	end )
 
 	message.setHandler( "uneat", function(_,_, eid)
-		local i = getOccupantFromEid(eid)
+		local i = p.getOccupantFromEid(eid)
 		p.occupant[i] = p.clearOccupant
 		p.unForceSeat( "occupant"..i)
 	end )
@@ -166,7 +165,7 @@ function init()
 	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
 	vehicle.setLoungeStatusEffects = function(seatname, effects)
 		local eid = vehicle.entityLoungingIn(seatname)
-		local seatindex = getOccupantFromEid(eid)
+		local seatindex = p.getOccupantFromEid(eid)
 		local smolprey
 		if seatname ~= "driver" then
 			smolprey = p.occupant[seatindex].species
@@ -197,7 +196,10 @@ function init()
 end
 
 function update(dt)
+	p.dt = dt
 	p.updateAnims(dt)
+	p.checkRPCsFinished(dt)
+	p.checkTimers(dt)
 	p.idleStateChange()
 	if p.control.driving then
 		p.driverStateChange()
@@ -213,10 +215,58 @@ function update(dt)
 	p.update(dt)
 end
 
-function p.update(dt) -- another thing for someone to replace in the pvso itself to be able to put things in the main update loop rather than just the states
+function uninit()
 end
 
-function uninit()
+p.rpcList = {}
+function p.addRPC(rpc, callback)
+	if callback ~= nil then table.insert(p.rpcList, {rpc = rpc, callback = callback, dt = 0}) end
+end
+
+function p.checkRPCsFinished(dt)
+	for i, list in ipairs(p.rpcList) do
+		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
+		if list.rpc:finished() then
+			list.callback(list.rpc:result(), list.dt)
+			-- not quite sure if what is below is what I should be doing
+			table.remove(p.rpcList, i)
+			i = i - 1
+		end
+	end
+end
+
+p.timerList = {}
+
+function p.randomTimer(name, min, max, callback)
+	if p.timerList.name == nil then
+		local timer = {
+			targetTime = (math.random(min * 100, max * 100))/100,
+			currTime = 0,
+			callback = callback
+		}
+		table.insert(p.timerList, timer)
+	end
+end
+
+function p.timer(name, time, callback)
+	if p.timerList.name == nil then
+		local timer = {
+			targetTime = time
+			currTime = 0,
+			callback = callback
+		}
+		table.insert(p.timerList, timer)
+	end
+end
+
+function p.checkTimers(dt)
+	for i, timer in pairs(p.timerList) do
+		timer.currTime = timer.currTime + dt
+		if timer.currTime >= timer.targetTime then
+			timer.callback()
+			table.remove(p.timerList, i)
+		end
+	end
 end
 
 function p.applyStatusLists()
@@ -506,16 +556,6 @@ function p.updateOccupants()
 	end
 end
 
-function p.setState(state)
-	if state == nil then
-		sb.logError( "nil state from ".. p.state )
-	end
-	p.state = state
-	animator.setGlobalTag( "state", state )
-	vsoNext( "state_"..state )
-	p.doAnims( p.stateconfig[state].idle )
-end
-
 function p.localToGlobal( position )
 	local lpos = { position[1], position[2] }
 	if self.vsoCurrentDirection == -1 then lpos[1] = -lpos[1] end
@@ -630,7 +670,7 @@ end
 function p.uneat( seatindex )
 	local occupantId = p.occupant[seatindex].id
 	world.sendEntityMessage( occupantId, "PVSOClear")
-	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremovebellyeffects")
+	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremovebellyEffects")
 	p.unForceSeat( "occupant"..seatindex )
 	if p.occupant[seatindex].species then
 		if world.entityType(occupantId) == "player" then
@@ -682,9 +722,9 @@ function p.loadStoredData()
 
 		sb.logInfo("Loaded VSO data")
 
-		if vsoPill( "heal" ) then p.settings.bellyeffect = "heal" end
-		if vsoPill( "digest" ) then p.settings.bellyeffect = "digest" end
-		if vsoPill( "softdigest" ) then p.settings.bellyeffect = "softdigest" end
+		if vsoPill( "heal" ) then p.settings.bellyEffect = "heal" end
+		if vsoPill( "digest" ) then p.settings.bellyEffect = "digest" end
+		if vsoPill( "pvsoSoftDigest" ) then p.settings.bellyEffect = "pvsoSoftDigest" end
 
 		if vsoPill( "fatten" ) then
 			p.fattenBelly = math.floor(vsoPillValue( "fatten" ))
@@ -706,7 +746,7 @@ function p.onForcedReset()
 	p.emoteCooldown = 0
 end
 
-function getOccupantFromEid(eid)
+function p.getOccupantFromEid(eid)
 	for i = 1, p.maxOccupants.total do
 		if eid == p.occupant[i].id then
 			return i
@@ -722,110 +762,7 @@ end
 
 -------------------------------------------------------------------------------
 
-p.statescripts = {}
-
-function p.registerStateScript( state, name, func )
-	if p.statescripts[state] == nil then
-		p.statescripts[state] = {}
-	end
-	p.statescripts[state][name] = func
-end
-
-local _ptransition = {}
-
-function p.doTransition( direction, scriptargs )
-	if not p.stateconfig[p.state].transitions[direction] then return end
-	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
-	if tconfig == nil then return end
-	local continue = true
-	local after = function() end
-	if tconfig.script then
-		local statescript = p.statescripts[p.state][tconfig.script]
-		local _continue, _after, _tconfig = statescript( scriptargs or {} )
-		if _continue ~= nil then continue = _continue end
-		if _after ~= nil then after = _after end
-		if _tconfig ~= nil then tconfig = _tconfig end
-	end
-	if not continue then return end
-	_ptransition.after = after
-	_ptransition.state = tconfig.state or p.state
-	_ptransition.timing = tconfig.timing or "body"
-	if tconfig.animation ~= nil then
-		p.doAnims( tconfig.animation )
-	end
-	if tconfig.victimAnimation ~= nil then
-		local i = (scriptargs or {}).index
-		if i == nil then
-			i = p.occupants.total
-			if p.justAte then
-				i = i + 1
-				p.justAte = false
-			elseif tconfig.victimAnimLocation ~= nil then
-				i = p.findFirstIndexForLocation(tconfig.victimAnimLocation)
-			end
-		end
-		if i then p.doVictimAnim( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" ) end
-	end
-	vsoNext( "state__ptransition" )
-	return true
-end
-
- -- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
-
- -- this itself as well as the _ptransition.after() thing should be changed to use p.queueAnimEndFunction
-local _endedframes = 0
-function state__ptransition()
-	if p.hasAnimEnded( _ptransition.timing.."State" ) then
-		_endedframes = _endedframes + 1
-		if _endedframes > 2 then
-			_endedframes = 0
-			_ptransition.after()
-			p.setState( _ptransition.state )
-			p.doAnims( p.stateconfig[p.state].idle )
-		end
-	end
-	if not p.stateconfig[p.state].noPhysicsTransition then
-		p.doPhysics()
-	end
-end
-
--------------------------------------------------------------------------------
-
 p.control = {}
-
-function p.updateDriving()
-	local driver = vehicle.entityLoungingIn(p.control.driver)
-	if driver then
-		local light = p.vso.lights.driver
-		light.position = world.entityPosition( driver )
-		world.sendEntityMessage( driver, "PVSOAddLocalLight", light )
-		local aim = vehicle.aimPosition(p.control.driver)
-		local cursor = "/cursors/cursors.png:pointer"
-
-		world.sendEntityMessage( driver, "PVSOCursor", aim, cursor)
-	end
-
-
-	if p.control.standalone then
-		--vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
-		p.control.driving = true
-		if vehicle.controlHeld( p.control.driver, "Special3" ) then
-			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.maxOccupants.total }, false, entity.id()
-			)
-		end
-	elseif p.occupants.total >= 1 then
-		if vehicle.controlHeld( p.control.driver, "Special1" ) then
-			p.control.driving = true
-		end
-		if vehicle.controlHeld( p.control.driver, "Special2" ) then
-			p.control.driving = false
-		end
-	else
-		p.control.driving = false
-	end
-end
 
 function getSettingsMenuInfo()
 	local occupants = {}
@@ -871,253 +808,15 @@ function p.doPhysics()
 	end
 end
 
-function p.control.pressE(_,_, seat_index )
-	if seat_index == 0 and p.control.standalone then
-		p.movement.E = true
-	elseif seat_index == 1 and not p.control.standalone then
-		p.movement.E = true
-	end
-end
-
-function p.control.drive()
-	if not p.control.driving then return end
-	local control = p.stateconfig[p.state].control
-	if control.animations == nil then control.animations = {} end -- allow indexing
-
-	local dx = 0
-	if vehicle.controlHeld( p.control.driver, "left" ) then
-		dx = dx - 1
-	end
-	if vehicle.controlHeld( p.control.driver, "right" ) then
-		dx = dx + 1
-	end
-	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
-	if p.control.probablyOnGround() then
-		p.control.groundMovement( dx )
-	elseif p.control.underWater() then
-		p.control.waterMovement( dx )
-	else
-		p.control.airMovement( dx )
-	end
-
-	p.control.primaryAction()
-	p.control.altAction()
-end
-
-function p.control.primaryAction()
-	local control = p.stateconfig[p.state].control
-	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
-		if p.movement.primaryCooldown < 1 then
-			if control.primaryAction.projectile ~= nil then
-				p.control.projectile(control.primaryAction.projectile)
-			end
-			if control.primaryAction.animation ~= nil then
-				p.doAnims( control.primaryAction.animation )
-			end
-			if control.primaryAction.script ~= nil then
-				local statescript = p.statescripts[p.state][control.primaryAction.script]
-				if statescript then
-					statescript() -- what arguments might this need?
-				else
-					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
-				end
-			end
-			if 	p.movement.primaryCooldown < 1 then
-				p.movement.primaryCooldown = control.primaryAction.cooldown
-			end
-		end
-	end
-	p.movement.primaryCooldown = p.movement.primaryCooldown - 1
-end
-function p.control.altAction()
-	local control = p.stateconfig[p.state].control
-	if control.altAction ~= nil and vehicle.controlHeld( p.control.driver, "altFire" ) then
-		if p.movement.altCooldown < 1 then
-			if control.altAction.projectile ~= nil then
-				p.control.projectile(control.altAction.projectile)
-			end
-			if control.altAction.animation ~= nil then
-				p.doAnims( control.altAction.animation )
-			end
-			if control.altAction.script ~= nil then
-				local statescript = p.statescripts[p.state][control.altAction.script]
-				if statescript then
-					statescript() -- what arguments might this need?
-				else
-					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
-				end
-			end
-			if 	p.movement.altCooldown < 1 then
-				p.movement.altCooldown = control.altAction.cooldown
-			end
-		end
-	end
-	p.movement.altCooldown = p.movement.altCooldown - 1
-end
-
-function p.control.groundMovement( dx )
-	local state = p.stateconfig[p.state]
-	local control = state.control
-
-	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly)< control.fullThreshold then
-		running = true
-	end
-	if dx ~= 0 then
-		vsoFaceDirection( dx )
-	end
-	if running then
-		mcontroller.setXVelocity( dx * control.runSpeed )
-	else
-		mcontroller.setXVelocity( dx * control.walkSpeed )
-	end
-
-	if dx ~= 0 then
-		if not running then
-			p.doAnims( control.animations.walk )
-			p.movement.animating = true
-		elseif running then
-			p.doAnims( control.animations.run )
-			p.movement.animating = true
-		end
-	elseif p.movement.animating then
-		p.doAnims( state.idle )
-		p.movement.animating = false
-	end
-
-	mcontroller.setYVelocity( -0.15 ) -- to detect leaving ground
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
-		if not vehicle.controlHeld( p.control.driver, "down" ) then
-			if not p.movement.jumped then
-				p.doAnims( control.animations.jump )
-				p.movement.animating = true
-				if p.occupants.total + p.fattenBelly < control.fullThreshold then
-					mcontroller.setYVelocity( control.jumpStrength )
-				else
-					mcontroller.setYVelocity( control.fullJumpStrength )
-				end
-			end
-		else
-			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		end
-		p.movement.jumped = true
-	else
-		p.movement.jumped = false
-	end
-
-	p.movement.waswater = false
-	p.movement.jumps = 1
-	p.movement.airframes = 0
-	p.movement.falling = false
-end
-
-function p.control.waterMovement( dx )
-	local control = p.stateconfig[p.state].control
-
-	if dx ~= 0 then
-		vsoFaceDirection( dx )
-	end
-	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
-
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
-		mcontroller.approachYVelocity( 10, 50 )
-	else
-		mcontroller.approachYVelocity( -10, 50 )
-	end
-
-	if vehicle.controlHeld( p.control.driver, "jump" )
-	-- or vehicle.controlHeld( p.control.driver, "down" )
-	or vehicle.controlHeld( p.control.driver, "left" )
-	or vehicle.controlHeld( p.control.driver, "right" ) then
-		p.doAnims( control.animations.swim )
-
-		p.movement.animating = true
-	else
-		p.doAnims( control.animations.swimIdle )
-		p.movement.animating = true
-	end
-
-	p.movement.waswater = true
-	p.movement.jumped = false
-	p.movement.jumps = 1
-	p.movement.airframes = 0
-	p.movement.falling = false
-end
-
-function p.control.airMovement( dx )
-	local control = p.stateconfig[p.state].control
-
-	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly) < control.fullThreshold then
-		running = true
-	end
-	if dx ~= 0 then
-		if running then
-			mcontroller.approachXVelocity( dx * control.runSpeed, 50 )
-		else
-			mcontroller.approachXVelocity( dx * control.walkSpeed, 50 )
-		end
-	else
-		mcontroller.approachXVelocity( 0, 30 )
-	end
-
-	if vehicle.controlHeld( p.control.driver, "down" ) then
-		mcontroller.applyParameters{ ignorePlatformCollision = true }
-	else
-		mcontroller.applyParameters{ ignorePlatformCollision = false }
-	end
-	if mcontroller.yVelocity() > 0 and vehicle.controlHeld( p.control.driver, "jump" ) then
-		mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
-	else
-		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
-	end
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
-		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
-			p.doAnims( control.animations.jump )
-			p.movement.animating = true
-			if (p.occupants.total + p.fattenBelly) < control.fullThreshold then
-				mcontroller.setYVelocity( control.jumpStrength )
-			else
-				mcontroller.setYVelocity( control.fullJumpStrength )
-			end
-			if not p.movement.waswater and p.movement.airframes > 10 then
-				p.movement.jumps = p.movement.jumps + 1
-				-- particles from effects/multiJump.effectsource
-				animator.burstParticleEmitter( control.pulseEffect )
-				for i = 1, control.pulseSparkles do
-					animator.burstParticleEmitter( "defaultblue" )
-					animator.burstParticleEmitter( "defaultlightblue" )
-				end
-				animator.playSound( "doublejump" )
-			end
-		end
-		p.movement.jumped = true
-	else
-		p.movement.jumped = false
-	end
-
-	if mcontroller.yVelocity() < -10 and p.movement.airframes > 15 then
-		if not p.movement.falling then
-			p.doAnims( control.animations.fall )
-			p.movement.falling = true
-			p.movement.animating = true
-		end
-	else
-		p.movement.falling = false
-	end
-	p.movement.lastYVelocity = mcontroller.yVelocity()
-	p.movement.airframes = p.movement.airframes + 1
-end
-
-function useEnergy(eid, cost, callback)
-	_add_vso_rpc( world.sendEntityMessage(eid, "useEnergy", cost), callback)
+function p.useEnergy(eid, cost, callback)
+	p.addRPC( world.sendEntityMessage(eid, "useEnergy", cost), callback)
 end
 
 function p.control.projectile( projectiledata )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		useEnergy(driver, projectiledata.cost, function(canUseEnergy)
-			if canUseEnergy then
+		p.useEnergy(driver, projectiledata.cost, function(canp.useEnergy)
+			if canp.useEnergy then
 				p.control.fireProjectile( projectiledata, driver )
 			end
 		end)
@@ -1125,11 +824,6 @@ function p.control.projectile( projectiledata )
 		p.control.fireProjectile( projectiledata, driver )
 	end
 end
-
-function getDriverStat(eid, stat, callback)
-	_add_vso_rpc( world.sendEntityMessage(eid, "getDriverStat", stat), callback)
-end
-
 
 function p.control.fireProjectile( projectiledata, driver )
 	local position = p.localToGlobal( projectiledata.position )
@@ -1158,57 +852,6 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.standardState()
-end
-
-function p.whenFalling() -- an empty function here, meant to be overwritten in other things to return you to stand
-end
-
-function p.idleStateChange()
-	if not p.control.probablyOnGround() or not p.control.notMoving() or p.movement.animating then return end
-
-	if vsoTimerEvery( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
-		local transitions = p.stateconfig[p.state].transitions
-		if not p.control.driving then
-			local percent = math.random(100)
-			for name, t in pairs(transitions) do
-				local transition = p.occupantArray( t )
-				if transition and transition.chance and transition.chance > 0 then
-					percent = percent - transition.chance
-					if percent <= 0 then
-						p.doTransition( name )
-						return
-					end
-				end
-			end
-		end
-	end
-
-	p.doAnims( p.stateconfig[p.state].idle )
-
-	p.nextIdle = p.nextIdle - 1
-	if p.nextIdle <= 0 then
-		p.nextIdle = math.random(50, 300)
-		local idles = p.stateconfig[p.state].idleAnimations
-		if idles ~= nil and #idles >= 1 then
-			local which = math.random(#idles)
-			p.doAnims( idles[which] )
-		end
-	end
-end
-
-function p.driverStateChange()
-	local transitions = p.stateconfig[p.state].transitions
-	local movedir = p.getSeatDirections( p.control.driver )
-	if movedir ~= nil then
-		if transitions[movedir] ~= nil then
-			p.doTransition(movedir)
-		elseif (movedir == "front" or movedir == "back") and transitions.side ~= nil then
-			p.doTransition("side")
-		end
-	end
-end
-
 function p.handleBelly()
 	p.updateOccupants()
 	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= nil then
@@ -1231,25 +874,9 @@ function p.standalonePowerLevel()
 end
 
 function p.doBellyEffects(driver, powerMultiplier)
-	local status = "pvsoremovebellyeffects"
-	local hungereffect = 0
-	if p.settings.bellyeffect == "digest" then
-		hungereffect = 1
-		if p.settings.displaydamage then
-			status = "displaydamagedigest"
-		else
-			status = "damagedigest"
-		end
-	elseif p.settings.bellyeffect == "softdigest" then
-		hungereffect = 1
-		if p.settings.displaydamage then
-			status = "displaydamagesoftdigest"
-		else
-			status = "damagesoftdigest"
-		end
-	elseif p.settings.bellyeffect == "heal" then
-		status = "pvsovoreheal"
-	end
+	local status = p.settings.bellyEffect
+	local hungereffect = p.settings.hungerEffect
+
 	for i = 1, p.maxOccupants.total do
 		local eid = p.occupant[i].id
 
@@ -1260,11 +887,11 @@ function p.doBellyEffects(driver, powerMultiplier)
 			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
 			if p.isLocationDigest(p.occupant[i].location) then
-				if vsoTimerEvery( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
-				local hunger_change = (hungereffect * powerMultiplier * vsoDelta())/100
+				if (p.settings.bellySounds == true) and p.randomTimer( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
+				local hunger_change = (hungereffect * powerMultiplier * p.dt)/100
 				if status then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
-				if p.settings.bellyeffect == "softdigest" and health[1] <= 1 then hunger_change = 0 end
-				if driver then addHungerHealth( driver, hunger_change) end
+				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
+				if driver then p.addHungerHealth( driver, hunger_change) end
 				p.extraBellyEffects(i, eid, health, status)
 			else
 				p.otherLocationEffects(i, eid, health, status)
@@ -1282,77 +909,18 @@ function p.isLocationDigest(location)
 	return false
 end
 
-function p.extraBellyEffects(i, eid, health, status) -- something for the PVSOs to replace
-end
-
-function p.otherLocationEffects(i, eid, health, status)
-end
-
 randomDirections = { "back", "front", "up", "down", "jump", nil}
 p.monsterstrugglecooldown = {}
 
-function p.getSeatDirections(seatname)
-	local occupantId = vehicle.entityLoungingIn(seatname)
-	if not occupantId or not world.entityExists(occupantId) then return end
-
-	if world.entityType( occupantId ) ~= "player" then
-		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] < 1 then
-			local movedir = randomDirections[math.random(1,6)]
-			p.monsterstrugglecooldown[seatname] = math.random(1, 30)
-			return movedir
-		else
-			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - 1
-			return
-		end
-	else
-		local dx = 0
-		local dy = 0
-		if vehicle.controlHeld( seatname, "left" ) then
-			dx = dx - 1
-		end
-		if vehicle.controlHeld( seatname, "right" ) then
-			dx = dx + 1
-		end
-		if vehicle.controlHeld( seatname, "down" ) then
-			dy = dy - 1
-		end
-		if vehicle.controlHeld( seatname, "up" ) then
-			dy = dy + 1
-		end
-
-		dx = dx * self.vsoCurrentDirection
-
-		if dx ~= 0 then
-			if dx >= 1 then
-				return "front"
-			else
-				return "back"
-			end
-		end
-
-		if dy ~= 0 then
-			if dy >= 1 then
-				return "up"
-			else
-				return "down"
-			end
-		end
-
-		if vehicle.controlHeld( seatname, "jump" ) then
-			return "jump"
-		end
-	end
-end
-
-function addHungerHealth(eid, amount, callback)
-	_add_vso_rpc( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
+function p.addHungerHealth(eid, amount, callback)
+	p.addRPC( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
 
 p.struggleCount = 0
 p.bellySettleDownTimer = 3
 
 function p.handleStruggles()
-	p.bellySettleDownTimer = p.bellySettleDownTimer - vsoDelta()
+	p.bellySettleDownTimer = p.bellySettleDownTimer - p.dt
 	if p.bellySettleDownTimer <= 0 then
 		if p.struggleCount > 0 then
 			p.struggleCount = p.struggleCount - 1

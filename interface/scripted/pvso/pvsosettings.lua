@@ -1,7 +1,7 @@
 
-p.bellyeffects = {
-	[-1] = "", [0] = "heal", [1] = "digest", [2] = "softdigest",
-	[""] = -1, ["heal"] = 0, ["digest"] = 1, ["softdigest"] = 2 -- reverse lookup
+p.bellyEffects = {
+	[-1] = "pvsoRemoveBellyEffects", [0] = "pvsoVoreHeal", [1] = "pvsoDigest", [2] = "pvsoSoftDigest",
+	["pvsoRemoveBellyEffects"] = -1, ["pvsoVoreHeal"] = 0, ["pvsoDigest"] = 1, ["pvsoSoftDigest"] = 2 -- reverse lookup
 }
 
 function onInit()
@@ -12,11 +12,14 @@ function onInit()
 	enableActionButtons(false)
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
+	globalSettings = p.vsoSettings.global or {}
+	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "pvsoRemoveBellyEffects"] )
+	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
+	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
+
 	settings = p.vsoSettings[p.vsoname] or {}
 	widget.setChecked( "autoDeploy", settings.autodeploy or false )
-	widget.setChecked( "displayDamage", settings.displaydamage or false )
 	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
-	widget.setSelectedOption( "bellyEffect", p.bellyeffects[settings.bellyeffect or ""] )
 	p.refreshed = true
 end
 
@@ -140,8 +143,20 @@ end
 
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
-	local bellyeffect = p.bellyeffects[value]
-	settings.bellyeffect = bellyeffect
+	local bellyEffect = p.bellyEffects[value]
+	globalSettings.bellyEffect = bellyEffect
+	if (bellyEffect == "pvsoDigest") or (bellyEffect == "pvsoSoftDigest") then
+		settings.hungerEffect = 1
+	else
+		settings.hungerEffect = 0
+	end
+	if widget.getChecked( "displayDamage" ) then
+		local bellyDisplayEffectList = root.assetJson("/vehicles/spov/pvso_general.config:bellyDisplayStatusEffects")
+		if bellyDisplayEffectList[bellyEffect] ~= nil then
+			bellyEffect = bellyDisplayEffectList[bellyEffect]
+		end
+	end
+	settings.bellyEffect = bellyEffect
 	saveSettings()
 end
 
@@ -151,8 +166,15 @@ function changeSetting(settingname)
 	saveSettings()
 end
 
+function changeGlobalSetting(settingname)
+	local value = widget.getChecked( settingname )
+	globalSettings[string.lower(settingname)] = value
+	settings[string.lower(settingname)] = value
+	saveSettings()
+end
+
 function displayDamage()
-	changeSetting( "displayDamage" )
+	changeGlobalSetting( "displayDamage" )
 end
 
 function autoDeploy()
@@ -165,6 +187,7 @@ end
 function saveSettings()
 	world.sendEntityMessage( p.vso, "settingsMenuSet", settings )
 	p.vsoSettings[p.vsoname] = settings
+	p.vsoSettings.global = globalSettings
 	player.setProperty( "vsoSettings", p.vsoSettings )
 end
 

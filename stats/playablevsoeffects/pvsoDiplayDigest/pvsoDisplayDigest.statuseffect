@@ -1,16 +1,16 @@
 {
-	"name" : "displaydamagedigest",
+	"name" : "pvsoDisplayDigest",
 	"blockingStat" : "digestionImmunity",
 
 	"effectConfig" : {},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-	"displaydamagedigest.lua"
+	"pvsoDisplayDigest.lua"
 	],
 
-	"animationConfig" : "displaydamagedigest.animation",
+	"animationConfig" : "pvsoDisplayDigest.animation",
 
-	"label" : "Being	Digested",
+	"label" : "Being Digested",
 	"icon" : "/stats/playablevsoeffects/digest.png"
 }

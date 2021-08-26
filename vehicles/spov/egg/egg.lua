@@ -18,27 +18,11 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.control.standalone = false
 	p.control.driver = "occupant1"
 	p.control.driving = false
-	p.driver = config.getParameter( "driver" )
-	storage._vsoSpawnOwner = p.driver
-	storage._vsoSpawnOwnerName = world.entityName( p.driver )
 	p.occupant[1].location = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1
-	p.nowarpout = nowarpout
-	message.setHandler( "forcedsit", p.control.pressE )
-	message.setHandler( "despawn", function(_,_, nowarpout)
-		local driver = vehicle.entityLoungingIn(p.control.driver)
-		world.sendEntityMessage(driver, "PVSOClear")
-		p.nowarpout = nowarpout
-		_vsoOnDeath()
-	end )
-
-	p.stateconfig = config.getParameter("states")
-	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 
 	vsoOnBegin( "state_stand", begin_state_stand)
-
-	p.setState( "stand" )
 end
 
 function onEnd()

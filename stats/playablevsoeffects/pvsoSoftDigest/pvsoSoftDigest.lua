@@ -1,12 +1,11 @@
+
+require("/stats/playablevsoeffects/pvsoEffectsGeneral.lua")
+
 function init()
 	script.setUpdateDelta(5)
 	self.powerMultiplier = effect.duration()
 
-	status.removeEphemeralEffect("pvsovoreheal")
-	status.removeEphemeralEffect("damagedigest")
-	status.removeEphemeralEffect("displaydamagesoftdigest")
-	status.removeEphemeralEffect("displaydamagedigest")
-
+	removeOtherBellyEffects()
 end
 
 function update(dt)

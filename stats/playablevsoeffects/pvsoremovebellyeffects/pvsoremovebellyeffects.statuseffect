@@ -1,10 +1,10 @@
 {
-	"name" : "pvsoremovebellyeffects",
+	"name" : "pvsoremovebellyEffects",
 	"effectConfig" : {},
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoremovebellyeffects.lua"
+	"pvsoremovebellyEffects.lua"
 	]
 
 }

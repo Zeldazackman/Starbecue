@@ -1,9 +1,9 @@
 function init()
-	status.removeEphemeralEffect("damagedigest")
-	status.removeEphemeralEffect("damagesoftdigest")
-	status.removeEphemeralEffect("displaydamagesoftdigest")
-	status.removeEphemeralEffect("displaydamagedigest")
-	status.removeEphemeralEffect("pvsovoreheal")
+	status.removeEphemeralEffect("pvsoDigest")
+	status.removeEphemeralEffect("pvsoSoftDigest")
+	status.removeEphemeralEffect("pvsoDisplaySoftDigest")
+	status.removeEphemeralEffect("pvsoDisplayDigest")
+	status.removeEphemeralEffect("pvsoVoreHeal")
 	effect.expire()
 end
 
