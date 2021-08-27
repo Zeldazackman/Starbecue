@@ -1,5 +1,5 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
---https://creativecommons.org/licenses/by-nc-sa/2.0/  @ 
+--https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 defaultPrice = 500
 
@@ -47,7 +47,7 @@ function buildIcon()	--Build a CUSTOM icon for this item
 
 	local directivestring = getRecolorDirectives()
 	spovSpawnerSetDirectives( directivestring );
-	
+
 	local R = { { image=defaultIcon.."?"..directivestring, position={0,0} } }
 
 	return R;
@@ -65,10 +65,10 @@ function spovSpawnerItemGenerateCallback()	--THIS function is used to create the
 
 	--this sets our storage defaults, very important if we want to track things or change colors.
 	spovSpawnerStorageSetIfNotNil( defaultValues )
-	
+
 	local directivestring = getRecolorDirectives()	--Regenerate item configuration override
 	spovSpawnerSetDirectives( directivestring );
-	
+
 	storage.vso.itemConfigOverride = {
 		inventoryIcon = buildIcon()
 		,largeImage = largeImageFrame().."?"..directivestring
