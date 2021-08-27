@@ -23,7 +23,3 @@ vsoFacePoint
 	vsoFaceDirection
 		vsoMotionParam
 			mMotionParametersSet
-
-vsoDebugRect
-
-_vsoOnDeath

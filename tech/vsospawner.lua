@@ -12,7 +12,7 @@ function update(args)
 		rpc = world.sendEntityMessage( entity.id(), "loadVSOsettings" )
 		rpcCallback = function(result)
 			settings = result
-			if settings.autodeploy then
+			if settings.autoDeploy then
 				spawnVSO(settings.selected)
 				activated = false
 			end

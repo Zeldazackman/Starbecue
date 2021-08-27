@@ -12,28 +12,6 @@
 		"skin" : "default",
 		"bap" : ""
 	},
-	"animationPartLists" : {
-		"stateTypes" : [
-			"bodyState",
-			"legsState",
-			"bapState",
-			"tailState",
-			"headState",
-			"occupant1state",
-			"occupant2state",
-			"occupant3state"
-		],
-		"transformationGroups" : [
-			"flip",
-			"occupant1position",
-			"occupant2position",
-			"occupant3position",
-			"headbob",
-			"bodybob",
-			"legsbob",
-			"tailbob"
-		]
-	},
 	"animatedParts": {
 		"stateTypes": {
 			"bodyState": {
@@ -651,30 +629,30 @@
 	},
 	"particleEmitters": {
 		"emotehappy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
-			{
-			  "particle" : {
-				"type" : "animated",
-				"animation" : "/animations/emotes/happy.animation",
-				"position" : [-0.2, 3.3],
-				"finalVelocity" : [0, 0],
-				"initialVelocity" : [0, 0],
-				"destructionTime" : 0.2,
-				"destructionAction" : "shrink",
-				"layer" : "front",
-				"timeToLive" : 0.8,
-				"flippable" : false
-			  }
-			}
-		  ]
+			"emissionRate" : 1,
+			"particles" : [
+				{
+					"particle" : {
+						"type" : "animated",
+						"animation" : "/animations/emotes/happy.animation",
+						"position" : [-0.2, 3.3],
+						"finalVelocity" : [0, 0],
+						"initialVelocity" : [0, 0],
+						"destructionTime" : 0.2,
+						"destructionAction" : "shrink",
+						"layer" : "front",
+						"timeToLive" : 0.8,
+						"flippable" : false
+					}
+				}
+			]
 		},
 
 		"emotesad" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+			"emissionRate" : 1,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/sad.animation",
 				"position" : [-0.2, 3.3],
@@ -685,16 +663,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+				}
 			}
-		  ]
+			]
 		},
 
 		"emoteconfused" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+			"emissionRate" : 1,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/confused.animation",
 				"position" : [-0.2, 3.3],
@@ -705,16 +683,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+				}
 			}
-		  ]
+			]
 		},
 
 		"emotesleepy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+			"emissionRate" : 1,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/sleepy.animation",
 				"position" : [-0.2, 3.3],
@@ -725,16 +703,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+				}
 			}
-		  ]
+			]
 		},
 
 		"drips" : {
-		  "emissionRate" : 15,
-		  "particles" : [
+			"emissionRate" : 15,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "ember",
 				"layer" : "front",
 				"size" : 1.0,
@@ -749,21 +727,21 @@
 				"approach" : [3, 10],
 				"timeToLive" : 0.5,
 				"variance" : {
-				  "initialVelocity" : [0.2, 0.0],
-				  "size" : 0.5,
-				  "position" : [0.3, 0]
+					"initialVelocity" : [0.2, 0.0],
+					"size" : 0.5,
+					"position" : [0.3, 0]
 				},
 				"flippable" : true
-			  }
+				}
 			}
-		  ]
+			]
 		},
 
 		"doublejump" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+			"emissionRate" : 1,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "animated",
 				"animation" : "/animations/doublejump/doublejump.animation",
 				"position" : [0, -3],
@@ -775,17 +753,17 @@
 				"light" : [70, 100, 140],
 				"fade" : 0.5,
 				"variance" : {
-				  "initialVelocity" : [0.0, 0.0]
+					"initialVelocity" : [0.0, 0.0]
 				}
-			  }
+				}
 			}
-		  ]
+			]
 		},
 		"defaultblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
+			"emissionRate" : 6,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "ember",
 				"size" : 1.0,
 				"color" : [49, 166, 255, 255],
@@ -797,18 +775,18 @@
 				"timeToLive" : 0.8,
 				"layer" : "middle",
 				"variance" : {
-				  "initialVelocity" : [2, 3.0],
-				  "size" : 0.5
+					"initialVelocity" : [2, 3.0],
+					"size" : 0.5
 				}
-			  }
+				}
 			}
-		  ]
+			]
 		},
 		"defaultlightblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
+			"emissionRate" : 6,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "ember",
 				"size" : 1.0,
 				"color" : [155, 212, 255, 255],
@@ -823,18 +801,18 @@
 				"light" : [46, 63, 76],
 				"layer" : "back",
 				"variance" : {
-				  "initialVelocity" : [6, 6.0]
+					"initialVelocity" : [6, 6.0]
 				}
-			  }
+				}
 			}
-		  ]
+			]
 		},
 
 		"smoldoublejump" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+			"emissionRate" : 1,
+			"particles" : [
 			{
-			  "particle" : {
+				"particle" : {
 				"type" : "animated",
 				"animation" : "/animations/doublejump/doublejump.animation",
 				"position" : [0, -1],
@@ -846,11 +824,11 @@
 				"light" : [70, 100, 140],
 				"fade" : 0.5,
 				"variance" : {
-				  "initialVelocity" : [0.0, 0.0]
+					"initialVelocity" : [0.0, 0.0]
 				}
-			  }
+				}
 			}
-		  ]
+			]
 		}
 	}
 }

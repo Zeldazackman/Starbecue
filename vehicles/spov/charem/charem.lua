@@ -6,7 +6,6 @@ p.vsoMenuName = "charem"
 p.startState = "back"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
-	p.onForcedReset()
 end
 
 function onBegin()	--This sets up the VSO ONCE.
@@ -15,7 +14,6 @@ function onBegin()	--This sets up the VSO ONCE.
 end
 
 function onEnd()
-	p.onEnd()
 end
 
 p.registerStateScript( "back", "eat", function( args )

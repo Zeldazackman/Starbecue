@@ -18,8 +18,8 @@ function onInit()
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
 	settings = p.vsoSettings[p.vsoname] or {}
-	widget.setChecked( "autoDeploy", settings.autodeploy or false )
-	widget.setChecked( "defaultSmall", settings.defaultsmall or false )
+	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
+	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
 	p.refreshed = true
 end
 

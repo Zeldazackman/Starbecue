@@ -17,6 +17,7 @@ p = {
 	nextIdle = 0,
 	swapCooldown = 0
 }
+
 p.settings = {}
 
 p.movement = {
@@ -48,8 +49,6 @@ p.clearOccupant = {
 	filepath = nil
 }
 
-p.animationState = {}
-
 require("/vehicles/spov/pvso_animation.lua")
 require("/vehicles/spov/pvso_state_control.lua")
 require("/vehicles/spov/pvso_replaceable_functions.lua")
@@ -62,26 +61,33 @@ function init()
 	p.stateconfig = config.getParameter("states")
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
-	p.animPartLists = root.assetJson(p.directoryPath .. p.cfgAnimationFile ).animationPartLists
+	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
 	p.maxOccupants = config.getParameter( "maxOccupants")
 	p.locations = config.getParameter( "locations")
+	p.settings = config.getParameter( "settings", {
+		bellyEffect = "pvsoRemoveBellyEffects",
+		bellySounds = true,
+		diaplayDamage = false
+	})
+	p.spawner = config.getParameter("spawner")
+
 	p.resetOccupantCount()
 
 	for i = 1, p.maxOccupants.total do
 		p.occupant[i] = p.clearOccupant
 	end
 
-	for i = 1, #p.animPartLists.stateTypes do
-		local state = p.animPartLists.stateTypes[i]
-		p.animationState[state] = {
-			anim = p.animStateData[state].default,
-			priority = p.animStateData[state].states[p.animStateData[state].default].priority,
-			cycle = p.animStateData[state].states[p.animStateData[state].default].cycle,
-			frames = p.animStateData[state].states[p.animStateData[state].default].frames,
+	for _, state in pairs(p.animStateData) do
+		state.animationState = {
+			anim = state.default,
+			priority = state.states[state.default].priority,
+			cycle = state.states[state.default].cycle,
+			frames = state.states[state.default].frames,
 			time = 0,
-			queue = {}
+			queue = {},
 		}
-		p.victimAnims[state] = {
+		state.tag = nil
+		state.victimAnim = {
 			done = true
 		}
 	end
@@ -90,27 +96,28 @@ function init()
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 	end
 
-	if config.getParameter( "driver" ) ~= nil then
+	local driver = config.getParameter( "driver" )
+	if driver ~= nil then
 		p.control.standalone = true
 		p.control.driver = "driver"
 		p.control.driving = true
-		local driver = config.getParameter( "driver" )
-		storage._vsoSpawnOwner = driver
-		storage._vsoSpawnOwnerName = world.entityName( driver )
 		p.forceSeat( driver, "driver" )
-		-- vsoVictimAnimVisible( "driver", false )
-
-		local settings = config.getParameter( "settings" )
-		p.settings = settings
+		p.spawner = driver
 	else
 		p.control.standalone = false
 		p.control.driver = "occupant1"
 		p.control.driving = false
 		vehicle.setLoungeEnabled( "driver", false )
 	end
+	p.spawnerUUID = world.entityUniqueId(p.spawner)
+
+	if entity.uniqueId() ~= nil then
+		world.setUniqueId(entity.id(), sb.makeUuid())
+		sb.logInfo("uuid"..entity.uniqueId())
+	end
 
 
-	onForcedReset();	--Do a forced reset once.
+	p.onForcedReset()	--Do a forced reset once.
 
 	-- TODO: redo storage loading to use spawn config instead of entity messaging
 	-- vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
@@ -131,7 +138,7 @@ function init()
 		local driver = vehicle.entityLoungingIn(p.control.driver)
 		world.sendEntityMessage(driver, "PVSOClear")
 		p.nowarpout = nowarpout
-		_vsoOnDeath()
+		p.onDeath()
 	end )
 
 	message.setHandler( "digest", function(_,_, eid)
@@ -216,6 +223,43 @@ function update(dt)
 end
 
 function uninit()
+	if mcontroller.atWorldLimit() or (world.entityHealth(entity.id()) <= 0) then
+		p.onDeath()
+	end
+end
+
+function p.checkSpawnerExists()
+	if world.entityExists(p.spawner) then
+	elseif (p.spawnerUUID ~= nil) and (p.waitingResponse == nil)then
+		p.waitingResponse = true
+		p.addRPC(world.sendEntityMessage(p.spawnerUUID, "pvsoPreyWarpRequest"), function(data)
+			p.waitingResponse = false
+		end)
+	else
+		p.onDeath()
+	end
+end
+
+function p.onForcedReset()
+	animator.setAnimationRate( 1.0 );
+	for i = 1, p.maxOccupants.total do
+		vehicle.setLoungeEnabled( "occupant"..i, false )
+	end
+
+	vehicle.setInteractive( true )
+
+	p.emoteCooldown = 0
+
+	onForcedReset()
+end
+
+function p.onDeath()
+	if not p.nowarpout then
+		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true);
+	end
+
+	onEnd()
+	vehicle.destroy()
 end
 
 p.rpcList = {}
@@ -251,7 +295,7 @@ end
 function p.timer(name, time, callback)
 	if p.timerList.name == nil then
 		local timer = {
-			targetTime = time
+			targetTime = time,
 			currTime = 0,
 			callback = callback
 		}
@@ -735,28 +779,11 @@ function p.loadStoredData()
 	end )
 end
 
-function p.onForcedReset()
-	animator.setAnimationRate( 1.0 );
-	for i = 1, p.maxOccupants.total do
-		vehicle.setLoungeEnabled( "occupant"..i, false )
-	end
-
-	vehicle.setInteractive( true )
-
-	p.emoteCooldown = 0
-end
-
 function p.getOccupantFromEid(eid)
 	for i = 1, p.maxOccupants.total do
 		if eid == p.occupant[i].id then
 			return i
 		end
-	end
-end
-
-function p.onEnd()
-	if not p.nowarpout then
-		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true);
 	end
 end
 
@@ -815,8 +842,8 @@ end
 function p.control.projectile( projectiledata )
 	local driver = vehicle.entityLoungingIn(p.control.driver)
 	if projectiledata.energy and driver then
-		p.useEnergy(driver, projectiledata.cost, function(canp.useEnergy)
-			if canp.useEnergy then
+		p.useEnergy(driver, projectiledata.cost, function(energyUsed)
+			if energyUsed then
 				p.control.fireProjectile( projectiledata, driver )
 			end
 		end)

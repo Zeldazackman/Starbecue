@@ -10,8 +10,6 @@ p.vsoMenuName = "egg"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
-	p.onForcedReset()
-
 end
 
 function onBegin()	--This sets up the VSO ONCE.
@@ -26,8 +24,6 @@ function onBegin()	--This sets up the VSO ONCE.
 end
 
 function onEnd()
-
-	p.onEnd()
 
 end
 
@@ -115,7 +111,7 @@ p.cracks = 0
 p.registerStateScript( "stand", "crack", function( args )
 	p.cracks = p.cracks + 1
 
-	if p.cracks > 3 then _vsoOnDeath()
+	if p.cracks > 3 then p.onDeath()
 	else animator.setGlobalTag( "cracks", tostring(p.cracks) )
 	end
 end)

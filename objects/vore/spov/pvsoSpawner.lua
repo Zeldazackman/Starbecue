@@ -22,7 +22,7 @@ s.vsoEid = nil
 function update(dt)
 
 	if (s.vsoEid == nil) or (not world.entityExists(s.vsoEid)) then
-		s.vsoEid = world.spawnVehicle( s.vehicle, s.spawnPosition, { settings = storage.settings } )
+		s.vsoEid = world.spawnVehicle( s.vehicle, s.spawnPosition, { spawner = entity.id() settings = storage.settings } )
 	end
 
 

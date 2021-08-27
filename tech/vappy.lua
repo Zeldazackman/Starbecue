@@ -11,7 +11,7 @@ function update(args)
 		if rpcSettings:succeeded() then
 			local result = rpcSettings:result()
 			if result ~= nil then
-				if result.autodeploy then args.moves["special1"] = true end
+				if result.autoDeploy then args.moves["special1"] = true end
 				settings = sb.jsonMerge( settings, result ) -- any missing settings fill in from defaults
 			end
 		else

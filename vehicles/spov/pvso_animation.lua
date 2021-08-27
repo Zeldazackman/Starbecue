@@ -1,28 +1,24 @@
 
 function p.updateAnims(dt)
-	for i = 1, #p.animPartLists.stateTypes do
-		p.animationState[p.animPartLists.stateTypes[i]].time = p.animationState[p.animPartLists.stateTypes[i]].time + dt
-		if p.animationState[p.animPartLists.stateTypes[i]].time >= p.animationState[p.animPartLists.stateTypes[i]].cycle then -- anim end stuff here
-
-			for j = 1, #p.animationState[p.animPartLists.stateTypes[i]].queue[j] do -- end of anim function queue
-				local func = p.animationState[p.animPartLists.stateTypes[i]].queue[j]
+	for _, state in pairs(p.animStateData) do
+		state.animationState.time = state.animationState.time + dt
+		if state.animationState.time >= state.animationState.cycle then
+			for _, func in pairs(state.animationState.queue) do
 				func()
 			end
-			p.animationState[p.animPartLists.stateTypes[i]].queue = {}
-		end
-	end
-	for owner,tag in pairs( p.currentTags ) do
-		if p.animationState[owner.."State"].ended then
-			if tag.reset then
-				if tag.part == "global" then
-					animator.setGlobalTag( tag.name, "" )
+			state.animationState.queue = {}
+
+			if (state.tag ~= nil) and state.tag.reset then
+				if state.tag.part == "global" then
+					animator.setGlobalTag( state.tag.name, "" )
 				else
-					animator.setPartTag( tag.part, tag.name, "" )
+					animator.setPartTag( state.tag.part, state.tag.name, "" )
 				end
-				p.currentTags[owner] = nil
+				state.tag = nil
 			end
 		end
 	end
+
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
 	p.victimAnimUpdate()
@@ -37,7 +33,7 @@ function p.victimAnimUpdate()
 	else
 		local eid = vehicle.entityLoungingIn(seat)
 		local occupantIndex = tonumber(seat:sub(#"occupant"+1))
-		local speed = p.animationState[state].frames / p.animationState[state].cycle
+		local speed = p.animStateData[state].animationState.frames / p.animStateData[state].animationState.cycle
 		local frame = math.floor(time * speed)
 		local nextFrame = frame + 1
 		local nextFrameIndex = nextFrame + 1
@@ -62,7 +58,7 @@ function p.victimAnimUpdate()
 			p.victimAnim.index = nextFrameIndex
 
 			if anim.e ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
-				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[p.victimAnim.prevIndex], (p.victimAnim.frame - p.victimAnim.prevFrame) * (p.animationState[state].cycle / p.animationState[state].frames) + 0.1, entity.id())
+				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[p.victimAnim.prevIndex], (p.victimAnim.frame - p.victimAnim.prevFrame) * (p.animStateData[state].animationState.cycle / p.animStateData[state].animationState.frames) + 0.1, entity.id())
 			end
 			if anim.invis ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
 				if anim.e[p.victimAnim.prevIndex] == 0 then
@@ -116,7 +112,7 @@ function p.offsetAnimUpdate()
 	local state = p.offsets.timing.."State"
 	local ended, times, time = p.hasAnimEnded(state)
 	if ended and not p.offsets.loop then p.offsets.enabled = false end
-	local speed = p.animationState[state].frames / p.animationState[state].cycle
+	local speed = p.animStateData[state].animationState.frames / p.animStateData[state].animationState.cycle
 	local frame = math.floor(time * speed) + 1
 
 	for _,r in ipairs(p.offsets.parts) do
@@ -134,7 +130,7 @@ function p.rotationAnimUpdate()
 	local state = p.rotating.timing.."State"
 	local ended, times, time = p.hasAnimEnded(state)
 	if ended and not p.rotating.loop then p.rotating.enabled = false end
-	local speed = p.animationState[state].frames / p.animationState[state].cycle
+	local speed = p.animStateData[state].animationState.frames / p.animStateData[state].animationState.cycle
 	local frame = math.floor(time * speed) + 1
 
 	for _,r in ipairs(p.rotating.parts) do
@@ -150,19 +146,19 @@ end
 
 function p.queueAnimEndFunction(state, func, newPriority)
 	if newPriority then
-		p.animationState[state].priority = newPriority
+		p.animStateData[state].animationState.priority = newPriority
 	end
-	table.insert(p.animationState[state].queue, func)
+	table.insert(p.animStateData[state].animationState.queue, func)
 end
 
 function p.doAnim( state, anim, force)
-	local oldPriority = p.animationState[state].priority
+	local oldPriority = p.animStateData[state].animationState.priority
 	local newPriority = (p.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = p.animationIs( state, anim )
 	local force = force
 	local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
 	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
-		p.animationState[state] = {
+		p.animStateData[state].animationState = {
 			anim = anim,
 			priority = newPriority,
 			cycle = p.animStateData[state].states[anim].cycle,
@@ -182,20 +178,24 @@ function p.doAnims( anims, force )
 		elseif state == "rotate" then
 			p.rotate( anim )
 		elseif state == "tags" then
-			for _,tag in ipairs(anim) do
-				p.currentTags[tag.owner] = {
-					part = tag.part,
-					name = tag.name,
-					reset = tag.reset or true
-				}
-				if tag.part == "global" then
-					animator.setGlobalTag( tag.name, tag.value )
-				else
-					animator.setPartTag( tag.part, tag.name, tag.value )
-				end
-			end
+			p.setAnimTag( anim )
 		else
 			p.doAnim( state.."State", anim, force)
+		end
+	end
+end
+
+function p.setAnimTag(anim)
+	for _,tag in ipairs(anim) do
+		p.animStateData[tag.owner.."State"].tags = {
+			part = tag.part,
+			name = tag.name,
+			reset = tag.reset or true
+		}
+		if tag.part == "global" then
+			animator.setGlobalTag( tag.name, tag.value )
+		else
+			animator.setPartTag( tag.part, tag.name, tag.value )
 		end
 	end
 end
@@ -261,9 +261,9 @@ function p.rotate( data )
 end
 
 function p.hasAnimEnded(state)
-	local ended = (p.animationState[state].time >= p.animationState[state].cycle)
-	local times = math.floor(p.animationState[state].time/p.animationState[state].cycle)
-	local currentCycle = (p.animationState[state].time - (p.animationState[state].cycle*times))
+	local ended = (p.animStateData[state].animationState.time >= p.animStateData[state].animationState.cycle)
+	local times = math.floor(p.animStateData[state].animationState.time/p.animStateData[state].animationState.cycle)
+	local currentCycle = (p.animStateData[state].animationState.time - (p.animStateData[state].animationState.cycle*times))
 	return ended, times, currentCycle
 end
 
