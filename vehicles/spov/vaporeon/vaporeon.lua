@@ -37,30 +37,12 @@ vaporeon plan:
 
 -------------------------------------------------------------------------------
 
-p.vsoMenuName = "vappy"
-
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
 end
 
 function onBegin()	--This sets up the VSO ONCE.
 
-	vsoOnInteract( "state_stand", interact_state_stand )
-
-	vsoOnInteract( "state_sit", p.onInteraction )
-
-	vsoOnInteract( "state_lay", p.onInteraction )
-
-	vsoOnInteract( "state_sleep", p.onInteraction )
-	vsoOnInteract( "state_back", p.onInteraction )
-	vsoOnInteract( "state_hug", p.onInteraction )
-	vsoOnInteract( "state_pinned_sleep", p.onInteraction )
-
-	vsoOnBegin( "state_smol", begin_state_smol )
-	vsoOnEnd( "state_smol", end_state_smol )
-
-	vsoOnBegin( "state_chonk_ball", begin_state_chonk_ball )
-	vsoOnEnd( "state_chonk_ball", end_state_chonk_ball )
 
 end
 
@@ -98,13 +80,13 @@ p.registerStateScript( "stand", "bapeat", function()
 	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
 end)
 
-function state_stand()
+function state.stand()
 
-	if p.control.driving then
-		if vehicle.controlHeld( p.control.driver, "down" ) then
+	if p.driving then
+		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
 		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.control.notMoving() and p.control.probablyOnGround() then
+			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and p.probablyOnGround() then
 				p.doTransition( "down" )
 			end
 			p.movement.downframes = 0
@@ -112,7 +94,7 @@ function state_stand()
 		if p.movement.wasspecial1 ~= true and p.movement.wasspecial1 ~= false and p.movement.wasspecial1 > 0 then
 			-- a bit of a hack, prevents the special1 press from activating vappy from also doing this by adding a 10 frame delay before checking if you're pressing it
 			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
-		elseif p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
+		elseif p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 			if not p.movement.wasspecial1 then
 				p.movement.wasspecial1 = true
 				vsoEffectWarpOut()
@@ -128,17 +110,17 @@ function state_stand()
 		else
 			p.movement.wasspecial1 = false
 		end
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
+		if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
 			if p.occupants.belly > 0 then
 				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
 			end
 		end
-		p.control.drive()
+		p.drive()
 	end
 
 end
 
-function interact_state_stand( occupantId )
+function state.interact.stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
@@ -152,7 +134,7 @@ p.registerStateScript( "sit", "pin", function( args )
 	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
 		local pinbounds = vsoRelativeRect( 2.75, -4, 3.5, -3.5 )
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
-		if #pinnable == 0 and p.control.driving then
+		if #pinnable == 0 and p.driving then
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
@@ -163,8 +145,6 @@ p.registerStateScript( "sit", "pin", function( args )
 	return true
 end)
 
-
-state_sit = p.standardState
 
 -------------------------------------------------------------------------------
 
@@ -188,14 +168,14 @@ function LayAbsorb()
 	end
 end
 
-function state_lay()
+function state.lay()
 	p.standardState()
 
-	if p.control.driving then
-		p.control.primaryAction() -- lick
+	if p.driving then
+		p.primaryAction() -- lick
 	end
 
-	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
+	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 
@@ -207,10 +187,10 @@ p.registerStateScript( "sleep", "absorb", function(args)
 	return LayAbsorb()
 end)
 
-function state_sleep()
+function state.sleep()
 	p.standardState()
 
-	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
+	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 end
@@ -228,11 +208,11 @@ p.registerStateScript( "back", "bed", function( args )
 	end
 end)
 
-function state_back()
+function state.back()
 	p.standardState()
 
 	-- simulate npc interaction when nearby
-	if p.occupants.total == 0 and p.control.standalone then
+	if p.occupants.total == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
@@ -258,11 +238,11 @@ p.registerStateScript( "hug", "absorb", function(args)
 	end
 end)
 
-function state_hug()
+function state.hug()
 
 	p.standardState()
 
-	if p.control.driving and vehicle.controlHeld( p.control.driver, "jump" ) then
+	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 
@@ -270,20 +250,18 @@ end
 
 -------------------------------------------------------------------------------
 
-state_pinnedsleep = p.standardState
-
 -------------------------------------------------------------------------------
 
-function begin_state_smol()
-	mcontroller.applyParameters( p.vso.movementSettings.smol )
+function state.begin.smol()
+	p.setMovementParams( "smol" )
 end
 
-function state_smol()
+function state.smol()
 
 	p.idleStateChange()
 	p.handleBelly()
 
-	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
+	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 		if not p.movement.wasspecial1 then
 			-- p.doAnim( "bodyState", "unsmolify" )
 			vsoEffectWarpIn()
@@ -294,14 +272,14 @@ function state_smol()
 	else
 		p.movement.wasspecial1 = false
 	end
-	p.control.drive()
+	p.drive()
 
 	p.updateDriving()
 
 end
 
-function end_state_smol()
-	mcontroller.applyParameters( p.vso.movementSettings.default )
+function state.ending.smol()
+	p.setMovementParams( "default" )
 end
 
 -------------------------------------------------------------------------------
@@ -321,16 +299,16 @@ function roll_chonk_ball(dx, control)
 	end
 end
 
-function begin_state_chonk_ball()
-	animator.setGlobalTag("rotationFlip", self.vsoCurrentDirection)
+function state.begin.chonk_ball()
+	animator.setGlobalTag("rotationFlip", p.direction)
 
-	mcontroller.applyParameters( p.vso.movementSettings.chonk_ball )
+	p.setMovementParams( "chonk_ball" )
 	CurBallFrame = 0
 	BallLastPosition = mcontroller.position()
 
 end
 
-function state_chonk_ball()
+function state.chonk_ball()
 	p.handleBelly()
 	p.doPhysics()
 	if p.occupants.belly < 2 then
@@ -344,8 +322,8 @@ function state_chonk_ball()
 	local dx = 0
 	local dy = 0
 
-	if p.control.driving then
-		if vehicle.controlHeld( p.control.driver, "Special1" ) then
+	if p.driving then
+		if vehicle.controlHeld( p.driverSeat, "Special1" ) then
 			if not p.movement.wasspecial1 then
 				p.movement.wasspecial1 = true
 				vsoEffectWarpIn()
@@ -356,19 +334,19 @@ function state_chonk_ball()
 		else
 			p.movement.wasspecial1 = false
 		end
-		if vehicle.controlHeld( p.control.driver, "left" ) then
+		if vehicle.controlHeld( p.driverSeat, "left" ) then
 			dx = dx - 1
 		end
-		if vehicle.controlHeld( p.control.driver, "right" ) then
+		if vehicle.controlHeld( p.driverSeat, "right" ) then
 			dx = dx + 1
 		end
-		if vehicle.controlHeld( p.control.driver, "up" ) then
+		if vehicle.controlHeld( p.driverSeat, "up" ) then
 			dy = dy + 1
 		end
-		if vehicle.controlHeld( p.control.driver, "down" ) then
+		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			dy = dy - 1
 		end
-		if vehicle.controlHeld( p.control.driver, "jump" ) then
+		if vehicle.controlHeld( p.driverSeat, "jump" ) then
 			p.movement.jumped = true
 		end
 	end
@@ -379,7 +357,7 @@ function state_chonk_ball()
 		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
 
-	if p.control.underWater() then
+	if p.underWater() then
 		mcontroller.approachYVelocity( 11, 50 ) --this should make ball vappy float on the surface of water haha
 	end
 
@@ -388,6 +366,6 @@ function state_chonk_ball()
 	p.updateDriving()
 end
 
-function end_state_chonk_ball()
-	mcontroller.applyParameters( p.vso.movementSettings.default )
+function state.ending.chonk_ball()
+	p.setMovementParams( "default" )
 end

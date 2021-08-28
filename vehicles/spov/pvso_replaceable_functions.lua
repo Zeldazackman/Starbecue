@@ -10,6 +10,10 @@
 function p.update(dt)
 end
 
+-- the standard state called when a state's script is undefined
+function p.standardState()
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------
 
 -- called when the vso starts falling, for example, you may want to force it to change to the stand state if it has one

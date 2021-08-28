@@ -23,7 +23,7 @@ function update(args)
 	end
 	if args.moves["special1"] and not pressed then
 		local position = mcontroller.position()
-		world.spawnVehicle( "spovxeronious", { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings } )
+		world.spawnVehicle( "spovxeronious", { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, direction = mcontroller.facingDirection()  } )
 	end
 	pressed = args.moves["special1"]
 end

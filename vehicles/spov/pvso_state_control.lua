@@ -1,15 +1,29 @@
 
-function p.standardState()
-end
 
+function p.updateState()
+	if p.prevState == p.state then
+		if state[p.state] ~= nil then
+			state[p.state]()
+		else
+			p.standardState()
+		end
+	else
+		if state.ending[p.prevState] ~= nil then
+			state.ending[p.prevState]()
+		end
+		if state.begin[p.state] ~= nil then
+			state.begin[p.state]()
+		end
+	end
+end
 
 function p.setState(state)
 	if state == nil then
 		sb.logError( "nil state from ".. p.state )
 	end
+	p.prevState = p.state
 	p.state = state
 	animator.setGlobalTag( "state", state )
-	vsoNext( "state_"..state )
 	p.doAnims( p.stateconfig[state].idle )
 end
 
@@ -22,27 +36,37 @@ function p.registerStateScript( state, name, func )
 	p.statescripts[state][name] = func
 end
 
-local _ptransition = {}
+p.transitionLock = false
 
 function p.doTransition( direction, scriptargs )
 	if not p.stateconfig[p.state].transitions[direction] then return end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return end
 	local continue = true
-	local after = function() end
+	local after
 	if tconfig.script then
 		local statescript = p.statescripts[p.state][tconfig.script]
-		local _continue, _after, _tconfig = statescript( scriptargs or {} )
+		local _continue, _tconfig
+		_continue, after, _tconfig = statescript( scriptargs or {} )
 		if _continue ~= nil then continue = _continue end
-		if _after ~= nil then after = _after end
 		if _tconfig ~= nil then tconfig = _tconfig end
 	end
 	if not continue then return end
-	_ptransition.after = after
-	_ptransition.state = tconfig.state or p.state
-	_ptransition.timing = tconfig.timing or "body"
+
 	if tconfig.animation ~= nil then
 		p.doAnims( tconfig.animation )
+	end
+	if after ~= nil then
+		p.queueAnimEndFunction(tconfig.timing.."State", p.transition.after)
+	end
+	if (tconfig.state ~= nil) and (tconfig.state ~= p.state) then
+		p.transitionLock = true
+
+		p.queueAnimEndFunction(tconfig.timing.."State", function()
+			p.setState( tconfig.state )
+			p.doAnims( p.stateconfig[p.state].idle )
+			p.transitionLock = false
+		end)
 	end
 	if tconfig.victimAnimation ~= nil then
 		local i = (scriptargs or {}).index
@@ -55,36 +79,17 @@ function p.doTransition( direction, scriptargs )
 				i = p.findFirstIndexForLocation(tconfig.victimAnimLocation)
 			end
 		end
-		if i then p.doVictimAnim( "occupant"..i, tconfig.victimAnimation, _ptransition.timing.."State" ) end
+		if i then p.doVictimAnim( "occupant"..i, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
 	return true
 end
 
--- somehow, even though I change the animation tag *after* vsoAnimEnded, it's too early
-
--- this itself as well as the _ptransition.after() thing should be changed to use p.queueAnimEndFunction
-local _endedframes = 0
-function state__ptransition()
-	if p.hasAnimEnded( _ptransition.timing.."State" ) then
-		_endedframes = _endedframes + 1
-		if _endedframes > 2 then
-			_endedframes = 0
-			_ptransition.after()
-			p.setState( _ptransition.state )
-			p.doAnims( p.stateconfig[p.state].idle )
-		end
-	end
-	if not p.stateconfig[p.state].noPhysicsTransition then
-		 p.doPhysics()
-	end
-end
-
 function p.idleStateChange()
-	if not p.control.probablyOnGround() or not p.control.notMoving() or p.movement.animating then return end
+	if not p.probablyOnGround() or not p.notMoving() or p.movement.animating then return end
 
 	if p.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions
-		if not p.control.driving then
+		if not p.driving then
 			local percent = math.random(100)
 			for name, t in pairs(transitions) do
 				local transition = p.occupantArray( t )

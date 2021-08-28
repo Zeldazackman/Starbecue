@@ -1,4 +1,5 @@
 s = {}
+
 function init()
 	if object.uniqueId() ~= nil then
 		object.setUniqueId(sb.makeUuid())
@@ -7,6 +8,11 @@ function init()
 	s.vehicle = s.defaultValues.spov.types[math.random(#s.defaultValues.spov.types)]
 	s.position = object.position()
 	s.spawnPosition = localToGlobal(s.defaultValues.spov.position)
+
+	message.setHandler( "saveVSOsettings", function(_,_, settings )
+		storage.settings = settings
+	end)
+
 end
 
 function localToGlobal(position)
@@ -22,7 +28,7 @@ s.vsoEid = nil
 function update(dt)
 
 	if (s.vsoEid == nil) or (not world.entityExists(s.vsoEid)) then
-		s.vsoEid = world.spawnVehicle( s.vehicle, s.spawnPosition, { spawner = entity.id() settings = storage.settings } )
+		s.vsoEid = world.spawnVehicle( s.vehicle, s.spawnPosition, { spawner = entity.id(), settings = storage.settings, direction = object.direction() } )
 	end
 
 

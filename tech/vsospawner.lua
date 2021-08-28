@@ -61,7 +61,7 @@ function spawnVSO(type)
 	settings.selected = type
 	world.sendEntityMessage( entity.id(), "saveVSOsettings", settings )
 	local position = mcontroller.position()
-	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings.vsos[type] } )
+	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings.vsos[type], direction = mcontroller.facingDirection()  } )
 end
 
 function openRadialMenu()

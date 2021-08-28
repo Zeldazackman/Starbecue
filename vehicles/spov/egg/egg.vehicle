@@ -30,9 +30,6 @@
 	},
 
 	"vso" : {
-		"useAnimatorFirst":0,
-		"spawnOwnerState":"faint",
-		"movementSettingsFlipPoly" : 0,
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [

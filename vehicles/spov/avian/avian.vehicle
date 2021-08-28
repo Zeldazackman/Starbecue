@@ -62,9 +62,7 @@
 	},
 
 	"vso" : {
-		"useAnimatorFirst":0,
-		"spawnOwnerState":"faint",
-		"movementSettingsFlipPoly" : 0,
+		"menuName" : "avian",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -149,33 +147,33 @@
 				["eae660", "c1b54e", "978841"] // last "canon" color option
 			]
 		],
+		"locations" :{
+			"regular" :[
+				"belly",
+				"shaft"
+			],
+			"sided" : [
+				"balls"
+			],
+			"digest" : [
+				"belly"
+			],
+			"combine" :[
+				["belly", "fatten"]
+			]
+		},
 
+		"maxOccupants" : {
+			"total" : 4,
+			"belly" : 1,
+			"shaft" : 1,
+			"ballsL" : 1,
+			"ballsR" : 1
+		},
 		"victimAnimations": "/vehicles/spov/avian/victim_animations.config"
 	},
 
-	"locations" :{
-		"regular" :[
-			"belly",
-			"shaft"
-		],
-		"sided" : [
-			"balls"
-		],
-		"digest" : [
-			"belly"
-		],
-		"combine" :[
-			["belly", "fatten"]
-		]
-	},
 
-	"maxOccupants" : {
-		"total" : 4,
-		"belly" : 1,
-		"shaft" : 1,
-		"ballsL" : 1,
-		"ballsR" : 1
-	},
 
 	"states": {
 		"stand": {

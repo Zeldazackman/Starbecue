@@ -7,7 +7,7 @@ require("/vehicles/spov/playable_vso.lua")
 
 -------------------------------------------------------------------------------
 
-p.vsoMenuName = "avian"
+p.vso.menuName = "avian"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
@@ -15,10 +15,6 @@ end
 
 function onBegin()	--This sets up the VSO ONCE.
 
-	vsoOnInteract( "state_stand", interact_state_stand )
-
-	vsoOnBegin( "state_smol", begin_state_smol )
-	vsoOnEnd( "state_smol", end_state_smol )
 end
 
 function onEnd()
@@ -31,20 +27,20 @@ p.registerStateScript( "stand", "eat", function( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end)
 
-function state_stand()
+function state.stand()
 
 	p.idleStateChange()
 	p.handleBelly()
 
-	if p.control.driving then
-		if p.control.standalone then
-			if vehicle.controlHeld( p.control.driver, "Special2" ) then
+	if p.driving then
+		if p.standalone then
+			if vehicle.controlHeld( p.driverSeat, "Special2" ) then
 				if p.occupants.total > 0 then
 					--p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 				end
 			end
 
-			if vehicle.controlHeld( p.control.driver, "Special1" ) then
+			if vehicle.controlHeld( p.driverSeat, "Special1" ) then
 				if not p.movement.wasspecial1 then
 					-- p.doAnim( "bodyState", "unsmolify" )
 					vsoEffectWarpIn()
@@ -57,7 +53,7 @@ function state_stand()
 			end
 		end
 
-		p.control.drive()
+		p.drive()
 	else
 		p.doPhysics()
 	end
@@ -66,7 +62,7 @@ function state_stand()
 
 end
 
-function interact_state_stand( occupantId )
+function state.interact.stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
@@ -74,16 +70,16 @@ end
 
 -------------------------------------------------------------------------------
 
-function begin_state_smol()
-	mcontroller.applyParameters( p.vso.movementSettings.smol )
+function state.begin.smol()
+	p.setMovementParams( "smol" )
 end
 
-function state_smol()
+function state.smol()
 
 	p.idleStateChange()
 	p.handleBelly()
 
-	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special1" ) then
+	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 		if not p.movement.wasspecial1 then
 			-- p.doAnim( "bodyState", "unsmolify" )
 			vsoEffectWarpIn()
@@ -94,14 +90,14 @@ function state_smol()
 	else
 		p.movement.wasspecial1 = false
 	end
-	p.control.drive()
+	p.drive()
 
 	p.updateDriving()
 
 end
 
-function end_state_smol()
-	mcontroller.applyParameters( p.vso.movementSettings.default )
+function state.ending.smol()
+	p.setMovementParams( "default" )
 end
 
 -------------------------------------------------------------------------------

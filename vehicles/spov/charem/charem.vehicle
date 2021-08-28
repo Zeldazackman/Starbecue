@@ -48,9 +48,7 @@
 	},
 
 	"vso" : {
-		"useAnimatorFirst":0,
-		"spawnOwnerState":"faint",
-		"movementSettingsFlipPoly" : 0,
+		"startState" : "back",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -81,25 +79,26 @@
 				"pointLight" : true
 			}
 		},
+		"locations" :{
+			"regular" :[
+				"belly",
+				"hug"
+			],
+			"digest" : [
+				"belly"
+			],
+			"combine" :[
+				["belly", "fatten"]
+			]
+		},
+		"maxOccupants" : {
+			"total" : 2,
+			"belly" : 1,
+			"hug" : 1
+		},
+
 
 		"victimAnimations": "/vehicles/spov/charem/victim_animations.config"
-	},
-	"locations" :{
-		"regular" :[
-			"belly",
-			"hug"
-		],
-		"digest" : [
-			"belly"
-		],
-		"combine" :[
-			["belly", "fatten"]
-		]
-	},
-	"maxOccupants" : {
-		"total" : 2,
-		"belly" : 1,
-		"hug" : 1
 	},
 
 	"states": {

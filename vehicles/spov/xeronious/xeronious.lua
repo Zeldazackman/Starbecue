@@ -21,23 +21,12 @@ TODO:
 ]]--
 -------------------------------------------------------------------------------
 
-p.vsoMenuName = "xeronious"
-
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
 end
 
 function onBegin()	--This sets up the VSO ONCE.
 
-	vsoOnInteract( "state_stand", interact_state_stand )
-	vsoOnInteract( "state_sit", p.onInteraction )
-	vsoOnInteract( "state_hug", p.onInteraction )
-
-	vsoOnBegin( "state_crouch", begin_state_crouch )
-	vsoOnEnd( "state_crouch", end_state_crouch )
-
-	vsoOnBegin( "state_fly", begin_state_fly )
-	vsoOnEnd( "state_fly", end_state_fly )
 
 end
 
@@ -69,7 +58,7 @@ function checkEscapes(args)
 	local move = args.direction or "up"
 
 	if (p.occupant[args.index].species == "xeronious_egg"
-	or vehicle.controlHeld(p.control.driver, "down")) and location ~= "tail" then
+	or vehicle.controlHeld(p.driverSeat, "down")) and location ~= "tail" then
 		move = "down"
 	end
 
@@ -98,13 +87,13 @@ function p.extraBellyEffects(i, eid, health)
 	if p.occupant[i].location == "belly" and health[1] == 1 and ((p.settings.bellyEffect == "pvsoSoftDigest") or (p.settings.bellyEffect == "pvsoDisplaySoftDigest"))then
 		p.occupant[i].species = "xeronious_egg"
 		p.smolprey( i )
-		if p.settings.autoegglay or not p.control.driving then p.doTransition("escape", {index=i, direction="down"}) end
+		if p.settings.autoegglay or not p.driving then p.doTransition("escape", {index=i, direction="down"}) end
 		return
 	end
 end
 
 function checkEggSitup()
-	if not p.control.driving then
+	if not p.driving then
 		for i = 1, p.occupants.total do
 			if p.occupant[i].species == "xeronious_egg" then
 				return p.doTransition("up")
@@ -123,12 +112,12 @@ function succ(args)
 	-- local pos1 = p.localToGlobal({9,0})
 
 	local entities = world.entityQuery(pos1, pos2, {
-		withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+		withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
 		includedTypes = {"creature"}
 	})
 
 	-- local entities = world.entityQuery(pos1, 10, {
-	-- 	withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+	-- 	withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
 	-- 	includedTypes = {"creature"}
 	-- })
 
@@ -170,7 +159,7 @@ p.registerStateScript( "stand", "succ", function( args )
 end)
 
 
-function state_stand()
+function state.stand()
 
 	p.idleStateChange()
 	p.handleBelly()
@@ -181,25 +170,25 @@ function state_stand()
 	local pos3 = p.localToGlobal({3.5, -5})
 	local pos4 = p.localToGlobal({-3, 0})
 
-	if p.control.probablyOnGround()
+	if p.probablyOnGround()
 	and world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
 	and not world.rectCollision( {pos3[1], pos3[2], pos4[1], pos4[2] }, { "Null", "block", "slippery"} )
 	then
-		if (vehicle.controlHeld( p.control.driver, "left") or vehicle.controlHeld( p.control.driver, "right") )
-		and vehicle.controlHeld( p.control.driver, "down") then
+		if (vehicle.controlHeld( p.driverSeat, "left") or vehicle.controlHeld( p.driverSeat, "right") )
+		and vehicle.controlHeld( p.driverSeat, "down") then
 			p.doTransition( "crouch" )
 			return
-		elseif p.settings.autocrouch or not p.control.driving then
+		elseif p.settings.autocrouch or not p.driving then
 			p.doTransition( "crouch" )
 			return
 		end
 	end
 
-	if p.control.driving then
-		if vehicle.controlHeld( p.control.driver, "down" ) then
+	if p.driving then
+		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
 		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.control.notMoving() and p.control.probablyOnGround() then
+			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and p.probablyOnGround() then
 				p.doTransition( "down" )
 			end
 			p.movement.downframes = 0
@@ -211,17 +200,17 @@ function state_stand()
 			p.movement.wasspecial1 = false
 		end
 
-		if vehicle.controlHeld( p.control.driver, "jump" ) and p.movement.airframes > 10 and not p.movement.jumped then
+		if vehicle.controlHeld( p.driverSeat, "jump" ) and p.movement.airframes > 10 and not p.movement.jumped then
 			p.setState( "fly" )
 			return
 		end
 
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
+		if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
 		end
-		p.control.drive()
+		p.drive()
 	else
 		p.doPhysics()
 	end
@@ -230,7 +219,7 @@ function state_stand()
 
 end
 
-function interact_state_stand( occupantId )
+function state.interact.stand( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
@@ -259,18 +248,18 @@ p.registerStateScript( "sit", "hug", function( args )
 	return p.doVore(args, "hug", {})
 end)
 
-function state_sit()
+function state.sit()
 	p.standardState()
 	checkEggSitup()
 
-	if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
+	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
 		if p.occupants.total > 0 then
 			p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 		end
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants.total == 0 and p.control.standalone then
+	if p.occupants.total == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
@@ -307,7 +296,7 @@ p.registerStateScript( "hug", "unhug", function( args )
 	end
 end)
 
-function state_hug()
+function state.hug()
 	p.standardState()
 	checkEggSitup()
 
@@ -332,17 +321,17 @@ p.registerStateScript( "crouch", "taileat", function( args )
 end)
 
 
-function begin_state_crouch()
-	mcontroller.applyParameters( p.vso.movementSettings.crouch )
+function state.begin.crouch()
+	p.setMovementParams( "crouch" )
 end
 
-function state_crouch()
+function state.crouch()
 
 	p.idleStateChange()
 	p.handleBelly()
 
-	if p.control.driving then
-		p.control.drive()
+	if p.driving then
+		p.drive()
 	else
 		p.doPhysics()
 	end
@@ -353,9 +342,9 @@ function state_crouch()
 	local pos2 = p.localToGlobal({-3, 1})
 
 	if not world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
-	and not vehicle.controlHeld( p.control.driver, "down")
+	and not vehicle.controlHeld( p.driverSeat, "down")
 	then
-		if not p.control.probablyOnGround() then
+		if not p.probablyOnGround() then
 			p.setState( "stand" )
 			return
 		else
@@ -366,16 +355,16 @@ function state_crouch()
 
 end
 
-function end_state_crouch()
-	mcontroller.applyParameters( p.vso.movementSettings.default )
+function state.ending.crouch()
+	p.setMovementParams( "default" )
 	p.movement.downframes = 11
 
 end
 
 -------------------------------------------------------------------------------
 
-function begin_state_fly()
-	mcontroller.applyParameters( p.vso.movementSettings.fly )
+function state.begin.fly()
+	p.setMovementParams( "fly" )
 	p.movement.jumped = true
 end
 
@@ -410,20 +399,20 @@ end)
 
 
 
-function state_fly()
+function state.fly()
 	p.doAnims(p.stateconfig[p.state].control.animations.fly)
 
 	p.idleStateChange()
 	p.handleBelly()
 
 
-	p.control.primaryAction()
-	p.control.altAction()
-	p.control.interact()
+	p.primaryAction()
+	p.altAction()
+	p.interact()
 
 	local control = p.stateconfig[p.state].control
 
-	if p.occupants.total >= control.fullThreshold and p.control.probablyOnGround() then
+	if p.occupants.total >= control.fullThreshold and p.probablyOnGround() then
 		p.setState( "stand" )
 		return
 	end
@@ -432,21 +421,21 @@ function state_fly()
 	local dy = 0
 	local controlForce = 100
 
-	if p.control.driving then
-		if vehicle.controlHeld( p.control.driver, "left" ) then
+	if p.driving then
+		if vehicle.controlHeld( p.driverSeat, "left" ) then
 			dx = dx - 1
 		end
-		if vehicle.controlHeld( p.control.driver, "right" ) then
+		if vehicle.controlHeld( p.driverSeat, "right" ) then
 			dx = dx + 1
 		end
-		if vehicle.controlHeld( p.control.driver, "up" ) then
+		if vehicle.controlHeld( p.driverSeat, "up" ) then
 			dy = dy + 1
 		end
-		if vehicle.controlHeld( p.control.driver, "down" ) then
+		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			dy = dy - 1
 		end
 
-		if vehicle.controlHeld( p.control.driver, "jump" ) then
+		if vehicle.controlHeld( p.driverSeat, "jump" ) then
 			if not p.movement.jumped then
 				p.setState( "stand" )
 				return
@@ -455,7 +444,7 @@ function state_fly()
 			p.movement.jumped = false
 		end
 
-		if p.control.standalone and vehicle.controlHeld( p.control.driver, "Special2" ) then
+		if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
@@ -463,7 +452,7 @@ function state_fly()
 	end
 
 	local running = false
-	if (p.occupants.total + p.fattenBelly) < control.fullThreshold then --add walk control here when we have more controls
+	if (p.occupants.total + p.settings.fatten) < control.fullThreshold then --add walk control here when we have more controls
 		running = true
 	end
 	if dx ~= 0 then
@@ -471,18 +460,18 @@ function state_fly()
 	end
 	if running then
 		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.total + p.fattenBelly) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.total + p.settings.fatten) +1], controlForce )
 	else
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.fattenBelly) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.settings.fatten) +1], controlForce )
 	end
 
 	p.updateDriving()
 end
 
-function end_state_fly()
+function state.ending.fly()
 	p.movement.jumped = true
-	mcontroller.applyParameters( p.vso.movementSettings.default )
+	p.setMovementParams( "default" )
 end
 
 -------------------------------------------------------------------------------

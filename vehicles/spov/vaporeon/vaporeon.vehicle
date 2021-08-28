@@ -49,9 +49,8 @@
 
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
-		"useAnimatorFirst":0,
-		"spawnOwnerState":"faint",
-		"movementSettingsFlipPoly" : 0,
+		"menuName": "vappy",
+		"startState": "stand",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -113,29 +112,29 @@
 				"position" : [0,0],
 				"pointLight" : true
 			}
+		},
+		"locations" :{
+			"regular" :[
+				"belly",
+				"hug",
+				"shaft",
+				"knot"
+			],
+			"sided" : [
+				"balls"
+			],
+			"digest" : [
+				"belly"
+			],
+			"combine" :[
+				["belly", "fatten"]
+			]
+		},
+		"maxOccupants" : {
+			"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu
+			"belly" : 2,
+			"hug" : 1
 		}
-	},
-	"locations" :{
-		"regular" :[
-			"belly",
-			"hug",
-			"shaft",
-			"knot"
-		],
-		"sided" : [
-			"balls"
-		],
-		"digest" : [
-			"belly"
-		],
-		"combine" :[
-			["belly", "fatten"]
-		]
-	},
-	"maxOccupants" : {
-		"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu
-		"belly" : 2,
-		"hug" : 1
 	},
 
 	"states": {

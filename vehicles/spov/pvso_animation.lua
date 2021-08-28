@@ -25,6 +25,7 @@ function p.updateAnims(dt)
 end
 
 function p.victimAnimUpdate()
+	if p.victimAnim == nil or not p.victimAnim.enabled then return end
 	local seat = p.victimAnim.seat
 	local state = p.victimAnim.state
 	local ended, times, time = p.hasAnimEnded(state)

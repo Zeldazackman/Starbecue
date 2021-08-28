@@ -62,9 +62,8 @@
 	},
 
 	"vso" : {
-		"useAnimatorFirst":0,
-		"spawnOwnerState":"faint",
-		"movementSettingsFlipPoly" : 0,
+		"victimAnimations": "/vehicles/spov/xeronious/victim_animations.config",
+		"menuName": "xeronious",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -129,31 +128,29 @@
 				"pointLight" : true
 			}
 		},
+		"locations" :{
+			"regular" :[
+				"belly",
+				"hug",
+				"tail"
+			],
+			"digest" : [
+				"belly",
+				"tail"
+			],
+			"combine" :[
+				["belly", "fatten"]
+			]
+		},
 
-		"victimAnimations": "/vehicles/spov/xeronious/victim_animations.config"
+		"maxOccupants" : {
+			"total" : 4, // could be 5 but making just 4 so I don't have to fuck with the menu
+			"belly" : 3,
+			"hug" : 1,
+			"tail" : 1
+		}
 	},
 
-	"locations" :{
-		"regular" :[
-			"belly",
-			"hug",
-			"tail"
-		],
-		"digest" : [
-			"belly",
-			"tail"
-		],
-		"combine" :[
-			["belly", "fatten"]
-		]
-	},
-
-	"maxOccupants" : {
-		"total" : 4, // could be 5 but making just 4 so I don't have to fuck with the menu
-		"belly" : 3,
-		"hug" : 1,
-		"tail" : 1
-	},
 
 	"states": {
 		"stand": {

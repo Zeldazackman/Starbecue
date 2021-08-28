@@ -1,6 +1,12 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
+state = {
+	begin = {},
+	ending = {},
+	interact = {}
+}
+
 p = {
 	maxOccupants = { --basically everything I think we'd need
 		total = 0
@@ -10,7 +16,6 @@ p = {
 	},
 	occupant = {},
 	occupantOffset = 1,
-	fattenBelly = 0,
 	justAte = false,
 	justLetout = false,
 	monstercoords = {0,0},
@@ -51,6 +56,7 @@ p.clearOccupant = {
 
 require("/vehicles/spov/pvso_animation.lua")
 require("/vehicles/spov/pvso_state_control.lua")
+require("/vehicles/spov/pvso_driving.lua")
 require("/vehicles/spov/pvso_replaceable_functions.lua")
 
 function init()
@@ -62,18 +68,14 @@ function init()
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
-	p.maxOccupants = config.getParameter( "maxOccupants")
-	p.locations = config.getParameter( "locations")
-	p.settings = config.getParameter( "settings", {
-		bellyEffect = "pvsoRemoveBellyEffects",
-		bellySounds = true,
-		diaplayDamage = false
-	})
+	p.settings = config.getParameter( "settings", p.config.defaultSettings )
 	p.spawner = config.getParameter("spawner")
+	p.movementParams = "default"
+	p.faceDirection(config.getParameter("direction", 1))
 
 	p.resetOccupantCount()
 
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		p.occupant[i] = p.clearOccupant
 	end
 
@@ -98,15 +100,15 @@ function init()
 
 	local driver = config.getParameter( "driver" )
 	if driver ~= nil then
-		p.control.standalone = true
-		p.control.driver = "driver"
-		p.control.driving = true
+		p.standalone = true
+		p.driverSeat = "driver"
+		p.driving = true
 		p.forceSeat( driver, "driver" )
 		p.spawner = driver
 	else
-		p.control.standalone = false
-		p.control.driver = "occupant1"
-		p.control.driving = false
+		p.standalone = false
+		p.driverSeat = "occupant1"
+		p.driving = false
 		vehicle.setLoungeEnabled( "driver", false )
 	end
 	p.spawnerUUID = world.entityUniqueId(p.spawner)
@@ -118,9 +120,6 @@ function init()
 
 
 	p.onForcedReset()	--Do a forced reset once.
-
-	-- TODO: redo storage loading to use spawn config instead of entity messaging
-	-- vsoStorageLoad( p.loadStoredData );	--Load our data (asynchronous, so it takes a few frames)
 
 	message.setHandler( "settingsMenuSet", function(_,_, val )
 		p.settings = val
@@ -135,7 +134,7 @@ function init()
 	end )
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
-		local driver = vehicle.entityLoungingIn(p.control.driver)
+		local driver = vehicle.entityLoungingIn(p.driverSeat)
 		world.sendEntityMessage(driver, "PVSOClear")
 		p.nowarpout = nowarpout
 		p.onDeath()
@@ -158,12 +157,13 @@ function init()
 		p.smolprey()
 	end )
 
+	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing, though, if a "end_state_" function exists, thats called
 	if not config.getParameter( "uneaten" ) then
-		if not p.startState then
-			p.startState = "stand"
+		if not p.vso.startState then
+			p.vso.startState = "stand"
 		end
-		p.setState( p.startState )
-		p.doAnims( p.stateconfig[p.startState].idle, true )
+		p.setState( p.vso.startState )
+		p.doAnims( p.stateconfig[p.vso.startState].idle, true )
 	else -- released from larger pred
 		p.setState( "smol" )
 		p.doAnims( p.stateconfig.smol.idle, true )
@@ -208,8 +208,8 @@ function update(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
 	p.idleStateChange()
-	if p.control.driving then
-		p.driverStateChange()
+	if p.driving then
+		p.driverSeatStateChange()
 	end
 	p.updateDriving()
 	p.doPhysics()
@@ -218,14 +218,42 @@ function update(dt)
 	p.applyStatusLists()
 
 	p.emoteCooldown = p.emoteCooldown - dt
-
+	p.updateState()
 	p.update(dt)
 end
 
 function uninit()
-	if mcontroller.atWorldLimit() or (world.entityHealth(entity.id()) <= 0) then
+	if mcontroller.atWorldLimit()
+	--or (world.entityHealth(entity.id()) <= 0) -- vehicles don't have health?
+	then
 		p.onDeath()
 	end
+end
+
+function p.facePoint(x)
+	p.faceDirection(x - mcontroller.position()[1])
+end
+
+function p.faceDirection(x)
+	if x > 0 then
+		p.direction = 1
+		animator.setFlipped(false)
+	elseif x < 0 then
+		p.direction = -1
+		animator.setFlipped(true)
+	end
+	p.setMovementParams(p.movementParams)
+end
+
+function p.setMovementParams(name)
+	p.movementParams = name
+	local params = p.vso.movementSettings[name]
+	if params.flip then
+		for _, coords in ipairs(params.collisionPoly) do
+			coords[1] = coords[1] * p.direction
+		end
+	end
+	mcontroller.applyParameters(params)
 end
 
 function p.checkSpawnerExists()
@@ -242,7 +270,7 @@ end
 
 function p.onForcedReset()
 	animator.setAnimationRate( 1.0 );
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		vehicle.setLoungeEnabled( "occupant"..i, false )
 	end
 
@@ -254,6 +282,8 @@ function p.onForcedReset()
 end
 
 function p.onDeath()
+	world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
+
 	if not p.nowarpout then
 		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true);
 	end
@@ -307,7 +337,9 @@ function p.checkTimers(dt)
 	for i, timer in pairs(p.timerList) do
 		timer.currTime = timer.currTime + dt
 		if timer.currTime >= timer.targetTime then
-			timer.callback()
+			if timer.callback ~= nil then
+				timer.callback()
+			end
 			table.remove(p.timerList, i)
 		end
 	end
@@ -395,13 +427,13 @@ function p.unForceSeat(seatname)
 end
 
 function p.locationFull(location)
-	if p.occupants.total == p.maxOccupants.total then
-		--sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants.total.." occupants total!")
+	if p.occupants.total == p.vso.maxOccupants.total then
+		--sb.logInfo("["..p.vso.menuName.."] Can't have more than "..p.vso.maxOccupants.total.." occupants total!")
 		return true
 	else
-		return p.occupants[location] == p.maxOccupants[location]
-		--[[if p.occupants[location] == p.maxOccupants[location] then
-			--sb.logInfo("["..p.vsoMenuName.."] Can't have more than "..p.maxOccupants[location].." occupants in their "..location.."!")
+		return p.occupants[location] == p.vso.maxOccupants[location]
+		--[[if p.occupants[location] == p.vso.maxOccupants[location] then
+			--sb.logInfo("["..p.vso.menuName.."] Can't have more than "..p.vso.maxOccupants[location].." occupants in their "..location.."!")
 			return true
 		else
 			return false
@@ -411,12 +443,12 @@ end
 
 function p.locationEmpty(location)
 	if p.occupants.total == 0 then
-		--sb.logInfo( "["..p.vsoMenuName.."] No one to let out!" )
+		--sb.logInfo( "["..p.vso.menuName.."] No one to let out!" )
 		return true
 	else
 		return p.occupants[location] == 0
 		--[[if p.occupants[location] == 0 then
-			sb.logInfo( "["..p.vsoMenuName.."] No one in "..location.." to let out!" )
+			sb.logInfo( "["..p.vso.menuName.."] No one in "..location.." to let out!" )
 			return true
 		else
 			return false
@@ -479,11 +511,11 @@ end
 function p.checkEatPosition(position, location, transition, noaim)
 	if not p.locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+			withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
 			includedTypes = {"creature"}
 		})
-		local entityaimed = world.entityQuery(vehicle.aimPosition(p.control.driver), 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.control.driver),
+		local entityaimed = world.entityQuery(vehicle.aimPosition(p.driverSeat), 2, {
+			withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
 			includedTypes = {"creature"}
 		})
 		local aimednotlounging = p.firstNotLounging(entityaimed)
@@ -533,13 +565,13 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 end
 function p.resetOccupantCount()
 	p.occupants.total = 0
-	for i = 1, #p.locations.regular do
-		p.occupants[p.locations.regular[i]] = 0
+	for i = 1, #p.vso.locations.regular do
+		p.occupants[p.vso.locations.regular[i]] = 0
 	end
-	if p.locations.sided then
-		for i = 1, #p.locations.sided do
-			p.occupants[p.locations.sided[i].."R"] = 0
-			p.occupants[p.locations.sided[i].."L"] = 0
+	if p.vso.locations.sided then
+		for i = 1, #p.vso.locations.sided do
+			p.occupants[p.vso.locations.sided[i].."R"] = 0
+			p.occupants[p.vso.locations.sided[i].."L"] = 0
 		end
 	end
 end
@@ -548,7 +580,7 @@ function p.updateOccupants()
 	p.resetOccupantCount()
 
 	local lastFilled = true
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		local occupantId = p.occupant[i].id
 		if occupantId and world.entityExists(occupantId) then
 			p.occupants.total = p.occupants.total + 1
@@ -563,38 +595,34 @@ function p.updateOccupants()
 			lastFilled = false
 			animator.setAnimationState( "occupant"..i.."state", "empty" )
 		end
-		if not self.sv.va[ "occupant"..i ].visible then
-			animator.setAnimationState( "occupant"..i.."state", "empty" )
-		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
-	p.occupants.fatten = p.fattenBelly
+	p.occupants.fatten = p.settings.fatten or 0
 
-	for i = 1, #p.locations.combine do
-		local a = 0
-		for j = 1, #p.locations.combine[i] do
-			a = a + p.occupants[p.locations.combine[i][j]]
-			--sb.logInfo("added "..p.occupants[p.locations.combine[i][j]].." from "..p.locations.combine[i][j])
-		end
-		for j = 1, #p.locations.combine[i] do
-			p.occupants[p.locations.combine[i][j]] = a
+	for i = 1, #p.vso.locations.combine do
+		for j = 2, #p.vso.locations.combine[i] do
+			p.occupants[p.vso.locations.combine[i][1]] = p.occupants[p.vso.locations.combine[i][1]]+p.occupants[p.vso.locations.combine[i][j]]
+			if p.occupants[p.vso.locations.combine[i][1]] > p.vso.maxOccupants[p.vso.locations.combine[i][1]] then
+				p.occupants[p.vso.locations.combine[i][1]] = p.vso.maxOccupants[p.vso.locations.combine[i][1]]
+			end
+			p.occupants[p.vso.locations.combine[i][j]] = p.occupants[p.vso.locations.combine[i][1]]
 		end
 	end
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
-	for i = 1, #p.locations.regular do
-		animator.setGlobalTag( p.locations.regular[i].."occupants", tostring(p.occupants[p.locations.regular[i]]) )
+	for i = 1, #p.vso.locations.regular do
+		animator.setGlobalTag( p.vso.locations.regular[i].."occupants", tostring(p.occupants[p.vso.locations.regular[i]]) )
 	end
 
-	if p.locations.sided then
-		for i = 1, #p.locations.sided do
-			if self.vsoCurrentDirection >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-				animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
-				animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+	if p.vso.locations.sided then
+		for i = 1, #p.vso.locations.sided do
+			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
+				animator.setGlobalTag( p.vso.locations.sided[i].."2occupants", tostring(p.occupants[p.vso.locations.sided[i].."R"]) )
+				animator.setGlobalTag( p.vso.locations.sided[i].."1occupants", tostring(p.occupants[p.vso.locations.sided[i].."L"]) )
 			else
-				animator.setGlobalTag( p.locations.sided[i].."1occupants", tostring(p.occupants[p.locations.sided[i].."R"]) )
-				animator.setGlobalTag( p.locations.sided[i].."2occupants", tostring(p.occupants[p.locations.sided[i].."L"]) )
+				animator.setGlobalTag( p.vso.locations.sided[i].."1occupants", tostring(p.occupants[p.vso.locations.sided[i].."R"]) )
+				animator.setGlobalTag( p.vso.locations.sided[i].."2occupants", tostring(p.occupants[p.vso.locations.sided[i].."L"]) )
 			end
 		end
 	end
@@ -602,14 +630,14 @@ end
 
 function p.localToGlobal( position )
 	local lpos = { position[1], position[2] }
-	if self.vsoCurrentDirection == -1 then lpos[1] = -lpos[1] end
+	if p.direction == -1 then lpos[1] = -lpos[1] end
 	local mpos = mcontroller.position()
 	local gpos = { mpos[1] + lpos[1], mpos[2] + lpos[2] }
 	return world.xwrap( gpos )
 end
 function p.globalToLocal( position )
 	local pos = world.distance( position, mcontroller.position() )
-	if self.vsoCurrentDirection == -1 then pos[1] = -pos[1] end
+	if p.direction == -1 then pos[1] = -pos[1] end
 	return pos
 end
 
@@ -645,7 +673,7 @@ end
 
 function p.entityLounging( entity )
 	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		if entity == (vehicle.entityLoungingIn( "occupant"..i ) or p.occupant[i].id) then return true end
 	end
 	return false
@@ -758,29 +786,8 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.loadStoredData()
-	vsoStorageSaveAndLoad( function()	--Get defaults from the item spawner itself
-		if storage.colorReplaceMap ~= nil then
-			vsoSetDirectives( vsoMakeColorReplaceDirectiveString( storage.colorReplaceMap ) );
-		end
-
-		sb.logInfo("Loaded VSO data")
-
-		if vsoPill( "heal" ) then p.settings.bellyEffect = "heal" end
-		if vsoPill( "digest" ) then p.settings.bellyEffect = "digest" end
-		if vsoPill( "pvsoSoftDigest" ) then p.settings.bellyEffect = "pvsoSoftDigest" end
-
-		if vsoPill( "fatten" ) then
-			p.fattenBelly = math.floor(vsoPillValue( "fatten" ))
-			if config.getParameter( "driver" ) == nil then
-				p.control.driver = "occupant1"
-			end
-		end
-	end )
-end
-
 function p.getOccupantFromEid(eid)
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		if eid == p.occupant[i].id then
 			return i
 		end
@@ -788,8 +795,6 @@ function p.getOccupantFromEid(eid)
 end
 
 -------------------------------------------------------------------------------
-
-p.control = {}
 
 function getSettingsMenuInfo()
 	local occupants = {}
@@ -806,7 +811,7 @@ function getSettingsMenuInfo()
 	return occupants
 end
 
-function p.control.probablyOnGround() -- check number of frames -> ceiling isn't ground
+function p.probablyOnGround() -- check number of frames -> ceiling isn't ground
 	local yvel = mcontroller.yVelocity()
 	if yvel < 0.1 and yvel > -0.1 then
 		p.movement.groundframes = p.movement.groundframes + 1
@@ -816,17 +821,17 @@ function p.control.probablyOnGround() -- check number of frames -> ceiling isn't
 	return p.movement.groundframes > 5
 end
 
-function p.control.notMoving()
+function p.notMoving()
 	local xvel = mcontroller.xVelocity()
 	return xvel < 0.1 and xvel > -0.1
 end
 
-function p.control.underWater()
+function p.underWater()
 	return mcontroller.liquidPercentage() >= 0.2
 end
 
 function p.doPhysics()
-	if not p.control.underWater() then
+	if not p.underWater() then
 		mcontroller.setXVelocity( 0 )
 		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
 	else
@@ -837,44 +842,6 @@ end
 
 function p.useEnergy(eid, cost, callback)
 	p.addRPC( world.sendEntityMessage(eid, "useEnergy", cost), callback)
-end
-
-function p.control.projectile( projectiledata )
-	local driver = vehicle.entityLoungingIn(p.control.driver)
-	if projectiledata.energy and driver then
-		p.useEnergy(driver, projectiledata.cost, function(energyUsed)
-			if energyUsed then
-				p.control.fireProjectile( projectiledata, driver )
-			end
-		end)
-	else
-		p.control.fireProjectile( projectiledata, driver )
-	end
-end
-
-function p.control.fireProjectile( projectiledata, driver )
-	local position = p.localToGlobal( projectiledata.position )
-	local direction
-	if projectiledata.aimable then
-		local aiming = vehicle.aimPosition( p.control.driver )
-		vsoFacePoint( aiming[1] )
-		position = p.localToGlobal( projectiledata.position )
-		aiming[2] = aiming[2] + 0.2 * self.vsoCurrentDirection * (aiming[1] - position[1])
-		direction = world.distance( aiming, position )
-	else
-		direction = { self.vsoCurrentDirection, 0 }
-	end
-	local params = {}
-
-	if driver then
-		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-			params.powerMultiplier = powerMultiplier
-			world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
-		end)
-	else
-		params.powerMultiplier = p.standalonePowerLevel()
-		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
-	end
 end
 
 -------------------------------------------------------------------------------
@@ -904,7 +871,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 	local status = p.settings.bellyEffect
 	local hungereffect = p.settings.hungerEffect
 
-	for i = 1, p.maxOccupants.total do
+	for i = 1, p.vso.maxOccupants.total do
 		local eid = p.occupant[i].id
 
 		if eid and world.entityExists(eid) then
@@ -928,8 +895,8 @@ function p.doBellyEffects(driver, powerMultiplier)
 end
 
 function p.isLocationDigest(location)
-	for i = 1, #p.locations.digest do
-		if #p.locations.digest[i] == location then
+	for i = 1, #p.vso.locations.digest do
+		if #p.vso.locations.digest[i] == location then
 			return true
 		end
 	end
@@ -957,13 +924,13 @@ function p.handleStruggles()
 
 	local struggler = 0
 	local struggledata
-	if p.control.driving and not p.control.standalone then
+	if p.driving and not p.standalone then
 		struggler = 1
 	end
 
 	local movedir = nil
 
-	while (movedir == nil) and struggler < p.maxOccupants.total do
+	while (movedir == nil) and struggler < p.vso.maxOccupants.total do
 		struggler = struggler + 1
 		movedir = p.getSeatDirections( "occupant"..struggler )
 		struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
@@ -998,16 +965,12 @@ function p.handleStruggles()
 	if struggledata[movedir].chances ~= nil then
 		chance = struggledata[movedir].chances
 	end
-	if vsoPill( "easyescape" ) then
-		chance = chance.easyescape
-	elseif vsoPill( "antiescape" ) then
-		chance = chance.antiescape
-	else
-		chance = chance.normal
+	if chance[p.settings.escapeModifier] ~= nil then
+		chance = chance[p.settings.escapeModifier]
 	end
 
 	if chance ~= nil and ( chance.max == 0 or (
-		(not p.control.driving or struggledata[movedir].controlled)
+		(not p.driving or struggledata[movedir].controlled)
 		and (math.random(chance.min, chance.max) <= p.struggleCount))
 	) then
 		p.struggleCount = 0
@@ -1023,7 +986,7 @@ function p.handleStruggles()
 
 		p.doAnims(animation)
 
-		if p.control.notMoving() then
+		if p.notMoving() then
 			p.doAnims( struggledata[movedir].animation or struggledata.animation, true )
 		else
 			p.doAnims( struggledata[movedir].animationWhenMoving or struggledata.animationWhenMoving, true )
@@ -1048,7 +1011,7 @@ function p.onInteraction( occupantId )
 	else
 		interact = p.occupantArray( state.interact.side )
 	end
-	if not p.control.driving or interact.controlled then
+	if not p.driving or interact.controlled then
 		if interact.chance > 0 and p.randomChance( interact.chance ) then
 			p.doTransition( interact.transition, {id=occupantId} )
 			return

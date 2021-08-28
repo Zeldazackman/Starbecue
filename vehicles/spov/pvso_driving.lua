@@ -1,69 +1,69 @@
 
 function p.updateDriving()
-	local driver = vehicle.entityLoungingIn(p.control.driver)
+	local driver = vehicle.entityLoungingIn(p.driverSeat)
 	if driver then
 		local light = p.vso.lights.driver
 		light.position = world.entityPosition( driver )
 		world.sendEntityMessage( driver, "PVSOAddLocalLight", light )
-		local aim = vehicle.aimPosition(p.control.driver)
+		local aim = vehicle.aimPosition(p.driverSeat)
 		local cursor = "/cursors/cursors.png:pointer"
 
 		world.sendEntityMessage( driver, "PVSOCursor", aim, cursor)
 	end
 
 
-	if p.control.standalone then
+	if p.standalone then
 		--vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
-		p.control.driving = true
-		if vehicle.controlHeld( p.control.driver, "Special3" ) then
+		p.driving = true
+		if vehicle.controlHeld( p.driverSeat, "Special3" ) then
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.control.driver ), "openInterface", p.vsoMenuName.."settings",
-				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.maxOccupants.total }, false, entity.id()
+				vehicle.entityLoungingIn( p.driverSeat ), "openInterface", p.vso.menuName.."settings",
+				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
 			)
 		end
 	elseif p.occupants.total >= 1 then
-		if vehicle.controlHeld( p.control.driver, "Special1" ) then
-			p.control.driving = true
+		if vehicle.controlHeld( p.driverSeat, "Special1" ) then
+			p.driving = true
 		end
-		if vehicle.controlHeld( p.control.driver, "Special2" ) then
-			p.control.driving = false
+		if vehicle.controlHeld( p.driverSeat, "Special2" ) then
+			p.driving = false
 		end
 	else
-		p.control.driving = false
+		p.driving = false
 	end
 end
 
-function p.control.drive()
-	if not p.control.driving then return end
+function p.drive()
+	if not p.driving then return end
 	local control = p.stateconfig[p.state].control
 	if control.animations == nil then control.animations = {} end -- allow indexing
 
 	local dx = 0
-	if vehicle.controlHeld( p.control.driver, "left" ) then
+	if vehicle.controlHeld( p.driverSeat, "left" ) then
 		dx = dx - 1
 	end
-	if vehicle.controlHeld( p.control.driver, "right" ) then
+	if vehicle.controlHeld( p.driverSeat, "right" ) then
 		dx = dx + 1
 	end
 	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
-	if p.control.probablyOnGround() then
-		p.control.groundMovement( dx )
-	elseif p.control.underWater() then
-		p.control.waterMovement( dx )
+	if p.probablyOnGround() then
+		p.groundMovement( dx )
+	elseif p.underWater() then
+		p.waterMovement( dx )
 	else
-		p.control.airMovement( dx )
+		p.airMovement( dx )
 	end
 
-	p.control.primaryAction()
-	p.control.altAction()
+	p.primaryAction()
+	p.altAction()
 end
 
-function p.control.groundMovement( dx )
+function p.groundMovement( dx )
 	local state = p.stateconfig[p.state]
 	local control = state.control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly)< control.fullThreshold then
+	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total + p.settings.fatten)< control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -89,12 +89,12 @@ function p.control.groundMovement( dx )
 	end
 
 	mcontroller.setYVelocity( -0.15 ) -- to detect leaving ground
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
-		if not vehicle.controlHeld( p.control.driver, "down" ) then
+	if vehicle.controlHeld( p.driverSeat, "jump" ) then
+		if not vehicle.controlHeld( p.driverSeat, "down" ) then
 			if not p.movement.jumped then
 				p.doAnims( control.animations.jump )
 				p.movement.animating = true
-				if p.occupants.total + p.fattenBelly < control.fullThreshold then
+				if p.occupants.total + p.settings.fatten < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
 					mcontroller.setYVelocity( control.fullJumpStrength )
@@ -114,7 +114,7 @@ function p.control.groundMovement( dx )
 	p.movement.falling = false
 end
 
-function p.control.waterMovement( dx )
+function p.waterMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	if dx ~= 0 then
@@ -122,16 +122,16 @@ function p.control.waterMovement( dx )
 	end
 	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
 
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
+	if vehicle.controlHeld( p.driverSeat, "jump" ) then
 		mcontroller.approachYVelocity( 10, 50 )
 	else
 		mcontroller.approachYVelocity( -10, 50 )
 	end
 
-	if vehicle.controlHeld( p.control.driver, "jump" )
-	-- or vehicle.controlHeld( p.control.driver, "down" )
-	or vehicle.controlHeld( p.control.driver, "left" )
-	or vehicle.controlHeld( p.control.driver, "right" ) then
+	if vehicle.controlHeld( p.driverSeat, "jump" )
+	-- or vehicle.controlHeld( p.driverSeat, "down" )
+	or vehicle.controlHeld( p.driverSeat, "left" )
+	or vehicle.controlHeld( p.driverSeat, "right" ) then
 		p.doAnims( control.animations.swim )
 
 		p.movement.animating = true
@@ -147,11 +147,11 @@ function p.control.waterMovement( dx )
 	p.movement.falling = false
 end
 
-function p.control.airMovement( dx )
+function p.airMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.control.driver, "down" ) and (p.occupants.total + p.fattenBelly) < control.fullThreshold then
+	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total + p.settings.fatten) < control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -164,21 +164,21 @@ function p.control.airMovement( dx )
 		mcontroller.approachXVelocity( 0, 30 )
 	end
 
-	if vehicle.controlHeld( p.control.driver, "down" ) then
+	if vehicle.controlHeld( p.driverSeat, "down" ) then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
 	else
 		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
-	if mcontroller.yVelocity() > 0 and vehicle.controlHeld( p.control.driver, "jump" ) then
+	if mcontroller.yVelocity() > 0 and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		mcontroller.approachYVelocity( -100, world.gravity(mcontroller.position()) )
 	else
 		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
 	end
-	if vehicle.controlHeld( p.control.driver, "jump" ) then
+	if vehicle.controlHeld( p.driverSeat, "jump" ) then
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.doAnims( control.animations.jump )
 			p.movement.animating = true
-			if (p.occupants.total + p.fattenBelly) < control.fullThreshold then
+			if (p.occupants.total + p.settings.fatten) < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
@@ -212,12 +212,12 @@ function p.control.airMovement( dx )
 	p.movement.airframes = p.movement.airframes + 1
 end
 
-function p.control.primaryAction()
+function p.primaryAction()
 	local control = p.stateconfig[p.state].control
-	if control.primaryAction ~= nil and vehicle.controlHeld( p.control.driver, "PrimaryFire" ) then
+	if control.primaryAction ~= nil and vehicle.controlHeld( p.driverSeat, "PrimaryFire" ) then
 		if p.movement.primaryCooldown < 1 then
 			if control.primaryAction.projectile ~= nil then
-				p.control.projectile(control.primaryAction.projectile)
+				p.projectile(control.primaryAction.projectile)
 			end
 			if control.primaryAction.animation ~= nil then
 				p.doAnims( control.primaryAction.animation )
@@ -238,12 +238,12 @@ function p.control.primaryAction()
 	p.movement.primaryCooldown = p.movement.primaryCooldown - 1
 end
 
-function p.control.altAction()
+function p.altAction()
 	local control = p.stateconfig[p.state].control
-	if control.altAction ~= nil and vehicle.controlHeld( p.control.driver, "altFire" ) then
+	if control.altAction ~= nil and vehicle.controlHeld( p.driverSeat, "altFire" ) then
 		if p.movement.altCooldown < 1 then
 			if control.altAction.projectile ~= nil then
-				p.control.projectile(control.altAction.projectile)
+				p.projectile(control.altAction.projectile)
 			end
 			if control.altAction.animation ~= nil then
 				p.doAnims( control.altAction.animation )
@@ -294,7 +294,7 @@ function p.getSeatDirections(seatname)
 			dy = dy + 1
 		end
 
-		dx = dx * self.vsoCurrentDirection
+		dx = dx * p.direction
 
 		if dx ~= 0 then
 			if dx >= 1 then
@@ -322,14 +322,52 @@ function getDriverStat(eid, stat, callback)
 	p.addRPC( world.sendEntityMessage(eid, "getDriverStat", stat), callback)
 end
 
-function p.driverStateChange()
+function p.driverSeatStateChange()
 	local transitions = p.stateconfig[p.state].transitions
-	local movedir = p.getSeatDirections( p.control.driver )
+	local movedir = p.getSeatDirections( p.driverSeat )
 	if movedir ~= nil then
 		if transitions[movedir] ~= nil then
 			p.doTransition(movedir)
 		elseif (movedir == "front" or movedir == "back") and transitions.side ~= nil then
 			p.doTransition("side")
 		end
+	end
+end
+
+function p.projectile( projectiledata )
+	local driver = vehicle.entityLoungingIn(p.driverSeat)
+	if projectiledata.energy and driver then
+		p.useEnergy(driver, projectiledata.cost, function(energyUsed)
+			if energyUsed then
+				p.fireProjectile( projectiledata, driver )
+			end
+		end)
+	else
+		p.fireProjectile( projectiledata, driver )
+	end
+end
+
+function p.fireProjectile( projectiledata, driver )
+	local position = p.localToGlobal( projectiledata.position )
+	local direction
+	if projectiledata.aimable then
+		local aiming = vehicle.aimPosition( p.driverSeat )
+		vsoFacePoint( aiming[1] )
+		position = p.localToGlobal( projectiledata.position )
+		aiming[2] = aiming[2] + 0.2 * p.direction * (aiming[1] - position[1])
+		direction = world.distance( aiming, position )
+	else
+		direction = { p.direction, 0 }
+	end
+	local params = {}
+
+	if driver then
+		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
+			params.powerMultiplier = powerMultiplier
+			world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
+		end)
+	else
+		params.powerMultiplier = p.standalonePowerLevel()
+		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
 	end
 end

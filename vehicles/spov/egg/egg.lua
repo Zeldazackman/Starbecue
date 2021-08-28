@@ -6,16 +6,14 @@ require("/vehicles/spov/playable_vso.lua")
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-p.vsoMenuName = "egg"
-
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
 end
 
 function onBegin()	--This sets up the VSO ONCE.
-	p.control.standalone = false
-	p.control.driver = "occupant1"
-	p.control.driving = false
+	p.standalone = false
+	p.driverSeat = "occupant1"
+	p.driving = false
 	p.occupant[1].location = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1
@@ -63,16 +61,12 @@ function p.handleStruggles()
 	if struggledata[movedir].chances ~= nil then
 		chance = struggledata[movedir].chances
 	end
-	if vsoPill( "easyescape" ) then
-		chance = chance.easyescape
-	elseif vsoPill( "antiescape" ) then
-		chance = chance.antiescape
-	else
-		chance = chance.normal
+	if chance[p.settings.escapeModifier] ~= nil then
+		chance = chance[p.settings.escapeModifier]
 	end
 
 	if chance ~= nil and ( chance.max == 0 or (
-		(not p.control.driving or struggledata[movedir].controlled)
+		(not p.driving or struggledata[movedir].controlled)
 		and (math.random(chance.min, chance.max) <= p.struggleCount))
 	) ) then
 		p.struggleCount = 0
@@ -94,13 +88,13 @@ function p.handleStruggles()
 	end
 end
 
-function begin_state_stand()
-	p.occupant[1].id = p.driver
-	p.forceSeat( p.driver, "occupant1" )
+function state.begin.stand()
+	p.occupant[1].id = p.driverSeat
+	p.forceSeat( p.driverSeat, "occupant1" )
 end
 
 
-function state_stand()
+function state.stand()
 	p.doPhysics()
 	p.handleStruggles()
 end
