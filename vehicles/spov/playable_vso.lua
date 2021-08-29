@@ -344,7 +344,11 @@ function p.checkRPCsFinished(dt)
 		if list.rpc:finished() then
 			list.callback(list.rpc:result(), list.dt)
 			-- not quite sure if what is below is what I should be doing
-			table.remove(p.rpcList, name)
+			if type(name) == number then
+				table.remove(p.rpcList, name)
+			else
+				p.rpcList[name] = nil
+			end
 		end
 	end
 end
@@ -388,7 +392,11 @@ function p.checkTimers(dt)
 			if timer.callback ~= nil then
 				timer.callback()
 			end
-			table.remove(p.timerList, name)
+			if type(name) == "number" then
+				table.remove(p.timerList, name)
+			else
+				p.timerList[name] = nil
+			end
 		end
 	end
 end

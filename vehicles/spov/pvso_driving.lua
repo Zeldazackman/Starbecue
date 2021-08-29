@@ -92,8 +92,10 @@ function p.updateControls(dt)
 			seat.dx = dx
 			seat.dy = dy
 			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation"), function(seatdata)
-				for index, data in pairs(seatdata) do
-					seat[index] = data
+				if seatdata ~= nil then
+					for index, data in pairs(seatdata) do
+						seat[index] = data
+					end
 				end
 			end, seatname.."Info")
 		else
