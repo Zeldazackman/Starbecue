@@ -204,10 +204,12 @@ function update(dt)
 	p.checkTimers(dt)
 	p.idleStateChange()
 	if p.driving then
+		p.drive()
 		p.driverSeatStateChange()
+	else
+		p.doPhysics()
 	end
 	p.updateDriving()
-	p.doPhysics()
 	p.whenFalling()
 	p.handleBelly()
 	p.applyStatusLists()
@@ -569,6 +571,8 @@ function p.resetOccupantCount()
 			p.occupants[p.vso.locations.sided[i].."L"] = 0
 		end
 	end
+	p.occupants.fatten = p.settings.fatten or 0
+	p.occupants.weight = 0
 end
 
 function p.updateOccupants()
@@ -593,16 +597,18 @@ function p.updateOccupants()
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
-	p.occupants.fatten = p.settings.fatten or 0
-
-	for i = 1, #p.vso.locations.combine do
-		for j = 2, #p.vso.locations.combine[i] do
-			p.occupants[p.vso.locations.combine[i][1]] = p.occupants[p.vso.locations.combine[i][1]]+p.occupants[p.vso.locations.combine[i][j]]
-			if p.occupants[p.vso.locations.combine[i][1]] > p.vso.maxOccupants[p.vso.locations.combine[i][1]] then
-				p.occupants[p.vso.locations.combine[i][1]] = p.vso.maxOccupants[p.vso.locations.combine[i][1]]
+	for _, combine in ipairs(p.vso.locations.combine) do
+		for j = 2, #combine do
+			p.occupants[combine[1]] = p.occupants[combine[1]]+p.occupants[combine[j]]
+			if p.occupants[combine[1]] > p.vso.maxOccupants[combine[1]] then
+				p.occupants[combine[1]] = p.vso.maxOccupants[combine[1]]
 			end
-			p.occupants[p.vso.locations.combine[i][j]] = p.occupants[p.vso.locations.combine[i][1]]
+			p.occupants[combine[j]] = p.occupants[combine[1]]
 		end
+	end
+
+	for _, location in ipairs(p.vso.locations.weight) do
+		p.occupants.weight = p.occupants.weight + p.occupants[location]
 	end
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )

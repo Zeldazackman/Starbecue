@@ -160,6 +160,9 @@
 			],
 			"combine" :[
 				["belly", "fatten"]
+			],
+			"weight" :[
+				"belly"
 			]
 		},
 

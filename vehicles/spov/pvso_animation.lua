@@ -103,7 +103,7 @@ function p.doVictimAnim(seatname, anim, state)
 		frame = 0,
 		index = 1,
 		prevFrame = 0,
-		prevIndex = 1,
+		prevIndex = 1
 	}
 	p.victimAnimUpdate()
 end
@@ -171,7 +171,6 @@ function p.doAnim( state, anim, force)
 	end
 end
 
-p.currentTags = {}
 function p.doAnims( anims, force )
 	for state,anim in pairs( anims or {} ) do
 		if state == "offset" then

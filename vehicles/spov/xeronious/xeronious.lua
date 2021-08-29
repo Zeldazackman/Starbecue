@@ -357,18 +357,18 @@ function state.fly.update()
 	end
 
 	local running = false
-	if (p.occupants.total + p.settings.fatten) < control.fullThreshold then --add walk control here when we have more controls
+	if p.occupants.weight < control.fullThreshold then --add walk control here when we have more controls
 		running = true
 	end
 	if dx ~= 0 then
-		vsoFaceDirection( dx )
+		p.faceDirection( dx )
 	end
 	if running then
 		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.total + p.settings.fatten) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.weight) +1], controlForce )
 	else
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.settings.fatten) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.weight) +1], controlForce )
 	end
 end
 

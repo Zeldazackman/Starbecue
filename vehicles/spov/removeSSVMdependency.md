@@ -4,6 +4,6 @@ a somewhat long task that will grant more freedom and make future creations a lo
 
 ## things to replace
 
--sound effects, find out which ones are stock
+- sound effects, find out which ones are stock
 
--
+- any status effects we may need, the indicator ones mainly

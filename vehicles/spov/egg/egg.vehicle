@@ -54,20 +54,20 @@
 			"color" : [50, 50, 50]
 			}
 		},
+		"locations" :{
+			"regular" :[
+				"other"
+			]
+		},
+		"maxOccupants" : {
+			"total" : 1,
+			"other" : 1
+		},
 
 		"victimAnimations": "/vehicles/spov/egg/victim_animations.config"
 	},
 
-	"locations" :{
-		"regular" :[
-			"other"
-		]
-	},
 
-	"maxOccupants" : {
-		"total" : 1,
-		"other" : 1
-	},
 
 	"states": {
 		"stand": {

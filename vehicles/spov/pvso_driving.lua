@@ -11,7 +11,6 @@ function p.updateDriving()
 		world.sendEntityMessage( driver, "PVSOCursor", aim, cursor)
 	end
 
-
 	if p.standalone then
 		--vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.driving = true
@@ -34,7 +33,7 @@ function p.updateDriving()
 end
 
 function p.drive()
-	if not p.driving then return end
+	if (not p.driving) or (not p.stateconfig[p.state].control) then return end
 	local control = p.stateconfig[p.state].control
 	if control.animations == nil then control.animations = {} end -- allow indexing
 
@@ -63,11 +62,11 @@ function p.groundMovement( dx )
 	local control = state.control
 
 	local running = false
-	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total + p.settings.fatten)< control.fullThreshold then
+	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total)< control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
-		vsoFaceDirection( dx )
+		p.faceDirection( dx )
 	end
 	if running then
 		mcontroller.setXVelocity( dx * control.runSpeed )
@@ -94,7 +93,7 @@ function p.groundMovement( dx )
 			if not p.movement.jumped then
 				p.doAnims( control.animations.jump )
 				p.movement.animating = true
-				if p.occupants.total + p.settings.fatten < control.fullThreshold then
+				if p.occupants.weight < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
 					mcontroller.setYVelocity( control.fullJumpStrength )
@@ -118,7 +117,7 @@ function p.waterMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	if dx ~= 0 then
-		vsoFaceDirection( dx )
+		p.faceDirection( dx )
 	end
 	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
 
@@ -151,7 +150,7 @@ function p.airMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total + p.settings.fatten) < control.fullThreshold then
+	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.weight < control.fullThreshold) then
 		running = true
 	end
 	if dx ~= 0 then
@@ -178,7 +177,7 @@ function p.airMovement( dx )
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.doAnims( control.animations.jump )
 			p.movement.animating = true
-			if (p.occupants.total + p.settings.fatten) < control.fullThreshold then
+			if p.occupants.weight < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
