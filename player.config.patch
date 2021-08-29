@@ -1,8 +1,13 @@
 [
 	{
 		"op": "add",
-		"path": "/companionsConfig/scripts/-",
+		"path": "/statusControllerSettings/primaryScriptSources/scripts/-",
 		"value": "/scripts/ZSSVMA_player.lua"
+	},
+	{
+		"op": "add",
+		"path": "/companionsConfig/scripts/-",
+		"value": "/scripts/ZSSVMA_player_companion.lua"
 	},
 	{
 		"op": "add",
