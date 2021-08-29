@@ -1,11 +1,7 @@
 --This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
-state = {
-	begin = {},
-	ending = {},
-	interact = {}
-}
+state = {}
 
 p = {
 	maxOccupants = { --basically everything I think we'd need
@@ -118,7 +114,6 @@ function init()
 		sb.logInfo("uuid"..entity.uniqueId())
 	end
 
-
 	p.onForcedReset()	--Do a forced reset once.
 
 	message.setHandler( "settingsMenuSet", function(_,_, val )
@@ -157,7 +152,7 @@ function init()
 		p.smolprey()
 	end )
 
-	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing, though, if a "end_state_" function exists, thats called
+	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing
 	if not config.getParameter( "uneaten" ) then
 		if not p.vso.startState then
 			p.vso.startState = "stand"
@@ -285,7 +280,7 @@ function p.onDeath()
 	world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
 
 	if not p.nowarpout then
-		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true);
+		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
 	end
 
 	onEnd()

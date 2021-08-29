@@ -2,17 +2,17 @@
 
 function p.updateState()
 	if p.prevState == p.state then
-		if state[p.state] ~= nil then
-			state[p.state]()
+		if state[p.state] ~= nil and state[p.state].update ~= nil then
+			state[p.state].update()
 		else
 			p.standardState()
 		end
 	else
-		if state.ending[p.prevState] ~= nil then
-			state.ending[p.prevState]()
+		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
+			state[p.prevState].ending()
 		end
-		if state.begin[p.state] ~= nil then
-			state.begin[p.state]()
+		if state[p.state] ~= nil and state[p.state].begin ~= nil then
+			state[p.state].begin()
 		end
 	end
 end
@@ -27,15 +27,6 @@ function p.setState(state)
 	p.doAnims( p.stateconfig[state].idle )
 end
 
-p.statescripts = {}
-
-function p.registerStateScript( state, name, func )
-	if p.statescripts[state] == nil then
-		p.statescripts[state] = {}
-	end
-	p.statescripts[state][name] = func
-end
-
 p.transitionLock = false
 
 function p.doTransition( direction, scriptargs )
@@ -45,14 +36,16 @@ function p.doTransition( direction, scriptargs )
 	local continue = true
 	local after
 	if tconfig.script then
-		local statescript = p.statescripts[p.state][tconfig.script]
+		local statescript = state[p.state][tconfig.script]
 		local _continue, _tconfig
 		_continue, after, _tconfig = statescript( scriptargs or {} )
 		if _continue ~= nil then continue = _continue end
 		if _tconfig ~= nil then tconfig = _tconfig end
 	end
 	if not continue then return end
-
+	if tconfig.timing == nil then
+		tconfig.timing = "body"
+	end
 	if tconfig.animation ~= nil then
 		p.doAnims( tconfig.animation )
 	end

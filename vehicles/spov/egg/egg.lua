@@ -3,7 +3,10 @@
 
 require("/vehicles/spov/playable_vso.lua")
 
--------------------------------------------------------------------------------
+state = {
+	stand = {}
+}
+
 -------------------------------------------------------------------------------
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
@@ -88,27 +91,20 @@ function p.handleStruggles()
 	end
 end
 
-function state.begin.stand()
+function state.stand.begin()
 	p.occupant[1].id = p.driverSeat
 	p.forceSeat( p.driverSeat, "occupant1" )
 end
 
-
-function state.stand()
-	p.doPhysics()
-	p.handleStruggles()
-end
-
-
 p.cracks = 0
 
-p.registerStateScript( "stand", "crack", function( args )
+function state.stand.crack( args )
 	p.cracks = p.cracks + 1
 
 	if p.cracks > 3 then p.onDeath()
 	else animator.setGlobalTag( "cracks", tostring(p.cracks) )
 	end
-end)
+end
 
 
 -------------------------------------------------------------------------------

@@ -3,11 +3,11 @@
 
 require("/vehicles/spov/playable_vso.lua")
 
+state = {
+	stand = {},
+	smol = {}
+}
 -------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
-
-p.vso.menuName = "avian"
 
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 
@@ -23,15 +23,11 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "eat", function( args )
+function state.stand.eat( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
+end
 
-function state.stand()
-
-	p.idleStateChange()
-	p.handleBelly()
-
+function state.stand.update()
 	if p.driving then
 		if p.standalone then
 			if vehicle.controlHeld( p.driverSeat, "Special2" ) then
@@ -43,7 +39,8 @@ function state.stand()
 			if vehicle.controlHeld( p.driverSeat, "Special1" ) then
 				if not p.movement.wasspecial1 then
 					-- p.doAnim( "bodyState", "unsmolify" )
-					vsoEffectWarpIn()
+					world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+
 					p.setState( "smol" )
 					p.doAnims( p.stateconfig.smol.idle, true )
 				end
@@ -52,17 +49,10 @@ function state.stand()
 				p.movement.wasspecial1 = false
 			end
 		end
-
-		p.drive()
-	else
-		p.doPhysics()
 	end
-
-	p.updateDriving()
-
 end
 
-function state.interact.stand( occupantId )
+function state.stand.interact( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
@@ -70,19 +60,16 @@ end
 
 -------------------------------------------------------------------------------
 
-function state.begin.smol()
+function state.smol.begin()
 	p.setMovementParams( "smol" )
 end
 
-function state.smol()
-
-	p.idleStateChange()
-	p.handleBelly()
-
+function state.smol.update()
 	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 		if not p.movement.wasspecial1 then
 			-- p.doAnim( "bodyState", "unsmolify" )
-			vsoEffectWarpIn()
+			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )
 		end
@@ -90,13 +77,9 @@ function state.smol()
 	else
 		p.movement.wasspecial1 = false
 	end
-	p.drive()
-
-	p.updateDriving()
-
 end
 
-function state.ending.smol()
+function state.smol.ending()
 	p.setMovementParams( "default" )
 end
 

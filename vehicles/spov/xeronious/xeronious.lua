@@ -2,7 +2,13 @@
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 require("/vehicles/spov/playable_vso.lua")
-
+state = {
+	stand = {},
+	crouch = {},
+	fly = {},
+	sit = {},
+	hug = {}
+}
 -------------------------------------------------------------------------------
 --[[
 
@@ -131,39 +137,25 @@ function succ(args)
 	p.checkEatPosition( dest, "belly", "succeat", true)
 end
 
+function bellyToTail(args)
+	return p.moveOccupantLocation(args, "body", "tail")
+end
+
+function tailToBelly(args)
+	return p.moveOccupantLocation(args, "tail", "belly")
+end
+
+function oralEat(args)
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end
+
+function tailEat(args)
+	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end
+
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "stand", "bellytotail", function( args )
-	return p.moveOccupantLocation(args, "body", "tail")
-end)
-p.registerStateScript( "stand", "tailtobelly", function( args )
-	return p.moveOccupantLocation(args, "tail", "belly")
-end)
-p.registerStateScript( "stand", "eat", function( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "stand", "taileat", function( args )
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-
-p.registerStateScript( "stand", "bapeat", function()
-	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
-	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
-end)
-
-p.registerStateScript( "stand", "succ", function( args )
-	succ(args)
-end)
-
-
-function state.stand()
-
-	p.idleStateChange()
-	p.handleBelly()
-
+function state.stand.update()
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3, 1})
 
@@ -210,46 +202,30 @@ function state.stand()
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
 		end
-		p.drive()
-	else
-		p.doPhysics()
 	end
-
-	p.updateDriving()
-
 end
 
-function state.interact.stand( occupantId )
+function state.stand.bapeat()
+	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
+end
+
+function state.stand.interact( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
 end
 
+state.stand.checkletout = checkEscapes
+state.stand.bellytotail = bellyToTail
+state.stand.tailtobelly = tailToBelly
+state.stand.eat = oralEat
+state.stand.taileat = tailEat
+state.stand.succ = succ
+
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "sit", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "sit", "bellytotail", function( args )
-	return p.moveOccupantLocation(args, "body", "tail")
-end)
-p.registerStateScript( "sit", "tailtobelly", function( args )
-	return p.moveOccupantLocation(args, "tail", "belly")
-end)
-
-p.registerStateScript( "sit", "eat", function( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "sit", "taileat", function( args )
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-
-p.registerStateScript( "sit", "hug", function( args )
-	return p.doVore(args, "hug", {})
-end)
-
-function state.sit()
-	p.standardState()
+function state.sit.update()
 	checkEggSitup()
 
 	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
@@ -269,75 +245,41 @@ function state.sit()
 	end
 end
 
+function state.sit.hug( args )
+	return p.doVore(args, "hug", {})
+end
+
+state.sit.checkletout = checkEscapes
+state.sit.bellytotail = bellyToTail
+state.sit.tailtobelly = tailToBelly
+state.sit.eat = oralEat
+state.sit.taileat = tailEat
+
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "hug", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "hug", "bellytotail", function( args )
-	return p.moveOccupantLocation(args, "body", "tail")
-end)
-p.registerStateScript( "hug", "tailtobelly", function( args )
-	return p.moveOccupantLocation(args, "tail", "belly")
-end)
-p.registerStateScript( "hug", "eat", function( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "hug", "taileat", function( args )
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-
-
-p.registerStateScript( "hug", "unhug", function( args )
-	for i = 1, p.occupants.total do
-		if p.occupant[i].location == "hug" then
-			return p.doEscape({index = i}, "hug", {2.5,0}, {}, {})
-		end
-	end
-end)
-
-function state.hug()
-	p.standardState()
-	checkEggSitup()
-
+function state.hug.update()
 	if p.occupants.hug < 1 then
 		p.setState("sit")
 	end
 end
 
--------------------------------------------------------------------------------
-
-p.registerStateScript( "crouch", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "crouch", "bellytotail", function( args )
-	return p.moveOccupantLocation(args, "body", "tail")
-end)
-p.registerStateScript( "crouch", "tailtobelly", function( args )
-	return p.moveOccupantLocation(args, "tail", "belly")
-end)
-p.registerStateScript( "crouch", "taileat", function( args )
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-
-
-function state.begin.crouch()
-	p.setMovementParams( "crouch" )
+function state.hug.unhug( args )
+	for i = 1, p.occupants.total do
+		if p.occupant[i].location == "hug" then
+			return p.doEscape({index = i}, "hug", {2.5,0}, {}, {})
+		end
+	end
 end
 
-function state.crouch()
+state.hug.checkletout = checkEscapes
+state.hug.bellytotail = bellyToTail
+state.hug.tailtobelly = tailToBelly
+state.hug.eat = oralEat
+state.hug.taileat = tailEat
 
-	p.idleStateChange()
-	p.handleBelly()
+-------------------------------------------------------------------------------
 
-	if p.driving then
-		p.drive()
-	else
-		p.doPhysics()
-	end
-
-	p.updateDriving()
-
+function state.crouch.update()
 	local pos1 = p.localToGlobal({3.5, 4})
 	local pos2 = p.localToGlobal({-3, 1})
 
@@ -352,63 +294,26 @@ function state.crouch()
 			return
 		end
 	end
-
 end
 
-function state.ending.crouch()
+function state.crouch.begin()
+	p.setMovementParams( "crouch" )
+end
+
+function state.crouch.ending()
 	p.setMovementParams( "default" )
 	p.movement.downframes = 11
-
 end
+
+state.crouch.checkletout = checkEscapes
+state.crouch.bellytotail = bellyToTail
+state.crouch.tailtobelly = tailToBelly
+state.crouch.taileat = tailEat
 
 -------------------------------------------------------------------------------
 
-function state.begin.fly()
-	p.setMovementParams( "fly" )
-	p.movement.jumped = true
-end
-
-p.registerStateScript( "fly", "checkletout", function( args )
-	return checkEscapes(args)
-end)
-p.registerStateScript( "fly", "bellytotail", function( args )
-	return p.moveOccupantLocation(args, "body", "tail")
-end)
-p.registerStateScript( "fly", "tailtobelly", function( args )
-	return p.moveOccupantLocation(args, "tail", "belly")
-end)
-
-p.registerStateScript( "fly", "eat", function( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "fly", "taileat", function( args )
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
-end)
-p.registerStateScript( "fly", "analvore", function( args )
-	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
-end)
-
-p.registerStateScript( "fly", "grabanalvore", function()
-	if p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore") then return end
-	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
-end)
-
-p.registerStateScript( "fly", "succ", function( args )
-	succ(args)
-end)
-
-
-
-function state.fly()
+function state.fly.update()
 	p.doAnims(p.stateconfig[p.state].control.animations.fly)
-
-	p.idleStateChange()
-	p.handleBelly()
-
-
-	p.primaryAction()
-	p.altAction()
-	p.interact()
 
 	local control = p.stateconfig[p.state].control
 
@@ -465,13 +370,32 @@ function state.fly()
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
 		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.total + p.settings.fatten) +1], controlForce )
 	end
-
-	p.updateDriving()
 end
 
-function state.ending.fly()
+function state.fly.begin()
+	p.setMovementParams( "fly" )
+	p.movement.jumped = true
+end
+
+function state.fly.ending()
 	p.movement.jumped = true
 	p.setMovementParams( "default" )
 end
+
+function state.fly.analvore(args)
+	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
+end
+
+function state.fly.grabanalvore()
+	if p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore") then return end
+	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
+end
+
+state.fly.checkletout = checkEscapes
+state.fly.bellytotail = bellyToTail
+state.fly.tailtobelly = tailToBelly
+state.fly.eat = oralEat
+state.fly.taileat = tailEat
+state.fly.succ = succ
 
 -------------------------------------------------------------------------------

@@ -2,6 +2,11 @@
 
 require("/vehicles/spov/playable_vso.lua")
 
+state = {
+	back = {},
+	hug = {}
+}
+
 function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
 end
 
@@ -11,20 +16,19 @@ end
 function onEnd()
 end
 
-p.registerStateScript( "back", "eat", function( args )
+function state.back.eat( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
+end
 
-p.registerStateScript( "back", "anal", function( args )
+function state.back.anal( args )
 	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
-end)
+end
 
-p.registerStateScript( "back", "analescape", function( args )
+function state.back.analescape( args )
 	return p.doEscape(args, "belly", {-3, -3.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
-end)
+end
 
-
-p.registerStateScript( "back", "bed", function( args )
+function state.back.bed( args )
 	local index = p.occupants.total + 1
 
 	if p.eat( args.id, index, "hug" ) then
@@ -33,11 +37,9 @@ p.registerStateScript( "back", "bed", function( args )
 	else
 		return false
 	end
-end)
+end
 
-function state.back()
-	p.standardState()
-
+function state.back.update()
 	-- simulate npc interaction when nearby
 	if p.occupants.total == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
@@ -49,20 +51,20 @@ function state.back()
 	end
 end
 
-p.registerStateScript( "back", "unbed", function(args)
+function state.back.unbed(args)
 	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {})
-end)
+end
 
-state_hug = p.standardState
+---------------------------------------------------------------------------
 
-p.registerStateScript( "hug", "eat", function( args )
+function state.hug.eat( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
+end
 
-p.registerStateScript( "hug", "anal", function( args )
+function state.hug.anal( args )
 	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
-end)
+end
 
-p.registerStateScript( "hug", "analescape", function( args )
+function state.hug.analescape( args )
 	return p.doEscape(args, "belly", {-3, -2.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
-end)
+end

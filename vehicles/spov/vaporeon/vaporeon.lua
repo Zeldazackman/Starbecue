@@ -2,6 +2,18 @@
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 require("/vehicles/spov/playable_vso.lua")
+
+state = {
+	stand = {},
+	sit = {},
+	lay = {},
+	sleep = {},
+	back = {},
+	hug = {},
+	smol = {},
+	chonk_ball = {}
+}
+
 --[[
 
 vaporeon plan:
@@ -51,7 +63,6 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
--------------------------------------------------------------------------------
 
 function p.whenFalling()
 	if p.state ~= ("stand" or "smol" or "chonk_ball") and mcontroller.yVelocity() < -5 then
@@ -68,20 +79,7 @@ end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "stand", "eat", function( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end)
-
-p.registerStateScript( "stand", "letout", function( args )
-	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
-end)
-
-p.registerStateScript( "stand", "bapeat", function()
-	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
-end)
-
-function state.stand()
-
+function state.stand.update()
 	if p.driving then
 		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
@@ -97,7 +95,7 @@ function state.stand()
 		elseif p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 			if not p.movement.wasspecial1 then
 				p.movement.wasspecial1 = true
-				vsoEffectWarpOut()
+				world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
 				if p.occupants.belly < 2 then
 					p.setState( "smol" )
 					p.doAnims( p.stateconfig.smol.idle, true )
@@ -115,24 +113,37 @@ function state.stand()
 				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
 			end
 		end
-		p.drive()
 	end
-
 end
 
-function state.interact.stand( occupantId )
+function state.stand.interact( occupantId )
 	if mcontroller.yVelocity() > -5 then
 		p.onInteraction( occupantId )
 	end
 end
 
+function state.stand.eat( args )
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end
+
+function state.stand.letout( args )
+	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end
+
+function state.stand.bapeat()
+	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+end
+
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "sit", "pin", function( args )
+function state.sit.pin( args )
 	local pinnable = { args.id }
 	-- if not interact target or target isn't in front
 	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
-		local pinbounds = vsoRelativeRect( 2.75, -4, 3.5, -3.5 )
+		local pinbounds = {
+			p.localToGlobal({2.75, -4}),
+			p.localToGlobal({3.5, -3.5})
+		}
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
 		if #pinnable == 0 and p.driving then
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
@@ -143,20 +154,9 @@ p.registerStateScript( "sit", "pin", function( args )
 		--vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
 	return true
-end)
-
+end
 
 -------------------------------------------------------------------------------
-
-p.registerStateScript( "lay", "unpin", function(args)
-	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
-	return true, returnval[2], returnval[3]
-end)
-
-p.registerStateScript( "lay", "absorb", function(args)
-	return LayAbsorb()
-end)
 
 function LayAbsorb()
 	local index = p.findFirstIndexForLocation("hug")
@@ -168,9 +168,7 @@ function LayAbsorb()
 	end
 end
 
-function state.lay()
-	p.standardState()
-
+function state.lay.update()
 	if p.driving then
 		p.primaryAction() -- lick
 	end
@@ -178,39 +176,29 @@ function state.lay()
 	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
+end
 
+state.lay.absorb = LayAbsorb
+
+function state.lay.unpin(args)
+	local returnval = {}
+	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
+	return true, returnval[2], returnval[3]
 end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "sleep", "absorb", function(args)
-	return LayAbsorb()
-end)
-
-function state.sleep()
-	p.standardState()
-
+function state.sleep.update()
 	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 end
 
+state.sleep.absorb = LayAbsorb
+
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "back", "bed", function( args )
-	local index = p.occupants.total + 1
-
-	if p.eat( args.id, index, "hug" ) then
-		--vsoVictimAnimSetStatus( "occupant"..index, {} );
-		return true
-	else
-		return false
-	end
-end)
-
-function state.back()
-	p.standardState()
-
+function state.back.update()
 	-- simulate npc interaction when nearby
 	if p.occupants.total == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
@@ -222,13 +210,30 @@ function state.back()
 	end
 end
 
-p.registerStateScript( "back", "unbed", function(args)
+function state.back.bed( args )
+	local index = p.occupants.total + 1
+
+	if p.eat( args.id, index, "hug" ) then
+		--vsoVictimAnimSetStatus( "occupant"..index, {} );
+		return true
+	else
+		return false
+	end
+end
+
+function state.back.unbed(args)
 	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {})
-end)
+end
 
 -------------------------------------------------------------------------------
 
-p.registerStateScript( "hug", "absorb", function(args)
+function state.hug.update()
+	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
+		p.doTransition( "absorb" )
+	end
+end
+
+function state.hug.absorb(args)
 	local index = p.findFirstIndexForLocation("hug")
 	if not index then return false end
 
@@ -236,35 +241,16 @@ p.registerStateScript( "hug", "absorb", function(args)
 	return true, function()
 		p.occupant[index].location = "belly"
 	end
-end)
-
-function state.hug()
-
-	p.standardState()
-
-	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
-		p.doTransition( "absorb" )
-	end
-
 end
 
 -------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------
-
-function state.begin.smol()
-	p.setMovementParams( "smol" )
-end
-
-function state.smol()
-
-	p.idleStateChange()
-	p.handleBelly()
-
+function state.smol.update()
 	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
 		if not p.movement.wasspecial1 then
 			-- p.doAnim( "bodyState", "unsmolify" )
-			vsoEffectWarpIn()
+			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )
 		end
@@ -272,13 +258,13 @@ function state.smol()
 	else
 		p.movement.wasspecial1 = false
 	end
-	p.drive()
-
-	p.updateDriving()
-
 end
 
-function state.ending.smol()
+function state.smol.begin()
+	p.setMovementParams( "smol" )
+end
+
+function state.smol.ending()
 	p.setMovementParams( "default" )
 end
 
@@ -299,20 +285,10 @@ function roll_chonk_ball(dx, control)
 	end
 end
 
-function state.begin.chonk_ball()
-	animator.setGlobalTag("rotationFlip", p.direction)
-
-	p.setMovementParams( "chonk_ball" )
-	CurBallFrame = 0
-	BallLastPosition = mcontroller.position()
-
-end
-
-function state.chonk_ball()
-	p.handleBelly()
-	p.doPhysics()
+function state.chonk_ball.update()
 	if p.occupants.belly < 2 then
-		vsoEffectWarpIn()
+		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+
 		p.setState( "smol" )
 		p.doAnims( p.stateconfig.smol.idle, true )
 	end
@@ -326,7 +302,8 @@ function state.chonk_ball()
 		if vehicle.controlHeld( p.driverSeat, "Special1" ) then
 			if not p.movement.wasspecial1 then
 				p.movement.wasspecial1 = true
-				vsoEffectWarpIn()
+				world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+
 				p.setState( "stand" )
 				p.doAnims( p.stateconfig.stand.idle, true )
 				return
@@ -362,10 +339,16 @@ function state.chonk_ball()
 	end
 
 	roll_chonk_ball(dx, control)
-
-	p.updateDriving()
 end
 
-function state.ending.chonk_ball()
+function state.chonk_ball.begin()
+	animator.setGlobalTag("rotationFlip", p.direction)
+	p.setMovementParams( "chonk_ball" )
+	CurBallFrame = 0
+	BallLastPosition = mcontroller.position()
+end
+
+
+function state.chonk_ball.ending()
 	p.setMovementParams( "default" )
 end
