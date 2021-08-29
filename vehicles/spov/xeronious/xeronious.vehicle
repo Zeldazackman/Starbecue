@@ -141,8 +141,9 @@
 			"combine" :[
 				["belly", "fatten"]
 			],
-			"weight" : [
-				"belly"
+			"mass" : [
+				"belly",
+				"fatten"
 			]
 		},
 

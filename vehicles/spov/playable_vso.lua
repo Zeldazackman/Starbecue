@@ -2,6 +2,7 @@
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 state = {}
+controls = {}
 
 p = {
 	maxOccupants = { --basically everything I think we'd need
@@ -50,6 +51,32 @@ p.clearOccupant = {
 	filepath = nil
 }
 
+p.clearSeat = {
+	dx = 0,
+	dy = 0,
+	left = 0,
+	right = 0,
+	up = 0,
+	down = 0,
+	jump = 0,
+	special1 = 0,
+	special2 = 0,
+	special3 = 0,
+	species = nil,
+	mass = 0,
+	primaryHandItem = nil,
+	altHandItem = nil,
+	head = nil,
+	chest = nil,
+	legs = nil,
+	back = nil,
+	headCosmetic = nil,
+	chestCosmetic = nil,
+	legsCosmetic = nil,
+	backCosmetic = nil,
+	powerMultiplier = 1
+}
+
 require("/vehicles/spov/pvso_animation.lua")
 require("/vehicles/spov/pvso_state_control.lua")
 require("/vehicles/spov/pvso_driving.lua")
@@ -61,6 +88,7 @@ function init()
 	p.cfgAnimationFile = config.getParameter("animation")
 	p.victimAnimations = root.assetJson(p.vso.victimAnimations)
 	p.stateconfig = config.getParameter("states")
+	p.loungePositions = config.getParameter("loungePositions")
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
@@ -88,6 +116,10 @@ function init()
 		state.victimAnim = {
 			done = true
 		}
+	end
+
+	for seatname, data in pairs(p.loungePositions) do
+		controls[seatname] = p.clearSeat
 	end
 
 	if not config.getParameter( "uneaten" ) then
@@ -125,7 +157,7 @@ function init()
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
-		return getSettingsMenuInfo()
+		return p.getSettingsMenuInfo()
 	end )
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
@@ -197,17 +229,18 @@ function init()
 	onBegin()
 end
 
+p.totalTimeAlive = 0
 function update(dt)
+	p.totalTimeAlive = p.totalTimeAlive + dt
 	p.dt = dt
 	p.updateAnims(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
-	p.idleStateChange()
+	p.idleStateChange(dt)
+	p.updateControls(dt)
 	if p.driving then
 		p.drive()
 		p.driverSeatStateChange()
-	else
-		p.doPhysics()
 	end
 	p.updateDriving()
 	p.whenFalling()
@@ -225,6 +258,13 @@ function uninit()
 	then
 		p.onDeath()
 	end
+end
+
+p.dtSinceList = {}
+function p.dtSince(name) -- used for when something isn't in the main update loop but knowing the dt since it was last called is good
+	local last = p.dtSinceList[name] or p.totalTimeAlive
+	p.dtSinceList[name] = p.totalTimeAlive
+	return p.totalTimeAlive - last
 end
 
 function p.facePoint(x)
@@ -290,18 +330,21 @@ function p.onDeath()
 end
 
 p.rpcList = {}
-function p.addRPC(rpc, callback)
-	if callback ~= nil then table.insert(p.rpcList, {rpc = rpc, callback = callback, dt = 0}) end
+function p.addRPC(rpc, callback, name)
+	if callback ~= nil and name == nil then
+		table.insert(p.rpcList, name, {rpc = rpc, callback = callback, dt = 0})
+	elseif p.rpcList[name] == nil then
+		p.rpcList[name] = {rpc = rpc, callback = callback, dt = 0}
+	end
 end
 
 function p.checkRPCsFinished(dt)
-	for i, list in ipairs(p.rpcList) do
+	for name, list in pairs(p.rpcList) do
 		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
 		if list.rpc:finished() then
 			list.callback(list.rpc:result(), list.dt)
 			-- not quite sure if what is below is what I should be doing
-			table.remove(p.rpcList, i)
-			i = i - 1
+			table.remove(p.rpcList, name)
 		end
 	end
 end
@@ -309,35 +352,43 @@ end
 p.timerList = {}
 
 function p.randomTimer(name, min, max, callback)
-	if p.timerList.name == nil then
+	if name == nil or p.timerList[name] == nil then
 		local timer = {
 			targetTime = (math.random(min * 100, max * 100))/100,
 			currTime = 0,
 			callback = callback
 		}
-		table.insert(p.timerList, timer)
+		if name ~= nil then
+			p.timerList[name] = timer
+		else
+			table.insert(p.timerList, timer)
+		end
 	end
 end
 
 function p.timer(name, time, callback)
-	if p.timerList.name == nil then
+	if name == nil or p.timerList[name] == nil then
 		local timer = {
 			targetTime = time,
 			currTime = 0,
 			callback = callback
 		}
-		table.insert(p.timerList, timer)
+		if name ~= nil then
+			p.timerList[name] = timer
+		else
+			table.insert(p.timerList, timer)
+		end
 	end
 end
 
 function p.checkTimers(dt)
-	for i, timer in pairs(p.timerList) do
+	for name, timer in pairs(p.timerList) do
 		timer.currTime = timer.currTime + dt
 		if timer.currTime >= timer.targetTime then
 			if timer.callback ~= nil then
 				timer.callback()
 			end
-			table.remove(p.timerList, i)
+			table.remove(p.timerList, name)
 		end
 	end
 end
@@ -572,7 +623,7 @@ function p.resetOccupantCount()
 		end
 	end
 	p.occupants.fatten = p.settings.fatten or 0
-	p.occupants.weight = 0
+	p.occupants.mass = 0
 end
 
 function p.updateOccupants()
@@ -584,6 +635,12 @@ function p.updateOccupants()
 		if occupantId and world.entityExists(occupantId) then
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
+
+			for _, location in ipairs(p.vso.locations.mass) do
+				if location == p.occupant[i].location then
+					p.occupants.mass = p.occupants.mass + controls["occupant"..i].mass
+				end
+			end
 
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
@@ -597,6 +654,12 @@ function p.updateOccupants()
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
+	for _, location in ipairs(p.vso.locations.mass) do
+		if location == "fatten" then
+			p.occupants.mass = p.occupants.mass + p.occupants.fatten
+		end
+	end
+
 	for _, combine in ipairs(p.vso.locations.combine) do
 		for j = 2, #combine do
 			p.occupants[combine[1]] = p.occupants[combine[1]]+p.occupants[combine[j]]
@@ -607,9 +670,7 @@ function p.updateOccupants()
 		end
 	end
 
-	for _, location in ipairs(p.vso.locations.weight) do
-		p.occupants.weight = p.occupants.weight + p.occupants[location]
-	end
+	mcontroller.applyParameters({mass = p.vso.movementSettings[p.movementParams].mass + p.occupants.mass})
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
 	for i = 1, #p.vso.locations.regular do
@@ -797,7 +858,7 @@ end
 
 -------------------------------------------------------------------------------
 
-function getSettingsMenuInfo()
+function p.getSettingsMenuInfo()
 	local occupants = {}
 	for i = 1, p.occupants.total do
 		if p.occupant[i].id then
@@ -831,16 +892,6 @@ function p.underWater()
 	return mcontroller.liquidPercentage() >= 0.2
 end
 
-function p.doPhysics()
-	if not p.underWater() then
-		mcontroller.setXVelocity( 0 )
-		mcontroller.approachYVelocity( -200, 2 * world.gravity(mcontroller.position()) )
-	else
-		mcontroller.approachXVelocity( 0, 50 )
-		mcontroller.approachYVelocity( -10, 50 )
-	end
-end
-
 function p.useEnergy(eid, cost, callback)
 	p.addRPC( world.sendEntityMessage(eid, "useEnergy", cost), callback)
 end
@@ -849,6 +900,7 @@ end
 
 function p.handleBelly()
 	p.updateOccupants()
+	p.handleStruggles()
 	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= nil then
 		local driver = vehicle.entityLoungingIn( "driver")
 		if driver ~= nil then
@@ -859,7 +911,6 @@ function p.handleBelly()
 			p.doBellyEffects(false, p.standalonePowerLevel())
 		end
 	end
-	p.handleStruggles()
 end
 
 function p.standalonePowerLevel()
@@ -904,15 +955,12 @@ function p.isLocationDigest(location)
 	return false
 end
 
-randomDirections = { "back", "front", "up", "down", "jump", nil}
-p.monsterstrugglecooldown = {}
-
 function p.addHungerHealth(eid, amount, callback)
 	p.addRPC( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
 
 p.struggleCount = 0
-p.bellySettleDownTimer = 3
+p.bellySettleDownTimer = 5
 
 function p.handleStruggles()
 	p.bellySettleDownTimer = p.bellySettleDownTimer - p.dt

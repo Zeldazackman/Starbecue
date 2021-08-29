@@ -85,12 +85,12 @@ function openRadialMenu()
 		end
 	end
 
-	world.sendEntityMessage( entity.id(), "openInterface", "vsoRadialMenu", {options = options}, true )
+	world.sendEntityMessage( entity.id(), "openPVSOInterface", "vsoRadialMenu", {options = options}, true )
 end
 function openSettingsMenu()
-	-- world.sendEntityMessage( entity.id(), "openInterface", "vsoSpawnerSettings" )
+	-- world.sendEntityMessage( entity.id(), "openPVSOInterface", "vsoSpawnerSettings" )
 	sb.logInfo("TODO: vso spawner settings menu")
 end
 function closeMenu()
-	world.sendEntityMessage( entity.id(), "openInterface", "close" )
+	world.sendEntityMessage( entity.id(), "openPVSOInterface", "close" )
 end

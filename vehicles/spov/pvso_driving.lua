@@ -14,17 +14,17 @@ function p.updateDriving()
 	if p.standalone then
 		--vsoVictimAnimSetStatus( "driver", { "breathprotectionvehicle" } )
 		p.driving = true
-		if vehicle.controlHeld( p.driverSeat, "Special3" ) then
+		if controls[p.driverSeat].special3 > 0 then
 			world.sendEntityMessage(
-				vehicle.entityLoungingIn( p.driverSeat ), "openInterface", p.vso.menuName.."settings",
-				{ vso = entity.id(), occupants = getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
+				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
+				{ vso = entity.id(), occupants = p.getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
 			)
 		end
 	elseif p.occupants.total >= 1 then
-		if vehicle.controlHeld( p.driverSeat, "Special1" ) then
+		if controls[p.driverSeat].special1 > 0 then
 			p.driving = true
 		end
-		if vehicle.controlHeld( p.driverSeat, "Special2" ) then
+		if controls[p.driverSeat].special2 > 0 then
 			p.driving = false
 		end
 	else
@@ -34,27 +34,72 @@ end
 
 function p.drive()
 	if (not p.driving) or (not p.stateconfig[p.state].control) then return end
-	local control = p.stateconfig[p.state].control
-	if control.animations == nil then control.animations = {} end -- allow indexing
 
-	local dx = 0
-	if vehicle.controlHeld( p.driverSeat, "left" ) then
-		dx = dx - 1
-	end
-	if vehicle.controlHeld( p.driverSeat, "right" ) then
-		dx = dx + 1
-	end
-	mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
-	if p.probablyOnGround() then
-		p.groundMovement( dx )
-	elseif p.underWater() then
-		p.waterMovement( dx )
-	else
-		p.airMovement( dx )
-	end
 
-	p.primaryAction()
-	p.altAction()
+end
+
+function p.updateControls(dt)
+	for seatname, seat in pairs(controls) do
+		local lounging = vehicle.entityLoungingIn(seatname)
+
+		if lounging ~= nil and world.entityExists(lounging) then
+			local dx = 0
+			local dy = 0
+			if vehicle.controlHeld(seatname, "left") then
+				seat.left = seat.left + dt
+				dx = dx -1
+			else
+				seat.left = 0
+			end
+			if vehicle.controlHeld(seatname, "right") then
+				seat.right = seat.right + dt
+				dx = dx +1
+			else
+				seat.right = 0
+			end
+			if vehicle.controlHeld(seatname, "up") then
+				seat.up = seat.up + dt
+				dy = dy +1
+			else
+				seat.up = 0
+			end
+			if vehicle.controlHeld(seatname, "down") then
+				seat.down = seat.down + dt
+				dy = dy -1
+			else
+				seat.down = 0
+			end
+			if vehicle.controlHeld(seatname, "jump") then
+				seat.jump = seat.jump + dt
+			else
+				seat.jump = 0
+			end
+			if vehicle.controlHeld(seatname, "special1") then
+				seat.special1 = seat.special1 + dt
+			else
+				seat.special1 = 0
+			end
+			if vehicle.controlHeld(seatname, "special2") then
+				seat.special2 = seat.special2 + dt
+			else
+				seat.special2 = 0
+			end
+			if vehicle.controlHeld(seatname, "special3") then
+				seat.special3 = seat.special3 + dt
+			else
+				seat.special3 = 0
+			end
+			seat.dx = dx
+			seat.dy = dy
+			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation"), function(seatdata)
+				for index, data in pairs(seatdata) do
+					seat[index] = data
+				end
+			end, seatname.."Info")
+		else
+			seat = p.clearSeat
+		end
+	end
 end
 
 function p.groundMovement( dx )
@@ -62,7 +107,7 @@ function p.groundMovement( dx )
 	local control = state.control
 
 	local running = false
-	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.total)< control.fullThreshold then
+	if not (controls[p.driverSeat].down > 0) and (p.occupants.total)< control.fullThreshold then
 		running = true
 	end
 	if dx ~= 0 then
@@ -93,7 +138,7 @@ function p.groundMovement( dx )
 			if not p.movement.jumped then
 				p.doAnims( control.animations.jump )
 				p.movement.animating = true
-				if p.occupants.weight < control.fullThreshold then
+				if p.occupants.mass < control.fullThreshold then
 					mcontroller.setYVelocity( control.jumpStrength )
 				else
 					mcontroller.setYVelocity( control.fullJumpStrength )
@@ -150,7 +195,7 @@ function p.airMovement( dx )
 	local control = p.stateconfig[p.state].control
 
 	local running = false
-	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.weight < control.fullThreshold) then
+	if not vehicle.controlHeld( p.driverSeat, "down" ) and (p.occupants.mass < control.fullThreshold) then
 		running = true
 	end
 	if dx ~= 0 then
@@ -177,7 +222,7 @@ function p.airMovement( dx )
 		if not p.movement.jumped and p.movement.jumps < control.jumpCount then
 			p.doAnims( control.animations.jump )
 			p.movement.animating = true
-			if p.occupants.weight < control.fullThreshold then
+			if p.occupants.mass < control.fullThreshold then
 				mcontroller.setYVelocity( control.jumpStrength )
 			else
 				mcontroller.setYVelocity( control.fullJumpStrength )
@@ -263,36 +308,24 @@ function p.altAction()
 	p.movement.altCooldown = p.movement.altCooldown - 1
 end
 
+p.monsterstrugglecooldown = {}
 
 function p.getSeatDirections(seatname)
 	local occupantId = vehicle.entityLoungingIn(seatname)
 	if not occupantId or not world.entityExists(occupantId) then return end
 
 	if world.entityType( occupantId ) ~= "player" then
-		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] < 1 then
-			local movedir = randomDirections[math.random(1,6)]
-			p.monsterstrugglecooldown[seatname] = math.random(1, 30)
-			return movedir
+		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] <= 0 then
+			local randomDirections = { "back", "front", "up", "down", "jump", nil}
+			p.monsterstrugglecooldown[seatname] = (math.random(100, 1000)/100)
+			return randomDirections[math.random(1,6)]
 		else
-			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - 1
+			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - p.dt
 			return
 		end
 	else
-		local dx = 0
-		local dy = 0
-		if vehicle.controlHeld( seatname, "left" ) then
-			dx = dx - 1
-		end
-		if vehicle.controlHeld( seatname, "right" ) then
-			dx = dx + 1
-		end
-		if vehicle.controlHeld( seatname, "down" ) then
-			dy = dy - 1
-		end
-		if vehicle.controlHeld( seatname, "up" ) then
-			dy = dy + 1
-		end
-
+		local dx = controls[seatname].dx
+		local dy = controls[seatname].dy
 		dx = dx * p.direction
 
 		if dx ~= 0 then
@@ -311,7 +344,7 @@ function p.getSeatDirections(seatname)
 			end
 		end
 
-		if vehicle.controlHeld( seatname, "jump" ) then
+		if controls[seatname].jump > 0 then
 			return "jump"
 		end
 	end

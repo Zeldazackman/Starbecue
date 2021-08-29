@@ -357,7 +357,7 @@ function state.fly.update()
 	end
 
 	local running = false
-	if p.occupants.weight < control.fullThreshold then --add walk control here when we have more controls
+	if p.occupants.mass < control.fullThreshold then --add walk control here when we have more controls
 		running = true
 	end
 	if dx ~= 0 then
@@ -365,10 +365,10 @@ function state.fly.update()
 	end
 	if running then
 		mcontroller.approachXVelocity( dx * control.runSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[(p.occupants.weight) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.runSpeed -control.fullWeights[math.floor(p.occupants.mass) +1], controlForce )
 	else
 		mcontroller.approachXVelocity( dx * control.walkSpeed, controlForce )
-		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[(p.occupants.weight) +1], controlForce )
+		mcontroller.approachYVelocity( dy * control.walkSpeed -control.fullWeights[math.floor(p.occupants.mass) +1], controlForce )
 	end
 end
 

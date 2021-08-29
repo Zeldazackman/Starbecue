@@ -9,7 +9,7 @@ function init()
 	message.setHandler( "saveVSOsettings", function(_,_, settings )
 		player.setProperty( "vsoSettings", settings )
 	end)
-	message.setHandler( "openInterface", function(_,_, name, args, appendSettings, sourceEntity)
+	message.setHandler( "openPVSOInterface", function(_,_, name, args, appendSettings, sourceEntity)
 		local pane = root.assetJson("/interface/scripted/pvso/"..name.."/"..name..".config")
 		if args then
 			pane = sb.jsonMerge(pane, args)
@@ -39,6 +39,25 @@ function init()
 	message.setHandler("getDriverStat", function( _, _, stat)
 		return status.stat(stat)
 	end )
+
+	message.setHandler("getVSOseatInformation", function()
+		local seatdata = {
+			species = player.species(),
+			mass = mcontroller.mass(),
+			primaryHandItem = player.primaryHandItem(),
+			altHandItem = player.altHandItem(),
+			head = player.equippedItem("head"),
+			chest = player.equippedItem("chest"),
+			legs = player.equippedItem("legs"),
+			back = player.equippedItem("back"),
+			headCosmetic = player.equippedItem("headCosmetic"),
+			chestCosmetic = player.equippedItem("chestCosmetic"),
+			legsCosmetic = player.equippedItem("legsCosmetic"),
+			backCosmetic = player.equippedItem("backCosmetic"),
+			powerMultiplier = status.stat("powerMultiplier")
+		}
+		return seatdata
+	end)
 
 	message.setHandler("addHungerHealth", function( _, _, amount)
 		if status.resourcePercentage("food") < 1 then

@@ -17,7 +17,7 @@
 			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "breathprotectionvehicle", "pvsoInvisible"]
 		},
 		"occupant1" : {
 			"part" : "occupant1",
@@ -59,13 +59,10 @@
 					[2.5, -4], [3, -3.4],
 					[3, 0.4], [2.5, 1]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
+				"mass" : 1.6, // mass from eating people gets added to this
 				"collisionEnabled" : true,
 				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 			},
 			"smol":{
@@ -75,13 +72,10 @@
 					[1.25, -0.35], [0.85, 0.22],
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
+				"mass" : 1.6, // mass from eating people gets added to this
 				"collisionEnabled" : true,
 				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 			},
 			"chonk_ball":{
@@ -91,13 +85,12 @@
 					[1.25, -0.35], [0.85, 0.22],
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
+				"mass" : 1.6, // mass from eating people gets added to this
+				"liquidBuoyancy" : 2.0,
+				"bounceFactor" : 0.75,
 				"collisionEnabled" : true,
 				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 			}
 		},
@@ -129,8 +122,9 @@
 			"combine" :[
 				["belly", "fatten"]
 			],
-			"weight" : [
-				"belly"
+			"mass" : [
+				"belly",
+				"fatten"
 			]
 		},
 		"maxOccupants" : {
