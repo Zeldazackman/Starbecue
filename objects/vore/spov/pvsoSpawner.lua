@@ -34,9 +34,11 @@ function update(dt)
 		s.vsoEid = world.spawnVehicle( s.vehicle, s.spawnPosition, { spawner = entity.id(), settings = storage.settings, direction = object.direction() } )
 	end
 
-
 end
 
 function die()
+	if s.vsoEid ~= nil then
+		world.sendEntityMessage(s.vsoEid, "despawn")
+	end
 
 end

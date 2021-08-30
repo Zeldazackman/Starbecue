@@ -162,7 +162,9 @@ function init()
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
 		local driver = vehicle.entityLoungingIn(p.driverSeat)
-		world.sendEntityMessage(driver, "PVSOClear")
+		if driver then
+			world.sendEntityMessage(driver, "PVSOClear")
+		end
 		p.nowarpout = nowarpout
 		p.onDeath()
 	end )
@@ -231,6 +233,7 @@ end
 
 p.totalTimeAlive = 0
 function update(dt)
+	p.checkSpawnerExists()
 	p.totalTimeAlive = p.totalTimeAlive + dt
 	p.dt = dt
 	p.updateAnims(dt)
@@ -332,7 +335,7 @@ end
 p.rpcList = {}
 function p.addRPC(rpc, callback, name)
 	if callback ~= nil and name == nil then
-		table.insert(p.rpcList, name, {rpc = rpc, callback = callback, dt = 0})
+		table.insert(p.rpcList, {rpc = rpc, callback = callback, dt = 0})
 	elseif p.rpcList[name] == nil then
 		p.rpcList[name] = {rpc = rpc, callback = callback, dt = 0}
 	end

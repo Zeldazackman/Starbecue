@@ -64,4 +64,18 @@ function init()
 	message.setHandler("getRadialSelection", function(_,_, stat)
 		return player.getProperty("radialSelection")
 	end)
+
+	message.setHandler("getVSOseatEquips", function()
+		local seatdata = {
+			head = player.equippedItem("head"),
+			chest = player.equippedItem("chest"),
+			legs = player.equippedItem("legs"),
+			back = player.equippedItem("back"),
+			headCosmetic = player.equippedItem("headCosmetic"),
+			chestCosmetic = player.equippedItem("chestCosmetic"),
+			legsCosmetic = player.equippedItem("legsCosmetic"),
+			backCosmetic = player.equippedItem("backCosmetic"),
+		}
+		return seatdata
+	end)
 end
