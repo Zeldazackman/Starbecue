@@ -18,10 +18,7 @@ function init()
 
 	message.setHandler("getVSOseatInformation", function()
 		local seatdata = {
-			species = npc.species(),
 			mass = mcontroller.mass(),
-			primaryHandItem = npc.getItemSlot("primary"),
-			altHandItem = npc.getItemSlot("alt"),
 			head = npc.getItemSlot("head"),
 			chest = npc.getItemSlot("chest"),
 			legs = npc.getItemSlot("legs"),

@@ -2,12 +2,23 @@ local oldinit = init
 function init()
 	oldinit()
 
+	message.setHandler("pvsoApplyStatusEffects", function(_,_, effects, source)
+		status.addEphemeralEffects(effects, source)
+	end)
+
+	message.setHandler("pvsoRemoveStatusEffect", function(_,_, effect)
+		status.removeEphemeralEffect(effect)
+	end)
+
+	message.setHandler("pvsoRemoveStatusEffects", function(_,_, effects)
+		for i = 1, #effects do
+			status.removeEphemeralEffect(effect[i])
+		end
+	end)
+
 	message.setHandler("getVSOseatInformation", function()
 		local seatdata = {
-			species = player.species(),
 			mass = mcontroller.mass(),
-			primaryHandItem = player.primaryHandItem(),
-			altHandItem = player.altHandItem(),
 			head = player.equippedItem("head"),
 			chest = player.equippedItem("chest"),
 			legs = player.equippedItem("legs"),

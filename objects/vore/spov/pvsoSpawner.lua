@@ -13,6 +13,9 @@ function init()
 		storage.settings = settings
 	end)
 
+	if storage.settings == nil and s.defaultValues.spov.settings ~= nil then
+		storage.settings = s.defaultValues.spov.settings
+	end
 end
 
 function localToGlobal(position)

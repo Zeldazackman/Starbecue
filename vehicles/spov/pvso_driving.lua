@@ -91,6 +91,10 @@ function p.updateControls(dt)
 			end
 			seat.dx = dx
 			seat.dy = dy
+			seat.species = world.entitySpecies(lounging) or world.monsterType(lounging)
+			seat.primaryHandItem = world.entityHandItem(lounging, "primary")
+			seat.altHandItem = world.entityHandItem(lounging, "alt")
+
 			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation"), function(seatdata)
 				if seatdata ~= nil then
 					for index, data in pairs(seatdata) do

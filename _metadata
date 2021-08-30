@@ -1,9 +1,9 @@
 {
-	"version" : "1.3",
+	"version" : "2.0",
 	"tags" : "",
 	"author" : "Zygan",
-	"description" : "SSVM addons made by Zygan (aka Notnat Tlikehis or Alpaca53382)",
+	"description" : "SSVM addons made by Zygan (aka Notnat Tlikehis or Alpaca53382) and Wasabi_Raptor (aka LokiVulpix)",
 	"name" : "ZyganSSVMAddons",
 	"friendlyName" : "ZyganSSVMAddons",
-	"requires" : ["StarboundSimpleVoreModVSO"]
+	"includes" : ["StarboundSimpleVoreModVSO"]
 }

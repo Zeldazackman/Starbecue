@@ -16,4 +16,13 @@ function init()
 		end
 	end)
 
+	message.setHandler("getVSOseatInformation", function()
+		local seatdata = {
+			mass = mcontroller.mass(),
+			powerMultiplier = status.stat("powerMultiplier")
+		}
+		return seatdata
+	end)
+
+
 end

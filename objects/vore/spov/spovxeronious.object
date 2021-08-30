@@ -1,62 +1,57 @@
 {
-	"objectName": "spovspawnerxeronious"
-	, "colonyTags": ["vore"]
-	, "rarity": "Rare"
-	, "shortdescription": "Xeronious"
-	, "race": "generic"
-	, "category": "other"
-	, "price": 500
-	, "health" : 5
+	"objectName": "spovspawnerxeronious",
+	"colonyTags": ["vore"],
+	"rarity": "Rare",
+	"shortdescription": "Xeronious",
+	"race": "generic",
+	"category": "other",
+	"price": 500,
+	"health" : 5,
+	"path" : "/objects/vore/spov/spovxeronious.object",
 
-	, "tooltipKind" : "vso"
-	, "objectImage" : "/vehicles/spov/xeronious/xeronious.png:normal"
-	, "description": "A fluffy kaiju who can eat you in several ways!"
-	, "tooltipFields": {
+	"tooltipKind" : "vso",
+	"objectImage" : "/vehicles/spov/xeronious/xeronious.png:normal",
+	"description": "A fluffy kaiju who can eat you in several ways!",
+	"tooltipFields": {
 		"statusLabel": "A fluffy kaiju who can eat you in several ways!"
-	}
-	, "tooltipSubtitle" : "xeronious"
+	},
+	"tooltipSubtitle" : "xeronious",
 
-	, "orientations": [{
-			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
-			, "imagePosition": [-48, 0]
-			, "direction": "left"
-			, "flipImages": true
-			, "spaceScan": 0.1
-			, "anchors": ["bottom"]
-		}, {
-			"image": "/vehicles/spov/xeronious/xeronious.png:normal"
-			, "imagePosition": [-48, 0]
-			, "direction": "right"
-			, "spaceScan": 0.1
-			, "anchors": ["bottom"]
-		}]
+	"orientations": [
+		{
+			"image": "/vehicles/spov/xeronious/xeronious.png:normal",
+			"imagePosition": [-48, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		},
+		{
+			"image": "/vehicles/spov/xeronious/xeronious.png:normal",
+			"imagePosition": [-48, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		}
+	],
 
-	, "inventoryIcon": "/vehicles/spov/xeronious/xeroniousicon.png"
+	"inventoryIcon": "/vehicles/spov/xeronious/xeroniousicon.png",
 
-	, "animation": "spovspawner.animation"
-	, "animationParts" : {
-		"bg": "/vehicles/spov/xeronious/xeronious.png:normal"
-	}
-	, "animationPosition" : [0, 48]
-	, "animationCustom" : {}
+	"spov": {
+		"types": ["spovxeronious"],
+		"position": [0.0, 5]
+	},
 
-	, "spov": {
-		"types": ["spovxeronious"]
-		, "position": [0.0, 5, 0.0, 5]
-		, "template": {}
-		, "pillsAdd": { "antiescape":{}, "easyescape":{}, "heal":{}, "digest":{}, "softdigest":{}, "fatten":{} }
-	}
-
-	, "retainObjectParametersInItem" : true
-	, "isWired" : false
-	, "printable" : false
-	, "scannable" : false
-	, "interactive" : false
-	, "inspectable" : false
-	, "allowScanning" : false
-	, "isContainer" : false
-	, "builder" : "/scripts/vore/spovitembuilder.lua"
-	, "scripts": [
-		"/scripts/vore/spovspawner.lua", "/vehicles/spov/xeronious/xeroniousitemscript.lua"
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
+	"scripts": [
+		"/objects/vore/spov/pvsoSpawner.lua"
 	]
 }

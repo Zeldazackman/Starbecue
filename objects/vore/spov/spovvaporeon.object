@@ -65,9 +65,8 @@
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false,
-	"builder" : "/scripts/vore/spovitembuilder.lua",
+	"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
 	"scripts": [
-		"/scripts/vore/spovspawner.lua",
-		"/vehicles/spov/vaporeon/vaporeonitemscript.lua"
+		"/objects/vore/spov/pvsoSpawner.lua"
 	]
 }
