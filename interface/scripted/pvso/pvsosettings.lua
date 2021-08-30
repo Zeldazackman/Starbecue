@@ -13,11 +13,12 @@ function onInit()
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	globalSettings = p.vsoSettings.global or {}
+	settings = p.vsoSettings[p.vsoname] or {}
+
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
-	settings = p.vsoSettings[p.vsoname] or {}
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
 	p.refreshed = true
