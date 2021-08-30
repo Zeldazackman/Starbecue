@@ -3,25 +3,29 @@ function p.updateAnims(dt)
 	for _, state in pairs(p.animStateData) do
 		state.animationState.time = state.animationState.time + dt
 		if state.animationState.time >= state.animationState.cycle then
-			for _, func in pairs(state.animationState.queue) do
-				func()
-			end
-			state.animationState.queue = {}
-
-			if (state.tag ~= nil) and state.tag.reset then
-				if state.tag.part == "global" then
-					animator.setGlobalTag( state.tag.name, "" )
-				else
-					animator.setPartTag( state.tag.part, state.tag.name, "" )
-				end
-				state.tag = nil
-			end
+			p.endAnim(state)
 		end
 	end
 
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
 	p.victimAnimUpdate()
+end
+
+function p.endAnim(state)
+	for _, func in pairs(state.animationState.queue) do
+		func()
+	end
+	state.animationState.queue = {}
+
+	if (state.tag ~= nil) and state.tag.reset then
+		if state.tag.part == "global" then
+			animator.setGlobalTag( state.tag.name, "" )
+		else
+			animator.setPartTag( state.tag.part, state.tag.name, "" )
+		end
+		state.tag = nil
+	end
 end
 
 function p.victimAnimUpdate()
@@ -159,6 +163,11 @@ function p.doAnim( state, anim, force)
 	local force = force
 	local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
 	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
+		if isSame and (p.animStateData[state].states[animator.animationState(state)].mode == "end") then
+			force = true
+		end
+		p.endAnim(p.animStateData[state])
+
 		p.animStateData[state].animationState = {
 			anim = anim,
 			priority = newPriority,
