@@ -8,7 +8,7 @@ function onInit()
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
-	p.vso.maxOccupants = config.getParameter( "maxOccupants" )
+	p.maxOccupants = config.getParameter( "maxOccupants" )
 	enableActionButtons(false)
 	readOccupantData()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}

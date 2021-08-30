@@ -24,7 +24,7 @@ function p.setState(state)
 	p.prevState = p.state
 	p.state = state
 	animator.setGlobalTag( "state", state )
-	p.doAnims( p.stateconfig[state].idle )
+	p.doAnims( p.stateconfig[state].idle, true )
 end
 
 p.transitionLock = false
