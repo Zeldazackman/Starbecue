@@ -1,10 +1,10 @@
 # ZyganSSVMAddons
 
-This is an addon pack for [SSVM](https://github.com/Sheights/StarboundSimpleVoreMod), requiring it to function.
-
-To install the addon simply visit the [releases page](https://github.com/Zygahedron/ZyganSSVMAddons/releases), download the latest one, and put it in your Starbound mods folder.
+To install simply visit the [releases page](https://github.com/Zygahedron/ZyganSSVMAddons/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
 
 Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable.
+
+While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217) because it should fix potential compatibility issues with other mods.
 
 ## Features
 

@@ -50,7 +50,7 @@
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false,
-	"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
+	//"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
 	"scripts": [
 		"/objects/vore/spov/pvsoSpawner.lua"
 	]

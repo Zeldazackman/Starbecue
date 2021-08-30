@@ -1,7 +1,7 @@
 [
 	{
 		"op": "add",
-		"path": "/statusControllerSettings/primaryScriptSources/scripts/-",
+		"path": "/statusControllerSettings/primaryScriptSources/-",
 		"value": "/scripts/ZSSVMA_player.lua"
 	},
 	{
