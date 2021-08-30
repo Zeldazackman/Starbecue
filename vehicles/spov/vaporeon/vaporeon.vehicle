@@ -60,10 +60,8 @@
 					[3, 0.4], [2.5, 1]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : true,
-				"ignorePlatformCollision" : false
+				"liquidBuoyancy" : 0.0,
+				"bounceFactor" : 0.0
 			},
 			"smol":{
 				"collisionPoly" : [
@@ -73,10 +71,8 @@
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : true,
-				"ignorePlatformCollision" : false
+				"liquidBuoyancy" : 0.0,
+				"bounceFactor" : 0.0
 			},
 			"chonk_ball":{
 				"collisionPoly" : [
@@ -87,11 +83,7 @@
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
 				"liquidBuoyancy" : 2.0,
-				"bounceFactor" : 0.75,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : true,
-				"ignorePlatformCollision" : false
+				"bounceFactor" : 0.75
 			}
 		},
 		"lights" : {
@@ -196,7 +188,6 @@
 				{ "head": "blink" },
 				{ "tail": "flick" }
 			],
-
 			"struggle": {
 				"belly" : {
 					"part" : "body",

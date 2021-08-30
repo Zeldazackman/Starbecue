@@ -14,6 +14,10 @@ end
 function p.standardState()
 end
 
+-- the pathfinding function called if a state doesn't have its own pathfinding script
+function p.pathfinding(dt)
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------
 
 -- called when the vso starts falling, for example, you may want to force it to change to the stand state if it has one

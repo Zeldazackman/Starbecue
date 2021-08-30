@@ -74,14 +74,14 @@
 
 					"grab": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 3 },
 
-					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
-					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 },
+					"swim": { "frames": 4, "cycle": 1, "mode": "loop", "priority": 0 },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
@@ -90,14 +90,14 @@
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
-					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"smol.walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+					"smol.run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"smol.jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 1 },
 					"smol.fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 1 },
 
 					"smol.swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"smol.swim": { "frames": 4, "cycle": 1, "mode": "end", "priority": 0 }
+					"smol.swim": { "frames": 4, "cycle": 1, "mode": "loop", "priority": 0 }
 
 				}
 			},

@@ -162,7 +162,7 @@ function state.stand.update()
 	local pos3 = p.localToGlobal({3.5, -5})
 	local pos4 = p.localToGlobal({-3, 0})
 
-	if p.probablyOnGround()
+	if mcontroller.onGround()
 	and world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
 	and not world.rectCollision( {pos3[1], pos3[2], pos4[1], pos4[2] }, { "Null", "block", "slippery"} )
 	then
@@ -180,7 +180,7 @@ function state.stand.update()
 		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
 		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and p.probablyOnGround() then
+			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and mcontroller.onGround() then
 				p.doTransition( "down" )
 			end
 			p.movement.downframes = 0
@@ -286,7 +286,7 @@ function state.crouch.update()
 	if not world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
 	and not vehicle.controlHeld( p.driverSeat, "down")
 	then
-		if not p.probablyOnGround() then
+		if not mcontroller.onGround() then
 			p.setState( "stand" )
 			return
 		else
@@ -317,7 +317,7 @@ function state.fly.update()
 
 	local control = p.stateconfig[p.state].control
 
-	if p.occupants.total >= control.fullThreshold and p.probablyOnGround() then
+	if p.occupants.total >= control.fullThreshold and mcontroller.onGround() then
 		p.setState( "stand" )
 		return
 	end

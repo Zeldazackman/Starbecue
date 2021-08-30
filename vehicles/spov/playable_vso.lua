@@ -62,6 +62,16 @@ p.clearSeat = {
 	special1 = 0,
 	special2 = 0,
 	special3 = 0,
+	dxReleased = 0,
+	dyReleased = 0,
+	leftReleased = 0,
+	rightReleased = 0,
+	upReleased = 0,
+	downReleased = 0,
+	jumpReleased = 0,
+	special1Released = 0,
+	special2Released = 0,
+	special3Released = 0,
 	species = nil,
 	mass = 0,
 	primaryHandItem = nil,
@@ -80,6 +90,7 @@ p.clearSeat = {
 require("/vehicles/spov/pvso_animation.lua")
 require("/vehicles/spov/pvso_state_control.lua")
 require("/vehicles/spov/pvso_driving.lua")
+require("/vehicles/spov/pvso_pathfinding.lua")
 require("/vehicles/spov/pvso_replaceable_functions.lua")
 
 function init()
@@ -94,8 +105,20 @@ function init()
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
 	p.settings = config.getParameter( "settings", p.config.defaultSettings )
 	p.spawner = config.getParameter("spawner")
-	p.movementParams = "default"
-	p.faceDirection(config.getParameter("direction", 1))
+
+	--[[
+	so, the thing is, we want this to move like an actor, even if it is a vehicle, so we have to have a little funny business,
+	both mcontrollers use the same arguments for the most part, just the actor mcontroller has more values, as well as some
+	different function names, however the json for the data is what is the most important and thats the same for what is shared,
+	therefore, if we try and set the params to the default actor ones, and then merge the humanoid ones on top
+	that could help with the illusion yes?
+	]]
+	p.movementParams = root.assetJson("/default_actor_movement.config")
+	sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config").movementParameters)
+	mcontroller.applyParameters(p.movementParams)
+
+	p.movementParamsName = "default"
+	p.faceDirection(config.getParameter("direction", 1)) -- the hitbox and default movement params are set here
 
 	p.resetOccupantCount()
 
@@ -198,36 +221,6 @@ function init()
 		p.doAnims( p.stateconfig.smol.idle, true )
 	end
 
-	local v_status = vehicle.setLoungeStatusEffects -- has to be in here instead of root because vehicle is nil before init
-	vehicle.setLoungeStatusEffects = function(seatname, effects)
-		local eid = vehicle.entityLoungingIn(seatname)
-		local seatindex = p.getOccupantFromEid(eid)
-		local smolprey
-		if seatname ~= "driver" then
-			smolprey = p.occupant[seatindex].species
-		end
-		if smolprey or p.isMonster(eid) then -- fix invis on smolprey too
-			local invis = false
-			local effects2 = {} -- don't touch outer table
-			for _,e in ipairs(effects) do
-				if e == "pvsoinvisible" then invis = true end
-				table.insert(effects2, e)
-			end
-			if invis then
-				animator.setAnimationState( seatname.."state", "empty" )
-			elseif smolprey then
-				animator.setAnimationState( seatname.."state", "smol" )
-				table.insert(effects2, "vsoinvisible")
-			elseif p.isMonster(eid) then
-				animator.setAnimationState( seatname.."state", "monster" )
-				table.insert(effects2, "vsoinvisible")
-			end
-			v_status(seatname, effects2)
-		else
-			v_status(seatname, effects)
-		end
-	end
-
 	onBegin()
 end
 
@@ -240,13 +233,11 @@ function update(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
 	p.idleStateChange(dt)
+
 	p.updateControls(dt)
-	if p.driving then
-		p.drive()
-		p.driverSeatStateChange()
-	end
-	p.updateDriving()
-	p.whenFalling()
+	p.updatePathfinding(dt)
+	p.updateDriving(dt)
+
 	p.handleBelly()
 	p.applyStatusLists()
 
@@ -282,17 +273,18 @@ function p.faceDirection(x)
 		p.direction = -1
 		animator.setFlipped(true)
 	end
-	p.setMovementParams(p.movementParams)
+	p.setMovementParams(p.movementParamsName)
 end
 
 function p.setMovementParams(name)
-	p.movementParams = name
+	p.movementParamsName = name
 	local params = p.vso.movementSettings[name]
 	if params.flip then
 		for _, coords in ipairs(params.collisionPoly) do
 			coords[1] = coords[1] * p.direction
 		end
 	end
+	sb.jsonMerge(p.movementParams, params)
 	mcontroller.applyParameters(params)
 end
 
@@ -370,6 +362,7 @@ function p.randomTimer(name, min, max, callback)
 		else
 			table.insert(p.timerList, timer)
 		end
+		return true
 	end
 end
 
@@ -385,6 +378,7 @@ function p.timer(name, time, callback)
 		else
 			table.insert(p.timerList, timer)
 		end
+		return true
 	end
 end
 
@@ -681,7 +675,7 @@ function p.updateOccupants()
 		end
 	end
 
-	mcontroller.applyParameters({mass = p.vso.movementSettings[p.movementParams].mass + p.occupants.mass})
+	mcontroller.applyParameters({mass = p.vso.movementSettings[p.movementParamsName].mass + p.occupants.mass})
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
 	for i = 1, #p.vso.locations.regular do
@@ -884,23 +878,12 @@ function p.getSettingsMenuInfo()
 	return occupants
 end
 
-function p.probablyOnGround() -- check number of frames -> ceiling isn't ground
-	local yvel = mcontroller.yVelocity()
-	if yvel < 0.1 and yvel > -0.1 then
-		p.movement.groundframes = p.movement.groundframes + 1
-	else
-		p.movement.groundframes = 0
-	end
-	return p.movement.groundframes > 5
-end
-
 function p.notMoving()
-	local xvel = mcontroller.xVelocity()
-	return xvel < 0.1 and xvel > -0.1
+	return mcontroller.xVelocity() == 0
 end
 
 function p.underWater()
-	return mcontroller.liquidPercentage() >= 0.2
+	return mcontroller.liquidPercentage() >= p.movementParams.minimumLiquidPercentage
 end
 
 function p.useEnergy(eid, cost, callback)

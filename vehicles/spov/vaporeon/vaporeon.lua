@@ -84,7 +84,7 @@ function state.stand.update()
 		if vehicle.controlHeld( p.driverSeat, "down" ) then
 			p.movement.downframes = p.movement.downframes + 1
 		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and p.probablyOnGround() then
+			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and mcontroller.onGround() then
 				p.doTransition( "down" )
 			end
 			p.movement.downframes = 0
