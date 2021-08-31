@@ -17,7 +17,8 @@ p = {
 	justLetout = false,
 	monstercoords = {0,0},
 	nextIdle = 0,
-	swapCooldown = 0
+	swapCooldown = 0,
+	pathfinding = false
 }
 
 p.settings = {}
@@ -113,8 +114,9 @@ function init()
 	therefore, if we try and set the params to the default actor ones, and then merge the humanoid ones on top
 	that could help with the illusion yes?
 	]]
-	p.movementParams = root.assetJson("/default_actor_movement.config")
-	sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config").movementParameters)
+	p.movementParams = sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/player.config:movementParameters"))
+	p.movementParams = sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config:movementParameters"))
+
 	mcontroller.applyParameters(p.movementParams)
 
 	p.movementParamsName = "default"
@@ -255,9 +257,11 @@ function uninit()
 end
 
 p.dtSinceList = {}
-function p.dtSince(name) -- used for when something isn't in the main update loop but knowing the dt since it was last called is good
-	local last = p.dtSinceList[name] or p.totalTimeAlive
-	p.dtSinceList[name] = p.totalTimeAlive
+function p.dtSince(name, overwrite) -- used for when something isn't in the main update loop but knowing the dt since it was last called is good
+	local last = p.dtSinceList[name] or 0
+	if overwrite then
+		p.dtSinceList[name] = p.totalTimeAlive
+	end
 	return p.totalTimeAlive - last
 end
 

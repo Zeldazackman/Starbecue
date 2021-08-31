@@ -1,10 +1,10 @@
 {
 	"itemName" : "pvsoController",
 	"shortdescription" : "Vore Controller",
-	"description" : "For controlling the actions of a playable VSO",
+	"description" : "For controlling the click actions of a playable VSO",
 	"price" : 1,
 	"maxStack" : 1,
-	"rarity" : "legendary",
+	"rarity" : "common",
 	"category" : "Tool",
 	"twoHanded" : false,
 	"itemTags" : ["tool"],

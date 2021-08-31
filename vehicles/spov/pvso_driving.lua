@@ -39,8 +39,16 @@ function p.pressControl(seat, control)
 	return (( controls[seat][control.."Released"] > 0 ) and ( controls[seat][control.."Released"] < 0.15 ))
 end
 
-function p.heldControl(seat, control, time)
-	return controls[seat][control] > (time or 0)
+function p.heldControl(seat, control, min)
+	return controls[seat][control] > (min or 0)
+end
+
+function p.heldControlMax(seat, control, max)
+	return controls[seat][control] < (max or 1)
+end
+
+function p.heldControlMinMax(seat, control, min, max)
+	return p.heldControl(seat, control, min) and p.heldControlMax(seat, control, max)
 end
 
 function p.heldControls(seat, controlList, time)
@@ -52,22 +60,24 @@ function p.heldControls(seat, controlList, time)
 	return true
 end
 
-function p.updateControl(seatname, seat, control, dt)
-	if vehicle.controlHeld(seatname, control) then
+function p.updateControl(seatname, seat, control, dt, pathfindUpate)
+	if vehicle.controlHeld(seatname, control) or pathfindUpate == "hold" then
 		seat[control] = seat[control] + dt
 		seat[control.."Released"] = 0
 	else
+		--if p.pathfinding and seatname == p.driverSeat and pathfindUpate ~= "release" then return end
 		seat[control.."Released"] = seat[control]
 		seat[control] = 0
 	end
 end
 
-function p.updateDirectionControl(seatname, seat, control, direction, val, dt)
+function p.updateDirectionControl(seatname, seat, control, direction, val, dt, pathfindUpate)
 	if vehicle.controlHeld(seatname, control) then
 		seat[control] = seat[control] + dt
 		seat[direction] = seat[direction] + val
 		seat[control.."Released"] = 0
 	else
+		--if p.pathfinding and seatname == p.driverSeat and pathfindUpate ~= "release" then return end
 		seat[control.."Released"] = seat[control]
 		seat[control] = 0
 	end
@@ -146,30 +156,33 @@ end
 function p.jumpMovement(dx, dy, state, control)
 	mcontroller.applyParameters{ ignorePlatformCollision = p.movementParams.ignorePlatformCollision }
 
-	if p.heldControl( p.driverSeat, "jump" ) and (p.movement.jumps < control.jumpCount) and (not p.underWater()) and (not p.movement.jumped) then
-		p.movement.jumps = p.movement.jumps + 1
-		if (dy ~= -1) then
-			p.doAnims( control.animations.jump )
-			p.movement.animating = true
-			p.movement.falling = false
-			mcontroller.setYVelocity( control.jumpStrength )
-			if p.movement.jumps > 1 then
-				-- particles from effects/multiJump.effectsource
-				animator.burstParticleEmitter( control.pulseEffect )
-				animator.playSound( "doublejump" )
-				for i = 1, control.pulseSparkles do
-					animator.burstParticleEmitter( "defaultblue" )
-					animator.burstParticleEmitter( "defaultlightblue" )
+	local jumpProfile = "airJumpProfile"
+
+	if p.heldControl( p.driverSeat, "jump" ) then
+		if (p.movement.jumps < control.jumpCount) and (p.dtSince("jump") >= p.movementParams[jumpProfile].reJumpDelay) and ((not p.movement.jumped) or p.movementParams[jumpProfile].autoJump) then
+			p.dtSince("jump", true)
+			p.movement.jumps = p.movement.jumps + 1
+			p.movement.jumped = true
+			if (dy ~= -1) then
+				p.doAnims( control.animations.jump )
+				p.movement.animating = true
+				p.movement.falling = false
+				mcontroller.setYVelocity(p.movementParams[jumpProfile].jumpSpeed )
+				if (p.movement.jumps > 1) and (not p.underWater()) then
+					-- particles from effects/multiJump.effectsource
+					animator.burstParticleEmitter( control.pulseEffect )
+					animator.playSound( "doublejump" )
+					for i = 1, control.pulseSparkles do
+						animator.burstParticleEmitter( "defaultblue" )
+						animator.burstParticleEmitter( "defaultlightblue" )
+					end
 				end
 			end
 		end
-	end
-	if p.heldControl( p.driverSeat, "jump" ) then
-		p.movement.jumped = true
 		if dy == -1 then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		elseif (not p.underWater()) then
-
+		elseif p.movement.jumped and controls[p.driverSeat].jump < p.movementParams[jumpProfile].jumpHoldTime then
+			mcontroller.approachYVelocity( p.movementParams[jumpProfile].jumpSpeed, p.movementParams[jumpProfile].jumpControlForce, true)
 		end
 	else
 		p.movement.jumped = false

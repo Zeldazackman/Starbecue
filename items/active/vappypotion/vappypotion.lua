@@ -28,12 +28,16 @@ function update(dt, fireMode, shiftHeld)
 		player.equipTech(self.tech)
 
 		local position = mcontroller.position()
-		world.spawnVehicle( "spovvaporeon", { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = {} } )
+		world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = {} } )
 
 		player.radioMessage({
-		messageId = "vappypotion", unique = false,
-		text = "It seems that the potion you just drank transformed you into a vaporeon. Scans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons will be helpful in this form. ^#555;(You may have to go into settings and bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys first.)^reset; If you need further instructions on your capabilities I suggest buying a guide from that potion dealer."
+			messageId = self.vehicle.."1", unique = false,
+			text = "It seems that the potion you just drank transformed you into "..config.getParameter("transformationDescription")..".\nScans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons will be helpful in this form."
 		}, 1)
+		player.radioMessage({
+			messageId = self.vehicle.."2", unique = false,
+			text = "I suggest reading the included guide for more information about how to control your new form.\n^#555;(You may have to go into settings and bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys first.)^reset;"
+		}, 5)
 
 		item.consume(1)
 	end
