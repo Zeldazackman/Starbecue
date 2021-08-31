@@ -28,10 +28,10 @@ function p.updateDriving(dt)
 		p.faceDirection( dx )
 	end
 	if state.control ~= nil then
-		p.groundMovement(dx, dy, state, control)
-		p.jumpMovement(dx, dy, state, control)
-		p.airMovement(dx, dy, state, control)
-		p.waterMovement( dx, dy, state, control )
+		p.groundMovement(dx, dy, state, control, dt)
+		p.jumpMovement(dx, dy, state, control, dt)
+		p.airMovement(dx, dy, state, control, dt)
+		p.waterMovement(dx, dy, state, control, dt)
 	end
 end
 
@@ -127,7 +127,7 @@ function p.updateControls(dt)
 	end
 end
 
-function p.groundMovement(dx, dy, state, control)
+function p.groundMovement(dx, dy, state, control, dt)
 	if (not mcontroller.onGround()) then return end
 
 	local running = "walk"
@@ -153,7 +153,7 @@ function p.groundMovement(dx, dy, state, control)
 	p.movement.airframes = 0
 end
 
-function p.jumpMovement(dx, dy, state, control)
+function p.jumpMovement(dx, dy, state, control, dt)
 	mcontroller.applyParameters{ ignorePlatformCollision = p.movementParams.ignorePlatformCollision }
 
 	local jumpProfile = "airJumpProfile"
@@ -167,7 +167,7 @@ function p.jumpMovement(dx, dy, state, control)
 				p.doAnims( control.animations.jump )
 				p.movement.animating = true
 				p.movement.falling = false
-				mcontroller.setYVelocity(p.movementParams[jumpProfile].jumpSpeed )
+				mcontroller.setYVelocity(p.movementParams[jumpProfile].jumpSpeed)
 				if (p.movement.jumps > 1) and (not p.underWater()) then
 					-- particles from effects/multiJump.effectsource
 					animator.burstParticleEmitter( control.pulseEffect )
@@ -181,15 +181,15 @@ function p.jumpMovement(dx, dy, state, control)
 		end
 		if dy == -1 then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		elseif p.movement.jumped and controls[p.driverSeat].jump < p.movementParams[jumpProfile].jumpHoldTime then
-			mcontroller.approachYVelocity( p.movementParams[jumpProfile].jumpSpeed, p.movementParams[jumpProfile].jumpControlForce, true)
+		elseif p.movement.jumped and controls[p.driverSeat].jump < p.movementParams[jumpProfile].jumpHoldTime and mcontroller.yVelocity() <= p.movementParams[jumpProfile].jumpSpeed then
+			mcontroller.force({0, p.movementParams[jumpProfile].jumpControlForce * (1 + dt)})
 		end
 	else
 		p.movement.jumped = false
 	end
 end
 
-function p.airMovement( dx, dy, state, control )
+function p.airMovement( dx, dy, state, control, dt )
 	if (not p.underWater()) and (not mcontroller.onGround()) then
 		if (mcontroller.yVelocity() < 0) and (p.movement.falling) then
 			p.doAnims( control.animations.fall )
@@ -204,7 +204,7 @@ function p.airMovement( dx, dy, state, control )
 	end
 end
 
-function p.waterMovement( dx, dy, state, control )
+function p.waterMovement( dx, dy, state, control, dt )
 	if p.underWater() and (not mcontroller.onGround()) then
 		mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
 
