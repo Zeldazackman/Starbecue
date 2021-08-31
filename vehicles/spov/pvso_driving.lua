@@ -36,7 +36,7 @@ function p.updateDriving(dt)
 end
 
 function p.pressControl(seat, control)
-	return (( controls[seat][control.."Released"] > 0 ) and ( controls[seat][control.."Released"] < 0.1 ))
+	return (( controls[seat][control.."Released"] > 0 ) and ( controls[seat][control.."Released"] < 0.15 ))
 end
 
 function p.heldControl(seat, control, time)
@@ -90,15 +90,23 @@ function p.updateControls(dt)
 			p.updateControl(seatname, seat, "special3", dt)
 
 			seat.species = world.entitySpecies(lounging) or world.monsterType(lounging)
+
 			seat.primaryHandItem = world.entityHandItem(lounging, "primary")
 			seat.altHandItem = world.entityHandItem(lounging, "alt")
+			seat.primaryHandItemDescriptor = world.entityHandItemDescriptor(lounging, "primary")
+			seat.altHandItemDescriptor = world.entityHandItemDescriptor(lounging, "alt")
 
-			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation"), function(seatdata)
+			local type = "prey"
+			if p.driving and (seatname == p.driverSeat) then
+				--type = "driver"
+			end
+
+			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation", type), function(seatdata)
 				if seatdata ~= nil then
 					sb.jsonMerge(seat, seatdata)
 				end
 			end, seatname.."Info")
-			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatEquips"), function(seatdata)
+			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatEquips", type), function(seatdata)
 				if seatdata ~= nil then
 					sb.jsonMerge(seat, seatdata)
 				end

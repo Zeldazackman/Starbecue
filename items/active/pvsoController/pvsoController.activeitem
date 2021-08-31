@@ -1,0 +1,15 @@
+{
+	"itemName" : "pvsoController",
+	"shortdescription" : "Vore Controller",
+	"description" : "For controlling the actions of a playable VSO",
+	"price" : 1,
+	"maxStack" : 1,
+	"rarity" : "legendary",
+	"category" : "Tool",
+	"twoHanded" : false,
+	"itemTags" : ["tool"],
+	"inventoryIcon" : "/assetmissing.png",
+
+	"retainScriptStorageInItem": true,
+	"scripts" : ["pvsoController.lua"]
+  }
