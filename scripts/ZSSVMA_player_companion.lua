@@ -97,8 +97,10 @@ function checkLockItem(itemDescriptor, type)
 
 	for i, item in ipairs(essentialItems) do
 		local essentialItem = player.essentialItem(item)
-		if essentialItem.name == itemDescriptor.name then
-			return lockEssentialItem(itemDescriptor, item)
+		if essentialItem then
+			if (essentialItem.name == itemDescriptor.name) then
+				return lockEssentialItem(itemDescriptor, item)
+			end
 		end
 	end
 

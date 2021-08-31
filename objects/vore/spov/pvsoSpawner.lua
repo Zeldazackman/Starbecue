@@ -14,7 +14,7 @@ function init()
 	end)
 
 	if storage.settings == nil and s.defaultValues.spov.settings ~= nil then
-		storage.settings = s.defaultValues.spov.settings
+		storage.settings = sb.jsonMerge(root.assetJson("/vehicles/spov/pvso_general.config:defaultSettings"), s.defaultValues.spov.settings)
 	end
 end
 

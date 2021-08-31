@@ -98,7 +98,7 @@ function p.updateControls(dt)
 
 			local type = "prey"
 			if p.driving and (seatname == p.driverSeat) then
-				--type = "driver"
+				type = "driver"
 			end
 
 			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation", type), function(seatdata)

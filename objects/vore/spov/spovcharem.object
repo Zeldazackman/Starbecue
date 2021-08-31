@@ -39,7 +39,10 @@
 
 	"spov": {
 		"types": ["spovcharem"],
-		"position": [0, 4]	// in blocks,
+		"position": [0, 4],	// in blocks,
+		"settings": {
+			"bellyEffect" : "pvsoSoftDigest"
+		}
 	},
 
 	"retainObjectParametersInItem" : true,
