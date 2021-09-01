@@ -29,9 +29,9 @@ function p.updateDriving(dt)
 	end
 	if state.control ~= nil then
 		p.groundMovement(dx, dy, state, control, dt)
+		p.waterMovement(dx, dy, state, control, dt)
 		p.jumpMovement(dx, dy, state, control, dt)
 		p.airMovement(dx, dy, state, control, dt)
-		p.waterMovement(dx, dy, state, control, dt)
 	end
 end
 
@@ -131,40 +131,44 @@ function p.groundMovement(dx, dy, state, control, dt)
 	if (not mcontroller.onGround()) then return end
 
 	local running = "walk"
-	if not p.heldControl(p.driverSeat, "down") and p.occupants.mass < control.fullThreshold then
+	if not p.heldControl(p.driverSeat, "shift") and p.occupants.mass < control.fullThreshold then
 		running = "run"
 	end
-	if running == "run" then
-		mcontroller.setXVelocity( dx * control.runSpeed )
-	else
-		mcontroller.setXVelocity( dx * control.walkSpeed )
-	end
+	mcontroller.setXVelocity( dx * p.movementParams[running.."Speed"] )
 
 	if dx ~= 0 then
 		p.doAnims( control.animations[running] )
 		p.movement.animating = true
+		mcontroller.applyParameters{ groundFriction = p.movementParams.ambulatingGroundFriction }
 	elseif p.movement.animating then
 		p.doAnims( state.idle )
 		p.movement.animating = false
+		mcontroller.applyParameters{ groundFriction = p.movementParams.normalGroundFriction }
 	end
 
 	p.movement.jumps = 0
 	p.movement.falling = false
-	p.movement.airframes = 0
+	p.movement.airtime = 0
 end
 
 function p.jumpMovement(dx, dy, state, control, dt)
 	mcontroller.applyParameters{ ignorePlatformCollision = p.movementParams.ignorePlatformCollision }
+	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
 
 	local jumpProfile = "airJumpProfile"
+	if p.underWater() and p.movementParams.liquidJumpProfile ~= nil then
+		jumpProfile = "liquidJumpProfile"
+	end
 
 	if p.heldControl( p.driverSeat, "jump" ) then
-		if (p.movement.jumps < control.jumpCount) and (p.dtSince("jump") >= p.movementParams[jumpProfile].reJumpDelay) and ((not p.movement.jumped) or p.movementParams[jumpProfile].autoJump) then
-			p.dtSince("jump", true)
+		if (p.movement.jumps < control.jumpCount) and (p.movement.sinceLastJump >= p.movementParams[jumpProfile].reJumpDelay) and ((not p.movement.jumped) or p.movementParams[jumpProfile].autoJump) then
+			p.movement.sinceLastJump = 0
 			p.movement.jumps = p.movement.jumps + 1
 			p.movement.jumped = true
 			if (dy ~= -1) then
-				p.doAnims( control.animations.jump )
+				if not p.underWater() then
+					p.doAnims( control.animations.jump )
+				end
 				p.movement.animating = true
 				p.movement.falling = false
 				mcontroller.setYVelocity(p.movementParams[jumpProfile].jumpSpeed)
@@ -191,39 +195,44 @@ end
 
 function p.airMovement( dx, dy, state, control, dt )
 	if (not p.underWater()) and (not mcontroller.onGround()) then
-		if (mcontroller.yVelocity() < 0) and (p.movement.falling) then
+		if (mcontroller.yVelocity() < 0) and (not p.movement.falling) then
 			p.doAnims( control.animations.fall )
-			p.movement.falling = false
-			p.movement.animating = true
-		end
-		if (mcontroller.yVelocity() > 0) and (not p.movement.falling) then
-			p.doAnims( control.animations.jump, true )
-			p.movement.animating = true
 			p.movement.falling = true
+			p.movement.animating = true
+		elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then
+			p.doAnims( control.animations.jump )
+			p.movement.animating = true
+			p.movement.falling = false
+		end
+		if math.abs(mcontroller.xVelocity()) <= p.movementParams.runSpeed then
+			mcontroller.force({ dx * p.movementParams.airForce, 0 })
 		end
 	end
 end
 
 function p.waterMovement( dx, dy, state, control, dt )
-	if p.underWater() and (not mcontroller.onGround()) then
-		mcontroller.approachXVelocity( dx * control.swimSpeed, 50 )
-
-		if vehicle.controlHeld( p.driverSeat, "jump" ) then
-			mcontroller.approachYVelocity( 10, 50 )
-		else
-			mcontroller.approachYVelocity( -10, 50 )
+	if p.underWater() then
+		local swimSpeed = p.movementParams.swimSpeed or p.movementParams.walkSpeed
+		local dy = dy
+		if p.heldControl(p.driverSeat, "jump") and (dy ~= 1) then
+			dy = dy + 1
 		end
-
-		if p.heldControl(p.driverSeat, "jump") or (controls[seat].dx ~= 0)then
+		if (dx ~= 0) or (dy ~= 0)then
 			p.doAnims( control.animations.swim )
 			p.movement.animating = true
 		else
 			p.doAnims( control.animations.swimIdle )
 			p.movement.animating = true
 		end
-		p.movement.jumps = 1
+		if dx ~= 0 then
+			mcontroller.setXVelocity( dx * swimSpeed )
+		end
+		if dy ~= 0 then
+			mcontroller.setYVelocity( dy * swimSpeed )
+		end
+		p.movement.jumps = 0
 		p.movement.falling = false
-		p.movement.airframes = 0
+		p.movement.airtime = 0
 	end
 end
 

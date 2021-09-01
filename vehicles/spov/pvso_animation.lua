@@ -161,7 +161,7 @@ function p.doAnim( state, anim, force)
 	local newPriority = (p.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = p.animationIs( state, anim )
 	local force = force
-	local priorityHigher = (tonumber(newPriority) >= tonumber(oldPriority)) or (tonumber(newPriority) == -1)
+	local priorityHigher = ((newPriority >= oldPriority) or (newPriority == -1))
 	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
 		if isSame and (p.animStateData[state].states[animator.animationState(state)].mode == "end") then
 			force = true

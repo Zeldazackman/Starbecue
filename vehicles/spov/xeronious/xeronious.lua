@@ -192,7 +192,7 @@ function state.stand.update()
 			p.movement.wasspecial1 = false
 		end
 
-		if vehicle.controlHeld( p.driverSeat, "jump" ) and p.movement.airframes > 10 and not p.movement.jumped then
+		if vehicle.controlHeld( p.driverSeat, "jump" ) and p.movement.airtime > 10 and not p.movement.jumped then
 			p.setState( "fly" )
 			return
 		end
