@@ -27,19 +27,11 @@ p.movement = {
 	jumps = 0,
 	jumped = false,
 	sinceLastJump = 0,
-	waswater = false,
-	bapped = 0,
-	downframes = 0,
-	spaceframes = 0,
-	groundframes = 0,
+	jumpProfile = "airJumpProfile",
 	airtime = 0,
-	run = false,
-	wasspecial1 = 10, -- Give things time to finish initializing, so it realizes you're holding special1 from spawning vap instead of it being a new press
-	E = false,
-	wasE = false,
+	groundMovement = "run",
 	primaryCooldown = 0,
-	altCooldown = 0,
-	lastYVelocity = 0
+	altCooldown = 0
 }
 
 p.clearOccupant = {
@@ -62,7 +54,7 @@ p.clearSeat = {
 	down = 0,
 	jump = 0,
 	shift = 0,
-	special1 = 0,
+	special1 = 1, --so that it doesn't trip p.pressControl from using the tech
 	special2 = 0,
 	special3 = 0,
 	dxReleased = 0,
@@ -119,6 +111,7 @@ function init()
 	]]
 	p.movementParams = sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/player.config:movementParameters"))
 	p.movementParams = sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config:movementParameters"))
+	p.movementParams.jumpCount = 1
 
 	mcontroller.applyParameters(p.movementParams)
 
@@ -291,7 +284,7 @@ function p.setMovementParams(name)
 			coords[1] = coords[1] * p.direction
 		end
 	end
-	sb.jsonMerge(p.movementParams, params)
+	p.movementParams = sb.jsonMerge(p.movementParams, params)
 	mcontroller.applyParameters(params)
 end
 

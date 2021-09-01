@@ -60,6 +60,7 @@
 					[3, 0.4], [2.5, 1]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"jumpCount" : 2,
 				//"liquidFriction" : 0,
 				"liquidBuoyancy" : 0.0,
 				"bounceFactor" : 0.0

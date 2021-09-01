@@ -177,27 +177,12 @@ function state.stand.update()
 	end
 
 	if p.driving then
-		if vehicle.controlHeld( p.driverSeat, "down" ) then
-			p.movement.downframes = p.movement.downframes + 1
-		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and mcontroller.onGround() then
-				p.doTransition( "down" )
-			end
-			p.movement.downframes = 0
-		end
-		if p.movement.wasspecial1 ~= true and p.movement.wasspecial1 ~= false and p.movement.wasspecial1 > 0 then
-			-- a bit of a hack, prevents the special1 press from activating xeronious from also doing this by adding a 10 frame delay before checking if you're pressing it
-			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
-		else
-			p.movement.wasspecial1 = false
-		end
-
-		if vehicle.controlHeld( p.driverSeat, "jump" ) and p.movement.airtime > 10 and not p.movement.jumped then
+		if p.pressControl( p.driverSeat, "jump" ) and p.movement.airtime > 10 and not p.movement.jumped then
 			p.setState( "fly" )
 			return
 		end
 
-		if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
+		if p.pressControl( p.driverSeat, "special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end
@@ -302,7 +287,6 @@ end
 
 function state.crouch.ending()
 	p.setMovementParams( "default" )
-	p.movement.downframes = 11
 end
 
 state.crouch.checkletout = checkEscapes

@@ -77,34 +77,18 @@ end
 
 function state.stand.update()
 	if p.driving then
-		if vehicle.controlHeld( p.driverSeat, "down" ) then
-			p.movement.downframes = p.movement.downframes + 1
-		else
-			if p.movement.downframes > 0 and p.movement.downframes < 10 and p.notMoving() and mcontroller.onGround() then
-				p.doTransition( "down" )
+		if p.pressControl( p.driverSeat, "special1" ) then
+			world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+			if p.occupants.belly < 2 then
+				p.setState( "smol" )
+				p.doAnims( p.stateconfig.smol.idle, true )
+			else
+				p.setState( "chonk_ball" )
+				p.doAnims( p.stateconfig.chonk_ball.idle, true )
 			end
-			p.movement.downframes = 0
+			return
 		end
-		if p.movement.wasspecial1 ~= true and p.movement.wasspecial1 ~= false and p.movement.wasspecial1 > 0 then
-			-- a bit of a hack, prevents the special1 press from activating vappy from also doing this by adding a 10 frame delay before checking if you're pressing it
-			p.movement.wasspecial1 = p.movement.wasspecial1 - 1
-		elseif p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
-			if not p.movement.wasspecial1 then
-				p.movement.wasspecial1 = true
-				world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
-				if p.occupants.belly < 2 then
-					p.setState( "smol" )
-					p.doAnims( p.stateconfig.smol.idle, true )
-				else
-					p.setState( "chonk_ball" )
-					p.doAnims( p.stateconfig.chonk_ball.idle, true )
-				end
-				return
-			end
-		else
-			p.movement.wasspecial1 = false
-		end
-		if p.standalone and vehicle.controlHeld( p.driverSeat, "Special2" ) then
+		if p.pressControl( p.driverSeat, "special2" ) then
 			if p.occupants.belly > 0 then
 				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
 			end
@@ -242,17 +226,10 @@ end
 -------------------------------------------------------------------------------
 
 function state.smol.update()
-	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
-		if not p.movement.wasspecial1 then
-			-- p.doAnim( "bodyState", "unsmolify" )
-			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-
-			p.setState( "stand" )
-			p.doAnims( p.stateconfig.stand.idle, true )
-		end
-		p.movement.wasspecial1 = true
-	else
-		p.movement.wasspecial1 = false
+	if p.driving and p.pressControl( p.driverSeat, "special1" ) then
+		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		p.setState( "stand" )
+		p.doAnims( p.stateconfig.stand.idle, true )
 	end
 end
 
@@ -295,17 +272,12 @@ function state.chonk_ball.update()
 	local dy = 0
 
 	if p.driving then
-		if vehicle.controlHeld( p.driverSeat, "Special1" ) then
-			if not p.movement.wasspecial1 then
-				p.movement.wasspecial1 = true
-				world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		if p.pressControl( p.driverSeat, "special1" ) then
+			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 
-				p.setState( "stand" )
-				p.doAnims( p.stateconfig.stand.idle, true )
-				return
-			end
-		else
-			p.movement.wasspecial1 = false
+			p.setState( "stand" )
+			p.doAnims( p.stateconfig.stand.idle, true )
+			return
 		end
 		if vehicle.controlHeld( p.driverSeat, "left" ) then
 			dx = dx - 1
