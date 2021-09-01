@@ -1,3 +1,5 @@
+function init()
+end
 
 function update(dt)
 	if player.isLounging() then
