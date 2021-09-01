@@ -18,7 +18,7 @@ p = {
 	monstercoords = {0,0},
 	nextIdle = 0,
 	swapCooldown = 0,
-	pathfinding = false
+	isPathfinding = false
 }
 
 p.settings = {}

@@ -60,44 +60,41 @@ function p.heldControls(seat, controlList, time)
 	return true
 end
 
-function p.updateControl(seatname, seat, control, dt, pathfindUpate)
-	if vehicle.controlHeld(seatname, control) or pathfindUpate == "hold" then
-		seat[control] = seat[control] + dt
-		seat[control.."Released"] = 0
+function p.updateControl(seatname, control, dt, forceHold)
+	if vehicle.controlHeld(seatname, control) or forceHold then
+		controls[seatname][control] = controls[seatname][control] + dt
+		controls[seatname][control.."Released"] = 0
 	else
-		--if p.pathfinding and seatname == p.driverSeat and pathfindUpate ~= "release" then return end
-		seat[control.."Released"] = seat[control]
-		seat[control] = 0
+		controls[seatname][control.."Released"] = controls[seatname][control]
+		controls[seatname][control] = 0
 	end
 end
 
-function p.updateDirectionControl(seatname, seat, control, direction, val, dt, pathfindUpate)
-	if vehicle.controlHeld(seatname, control) then
-		seat[control] = seat[control] + dt
-		seat[direction] = seat[direction] + val
-		seat[control.."Released"] = 0
+function p.updateDirectionControl(seatname, control, direction, val, dt, forceHold)
+	if vehicle.controlHeld(seatname, control) or forceHold then
+		controls[seatname][control] = controls[seatname][control] + dt
+		controls[seatname][direction] = controls[seatname][direction] + val
+		controls[seatname][control.."Released"] = 0
 	else
-		--if p.pathfinding and seatname == p.driverSeat and pathfindUpate ~= "release" then return end
-		seat[control.."Released"] = seat[control]
-		seat[control] = 0
+		controls[seatname][control.."Released"] = controls[seatname][control]
+		controls[seatname][control] = 0
 	end
 end
 
 function p.updateControls(dt)
 	for seatname, seat in pairs(controls) do
 		local lounging = vehicle.entityLoungingIn(seatname)
-
-		if lounging ~= nil and world.entityExists(lounging) then
+		if lounging ~= nil and world.entityExists(lounging) and not (seatname == p.driverSeat and p.isPathfinding) then
 			seat.dx = 0
 			seat.dy = 0
-			p.updateDirectionControl(seatname, seat, "left", "dx", -1, dt)
-			p.updateDirectionControl(seatname, seat, "right", "dx", 1, dt)
-			p.updateDirectionControl(seatname, seat, "down", "dy", -1, dt)
-			p.updateDirectionControl(seatname, seat, "up", "dy", 1, dt)
-			p.updateControl(seatname, seat, "jump", dt)
-			p.updateControl(seatname, seat, "special1", dt)
-			p.updateControl(seatname, seat, "special2", dt)
-			p.updateControl(seatname, seat, "special3", dt)
+			p.updateDirectionControl(seatname, "left", "dx", -1, dt)
+			p.updateDirectionControl(seatname, "right", "dx", 1, dt)
+			p.updateDirectionControl(seatname, "down", "dy", -1, dt)
+			p.updateDirectionControl(seatname, "up", "dy", 1, dt)
+			p.updateControl(seatname, "jump", dt)
+			p.updateControl(seatname, "special1", dt)
+			p.updateControl(seatname, "special2", dt)
+			p.updateControl(seatname, "special3", dt)
 
 			seat.species = world.entitySpecies(lounging) or world.monsterType(lounging)
 
@@ -110,17 +107,28 @@ function p.updateControls(dt)
 			if p.driving and (seatname == p.driverSeat) then
 				type = "driver"
 			end
-
-			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation", type), function(seatdata)
-				if seatdata ~= nil then
-					sb.jsonMerge(seat, seatdata)
+			if seat.primaryHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
+				if seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+					controls[seatname] = sb.jsonMerge(seat, seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
 				end
-			end, seatname.."Info")
-			p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatEquips", type), function(seatdata)
-				if seatdata ~= nil then
-					sb.jsonMerge(seat, seatdata)
+			elseif seat.altHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
+				if seat.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+					controls[seatname] = sb.jsonMerge(seat, seat.altHandItemDescriptor.parameters.scriptStorage.seatdata)
 				end
-			end, seatname.."Equips")
+			else
+				seat.shiftReleased = seat.shift
+				seat.shift = 0
+				p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation", type), function(seatdata)
+					if seatdata ~= nil then
+						controls[seatname] = sb.jsonMerge(seat, seatdata)
+					end
+				end)
+				p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatEquips", type), function(seatdata)
+					if seatdata ~= nil then
+						controls[seatname] = sb.jsonMerge(seat, seatdata)
+					end
+				end)
+			end
 		else
 			seat = p.clearSeat
 		end

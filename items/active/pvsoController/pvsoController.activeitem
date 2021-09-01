@@ -6,10 +6,13 @@
 	"maxStack" : 1,
 	"rarity" : "common",
 	"category" : "Tool",
-	"twoHanded" : false,
+	"twoHanded" : true,
 	"itemTags" : ["tool"],
 	"inventoryIcon" : "/assetmissing.png",
 
 	"retainScriptStorageInItem": true,
-	"scripts" : ["pvsoController.lua"]
-  }
+	"scripts" : [
+		"pvsoController.lua",
+		"pvsoControllerData.lua"
+	]
+}
