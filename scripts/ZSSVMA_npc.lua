@@ -19,6 +19,7 @@ function init()
 	message.setHandler("getVSOseatInformation", function()
 		local seatdata = {
 			mass = mcontroller.mass(),
+			--[[ I don't think we actually need to know what NPCs have equipped tbh
 			head = npc.getItemSlot("head"),
 			chest = npc.getItemSlot("chest"),
 			legs = npc.getItemSlot("legs"),
@@ -27,6 +28,7 @@ function init()
 			chestCosmetic = npc.getItemSlot("chestCosmetic"),
 			legsCosmetic = npc.getItemSlot("legsCosmetic"),
 			backCosmetic = npc.getItemSlot("backCosmetic"),
+			]]
 			powerMultiplier = status.stat("powerMultiplier")
 		}
 		return seatdata
