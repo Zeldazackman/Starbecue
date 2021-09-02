@@ -21,31 +21,31 @@
 		},
 		"occupant1" : {
 			"part" : "occupant1",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant1Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant2" : {
 			"part" : "occupant2",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant2Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant3" : {
 			"part" : "occupant3",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant3Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant4" : {
 			"part" : "occupant4",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant4Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant5" : {
 			"part" : "occupant5",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant5Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		}

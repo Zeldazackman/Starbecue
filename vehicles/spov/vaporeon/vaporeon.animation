@@ -546,7 +546,7 @@
 				"properties": {
 					"centered": true,
 					 "zLevel": 0,
-					 "transformationGroups": ["flip"],
+					 "transformationGroups": ["flip", "driverPosition"],
 					 "driverPosition": [0.0, -1.0] // only used for standalone
 				}
 			},
@@ -554,8 +554,8 @@
 				"properties": {
 					"centered": true,
 					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant1position"],
-					 "occupantPosition": [0.0, 0.0]
+					 "transformationGroups": ["flip", "occupant1Position"],
+					 "occupant1Position": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant1state": {
@@ -568,8 +568,8 @@
 				"properties": {
 					"centered": true,
 					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant2position"],
-					 "occupantPosition": [0.0, 0.0]
+					 "transformationGroups": ["flip", "occupant2Position"],
+					 "occupant2Position": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant2state": {
@@ -582,8 +582,8 @@
 				"properties": {
 					"centered": true,
 					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant3position"],
-					 "occupantPosition": [0.0, 0.0]
+					 "transformationGroups": ["flip", "occupant3Position"],
+					 "occupant3Position": [0.0, 0.0]
 				},
 				"partStates": {
 					"occupant3state": {
@@ -596,13 +596,16 @@
 	},
 	"transformationGroups": {
 		"flip": {},
-		"occupant1position": {
+		"driverPosition": {
 			"interpolated": true
 		},
-		"occupant2position": {
+		"occupant1Position": {
 			"interpolated": true
 		},
-		"occupant3position": {
+		"occupant2Position": {
+			"interpolated": true
+		},
+		"occupant3Position": {
 			"interpolated": true
 		},
 		"headbob": {

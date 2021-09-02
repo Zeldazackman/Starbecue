@@ -1,15 +1,18 @@
 
 function p.updateAnims(dt)
-	for _, state in pairs(p.animStateData) do
+	for statename, state in pairs(p.animStateData) do
 		state.animationState.time = state.animationState.time + dt
+
+		for seatname, victimAnim in pairs(state.victimAnims) do
+			p.victimAnimUpdate(statename, seatname, victimAnim )
+		end
+
 		if state.animationState.time >= state.animationState.cycle then
 			p.endAnim(state)
 		end
 	end
-
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
-	p.victimAnimUpdate()
 end
 
 function p.endAnim(state)
@@ -28,22 +31,20 @@ function p.endAnim(state)
 	end
 end
 
-function p.victimAnimUpdate()
-	if p.victimAnim == nil or not p.victimAnim.enabled then return end
-	local seat = p.victimAnim.seat
-	local state = p.victimAnim.state
-	local ended, times, time = p.hasAnimEnded(state)
-	local anim = p.victimAnimations[anim]
-	if ended and not anim.loop then p.victimAnim.enabled = false
+function p.victimAnimUpdate(statename, seatname, victimAnim)
+	if victimAnim == nil then return end
+	local ended, times, time = p.hasAnimEnded(statename)
+	local anim = p.victimAnimations[victimAnim.anim]
+	if ended and not anim.loop then victimAnim = nil
 	else
-		local eid = vehicle.entityLoungingIn(seat)
-		local occupantIndex = tonumber(seat:sub(#"occupant"+1))
-		local speed = p.animStateData[state].animationState.frames / p.animStateData[state].animationState.cycle
+		local eid = vehicle.entityLoungingIn(seatname)
+		local occupantIndex = tonumber(seatname:sub(#"occupant"+1))
+		local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
 		local frame = math.floor(time * speed)
 		local nextFrame = frame + 1
 		local nextFrameIndex = nextFrame + 1
 
-		if p.victimAnim.prevFrame ~= frame then
+		if victimAnim.prevFrame ~= frame then
 			if anim.frames then
 				for i = 1, #anim.frames do
 					if (anim.frames[i] == frame) and (i ~= #anim.frames) then
@@ -56,38 +57,44 @@ function p.victimAnimUpdate()
 					end
 				end
 			end
-			p.victimAnim.prevFrame = p.victimAnim.frame
-			p.victimAnim.frame = nextFrame
+			victimAnim.prevFrame = victimAnim.frame
+			victimAnim.frame = nextFrame
 
-			p.victimAnim.prevIndex = p.victimAnim.index
-			p.victimAnim.index = nextFrameIndex
+			victimAnim.prevIndex = victimAnim.index
+			victimAnim.index = nextFrameIndex
 
-			if anim.e ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
-				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[p.victimAnim.prevIndex], (p.victimAnim.frame - p.victimAnim.prevFrame) * (p.animStateData[state].animationState.cycle / p.animStateData[state].animationState.frames) + 0.1, entity.id())
+			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
+				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
 			end
-			if anim.invis ~= nil and anim.e[p.victimAnim.prevIndex] ~= nil then
-				if anim.e[p.victimAnim.prevIndex] == 0 then
+			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
+				if anim.e[victimAnim.prevIndex] == 0 then
 					p.removeLoungeStatusFromList(occupantIndex, "pvsoinvisible")
 				else
 					p.addLoungeStatusToList(occupantIndex, "pvsoinvisible")
 				end
 			end
-			if anim.sitpos ~= nil and anim.sitpos[p.victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeOrientation(anim.sitpos[p.victimAnim.prevIndex])
+			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
 			end
-			if anim.emote ~= nil and anim.emote[p.victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeEmote(anim.emote[p.victimAnim.prevIndex])
+			if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
 			end
-			if anim.dance ~= nil and anim.dance[p.victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeDance(anim.dance[p.victimAnim.prevIndex])
+			if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
+				vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
 			end
 		end
 
-		local timeMod = time % (p.victimAnim.frame - p.victimAnim.prevFrame)
-		local transformGroup = p.victimAnim.seat.."Position"
-		local scale = {(anim[p.victimAnim.prevIndex].xs + (anim[p.victimAnim.index].xs - anim[p.victimAnim.prevIndex].xs) * timeMod), (anim[p.victimAnim.prevIndex].ys + (anim[p.victimAnim.index].ys - anim[p.victimAnim.prevIndex].ys) * timeMod)}
-		local rotation = anim[p.victimAnim.prevIndex].r + (anim[p.victimAnim.index].r - anim[p.victimAnim.prevIndex].r) * timeMod
-		local translation = {(anim[p.victimAnim.prevIndex].x + (anim[p.victimAnim.index].x - anim[p.victimAnim.prevIndex].x) * timeMod), (anim[p.victimAnim.prevIndex].y + (anim[p.victimAnim.index].y - anim[p.victimAnim.prevIndex].y) * timeMod)}
+		local timeMod = time % (victimAnim.frame - victimAnim.prevFrame)
+		local transformGroup = seatname.."Position"
+		local scale = {
+			(p.getPrevVictimAnimValue(victimAnim, "xs") + (p.getNextVictimAnimValue(victimAnim, "xs") - p.getPrevVictimAnimValue(victimAnim, "xs")) * timeMod),
+			(p.getPrevVictimAnimValue(victimAnim, "ys") + (p.getNextVictimAnimValue(victimAnim, "ys") - p.getPrevVictimAnimValue(victimAnim, "ys")) * timeMod)
+		}
+		local rotation = (p.getPrevVictimAnimValue(victimAnim, "r") + (p.getNextVictimAnimValue(victimAnim, "r") - p.getPrevVictimAnimValue(victimAnim, "r")) * timeMod)
+		local translation = {
+			(p.getPrevVictimAnimValue(victimAnim, "x") + (p.getNextVictimAnimValue(victimAnim, "x") - p.getPrevVictimAnimValue(victimAnim, "x")) * timeMod),
+			(p.getPrevVictimAnimValue(victimAnim, "y") + (p.getNextVictimAnimValue(victimAnim, "y") - p.getPrevVictimAnimValue(victimAnim, "y")) * timeMod)
+		}
 
 		animator.resetTransformationGroup(transformGroup)
 		--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
@@ -97,19 +104,47 @@ function p.victimAnimUpdate()
 	end
 end
 
-p.victimAnim = { enabled = false }
-function p.doVictimAnim(seatname, anim, state)
-	p.victimAnim = {
-		enabled = true,
-		seatname = seatname,
-		state = state,
+function p.getPrevVictimAnimValue(victimAnim, valName)
+	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
+		victimAnim.last[valName] = p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex]
+	end
+	return victimAnim.last[valName]
+end
+
+function p.getNextVictimAnimValue(victimAnim, valName)
+	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
+		return p.victimAnimations[victimAnim.anim][valName][victimAnim.index]
+	end
+	return victimAnim.last[valName]
+end
+
+local victimAnimArgs = {
+	xs = 1,
+	ys = 1,
+	x = 0,
+	y = 0,
+	r = 0
+}
+
+function p.doVictimAnim(seatname, anim, statename)
+	p.animStateData[statename].victimAnims[seatname] = {
 		anim = anim,
 		frame = 0,
 		index = 1,
 		prevFrame = 0,
-		prevIndex = 1
+		prevIndex = 1,
+
+		last = {}
 	}
-	p.victimAnimUpdate()
+	for arg, default in pairs(victimAnimArgs) do
+		if p.victimAnimations[anim][arg] ~= nil then
+			p.animStateData[statename].victimAnims[seatname].last[arg] = p.victimAnimations[anim][arg][1]
+		else
+			p.animStateData[statename].victimAnims[seatname].last[arg] = default
+		end
+	end
+
+	p.victimAnimUpdate(statename, seatname, p.animStateData[statename].victimAnims[seatname])
 end
 
 function p.offsetAnimUpdate()

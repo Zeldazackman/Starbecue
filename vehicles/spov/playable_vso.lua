@@ -37,7 +37,6 @@ p.clearOccupant = {
 	id = nil,
 	loungeStatList = {},
 	statList = {},
-	statPower = {},
 	visible = nil,
 	location = nil,
 	species = nil,
@@ -151,9 +150,9 @@ function init()
 			queue = {},
 		}
 		state.tag = nil
-		state.victimAnim = {
-			done = true
-		}
+		state.victimAnims = {}
+		state.offsetAnims = {}
+		state.rotationAnims = {}
 	end
 
 	for seatname, data in pairs(p.loungePositions) do
@@ -425,36 +424,27 @@ function p.checkTimers(dt)
 	end
 end
 
-function p.applyStatusLists()
-	for i = 1, p.occupants.total do
-		for j = 1, #p.occupant[i].statList[j] do
-			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", p.occupant[i].statList[j], p.occupant[i].statPower[j], entity.id() )
-		end
-		vehicle.setLoungeStatusEffects( "occupant"..i, p.occupant[i].loungeStatList )
-	end
-end
-
 function p.applyStatusEffects(eid, statuses)
 	for i = 1, #statuses do
 		world.sendEntityMessage(eid, "applyStatusEffect", statuses[i][1], statuses[i][2], entity.id())
 	end
 end
 
-function p.addStatusToList(index, status, power)
-	local power = power
-	for i = 1, #p.occupant[index].statList do
-		if p.occupant[index].statList[i] == status then
-			if power then
-				p.occupant[index].statPower[i] = power
-			end
-			return
+function p.applyStatusLists()
+	for i = 1, p.occupants.total do
+		for status, power in pairs(p.occupant[i].statList) do
+			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
 		end
+		vehicle.setLoungeStatusEffects( "occupant"..i, p.occupant[i].loungeStatList )
 	end
-	if not power then
-		power = 1
-	end
-	table.insert(p.occupant[index].statList, status)
-	table.insert(p.occupant[index].statPower, power)
+end
+
+function p.addStatusToList(index, status, power)
+	p.occupant[index].statList[status] = power or 1
+end
+
+function p.removeStatusFromList(index, status)
+	p.occupant[index].statList[status] = nil
 end
 
 function p.addLoungeStatusToList(index, status)
@@ -475,15 +465,6 @@ function p.removeLoungeStatusFromList(index, status)
 	end
 end
 
-function p.removeStatusFromList(index, status)
-	for i = 1, #p.occupant[index].statList do
-		if p.occupant[index].statList[i] == status then
-			table.remove(p.occupant[index].statList, i)
-			table.remove(p.occupant[index].statPower, i)
-			return
-		end
-	end
-end
 
 function p.forceSeat( occupantId, seatname )
 	if occupantId then
