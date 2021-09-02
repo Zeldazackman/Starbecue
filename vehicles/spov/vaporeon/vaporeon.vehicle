@@ -223,7 +223,15 @@
 				"jumpCount": 2,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
-				"primaryAction": {
+				"vore":{
+					"script": "bapeat"
+				},
+				"oralVore":{
+					"script": "bapeat",
+					"position": [ 3, -2.5 ]
+				},
+				"physicalAttack": {
+					"cooldown": 30,
 					"projectile": {
 						"name": "vapbap",
 						"position": [ 3, -2.5 ],
@@ -239,11 +247,10 @@
 								"value": "bap/"
 							}
 						]
-					},
-					"cooldown": 30,
-					"script": "bapeat"
+					}
 				},
-				"altAction": {
+				"specialAttack": {
+					"hold" : true,
 					"animation": { "head" : "waterspray"},
 					"projectile": {
 						"name": "vapwatergun",

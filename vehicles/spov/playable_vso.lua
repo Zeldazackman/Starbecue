@@ -30,8 +30,7 @@ p.movement = {
 	jumpProfile = "airJumpProfile",
 	airtime = 0,
 	groundMovement = "run",
-	primaryCooldown = 0,
-	altCooldown = 0
+	aimingLock = 0
 }
 
 p.clearOccupant = {
@@ -46,6 +45,8 @@ p.clearOccupant = {
 }
 
 p.clearSeat = {
+	primaryFire = 0,
+	altFire = 0,
 	dx = 0,
 	dy = 0,
 	left = 0,
@@ -54,11 +55,12 @@ p.clearSeat = {
 	down = 0,
 	jump = 0,
 	shift = 0,
-	special1 = 1, --so that it doesn't trip p.pressControl from using the tech
+	special1 = 1, --so that it doesn't trip p.tapControl from using the tech
 	special2 = 0,
 	special3 = 0,
-	dxReleased = 0,
-	dyReleased = 0,
+
+	primaryFireReleased = 0,
+	altFireReleased = 0,
 	leftReleased = 0,
 	rightReleased = 0,
 	upReleased = 0,
@@ -68,10 +70,25 @@ p.clearSeat = {
 	special1Released = 0,
 	special2Released = 0,
 	special3Released = 0,
-	species = nil,
-	mass = 0,
+
+	primaryFirePressed = false,
+	altFirePressed = false,
+	leftPressed = false,
+	rightPressed = false,
+	upPressed = false,
+	downPressed = false,
+	jumpPressed = false,
+	shiftPressed = false,
+	special1Pressed = false,
+	special2Pressed = false,
+	special3Pressed = false,
+
+	aim = {0,0},
 	primaryHandItem = nil,
 	altHandItem = nil,
+	species = nil,
+
+	mass = 0,
 	head = nil,
 	chest = nil,
 	legs = nil,
@@ -249,6 +266,16 @@ function uninit()
 	--or (world.entityHealth(entity.id()) <= 0) -- vehicles don't have health?
 	then
 		p.onDeath()
+	end
+end
+
+function sameSign(num1, num2)
+	if num1 <= 0 and num2 <= 0 then
+		return true
+	elseif num1 >=0 and num2 >=0 then
+		return true
+	else
+		return false
 	end
 end
 

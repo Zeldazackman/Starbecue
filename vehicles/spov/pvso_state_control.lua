@@ -50,7 +50,7 @@ function p.doTransition( direction, scriptargs )
 		p.doAnims( tconfig.animation )
 	end
 	if after ~= nil then
-		p.queueAnimEndFunction(tconfig.timing.."State", p.transition.after)
+		p.queueAnimEndFunction(tconfig.timing.."State", after)
 	end
 	if (tconfig.state ~= nil) and (tconfig.state ~= p.state) then
 		p.transitionLock = true

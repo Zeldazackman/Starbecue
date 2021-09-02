@@ -177,12 +177,12 @@ function state.stand.update()
 	end
 
 	if p.driving then
-		if p.pressControl( p.driverSeat, "jump" ) and p.movement.airtime > 10 and not p.movement.jumped then
+		if p.tapControl( p.driverSeat, "jump" ) and p.movement.airtime > 10 and not p.movement.jumped then
 			p.setState( "fly" )
 			return
 		end
 
-		if p.pressControl( p.driverSeat, "special2" ) then
+		if p.tapControl( p.driverSeat, "special2" ) then
 			if p.occupants.total > 0 then
 				p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
 			end

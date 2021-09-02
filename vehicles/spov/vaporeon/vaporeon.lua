@@ -77,7 +77,7 @@ end
 
 function state.stand.update()
 	if p.driving then
-		if p.pressControl( p.driverSeat, "special1" ) then
+		if p.tapControl( p.driverSeat, "special1" ) then
 			world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
 			if p.occupants.belly < 2 then
 				p.setState( "smol" )
@@ -88,7 +88,7 @@ function state.stand.update()
 			end
 			return
 		end
-		if p.pressControl( p.driverSeat, "special2" ) then
+		if p.tapControl( p.driverSeat, "special2" ) then
 			if p.occupants.belly > 0 then
 				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
 			end
@@ -111,7 +111,7 @@ function state.stand.letout( args )
 end
 
 function state.stand.bapeat()
-	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
+	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.oralVore.position ), "belly", "eat") then return end
 end
 
 -------------------------------------------------------------------------------
@@ -226,7 +226,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.smol.update()
-	if p.driving and p.pressControl( p.driverSeat, "special1" ) then
+	if p.driving and p.tapControl( p.driverSeat, "special1" ) then
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 		p.setState( "stand" )
 		p.doAnims( p.stateconfig.stand.idle, true )
@@ -272,7 +272,7 @@ function state.chonk_ball.update()
 	local dy = 0
 
 	if p.driving then
-		if p.pressControl( p.driverSeat, "special1" ) then
+		if p.tapControl( p.driverSeat, "special1" ) then
 			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 
 			p.setState( "stand" )

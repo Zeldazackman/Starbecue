@@ -1,5 +1,9 @@
 
 function p.pressControl(seat, control)
+	return controls[seat][control.."Pressed"]
+end
+
+function p.tapControl(seat, control)
 	return (( controls[seat][control.."Released"] > 0 ) and ( controls[seat][control.."Released"] < 0.15 ))
 end
 
@@ -26,6 +30,11 @@ end
 
 function p.updateControl(seatname, control, dt, forceHold)
 	if vehicle.controlHeld(seatname, control) or forceHold then
+		if controls[seatname][control] == 0 then
+			controls[seatname][control.."Pressed"] = true
+		else
+			controls[seatname][control.."Pressed"] = false
+		end
 		controls[seatname][control] = controls[seatname][control] + dt
 		controls[seatname][control.."Released"] = 0
 	else
@@ -59,9 +68,11 @@ function p.updateControls(dt)
 			p.updateControl(seatname, "special1", dt)
 			p.updateControl(seatname, "special2", dt)
 			p.updateControl(seatname, "special3", dt)
+			p.updateControl(seatname, "primaryFire", dt)
+			p.updateControl(seatname, "altFire", dt)
 
+			seat.aim = vehicle.aimPosition( p.driverSeat ) or {0,0}
 			seat.species = world.entitySpecies(lounging) or world.monsterType(lounging)
-
 			seat.primaryHandItem = world.entityHandItem(lounging, "primary")
 			seat.altHandItem = world.entityHandItem(lounging, "alt")
 			seat.primaryHandItemDescriptor = world.entityHandItemDescriptor(lounging, "primary")
@@ -112,7 +123,7 @@ function p.updateDriving(dt)
 
 	if p.standalone then
 		p.driving = true
-		if p.pressControl(p.driverSeat, "special3") then
+		if p.tapControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
 				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
 				{ vso = entity.id(), occupants = p.getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
@@ -123,10 +134,11 @@ function p.updateDriving(dt)
 	local dx = controls[p.driverSeat].dx
 	local dy = controls[p.driverSeat].dy
 	local state = p.stateconfig[p.state]
-	if dx ~= 0 then
+	if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
 		p.faceDirection( dx )
 	end
 	if p.stateconfig[p.state].control ~= nil then
+		p.doClickActions(state, dt)
 		p.groundMovement(dx, dy, state, dt)
 		p.waterMovement(dx, dy, state, dt)
 		p.jumpMovement(dx, dy, state, dt)
@@ -157,8 +169,6 @@ function p.groundMovement(dx, dy, state, dt)
 		p.movement.airtime = 0
 	end
 end
-
-
 
 function p.jumpMovement(dx, dy, state, dt)
 	mcontroller.applyParameters{ ignorePlatformCollision = p.movementParams.ignorePlatformCollision }
@@ -218,16 +228,6 @@ function p.airMovement( dx, dy, state, dt )
 	end
 end
 
-function sameSign(num1, num2)
-	if num1 <= 0 and num2 <= 0 then
-		return true
-	elseif num1 >=0 and num2 >=0 then
-		return true
-	else
-		return false
-	end
-end
-
 function p.waterMovement( dx, dy, state, dt )
 	if (p.underWater() and (not mcontroller.onGround())) and not state.control.waterMovementDisabled then
 		local swimSpeed = p.movementParams.swimSpeed or p.movementParams[p.movement.groundMovement.."Speed"]
@@ -253,33 +253,51 @@ function p.waterMovement( dx, dy, state, dt )
 	end
 end
 
-function p.primaryAction()
-	local control = p.stateconfig[p.state].control
-	if control.primaryAction ~= nil and vehicle.controlHeld( p.driverSeat, "PrimaryFire" ) then
-		if p.movement.primaryCooldown < 1 then
-			if control.primaryAction.projectile ~= nil then
-				p.projectile(control.primaryAction.projectile)
-			end
-			if control.primaryAction.animation ~= nil then
-				p.doAnims( control.primaryAction.animation )
-			end
-			if control.primaryAction.script ~= nil then
-				local statescript = p.statescripts[p.state][control.primaryAction.script]
-				if statescript then
-					statescript() -- what arguments might this need?
-				else
-					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
-				end
-			end
-			if 	p.movement.primaryCooldown < 1 then
-				p.movement.primaryCooldown = control.primaryAction.cooldown
-			end
-		end
+p.clickActionCooldowns = {
+	vore = 0
+}
+
+function p.doClickActions(state, dt)
+	for name, cooldown in pairs(p.clickActionCooldowns) do
+		cooldown = cooldown - dt
 	end
-	p.movement.primaryCooldown = p.movement.primaryCooldown - 1
+
+	p.movement.aimingLock = p.movement.aimingLock - dt
+
+	if (controls[p.driverSeat].primaryHandItem == "pvsoController") and (controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
+		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
+		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")
+	else
+		p.clickAction(state, "vore", "primaryFire")
+		p.clickAction(state, "specialAttack", "altFire")
+	end
 end
 
-function p.altAction()
+function p.clickAction(stateData, name, control)
+	if stateData.control[name] == nil then return end
+	if not p.clickActionCooldowns[name] then
+		p.clickActionCooldowns[name] = 0
+	end
+
+	if p.clickActionCooldowns[name] > 0 then return end
+
+	if (p.pressControl(p.driverSeat, control))
+	or (p.heldControl(p.driverSeat, control) and stateData.control[name].hold)
+	then
+		p.clickActionCooldowns[name] = stateData.control[name].cooldown or 0
+		if stateData.control[name].animation ~= nil then
+			p.doAnims(stateData.control[name].animation)
+		end
+		if stateData.control[name].projectile ~= nil then
+			p.projectile(stateData.control[name].projectile)
+		end
+		if stateData.control[name].script ~= nil and state[p.state][stateData.control[name].script] ~= nil then
+			state[p.state][stateData.control[name].script]()
+		end
+	end
+end
+
+function p.altAction(state, dt)
 	local control = p.stateconfig[p.state].control
 	if control.altAction ~= nil and vehicle.controlHeld( p.driverSeat, "altFire" ) then
 		if p.movement.altCooldown < 1 then
@@ -355,21 +373,21 @@ function p.driverSeatStateChange()
 	local transitions = p.stateconfig[p.state].transitions
 	local dx = 0
 	local dy = 0
-	if p.pressControl(p.driverSeat, "left") then
+	if p.tapControl(p.driverSeat, "left") then
 		dx = dx -1
 	end
-	if p.pressControl(p.driverSeat, "right") then
+	if p.tapControl(p.driverSeat, "right") then
 		dx = dx +1
 	end
-	if p.pressControl(p.driverSeat, "up") then
+	if p.tapControl(p.driverSeat, "up") then
 		dy = dy +1
 	end
-	if p.pressControl(p.driverSeat, "down") then
+	if p.tapControl(p.driverSeat, "down") then
 		dy = dy -1
 	end
 	local movedir = p.relativeDirectionName(dx, dy)
 
-	if (movedir == nil) and p.pressControl(p.driverSeat, "jump") then
+	if (movedir == nil) and p.tapControl(p.driverSeat, "jump") then
 		movedir = "jump"
 	end
 
@@ -399,8 +417,10 @@ function p.fireProjectile( projectiledata, driver )
 	local position = p.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
-		local aiming = vehicle.aimPosition( p.driverSeat )
-		vsoFacePoint( aiming[1] )
+		p.movement.aimingLock = 0.1
+
+		local aiming = controls[p.driverSeat].aim
+		p.facePoint( aiming[1] )
 		position = p.localToGlobal( projectiledata.position )
 		aiming[2] = aiming[2] + 0.2 * p.direction * (aiming[1] - position[1])
 		direction = world.distance( aiming, position )
@@ -410,10 +430,8 @@ function p.fireProjectile( projectiledata, driver )
 	local params = {}
 
 	if driver then
-		getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-			params.powerMultiplier = powerMultiplier
-			world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
-		end)
+		params.powerMultiplier = controls[p.driverSeat].powerMultiplier
+		world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
 	else
 		params.powerMultiplier = p.standalonePowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
