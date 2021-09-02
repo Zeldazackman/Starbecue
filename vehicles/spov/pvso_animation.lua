@@ -37,14 +37,12 @@ function p.victimAnimUpdate(statename, seatname, victimAnim)
 	local anim = p.victimAnimations[victimAnim.anim]
 	if ended and not anim.loop then victimAnim.enabled = false return
 	else
-		local eid = vehicle.entityLoungingIn(seatname)
 		local occupantIndex = tonumber(seatname:sub(#"occupant"+1))
+		local eid = p.occupant[occupantIndex].id
 		local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
 		local frame = math.floor(time * speed)
 		local nextFrame = frame + 1
 		local nextFrameIndex = nextFrame + 1
-
-		sb.logInfo(frame.."")
 
 		if victimAnim.prevFrame ~= frame then
 			if anim.frames then

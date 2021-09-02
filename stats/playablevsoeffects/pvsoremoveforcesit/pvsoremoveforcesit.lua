@@ -1,6 +1,6 @@
 function init()
-	status.removeEphemeralEffect("pvsoforcesit")
-	effect.expire()
+	status.removeEphemeralEffect("pvsoForceSit")
+	mcontroller.resetAnchorState()
 end
 
 function update(dt)

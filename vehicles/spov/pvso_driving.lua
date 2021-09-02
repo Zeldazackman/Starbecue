@@ -56,8 +56,8 @@ end
 
 function p.updateControls(dt)
 	for seatname, seat in pairs(controls) do
-		local lounging = vehicle.entityLoungingIn(seatname)
-		if lounging ~= nil and world.entityExists(lounging) and not (seatname == p.driverSeat and p.isPathfinding) then
+		local eid = p.getEidFromSeatname(seatname)
+		if eid ~= nil and world.entityExists(eid) and not (seatname == p.driverSeat and p.isPathfinding) then
 			seat.dx = 0
 			seat.dy = 0
 			p.updateDirectionControl(seatname, "left", "dx", -1, dt)
@@ -72,11 +72,11 @@ function p.updateControls(dt)
 			p.updateControl(seatname, "altFire", dt)
 
 			seat.aim = vehicle.aimPosition( p.driverSeat ) or {0,0}
-			seat.species = world.entitySpecies(lounging) or world.monsterType(lounging)
-			seat.primaryHandItem = world.entityHandItem(lounging, "primary")
-			seat.altHandItem = world.entityHandItem(lounging, "alt")
-			seat.primaryHandItemDescriptor = world.entityHandItemDescriptor(lounging, "primary")
-			seat.altHandItemDescriptor = world.entityHandItemDescriptor(lounging, "alt")
+			seat.species = world.entitySpecies(eid) or world.monsterType(eid)
+			seat.primaryHandItem = world.entityHandItem(eid, "primary")
+			seat.altHandItem = world.entityHandItem(eid, "alt")
+			seat.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
+			seat.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
 
 			local type = "prey"
 			if p.driving and (seatname == p.driverSeat) then
@@ -93,14 +93,14 @@ function p.updateControls(dt)
 			else
 				seat.shiftReleased = seat.shift
 				seat.shift = 0
-				p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatInformation", type), function(seatdata)
+				p.addRPC(world.sendEntityMessage(eid, "getVSOseatInformation", type), function(seatdata)
 					if seatdata ~= nil then
-						controls[seatname] = sb.jsonMerge(seat, seatdata)
+						controls[seatname] = sb.jsonMerge(controls[seatname], seatdata)
 					end
 				end)
-				p.addRPC(world.sendEntityMessage(vehicle.entityLoungingIn(seatname), "getVSOseatEquips", type), function(seatdata)
+				p.addRPC(world.sendEntityMessage(eid, "getVSOseatEquips", type), function(seatdata)
 					if seatdata ~= nil then
-						controls[seatname] = sb.jsonMerge(seat, seatdata)
+						controls[seatname] = sb.jsonMerge(controls[seatname], seatdata)
 					end
 				end)
 			end
@@ -125,6 +125,7 @@ function p.updateDriving(dt)
 		p.driving = true
 		if p.tapControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
+				--vehicle.entityLoungingIn only works for players and NPCs, but since this is a script that will only trigger for players, its ok
 				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
 				{ vso = entity.id(), occupants = p.getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
 			)
@@ -326,7 +327,7 @@ end
 p.monsterstrugglecooldown = {}
 
 function p.getSeatDirections(seatname)
-	local occupantId = vehicle.entityLoungingIn(seatname)
+	local occupantId = p.getEidFromSeatname(seatname)
 	if not occupantId or not world.entityExists(occupantId) then return end
 
 	if world.entityType( occupantId ) ~= "player" then
@@ -401,7 +402,7 @@ function p.driverSeatStateChange()
 end
 
 function p.projectile( projectiledata )
-	local driver = vehicle.entityLoungingIn(p.driverSeat)
+	local driver = p.driver
 	if projectiledata.energy and driver then
 		p.useEnergy(driver, projectiledata.cost, function(energyUsed)
 			if energyUsed then

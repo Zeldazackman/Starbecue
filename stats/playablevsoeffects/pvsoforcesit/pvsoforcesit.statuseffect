@@ -1,10 +1,11 @@
 {
-	"name" : "pvsoforcesit",
+	"name" : "pvsoForceSit",
+	"blockingStat" : "pvsoRemoveForceSit",
 	"effectConfig" : {},
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoforcesit.lua"
+	"pvsoForceSit.lua"
 	]
 
 }

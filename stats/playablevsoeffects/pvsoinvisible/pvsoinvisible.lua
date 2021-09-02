@@ -1,9 +1,8 @@
 function init()
-	effect.setParentDirectives("multiply=00000000")
-	script.setUpdateDelta(0)
 end
 
 function update(dt)
+	effect.setParentDirectives("multiply=00000000")
 end
 
 function uninit()

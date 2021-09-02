@@ -1,10 +1,10 @@
 {
-	"name" : "pvsoremoveforcesit",
+	"name" : "pvsoRemoveForceSit",
 	"effectConfig" : {},
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoremoveforcesit.lua"
+	"pvsoRemoveForceSit.lua"
 	]
 
 }

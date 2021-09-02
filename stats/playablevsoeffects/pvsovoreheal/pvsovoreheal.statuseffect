@@ -12,5 +12,5 @@
 	"animationConfig" : "pvsoVoreHeal.animation",
 
 	"label" : "Healing Vore",
-	"icon" : "/stats/playablevsoeffects/voreheal.png"
+	"icon" : "/stats/playablevsoeffects/voreHeal.png"
 }

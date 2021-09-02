@@ -169,8 +169,10 @@ function init()
 		p.driverSeat = "driver"
 		p.driving = true
 		p.forceSeat( driver, "driver" )
+		p.driver = driver
 		p.spawner = driver
 	else
+		p.driver = nil
 		p.standalone = false
 		p.driverSeat = "occupant1"
 		p.driving = false
@@ -198,9 +200,8 @@ function init()
 	end )
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
-		local driver = vehicle.entityLoungingIn(p.driverSeat)
-		if driver then
-			world.sendEntityMessage(driver, "PVSOClear")
+		if p.driver then
+			world.sendEntityMessage(p.driver, "PVSOClear")
 		end
 		p.nowarpout = nowarpout
 		p.onDeath()
@@ -213,9 +214,7 @@ function init()
 	end )
 
 	message.setHandler( "uneat", function(_,_, eid)
-		local i = p.getOccupantFromEid(eid)
-		p.occupant[i] = p.clearOccupant
-		p.unForceSeat( "occupant"..i)
+		p.unForceSeat( eid )
 	end )
 
 	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
@@ -435,7 +434,6 @@ function p.applyStatusLists()
 		for status, power in pairs(p.occupant[i].statList) do
 			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
 		end
-		vehicle.setLoungeStatusEffects( "occupant"..i, p.occupant[i].loungeStatList )
 	end
 end
 
@@ -447,73 +445,39 @@ function p.removeStatusFromList(index, status)
 	p.occupant[index].statList[status] = nil
 end
 
-function p.addLoungeStatusToList(index, status)
-	for i = 1, #p.occupant[index].loungeStatList do
-		if p.occupant[index].loungeStatList[i] == status then
-			return
-		end
-	end
-	table.insert(p.occupant[index].loungeStatList, status)
-end
-
-function p.removeLoungeStatusFromList(index, status)
-	for i = 1, #p.occupant[index].loungeStatList do
-		if p.occupant[index].loungeStatList[i] == status then
-			table.remove(p.occupant[index].loungeStatList, i)
-			return
-		end
-	end
-end
-
-
 function p.forceSeat( occupantId, seatname )
 	if occupantId then
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremoveforcesit", 1, entity.id())
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveForceSit", 1, entity.id())
 
 		vehicle.setLoungeEnabled(seatname, true)
 		local seat = 0
 		if seatname ~= "driver" then
 			seat = tonumber(seatname:sub(#"occupant"+1))
 		end
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoforcesit", seat + 1, entity.id())
+
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoForceSit", seat + 1, entity.id())
 	end
 end
 
-function p.unForceSeat(seatname)
-	local occupantId = vehicle.entityLoungingIn( seatname )
-	vehicle.setLoungeEnabled(seatname, false)
+function p.unForceSeat(occupantId)
 	if occupantId then
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremoveforcesit", 1, entity.id())
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveForceSit", 1, entity.id())
 	end
 end
 
 function p.locationFull(location)
 	if p.occupants.total == p.vso.maxOccupants.total then
-		--sb.logInfo("["..p.vso.menuName.."] Can't have more than "..p.vso.maxOccupants.total.." occupants total!")
 		return true
 	else
 		return p.occupants[location] == p.vso.maxOccupants[location]
-		--[[if p.occupants[location] == p.vso.maxOccupants[location] then
-			--sb.logInfo("["..p.vso.menuName.."] Can't have more than "..p.vso.maxOccupants[location].." occupants in their "..location.."!")
-			return true
-		else
-			return false
-		end]]
 	end
 end
 
 function p.locationEmpty(location)
 	if p.occupants.total == 0 then
-		--sb.logInfo( "["..p.vso.menuName.."] No one to let out!" )
 		return true
 	else
 		return p.occupants[location] == 0
-		--[[if p.occupants[location] == 0 then
-			sb.logInfo( "["..p.vso.menuName.."] No one in "..location.." to let out!" )
-			return true
-		else
-			return false
-		end]]
 	end
 end
 
@@ -522,8 +486,10 @@ function p.doVore(args, location, statuses, sound )
 	if p.eat( args.id, i, location ) then
 		vehicle.setInteractive( false )
 		p.showEmote("emotehappy")
+		p.transitionLock = true
 		--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 		return true, function()
+			p.transitionLock = false
 			vehicle.setInteractive( true )
 			if sound then animator.playSound( sound ) end
 		end
@@ -544,11 +510,13 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	end
 	vehicle.setInteractive( false )
 	--vsoVictimAnimSetStatus( "occupant"..i, statuses );
+	p.transitionLock = true
 
 	return true, function()
+		p.transitionLock = false
 		vehicle.setInteractive( true )
 		p.uneat( i )
-		world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
+		--world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
 	end
 end
 
@@ -565,18 +533,18 @@ function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
 
 	vehicle.setInteractive( true )
 	p.uneat( i )
-	world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
+	--world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
 end
 
 
 function p.checkEatPosition(position, location, transition, noaim)
 	if not p.locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
+			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
 		local entityaimed = world.entityQuery(vehicle.aimPosition(p.driverSeat), 2, {
-			withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
+			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
 		local aimednotlounging = p.firstNotLounging(entityaimed)
@@ -663,10 +631,12 @@ function p.updateOccupants()
 			p.occupant[i] = p.clearOccupant
 			lastFilled = false
 			animator.setAnimationState( "occupant"..i.."state", "empty" )
+			vehicle.setLoungeEnabled("occupant"..i, false)
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
+	--[[
 	for _, location in ipairs(p.vso.locations.mass) do
 		if location == "fatten" then
 			p.occupants.mass = p.occupants.mass + p.occupants.fatten
@@ -675,15 +645,16 @@ function p.updateOccupants()
 
 	for _, combine in ipairs(p.vso.locations.combine) do
 		for j = 2, #combine do
-			p.occupants[combine[1]] = p.occupants[combine[1]]+p.occupants[combine[j]]
-			if p.occupants[combine[1]] > p.vso.maxOccupants[combine[1]] then
-				p.occupants[combine[1]] = p.vso.maxOccupants[combine[1]]
+			p.occupants[ combine[1] ] = p.occupants[ combine[1] ]+p.occupants[ combine[j] ]
+			if p.occupants[ combine[1] ] > p.vso.maxOccupants[ combine[1] ] then
+				p.occupants[ combine[1] ] = p.vso.maxOccupants[ combine[1] ]
 			end
-			p.occupants[combine[j]] = p.occupants[combine[1]]
+			p.occupants[ combine[j] ] = p.occupants[ combine[1] ]
 		end
 	end
 
 	mcontroller.applyParameters({mass = p.vso.movementSettings[p.movementParamsName].mass + p.occupants.mass})
+	]]
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
 	for i = 1, #p.vso.locations.regular do
@@ -735,27 +706,25 @@ end
 function p.swapOccupants(a, b)
 	local A = p.occupant[a]
 	local B = p.occupant[b]
-	p.occupant[a] = b
+	p.occupant[a] = B
 	p.occupant[b] = A
 
-	if A then p.unForceSeat( "occupant"..a ) end
-	if B then p.unForceSeat( "occupant"..b ) end
-	if B then p.forceSeat( B, "occupant"..a ) end
-	if A then p.forceSeat( A, "occupant"..b ) end
+	if B then p.forceSeat( p.occupant[b].id, "occupant"..a ) end
+	if A then p.forceSeat( p.occupant[a].id, "occupant"..b ) end
 
 	p.swapCooldown = 100 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
 
 function p.entityLounging( entity )
-	if entity == vehicle.entityLoungingIn( "driver" ) then return true end
+	if entity == p.driver then return true end
 	for i = 1, p.vso.maxOccupants.total do
-		if entity == (vehicle.entityLoungingIn( "occupant"..i ) or p.occupant[i].id) then return true end
+		if entity == p.occupant[i].id then return true end
 	end
 	return false
 end
 
 function p.edible( occupantId, seatindex, source )
-	if vehicle.entityLoungingIn( "driver" ) ~= occupantId then return false end
+	if p.driver ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
 		if p.stateconfig[p.state].ediblePath then
@@ -793,7 +762,7 @@ function p.eat( occupantId, seatindex, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			p.smolprey( seatindex )
+			--p.smolprey( seatindex )
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.justAte = true
 			return true -- not lounging
@@ -805,11 +774,10 @@ function p.eat( occupantId, seatindex, location )
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
-	p.smolprey( seatindex )
+	--p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.forceSeat( occupantId, "occupant"..seatindex )
-	p.addStatusToList(seatindex, "vsoinvisible")
-	vehicle.setLoungeStatusEffects( "occupant"..seatindex, invis );
+	p.addStatusToList(seatindex, "pvsoInvisible")
 	p.justAte = true
 	return true
 end
@@ -817,8 +785,9 @@ end
 function p.uneat( seatindex )
 	local occupantId = p.occupant[seatindex].id
 	world.sendEntityMessage( occupantId, "PVSOClear")
-	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoremovebellyEffects")
-	p.unForceSeat( "occupant"..seatindex )
+	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
+	p.unForceSeat( occupantId )
+	--[[
 	if p.occupant[seatindex].species then
 		if world.entityType(occupantId) == "player" then
 			world.sendEntityMessage( occupantId, "spawnSmolPrey", p.occupant[seatindex].species )
@@ -827,11 +796,9 @@ function p.uneat( seatindex )
 		end
 		p.occupant[seatindex].species = nil
 		p.occupant[seatindex].filepath = nil
-	elseif p.isMonster(occupantId) then
-		-- do something to move it forward a few blocks
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsomonsterbindremove", p.monstercoords[1], p.monstercoords[2]) --this is hacky as fuck I love it
 	end
 	p.smolprey( seatindex ) -- clear
+	]]
 	p.occupant[seatindex] = p.clearOccupant
 end
 
@@ -866,6 +833,14 @@ function p.getOccupantFromEid(eid)
 		if eid == p.occupant[i].id then
 			return i
 		end
+	end
+end
+
+function p.getEidFromSeatname(seatname)
+	if seatname == "driver" then
+		return p.driver
+	else
+		return p.occupant[tonumber(seatname:sub(#"occupant"+1))].id
 	end
 end
 
@@ -904,10 +879,9 @@ function p.handleBelly()
 	p.updateOccupants()
 	p.handleStruggles()
 	if p.occupants.total > 0 and p.stateconfig[p.state].bellyEffect ~= nil then
-		local driver = vehicle.entityLoungingIn( "driver")
-		if driver ~= nil then
-			getDriverStat(driver, "powerMultiplier", function(powerMultiplier)
-				p.doBellyEffects(driver, math.log(powerMultiplier)+1)
+		if p.driver ~= nil then
+			getDriverStat(p.driver, "powerMultiplier", function(powerMultiplier)
+				p.doBellyEffects(p.driver, math.log(powerMultiplier)+1)
 			end)
 		else
 			p.doBellyEffects(false, p.standalonePowerLevel())

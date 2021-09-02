@@ -30,7 +30,7 @@ end
 
 -------------------------------------------------------------------------------
 function p.edible( occupantId )
-	if vehicle.entityLoungingIn( "occupant1" ) ~= occupantId then return false end
+	if p.getEidFromSeatname( "occupant1" ) ~= occupantId then return false end
 	if p.stateconfig[p.state].edible then
 		if p.stateconfig[p.state].ediblePath then
 			world.sendEntityMessage( source, "smolPreyPath", seatindex, p.stateconfig[p.state].ediblePath[p.cracks] )

@@ -1,12 +1,12 @@
+
+require("/stats/playablevsoeffects/pvsoEffectsGeneral.lua")
+
 function init()
 	script.setUpdateDelta(5)
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
-	status.removeEphemeralEffect("pvsoDigest")
-	status.removeEphemeralEffect("pvsoSoftDigest")
-	status.removeEphemeralEffect("pvsoDisplaySoftDigest")
-	status.removeEphemeralEffect("pvsoDisplayDigest")
+	removeOtherBellyEffects()
 
 end
 

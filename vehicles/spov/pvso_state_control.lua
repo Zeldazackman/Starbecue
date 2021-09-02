@@ -28,9 +28,10 @@ function p.setState(state)
 end
 
 p.transitionLock = false
+p.movementLock = false
 
 function p.doTransition( direction, scriptargs )
-	if not p.stateconfig[p.state].transitions[direction] then return end
+	if (not p.stateconfig[p.state].transitions[direction]) or p.transitionLock then return end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return end
 	local continue = true
@@ -53,12 +54,14 @@ function p.doTransition( direction, scriptargs )
 		p.queueAnimEndFunction(tconfig.timing.."State", after)
 	end
 	if (tconfig.state ~= nil) and (tconfig.state ~= p.state) then
+		p.movementLock = true
 		p.transitionLock = true
 
 		p.queueAnimEndFunction(tconfig.timing.."State", function()
 			p.setState( tconfig.state )
 			p.doAnims( p.stateconfig[p.state].idle )
 			p.transitionLock = false
+			p.movementLock = false
 		end)
 	end
 	if tconfig.victimAnimation ~= nil then

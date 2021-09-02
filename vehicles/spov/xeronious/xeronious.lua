@@ -118,12 +118,12 @@ function succ(args)
 	-- local pos1 = p.localToGlobal({9,0})
 
 	local entities = world.entityQuery(pos1, pos2, {
-		withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
+		withoutEntityId = p.driver,
 		includedTypes = {"creature"}
 	})
 
 	-- local entities = world.entityQuery(pos1, 10, {
-	-- 	withoutEntityId = vehicle.entityLoungingIn(p.driverSeat),
+	-- 	withoutEntityId = p.driver,
 	-- 	includedTypes = {"creature"}
 	-- })
 

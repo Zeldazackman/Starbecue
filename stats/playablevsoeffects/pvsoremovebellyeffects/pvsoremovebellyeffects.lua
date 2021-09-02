@@ -1,10 +1,8 @@
+
+require("/stats/playablevsoeffects/pvsoEffectsGeneral.lua")
+
 function init()
-	status.removeEphemeralEffect("pvsoDigest")
-	status.removeEphemeralEffect("pvsoSoftDigest")
-	status.removeEphemeralEffect("pvsoDisplaySoftDigest")
-	status.removeEphemeralEffect("pvsoDisplayDigest")
-	status.removeEphemeralEffect("pvsoVoreHeal")
-	effect.expire()
+	removeOtherBellyEffects()
 end
 
 function update(dt)
