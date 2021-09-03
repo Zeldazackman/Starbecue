@@ -806,7 +806,7 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			p.smolprey( seatindex )
+			--p.smolprey( seatindex )
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.updateOccupants(0)
 			p.justAte = true
@@ -819,7 +819,7 @@ function p.eat( occupantId, location )
 	local species = world.entityName( edibles[1] ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
-	p.smolprey( seatindex )
+	--p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.forceSeat( occupantId, "occupant"..seatindex )
 	p.addStatusToList(seatindex, "pvsoInvisible")
@@ -970,7 +970,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 			if p.isLocationDigest(p.occupant[i].location) then
 				if (p.settings.bellySounds == true) and p.randomTimer( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
 				local hunger_change = (hungereffect * powerMultiplier * p.dt)/100
-				if status ~= nil then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
+				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
 				if driver then p.addHungerHealth( driver, hunger_change) end
 				p.extraBellyEffects(i, eid, health, status)

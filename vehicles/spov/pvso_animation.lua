@@ -65,13 +65,13 @@ function p.victimAnimUpdate(entity)
 			victimAnim.index = nextFrameIndex
 
 			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-				world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
+				--world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
 			end
 			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 				if anim.e[victimAnim.prevIndex] == 0 then
-					p.removeLoungeStatusFromList(occupantIndex, "pvsoInvisible")
+					--p.removeLoungeStatusFromList(occupantIndex, "pvsoInvisible")
 				else
-					p.addLoungeStatusToList(occupantIndex, "pvsoInvisible")
+					--p.addLoungeStatusToList(occupantIndex, "pvsoInvisible")
 				end
 			end
 			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
@@ -85,33 +85,27 @@ function p.victimAnimUpdate(entity)
 			end
 		end
 		sb.logInfo(frame.." to "..nextFrame)
+		sb.logInfo("time"..time)
+		sb.logInfo("speed"..speed)
 
-		local prevFrameTime = (victimAnim.prevFrame)/speed
-		local nextFrameTime = (victimAnim.frame)/speed
+		local currTime = time * speed
 
-		sb.logInfo(prevFrameTime)
-		sb.logInfo(nextFrameTime)
+		sb.logInfo("currTime"..currTime)
 
-		local interpolate = (time - prevFrameTime)/(nextFrameTime - prevFrameTime)
+		local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame)
 
-		sb.logInfo(interpolate)
+		sb.logInfo(progress)
 
 		local transformGroup = seatname.."Position"
 		sb.logInfo(transformGroup)
 
-		local scale = {
-			(p.getPrevVictimAnimValue(victimAnim, "xs") + (p.getNextVictimAnimValue(victimAnim, "xs") - p.getPrevVictimAnimValue(victimAnim, "xs")) * interpolate),
-			(p.getPrevVictimAnimValue(victimAnim, "ys") + (p.getNextVictimAnimValue(victimAnim, "ys") - p.getPrevVictimAnimValue(victimAnim, "ys")) * interpolate)
-		}
+		local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
 		sb.logInfo(sb.printJson(scale))
 
-		local rotation = (p.getPrevVictimAnimValue(victimAnim, "r") + (p.getNextVictimAnimValue(victimAnim, "r") - p.getPrevVictimAnimValue(victimAnim, "r")) * interpolate)
+		local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
 		sb.logInfo(rotation)
 
-		local translation = {
-			(p.getPrevVictimAnimValue(victimAnim, "x") + (p.getNextVictimAnimValue(victimAnim, "x") - p.getPrevVictimAnimValue(victimAnim, "x")) * interpolate),
-			(p.getPrevVictimAnimValue(victimAnim, "y") + (p.getNextVictimAnimValue(victimAnim, "y") - p.getPrevVictimAnimValue(victimAnim, "y")) * interpolate)
-		}
+		local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
 		sb.logInfo(sb.printJson(translation))
 
 		animator.resetTransformationGroup(transformGroup)
@@ -120,6 +114,10 @@ function p.victimAnimUpdate(entity)
 		animator.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
 		animator.translateTransformationGroup(transformGroup, translation)
 	end
+end
+
+function p.getVictimAnimInterpolatedValue(victimAnim, valName, progress)
+	return (p.getPrevVictimAnimValue(victimAnim, valName) + (p.getNextVictimAnimValue(victimAnim, valName) - p.getPrevVictimAnimValue(victimAnim, valName)) * progress)
 end
 
 function p.getPrevVictimAnimValue(victimAnim, valName)
@@ -152,8 +150,8 @@ function p.doVictimAnim( occupantId, anim, statename )
 		enabled = true,
 		statename = statename,
 		anim = anim,
-		frame = 0,
-		index = 1,
+		frame = 1,
+		index = 2,
 		prevFrame = 0,
 		prevIndex = 1,
 
