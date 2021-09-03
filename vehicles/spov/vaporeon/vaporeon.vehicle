@@ -224,16 +224,16 @@
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"vore":{
-					"cooldown": 30,
+					"cooldown": 1,
 					"script": "bapeat"
 				},
 				"oralVore":{
-					"cooldown": 30,
+					"cooldown": 1,
 					"script": "bapeat",
 					"position": [ 3, -2.5 ]
 				},
 				"physicalAttack": {
-					"cooldown": 30,
+					"cooldown": 0.5,
 					"projectile": {
 						"name": "vapbap",
 						"position": [ 3, -2.5 ],
@@ -260,8 +260,7 @@
 						"aimable": true,
 						"energy": true,
 						"cost": 1
-					},
-					"cooldown": 0
+					}
 				},
 				"animations": {
 					"swim": {
