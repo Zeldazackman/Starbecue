@@ -2,14 +2,12 @@
 function p.updateAnims(dt)
 	for statename, state in pairs(p.animStateData) do
 		state.animationState.time = state.animationState.time + dt
-
-		for entity, victimAnim in pairs(state.victimAnims) do
-			p.victimAnimUpdate(statename, entity, victimAnim )
-		end
-
 		if state.animationState.time >= state.animationState.cycle then
 			p.endAnim(state)
 		end
+	end
+	for i, occupant in ipairs(p.occupant) do
+		p.victimAnimUpdate(occupant.id)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
@@ -31,8 +29,11 @@ function p.endAnim(state)
 	end
 end
 
-function p.victimAnimUpdate(statename, entity, victimAnim)
+function p.victimAnimUpdate(entity)
+	if entity == nil then return end
+	local victimAnim = p.entity[entity].victimAnim
 	if not victimAnim.enabled then return end
+	local statename = p.entity[entity].victimAnim.statename
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
 	if ended and not anim.loop then victimAnim.enabled = false return
@@ -126,9 +127,10 @@ local victimAnimArgs = {
 	r = 0
 }
 
-function p.doVictimAnim( occupantId, anim, statename)
-	p.animStateData[statename].victimAnims[occupantId] = {
+function p.doVictimAnim( occupantId, anim, statename )
+	p.entity[occupantId].victimAnim = {
 		enabled = true,
+		statename = statename,
 		anim = anim,
 		frame = 0,
 		index = 1,
@@ -139,13 +141,13 @@ function p.doVictimAnim( occupantId, anim, statename)
 	}
 	for arg, default in pairs(victimAnimArgs) do
 		if p.victimAnimations[anim][arg] ~= nil then
-			p.animStateData[statename].victimAnims[occupantId].last[arg] = p.victimAnimations[anim][arg][1]
+			p.entity[occupantId].victimAnim.last[arg] = p.victimAnimations[anim][arg][1]
 		else
-			p.animStateData[statename].victimAnims[occupantId].last[arg] = default
+			p.entity[occupantId].victimAnim.last[arg] = default
 		end
 	end
 
-	p.victimAnimUpdate(statename, occupantId, p.animStateData[statename].victimAnims[occupantId])
+	p.victimAnimUpdate(occupantId)
 end
 
 function p.offsetAnimUpdate()

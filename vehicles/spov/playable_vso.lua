@@ -51,7 +51,8 @@ function p.clearOccupant(i)
 		occupantTime = 0,
 		progressBar = 0,
 		progressBarActive = false,
-		progressBarFinishFunc = nil
+		progressBarFinishFunc = nil,
+		victimAnim = { enabled = false }
 	}
 end
 
@@ -165,9 +166,6 @@ function init()
 			queue = {},
 		}
 		state.tag = nil
-		state.victimAnims = {}
-		state.offsetAnims = {}
-		state.rotationAnims = {}
 	end
 
 	for seatname, data in pairs(p.loungePositions) do
@@ -658,10 +656,11 @@ function p.updateOccupants(dt)
 				p.swapOccupants( i-1, i )
 				i = i - 1
 			end
-			p.entity[occupantId] = p.occupant[i]
+			p.entity[p.occupant[i].id] = p.occupant[i]
 			p.occupant[i].index = i
 			p.occupant[i].seatname = "occupant"..i
 			p.seats["occupant"..i] = p.occupant[i]
+
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
 				p.occupant[i].progressBar = p.occupant[i].progressBar + ((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt)
