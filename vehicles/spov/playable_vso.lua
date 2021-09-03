@@ -177,20 +177,19 @@ function init()
 	end
 
 	p.driver = config.getParameter( "driver" )
+	p.occupant[0] = p.clearOccupant(0)
+	p.occupant[0].id = p.driver
+	p.occupant[0].seatname = "driver"
+	p.seats.driver = p.occupant[0]
 
 	if p.driver ~= nil then
-		p.seats.driver = {
-			id = p.driver,
-			index = 0,
-			seatname = "driver"
-		}
-		p.entity[p.driver] = p.seats.driver
-
+		p.entity[p.driver] = p.occupant[0]
 		p.standalone = true
 		p.driverSeat = "driver"
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
+		p.addStatusToList(0, "pvsoInvisible")
 	else
 		p.standalone = false
 		p.driverSeat = "occupant1"
@@ -465,9 +464,11 @@ function p.applyStatusEffects(eid, statuses)
 end
 
 function p.applyStatusLists()
-	for i = 1, p.occupants.total do
+	for i = 0, #p.occupant do
 		for status, power in pairs(p.occupant[i].statList) do
-			world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
+			if p.occupant[i].id then
+				world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
+			end
 		end
 	end
 end

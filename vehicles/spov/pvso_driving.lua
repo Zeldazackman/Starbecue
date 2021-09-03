@@ -111,14 +111,14 @@ function p.updateControls(dt)
 end
 
 function p.updateDriving(dt)
-	if driver then
+	if p.driver then
 		local light = p.vso.lights.driver
-		light.position = world.entityPosition( driver )
-		world.sendEntityMessage( driver, "PVSOAddLocalLight", light )
+		light.position = world.entityPosition( p.driver )
+		world.sendEntityMessage( p.driver, "PVSOAddLocalLight", light )
 
 		local aim = vehicle.aimPosition(p.driverSeat)
 		local cursor = "/cursors/cursors.png:pointer"
-		world.sendEntityMessage( driver, "PVSOCursor", aim, cursor)
+		world.sendEntityMessage( p.driver, "PVSOCursor", aim, cursor)
 	end
 
 	if p.standalone then
@@ -130,6 +130,9 @@ function p.updateDriving(dt)
 				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = controls[p.driverSeat].powerMultiplier }, false, entity.id()
 			)
 		end
+	end
+	if p.tapControl(p.driverSeat, "special2") then
+		p.doTransition("escape")
 	end
 
 	local dx = controls[p.driverSeat].dx

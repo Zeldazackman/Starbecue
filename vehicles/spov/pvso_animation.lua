@@ -6,8 +6,8 @@ function p.updateAnims(dt)
 			p.endAnim(state)
 		end
 	end
-	for i, occupant in ipairs(p.occupant) do
-		p.victimAnimUpdate(occupant.id)
+	for i = 0, #p.occupant do
+		p.victimAnimUpdate(p.occupant[i].id)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
@@ -44,6 +44,7 @@ function p.victimAnimUpdate(entity)
 		local frame = math.floor(time * speed)
 		local nextFrame = frame + 1
 		local nextFrameIndex = nextFrame + 1
+		local lastframe = false
 
 		if victimAnim.prevFrame ~= frame then
 			if anim.frames then
@@ -55,6 +56,8 @@ function p.victimAnimUpdate(entity)
 					if anim.loop and (i == #anim.frames) then
 						nextFrame = 0
 						nextFrameIndex = 1
+					elseif (i == #anim.frames) then
+						lastframe = true
 					end
 				end
 			end
@@ -65,13 +68,15 @@ function p.victimAnimUpdate(entity)
 			victimAnim.index = nextFrameIndex
 
 			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-				--world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
+				world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
 			end
 			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 				if anim.e[victimAnim.prevIndex] == 0 then
-					--p.removeLoungeStatusFromList(occupantIndex, "pvsoInvisible")
+					world.sendEntityMessage(entity, "applyStatusEffect", "pvsoInvisible", (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
+					p.addStatusToList(occupantIndex, "pvsoInvisible")
 				else
-					--p.addLoungeStatusToList(occupantIndex, "pvsoInvisible")
+					p.removeStatusFromList(occupantIndex, "pvsoInvisible")
+					world.sendEntityMessage(entity, "pvsoRemoveStatusEffect", "pvsoInvisible")
 				end
 			end
 			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
@@ -84,29 +89,13 @@ function p.victimAnimUpdate(entity)
 				vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
 			end
 		end
-		sb.logInfo(frame.." to "..nextFrame)
-		sb.logInfo("time"..time)
-		sb.logInfo("speed"..speed)
 
 		local currTime = time * speed
-
-		sb.logInfo("currTime"..currTime)
-
 		local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame)
-
-		sb.logInfo(progress)
-
 		local transformGroup = seatname.."Position"
-		sb.logInfo(transformGroup)
-
 		local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
-		sb.logInfo(sb.printJson(scale))
-
 		local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
-		sb.logInfo(rotation)
-
 		local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
-		sb.logInfo(sb.printJson(translation))
 
 		animator.resetTransformationGroup(transformGroup)
 		--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
@@ -124,16 +113,13 @@ function p.getPrevVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
 		victimAnim.last[valName] = p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex]
 	end
-	sb.logInfo(valName.." "..victimAnim.last[valName])
 	return victimAnim.last[valName]
 end
 
 function p.getNextVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
-		sb.logInfo(valName.." "..p.victimAnimations[victimAnim.anim][valName][victimAnim.index])
 		return p.victimAnimations[victimAnim.anim][valName][victimAnim.index]
 	end
-	sb.logInfo(valName.." "..victimAnim.last[valName])
 	return victimAnim.last[valName]
 end
 

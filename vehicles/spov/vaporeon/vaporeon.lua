@@ -107,6 +107,10 @@ function state.stand.eat( args )
 end
 
 function state.stand.letout( args )
+	local args = args
+	if args.id == nil then
+		args.id = p.occupant[p.occupants.total].id
+	end
 	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end
 

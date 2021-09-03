@@ -1,10 +1,10 @@
 {
-	"name" : "pvsoinvisible",
+	"name" : "pvsoInvisible",
 	"effectConfig" : {},
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoinvisible.lua"
+	"pvsoInvisible.lua"
 	]
 
 }
