@@ -5,15 +5,16 @@ p.bellyEffects = {
 }
 
 function onInit()
+	p.vsoSettings = player.getProperty("vsoSettings") or {}
+	globalSettings = p.vsoSettings.global or {}
+	settings = p.vsoSettings[p.vsoname] or {}
+
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupants = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	enableActionButtons(false)
 	readOccupantData()
-	p.vsoSettings = player.getProperty("vsoSettings") or {}
-	globalSettings = p.vsoSettings.global or {}
-	settings = p.vsoSettings[p.vsoname] or {}
 
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
@@ -95,6 +96,7 @@ function getSelectedId()
 	for j = 1, #p.listItems do
 		if p.listItems[j].listItem == selected then
 			p.selectedId = p.listItems[j].id
+			return p.selectedId
 		end
 	end
 end
@@ -209,23 +211,12 @@ function setPortrait( canvasName, data )
 	end
 end
 
-function getWhich()
-	getSelectedId()
-	for i = 1, #p.occupants do
-		if p.selectedId == p.occupants[i].id then
-			return i
-		end
-	end
-	return #p.occupants
-end
-
 function letOut()
 	if p.refreshed then
 		p.refreshed = false
 		p.refreshtime = 0
 		p.refreshList = true
-		local which = getWhich()
 		enableActionButtons(false)
-		world.sendEntityMessage( p.vso, "letout", which )
+		world.sendEntityMessage( p.vso, "letout", getSelectedId() )
 	end
 end

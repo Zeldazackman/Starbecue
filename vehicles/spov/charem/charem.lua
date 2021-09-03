@@ -29,9 +29,7 @@ function state.back.analescape( args )
 end
 
 function state.back.bed( args )
-	local index = p.occupants.total + 1
-
-	if p.eat( args.id, index, "hug" ) then
+	if p.eat( args.id, "hug" ) then
 		--vsoVictimAnimSetStatus( "occupant"..index, {} );
 		return true
 	else

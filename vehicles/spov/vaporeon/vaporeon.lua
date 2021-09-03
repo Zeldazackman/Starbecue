@@ -67,7 +67,7 @@ function p.whenFalling()
 		p.movement.falling = true
 		for i = 1, p.occupants.total do
 			if p.occupant[i].location == "hug" then
-				p.uneat(i)
+				p.uneat(p.occupant[i].id)
 			end
 		end
 	end
@@ -130,7 +130,7 @@ function state.sit.pin( args )
 		end
 	end
 	local index = p.occupants.total + 1
-	if #pinnable >= 1 and p.eat( pinnable[1], index, "hug" ) then
+	if #pinnable >= 1 and p.eat( pinnable[1], "hug" ) then
 		--vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
 	return true
@@ -193,7 +193,7 @@ end
 function state.back.bed( args )
 	local index = p.occupants.total + 1
 
-	if p.eat( args.id, index, "hug" ) then
+	if p.eat( args.id, "hug" ) then
 		--vsoVictimAnimSetStatus( "occupant"..index, {} );
 		return true
 	else

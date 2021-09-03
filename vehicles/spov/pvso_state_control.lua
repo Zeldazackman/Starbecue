@@ -31,9 +31,10 @@ p.transitionLock = false
 p.movementLock = false
 
 function p.doTransition( direction, scriptargs )
-	if (not p.stateconfig[p.state].transitions[direction]) or p.transitionLock then return end
+	if (not p.stateconfig[p.state].transitions[direction]) then return "doesn't exist" end
+	if p.transitionLock then return "locked" end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
-	if tconfig == nil then return end
+	if tconfig == nil then return "no data" end
 	local continue = true
 	local after
 	if tconfig.script then
@@ -43,7 +44,7 @@ function p.doTransition( direction, scriptargs )
 		if _continue ~= nil then continue = _continue end
 		if _tconfig ~= nil then tconfig = _tconfig end
 	end
-	if not continue then return end
+	if not continue then return "script fail" end
 	if tconfig.timing == nil then
 		tconfig.timing = "body"
 	end
@@ -64,20 +65,15 @@ function p.doTransition( direction, scriptargs )
 			p.movementLock = false
 		end)
 	end
-	if tconfig.victimAnimation ~= nil then
-		local i = (scriptargs or {}).index
-		if i == nil then
-			i = p.occupants.total
-			if p.justAte then
-				i = i + 1
-				p.justAte = false
-			elseif tconfig.victimAnimLocation ~= nil then
-				i = p.findFirstIndexForLocation(tconfig.victimAnimLocation)
-			end
+	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
+		local id = (scriptargs or {}).id
+		local index = (scriptargs or {}).index
+		if id == nil then
+			id = p.getEidFromIndex(index)
 		end
-		if i then p.doVictimAnim( "occupant"..i, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
+		if id then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
-	return true
+	return "success", p.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
 end
 
 function p.idleStateChange()

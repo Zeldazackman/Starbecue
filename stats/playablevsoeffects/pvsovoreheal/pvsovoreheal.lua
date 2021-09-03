@@ -6,7 +6,7 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
-	removeOtherBellyEffects()
+	removeOtherBellyEffects("pvsoVoreHeal")
 
 end
 

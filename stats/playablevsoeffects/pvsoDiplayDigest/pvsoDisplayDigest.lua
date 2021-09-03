@@ -11,7 +11,7 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 
-	removeOtherBellyEffects()
+	removeOtherBellyEffects("pvsoDisplayDigest")
 end
 
 function update(dt)

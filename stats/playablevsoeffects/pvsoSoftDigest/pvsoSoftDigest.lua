@@ -5,7 +5,7 @@ function init()
 	script.setUpdateDelta(5)
 	self.powerMultiplier = effect.duration()
 
-	removeOtherBellyEffects()
+	removeOtherBellyEffects("pvsoSoftDigest")
 end
 
 function update(dt)

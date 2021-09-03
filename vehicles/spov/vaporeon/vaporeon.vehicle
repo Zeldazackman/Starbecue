@@ -224,9 +224,11 @@
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"vore":{
+					"cooldown": 30,
 					"script": "bapeat"
 				},
 				"oralVore":{
+					"cooldown": 30,
 					"script": "bapeat",
 					"position": [ 3, -2.5 ]
 				},

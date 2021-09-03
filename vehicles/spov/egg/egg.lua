@@ -39,58 +39,6 @@ function p.edible( occupantId )
 	end
 end
 
-
-function p.handleStruggles()
-	local movedir = p.getSeatDirections( "occupant1" )
-
-	if movedir == nil then return end -- invalid struggle
-
-	local struggledata = p.stateconfig[p.state].struggle[p.occupant[1].location]
-	if struggledata == nil then return end
-
-	if not p.hasAnimEnded( struggledata.part.."State" ) and (
-		p.animationIs( struggledata.part.."State", "s_up" ) or
-		p.animationIs( struggledata.part.."State", "s_front" ) or
-		p.animationIs( struggledata.part.."State", "s_back" ) or
-		p.animationIs( struggledata.part.."State", "s_down" )
-	) then return end
-
-	if struggledata.script ~= nil then
-		local statescript = p.statestripts[p.state][struggledata.script]
-		statescript( struggler, movedir )
-	end
-
-	local chance = struggledata.chances
-	if struggledata[movedir].chances ~= nil then
-		chance = struggledata[movedir].chances
-	end
-	if chance[p.settings.escapeModifier] ~= nil then
-		chance = chance[p.settings.escapeModifier]
-	end
-
-	if chance ~= nil and ( chance.max == 0 or (
-		(not p.driving or struggledata[movedir].controlled)
-		and (math.random(chance.min, chance.max) <= p.struggleCount))
-	) ) then
-		p.struggleCount = 0
-		p.doTransition( struggledata[movedir].transition, {index=struggler, direction=movedir} )
-	else
-		p.struggleCount = p.struggleCount + 1
-		p.bellySettleDownTimer = 5
-
-		sb.setLogMap("b", "struggle")
-		local animation = {offset = struggledata[movedir].offset}
-		animation[struggledata.part] = "s_"..movedir
-
-		p.doAnims(animation)
-
-		if struggledata[movedir].victimAnimation then
-			p.doVictimAnim( "occupant"..struggler, struggledata[movedir].victimAnimation, struggledata.part.."State" )
-		end
-		--animator.playSound( "struggle" )
-	end
-end
-
 function state.stand.begin()
 	p.occupant[1].id = p.driverSeat
 	p.forceSeat( p.driverSeat, "occupant1" )

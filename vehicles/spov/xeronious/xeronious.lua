@@ -49,7 +49,7 @@ function p.whenFalling()
 		p.movement.falling = true
 		for i = 1, p.occupants.total do
 			if p.occupant[i].location == "hug" then
-				p.uneat(i)
+				p.uneat(p.occupant[i].id)
 			end
 		end
 	end
@@ -80,7 +80,7 @@ function checkEscapes(args)
 		return p.doEscape(args.index, "hug", {2.5,0}, {}, {})
 	end
 
-	if not p.doTransition(direction, args) then return false end
+	if not (p.doTransition(direction, args) == "success") then return false end
 
 	returnval[1], returnval[2] = p.doEscape(args, location, monstercoords, status, {"droolsoaked", 5})
 

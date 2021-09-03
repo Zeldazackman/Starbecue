@@ -3,31 +3,53 @@ require("/stats/playablevsoeffects/pvsoEffectsGeneral.lua")
 
 
 function init()
-	script.setUpdateDelta(5)
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
+	self.superDigest = false
+	self.targetTime = 0
+	self.rpcAttempts = 0
 
-	removeOtherBellyEffects()
+	removeOtherBellyEffects("pvsoDigest")
+
+	message.setHandler("pvsoSuperDigest", function()
+		self.superDigest = true
+	end)
 
 end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
 		local health = world.entityHealth(entity.id())
-		if health[1] > ( 0.01 * dt * self.powerMultiplier) then
-			status.modifyResourcePercentage("health", -0.01 * dt * self.powerMultiplier)
-		elseif not self.digested then
-			self.digested = true
-			world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
-		else
-			effect.modifyDuration(1)
-			if self.cdt > 1.5 then
-				status.modifyResourcePercentage("health", -1 * dt * self.powerMultiplier)
+		local digestRate = 0.01
+		if self.superDigest then
+			digestRate = 0.1
+		end
+		if health[1] > ( digestRate * dt * self.powerMultiplier) and not self.digested then
+			status.modifyResourcePercentage("health", -digestRate * dt * self.powerMultiplier)
+		elseif self.digested then
+			self.cdt = self.cdt + dt
+			if self.cdt >= self.targetTime then
 				world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
-			else
-				self.cdt = self.cdt + dt
+				status.modifyResourcePercentage("health", -1)
 			end
+		elseif self.rpc == nil then
+			self.rpc = world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
+		elseif self.rpc ~= nil and self.rpc:finished() then
+			if self.rpc:succeeded() then
+				local result = self.rpc:result()
+				if result.success == "success" then
+					self.digested = true
+					self.targetTime = result.timing
+				elseif result.success == "doesn't exist" or result.success == "no data" then
+					self.digested = true
+				end
+			end
+			if self.rpcAttempts > 5 then
+				self.digested = true
+			end
+			self.rpc = nil
+			self.rpcAttempts = self.rpcAttempts + 1
 		end
 	else
 		effect.expire()

@@ -26,5 +26,5 @@ end
 function transform()
 	local which = getWhich()
 	enableActionButtons(false)
-	world.sendEntityMessage( p.vso, "settingsMenuSet", "letout", which )
+	world.sendEntityMessage( p.vso, "letout", which )
 end

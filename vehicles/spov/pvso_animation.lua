@@ -3,8 +3,8 @@ function p.updateAnims(dt)
 	for statename, state in pairs(p.animStateData) do
 		state.animationState.time = state.animationState.time + dt
 
-		for seatname, victimAnim in pairs(state.victimAnims) do
-			p.victimAnimUpdate(statename, seatname, victimAnim )
+		for entity, victimAnim in pairs(state.victimAnims) do
+			p.victimAnimUpdate(statename, entity, victimAnim )
 		end
 
 		if state.animationState.time >= state.animationState.cycle then
@@ -31,14 +31,14 @@ function p.endAnim(state)
 	end
 end
 
-function p.victimAnimUpdate(statename, seatname, victimAnim)
+function p.victimAnimUpdate(statename, entity, victimAnim)
 	if not victimAnim.enabled then return end
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
 	if ended and not anim.loop then victimAnim.enabled = false return
 	else
-		local occupantIndex = tonumber(seatname:sub(#"occupant"+1))
-		local eid = p.occupant[occupantIndex].id
+		local occupantIndex = p.entity[entity].index
+		local seatname = p.entity[entity].seatname
 		local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
 		local frame = math.floor(time * speed)
 		local nextFrame = frame + 1
@@ -64,7 +64,7 @@ function p.victimAnimUpdate(statename, seatname, victimAnim)
 			victimAnim.index = nextFrameIndex
 
 			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-				world.sendEntityMessage(eid, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
+				world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.1, entity.id())
 			end
 			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 				if anim.e[victimAnim.prevIndex] == 0 then

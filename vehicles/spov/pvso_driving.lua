@@ -105,7 +105,7 @@ function p.updateControls(dt)
 				end)
 			end
 		else
-			seat = p.clearSeat
+			seat = p.clearSeat()
 		end
 	end
 end
@@ -127,7 +127,7 @@ function p.updateDriving(dt)
 			world.sendEntityMessage(
 				--vehicle.entityLoungingIn only works for players and NPCs, but since this is a script that will only trigger for players, its ok
 				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
-				{ vso = entity.id(), occupants = p.getSettingsMenuInfo(), maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
+				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
 			)
 		end
 	end
@@ -298,32 +298,6 @@ function p.clickAction(stateData, name, control)
 	end
 end
 
-function p.altAction(state, dt)
-	local control = p.stateconfig[p.state].control
-	if control.altAction ~= nil and vehicle.controlHeld( p.driverSeat, "altFire" ) then
-		if p.movement.altCooldown < 1 then
-			if control.altAction.projectile ~= nil then
-				p.projectile(control.altAction.projectile)
-			end
-			if control.altAction.animation ~= nil then
-				p.doAnims( control.altAction.animation )
-			end
-			if control.altAction.script ~= nil then
-				local statescript = p.statescripts[p.state][control.altAction.script]
-				if statescript then
-					statescript() -- what arguments might this need?
-				else
-					sb.logError("[PVSO "..world.entityName(entity.id()).."] Missing statescript "..control.altAction.script.." for state "..p.state.."!")
-				end
-			end
-			if 	p.movement.altCooldown < 1 then
-				p.movement.altCooldown = control.altAction.cooldown
-			end
-		end
-	end
-	p.movement.altCooldown = p.movement.altCooldown - 1
-end
-
 p.monsterstrugglecooldown = {}
 
 function p.getSeatDirections(seatname)
@@ -333,7 +307,7 @@ function p.getSeatDirections(seatname)
 	if world.entityType( occupantId ) ~= "player" then
 		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] <= 0 then
 			local randomDirections = { "back", "front", "up", "down", "jump", nil}
-			p.monsterstrugglecooldown[seatname] = (math.random(100, 1000)/100)
+			p.monsterstrugglecooldown[seatname] = (math.random(100, 300)/100)
 			return randomDirections[math.random(1,6)]
 		else
 			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - p.dt
