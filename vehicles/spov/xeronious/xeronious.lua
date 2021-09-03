@@ -92,7 +92,7 @@ end
 function p.extraBellyEffects(i, eid, health)
 	if p.occupant[i].location == "belly" and health[1] == 1 and ((p.settings.bellyEffect == "pvsoSoftDigest") or (p.settings.bellyEffect == "pvsoDisplaySoftDigest"))then
 		p.occupant[i].species = "xeronious_egg"
-		p.smolprey( i )
+		--p.smolprey( i )
 		if p.settings.autoegglay or not p.driving then p.doTransition("escape", {index=i, direction="down"}) end
 		return
 	end

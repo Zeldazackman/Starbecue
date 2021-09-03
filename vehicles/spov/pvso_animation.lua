@@ -2,15 +2,20 @@
 function p.updateAnims(dt)
 	for statename, state in pairs(p.animStateData) do
 		state.animationState.time = state.animationState.time + dt
+	end
+
+	for i = 0, #p.occupant do
+		p.victimAnimUpdate(p.occupant[i].id)
+		p.updateVisibility(p.occupant[i])
+	end
+	p.offsetAnimUpdate()
+	p.rotationAnimUpdate()
+
+	for statename, state in pairs(p.animStateData) do
 		if state.animationState.time >= state.animationState.cycle then
 			p.endAnim(state)
 		end
 	end
-	for i = 0, #p.occupant do
-		p.victimAnimUpdate(p.occupant[i].id)
-	end
-	p.offsetAnimUpdate()
-	p.rotationAnimUpdate()
 end
 
 function p.endAnim(state)
@@ -26,6 +31,20 @@ function p.endAnim(state)
 			animator.setPartTag( state.tag.part, state.tag.name, "" )
 		end
 		state.tag = nil
+	end
+end
+
+function p.updateVisibility(occupant)
+	if occupant.id == nil then return end
+	if occupant.visible then
+		if occupant.smolPreyData.species ~= nil then
+
+		else
+			world.sendEntityMessage(occupant.id, "pvsoRemoveStatusEffect", "pvsoInvisible")
+		end
+	else
+		world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")
+		animator.setAnimationState( occupant.seatname.."State", "empty", true )
 	end
 end
 
@@ -70,14 +89,8 @@ function p.victimAnimUpdate(entity)
 			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 				world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
 			end
-			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-				if anim.e[victimAnim.prevIndex] == 0 then
-					world.sendEntityMessage(entity, "applyStatusEffect", "pvsoInvisible", (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
-					p.addStatusToList(occupantIndex, "pvsoInvisible")
-				else
-					p.removeStatusFromList(occupantIndex, "pvsoInvisible")
-					world.sendEntityMessage(entity, "pvsoRemoveStatusEffect", "pvsoInvisible")
-				end
+			if anim.visible ~= nil and anim.visible[victimAnim.prevIndex] ~= nil then
+				p.entity[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
 			end
 			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
 				vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
@@ -91,7 +104,7 @@ function p.victimAnimUpdate(entity)
 		end
 
 		local currTime = time * speed
-		local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame)
+		local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame) * (victimAnim.interpMode or 1)
 		local transformGroup = seatname.."Position"
 		local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
 		local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)

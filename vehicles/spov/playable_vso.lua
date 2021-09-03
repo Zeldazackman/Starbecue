@@ -43,14 +43,14 @@ function p.clearOccupant(i)
 		id = nil,
 		loungeStatList = {},
 		statList = {},
-		visible = nil,
+		visible = true,
 		location = nil,
-		species = nil,
-		filepath = nil,
+		smolPreyData = {},
 		animating = nil,
 		occupantTime = 0,
 		progressBar = 0,
 		progressBarActive = false,
+		progressBarMode = 1,
 		progressBarFinishFunc = nil,
 		victimAnim = { enabled = false }
 	}
@@ -180,6 +180,7 @@ function init()
 	p.occupant[0] = p.clearOccupant(0)
 	p.occupant[0].id = p.driver
 	p.occupant[0].seatname = "driver"
+	p.occupant[0].visible = false
 	p.seats.driver = p.occupant[0]
 
 	if p.driver ~= nil then
@@ -189,7 +190,6 @@ function init()
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
-		p.addStatusToList(0, "pvsoInvisible")
 	else
 		p.standalone = false
 		p.driverSeat = "occupant1"
@@ -215,6 +215,7 @@ function init()
 
 	message.setHandler( "transform", function(_,_, val, eid )
 		sb.logInfo("transforming")
+		if p.entity[eid].progressBarActive then return end
 		local val = val
 		if val == nil then
 			if p.stateconfig.smol ~= nil then
@@ -224,6 +225,8 @@ function init()
 			end
 		end
 		p.entity[eid].progressBarActive = true
+		p.entity[eid].progressBarMode = 1
+		p.entity[eid].progressBar = 0
 		p.entity[eid].progressBarFinishFunc = function()
 			p.entity[eid].species = val
 		end
@@ -257,7 +260,7 @@ function init()
 
 	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
 		p.occupant[seatindex].filepath = path
-		p.smolprey()
+		--p.smolprey()
 	end )
 
 	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing
@@ -664,18 +667,27 @@ function p.updateOccupants(dt)
 
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + ((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt)
-				if p.occupant[i].progressBar >= 100 then
-					p.occupant[i].progressBarFinishFunc()
-					p.occupant[i].progressBar = 0
-					p.occupant[i].progressBarActive = false
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.entity[eid].progressBarMode)
+				if p.entity[eid].progressBarMode == 1 then
+					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
+					if p.occupant[i].progressBar >= 100 then
+						p.occupant[i].progressBarFinishFunc()
+						p.occupant[i].progressBar = 0
+						p.occupant[i].progressBarActive = false
+					end
+				else
+					p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
+					if p.occupant[i].progressBar <= 0 then
+						p.occupant[i].progressBarFinishFunc()
+						p.occupant[i].progressBar = 0
+						p.occupant[i].progressBarActive = false
+					end
 				end
 			end
 			lastFilled = true
 		else
 			p.occupant[i] = p.clearOccupant(i)
 			lastFilled = false
-			animator.setAnimationState( "occupant"..i.."state", "empty" )
 			vehicle.setLoungeEnabled("occupant"..i, false)
 		end
 	end
@@ -860,16 +872,9 @@ function p.smolprey( seatindex )
 		end
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
 		p.doAnim( "occupant"..seatindex.."state", "smol" )
-	elseif p.isMonster(id) then
-		local portrait = world.entityPortrait(id, "fullneutral")
-		if portrait and portrait[1] and portrait[1].image then
-			animator.setPartTag( "occupant"..seatindex, "monster", portrait[1].image )
-			p.doAnim( "occupant"..seatindex.."state", "monster" )
-		end
 	else
 		animator.setPartTag( "occupant"..seatindex, "smolspecies", "" )
 		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" )
-		p.doAnim( "occupant"..seatindex.."state", "empty" )
 	end
 end
 

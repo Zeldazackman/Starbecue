@@ -115,7 +115,7 @@ function state.stand.letout( args )
 end
 
 function state.stand.bapeat()
-	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.oralVore.position ), "belly", "eat") then return end
+	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.oralVore.position ), "belly", "eat")
 end
 
 -------------------------------------------------------------------------------

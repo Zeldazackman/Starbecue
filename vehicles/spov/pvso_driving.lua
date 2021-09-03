@@ -218,9 +218,11 @@ function p.jumpMovement(dx, dy, state, dt)
 end
 
 function p.airMovement( dx, dy, state, dt )
-	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDiabled then
+	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDisabled then
 		p.movement.animating = true
-		mcontroller.force({ dx * (p.movementParams.airForce * (dt + 1)), 0 })
+		if mcontroller.yVelocity() <= p.movementParams[p.movement.groundMovement.."Speed"] then
+			mcontroller.force({ dx * (p.movementParams.airForce * (dt + 1)), 0 })
+		end
 
 		if (mcontroller.yVelocity() <= p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) then
 			p.doAnims( state.control.animations.fall )
@@ -263,7 +265,7 @@ p.clickActionCooldowns = {
 
 function p.doClickActions(state, dt)
 	for name, cooldown in pairs(p.clickActionCooldowns) do
-		cooldown = cooldown - dt
+		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
 
 	p.movement.aimingLock = p.movement.aimingLock - dt
@@ -288,15 +290,18 @@ function p.clickAction(stateData, name, control)
 	if (p.pressControl(p.driverSeat, control))
 	or (p.heldControl(p.driverSeat, control) and stateData.control[name].hold)
 	then
-		p.clickActionCooldowns[name] = stateData.control[name].cooldown or 0
-		if stateData.control[name].animation ~= nil then
+		local continue = true
+		if stateData.control[name].script ~= nil and state[p.state][stateData.control[name].script] ~= nil then
+			continue = state[p.state][stateData.control[name].script]()
+		end
+		if continue then
+			p.clickActionCooldowns[name] = stateData.control[name].cooldown or 0
+		end
+		if continue and stateData.control[name].animation ~= nil then
 			p.doAnims(stateData.control[name].animation)
 		end
-		if stateData.control[name].projectile ~= nil then
+		if continue and stateData.control[name].projectile ~= nil then
 			p.projectile(stateData.control[name].projectile)
-		end
-		if stateData.control[name].script ~= nil and state[p.state][stateData.control[name].script] ~= nil then
-			state[p.state][stateData.control[name].script]()
 		end
 	end
 end

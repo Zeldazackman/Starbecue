@@ -7,6 +7,7 @@ function init()
 	end)
 
 	message.setHandler("pvsoRemoveStatusEffect", function(_,_, effect)
+		sb.logInfo("removed "..effect)
 		status.removeEphemeralEffect(effect)
 	end)
 
