@@ -88,11 +88,6 @@ function state.stand.update()
 			end
 			return
 		end
-		if p.tapControl( p.driverSeat, "special2" ) then
-			if p.occupants.belly > 0 then
-				p.doTransition( "escape", {index=p.occupants.belly} ) -- last eaten
-			end
-		end
 	end
 end
 

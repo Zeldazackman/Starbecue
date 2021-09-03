@@ -40,7 +40,7 @@ function p.updateVisibility(occupant)
 		if occupant.smolPreyData.species ~= nil then
 
 		else
-			world.sendEntityMessage(occupant.id, "pvsoRemoveStatusEffect", "pvsoInvisible")
+			world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoRemoveInvisible")
 		end
 	else
 		world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")

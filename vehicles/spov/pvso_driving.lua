@@ -132,7 +132,7 @@ function p.updateDriving(dt)
 		end
 	end
 	if p.tapControl(p.driverSeat, "special2") then
-		p.doTransition("escape")
+		p.doTransition("escape", {index = p.occupants.total})
 	end
 
 	local dx = controls[p.driverSeat].dx
