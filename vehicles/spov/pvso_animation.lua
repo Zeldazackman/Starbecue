@@ -84,18 +84,35 @@ function p.victimAnimUpdate(entity)
 				vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
 			end
 		end
+		sb.logInfo(frame.." to "..nextFrame)
 
-		local timeMod = time % (victimAnim.frame - victimAnim.prevFrame)
+		local prevFrameTime = (victimAnim.prevFrame)/speed
+		local nextFrameTime = (victimAnim.frame)/speed
+
+		sb.logInfo(prevFrameTime)
+		sb.logInfo(nextFrameTime)
+
+		local interpolate = (time - prevFrameTime)/(nextFrameTime - prevFrameTime)
+
+		sb.logInfo(interpolate)
+
 		local transformGroup = seatname.."Position"
+		sb.logInfo(transformGroup)
+
 		local scale = {
-			(p.getPrevVictimAnimValue(victimAnim, "xs") + (p.getNextVictimAnimValue(victimAnim, "xs") - p.getPrevVictimAnimValue(victimAnim, "xs")) * timeMod),
-			(p.getPrevVictimAnimValue(victimAnim, "ys") + (p.getNextVictimAnimValue(victimAnim, "ys") - p.getPrevVictimAnimValue(victimAnim, "ys")) * timeMod)
+			(p.getPrevVictimAnimValue(victimAnim, "xs") + (p.getNextVictimAnimValue(victimAnim, "xs") - p.getPrevVictimAnimValue(victimAnim, "xs")) * interpolate),
+			(p.getPrevVictimAnimValue(victimAnim, "ys") + (p.getNextVictimAnimValue(victimAnim, "ys") - p.getPrevVictimAnimValue(victimAnim, "ys")) * interpolate)
 		}
-		local rotation = (p.getPrevVictimAnimValue(victimAnim, "r") + (p.getNextVictimAnimValue(victimAnim, "r") - p.getPrevVictimAnimValue(victimAnim, "r")) * timeMod)
+		sb.logInfo(sb.printJson(scale))
+
+		local rotation = (p.getPrevVictimAnimValue(victimAnim, "r") + (p.getNextVictimAnimValue(victimAnim, "r") - p.getPrevVictimAnimValue(victimAnim, "r")) * interpolate)
+		sb.logInfo(rotation)
+
 		local translation = {
-			(p.getPrevVictimAnimValue(victimAnim, "x") + (p.getNextVictimAnimValue(victimAnim, "x") - p.getPrevVictimAnimValue(victimAnim, "x")) * timeMod),
-			(p.getPrevVictimAnimValue(victimAnim, "y") + (p.getNextVictimAnimValue(victimAnim, "y") - p.getPrevVictimAnimValue(victimAnim, "y")) * timeMod)
+			(p.getPrevVictimAnimValue(victimAnim, "x") + (p.getNextVictimAnimValue(victimAnim, "x") - p.getPrevVictimAnimValue(victimAnim, "x")) * interpolate),
+			(p.getPrevVictimAnimValue(victimAnim, "y") + (p.getNextVictimAnimValue(victimAnim, "y") - p.getPrevVictimAnimValue(victimAnim, "y")) * interpolate)
 		}
+		sb.logInfo(sb.printJson(translation))
 
 		animator.resetTransformationGroup(transformGroup)
 		--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
@@ -109,13 +126,16 @@ function p.getPrevVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
 		victimAnim.last[valName] = p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex]
 	end
+	sb.logInfo(valName.." "..victimAnim.last[valName])
 	return victimAnim.last[valName]
 end
 
 function p.getNextVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
+		sb.logInfo(valName.." "..p.victimAnimations[victimAnim.anim][valName][victimAnim.index])
 		return p.victimAnimations[victimAnim.anim][valName][victimAnim.index]
 	end
+	sb.logInfo(valName.." "..victimAnim.last[valName])
 	return victimAnim.last[valName]
 end
 
