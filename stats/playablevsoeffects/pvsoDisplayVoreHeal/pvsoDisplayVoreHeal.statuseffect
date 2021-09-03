@@ -6,7 +6,7 @@
 	"defaultDuration" : 5,
 
 	"scripts" : [
-	"pvsoVoreHeal.lua"
+	"pvsoDisplayVoreHeal.lua"
 	],
 
 	"animationConfig" : "pvsoDisplayVoreHeal.animation",

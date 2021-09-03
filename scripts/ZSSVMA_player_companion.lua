@@ -4,7 +4,7 @@ function init()
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
 		local settings = player.getProperty( "vsoSettings" ) or {}
 		if vsoMenuName then return settings[vsoMenuName] or {} end
-		return settings
+		return settings.global or {}
 	end)
 	message.setHandler( "saveVSOsettings", function(_,_, settings )
 		player.setProperty( "vsoSettings", settings )

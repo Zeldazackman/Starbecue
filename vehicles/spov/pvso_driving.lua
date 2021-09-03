@@ -127,7 +127,7 @@ function p.updateDriving(dt)
 			world.sendEntityMessage(
 				--vehicle.entityLoungingIn only works for players and NPCs, but since this is a script that will only trigger for players, its ok
 				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
-				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total }, false, entity.id()
+				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = controls[p.driverSeat].powerMultiplier }, false, entity.id()
 			)
 		end
 	end

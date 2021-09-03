@@ -6,14 +6,14 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
-	self.superDigest = false
+	self.turboDigest = false
 	self.targetTime = 0
 	self.rpcAttempts = 0
 
 	removeOtherBellyEffects("pvsoDigest")
 
-	message.setHandler("pvsoSuperDigest", function()
-		self.superDigest = true
+	message.setHandler("pvsoTurboDigest", function()
+		self.turboDigest = true
 	end)
 
 end
@@ -22,15 +22,16 @@ function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
 		local health = world.entityHealth(entity.id())
 		local digestRate = 0.01
-		if self.superDigest then
+		if self.turboDigest then
 			digestRate = 0.1
 		end
 		if health[1] > ( digestRate * dt * self.powerMultiplier) and not self.digested then
 			status.modifyResourcePercentage("health", -digestRate * dt * self.powerMultiplier)
 		elseif self.digested then
+			self.turboDigest = false
 			self.cdt = self.cdt + dt
 			if self.cdt >= self.targetTime then
-				world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
+				--world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
 				status.modifyResourcePercentage("health", -1)
 			end
 		elseif self.rpc == nil then

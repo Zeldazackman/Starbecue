@@ -48,7 +48,10 @@ function p.clearOccupant(i)
 		species = nil,
 		filepath = nil,
 		animating = nil,
-		occupantTime = 0
+		occupantTime = 0,
+		progressBar = 0,
+		progressBarActive = false,
+		progressBarFinishFunc = nil
 	}
 end
 
@@ -213,8 +216,28 @@ function init()
 		p.doTransition( "escape", {id = val} )
 	end )
 
+	message.setHandler( "transform", function(_,_, val, eid )
+		sb.logInfo("transforming")
+		local val = val
+		if val == nil then
+			if p.stateconfig.smol ~= nil then
+				val = config.getParameter("name")
+			else
+				return
+			end
+		end
+		p.entity[eid].progressBarActive = true
+		p.entity[eid].progressBarFinishFunc = function()
+			p.entity[eid].species = val
+		end
+	end )
+
 	message.setHandler( "settingsMenuRefresh", function(_,_)
-		return p.occupant
+		local settingsMenuData = {
+			occupants = p.occupant,
+			powerMultiplier = controls[p.driverSeat].powerMultiplier
+		}
+		return settingsMenuData
 	end )
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
@@ -640,7 +663,14 @@ function p.updateOccupants(dt)
 			p.occupant[i].seatname = "occupant"..i
 			p.seats["occupant"..i] = p.occupant[i]
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
-
+			if p.occupant[i].progressBarActive == true then
+				p.occupant[i].progressBar = p.occupant[i].progressBar + ((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt)
+				if p.occupant[i].progressBar >= 100 then
+					p.occupant[i].progressBarFinishFunc()
+					p.occupant[i].progressBar = 0
+					p.occupant[i].progressBarActive = false
+				end
+			end
 			lastFilled = true
 		else
 			p.occupant[i] = p.clearOccupant(i)
@@ -787,7 +817,7 @@ function p.eat( occupantId, location )
 		end
 	end
 	-- lounging in edible smol thing
-	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
+	local species = world.entityName( edibles[1] ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	p.smolprey( seatindex )

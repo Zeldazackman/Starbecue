@@ -11,12 +11,14 @@ function onInit()
 
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
-	p.occupants = config.getParameter( "occupants" )
+	p.occupant = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
+	p.powerMultiplier = config.getParameter( "powerMultiplier" )
+
 	enableActionButtons(false)
 	readOccupantData()
 
-	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "pvsoRemoveBellyEffects"] )
+	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
@@ -42,10 +44,10 @@ end
 
 function readOccupantData()
 	enableActionButtons(false)
-	for i = 1, #p.occupants do
-		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
-			local id = p.occupants[i].id
-			local species = p.occupants[i].species
+	for i = 1, #p.occupant do
+		if p.occupant[i] and p.occupant[i].id and world.entityExists( p.occupant[i].id ) then
+			local id = p.occupant[i].id
+			local species = p.occupant[i].species
 			local listEntry, listItem = checkIfIdListed(id, species)
 
 			p.listItems[listEntry] = {
@@ -69,26 +71,29 @@ function readOccupantData()
 	end
 end
 
-function updateHPbars()
+function updateHPbars(dt)
 	local listItem
-	for i = 1, #p.occupants do
+	for i = 1, #p.occupant do
 		for j = 1, #p.listItems do
-			if p.listItems[j].id == p.occupants[i].id then
+			if p.listItems[j].id == p.occupant[i].id then
 				listItem = p.listItems[j].listItem
 			end
 		end
-		if p.occupants[i] and p.occupants[i].id and world.entityExists( p.occupants[i].id ) then
-			local health = world.entityHealth( p.occupants[i].id )
+		if p.occupant[i] and p.occupant[i].id and world.entityExists( p.occupant[i].id ) then
+			local health = world.entityHealth( p.occupant[i].id )
 			widget.setProgress( p.occupantList.."."..listItem..".healthbar", health[1] / health[2] )
 
-			secondaryBar(i, listItem)
+			secondaryBar(i, listItem, dt)
 		else
 			p.refreshList = true
 		end
 	end
 end
 
-function secondaryBar(occupant, listItem)
+function secondaryBar(i, listItem, dt)
+	if not p.occupant[i].progressBarActive then return end
+	p.occupant[i].progressBar = p.occupant[i].progressBar + ((math.log(p.powerMultiplier)+1) * dt)
+	widget.setProgress( p.occupantList.."."..listItem..".secondarybar", p.occupant[i].progressBar / 100 )
 end
 
 function getSelectedId()
@@ -121,7 +126,8 @@ function checkRefresh(dt)
 		if p.rpc:succeeded() then
 			local result = p.rpc:result()
 			if result ~= nil then
-				p.occupants = result
+				p.occupant = result.occupants
+				p.powerMultiplier = result.powerMultiplier
 				refreshListData()
 				readOccupantData()
 				p.refreshtime = 0
@@ -147,32 +153,33 @@ end
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyEffect = p.bellyEffects[value]
-	globalSettings.bellyEffect = bellyEffect
+	globalSettings.selectedBellyEffect = bellyEffect
 	if (bellyEffect == "pvsoDigest") or (bellyEffect == "pvsoSoftDigest") then
 		settings.hungerEffect = 1
 	else
 		settings.hungerEffect = 0
 	end
-	if widget.getChecked( "displayDamage" ) then
+	if globalSettings.displayDamage then
 		local bellyDisplayEffectList = root.assetJson("/vehicles/spov/pvso_general.config:bellyDisplayStatusEffects")
 		if bellyDisplayEffectList[bellyEffect] ~= nil then
 			bellyEffect = bellyDisplayEffectList[bellyEffect]
 		end
 	end
+	globalSettings.bellyEffect = bellyEffect
 	settings.bellyEffect = bellyEffect
 	saveSettings()
 end
 
 function changeSetting(settingname)
 	local value = widget.getChecked( settingname )
-	settings[string.lower(settingname)] = value
+	settings[settingname] = value
 	saveSettings()
 end
 
 function changeGlobalSetting(settingname)
 	local value = widget.getChecked( settingname )
-	globalSettings[string.lower(settingname)] = value
-	settings[string.lower(settingname)] = value
+	globalSettings[settingname] = value
+	settings[settingname] = value
 	saveSettings()
 end
 
@@ -218,5 +225,25 @@ function letOut()
 		p.refreshList = true
 		enableActionButtons(false)
 		world.sendEntityMessage( p.vso, "letout", getSelectedId() )
+	end
+end
+
+function transform()
+end
+
+function turboDigest()
+	local selected = getSelectedId()
+	if selected ~= nil then
+		return sendturboDigestMessage(eid)
+	else
+		for i = 1, #p.occupant do
+			sendturboDigestMessage(p.occupant[i].id)
+		end
+	end
+end
+
+function sendturboDigestMessage(eid)
+	if eid ~= nil and world.entityExists(eid) then
+		world.sendEntityMessage( eid, "pvsoTurboDigest" )
 	end
 end

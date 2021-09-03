@@ -12,14 +12,24 @@ function init()
 
 	removeOtherBellyEffects("pvsoDisplaySoftDigest")
 
+	message.setHandler("pvsoTurboDigest", function()
+		self.turboDigest = true
+	end)
+
 end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
 		local health = world.entityHealth(entity.id())
-		local damagecalc = status.resourceMax("health") * 0.01 * self.powerMultiplier * self.cdt + self.cdamage
+		local digestRate = 0.01
+		if self.turboDigest then
+			digestRate = 0.1
+		end
+
+		local damagecalc = status.resourceMax("health") * digestRate * self.powerMultiplier * self.cdt + self.cdamage
 
 		if health[1] <= 1 then
+			self.turboDigest = false
 			status.setResource("health", 1)
 			return
 		end
