@@ -68,9 +68,9 @@ function p.victimAnimUpdate(statename, entity, victimAnim)
 			end
 			if anim.invis ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 				if anim.e[victimAnim.prevIndex] == 0 then
-					p.removeLoungeStatusFromList(occupantIndex, "pvsoinvisible")
+					p.removeLoungeStatusFromList(occupantIndex, "pvsoInvisible")
 				else
-					p.addLoungeStatusToList(occupantIndex, "pvsoinvisible")
+					p.addLoungeStatusToList(occupantIndex, "pvsoInvisible")
 				end
 			end
 			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
@@ -126,8 +126,8 @@ local victimAnimArgs = {
 	r = 0
 }
 
-function p.doVictimAnim(seatname, anim, statename)
-	p.animStateData[statename].victimAnims[seatname] = {
+function p.doVictimAnim( occupantId, anim, statename)
+	p.animStateData[statename].victimAnims[occupantId] = {
 		enabled = true,
 		anim = anim,
 		frame = 0,
@@ -139,13 +139,13 @@ function p.doVictimAnim(seatname, anim, statename)
 	}
 	for arg, default in pairs(victimAnimArgs) do
 		if p.victimAnimations[anim][arg] ~= nil then
-			p.animStateData[statename].victimAnims[seatname].last[arg] = p.victimAnimations[anim][arg][1]
+			p.animStateData[statename].victimAnims[occupantId].last[arg] = p.victimAnimations[anim][arg][1]
 		else
-			p.animStateData[statename].victimAnims[seatname].last[arg] = default
+			p.animStateData[statename].victimAnims[occupantId].last[arg] = default
 		end
 	end
 
-	p.victimAnimUpdate(statename, seatname, p.animStateData[statename].victimAnims[seatname])
+	p.victimAnimUpdate(statename, occupantId, p.animStateData[statename].victimAnims[occupantId])
 end
 
 function p.offsetAnimUpdate()
