@@ -1,19 +1,19 @@
 function init()
-	--get seat inext from our little hack
-	self.seat_index = effect.duration() -1
 end
 
 function update(dt)
-	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) and (world.entityType(effect.sourceEntity()) == "vehicle") then
+	local data = status.statusProperty("pvsoForceSitData")
+
+	if data ~= nil and world.entityExists(data.source) and (data.source ~= entity.id()) and (world.entityType(data.source) == "vehicle") then
 		mcontroller.setVelocity({0, 0})
 		mcontroller.controlModifiers({movementSuppressed = true, facingSuppressed = true, runningSuppressed = true, jumpingSuppressed = true})
 
 		local anchorEntity, seatindex = mcontroller.anchorState()
 		--sb.logInfo("Seat Index:"..seatindex)
 
-		if (anchorEntity ~= effect.sourceEntity()) and (seatindex ~= self.seat_index) then
+		if (anchorEntity ~= data.source) and (seatindex ~= data.index) then
 			mcontroller.resetAnchorState()
-			mcontroller.setAnchorState( effect.sourceEntity(), self.seat_index )
+			mcontroller.setAnchorState( data.source, data.index )
 		end
 	else
 		effect.expire()

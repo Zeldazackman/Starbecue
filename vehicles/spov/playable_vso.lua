@@ -412,7 +412,7 @@ function p.loopedMessage(name, eid, message, args, callback, failCallback)
 			failCallback = failCallback
 		}
 	elseif p.loopedMessages[name].rpc:finished() then
-		if p.loopedMessages[name].rpc:succeeded() then
+		if p.loopedMessages[name].rpc:succeeded() and p.loopedMessages[name].callback ~= nil then
 			p.loopedMessages[name].callback(p.loopedMessages[name].rpc:result())
 		elseif p.loopedMessages[name].failCallback ~= nil then
 			p.loopedMessages[name].failCallback()
@@ -425,7 +425,7 @@ function p.checkRPCsFinished(dt)
 	for i, list in pairs(p.rpcList) do
 		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
 		if list.rpc:finished() then
-			if list.rpc:succeeded() then
+			if list.rpc:succeeded() and list.callback ~= nil then
 				list.callback(list.rpc:result(), list.dt)
 			elseif list.failCallback ~= nil then
 				list.failCallback(list.dt)
@@ -494,18 +494,17 @@ end
 function p.applyStatusLists()
 	for i = 0, #p.occupant do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-			for status, power in pairs(p.occupant[i].statList) do
-				if p.occupant[i].id then
-					world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
-				end
-			end
-			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoForceSit", i + 1, entity.id())
+			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", p.occupant[i].statList )
+			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {index=i, source=entity.id()})
 		end
 	end
 end
 
-function p.addStatusToList(index, status, power)
-	p.occupant[index].statList[status] = power or 1
+function p.addStatusToList(index, status, power, source)
+	p.occupant[index].statList[status] = {
+		power = power or 1,
+		source = source or entity.id()
+	}
 end
 
 function p.removeStatusFromList(index, status)
@@ -514,13 +513,9 @@ end
 
 function p.forceSeat( occupantId, seatname )
 	if occupantId then
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveForceSit", 1, entity.id())
-
 		vehicle.setLoungeEnabled(seatname, true)
-
 		local seat = p.getIndexFromSeatname(seatname)
-
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoForceSit", seat + 1, entity.id())
+		world.sendEntityMessage( occupantId, "pvsoForceSit", {index=seat, source=entity.id()})
 	end
 end
 
