@@ -97,9 +97,11 @@ end
 
 function p.fixPathTags(path, skin, directives)
 	local path = path
-	path = sb.replaceTags(path, "<skin>", skin)
-	path = sb.replaceTags(path, "<directives>", directives)
-	path = sb.replaceTags(path, "<bap>", "")
+	path = sb.replaceTags(path, {
+		skin = skin,
+		directives = directives,
+		bap = ""
+	})
 	return path
 end
 
