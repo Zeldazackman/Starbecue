@@ -447,6 +447,11 @@
 					"victimAnimLocation": "hug",
 					"chance": 10,
 					"script": "absorb"
+				},
+				"lick": {
+					"animation": {
+						"head": "lick"
+					}
 				}
 			},
 			"idle": {
@@ -499,14 +504,6 @@
 				"side": { "transition": "side", "chance": 20 },
 				"back": { "transition": "down", "chance": 20 },
 				"animation": { "head": "pet" }
-			},
-			"control": {
-				"primaryAction": {
-					"animation": {
-						"head": "lick"
-					},
-					"cooldown": 0.75 // length of animation
-				}
 			}
 		},
 		"sleep": {

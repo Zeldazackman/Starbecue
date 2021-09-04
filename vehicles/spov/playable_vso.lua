@@ -264,7 +264,7 @@ function init()
 		p.entity[entity].smolPreyData = data
 	end )
 
-	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing
+	p.state = "start" -- this state doesn't need to exist
 	if not config.getParameter( "uneaten" ) then
 		if not p.vso.startState then
 			p.vso.startState = "stand"
@@ -299,8 +299,8 @@ function update(dt)
 	p.applyStatusLists()
 
 	p.emoteCooldown = p.emoteCooldown - dt
-	p.updateState()
 	p.update(dt)
+	p.updateState()
 end
 
 function uninit()
@@ -669,7 +669,7 @@ function p.updateOccupants(dt)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
 				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.entity[eid].progressBarMode)
-				if p.entity[eid].progressBarMode == 1 then
+				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
 						p.occupant[i].progressBarFinishFunc()
@@ -710,7 +710,7 @@ function p.updateOccupants(dt)
 		end
 	end
 
-	mcontroller.applyParameters({mass = p.vso.movementSettings[p.movementParamsName].mass + p.occupants.mass})
+	mcontroller.applyParameters({mass = p.movementParams.mass + p.occupants.mass})
 
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
 	for i = 1, #p.vso.locations.regular do

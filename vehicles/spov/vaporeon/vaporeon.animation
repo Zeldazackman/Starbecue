@@ -225,11 +225,11 @@
 						"lay": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.lay.<frame><directives>" } },
 						"back": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.back.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.stand.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.sit.standup.<frame><directives>" } },
 
-						"laydown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
-						"situp": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
+						"laydown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.sit.laydown.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.lay.situp.<frame><directives>" } },
 
 						"rollover": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
 
@@ -267,11 +267,11 @@
 						"lay": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.lay.<frame><directives>" } },
 						"back": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.back.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.stand.sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.sit.standup.<frame><directives>" } },
 
-						"laydown": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.laydown.<frame><directives>" } },
-						"situp": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.situp.<frame><directives>" } },
+						"laydown": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.sit.laydown.<frame><directives>" } },
+						"situp": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.lay.situp.<frame><directives>" } },
 
 						"rollover": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.rollover.<frame><directives>" } },
 

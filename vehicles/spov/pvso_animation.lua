@@ -276,8 +276,6 @@ function p.doAnim( state, anim, force)
 		if isSame and (p.animStateData[state].states[animator.animationState(state)].mode == "end") then
 			force = true
 		end
-		p.endAnim(p.animStateData[state])
-
 		p.animStateData[state].animationState = {
 			anim = anim,
 			priority = newPriority,

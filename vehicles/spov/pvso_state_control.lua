@@ -2,16 +2,17 @@
 
 function p.updateState()
 	if p.prevState == p.state then
-		if state[p.state] ~= nil and state[p.state].update ~= nil then
+		if state[p.state].update then
+			sb.logInfo("update")
 			state[p.state].update()
 		else
 			p.standardState()
 		end
 	else
-		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
+		if state[p.prevState].ending then
 			state[p.prevState].ending()
 		end
-		if state[p.state] ~= nil and state[p.state].begin ~= nil then
+		if state[p.state].begin then
 			state[p.state].begin()
 		end
 	end

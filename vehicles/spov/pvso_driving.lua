@@ -135,25 +135,27 @@ function p.updateDriving(dt)
 		p.doTransition("escape", {index = p.occupants.total})
 	end
 
-	local dx = controls[p.driverSeat].dx
-	local dy = controls[p.driverSeat].dy
-	local state = p.stateconfig[p.state]
-	if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
-		p.faceDirection( dx )
-	end
 	if p.stateconfig[p.state].control ~= nil then
+		local dx = controls[p.driverSeat].dx
+		local dy = controls[p.driverSeat].dy
+		local state = p.stateconfig[p.state]
+		if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
+			p.faceDirection( dx )
+		end
+
 		p.doClickActions(state, dt)
 		p.groundMovement(dx, dy, state, dt)
 		p.waterMovement(dx, dy, state, dt)
 		p.jumpMovement(dx, dy, state, dt)
 		p.airMovement(dx, dy, state, dt)
 	end
+	p.driverSeatStateChange()
 end
 
 function p.groundMovement(dx, dy, state, dt)
-	p.movement.groundMovement = "walk"
-	if not p.heldControl(p.driverSeat, "shift") and p.occupants.mass < state.control.fullThreshold then
-		p.movement.groundMovement = "run"
+	p.movement.groundMovement = "run"
+	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass > state.control.fullThreshold) then
+		p.movement.groundMovement = "walk"
 	end
 	if mcontroller.onGround() then
 		if dx ~= 0 and not state.control.groundMovementDisabled then
@@ -353,6 +355,7 @@ function getDriverStat(eid, stat, callback)
 end
 
 function p.driverSeatStateChange()
+	if p.movement.animating then return end
 	local transitions = p.stateconfig[p.state].transitions
 	local dx = 0
 	local dy = 0

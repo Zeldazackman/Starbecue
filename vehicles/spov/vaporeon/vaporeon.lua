@@ -4,6 +4,7 @@
 require("/vehicles/spov/playable_vso.lua")
 
 state = {
+	start = {},
 	stand = {},
 	sit = {},
 	lay = {},
@@ -149,11 +150,13 @@ end
 
 function state.lay.update()
 	if p.driving then
-		p.primaryAction() -- lick
-	end
-
-	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
-		p.doTransition( "absorb" )
+		if p.pressControl( p.driverSeat, "jump" ) then
+			p.doTransition( "absorb" )
+		end
+		if p.pressControl( p.driverSeat, "primaryFire" ) or p.pressControl( p.driverSeat, "altFire" )then
+			sb.logInfo("licked")
+			p.doTransition( "lick" )
+		end
 	end
 end
 
