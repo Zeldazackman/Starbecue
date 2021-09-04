@@ -192,6 +192,7 @@ function init()
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
+		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
 		p.standalone = false
 		p.driverSeat = "occupant1"

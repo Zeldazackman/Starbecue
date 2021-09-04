@@ -69,10 +69,6 @@ function init()
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
-		if (type == "driver") and (not player.hasItem("pvsoController")) then
-			player.giveItem("pvsoController")
-		end
-
 		local seatdata = {
 			head = player.equippedItem("head"),
 			chest = player.equippedItem("chest"),
@@ -84,6 +80,12 @@ function init()
 			backCosmetic = player.equippedItem("backCosmetic"),
 		}
 		return seatdata
+	end)
+
+	message.setHandler("giveVoreController", function(_,_)
+		if (not player.hasItem("pvsoController")) then
+			player.giveItem("pvsoController")
+		end
 	end)
 end
 
