@@ -97,13 +97,13 @@ function p.smolPreyAnimPath(occupant)
 end
 
 function p.fixPathTags(path, skin, directives)
-	local path = path
-	path = sb.replaceTags(path, {
+	return sb.replaceTags(path, {
 		skin = skin,
 		directives = directives,
-		bap = ""
+		bap = "",
+		frame = "1",
+		bellyoccupants = "0"
 	})
-	return path
 end
 
 function p.victimAnimUpdate(entity)
