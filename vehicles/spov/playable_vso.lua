@@ -44,9 +44,11 @@ function p.clearOccupant(i)
 		loungeStatList = {},
 		statList = {},
 		visible = true,
+		emote = "idle",
+		dance = "idle",
 		location = nil,
-		smolPreyData = {},
-		animating = nil,
+		species = nil,
+		smolPreyData = {recieved = false},
 		occupantTime = 0,
 		progressBar = 0,
 		progressBarActive = false,
@@ -258,9 +260,8 @@ function init()
 		p.uneat( eid )
 	end )
 
-	message.setHandler( "smolPreyPath", function(_,_, seatindex, path)
-		p.occupant[seatindex].filepath = path
-		--p.smolprey()
+	message.setHandler( "smolPreyPath", function(_,_, entity, data)
+		p.entity[entity].smolPreyData = data
 	end )
 
 	p.state = "" -- if its nil when setState is called it causes problems, empty string is the next best thing
@@ -778,15 +779,24 @@ function p.entityLounging( entity )
 	return false
 end
 
-function p.edible( occupantId, seatindex, source )
+function p.edible( occupantId, source )
 	if p.driver ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
-		if p.stateconfig[p.state].ediblePath then
-			world.sendEntityMessage( source, "smolPreyPath", seatindex, p.stateconfig[p.state].ediblePath )
-		end
+		world.sendEntityMessage( source, "smolPreyPath", p.driver, p.getSmolPreyData())
 		return true
 	end
+end
+
+function p.getSmolPreyData()
+	local smolPreyData = {
+		recieved = true,
+		path = p.directoryPath,
+		settings = p.settings,
+		state = p.stateconfig[p.state],
+		animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
+	}
+	return smolPreyData
 end
 
 function p.isMonster( id )
@@ -812,7 +822,7 @@ function p.eat( occupantId, location )
 	} )
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id() }
+		callScript = "p.edible", callScriptArgs = { occupantId, entity.id() }
 	} )
 	p.occupant[seatindex].location = location
 
@@ -835,7 +845,7 @@ function p.eat( occupantId, location )
 	--p.smolprey( seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.forceSeat( occupantId, "occupant"..seatindex )
-	p.addStatusToList(seatindex, "pvsoInvisible")
+	p.occupant[seatindex].visible = false
 	p.updateOccupants(0)
 	p.justAte = true
 	return true

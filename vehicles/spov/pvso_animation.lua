@@ -6,7 +6,7 @@ function p.updateAnims(dt)
 
 	for i = 0, #p.occupant do
 		p.victimAnimUpdate(p.occupant[i].id)
-		p.updateVisibility(p.occupant[i])
+		p.updateVisibilityAndSmolprey(p.occupant[i])
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
@@ -34,11 +34,13 @@ function p.endAnim(state)
 	end
 end
 
-function p.updateVisibility(occupant)
+function p.updateVisibilityAndSmolprey(occupant)
 	if occupant.id == nil then return end
 	if occupant.visible then
-		if occupant.smolPreyData.species ~= nil then
-
+		if occupant.species ~= nil then
+			if occupant.smolPreyData.recieved then
+				p.smolPreyAnimPath(occupant)
+			end
 		else
 			world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoRemoveInvisible")
 		end
@@ -46,6 +48,58 @@ function p.updateVisibility(occupant)
 		world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")
 		animator.setAnimationState( occupant.seatname.."State", "empty", true )
 	end
+end
+
+function p.smolPreyAnimPath(occupant)
+	local path = occupant.smolPreyData.path
+	local settings = occupant.smolPreyData.settings
+	local state = occupant.smolPreyData.state
+	local skin = settings.skin or "default"
+
+	local directives = "" -- this will be fixed when I figure out the
+
+	local head = "/assetmissing.png"
+	local body = "/assetmissing.png"
+	local tail = "/assetmissing.png"
+	local backlegs = "/assetmissing.png"
+	local frontlegs = "/assetmissing.png"
+	local backarms = "/assetmissing.png"
+	local frontarms = "/assetmissing.png"
+
+	if state.idle.head ~= nil then
+		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, directives)
+	end
+	if state.idle.body ~= nil then
+		body = p.fixPathTags(animatedParts.parts.background.partStates.bodyState[state.idle.body].properties.image, skin, directives)
+	end
+	if state.idle.tail ~= nil then
+		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, directives)
+	end
+	if state.idle.legs ~= nil then
+		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, directives)
+		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, directives)
+	end
+	if state.idle.arms ~= nil then
+		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.legsState[state.idle.arms].properties.image, skin, directives)
+		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.legsState[state.idle.arms].properties.image, skin, directives)
+	end
+
+	animator.setAnimationState( occupant.seatname.."State", "smol", true )
+	animator.setPartTag(seatname, "<smolpath>", head)
+	animator.setPartTag(seatname.."body", "<smolpath>", body)
+	animator.setPartTag(seatname.."tail", "<smolpath>", tail)
+	animator.setPartTag(seatname.."backlegs", "<smolpath>", backlegs)
+	animator.setPartTag(seatname.."frontlegs", "<smolpath>", frontlegs)
+	animator.setPartTag(seatname.."backarms", "<smolpath>", backarms)
+	animator.setPartTag(seatname.."frontarms", "<smolpath>", frontarms)
+end
+
+function p.fixPathTags(path, skin, directives)
+	local path = path
+	path = sb.replaceTags(path, "<skin>", skin)
+	path = sb.replaceTags(path, "<directives>", directives)
+	path = sb.replaceTags(path, "<bap>", "")
+	return path
 end
 
 function p.victimAnimUpdate(entity)
@@ -97,6 +151,7 @@ function p.victimAnimUpdate(entity)
 			end
 			if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
 				vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
+				p.entity[entity].emote = anim.emote[victimAnim.prevIndex]
 			end
 			if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
 				vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])

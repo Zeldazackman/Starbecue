@@ -289,8 +289,6 @@
 					}
 				}
 			},
-
-
 			"frontlegs": {
 				"properties": {
 					"centered": true,
@@ -516,7 +514,6 @@
 					}
 				}
 			},
-
 			"head": {
 				"properties": {
 					"centered": true,
@@ -545,57 +542,124 @@
 					}
 				}
 			},
+
+			"driverbackarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"drivertail": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"driverbacklegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"driverbody": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
 			"driver": {
-				"properties": {
-					"centered": true,
-					 "zLevel": 0,
-					 "transformationGroups": ["flip", "driverPosition"],
-					 "driverPosition": [0.0, -1.0] // only used for standalone
-				},
-				"partStates": {
-					"driverState": {
-						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } }
-					}
-				}
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"], "driverPosition": [0.0, 0.0] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"driverfrontlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"driverfrontarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+
+
+			"occupant1backarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1tail": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1backlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1body": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1": {
-				"properties": {
-					"centered": true,
-					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant1Position"],
-					 "occupant1Position": [0.0, 0.0]
-				},
-				"partStates": {
-					"occupant1State": {
-						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } }
-					}
-				}
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"], "occupant1Position": [0.0, 0.0] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1frontlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1frontarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+
+
+			"occupant2backarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2tail": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2backlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2body": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2": {
-				"properties": {
-					"centered": true,
-					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant2Position"],
-					 "occupant2Position": [0.0, 0.0]
-				},
-				"partStates": {
-					"occupant2State": {
-						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } }
-					}
-				}
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"], "occupant2Position": [0.0, 0.0] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2frontlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2frontarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+
+
+			"occupant3backarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3tail": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3backlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3body": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3": {
-				"properties": {
-					"centered": true,
-					 "zLevel": 0,
-					 "transformationGroups": ["flip", "occupant3Position"],
-					 "occupant3Position": [0.0, 0.0]
-				},
-				"partStates": {
-					"occupant3State": {
-						"smol": { "properties" : { "image": "<smolpath><smoldirectives>" } }
-					}
-				}
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"], "occupant3Position": [0.0, 0.0] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3frontlegs": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3frontarm": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		}
 	},
