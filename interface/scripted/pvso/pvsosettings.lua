@@ -234,7 +234,7 @@ end
 function turboDigest()
 	local selected = getSelectedId()
 	if selected ~= nil then
-		return sendturboDigestMessage(eid)
+		return sendturboDigestMessage(selected)
 	else
 		for i = 1, #p.occupant do
 			sendturboDigestMessage(p.occupant[i].id)

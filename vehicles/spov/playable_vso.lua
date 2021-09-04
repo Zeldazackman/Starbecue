@@ -395,7 +395,7 @@ end
 
 p.rpcList = {}
 function p.addRPC(rpc, callback)
-	if callback ~= nil and name == nil then
+	if callback ~= nil then
 		table.insert(p.rpcList, {rpc = rpc, callback = callback, dt = 0})
 	end
 end
@@ -671,7 +671,7 @@ function p.updateOccupants(dt)
 
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.entity[eid].progressBarMode)
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
 				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
@@ -936,8 +936,8 @@ function p.getLocationFromSeatname(seatname)
 end
 
 function p.getEidFromIndex(index)
-	if p.occupant[i] ~= nil then
-		return p.occupant[i].id
+	if p.occupant[index] ~= nil then
+		return p.occupant[index].id
 	end
 end
 

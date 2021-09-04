@@ -327,7 +327,7 @@ function p.getSeatDirections(seatname)
 		end
 	else
 		local direction = p.relativeDirectionName(controls[seatname].dx, controls[seatname].dy)
-		if diretion then return direction end
+		if direction then return direction end
 		if controls[seatname].jump > 0 then
 			return "jump"
 		end

@@ -20,8 +20,6 @@ function onBegin()	--This sets up the VSO ONCE.
 	p.occupant[1].location = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1
-
-	vsoOnBegin( "state_stand", begin_state_stand)
 end
 
 function onEnd()
@@ -29,12 +27,11 @@ function onEnd()
 end
 
 -------------------------------------------------------------------------------
-function p.edible( occupantId )
+
+function p.edible( occupantId, seatindex, source )
 	if p.getEidFromSeatname( "occupant1" ) ~= occupantId then return false end
 	if p.stateconfig[p.state].edible then
-		if p.stateconfig[p.state].ediblePath then
-			world.sendEntityMessage( source, "smolPreyPath", seatindex, p.stateconfig[p.state].ediblePath[p.cracks] )
-		end
+		world.sendEntityMessage( source, "smolPreyPath", seatindex, p.getSmolPreyData())
 		return true
 	end
 end

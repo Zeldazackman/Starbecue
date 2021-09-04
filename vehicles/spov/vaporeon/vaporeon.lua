@@ -247,7 +247,7 @@ end
 local CurBallFrame = 0
 function roll_chonk_ball(dx, control)
 	mcontroller.setXVelocity( dx * control.walkSpeed)
-	if dx ~= 0 and vsoAnimEnd( "bodyState" ) then
+	if dx ~= 0 and p.hasAnimEnded( "bodyState" ) then
 		CurBallFrame = CurBallFrame + dx
 		if CurBallFrame > 11 then
 			CurBallFrame = 0

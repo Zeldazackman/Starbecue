@@ -21,7 +21,7 @@ end
 function transform()
 	local selected = getSelectedId()
 	if selected ~= nil then
-		return sendTransformMessage(eid)
+		return sendTransformMessage(selected)
 	else
 		for i = 1, #p.occupant do
 			sendTransformMessage(p.occupant[i].id)
