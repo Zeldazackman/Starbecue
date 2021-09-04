@@ -668,7 +668,7 @@ function p.updateOccupants(dt)
 			p.occupant[i].index = i
 			p.occupant[i].seatname = "occupant"..i
 			p.seats["occupant"..i] = p.occupant[i]
-
+			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
 				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
@@ -846,8 +846,8 @@ function p.eat( occupantId, location )
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	--p.smolprey( seatindex )
-	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.forceSeat( occupantId, "occupant"..seatindex )
+	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.occupant[seatindex].visible = false
 	p.updateOccupants(0)
 	p.justAte = true
