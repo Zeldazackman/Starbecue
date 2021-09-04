@@ -83,29 +83,31 @@ function p.updateControls(dt)
 				type = "driver"
 			end
 			if seat.primaryHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
-				if seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
-					controls[seatname] = sb.jsonMerge(seat, seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
-				end
+				p.mergeSeatData(seatname, seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
 			elseif seat.altHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
-				if seat.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
-					controls[seatname] = sb.jsonMerge(seat, seat.altHandItemDescriptor.parameters.scriptStorage.seatdata)
-				end
+				p.mergeSeatData(seatname, seat.altHandItemDescriptor.parameters.scriptStorage.seatdata)
 			else
 				seat.shiftReleased = seat.shift
 				seat.shift = 0
 				p.addRPC(world.sendEntityMessage(eid, "getVSOseatInformation", type), function(seatdata)
-					if seatdata ~= nil then
-						controls[seatname] = sb.jsonMerge(controls[seatname], seatdata)
-					end
+					p.mergeSeatData(seatname, seatdata)
 				end)
 				p.addRPC(world.sendEntityMessage(eid, "getVSOseatEquips", type), function(seatdata)
-					if seatdata ~= nil then
-						controls[seatname] = sb.jsonMerge(controls[seatname], seatdata)
-					end
+					p.mergeSeatData(seatname, seatdata)
 				end)
 			end
 		else
 			seat = p.clearSeat()
+		end
+	end
+end
+
+function p.mergeSeatData(seatname, seatdata)
+	if seatdata ~= nil then
+		for name, data in pairs(seatdata) do
+			if data ~= nil then
+				controls[seatname][name] = data
+			end
 		end
 	end
 end

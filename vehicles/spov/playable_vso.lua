@@ -654,8 +654,8 @@ function p.updateOccupants(dt)
 
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
-			for _, location in ipairs(p.vso.locations.mass) do
-				if location == p.occupant[i].location then
+			for i = 1, #p.vso.locations.mass do
+				if p.vso.locations.mass[i] == p.occupant[i].location then
 					p.occupants.mass = p.occupants.mass + controls["occupant"..i].mass
 				end
 			end
