@@ -70,7 +70,7 @@ function p.clearSeat()
 		down = 0,
 		jump = 0,
 		shift = 0,
-		special1 = 1, --so that it doesn't trip p.tapControl from using the tech
+		special1 = 10, --so that it doesn't trip p.tapControl from using the tech
 		special2 = 0,
 		special3 = 0,
 
@@ -260,8 +260,8 @@ function init()
 		p.uneat( eid )
 	end )
 
-	message.setHandler( "smolPreyPath", function(_,_, entity, data)
-		p.entity[entity].smolPreyData = data
+	message.setHandler( "smolPreyPath", function(_,_, seatindex, data)
+		p.occupant[seatindex].smolPreyData = data
 	end )
 
 	p.state = "start" -- this state doesn't need to exist
@@ -469,10 +469,13 @@ end
 
 function p.applyStatusLists()
 	for i = 0, #p.occupant do
-		for status, power in pairs(p.occupant[i].statList) do
-			if p.occupant[i].id then
-				world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
+		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
+			for status, power in pairs(p.occupant[i].statList) do
+				if p.occupant[i].id then
+					world.sendEntityMessage( p.occupant[i].id, "applyStatusEffect", status, power, entity.id() )
+				end
 			end
+			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoForceSit", i + 1, entity.id())
 		end
 	end
 end
@@ -694,8 +697,8 @@ function p.updateOccupants(dt)
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
-	for _, location in ipairs(p.vso.locations.mass) do
-		if location == "fatten" then
+	for i = 1, #p.vso.locations.mass do
+		if p.vso.locations.mass[i] == "fatten" then
 			p.occupants.mass = p.occupants.mass + p.occupants.fatten
 		end
 	end
@@ -779,11 +782,11 @@ function p.entityLounging( entity )
 	return false
 end
 
-function p.edible( occupantId, source )
+function p.edible( occupantId, seatindex, source )
 	if p.driver ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyPath", p.driver, p.getSmolPreyData())
+		world.sendEntityMessage( source, "smolPreyPath", seatindex, p.getSmolPreyData())
 		return true
 	end
 end
@@ -822,7 +825,7 @@ function p.eat( occupantId, location )
 	} )
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, entity.id() }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id() }
 	} )
 	p.occupant[seatindex].location = location
 

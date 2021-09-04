@@ -4,7 +4,6 @@
 require("/vehicles/spov/playable_vso.lua")
 
 state = {
-	start = {},
 	stand = {},
 	sit = {},
 	lay = {},

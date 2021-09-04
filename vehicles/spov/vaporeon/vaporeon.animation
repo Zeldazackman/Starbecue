@@ -498,7 +498,7 @@
 
 						"swimidle": { "properties": { "image": "spov/<skin>/foreground/tail.png:swimidle.<frame><directives>" } },
 						"swim": { "properties": { "image": "spov/<skin>/foreground/tail.png:swim.<frame><directives>" } },
-
+						/*
 						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_tail.png:stand.<frame><directives>" } },
 
 						"smol.walk": { "properties": { "image": "spov/<skin>/smol/foreground/smol_tail.png:walk.<frame><directives>" } },
@@ -509,7 +509,7 @@
 
 						"smol.swimidle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_tail.png:swimidle.<frame><directives>" } },
 						"smol.swim": { "properties": { "image": "spov/<skin>/smol/foreground/smol_tail.png:swim.<frame><directives>" } },
-
+						*/
 						"none": { "properties": {} }
 					}
 				}

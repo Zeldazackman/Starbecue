@@ -2,16 +2,16 @@
 
 function p.updateState()
 	if p.prevState == p.state then
-		if state[p.state].update then
+		if state[p.state] ~= nil and state[p.state].update ~= nil then
 			state[p.state].update()
 		else
 			p.standardState()
 		end
 	else
-		if state[p.prevState].ending then
+		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
 			state[p.prevState].ending()
 		end
-		if state[p.state].begin then
+		if state[p.state] ~= nil and state[p.state].begin ~= nil then
 			state[p.state].begin()
 		end
 		p.prevState = p.state

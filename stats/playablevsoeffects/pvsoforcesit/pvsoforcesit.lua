@@ -5,7 +5,6 @@ end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) and (world.entityType(effect.sourceEntity()) == "vehicle") then
-		effect.modifyDuration(1)
 		mcontroller.setVelocity({0, 0})
 		mcontroller.controlModifiers({movementSuppressed = true, facingSuppressed = true, runningSuppressed = true, jumpingSuppressed = true})
 
