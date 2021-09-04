@@ -18,4 +18,10 @@ function everything_primary()
 		}
 		return seatdata
 	end)
+
+	message.setHandler("pvsoSucc", function(_,_, data)
+		status.setStatusProperty("pvsoSuccData", data)
+
+		status.addEphemeralEffect("pvsoSucc", 1, data.source)
+	end)
 end

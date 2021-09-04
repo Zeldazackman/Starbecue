@@ -109,7 +109,7 @@ function state.stand.letout( args )
 	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end
 
-function state.stand.bapeat()
+function state.stand.vore()
 	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.oralVore.position ), "belly", "eat")
 end
 

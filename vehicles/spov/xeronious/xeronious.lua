@@ -127,14 +127,16 @@ function succ(args)
 	-- 	includedTypes = {"creature"}
 	-- })
 
-	local dest = p.localToGlobal({3, 2.5})
+	local data = {
+		destination = p.localToGlobal({3, 2.5}),
+		source = entity.id(),
+		force = 400
+	}
 
 	for i = 1, #entities do
-		local pos = world.distance(dest, world.entityPosition(entities[i]))
-		local offset = math.floor(pos[2] + 0.5) * 1000 + math.floor(pos[1] + 500.5)
-		world.sendEntityMessage( entities[i], "applyStatusEffect", "succ", 1, offset)
+		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", data)
 	end
-	p.checkEatPosition( dest, "belly", "succeat", true)
+	p.checkEatPosition( data.destination, "belly", "succeat", true)
 end
 
 function bellyToTail(args)
@@ -151,6 +153,24 @@ end
 
 function tailEat(args)
 	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
+end
+
+function checkOral()
+	return p.checkEatPosition(p.localToGlobal( {3, -1.5} ), "belly", "eat")
+end
+
+function checkTail()
+	return p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat")
+end
+
+function checkAnal()
+	return p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore")
+end
+
+
+function checkVore()
+	if checkOral() then return true end
+	if checkTail then return true end
 end
 
 -------------------------------------------------------------------------------
@@ -190,10 +210,6 @@ function state.stand.update()
 	end
 end
 
-function state.stand.bapeat()
-	if p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.primaryAction.projectile.position ), "belly", "eat") then return end
-	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
-end
 
 function state.stand.interact( occupantId )
 	if mcontroller.yVelocity() > -5 then
@@ -206,6 +222,11 @@ state.stand.bellytotail = bellyToTail
 state.stand.tailtobelly = tailToBelly
 state.stand.eat = oralEat
 state.stand.taileat = tailEat
+
+state.stand.vore = checkVore
+state.stand.oralVore = checkOral
+state.stand.tailVore = checkTail
+
 state.stand.succ = succ
 
 -------------------------------------------------------------------------------
@@ -240,6 +261,11 @@ state.sit.tailtobelly = tailToBelly
 state.sit.eat = oralEat
 state.sit.taileat = tailEat
 
+state.sit.vore = checkVore
+state.sit.oralVore = checkOral
+state.sit.tailVore = checkTail
+
+
 -------------------------------------------------------------------------------
 
 function state.hug.update()
@@ -261,6 +287,11 @@ state.hug.bellytotail = bellyToTail
 state.hug.tailtobelly = tailToBelly
 state.hug.eat = oralEat
 state.hug.taileat = tailEat
+
+state.hug.vore = checkVore
+state.hug.oralVore = checkOral
+state.hug.tailVore = checkTail
+
 
 -------------------------------------------------------------------------------
 
@@ -292,7 +323,12 @@ end
 state.crouch.checkletout = checkEscapes
 state.crouch.bellytotail = bellyToTail
 state.crouch.tailtobelly = tailToBelly
+
 state.crouch.taileat = tailEat
+state.crouch.tailVore = checkTail
+state.crouch.vore = checkTail
+
+
 
 -------------------------------------------------------------------------------
 
@@ -370,9 +406,9 @@ function state.fly.analvore(args)
 	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
 end
 
-function state.fly.grabanalvore()
-	if p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore") then return end
-	if p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat") then return end
+function state.fly.vore()
+	if checkAnal() then return true end
+	if checkTail() then return true end
 end
 
 state.fly.checkletout = checkEscapes
@@ -380,6 +416,10 @@ state.fly.bellytotail = bellyToTail
 state.fly.tailtobelly = tailToBelly
 state.fly.eat = oralEat
 state.fly.taileat = tailEat
+
+state.fly.tailVore = checkTail
+state.fly.analVore = checkAnal
+
 state.fly.succ = succ
 
 -------------------------------------------------------------------------------

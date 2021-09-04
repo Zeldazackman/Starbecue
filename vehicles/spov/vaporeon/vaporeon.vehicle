@@ -225,11 +225,11 @@
 				"pulseSparkles": 6,
 				"vore":{
 					"cooldown": 1,
-					"script": "bapeat"
+					"script": "vore"
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "bapeat",
+					"script": "vore",
 					"position": [ 3, -2.5 ]
 				},
 				"physicalAttack": {

@@ -49,8 +49,6 @@
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		}
-
-
 	},
 
 	"mouthPosition" : [ 0.0, 0.0 ],
@@ -72,14 +70,9 @@
 					[2, 3.5], [-2, 3.5],
 					[-3, 2.5], [-3, -4]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
+
 			},
 			"fly":{
 				"collisionPoly" : [
@@ -88,13 +81,7 @@
 					[2, 3.5], [-2, 3.5],
 					[-3, 2.5], [-3, -4]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : false,
 				"ignorePlatformCollision" : true
 			},
 			"crouch":{
@@ -104,13 +91,7 @@
 					[3, 0], [-3, 0],
 					[-4, -1], [-4, -4]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 			}
 
@@ -349,6 +330,20 @@
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+
+				/*
 				"primaryAction": {
 					"projectile": {
 						"name": "xeroniousbap",
@@ -356,11 +351,11 @@
 						"aimable": false
 					},
 					"cooldown": 30,
-					"script": "bapeat"
 				},
-				"altAction": {
+				*/
+				"specialAttack": {
+					"hold" : true,
 					"animation": {"head": "succ"},
-					"cooldown": 1,
 					"script": "succ"
 				},
 				"animations": {
@@ -523,8 +518,14 @@
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
-				//"primaryAction": {},
-				//"altAction": {},
+				"vore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
 				"animations": {
 					"walk": {
 						"arms": "crawl",
@@ -700,21 +701,21 @@
 				"jumpCount": 1,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
-				"primaryAction": {
-					"projectile": {
-						"name": "xeroniousbap",
-						"position": [ 3, -1.5 ],
-						"aimable": false
-					},
-					"cooldown": 30,
-					"script": "grabanalvore"
-				},
-				"altAction": {
-					"animation": {
-						"head": "succ",
-						"arms": "fly"
-					},
+				"vore":{
 					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"specialAttack": {
+					"hold" : true,
+					"animation": {"head": "succ"},
 					"script": "succ"
 				},
 
