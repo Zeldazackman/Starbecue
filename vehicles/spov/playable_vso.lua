@@ -513,8 +513,10 @@ end
 
 function p.forceSeat( occupantId, seatname )
 	if occupantId then
+		sb.logInfo("opening seat "..seatname)
 		vehicle.setLoungeEnabled(seatname, true)
 		local seat = p.getIndexFromSeatname(seatname)
+		sb.logInfo("forcing seat "..seatname)
 		world.sendEntityMessage( occupantId, "pvsoForceSit", {index=seat, source=entity.id()})
 	end
 end
@@ -687,6 +689,7 @@ function p.updateOccupants(dt)
 			p.occupant[i].index = i
 			p.occupant[i].seatname = "occupant"..i
 			p.seats["occupant"..i] = p.occupant[i]
+			sb.logInfo("opening seat "..i)
 			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
@@ -711,6 +714,7 @@ function p.updateOccupants(dt)
 		else
 			p.occupant[i] = p.clearOccupant(i)
 			lastFilled = false
+			sb.logInfo("closing seat "..i)
 			vehicle.setLoungeEnabled("occupant"..i, false)
 		end
 	end
@@ -850,6 +854,8 @@ function p.eat( occupantId, location )
 
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
+			sb.logInfo("got ID "..occupantId)
+
 			p.occupant[seatindex].id = occupantId
 			--p.smolprey( seatindex )
 			p.forceSeat( occupantId, "occupant"..seatindex )
@@ -862,6 +868,7 @@ function p.eat( occupantId, location )
 	end
 	-- lounging in edible smol thing
 	local species = world.entityName( edibles[1] ) -- "spov"..species
+	sb.logInfo("got ID "..occupantId)
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	--p.smolprey( seatindex )
