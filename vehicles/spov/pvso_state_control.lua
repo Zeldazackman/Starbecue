@@ -3,7 +3,6 @@
 function p.updateState()
 	if p.prevState == p.state then
 		if state[p.state].update then
-			sb.logInfo("update")
 			state[p.state].update()
 		else
 			p.standardState()
@@ -15,6 +14,7 @@ function p.updateState()
 		if state[p.state].begin then
 			state[p.state].begin()
 		end
+		p.prevState = p.state
 	end
 end
 
