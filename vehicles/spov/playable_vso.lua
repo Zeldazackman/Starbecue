@@ -359,10 +359,13 @@ end
 
 function p.checkSpawnerExists()
 	if world.entityExists(p.spawner) then
-	elseif (p.spawnerUUID ~= nil) and (p.waitingResponse == nil)then
-		p.waitingResponse = true
-		p.addRPC(world.sendEntityMessage(p.spawnerUUID, "pvsoPreyWarpRequest"), function(data)
-			p.waitingResponse = false
+	elseif (p.spawnerUUID ~= nil) then
+		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "pvsoPreyWarpRequest", {},
+		function(data)
+			p.spawnerUUID = nil
+		end,
+		function()
+			p.spawnerUUID = nil
 		end)
 	else
 		p.onDeath()
@@ -394,9 +397,27 @@ function p.onDeath()
 end
 
 p.rpcList = {}
-function p.addRPC(rpc, callback)
+function p.addRPC(rpc, callback, failCallback)
 	if callback ~= nil then
-		table.insert(p.rpcList, {rpc = rpc, callback = callback, dt = 0})
+		table.insert(p.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
+	end
+end
+
+p.loopedMessages = {}
+function p.loopedMessage(name, eid, message, args, callback, failCallback)
+	if p.loopedMessages[name] == nil then
+		p.loopedMessages[name] = {
+			rpc = world.sendEntityMessage(eid, message, args),
+			callback = callback,
+			failCallback = failCallback
+		}
+	elseif p.loopedMessages[name].rpc:finished() then
+		if p.loopedMessages[name].rpc:succeeded() then
+			p.loopedMessages[name].callback(p.loopedMessages[name].rpc:result())
+		elseif p.loopedMessages[name].failCallback ~= nil then
+			p.loopedMessages[name].failCallback()
+		end
+		p.loopedMessages[name] = nil
 	end
 end
 
@@ -404,8 +425,11 @@ function p.checkRPCsFinished(dt)
 	for i, list in pairs(p.rpcList) do
 		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
 		if list.rpc:finished() then
-			list.callback(list.rpc:result(), list.dt)
-			-- not quite sure if what is below is what I should be doing
+			if list.rpc:succeeded() then
+				list.callback(list.rpc:result(), list.dt)
+			elseif list.failCallback ~= nil then
+				list.failCallback(list.dt)
+			end
 			table.remove(p.rpcList, i)
 		end
 	end
@@ -973,6 +997,7 @@ function p.standalonePowerLevel()
 	return power
 end
 
+p.restoreHunger = 0
 function p.doBellyEffects(driver, powerMultiplier)
 	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
 	local hungereffect = p.settings.hungerEffect or 0
@@ -991,7 +1016,14 @@ function p.doBellyEffects(driver, powerMultiplier)
 				local hunger_change = (hungereffect * powerMultiplier * p.dt)/100
 				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
-				if driver then p.addHungerHealth( driver, hunger_change) end
+				if driver then
+					p.restoreHunger = p.restoreHunger + hunger_change
+					if p.restoreHunger > 0.1 then
+						p.loopedMessage("driverHunger", driver, "addHungerHealth", p.restoreHunger, function ()
+							p.restoreHunger = 0
+						end)
+					end
+				end
 				p.extraBellyEffects(i, eid, health, status)
 			else
 				p.otherLocationEffects(i, eid, health, status)
@@ -1007,10 +1039,6 @@ function p.isLocationDigest(location)
 		end
 	end
 	return false
-end
-
-function p.addHungerHealth(eid, amount, callback)
-	p.addRPC( world.sendEntityMessage(eid, "addHungerHealth", amount), callback)
 end
 
 p.struggleCount = 0

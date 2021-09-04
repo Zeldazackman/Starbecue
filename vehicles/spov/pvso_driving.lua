@@ -89,10 +89,10 @@ function p.updateControls(dt)
 			else
 				seat.shiftReleased = seat.shift
 				seat.shift = 0
-				p.addRPC(world.sendEntityMessage(eid, "getVSOseatInformation", type), function(seatdata)
+				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", type, function(seatdata)
 					p.mergeSeatData(seatname, seatdata)
 				end)
-				p.addRPC(world.sendEntityMessage(eid, "getVSOseatEquips", type), function(seatdata)
+				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", type, function(seatdata)
 					p.mergeSeatData(seatname, seatdata)
 				end)
 			end
@@ -353,7 +353,7 @@ function p.relativeDirectionName(dx, dy)
 end
 
 function getDriverStat(eid, stat, callback)
-	p.addRPC( world.sendEntityMessage(eid, "getDriverStat", stat), callback, "getDriver"..stat)
+	p.addRPC( world.sendEntityMessage(eid, "getDriverStat", stat), callback)
 end
 
 function p.driverSeatStateChange()
