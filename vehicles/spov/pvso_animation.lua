@@ -56,6 +56,7 @@ function p.smolPreyAnimPath(occupant)
 	local state = occupant.smolPreyData.state
 	local skin = settings.skin or "default"
 	local animatedParts = occupant.smolPreyData.animatedParts
+	local seatname = occupant.seatname
 
 	local directives = "" -- this will be fixed when I figure out the color stuff
 
@@ -86,13 +87,13 @@ function p.smolPreyAnimPath(occupant)
 	end
 
 	animator.setAnimationState( occupant.seatname.."State", "smol", true )
-	animator.setPartTag(seatname, "<smolpath>", head)
-	animator.setPartTag(seatname.."body", "<smolpath>", body)
-	animator.setPartTag(seatname.."tail", "<smolpath>", tail)
-	animator.setPartTag(seatname.."backlegs", "<smolpath>", backlegs)
-	animator.setPartTag(seatname.."frontlegs", "<smolpath>", frontlegs)
-	animator.setPartTag(seatname.."backarms", "<smolpath>", backarms)
-	animator.setPartTag(seatname.."frontarms", "<smolpath>", frontarms)
+	animator.setPartTag(seatname, "smolpath", head)
+	animator.setPartTag(seatname.."body", "smolpath", body)
+	animator.setPartTag(seatname.."tail", "smolpath", tail)
+	animator.setPartTag(seatname.."backlegs", "smolpath", backlegs)
+	animator.setPartTag(seatname.."frontlegs", "smolpath", frontlegs)
+	animator.setPartTag(seatname.."backarms", "smolpath", backarms)
+	animator.setPartTag(seatname.."frontarms", "smolpath", frontarms)
 end
 
 function p.fixPathTags(path, skin, directives)
