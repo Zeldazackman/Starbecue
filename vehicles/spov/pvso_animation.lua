@@ -55,8 +55,9 @@ function p.smolPreyAnimPath(occupant)
 	local settings = occupant.smolPreyData.settings
 	local state = occupant.smolPreyData.state
 	local skin = settings.skin or "default"
+	local animatedParts = occupant.smolPreyData.animatedParts
 
-	local directives = "" -- this will be fixed when I figure out the
+	local directives = "" -- this will be fixed when I figure out the color stuff
 
 	local head = "/assetmissing.png"
 	local body = "/assetmissing.png"
