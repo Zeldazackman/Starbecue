@@ -13,7 +13,7 @@ function update(dt)
 
 		if (anchorEntity ~= data.source) and (seatindex ~= data.index) then
 			mcontroller.resetAnchorState()
-			mcontroller.setAnchorState( data.source, data.index )
+			pcall(mcontroller.setAnchorState( data.source, data.index ))
 		end
 	else
 		effect.expire()
