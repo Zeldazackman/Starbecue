@@ -860,7 +860,10 @@
 			"idleAnimations": [],
 			"struggle" : {
 				"belly" :{
-					"script" : "nudge"
+					"part" : "ball",
+					"script" : "nudge",
+					"front" : {},
+					"back" : {}
 				}
 			},
 			"control": {

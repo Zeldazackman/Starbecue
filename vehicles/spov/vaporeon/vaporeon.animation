@@ -187,6 +187,18 @@
 				}
 			},
 
+			"ballState": {
+				"default": "none",
+				"states": {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 }
+				}
+			},
+
 			"driverState": {
 				"default": "empty",
 				"states": {

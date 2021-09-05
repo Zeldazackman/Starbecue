@@ -321,7 +321,7 @@ function p.getSeatDirections(seatname)
 	if world.entityType( occupantId ) ~= "player" then
 		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] <= 0 then
 			local randomDirections = { "back", "front", "up", "down", "jump", nil}
-			p.monsterstrugglecooldown[seatname] = (math.random(100, 300)/100)
+			p.monsterstrugglecooldown[seatname] = (math.random(10, 300)/100)
 			return randomDirections[math.random(1,6)]
 		else
 			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - p.dt

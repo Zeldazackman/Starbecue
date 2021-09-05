@@ -285,8 +285,8 @@ function state.chonk_ball.nudge(args)
 			dx = -1
 		end
 		dx = dx * p.direction
-		if mcontroller.xVelocity() <= p.movementParams.walkSpeed then
-			mcontroller.force({900 * dx, 0})
+		if math.abs(mcontroller.xVelocity()) <= p.movementParams.walkSpeed * 1.5 then
+			mcontroller.force({p.movementParams.groundForce * 1.5 * dx, 0})
 		end
 	end
 end
