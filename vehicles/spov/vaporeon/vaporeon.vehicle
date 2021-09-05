@@ -61,7 +61,9 @@
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
 				"jumpCount" : 2,
-				//"liquidFriction" : 0,
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
 				"liquidBuoyancy" : 0.0,
 				"bounceFactor" : 0.0
 			},
@@ -73,6 +75,10 @@
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"swimSpeed" : 15,
+				"jumpCount" : 2,
 				"liquidBuoyancy" : 0.0,
 				"bounceFactor" : 0.0
 			},
@@ -84,6 +90,9 @@
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"jumpCount" : 0,
+				"runSpeed" : 3,
+				"walkSpeed" : 3,
 				"liquidBuoyancy" : 1.5,
 				"bounceFactor" : 0.75
 			}
@@ -208,13 +217,8 @@
 				"animation": { "head": "pet" }
 			},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
 				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
 				"fullJumpStrength": 30,
-				"jumpCount": 2,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"vore":{
@@ -748,13 +752,8 @@
 			],
 			"struggle" : {},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
 				"fullThreshold": 1,
 				"fullJumpStrength": 20,
-				"jumpCount": 2,
 				"pulseEffect": "smoldoublejump",
 				"pulseSparkles": 3,
 				"primaryAction": {
@@ -859,17 +858,23 @@
 				"tail": "none"
 			},
 			"idleAnimations": [],
-			"struggle" : {},
+			"struggle" : {
+				"belly" :{
+					"script" : "nudge"
+				}
+			},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
-				"fullThreshold": 1,
-				"fullJumpStrength": 20,
-				"jumpCount": 2,
-				"pulseEffect": "smoldoublejump",
-				"pulseSparkles": 3
+				"fullThreshold" : 1,
+				"ballFrames": 12,
+				"ballRadius": 2,
+				"animations": {
+					"walk": {},
+					"run": {},
+					"jump": {},
+					"fall": {},
+					"swimidle": {},
+					"swim": {}
+				}
 			}
 		}
 	}

@@ -243,80 +243,81 @@ end
 
 -------------------------------------------------------------------------------
 
-local CurBallFrame = 0
-function roll_chonk_ball(dx, control)
-	mcontroller.setXVelocity( dx * control.walkSpeed)
-	if dx ~= 0 and p.hasAnimEnded( "bodyState" ) then
-		CurBallFrame = CurBallFrame + dx
-		if CurBallFrame > 11 then
-			CurBallFrame = 0
-		elseif CurBallFrame < 0 then
-			CurBallFrame = 11
-		end
-		animator.setGlobalTag("rotationFrame", CurBallFrame)
-		p.doAnim( "bodyState", "chonk_ball" )
-	end
-end
-
-function state.chonk_ball.update()
+function state.chonk_ball.update(dt)
+	roll_chonk_ball(dt)
+	p.movement.aimingLock = 0.1
 	if p.occupants.belly < 2 then
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 
 		p.setState( "smol" )
 		p.doAnims( p.stateconfig.smol.idle, true )
 	end
-
-	local control = p.stateconfig[p.state].control
-
-	local dx = 0
-	local dy = 0
-
 	if p.driving then
 		if p.tapControl( p.driverSeat, "special1" ) then
 			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )
 			return
 		end
-		if vehicle.controlHeld( p.driverSeat, "left" ) then
-			dx = dx - 1
-		end
-		if vehicle.controlHeld( p.driverSeat, "right" ) then
-			dx = dx + 1
-		end
-		if vehicle.controlHeld( p.driverSeat, "up" ) then
-			dy = dy + 1
-		end
-		if vehicle.controlHeld( p.driverSeat, "down" ) then
-			dy = dy - 1
-		end
-		if vehicle.controlHeld( p.driverSeat, "jump" ) then
-			p.movement.jumped = true
-		end
 	end
-
-	if dy == -1 and p.movement.jumped then
-		mcontroller.applyParameters{ ignorePlatformCollision = true }
-	else
-		mcontroller.applyParameters{ ignorePlatformCollision = false }
-	end
-
-	if p.underWater() then
-		mcontroller.approachYVelocity( 11, 50 ) --this should make ball vappy float on the surface of water haha
-	end
-
-	roll_chonk_ball(dx, control)
 end
 
 function state.chonk_ball.begin()
-	animator.setGlobalTag("rotationFlip", p.direction)
+	animator.setGlobalTag("rotationFlip", p.direction * -1)
 	p.setMovementParams( "chonk_ball" )
-	CurBallFrame = 0
-	BallLastPosition = mcontroller.position()
+	self.ballFrames = p.stateconfig.chonk_ball.control.ballFrames
+	self.ballRadius = p.stateconfig.chonk_ball.control.ballRadius
+	self.angularVelocity = 0
+	self.angle = 0
 end
 
 
 function state.chonk_ball.ending()
 	p.setMovementParams( "default" )
+end
+
+function state.chonk_ball.nudge(args)
+	if args.direction ~= nil then
+		local dx = 0
+		if args.direction == "front" then
+			dx = 1
+		elseif args.direction == "back" then
+			dx = -1
+		end
+		dx = dx * p.direction
+		if mcontroller.xVelocity() <= p.movementParams.walkSpeed then
+			mcontroller.force({900 * dx, 0})
+		end
+	end
+end
+
+function roll_chonk_ball(dt)
+	updateAngularVelocity(dt)
+	updateRotationFrame(dt)
+	self.lastPosition = mcontroller.position()
+end
+
+--these are taken from /tech/distortionsphere/distortionsphere.lua
+require "/scripts/vec2.lua"
+
+function updateRotationFrame(dt)
+	self.angle = math.fmod(math.pi * 2 + self.angle + self.angularVelocity * dt, math.pi * 2)
+
+	-- Rotation frames for the ball are given as one *half* rotation so two
+	-- full cycles of each of the ball frames completes a total rotation.
+	local rotationFrame = math.floor(self.angle / math.pi * self.ballFrames) % self.ballFrames
+	animator.setGlobalTag("rotationFrame", rotationFrame)
+end
+
+function updateAngularVelocity(dt)
+	if mcontroller.onGround() then
+		-- If we are on the ground, assume we are rolling without slipping to
+		-- determine the angular velocity
+		local positionDiff = world.distance(self.lastPosition or mcontroller.position(), mcontroller.position())
+		self.angularVelocity = -vec2.mag(positionDiff) / dt / self.ballRadius
+
+		if positionDiff[1] > 0 then
+			self.angularVelocity = -self.angularVelocity
+		end
+	end
 end

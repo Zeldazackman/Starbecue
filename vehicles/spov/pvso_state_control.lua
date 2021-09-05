@@ -1,18 +1,18 @@
 
 
-function p.updateState()
+function p.updateState(dt)
 	if p.prevState == p.state then
 		if state[p.state] ~= nil and state[p.state].update ~= nil then
-			state[p.state].update()
+			state[p.state].update(dt)
 		else
-			p.standardState()
+			p.standardState(dt)
 		end
 	else
 		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
-			state[p.prevState].ending()
+			state[p.prevState].ending(dt)
 		end
 		if state[p.state] ~= nil and state[p.state].begin ~= nil then
-			state[p.state].begin()
+			state[p.state].begin(dt)
 		end
 		p.prevState = p.state
 	end

@@ -202,11 +202,13 @@ function p.jumpMovement(dx, dy, state, dt)
 				mcontroller.setYVelocity(p.movementParams[p.movement.jumpProfile].jumpSpeed)
 				if (p.movement.jumps > 1) and mcontroller.liquidPercentage() == 0 then
 					-- particles from effects/multiJump.effectsource
-					animator.burstParticleEmitter( state.control.pulseEffect )
-					animator.playSound( "doublejump" )
-					for i = 1, state.control.pulseSparkles do
-						animator.burstParticleEmitter( "defaultblue" )
-						animator.burstParticleEmitter( "defaultlightblue" )
+					if state.control.pulseEffect then
+						animator.burstParticleEmitter( state.control.pulseEffect )
+						animator.playSound( "doublejump" )
+						for i = 1, state.control.pulseSparkles do
+							animator.burstParticleEmitter( "defaultblue" )
+							animator.burstParticleEmitter( "defaultlightblue" )
+						end
 					end
 				end
 			end
@@ -224,7 +226,7 @@ end
 function p.airMovement( dx, dy, state, dt )
 	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDisabled then
 		p.movement.animating = true
-		if mcontroller.yVelocity() <= p.movementParams[p.movement.groundMovement.."Speed"] then
+		if mcontroller.xVelocity() <= p.movementParams[p.movement.groundMovement.."Speed"] then
 			mcontroller.force({ dx * (p.movementParams.airForce * (dt + 1)), 0 })
 		end
 

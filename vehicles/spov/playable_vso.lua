@@ -301,7 +301,7 @@ function update(dt)
 
 	p.emoteCooldown = p.emoteCooldown - dt
 	p.update(dt)
-	p.updateState()
+	p.updateState(dt)
 end
 
 function uninit()
@@ -852,7 +852,6 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			--p.smolprey( seatindex )
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.updateOccupants(0)
 			p.justAte = true
@@ -879,18 +878,13 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )
 	seatindex = p.entity[occupantId].index
-	--[[
 	if p.occupant[seatindex].species then
 		if world.entityType(occupantId) == "player" then
 			world.sendEntityMessage( occupantId, "spawnSmolPrey", p.occupant[seatindex].species )
 		else
 			world.spawnVehicle( "spov"..p.occupant[seatindex].species, { p.monstercoords[1], p.monstercoords[2]}, { driver = occupantId, settings = {}, uneaten = true } )
 		end
-		p.occupant[seatindex].species = nil
-		p.occupant[seatindex].filepath = nil
 	end
-	p.smolprey( seatindex ) -- clear
-	]]
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 end
 
@@ -1086,7 +1080,7 @@ function p.handleStruggles()
 	local strugglerId = p.getEidFromSeatname("occupant"..struggler)
 
 	if struggledata.script ~= nil then
-		local statescript = p.statestripts[p.state][struggledata.script]
+		local statescript = state[p.state][struggledata.script]
 		statescript({index = struggler, id = strugglerId, direction = movedir})
 	end
 
