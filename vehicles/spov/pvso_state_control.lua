@@ -67,7 +67,9 @@ function p.doTransition( direction, scriptargs )
 		end)
 	end
 	if tconfig.idleAfter then
+		p.transitionLock = true
 		p.queueAnimEndFunction(tconfig.timing.."State", function()
+			p.transitionLock = false
 			p.doAnims( p.stateconfig[p.state].idle )
 		end)
 	end

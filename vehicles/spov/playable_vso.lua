@@ -964,7 +964,7 @@ end
 -------------------------------------------------------------------------------
 
 function p.notMoving()
-	return mcontroller.xVelocity() == 0
+	return (mcontroller.xVelocity() == 0) and (mcontroller.yVelocity() == 0)
 end
 
 function p.underWater()
@@ -1114,10 +1114,10 @@ function p.handleStruggles()
 
 		p.doAnims(animation)
 
-		if p.notMoving() then
-			p.doAnims( struggledata[movedir].animation or struggledata.animation, true )
+		if not p.movement.animating then
+			p.doAnims( struggledata[movedir].animation or struggledata.animation )
 		else
-			p.doAnims( struggledata[movedir].animationWhenMoving or struggledata.animationWhenMoving, true )
+			p.doAnims( struggledata[movedir].animationWhenMoving or struggledata.animationWhenMoving )
 		end
 
 		if struggledata[movedir].victimAnimation then
