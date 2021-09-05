@@ -153,7 +153,6 @@ function state.lay.update()
 			p.doTransition( "absorb" )
 		end
 		if p.pressControl( p.driverSeat, "primaryFire" ) or p.pressControl( p.driverSeat, "altFire" )then
-			sb.logInfo("licked")
 			p.doTransition( "lick" )
 		end
 	end

@@ -7,7 +7,7 @@
 	"description" : "Turn into a big vaporeon that can eat people! ^green;[F]",
 	"shortDescription" : "Vappy",
 	"rarity" : "Uncommon",
-	"icon" : "/vehicles/spov/vaporeon/vaporeonicon.png",
+	"icon" : "/vehicles/spov/vaporeon/spov/default/icon.png",
 
 	"chipCost" : 8
 }

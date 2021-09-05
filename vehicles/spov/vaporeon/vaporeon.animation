@@ -32,9 +32,9 @@
 
 					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
 
-					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
-					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
-					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
@@ -110,7 +110,6 @@
 					"smol.bap": { "frames": 3, "cycle": 0.3, "mode": "end", "priority": 1 }
 				}
 			},
-
 			"tailState": {
 				"default": "idle",
 				"states": {
@@ -157,16 +156,22 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
-
 			"headState": {
 				"default": "idle",
 				"states": {
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"back.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"pinlook": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+
+					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
+
 					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
+					"back.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 },
 
 					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2 },
@@ -181,6 +186,7 @@
 					"smol.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1 }
 				}
 			},
+
 			"driverState": {
 				"default": "empty",
 				"states": {
@@ -214,7 +220,7 @@
 			"background": {
 				"properties": {
 					"centered": true,
-					 "zLevel": -1,
+					 "zLevel": -2,
 					 "transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
@@ -346,7 +352,7 @@
 			"backlegs": {
 				"properties": {
 					"centered": true,
-					"zLevel": -2,
+					"zLevel": -3,
 					 "transformationGroups": ["flip"]
 				},
 				"partStates": {
@@ -400,7 +406,7 @@
 			"bapleg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -2,
+					"zLevel": -3,
 					 "transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -517,7 +523,7 @@
 			"head": {
 				"properties": {
 					"centered": true,
-					"zLevel": 4,
+					"zLevel": -1,
 					 "transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -525,10 +531,17 @@
 						"none": { "properties": {} },
 
 						"idle": { "properties": { "image": "spov/<skin>/head.png:idle.<frame><directives>" } },
+						"back.idle": { "properties": { "image": "spov/<skin>/head.png:back.idle.<frame><directives>" } },
 						"pinlook": { "properties": { "image": "spov/<skin>/head.png:pinlook.<frame><directives>" } },
 
 						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
+						"back.blink": { "properties": { "image": "spov/<skin>/head.png:back.blink.<frame><directives>" } },
 						"pet": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/head.png:eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/head.png:escape.<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "spov/<skin>/head.png:<state>.rollover.<frame><directives>" } },
 
 						"look": { "properties": { "image": "spov/<skin>/head.png:look.<frame><directives>" } },
 						"lick": { "properties": { "image": "spov/<skin>/head.png:lick.<frame><directives>" } },
@@ -542,6 +555,42 @@
 					}
 				}
 			},
+			"head_foreground": {
+				"properties": {
+					"centered": true,
+					"zLevel": 4,
+					 "transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"none": { "properties": {} },
+
+						"idle": { "properties": { "image": "spov/<skin>/foreground/head.png:idle.<frame><directives>" } },
+						"back.idle": { "properties": { "image": "spov/<skin>/foreground/head.png:back.idle.<frame><directives>" } },
+						"pinlook": { "properties": { "image": "spov/<skin>/foreground/head.png:pinlook.<frame><directives>" } },
+
+						"blink": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><directives>" } },
+						"back.blink": { "properties": { "image": "spov/<skin>/foreground/head.png:back.blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/foreground/head.png:eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/head.png:escape.<frame><directives>" } },
+
+						"rollover": { "properties": { "image": "spov/<skin>/foreground/head.png:<state>.rollover.<frame><directives>" } },
+
+						"look": { "properties": { "image": "spov/<skin>/foreground/head.png:look.<frame><directives>" } },
+						"lick": { "properties": { "image": "spov/<skin>/foreground/head.png:lick.<frame><directives>" } },
+						"waterspray": { "properties": { "image": "spov/<skin>/foreground/head.png:waterspray.<frame><directives>" } },
+
+						"wakeup": { "properties": { "image": "spov/<skin>/foreground/head.png:wakeup.<frame><directives>" } },
+						"fallasleep": { "properties": { "image": "spov/<skin>/foreground/head.png:fallasleep.<frame><directives>" } },
+
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_head.png:idle.<frame><directives>" } },
+						"smol.blink": { "properties": { "image": "spov/<skin>/smol/foreground/smol_head.png:blink.<frame><directives>" } }
+					}
+				}
+			},
+
 
 			"driverbackarm": {
 				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },

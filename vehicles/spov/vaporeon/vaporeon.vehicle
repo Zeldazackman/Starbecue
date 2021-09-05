@@ -136,7 +136,6 @@
 					"animation": {
 						"body": "sitdown",
 						"legs": "sitdown",
-						"head": "idle",
 						"tail": "sitdown",
 						"offset" : {
 							"parts" : [
@@ -149,29 +148,24 @@
 				},
 				// non directional = not accessible via controls, except from script
 				"eat": { // 2 occupants
+					"idleAfter": true,
 					"location": "belly",
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"legs": "idle",
-						"head": "none",
-						"tail": "idle"
+						"head": "eat"
 					},
 					"victimAnimation": "playereat",
-					"state": "stand",
 					"script": "eat"
 				},
 				"escape": { // 2 occupants
+					"idleAfter": true,
 					"location": "belly",
 					"animation": {
 						"body": "escape",
-						"legs": "idle",
-						"bap": "none",
-						"head": "none",
-						"tail": "idle"
+						"head": "escape"
 					},
 					"victimAnimation": "escape",
-					"state": "stand",
 					"script": "letout"
 				}
 			},
@@ -428,7 +422,7 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "rollover",
-						"head": "none",
+						"head": "rollover",
 						"tail": "none"
 					},
 					"victimAnimation": "unpin",
@@ -585,7 +579,7 @@
 					"animation": {
 						"body": "rollover",
 						"legs": "rollover",
-						"head": "none",
+						"head": "rollover",
 						"tail": "none"
 					},
 					"victimAnimation": "pinned",
@@ -615,11 +609,12 @@
 			"idle": {
 				"body": "back",
 				"legs": "back",
-				"head": "none",
+				"head": "back.idle",
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "back.flick" }
+				{ "tail": "back.flick" },
+				{ "head": "back.flick" }
 			],
 			"struggle": {
 				"belly" : {

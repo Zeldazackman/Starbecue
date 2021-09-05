@@ -14,7 +14,7 @@
 	"description": "A big vaporeon of your very own!",
 	"tooltipFields": {
 		"statusLabel": "A big vaporeon of your very own!",
-		"modifyLabel": "A big<fattenAdjective><hungryAdjective> vaporeon of your very own!",
+		"modifyLabel": "A big <fattenAdjective><hungryAdjective>vaporeon of your very own!",
 		"fattenAdjectives": ["", "chubby", "chonky", "chunky"],
 		"hungryAdjectives": {
 			"pvsoRemoveBellyEffects": "",
@@ -50,7 +50,7 @@
 		}
 	],
 
-	"inventoryIcon": "/vehicles/spov/vaporeon/vaporeonicon.png",
+	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png",
 
 	"spov": {
 		"types": ["spovvaporeon"],

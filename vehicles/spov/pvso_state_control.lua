@@ -66,6 +66,11 @@ function p.doTransition( direction, scriptargs )
 			p.movementLock = false
 		end)
 	end
+	if tconfig.idleAfter then
+		p.queueAnimEndFunction(tconfig.timing.."State", function()
+			p.doAnims( p.stateconfig[p.state].idle )
+		end)
+	end
 	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
 		local id = (scriptargs or {}).id
 		local index = (scriptargs or {}).index
