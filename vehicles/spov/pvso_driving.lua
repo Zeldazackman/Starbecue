@@ -79,7 +79,7 @@ function p.updateControls(dt)
 			seat.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
 
 			local type = "prey"
-			if p.driving and (seatname == p.driverSeat) then
+			if (seatname == p.driverSeat) then
 				type = "driver"
 			end
 			if seat.primaryHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
@@ -124,7 +124,6 @@ function p.updateDriving(dt)
 	end
 
 	if p.standalone then
-		p.driving = true
 		if p.tapControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
 				--vehicle.entityLoungingIn only works for players and NPCs, but since this is a script that will only trigger for players, its ok

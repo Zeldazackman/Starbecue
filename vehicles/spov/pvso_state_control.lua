@@ -32,7 +32,7 @@ p.transitionLock = false
 p.movementLock = false
 
 function p.doTransition( direction, scriptargs )
-	if (not p.stateconfig[p.state].transitions[direction]) then return "doesn't exist" end
+	if (not p.stateconfig[p.state].transitions[direction]) then return "no data" end
 	if p.transitionLock then return "locked" end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return "no data" end
@@ -89,7 +89,7 @@ function p.idleStateChange()
 
 	if p.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions
-		if not p.driving then
+		if not p.driver then
 			local percent = math.random(100)
 			for name, t in pairs(transitions) do
 				local transition = p.occupantArray( t )

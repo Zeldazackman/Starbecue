@@ -52,12 +52,6 @@ function state.stand.update()
 	end
 end
 
-function state.stand.interact( occupantId )
-	if mcontroller.yVelocity() > -5 then
-		p.onInteraction( occupantId )
-	end
-end
-
 -------------------------------------------------------------------------------
 
 function state.smol.begin()

@@ -16,7 +16,6 @@ end
 function onBegin()	--This sets up the VSO ONCE.
 	p.standalone = false
 	p.driverSeat = "occupant1"
-	p.driving = false
 	p.occupant[1].location = "other"
 	p.occupants.total = 1
 	p.occupants.other = 1

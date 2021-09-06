@@ -162,7 +162,7 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"back.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"pinlook": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
@@ -536,14 +536,14 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1,
-					 "transformationGroups": ["flip", "headbob"]
+					 "transformationGroups": ["flip", "headbob", "bodybob"]
 				},
 				"partStates": {
 					"headState": {
 						"none": { "properties": {} },
 
 						"idle": { "properties": { "image": "spov/<skin>/head.png:idle.<frame><directives>" } },
-						"back.idle": { "properties": { "image": "spov/<skin>/head.png:back.idle.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/<skin>/head.png:back.<frame><directives>" } },
 						"pinlook": { "properties": { "image": "spov/<skin>/head.png:pinlook.<frame><directives>" } },
 
 						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
@@ -571,7 +571,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					 "transformationGroups": ["flip", "headbob"]
+					 "transformationGroups": ["flip", "headbob", "bodybob"]
 				},
 				"partStates": {
 					"headState": {

@@ -35,7 +35,10 @@ function p.endAnim(state)
 end
 
 function p.updateVisibilityAndSmolprey(occupant)
-	if occupant.id == nil then return end
+	if occupant.id == nil then
+		animator.setAnimationState( occupant.seatname.."State", "empty", true )
+		return
+	end
 	if occupant.visible then
 		if occupant.species ~= nil then
 			if occupant.smolPreyData.recieved then
@@ -324,9 +327,16 @@ end
 p.offsets = {enabled = false, parts = {}}
 function p.offsetAnim( data )
 	if data == p.offsets.data then
-		if not p.offsets.enabled then p.offsets.time = 0 p.offsets.enabled = true end
+		if not p.offsets.enabled then p.offsets.enabled = true end
 		return
+	else
+		for i, part in ipairs(p.offsets.parts) do
+			for j, group in ipairs(part.groups) do
+				animator.resetTransformationGroup(group)
+			end
+		end
 	end
+
 	p.offsets = {
 		enabled = data ~= nil,
 		data = data,
@@ -335,13 +345,13 @@ function p.offsetAnim( data )
 		timing = data.timing or "body"
 	}
 	local continue = false
-	for _,r in ipairs(data.parts or {}) do
+	for _, part in ipairs(data.parts or {}) do
 		table.insert(p.offsets.parts, {
-			x = r.x or {0},
-			y = r.y or {0},
-			groups = r.groups or {"headbob"},
+			x = part.x or {0},
+			y = part.y or {0},
+			groups = part.groups or {"headbob"},
 			})
-		if (r.x and #r.x > 1) or (r.y and #r.y > 1) then
+		if (part.x and #part.x > 1) or (part.y and #part.y > 1) then
 			continue = true
 		end
 	end

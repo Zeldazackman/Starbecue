@@ -183,11 +183,7 @@
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle",
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				}
+				"offset" : {}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -284,7 +280,7 @@
 						"offset" : {
 							"timing": "legs",
 							"parts" : [
-								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["headbob", "bodybob"] }
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["bodybob"] }
 							]
 						}
 					},
@@ -427,7 +423,8 @@
 						"body": "rollover",
 						"legs": "rollover",
 						"head": "rollover",
-						"tail": "none"
+						"tail": "none",
+						"offset" : { "foo":"bar"}
 					},
 					"victimAnimation": "unpin",
 					"victimAnimLocation": "hug",
@@ -613,12 +610,12 @@
 			"idle": {
 				"body": "back",
 				"legs": "back",
-				"head": "back.idle",
+				"head": "back",
 				"tail": "back"
 			},
 			"idleAnimations": [
 				{ "tail": "back.flick" },
-				{ "head": "back.flick" }
+				{ "head": "back.blink" }
 			],
 			"struggle": {
 				"belly" : {
@@ -694,11 +691,12 @@
 			"idle": {
 				"body": "back",
 				"legs": "hug",
-				"head": "none",
+				"head": "back",
 				"tail": "back"
 			},
 			"idleAnimations": [
-				{ "tail": "back.flick" }
+				{ "tail": "back.flick" },
+				{ "head": "back.blink" }
 			],
 			"struggle": {
 				"belly" : {
@@ -741,11 +739,7 @@
 				"legs": "smol.idle",
 				"head": "smol.idle",
 				"tail": "smol.idle",
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				}
+				"offset" : {}
 			},
 			"idleAnimations": [
 				{ "head": "smol.blink" }

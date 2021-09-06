@@ -49,6 +49,8 @@ function p.clearOccupant(i)
 		location = nil,
 		species = nil,
 		smolPreyData = {recieved = false},
+		struggleCount = 0,
+		bellySettleDownTimer = 0,
 		occupantTime = 0,
 		progressBar = 0,
 		progressBarActive = false,
@@ -184,19 +186,16 @@ function init()
 	p.occupant[0].seatname = "driver"
 	p.occupant[0].visible = false
 	p.seats.driver = p.occupant[0]
+	p.driverSeat = "driver"
 
 	if p.driver ~= nil then
 		p.entity[p.driver] = p.occupant[0]
 		p.standalone = true
-		p.driverSeat = "driver"
-		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
 		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
 		p.standalone = false
-		p.driverSeat = "occupant1"
-		p.driving = false
 		vehicle.setLoungeEnabled( "driver", false )
 	end
 	p.spawnerUUID = world.entityUniqueId(p.spawner)
@@ -217,7 +216,6 @@ function init()
 	end )
 
 	message.setHandler( "transform", function(_,_, val, eid )
-		sb.logInfo("transforming")
 		if p.entity[eid].progressBarActive then return end
 		local val = val
 		if val == nil then
@@ -295,7 +293,7 @@ function update(dt)
 	p.updateDriving(dt)
 
 	p.updateOccupants(dt)
-	p.handleStruggles()
+	p.handleStruggles(dt)
 	p.handleBelly()
 	p.applyStatusLists()
 
@@ -310,6 +308,51 @@ function uninit()
 	then
 		p.onDeath()
 	end
+end
+
+-- returns sourcePosition, sourceId, and interactPosition
+function onInteraction(args)
+
+	local stateData = p.stateconfig[p.state]
+	if p.entityLounging(args.sourceId) then
+		-- should add some sort of script for if you're already prey here?
+		return
+	elseif p.notMoving() then
+		p.showEmote( "emotehappy" )
+		if stateData.interact ~= nil then
+			if stateData.interact.side ~= nil  then
+				local area = mcontroller.collisionBoundBox()
+				local entities = world.entityQuery({area[1], area[2]}, {area[3], area[4]}, {
+					includedTypes = {"creature"}
+				})
+				for i = 1, #entities do
+					if entities[i] == args.sourceId then
+						p.doTransition( p.occupantArray(stateData.interact.side).transition, {id=args.sourceId} )
+						return
+					end
+				end
+			end
+			local interactPosition = p.globalToLocal( args.sourcePosition )
+			if interactPosition[1] > 0 then
+				p.doTransition( p.occupantArray(stateData.interact.front).transition, {id=args.sourceId} )
+				return
+			else
+				p.doTransition( p.occupantArray(stateData.interact.back).transition, {id=args.sourceId} )
+				return
+			end
+		elseif stateData.interact.animation ~= nil then
+			p.doAnims( stateData.interact.animation )
+		end
+		if state[p.state].interact ~= nil then
+			if state[p.state].interact() then
+				return
+			end
+		end
+	end
+end
+
+function p.logJson(arg)
+	sb.logInfo(sb.printJson(arg))
 end
 
 function sameSign(num1, num2)
@@ -958,7 +1001,7 @@ end
 -------------------------------------------------------------------------------
 
 function p.notMoving()
-	return (mcontroller.xVelocity() == 0) and (mcontroller.yVelocity() == 0)
+	return (math.abs(mcontroller.xVelocity()) < 0.1) and mcontroller.onGround()
 end
 
 function p.underWater()
@@ -1007,12 +1050,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
 				if driver then
-					p.restoreHunger = p.restoreHunger + hunger_change
-					if p.restoreHunger > 0.1 then
-						p.loopedMessage("driverHunger", driver, "addHungerHealth", p.restoreHunger, function ()
-							p.restoreHunger = 0
-						end)
-					end
+					world.sendEntityMessage( driver, "addHungerHealth", hunger_change)
 				end
 				p.extraBellyEffects(i, eid, health, status)
 			else
@@ -1034,26 +1072,23 @@ end
 p.struggleCount = 0
 p.bellySettleDownTimer = 5
 
-function p.handleStruggles()
-	p.bellySettleDownTimer = p.bellySettleDownTimer - p.dt
-	if p.bellySettleDownTimer <= 0 then
-		if p.struggleCount > 0 then
-			p.struggleCount = p.struggleCount - 1
-			p.bellySettleDownTimer = 3
-		end
-	end
-
-	local struggler = 0
+function p.handleStruggles(dt)
+	local struggler = -1
 	local struggledata
-	if p.driving and not p.standalone then
-		struggler = 1
-	end
-
 	local movedir = nil
 
 	while (movedir == nil) and struggler < p.vso.maxOccupants.total do
 		struggler = struggler + 1
-		movedir = p.getSeatDirections( "occupant"..struggler )
+		movedir = p.getSeatDirections( p.occupant[struggler].seatname )
+		if p.occupant[struggler].seatname == p.driverSeat then
+			movedir = nil
+		end
+		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)
+		if p.occupant[struggler].bellySettleDownTimer <= 0 then
+			p.occupant[struggler].struggleCount = math.max( 0, p.occupant[struggler].struggleCount - 1)
+			p.occupant[struggler].bellySettleDownTimer = 4
+		end
+
 		struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 		if movedir then
 			if (struggledata == nil) or (struggledata[movedir] == nil) then
@@ -1084,23 +1119,18 @@ function p.handleStruggles()
 		statescript({index = struggler, id = strugglerId, direction = movedir})
 	end
 
-	local chance = struggledata.chances
+	local chances = struggledata.chances
 	if struggledata[movedir].chances ~= nil then
-		chance = struggledata[movedir].chances
+		chances = struggledata[movedir].chances
 	end
-	if chance ~= nil and chance[p.settings.escapeModifier] ~= nil then
-		chance = chance[p.settings.escapeModifier]
+	if chances[p.settings.escapeModifier] ~= nil then
+		chances = chances[p.settings.escapeModifier]
 	end
-
-	if chance ~= nil and ( chance.max == 0 or (
-		(not p.driving or struggledata[movedir].controlled)
-		and (math.random(chance.min, chance.max) <= p.struggleCount))
-	) then
-		p.struggleCount = 0
+	if chances ~= nil and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount) then
 		p.doTransition( struggledata[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
 	else
-		p.struggleCount = p.struggleCount + 1
-		p.bellySettleDownTimer = 5
+		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1
+		p.occupant[struggler].bellySettleDownTimer = 5
 
 		sb.setLogMap("b", "struggle")
 		local animation = {offset = struggledata[movedir].offset}
@@ -1119,31 +1149,6 @@ function p.handleStruggles()
 		end
 		animator.playSound( "struggle" )
 	end
-end
-
-function p.onInteraction( occupantId )
-	local state = p.stateconfig[p.state]
-
-	local position = p.globalToLocal( world.entityPosition( occupantId ) )
-	local interact
-	if position[1] > 3 then
-		interact = p.occupantArray( state.interact.front )
-	elseif position[1] < -3 then
-		interact = p.occupantArray( state.interact.back )
-	else
-		interact = p.occupantArray( state.interact.side )
-	end
-	if not p.driving or interact.controlled then
-		if interact.chance > 0 and p.randomChance( interact.chance ) then
-			p.doTransition( interact.transition, {id=occupantId} )
-			return
-		end
-	end
-
-	if state.interact.animation then
-		p.doAnims( state.interact.animation )
-	end
-	p.showEmote( "emotehappy" )
 end
 
 function p.randomChance(percent)
