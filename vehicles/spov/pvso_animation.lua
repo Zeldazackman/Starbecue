@@ -116,68 +116,66 @@ function p.victimAnimUpdate(entity)
 	local statename = p.entity[entity].victimAnim.statename
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
-	if ended and not anim.loop then victimAnim.enabled = false return
-	else
-		local occupantIndex = p.entity[entity].index
-		local seatname = p.entity[entity].seatname
-		local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
-		local frame = math.floor(time * speed)
-		local nextFrame = frame + 1
-		local nextFrameIndex = nextFrame + 1
-		local lastframe = false
+	if ended and not anim.loop then victimAnim.enabled = false end
 
-		if victimAnim.prevFrame ~= frame then
-			if anim.frames then
-				for i = 1, #anim.frames do
-					if (anim.frames[i] == frame) and (i ~= #anim.frames) then
-						nextFrame = anim.frames[i + 1]
-						nextFrameIndex = i + 1
-					end
-					if anim.loop and (i == #anim.frames) then
-						nextFrame = 0
-						nextFrameIndex = 1
-					elseif (i == #anim.frames) then
-						lastframe = true
-					end
+	local seatname = p.entity[entity].seatname
+	local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
+	local frame = math.floor(time * speed)
+	local nextFrame = frame + 1
+	local nextFrameIndex = nextFrame + 1
+
+	if victimAnim.prevFrame ~= frame then
+		if anim.frames then
+			for i = 1, #anim.frames do
+				if (anim.frames[i] == frame) and (i ~= #anim.frames) then
+					nextFrame = anim.frames[i + 1]
+					nextFrameIndex = i + 1
+				end
+				if anim.loop and (i == #anim.frames) then
+					nextFrame = 0
+					nextFrameIndex = 1
 				end
 			end
-			victimAnim.prevFrame = victimAnim.frame
-			victimAnim.frame = nextFrame
-
-			victimAnim.prevIndex = victimAnim.index
-			victimAnim.index = nextFrameIndex
-
-			if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-				world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
-			end
-			if anim.visible ~= nil and anim.visible[victimAnim.prevIndex] ~= nil then
-				p.entity[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
-			end
-			if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
-			end
-			if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
-				p.entity[entity].emote = anim.emote[victimAnim.prevIndex]
-			end
-			if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
-				vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
-			end
 		end
+		victimAnim.prevFrame = victimAnim.frame
+		victimAnim.frame = nextFrame
 
-		local currTime = time * speed
-		local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame) * (victimAnim.interpMode or 1)
-		local transformGroup = seatname.."Position"
-		local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
-		local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
-		local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
+		victimAnim.prevIndex = victimAnim.index
+		victimAnim.index = nextFrameIndex
 
-		animator.resetTransformationGroup(transformGroup)
-		--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
-		animator.scaleTransformationGroup(transformGroup, scale)
-		animator.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
-		animator.translateTransformationGroup(transformGroup, translation)
+		if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
+			world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
+		end
+		if anim.visible ~= nil and anim.visible[victimAnim.prevIndex] ~= nil then
+			p.entity[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
+		end
+		if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
+			vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
+		end
+		if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
+			vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
+			p.entity[entity].emote = anim.emote[victimAnim.prevIndex]
+		end
+		if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
+			vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
+		end
 	end
+
+	local currTime = time * speed
+	local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame) * (victimAnim.interpMode or 1)
+	if (victimAnim.frame - victimAnim.prevFrame) == 0 then
+		progress = 0
+	end
+	local transformGroup = seatname.."Position"
+	local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
+	local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
+	local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
+
+	animator.resetTransformationGroup(transformGroup)
+	--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
+	animator.scaleTransformationGroup(transformGroup, scale)
+	animator.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
+	animator.translateTransformationGroup(transformGroup, translation)
 end
 
 function p.getVictimAnimInterpolatedValue(victimAnim, valName, progress)

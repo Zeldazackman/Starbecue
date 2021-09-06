@@ -81,7 +81,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.stand.update()
-	if p.driving then
+	if p.standalone then
 		if p.tapControl( p.driverSeat, "special1" ) then
 			world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
 			if p.occupants.belly < 2 then
@@ -108,7 +108,7 @@ function state.stand.letout( args )
 	if args.id == nil then
 		args.id = p.occupant[p.occupants.total].id
 	end
-	return p.doEscape(args, "belly", {3.5, -1.875}, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, "belly", {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end
 
 function state.stand.vore()
@@ -164,7 +164,7 @@ state.lay.absorb = LayAbsorb
 
 function state.lay.unpin(args)
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {}, {})
+	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {}, {})
 	return true, returnval[2], returnval[3]
 end
 
@@ -204,7 +204,7 @@ function state.back.bed( args )
 end
 
 function state.back.unbed(args)
-	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {})
+	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {})
 end
 
 -------------------------------------------------------------------------------

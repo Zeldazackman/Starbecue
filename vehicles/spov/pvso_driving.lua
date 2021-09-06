@@ -121,7 +121,6 @@ function p.updateDriving(dt)
 		local cursor = "/cursors/cursors.png:pointer"
 		world.sendEntityMessage( p.driver, "PVSOCursor", aim, cursor)
 	end
-
 	if p.standalone then
 		if p.tapControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(

@@ -25,7 +25,7 @@ function state.back.anal( args )
 end
 
 function state.back.analescape( args )
-	return p.doEscape(args, "belly", {-3, -3.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
+	return p.doEscape(args, "belly", {"vsoindicateguts"}, {"droolsoaked", 5} )
 end
 
 function state.back.bed( args )
@@ -50,7 +50,7 @@ function state.back.update()
 end
 
 function state.back.unbed(args)
-	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {1.3125, -2.0}, {})
+	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {})
 end
 
 ---------------------------------------------------------------------------
@@ -64,5 +64,5 @@ function state.hug.anal( args )
 end
 
 function state.hug.analescape( args )
-	return p.doEscape(args, "belly", {-3, -2.5}, {"vsoindicateguts"}, {"droolsoaked", 5} )
+	return p.doEscape(args, "belly", {"vsoindicateguts"}, {"droolsoaked", 5} )
 end

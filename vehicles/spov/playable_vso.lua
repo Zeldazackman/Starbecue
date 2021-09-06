@@ -14,7 +14,6 @@ p = {
 	occupantOffset = 1,
 	justAte = false,
 	justLetout = false,
-	monstercoords = {0,0},
 	nextIdle = 0,
 	swapCooldown = 0,
 	isPathfinding = false
@@ -55,7 +54,7 @@ function p.clearOccupant(i)
 		progressBarActive = false,
 		progressBarMode = 1,
 		progressBarFinishFunc = nil,
-		victimAnim = { enabled = false },
+		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
 		controls = {
 			primaryFire = 0,
 			altFire = 0,
@@ -184,10 +183,12 @@ function init()
 	if p.driver ~= nil then
 		p.entity[p.driver] = p.occupant[0]
 		p.standalone = true
+		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
 		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
+		p.driving = false
 		p.standalone = false
 		vehicle.setLoungeEnabled( "driver", false )
 	end
@@ -593,9 +594,7 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
-function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
-	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
-
+function p.doEscape(args, location, statuses, afterstatus )
 	if p.locationEmpty(location) then return false end
 	local victim = args.id
 
@@ -614,9 +613,7 @@ function p.doEscape(args, location, monsteroffset, statuses, afterstatus )
 	end
 end
 
-function p.doEscapeNoDelay(args, location, monsteroffset, afterstatus )
-	p.monstercoords = p.localToGlobal(monsteroffset)--same as last bit of escape anim
-
+function p.doEscapeNoDelay(args, location, afterstatus )
 	if p.locationEmpty(location) then return false end
 	local victim = args.id
 
@@ -913,12 +910,8 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )
 	seatindex = p.entity[occupantId].index
-	if p.occupant[seatindex].species then
-		if world.entityType(occupantId) == "player" then
-			world.sendEntityMessage( occupantId, "spawnSmolPrey", p.occupant[seatindex].species )
-		else
-			world.spawnVehicle( "spov"..p.occupant[seatindex].species, { p.monstercoords[1], p.monstercoords[2]}, { driver = occupantId, settings = {}, uneaten = true } )
-		end
+	if p.occupant[seatindex].species ~= nil then
+		world.spawnVehicle( p.occupant[seatindex].species, { p.entity[occupantId].victimAnim.last.x or 0, p.entity[occupantId].victimAnim.last.y or 0}, { driver = occupantId, settings = p.entity[occupantId].smolPreyData.settings, uneaten = true } )
 	end
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 end

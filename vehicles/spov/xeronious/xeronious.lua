@@ -60,7 +60,6 @@ function checkEscapes(args)
 	local returnval = {}
 	local direction = "escapeoral"
 	local status = {"vsoindicatemaw"}
-	local monstercoords = {6, 1} -- same as last coords of escape anim
 	local move = args.direction or "up"
 
 	if (p.occupant[args.index].species == "xeronious_egg"
@@ -70,19 +69,17 @@ function checkEscapes(args)
 
 	if location == "tail" then
 		direction = "escapetail"
-		monstercoords = {-6, 0}
 	elseif location == "belly" and move == "down" then
 		status = {"vsoindicateout"}
 		direction = "escapeanalvore"
-		monstercoords = {-0.75, -3}
 	elseif location == "hug" then
 		p.setState("sit")
-		return p.doEscape(args.index, "hug", {2.5,0}, {}, {})
+		return p.doEscape(args.index, "hug", {}, {})
 	end
 
 	if not (p.doTransition(direction, args) == "success") then return false end
 
-	returnval[1], returnval[2] = p.doEscape(args, location, monstercoords, status, {"droolsoaked", 5})
+	returnval[1], returnval[2] = p.doEscape(args, location, status, {"droolsoaked", 5})
 
 	returnval[3] = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 
@@ -270,7 +267,7 @@ end
 function state.hug.unhug( args )
 	for i = 1, p.occupants.total do
 		if p.occupant[i].location == "hug" then
-			return p.doEscape({index = i}, "hug", {2.5,0}, {}, {})
+			return p.doEscape({index = i}, "hug", {}, {})
 		end
 	end
 end
