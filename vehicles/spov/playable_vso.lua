@@ -882,6 +882,7 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
+			world.sendEntityMessage(occupantId, "pvsoMakeNonHostile")
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.updateOccupants(0)
 			p.justAte = true
@@ -894,7 +895,6 @@ function p.eat( occupantId, location )
 	local species = world.entityName( edibles[1] ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
-	--p.smolprey( seatindex )
 	p.forceSeat( occupantId, "occupant"..seatindex )
 	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
 	p.occupant[seatindex].visible = false
@@ -912,23 +912,6 @@ function p.uneat( occupantId )
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 	if occupantData.species ~= nil then
 		world.spawnVehicle( occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
-	end
-end
-
-function p.smolprey( seatindex )
-	if seatindex == nil then return end
-	local id = p.occupant[seatindex].id
-	if p.occupant[seatindex].species ~= nil then
-		if p.occupant[seatindex].filepath then
-			animator.setPartTag( "occupant"..seatindex, "smolpath", p.occupant[seatindex].filepath)
-		else
-			animator.setPartTag( "occupant"..seatindex, "smolpath", "/vehicles/spov/"..p.occupant[seatindex].species.."/spov/default/smol/smol_body.png:smolprey")
-		end
-		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" ) -- todo eventually, unimportant since there are no directives to set yet
-		p.doAnim( "occupant"..seatindex.."state", "smol" )
-	else
-		animator.setPartTag( "occupant"..seatindex, "smolspecies", "" )
-		animator.setPartTag( "occupant"..seatindex, "smoldirectives", "" )
 	end
 end
 

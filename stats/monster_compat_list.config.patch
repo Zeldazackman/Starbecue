@@ -2,12 +2,16 @@
 	{
 		"op" : "add",
 		"path" : "/primaryScripts/-",
-		"value" : "/scripts/ZSSVMA_monster.lua"
+		"value" : "/scripts/ZSSVMA_monster_primary.lua"
 	},
-		{
+	{
 		"op" : "add",
 		"path" : "/primaryScripts/-",
 		"value" : "/scripts/SSVM_compatibility_monster.lua"
+	},
+	{
+		"op" : "add",
+		"path" : "/spawnScripts/-",
+		"value" : "/scripts/ZSSVMA_monster_spawn.lua"
 	}
-
 ]

@@ -2,6 +2,11 @@
 	{
 		"op": "add",
 		"path": "/statusControllerSettings/primaryScriptSources/-",
-		"value": "/scripts/ZSSVMA_npc.lua"
+		"value": "/scripts/ZSSVMA_npc_primary.lua"
+	},
+	{
+		"op": "add",
+		"path": "/scripts/-",
+		"value": "/scripts/ZSSVMA_npc_bmain.lua"
 	}
 ]
