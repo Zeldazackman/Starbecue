@@ -225,7 +225,7 @@ end
 function p.airMovement( dx, dy, state, dt )
 	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDisabled then
 		p.movement.animating = true
-		if mcontroller.xVelocity() <= p.movementParams[p.movement.groundMovement.."Speed"] then
+		if math.abs(mcontroller.xVelocity()) <= p.movementParams[p.movement.groundMovement.."Speed"] then
 			mcontroller.force({ dx * (p.movementParams.airForce * (dt + 1)), 0 })
 		end
 
