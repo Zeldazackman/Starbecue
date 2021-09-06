@@ -309,7 +309,7 @@ end
 
 function p.setAnimTag(anim)
 	for _,tag in ipairs(anim) do
-		p.animStateData[tag.owner.."State"].tags = {
+		p.animStateData[tag.owner.."State"].tag = {
 			part = tag.part,
 			name = tag.name,
 			reset = tag.reset or true
