@@ -85,7 +85,7 @@ function p.doTransition( direction, scriptargs )
 end
 
 function p.idleStateChange()
-	if not mcontroller.onGround() or not p.notMoving() or p.movement.animating then return end
+	if not p.notMoving() or p.movement.animating or p.transitionLock then return end
 
 	if p.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
 		local transitions = p.stateconfig[p.state].transitions

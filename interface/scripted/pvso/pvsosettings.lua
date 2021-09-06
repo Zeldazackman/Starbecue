@@ -120,7 +120,7 @@ p.refreshtime = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-	if p.refreshtime >= 3 and p.rpc == nil then
+	if p.refreshtime >= 1 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
@@ -132,20 +132,13 @@ function checkRefresh(dt)
 				readOccupantData()
 				p.refreshtime = 0
 				p.refreshed = true
-				--sb.logInfo( "Refreshed Settings Menu" )
 			end
 		else
 			sb.logError( "Couldn't refresh settings." )
 			sb.logError( p.rpc:error() )
 		end
-		--sb.logInfo( "Reset Settings Menu RPC" )
 		p.rpc = nil
 	else
-		--[[if p.rpc then
-			sb.logInfo( "Waiting for RPC" )
-		else
-			sb.logInfo( "Waiting for refresh for"..p.refreshtime )
-		end]]
 		p.refreshtime = p.refreshtime + dt
 	end
 end

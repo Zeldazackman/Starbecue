@@ -134,7 +134,8 @@ function init()
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
-	p.settings = config.getParameter( "settings", p.config.defaultSettings )
+	p.settings = p.config.defaultSettings
+	p.settings = sb.jsonMerge(p.settings, config.getParameter( "settings", p.config.defaultSettings ))
 	p.spawner = config.getParameter("spawner")
 
 	--[[
@@ -1112,7 +1113,7 @@ function p.handleStruggles(dt)
 	end
 	if movedir == nil then return end -- invalid struggle
 
-	local strugglerId = p.getEidFromSeatname("occupant"..struggler)
+	local strugglerId = p.occupant[struggler].id
 
 	if struggledata.script ~= nil then
 		local statescript = state[p.state][struggledata.script]

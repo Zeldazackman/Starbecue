@@ -578,7 +578,7 @@
 						"none": { "properties": {} },
 
 						"idle": { "properties": { "image": "spov/<skin>/foreground/head.png:idle.<frame><directives>" } },
-						"back.idle": { "properties": { "image": "spov/<skin>/foreground/head.png:back.idle.<frame><directives>" } },
+						"back": { "properties": { "image": "spov/<skin>/foreground/head.png:back.<frame><directives>" } },
 						"pinlook": { "properties": { "image": "spov/<skin>/foreground/head.png:pinlook.<frame><directives>" } },
 
 						"blink": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><directives>" } },

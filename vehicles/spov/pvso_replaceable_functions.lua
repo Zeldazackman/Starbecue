@@ -19,12 +19,6 @@ function p.pathfinding(dt)
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------
-
--- called when the vso starts falling, for example, you may want to force it to change to the stand state if it has one
-function p.whenFalling()
-end
-
----------------------------------------------------------------------------------------------------------------------------------
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]
 

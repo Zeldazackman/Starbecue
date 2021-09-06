@@ -136,7 +136,7 @@ function p.updateDriving(dt)
 		p.doTransition("escape", {index = p.occupants.total})
 	end
 
-	if p.stateconfig[p.state].control ~= nil then
+	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
 		local dx = controls[p.driverSeat].dx
 		local dy = controls[p.driverSeat].dy
 		local state = p.stateconfig[p.state]
@@ -279,13 +279,13 @@ function p.doClickActions(state, dt)
 		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
 		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")
 	else
-		p.clickAction(state, "vore", "primaryFire")
-		p.clickAction(state, "specialAttack", "altFire")
+		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
+		p.clickAction(state, state.control.defaultActions[2], "altFire")
 	end
 end
 
 function p.clickAction(stateData, name, control)
-	if stateData.control[name] == nil then return end
+	if stateData.control.clickActions[name] == nil then return end
 	if not p.clickActionCooldowns[name] then
 		p.clickActionCooldowns[name] = 0
 	end
@@ -293,20 +293,20 @@ function p.clickAction(stateData, name, control)
 	if p.clickActionCooldowns[name] > 0 then return end
 
 	if (p.pressControl(p.driverSeat, control))
-	or (p.heldControl(p.driverSeat, control) and stateData.control[name].hold)
+	or (p.heldControl(p.driverSeat, control) and stateData.control.clickActions[name].hold)
 	then
 		local continue = true
-		if stateData.control[name].script ~= nil and state[p.state][stateData.control[name].script] ~= nil then
-			continue = state[p.state][stateData.control[name].script]()
+		if stateData.control.clickActions[name].script ~= nil and state[p.state][stateData.control.clickActions[name].script] ~= nil then
+			continue = state[p.state][stateData.control.clickActions[name].script]()
 		end
 		if continue then
-			p.clickActionCooldowns[name] = stateData.control[name].cooldown or 0
+			p.clickActionCooldowns[name] = stateData.control.clickActions[name].cooldown or 0
 		end
-		if continue and stateData.control[name].animation ~= nil then
-			p.doAnims(stateData.control[name].animation)
+		if continue and stateData.control.clickActions[name].animation ~= nil then
+			p.doAnims(stateData.control.clickActions[name].animation)
 		end
-		if continue and stateData.control[name].projectile ~= nil then
-			p.projectile(stateData.control[name].projectile)
+		if continue and stateData.control.clickActions[name].projectile ~= nil then
+			p.projectile(stateData.control.clickActions[name].projectile)
 		end
 	end
 end

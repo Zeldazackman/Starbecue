@@ -60,8 +60,13 @@ end
 
 -------------------------------------------------------------------------------
 
+function p.update(dt)
+	p.whenFalling()
+end
+
 function p.whenFalling()
-	if p.state ~= ("stand" or "smol" or "chonk_ball") and mcontroller.yVelocity() < -5 then
+	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" then return end
+	if not mcontroller.onGround() then
 		p.setState( "stand" )
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
 		p.movement.falling = true
@@ -92,10 +97,13 @@ function state.stand.update()
 end
 
 function state.stand.eat( args )
+	if not mcontroller.onGround() or p.movement.falling then return false end
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end
 
 function state.stand.letout( args )
+	if not mcontroller.onGround() or p.movement.falling then return false end
+
 	local args = args
 	if args.id == nil then
 		args.id = p.occupant[p.occupants.total].id
@@ -104,7 +112,7 @@ function state.stand.letout( args )
 end
 
 function state.stand.vore()
-	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.oralVore.position ), "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.clickActions.oralVore.position ), "belly", "eat")
 end
 
 -------------------------------------------------------------------------------

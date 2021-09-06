@@ -217,61 +217,73 @@
 				"fullJumpStrength": 30,
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
-				"vore":{
-					"cooldown": 1,
-					"script": "vore"
-				},
-				"oralVore":{
-					"cooldown": 1,
-					"script": "vore",
-					"position": [ 3, -2.5 ]
-				},
-				"physicalAttack": {
-					"cooldown": 0.5,
-					"projectile": {
-						"name": "vapbap",
-						"position": [ 3, -2.5 ],
-						"aimable": false
+				"defaultActions": ["vore", "specialAttack"],
+				"clickActions": {
+					"vore":{
+						"cooldown": 1,
+						"script": "vore"
 					},
-					"animation": {
-						"bap": "bap",
-						"tags": [
-							{
-								"owner": "bap",
-								"part": "global",
-								"name": "bap",
-								"value": "bap/"
-							}
-						]
-					}
-				},
-				"specialAttack": {
-					"hold" : true,
-					"animation": { "head" : "waterspray"},
-					"projectile": {
-						"name": "vapwatergun",
-						"position": [ 2.75, -0.125 ],
-						"aimable": true,
-						"energy": true,
-						"cost": 1
+					"oralVore":{
+						"cooldown": 1,
+						"script": "vore",
+						"position": [ 3, -2.5 ]
+					},
+					"physicalAttack": {
+						"cooldown": 0.5,
+						"projectile": {
+							"name": "vapbap",
+							"position": [ 3, -2.5 ],
+							"aimable": false
+						},
+						"animation": {
+							"bap": "bap",
+							"tags": [
+								{
+									"owner": "bap",
+									"part": "global",
+									"name": "bap",
+									"value": "bap/"
+								}
+							]
+						}
+					},
+					"specialAttack": {
+						"hold" : true,
+						"animation": { "head" : "waterspray"},
+						"projectile": {
+							"name": "vapwatergun",
+							"position": [ 2.75, -0.125 ],
+							"aimable": true,
+							"energy": true,
+							"cost": 1
+						}
 					}
 				},
 				"animations": {
 					"swim": {
 						"legs": "swim",
 						"body": "idle",
-						"tail": "swim"
+						"tail": "swim",
+						"offset": {}
 					},
 					"swimidle": {
 						"legs": "swimidle",
 						"body": "idle",
-						"tail": "swimidle"
+						"tail": "swimidle",
+						"offset": {}
 					},
 
 					"walk": {
 						"legs": "walk",
 						"body": "idle",
-						"tail": "walk"
+						"tail": "walk",
+						"offset" : {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["headbob"] }
+							]
+						}
 					},
 					"run": {
 						"legs": "run",
@@ -279,6 +291,7 @@
 						"tail": "run",
 						"offset" : {
 							"timing": "legs",
+							"loop": true,
 							"parts" : [
 								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["bodybob"] }
 							]
@@ -424,7 +437,7 @@
 						"legs": "rollover",
 						"head": "rollover",
 						"tail": "none",
-						"offset" : { "foo":"bar"}
+						"offset" : {}
 					},
 					"victimAnimation": "unpin",
 					"victimAnimLocation": "hug",
@@ -750,35 +763,36 @@
 				"fullJumpStrength": 20,
 				"pulseEffect": "smoldoublejump",
 				"pulseSparkles": 3,
-				"primaryAction": {
-					"projectile": {
-						"name": "smolvapbap",
-						"position": [ 0, -1.5 ],
-						"aimable": false
+				"defaultActions": ["physicalAttack", "specialAttack"],
+				"clickActions" : {
+					"physicalAttack": {
+						"cooldown": 0.5,
+						"projectile": {
+							"name": "smolvapbap",
+							"position": [ 0, -1.5 ],
+							"aimable": false
+						},
+						"animation": {
+							"bap": "smol.bap",
+							"tags": [
+								{
+									"owner": "bap",
+									"part": "global",
+									"name": "bap",
+									"value": "bap/"
+								}
+							]
+						}
 					},
-					"animation": {
-						"bap": "smol.bap",
-						"tags": [
-							{
-								"owner": "bap",
-								"part": "global",
-								"name": "bap",
-								"value": "bap/"
-							}
-						]
-					},
-					"cooldown": 30
-				},
-				"altAction": {
-					"projectile": {
-						"name": "vapwatergun",
-						"position": [ 1.5, -0.625 ],
-						"aimable": true,
-						"energy": true,
-						"cost": 1
-
-					},
-					"cooldown": 0
+					"specialAttack": {
+						"projectile": {
+							"name": "vapwatergun",
+							"position": [ 1.5, -0.625 ],
+							"aimable": true,
+							"energy": true,
+							"cost": 1
+						}
+					}
 				},
 				"animations": {
 					"walk": {
@@ -828,13 +842,15 @@
 					"swimidle": {
 						"legs": "smol.swimidle",
 						"body": "smol.idle",
-						"tail": "smol.swimidle"
+						"tail": "smol.swimidle",
+						"offset": {}
 					},
 					"swim": {
 						"legs": "smol.swim",
 						"body": "smol.idle",
 						"tail": "smol.swim",
 						"offset" : {
+							"loop": true,
 							"parts" : [
 								{ "y": [ 0, -1, -2, 0 ], "groups": ["headbob"] }
 							]
