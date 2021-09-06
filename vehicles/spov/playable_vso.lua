@@ -2,7 +2,6 @@
 --https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 state = {}
-controls = {}
 
 p = {
 	maxOccupants = { --basically everything I think we'd need
@@ -56,65 +55,62 @@ function p.clearOccupant(i)
 		progressBarActive = false,
 		progressBarMode = 1,
 		progressBarFinishFunc = nil,
-		victimAnim = { enabled = false }
-	}
-end
+		victimAnim = { enabled = false },
+		controls = {
+			primaryFire = 0,
+			altFire = 0,
+			dx = 0,
+			dy = 0,
+			left = 0,
+			right = 0,
+			up = 0,
+			down = 0,
+			jump = 0,
+			shift = 0,
+			special1 = 10, --so that it doesn't trip p.tapControl from using the tech
+			special2 = 0,
+			special3 = 0,
 
-function p.clearSeat()
-	return {
-		primaryFire = 0,
-		altFire = 0,
-		dx = 0,
-		dy = 0,
-		left = 0,
-		right = 0,
-		up = 0,
-		down = 0,
-		jump = 0,
-		shift = 0,
-		special1 = 10, --so that it doesn't trip p.tapControl from using the tech
-		special2 = 0,
-		special3 = 0,
+			primaryFireReleased = 0,
+			altFireReleased = 0,
+			leftReleased = 0,
+			rightReleased = 0,
+			upReleased = 0,
+			downReleased = 0,
+			jumpReleased = 0,
+			shiftReleased = 0,
+			special1Released = 0,
+			special2Released = 0,
+			special3Released = 0,
 
-		primaryFireReleased = 0,
-		altFireReleased = 0,
-		leftReleased = 0,
-		rightReleased = 0,
-		upReleased = 0,
-		downReleased = 0,
-		jumpReleased = 0,
-		shiftReleased = 0,
-		special1Released = 0,
-		special2Released = 0,
-		special3Released = 0,
+			primaryFirePressed = false,
+			altFirePressed = false,
+			leftPressed = false,
+			rightPressed = false,
+			upPressed = false,
+			downPressed = false,
+			jumpPressed = false,
+			shiftPressed = false,
+			special1Pressed = false,
+			special2Pressed = false,
+			special3Pressed = false,
 
-		primaryFirePressed = false,
-		altFirePressed = false,
-		leftPressed = false,
-		rightPressed = false,
-		upPressed = false,
-		downPressed = false,
-		jumpPressed = false,
-		shiftPressed = false,
-		special1Pressed = false,
-		special2Pressed = false,
-		special3Pressed = false,
+			aim = {0,0},
+			primaryHandItem = nil,
+			altHandItem = nil,
+			species = nil,
 
-		aim = {0,0},
-		primaryHandItem = nil,
-		altHandItem = nil,
-		species = nil,
-
-		mass = 0,
-		head = nil,
-		chest = nil,
-		legs = nil,
-		back = nil,
-		headCosmetic = nil,
-		chestCosmetic = nil,
-		legsCosmetic = nil,
-		backCosmetic = nil,
-		powerMultiplier = 1
+			mass = 0,
+			head = nil,
+			chest = nil,
+			legs = nil,
+			back = nil,
+			headCosmetic = nil,
+			chestCosmetic = nil,
+			legsCosmetic = nil,
+			backCosmetic = nil,
+			powerMultiplier = 1
+		}
 	}
 end
 
@@ -171,10 +167,6 @@ function init()
 			queue = {},
 		}
 		state.tag = nil
-	end
-
-	for seatname, data in pairs(p.loungePositions) do
-		controls[seatname] = p.clearSeat()
 	end
 
 	if not config.getParameter( "uneaten" ) then
@@ -235,12 +227,11 @@ function init()
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
-		local settingsMenuData = {
+		return {
 			occupants = p.occupant,
-			powerMultiplier = controls[p.driverSeat].powerMultiplier
+			powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
 		}
-		return settingsMenuData
-	end )
+	end)
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
 		if p.driver then
@@ -645,7 +636,7 @@ function p.checkEatPosition(position, location, transition, noaim)
 			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
-		local entityaimed = world.entityQuery(controls[p.driverSeat].aim, 2, {
+		local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
 			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
@@ -720,7 +711,7 @@ function p.updateOccupants(dt)
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
 			for i = 1, #p.vso.locations.mass do
 				if p.vso.locations.mass[i] == p.occupant[i].location then
-					p.occupants.mass = p.occupants.mass + controls["occupant"..i].mass
+					p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass
 				end
 			end
 
@@ -735,7 +726,7 @@ function p.updateOccupants(dt)
 			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(controls[p.driverSeat].powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
 				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
@@ -1018,7 +1009,7 @@ end
 function p.handleBelly()
 	if p.occupants.total > 0 then
 		if p.driver ~= nil then
-			p.doBellyEffects(p.driver, math.log(controls[p.driverSeat].powerMultiplier)+1)
+			p.doBellyEffects(p.driver, math.log(p.seats[p.driverSeat].controls.powerMultiplier)+1)
 		else
 			p.doBellyEffects(false, p.standalonePowerLevel())
 		end

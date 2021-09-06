@@ -1,18 +1,18 @@
 
 function p.pressControl(seat, control)
-	return controls[seat][control.."Pressed"]
+	return p.seats[seat].controls[control.."Pressed"]
 end
 
 function p.tapControl(seat, control)
-	return (( controls[seat][control.."Released"] > 0 ) and ( controls[seat][control.."Released"] < 0.15 ))
+	return (( p.seats[seat].controls[control.."Released"] > 0 ) and ( p.seats[seat].controls[control.."Released"] < 0.15 ))
 end
 
 function p.heldControl(seat, control, min)
-	return controls[seat][control] > (min or 0)
+	return p.seats[seat].controls[control] > (min or 0)
 end
 
 function p.heldControlMax(seat, control, max)
-	return controls[seat][control] < (max or 1)
+	return p.seats[seat].controls[control] < (max or 1)
 end
 
 function p.heldControlMinMax(seat, control, min, max)
@@ -21,7 +21,7 @@ end
 
 function p.heldControls(seat, controlList, time)
 	for _, control in pairs(controlList) do
-		if controls[seat][control] <= (time or 0) then
+		if p.seats[seat].controls[control] <= (time or 0) then
 			return false
 		end
 	end
@@ -30,36 +30,37 @@ end
 
 function p.updateControl(seatname, control, dt, forceHold)
 	if vehicle.controlHeld(seatname, control) or forceHold then
-		if controls[seatname][control] == 0 then
-			controls[seatname][control.."Pressed"] = true
+		if p.seats[seatname].controls[control] == 0 then
+			p.seats[seatname].controls[control.."Pressed"] = true
 		else
-			controls[seatname][control.."Pressed"] = false
+			p.seats[seatname].controls[control.."Pressed"] = false
 		end
-		controls[seatname][control] = controls[seatname][control] + dt
-		controls[seatname][control.."Released"] = 0
+		p.seats[seatname].controls[control] = p.seats[seatname].controls[control] + dt
+		p.seats[seatname].controls[control.."Released"] = 0
 	else
-		controls[seatname][control.."Released"] = controls[seatname][control]
-		controls[seatname][control] = 0
+		p.seats[seatname].controls[control.."Released"] = p.seats[seatname].controls[control]
+		p.seats[seatname].controls[control] = 0
 	end
 end
 
 function p.updateDirectionControl(seatname, control, direction, val, dt, forceHold)
 	if vehicle.controlHeld(seatname, control) or forceHold then
-		controls[seatname][control] = controls[seatname][control] + dt
-		controls[seatname][direction] = controls[seatname][direction] + val
-		controls[seatname][control.."Released"] = 0
+		p.seats[seatname].controls[control] = p.seats[seatname].controls[control] + dt
+		p.seats[seatname].controls[direction] = p.seats[seatname].controls[direction] + val
+		p.seats[seatname].controls[control.."Released"] = 0
 	else
-		controls[seatname][control.."Released"] = controls[seatname][control]
-		controls[seatname][control] = 0
+		p.seats[seatname].controls[control.."Released"] = p.seats[seatname].controls[control]
+		p.seats[seatname].controls[control] = 0
 	end
 end
 
 function p.updateControls(dt)
-	for seatname, seat in pairs(controls) do
+	for i = 0, #p.occupant do
+		local seatname = p.occupant[i].seatname
 		local eid = p.getEidFromSeatname(seatname)
 		if eid ~= nil and world.entityExists(eid) and not (seatname == p.driverSeat and p.isPathfinding) then
-			seat.dx = 0
-			seat.dy = 0
+			p.occupant[i].controls.dx = 0
+			p.occupant[i].controls.dy = 0
 			p.updateDirectionControl(seatname, "left", "dx", -1, dt)
 			p.updateDirectionControl(seatname, "right", "dx", 1, dt)
 			p.updateDirectionControl(seatname, "down", "dy", -1, dt)
@@ -71,24 +72,24 @@ function p.updateControls(dt)
 			p.updateControl(seatname, "primaryFire", dt)
 			p.updateControl(seatname, "altFire", dt)
 
-			seat.aim = vehicle.aimPosition( p.driverSeat ) or {0,0}
-			seat.species = world.entitySpecies(eid) or world.monsterType(eid)
-			seat.primaryHandItem = world.entityHandItem(eid, "primary")
-			seat.altHandItem = world.entityHandItem(eid, "alt")
-			seat.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
-			seat.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
+			p.occupant[i].controls.aim = vehicle.aimPosition( p.driverSeat ) or {0,0}
+			p.occupant[i].controls.species = world.entitySpecies(eid) or world.monsterType(eid)
+			p.occupant[i].controls.primaryHandItem = world.entityHandItem(eid, "primary")
+			p.occupant[i].controls.altHandItem = world.entityHandItem(eid, "alt")
+			p.occupant[i].controls.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
+			p.occupant[i].controls.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
 
 			local type = "prey"
 			if (seatname == p.driverSeat) then
 				type = "driver"
 			end
-			if seat.primaryHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
-				p.mergeSeatData(seatname, seat.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
-			elseif seat.altHandItem == "pvsoController" or seat.primaryHandItem == "pvsoSecretTrick" then
-				p.mergeSeatData(seatname, seat.altHandItemDescriptor.parameters.scriptStorage.seatdata)
+			if p.occupant[i].controls.primaryHandItem == "pvsoController" or p.occupant[i].controls.primaryHandItem == "pvsoSecretTrick" then
+				p.mergeSeatData(seatname, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
+			elseif p.occupant[i].controls.altHandItem == "pvsoController" or p.occupant[i].controls.primaryHandItem == "pvsoSecretTrick" then
+				p.mergeSeatData(seatname, p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata)
 			else
-				seat.shiftReleased = seat.shift
-				seat.shift = 0
+				p.occupant[i].controls.shiftReleased = p.occupant[i].controls.shift
+				p.occupant[i].controls.shift = 0
 				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", type, function(seatdata)
 					p.mergeSeatData(seatname, seatdata)
 				end)
@@ -96,8 +97,6 @@ function p.updateControls(dt)
 					p.mergeSeatData(seatname, seatdata)
 				end)
 			end
-		else
-			seat = p.clearSeat()
 		end
 	end
 end
@@ -106,7 +105,7 @@ function p.mergeSeatData(seatname, seatdata)
 	if seatdata ~= nil then
 		for name, data in pairs(seatdata) do
 			if data ~= nil then
-				controls[seatname][name] = data
+				p.seats[seatname].controls[name] = data
 			end
 		end
 	end
@@ -126,9 +125,8 @@ function p.updateDriving(dt)
 	if p.standalone then
 		if p.tapControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
-				--vehicle.entityLoungingIn only works for players and NPCs, but since this is a script that will only trigger for players, its ok
-				vehicle.entityLoungingIn( p.driverSeat ), "openPVSOInterface", p.vso.menuName.."settings",
-				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = controls[p.driverSeat].powerMultiplier }, false, entity.id()
+				p.driver, "openPVSOInterface", p.vso.menuName.."settings",
+				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 			)
 		end
 	end
@@ -137,8 +135,8 @@ function p.updateDriving(dt)
 	end
 
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
-		local dx = controls[p.driverSeat].dx
-		local dy = controls[p.driverSeat].dy
+		local dx = p.seats[p.driverSeat].controls.dx
+		local dy = p.seats[p.driverSeat].controls.dy
 		local state = p.stateconfig[p.state]
 		if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
 			p.faceDirection( dx )
@@ -214,7 +212,7 @@ function p.jumpMovement(dx, dy, state, dt)
 		end
 		if dy == -1 then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		elseif p.movement.jumped and controls[p.driverSeat].jump < p.movementParams[p.movement.jumpProfile].jumpHoldTime and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
+		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump < p.movementParams[p.movement.jumpProfile].jumpHoldTime and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
 			mcontroller.force({0, p.movementParams[p.movement.jumpProfile].jumpControlForce * (1 + dt)})
 		end
 	else
@@ -275,9 +273,9 @@ function p.doClickActions(state, dt)
 
 	p.movement.aimingLock = p.movement.aimingLock - dt
 
-	if (controls[p.driverSeat].primaryHandItem == "pvsoController") and (controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
-		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
-		p.clickAction(state, controls[p.driverSeat].primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")
+	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
+		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
+		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")
 	else
 		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, state.control.defaultActions[2], "altFire")
@@ -327,9 +325,9 @@ function p.getSeatDirections(seatname)
 			return
 		end
 	else
-		local direction = p.relativeDirectionName(controls[seatname].dx, controls[seatname].dy)
+		local direction = p.relativeDirectionName(p.seats[seatname].controls.dx, p.seats[seatname].controls.dy)
 		if direction then return direction end
-		if controls[seatname].jump > 0 then
+		if p.seats[seatname].controls.jump > 0 then
 			return "jump"
 		end
 	end
@@ -408,7 +406,7 @@ function p.fireProjectile( projectiledata, driver )
 	if projectiledata.aimable then
 		p.movement.aimingLock = 0.1
 
-		local aiming = controls[p.driverSeat].aim
+		local aiming = p.seats[p.driverSeat].controls.aim
 		p.facePoint( aiming[1] )
 		position = p.localToGlobal( projectiledata.position )
 		aiming[2] = aiming[2] + 0.2 * p.direction * (aiming[1] - position[1])
@@ -419,7 +417,7 @@ function p.fireProjectile( projectiledata, driver )
 	local params = {}
 
 	if driver then
-		params.powerMultiplier = controls[p.driverSeat].powerMultiplier
+		params.powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
 		world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
 	else
 		params.powerMultiplier = p.standalonePowerLevel()
