@@ -264,12 +264,14 @@
 						"legs": "swim",
 						"body": "idle",
 						"tail": "swim",
+						"head": "idle",
 						"offset": {}
 					},
 					"swimidle": {
 						"legs": "swimidle",
 						"body": "idle",
 						"tail": "swimidle",
+						"head": "idle",
 						"offset": {}
 					},
 
@@ -277,6 +279,7 @@
 						"legs": "walk",
 						"body": "idle",
 						"tail": "walk",
+						"head": "idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -289,6 +292,7 @@
 						"legs": "run",
 						"body": "idle",
 						"tail": "run",
+						"head": "idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -301,6 +305,7 @@
 						"legs": "jump",
 						"body": "jump",
 						"tail": "jump",
+						"head": "idle",
 						"offset" : {
 							"parts" : [
 								{"y": [1, 2, 3, 4], "groups": ["headbob"] }
@@ -311,6 +316,7 @@
 						"legs": "fall",
 						"body": "fall",
 						"tail": "fall",
+						"head": "idle",
 						"offset" : {
 							"parts" : [
 								{"y": [4, 3, 2, 1], "groups": ["headbob"] }
@@ -799,6 +805,7 @@
 						"legs": "smol.walk",
 						"body": "smol.idle",
 						"tail": "smol.walk",
+						"head": "smol.idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -811,6 +818,7 @@
 						"legs": "smol.run",
 						"body": "smol.idle",
 						"tail": "smol.run",
+						"head": "smol.idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -823,6 +831,7 @@
 						"legs": "smol.jump",
 						"body": "smol.jump",
 						"tail": "smol.jump",
+						"head": "smol.idle",
 						"offset" : {
 							"parts" : [
 								{ "y": [0, 1, 2, 2], "groups": ["headbob"] }
@@ -833,6 +842,7 @@
 						"legs": "smol.fall",
 						"body": "smol.fall",
 						"tail": "smol.fall",
+						"head": "smol.idle",
 						"offset" : {
 							"parts" : [
 								{ "y": [2, 2, 1, 0], "groups": ["headbob"] }
@@ -843,12 +853,14 @@
 						"legs": "smol.swimidle",
 						"body": "smol.idle",
 						"tail": "smol.swimidle",
+						"head": "smol.idle",
 						"offset": {}
 					},
 					"swim": {
 						"legs": "smol.swim",
 						"body": "smol.idle",
 						"tail": "smol.swim",
+						"head": "smol.idle",
 						"offset" : {
 							"loop": true,
 							"parts" : [
