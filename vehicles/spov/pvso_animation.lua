@@ -90,13 +90,13 @@ function p.smolPreyAnimPath(occupant)
 	end
 
 	animator.setAnimationState( occupant.seatname.."State", "smol", true )
-	animator.setPartTag(seatname, "smolpath", head)
-	animator.setPartTag(seatname.."body", "smolpath", body)
-	animator.setPartTag(seatname.."tail", "smolpath", tail)
-	animator.setPartTag(seatname.."backlegs", "smolpath", backlegs)
-	animator.setPartTag(seatname.."frontlegs", "smolpath", frontlegs)
-	animator.setPartTag(seatname.."backarms", "smolpath", backarms)
-	animator.setPartTag(seatname.."frontarms", "smolpath", frontarms)
+	animator.setPartTag(seatname, "smolpath", path..head)
+	animator.setPartTag(seatname.."body", "smolpath", path..body)
+	animator.setPartTag(seatname.."tail", "smolpath", path..tail)
+	animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs)
+	animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs)
+	animator.setPartTag(seatname.."backarms", "smolpath", path..backarms)
+	animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms)
 end
 
 function p.fixPathTags(path, skin, directives)

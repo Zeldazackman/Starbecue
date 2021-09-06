@@ -701,8 +701,7 @@ function p.updateOccupants(dt)
 
 	local lastFilled = true
 	for i = 1, p.vso.maxOccupants.total do
-		local occupantId = p.occupant[i].id
-		if occupantId and world.entityExists(occupantId) then
+		if p.occupant[i].id and world.entityExists(p.occupant[i].id) then
 
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
@@ -844,14 +843,13 @@ function p.edible( occupantId, seatindex, source )
 end
 
 function p.getSmolPreyData()
-	local smolPreyData = {
+	return {
 		recieved = true,
 		path = p.directoryPath,
 		settings = p.settings,
-		state = p.stateconfig[p.state],
+		state = p.stateconfig.smol,
 		animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
 	}
-	return smolPreyData
 end
 
 function p.isMonster( id )
@@ -910,10 +908,11 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )
 	seatindex = p.entity[occupantId].index
-	if p.occupant[seatindex].species ~= nil then
-		world.spawnVehicle( p.occupant[seatindex].species, { p.entity[occupantId].victimAnim.last.x or 0, p.entity[occupantId].victimAnim.last.y or 0}, { driver = occupantId, settings = p.entity[occupantId].smolPreyData.settings, uneaten = true } )
-	end
+	local occupantData = p.entity[occupantId]
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
+	if occupantData.species ~= nil then
+		world.spawnVehicle( occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
+	end
 end
 
 function p.smolprey( seatindex )
