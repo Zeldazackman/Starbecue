@@ -82,7 +82,7 @@ end
 
 function state.stand.update()
 	if p.standalone then
-		if p.tapControl( p.driverSeat, "special1" ) then
+		if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 then
 			world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
 			if p.occupants.belly < 2 then
 				p.setState( "smol" )
@@ -228,7 +228,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.smol.update()
-	if p.driving and p.tapControl( p.driverSeat, "special1" ) then
+	if p.driving and p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 then
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 		p.setState( "stand" )
 		p.doAnims( p.stateconfig.stand.idle, true )
@@ -255,7 +255,7 @@ function state.chonk_ball.update(dt)
 		p.doAnims( p.stateconfig.smol.idle, true )
 	end
 	if p.driving then
-		if p.tapControl( p.driverSeat, "special1" ) then
+		if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 then
 			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 			p.setState( "stand" )
 			p.doAnims( p.stateconfig.stand.idle, true )

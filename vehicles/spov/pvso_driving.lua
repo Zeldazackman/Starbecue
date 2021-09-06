@@ -122,14 +122,14 @@ function p.updateDriving(dt)
 		world.sendEntityMessage( p.driver, "PVSOCursor", aim, cursor)
 	end
 	if p.standalone then
-		if p.tapControl(p.driverSeat, "special3") then
+		if p.pressControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
 				p.driver, "openPVSOInterface", p.vso.menuName.."settings",
 				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 			)
 		end
 	end
-	if p.tapControl(p.driverSeat, "special2") then
+	if p.pressControl(p.driverSeat, "special2") then
 		p.doTransition("escape", {index = p.occupants.total})
 	end
 

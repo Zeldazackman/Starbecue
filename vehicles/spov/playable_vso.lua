@@ -66,9 +66,9 @@ function p.clearOccupant(i)
 			down = 0,
 			jump = 0,
 			shift = 0,
-			special1 = 10, --so that it doesn't trip p.tapControl from using the tech
-			special2 = 0,
-			special3 = 0,
+			special1 = 1, --so that it doesn't trip p.tapControl from using the tech
+			special2 = 1,
+			special3 = 1,
 
 			primaryFireReleased = 0,
 			altFireReleased = 0,
