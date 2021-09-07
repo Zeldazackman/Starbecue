@@ -50,7 +50,7 @@ function state.back.update()
 end
 
 function state.back.unbed(args)
-	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {})
+	return p.doEscapeNoDelay({id = p.findFirstOccupantIdForLocation("hug")}, "hug", {})
 end
 
 ---------------------------------------------------------------------------

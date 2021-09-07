@@ -665,10 +665,10 @@ function p.moveOccupantLocation(args, part, location)
 	return true
 end
 
-function p.findFirstIndexForLocation(location)
+function p.findFirstOccupantIdForLocation(location)
 	for i = 1, p.occupants.total do
 		if p.occupant[i].location == location then
-			return i
+			return p.occupant[i].id
 		end
 	end
 	return
@@ -818,9 +818,6 @@ function p.swapOccupants(a, b)
 	local B = p.occupant[b]
 	p.occupant[a] = B
 	p.occupant[b] = A
-
-	if B then p.forceSeat( p.occupant[b].id, "occupant"..a ) end
-	if A then p.forceSeat( p.occupant[a].id, "occupant"..b ) end
 
 	p.swapCooldown = 100 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
@@ -1047,17 +1044,18 @@ function p.handleStruggles(dt)
 	while (movedir == nil) and struggler < p.vso.maxOccupants.total do
 		struggler = struggler + 1
 		movedir = p.getSeatDirections( p.occupant[struggler].seatname )
+		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)
+
 		if p.occupant[struggler].seatname == p.driverSeat then
 			movedir = nil
 		end
-		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)
 		if p.occupant[struggler].bellySettleDownTimer <= 0 then
 			p.occupant[struggler].struggleCount = math.max( 0, p.occupant[struggler].struggleCount - 1)
 			p.occupant[struggler].bellySettleDownTimer = 4
 		end
 
-		struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 		if movedir then
+			struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 			if (struggledata == nil) or (struggledata[movedir] == nil) then
 				movedir = nil
 			elseif not p.hasAnimEnded( struggledata.part.."State" )
@@ -1094,6 +1092,7 @@ function p.handleStruggles(dt)
 		chances = chances[p.settings.escapeModifier]
 	end
 	if chances ~= nil and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount) then
+		p.occupant[struggler].struggleCount = 0
 		p.doTransition( struggledata[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
 	else
 		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1

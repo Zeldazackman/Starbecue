@@ -157,22 +157,24 @@
 				},
 				// non directional = not accessible via controls, except from script
 				"eat": { // 2 occupants
-					"idleAfter": true,
+					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"head": "eat"
+						"head": "eat",
+						"offset" : {}
 					},
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
 				"escape": { // 2 occupants
-					"idleAfter": true,
+					"lock": true,
 					"location": "belly",
 					"animation": {
 						"body": "escape",
-						"head": "escape"
+						"head": "escape",
+						"offset" : {}
 					},
 					"victimAnimation": "escape",
 					"script": "letout"
@@ -345,14 +347,14 @@
 				},
 				"down": {
 					"animation": {
+						"body": "laydown",
+						"legs": "laydown",
+						"head": "idle",
 						"offset" : {
 							"parts" : [
 								{ "x": [4, 10], "y": [0, -11], "groups": ["headbob"] }
 							]
-						},
-						"body": "laydown",
-						"legs": "laydown",
-						"head": "idle"
+						}
 					},
 					"victimAnimation": "sitpinned",
 					"victimAnimLocation": "hug",
@@ -451,6 +453,7 @@
 					"chance": 10
 				},
 				"absorb": {
+					"lock" : true,
 					"location" :"belly",
 					"failOnFull" : 1,
 					"animation": {

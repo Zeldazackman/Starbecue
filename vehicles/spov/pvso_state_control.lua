@@ -46,6 +46,7 @@ function p.doTransition( direction, scriptargs )
 		if _tconfig ~= nil then tconfig = _tconfig end
 	end
 	if not continue then return "script fail" end
+	local scriptargs = scriptargs
 	if tconfig.timing == nil then
 		tconfig.timing = "body"
 	end
@@ -66,17 +67,20 @@ function p.doTransition( direction, scriptargs )
 			p.movementLock = false
 		end)
 	end
-	if tconfig.idleAfter then
+	if tconfig.lock then
 		p.transitionLock = true
 		p.queueAnimEndFunction(tconfig.timing.."State", function()
 			p.transitionLock = false
-			p.doAnims( p.stateconfig[p.state].idle )
 		end)
 	end
 	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
 		local id = (scriptargs or {}).id
 		local index = (scriptargs or {}).index
-		if id == nil then
+		if id == nil and tconfig.victimAnimLocation ~= nil then
+			sb.logInfo(tconfig.victimAnimLocation)
+			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
+		end
+		if id == nil and index ~= nil then
 			id = p.getEidFromIndex(index)
 		end
 		if id then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end

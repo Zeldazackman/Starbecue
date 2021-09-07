@@ -130,7 +130,6 @@ function state.sit.pin( args )
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	local index = p.occupants.total + 1
 	if #pinnable >= 1 and p.eat( pinnable[1], "hug" ) then
 		--vsoVictimAnimSetStatus( "occupant"..index , {} )
 	end
@@ -139,13 +138,13 @@ end
 
 -------------------------------------------------------------------------------
 
-function LayAbsorb()
-	local index = p.findFirstIndexForLocation("hug")
-	if not index then return false end
+function absorb(args)
+	args.id = p.findFirstOccupantIdForLocation("hug")
+	if not args.id then return false end
 
 	animator.playSound( "slurp" )
 	return true, function()
-		p.occupant[index].location = "belly"
+		p.entity[args.id].location = "belly"
 	end
 end
 
@@ -160,11 +159,12 @@ function state.lay.update()
 	end
 end
 
-state.lay.absorb = LayAbsorb
+state.lay.absorb = absorb
 
 function state.lay.unpin(args)
+	args.id = p.findFirstOccupantIdForLocation("hug")
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape({index = p.findFirstIndexForLocation("hug")}, "hug", {}, {})
+	returnval[1], returnval[2], returnval[3] = p.doEscape(args, "hug", {}, {})
 	return true, returnval[2], returnval[3]
 end
 
@@ -176,7 +176,7 @@ function state.sleep.update()
 	end
 end
 
-state.sleep.absorb = LayAbsorb
+state.sleep.absorb = absorb
 
 -------------------------------------------------------------------------------
 
@@ -193,8 +193,6 @@ function state.back.update()
 end
 
 function state.back.bed( args )
-	local index = p.occupants.total + 1
-
 	if p.eat( args.id, "hug" ) then
 		--vsoVictimAnimSetStatus( "occupant"..index, {} );
 		return true
@@ -204,7 +202,8 @@ function state.back.bed( args )
 end
 
 function state.back.unbed(args)
-	return p.doEscapeNoDelay({index = p.findFirstIndexForLocation("hug")}, "hug", {})
+	args.id = p.findFirstOccupantIdForLocation("hug")
+	return p.doEscapeNoDelay(args, "hug", {})
 end
 
 -------------------------------------------------------------------------------
@@ -215,15 +214,7 @@ function state.hug.update()
 	end
 end
 
-function state.hug.absorb(args)
-	local index = p.findFirstIndexForLocation("hug")
-	if not index then return false end
-
-	animator.playSound( "slurp" )
-	return true, function()
-		p.occupant[index].location = "belly"
-	end
-end
+state.hug.absorb = absorb
 
 -------------------------------------------------------------------------------
 
