@@ -208,6 +208,7 @@ local victimAnimArgs = {
 }
 
 function p.doVictimAnim( occupantId, anim, statename )
+	if not p.entity[occupantId] then return end
 	p.entity[occupantId].victimAnim = {
 		enabled = true,
 		statename = statename,

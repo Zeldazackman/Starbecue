@@ -83,7 +83,7 @@ function p.doTransition( direction, scriptargs )
 		if id == nil and index ~= nil then
 			id = p.getEidFromIndex(index)
 		end
-		if id then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
+		if id ~= nil then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
 	return "success", p.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
 end

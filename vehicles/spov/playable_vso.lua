@@ -716,7 +716,7 @@ function p.updateOccupants(dt)
 			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode) * 3
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
 				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
