@@ -69,7 +69,7 @@ function init()
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
-		local seatdata = {
+		return {
 			head = player.equippedItem("head"),
 			chest = player.equippedItem("chest"),
 			legs = player.equippedItem("legs"),
@@ -79,7 +79,6 @@ function init()
 			legsCosmetic = player.equippedItem("legsCosmetic"),
 			backCosmetic = player.equippedItem("backCosmetic"),
 		}
-		return seatdata
 	end)
 
 	message.setHandler("giveVoreController", function(_,_)
@@ -120,8 +119,8 @@ function checkLockItem(itemDescriptor, type)
 	if data == nil then
 		return lockItem(itemDescriptor)
 	end
-	for i, catagory in ipairs(bannedCategories[type]) do
-		if catagory == data.config.category then
+	for i, category in ipairs(bannedCategories[type]) do
+		if category == data.config.category then
 			return lockItem(itemDescriptor)
 		end
 	end

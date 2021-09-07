@@ -275,7 +275,7 @@ function p.doClickActions(state, dt)
 	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")
-	else
+	elseif (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") or ((p.seats[p.driverSeat].controls.primaryHandItem == nil) and (p.seats[p.driverSeat].controls.altHandItem == nil)) then
 		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, state.control.defaultActions[2], "altFire")
 	end
