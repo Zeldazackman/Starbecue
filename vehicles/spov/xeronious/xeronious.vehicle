@@ -289,12 +289,12 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "down" },
-					"back": { "transition": "bellytotail", "controlled" : true },
+					"back": { "transition": "bellytotail", "drivingEnabled": true },
 					"down": { "transition": "escape" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
@@ -302,13 +302,13 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly", "controlled" : true },
+					"front": { "transition": "tailtobelly", "drivingEnabled": true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
@@ -495,13 +495,13 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly", "controlled" : true },
+					"front": { "transition": "tailtobelly", "drivingEnabled": true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
@@ -664,12 +664,12 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "escape" },
-					"back": { "transition": "bellytotail", "controlled" : true },
+					"back": { "transition": "bellytotail", "drivingEnabled": true },
 					"down": { "transition": "escapeanalvore" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
@@ -677,13 +677,13 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly", "controlled" : true },
+					"front": { "transition": "tailtobelly", "drivingEnabled": true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
@@ -874,12 +874,12 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "up" },
-					"back": { "transition": "bellytotail", "controlled" : true },
+					"back": { "transition": "bellytotail", "drivingEnabled": true },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
@@ -887,13 +887,13 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly", "controlled" : true },
+					"front": { "transition": "tailtobelly", "drivingEnabled": true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
@@ -1025,9 +1025,9 @@
 					"back": { "transition": "down" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 1, "max": 1 },
+						"easyEscape": { "min": 1, "max": 1 },
 						"normal": { "min": 1, "max": 1 },
-						"antiescape": { "min": 1, "max": 1 }
+						"antiEscape": { "min": 1, "max": 1 }
 					},
 					"animation": { "head": "look" }
 				},
@@ -1035,12 +1035,12 @@
 					"part" : "body",
 					"up": { "transition": "escape" },
 					"front": { "transition": "up" },
-					"back": { "transition": "bellytotail", "controlled" : true },
+					"back": { "transition": "bellytotail", "drivingEnabled": true },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
@@ -1048,13 +1048,13 @@
 				"tail" : {
 					"part" : "tail",
 					"up": { "transition": "up" },
-					"front": { "transition": "tailtobelly", "controlled" : true },
+					"front": { "transition": "tailtobelly", "drivingEnabled": true },
 					"back": { "transition": "escape" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }

@@ -4,6 +4,11 @@ p.bellyEffects = {
 	["pvsoRemoveBellyEffects"] = -1, ["pvsoVoreHeal"] = 0, ["pvsoDigest"] = 1, ["pvsoSoftDigest"] = 2 -- reverse lookup
 }
 
+p.escapeModifier = {
+	[-1] = "easyEscape", [0] = "normal", [1] = "antiEscape", [2] = "noEscape",
+	["easyEscape"] = -1, ["normal"] = 0, ["antiEscape"] = 1, ["noEscape"] = 2 -- reverse lookup
+}
+
 function onInit()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	globalSettings = p.vsoSettings.global or {}
@@ -19,6 +24,8 @@ function onInit()
 	readOccupantData()
 
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
+	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
+
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
@@ -44,7 +51,9 @@ end
 
 function readOccupantData()
 	enableActionButtons(false)
-	for i = 1, #p.occupant do
+	sb.logInfo(sb.printJson(p.occupant))
+
+	for i = 1, p.maxOccupants do
 		if p.occupant[i] and p.occupant[i].id and world.entityExists( p.occupant[i].id ) then
 			local id = p.occupant[i].id
 			local species = p.occupant[i].species
@@ -73,7 +82,7 @@ end
 
 function updateHPbars(dt)
 	local listItem
-	for i = 1, #p.occupant do
+	for i = 1, p.maxOccupants do
 		for j = 1, #p.listItems do
 			if p.listItems[j].id == p.occupant[i].id then
 				listItem = p.listItems[j].listItem
@@ -162,6 +171,16 @@ function setBellyEffect()
 	settings.bellyEffect = bellyEffect
 	saveSettings()
 end
+
+function setEscapeModifier()
+	local value = widget.getSelectedOption( "escapeModifier" )
+	local escapeModifier = p.escapeModifier[value]
+
+	globalSettings.escapeModifier = escapeModifier
+	settings.escapeModifier = escapeModifier
+	saveSettings()
+end
+
 
 function changeSetting(settingname)
 	local value = widget.getChecked( settingname )

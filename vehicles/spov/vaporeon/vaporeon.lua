@@ -171,7 +171,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.sleep.update()
-	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
+	if p.driving and p.pressControl( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 end
@@ -209,7 +209,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.hug.update()
-	if p.driving and vehicle.controlHeld( p.driverSeat, "jump" ) then
+	if p.driving and p.pressControl( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 end

@@ -1092,7 +1092,11 @@ function p.handleStruggles(dt)
 	if chances[p.settings.escapeModifier] ~= nil then
 		chances = chances[p.settings.escapeModifier]
 	end
-	if chances ~= nil and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount) then
+	if chances ~= nil and (not p.settings.escapeModifier == "noEscape")
+	and (chances.min ~= nil) and (chances.max ~= nil)
+	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
+	and ((not p.driving) or struggledata[movedir].drivingEnabled)
+	then
 		p.occupant[struggler].struggleCount = 0
 		p.doTransition( struggledata[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
 	else

@@ -172,9 +172,9 @@
 					"back": { "transition": "analescape" },
 					"down": { "transition": "side" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 10 },
+						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
-						"antiescape": { "min": 20, "max": 40 }
+						"antiEscape": { "min": 20, "max": 40 }
 					}
 				},
 				"hug" : {
@@ -184,9 +184,9 @@
 					"back": { "transition": "up" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 0, "max": 0 },
+						"easyEscape": { "min": 0, "max": 0 },
 						"normal": { "min": 0, "max": 0 },
-						"antiescape": { "min": 0, "max": 0 }
+						"antiEscape": { "min": 0, "max": 0 }
 					}
 
 				}
@@ -272,9 +272,9 @@
 					"back": { "transition": "analescape" },
 					"down": { "transition": "side" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 10 },
+						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
-						"antiescape": { "min": 20, "max": 40 }
+						"antiEscape": { "min": 20, "max": 40 }
 					}
 				},
 				"hug" : {
@@ -284,9 +284,9 @@
 					"back": { "transition": "side", "victimAnimation": "hug.s_back" },
 					"down": { "transition": "down", "victimAnimation": "hug.s_down" },
 					"chances": {
-						"easyescape": { "min": 0, "max": 2 },
+						"easyEscape": { "min": 0, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 15, "max": 25 }
+						"antiEscape": { "min": 15, "max": 25 }
 					}
 
 				}

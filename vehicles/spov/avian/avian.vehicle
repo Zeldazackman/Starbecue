@@ -239,9 +239,9 @@
 					"back": { "transition": "down" },
 					"down": { "transition": "down" },
 					"chances": {
-						"easyescape": { "min": 2, "max": 5 },
+						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
-						"antiescape": { "min": 10, "max": 20 }
+						"antiEscape": { "min": 10, "max": 20 }
 					}
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
