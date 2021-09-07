@@ -36,7 +36,32 @@
 			"partAnchor" : "occupant3Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
 		}
+
 	},
 
 	"mouthPosition" : [ 0.0, 0.0 ],
