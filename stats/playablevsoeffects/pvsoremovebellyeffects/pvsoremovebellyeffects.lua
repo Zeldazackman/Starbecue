@@ -2,7 +2,7 @@
 require("/stats/playablevsoeffects/pvsoEffectsGeneral.lua")
 
 function init()
-	removeOtherBellyEffects("pvsoRemoveOtherBellyEffects")
+	removeOtherBellyEffects("pvsoRemoveBellyEffects")
 end
 
 function update(dt)

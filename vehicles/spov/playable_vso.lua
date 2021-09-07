@@ -298,7 +298,7 @@ end
 
 -- returns sourcePosition, sourceId, and interactPosition
 function onInteraction(args)
-
+	if p.transitionLock then return end
 	local stateData = p.stateconfig[p.state]
 	if p.entityLounging(args.sourceId) then
 		-- should add some sort of script for if you're already prey here?
@@ -313,17 +313,17 @@ function onInteraction(args)
 				})
 				for i = 1, #entities do
 					if entities[i] == args.sourceId then
-						p.doTransition( p.occupantArray(stateData.interact.side).transition, {id=args.sourceId} )
+						p.interactChance(stateData, "side", args)
 						return
 					end
 				end
 			end
 			local interactPosition = p.globalToLocal( args.sourcePosition )
 			if interactPosition[1] > 0 then
-				p.doTransition( p.occupantArray(stateData.interact.front).transition, {id=args.sourceId} )
+				p.interactChance(stateData, "front", args)
 				return
 			else
-				p.doTransition( p.occupantArray(stateData.interact.back).transition, {id=args.sourceId} )
+				p.interactChance(stateData, "back", args)
 				return
 			end
 		elseif stateData.interact.animation ~= nil then
@@ -337,9 +337,19 @@ function onInteraction(args)
 	end
 end
 
+function p.interactChance(stateData, direction, args)
+	if stateData.interact[direction].chance then
+		if math.random() <= (stateData.interact[direction].chance/100) then
+			p.doTransition( p.occupantArray(stateData.interact[direction]).transition, {id=args.sourceId} )
+		end
+	else
+		p.doTransition( p.occupantArray(stateData.interact[direction]).transition, {id=args.sourceId} )
+	end
+end
+
 
 function p.logJson(arg)
-	sb.logInfo(sb.printJson(arg))
+	sb.logInfo(sb.printJson(arg, 1))
 end
 
 function sameSign(num1, num2)
@@ -1109,7 +1119,7 @@ function p.handleStruggles(dt)
 	if chances[p.settings.escapeModifier] ~= nil then
 		chances = chances[p.settings.escapeModifier]
 	end
-	if chances ~= nil and (not p.settings.escapeModifier == "noEscape")
+	if chances ~= nil and (p.settings.escapeModifier ~= "noEscape")
 	and (chances.min ~= nil) and (chances.max ~= nil)
 	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
 	and ((not p.driving) or struggledata[movedir].drivingEnabled)
