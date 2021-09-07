@@ -102,7 +102,6 @@ end
 
 function secondaryBar(i, listItem, dt)
 	if not p.occupant[i].progressBarActive then return end
-	p.occupant[i].progressBar = p.occupant[i].progressBar + ((math.log(p.powerMultiplier)+1) * dt)
 	widget.setProgress( p.occupantList.."."..listItem..".secondarybar", p.occupant[i].progressBar / 100 )
 end
 
@@ -130,7 +129,7 @@ p.refreshtime = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-	if p.refreshtime >= 1 and p.rpc == nil then
+	if p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
@@ -148,8 +147,6 @@ function checkRefresh(dt)
 			sb.logError( p.rpc:error() )
 		end
 		p.rpc = nil
-	else
-		p.refreshtime = p.refreshtime + dt
 	end
 end
 

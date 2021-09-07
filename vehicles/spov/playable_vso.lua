@@ -210,6 +210,7 @@ function init()
 	end )
 
 	message.setHandler( "transform", function(_,_, val, eid )
+		sb.logInfo("transforming prey"..eid)
 		if p.entity[eid].progressBarActive then return end
 		local val = val
 		if val == nil then
@@ -222,9 +223,9 @@ function init()
 		p.entity[eid].progressBarActive = true
 		p.entity[eid].progressBarMode = 1
 		p.entity[eid].progressBar = 0
-		p.entity[eid].progressBarFinishFunc = function()
-			p.entity[eid].species = val
-		end
+		--p.entity[eid].progressBarFinishFunc = function()
+		--	p.entity[eid].species = val
+		--end
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
@@ -726,14 +727,14 @@ function p.updateOccupants(dt)
 				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
-						p.occupant[i].progressBarFinishFunc()
+						--p.occupant[i].progressBarFinishFunc()
 						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
 				else
 					p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar <= 0 then
-						p.occupant[i].progressBarFinishFunc()
+						--p.occupant[i].progressBarFinishFunc()
 						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
