@@ -50,11 +50,13 @@ function checkIfIdListed(id, species)
 end
 
 function readOccupantData()
-	enableActionButtons(false)
-	sb.logInfo(sb.printJson(p.occupant))
-
+	sb.logInfo(sb.printJson(p.occupant, 1))
+	local enable = false
 	for i = 1, p.maxOccupants do
-		if p.occupant[i] and p.occupant[i].id and world.entityExists( p.occupant[i].id ) then
+		if (p.occupant[i] ~= nil) and (p.occupant[i].id ~= nil) and (world.entityExists( p.occupant[i].id )) then
+			sb.logInfo("why the fuck isn't this working")
+			enable = true
+
 			local id = p.occupant[i].id
 			local species = p.occupant[i].species
 			local listEntry, listItem = checkIfIdListed(id, species)
@@ -76,8 +78,8 @@ function readOccupantData()
 			end
 			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
 		end
-		enableActionButtons(true)
 	end
+	enableActionButtons(enable)
 end
 
 function updateHPbars(dt)
@@ -240,9 +242,6 @@ function letOut()
 	end
 end
 
-function transform()
-end
-
 function turboDigest()
 	local selected = getSelectedId()
 	if selected ~= nil then
@@ -257,5 +256,22 @@ end
 function sendturboDigestMessage(eid)
 	if eid ~= nil and world.entityExists(eid) then
 		world.sendEntityMessage( eid, "pvsoTurboDigest" )
+	end
+end
+
+function transform()
+	local selected = getSelectedId()
+	if selected ~= nil then
+		return sendTransformMessage(selected)
+	else
+		for i = 1, #p.occupant do
+			sendTransformMessage(p.occupant[i].id)
+		end
+	end
+end
+
+function sendTransformMessage(eid)
+	if eid ~= nil and world.entityExists(eid) then
+		world.sendEntityMessage( p.vso, "transform", "spovvaporeon", eid )
 	end
 end
