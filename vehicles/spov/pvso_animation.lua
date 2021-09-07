@@ -116,7 +116,10 @@ function p.victimAnimUpdate(entity)
 	local statename = p.entity[entity].victimAnim.statename
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
-	if ended and not anim.loop then victimAnim.enabled = false end
+	if ended and not anim.loop then
+		victimAnim.enabled = false
+		time = p.animStateData[statename].animationState.cycle
+	end
 
 	local seatname = p.entity[entity].seatname
 	local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
@@ -162,7 +165,7 @@ function p.victimAnimUpdate(entity)
 	end
 
 	local currTime = time * speed
-	local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame) * (victimAnim.interpMode or 1)
+	local progress = (currTime - victimAnim.prevFrame)/(math.abs(victimAnim.frame - victimAnim.prevFrame)) * (victimAnim.interpMode or 1)
 	if (victimAnim.frame - victimAnim.prevFrame) == 0 then
 		progress = 0
 	end

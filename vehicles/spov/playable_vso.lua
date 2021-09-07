@@ -1037,6 +1037,7 @@ p.struggleCount = 0
 p.bellySettleDownTimer = 5
 
 function p.handleStruggles(dt)
+	if p.transitionLock then return end
 	local struggler = -1
 	local struggledata
 	local movedir = nil
