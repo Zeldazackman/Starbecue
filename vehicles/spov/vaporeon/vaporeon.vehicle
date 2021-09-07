@@ -158,7 +158,23 @@
 			"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu
 			"belly" : 2,
 			"hug" : 1
-		}
+		},
+		"replaceColors" : [
+			[
+				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
+				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the main body blue
+				["760596", "bd62d5", "df77de", "ffbdff"] //shiny
+			],
+			[
+				["0b2e67", "194893", "2d66c3"],
+				["0b2e67", "194893", "2d66c3"], // the dark fin blue
+				["4a042e", "621041", "83395a"] // shiny
+			],
+			[
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0"],// the white underbelly
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0"]
+			]
+		]
 	},
 
 	"states": {

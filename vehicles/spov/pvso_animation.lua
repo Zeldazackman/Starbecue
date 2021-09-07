@@ -403,3 +403,17 @@ end
 function p.animationIs(state, anim)
 	return animator.animationState(state) == anim
 end
+
+function p.setColorReplaceDirectives()
+	if p.vso.replaceColors ~= nil then
+		local colorReplaceString = "?replace"
+		for i, colorGroup in ipairs(p.vso.replaceColors) do
+			local basePalette = colorGroup[1]
+			local replacePalette = colorGroup[p.settings.replaceColors[i] + 1]
+			for j, color in ipairs(replacePalette) do
+				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
+			end
+		end
+		animator.setGlobalTag( "directives", colorReplaceString )
+	end
+end

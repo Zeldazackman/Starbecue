@@ -134,6 +134,7 @@ function init()
 	p.settings = sb.jsonMerge(p.settings, config.getParameter( "settings", p.config.defaultSettings ))
 	p.spawner = config.getParameter("spawner")
 
+	p.setColorReplaceDirectives()
 	--[[
 	so, the thing is, we want this to move like an actor, even if it is a vehicle, so we have to have a little funny business,
 	both mcontrollers use the same arguments for the most part, just the actor mcontroller has more values, as well as some
