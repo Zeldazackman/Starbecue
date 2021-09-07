@@ -1,6 +1,6 @@
 p = {}
 
-p.vsoname = "vappy"
+p.vsoname = "vaporeon"
 
 require("/interface/scripted/pvso/pvsosettings.lua")
 

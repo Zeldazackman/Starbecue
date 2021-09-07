@@ -52,6 +52,7 @@ function p.clearOccupant(i)
 		occupantTime = 0,
 		progressBar = 0,
 		progressBarActive = false,
+		progressBarData = nil,
 		progressBarMode = 1,
 		progressBarFinishFunc = nil,
 		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
@@ -209,23 +210,14 @@ function init()
 		p.doTransition( "escape", {id = val} )
 	end )
 
-	message.setHandler( "transform", function(_,_, val, eid )
-		sb.logInfo("transforming prey"..eid)
+	message.setHandler( "transform", function(_,_, data, eid )
 		if p.entity[eid].progressBarActive then return end
-		local val = val
-		if val == nil then
-			if p.stateconfig.smol ~= nil then
-				val = config.getParameter("name")
-			else
-				return
-			end
-		end
+
 		p.entity[eid].progressBarActive = true
 		p.entity[eid].progressBarMode = 1
 		p.entity[eid].progressBar = 0
-		--p.entity[eid].progressBarFinishFunc = function()
-		--	p.entity[eid].species = val
-		--end
+		p.entity[eid].progressBarData = data
+		p.entity[eid].progressBarFinishFuncName = "transformPrey"
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
@@ -253,7 +245,7 @@ function init()
 		p.uneat( eid )
 	end )
 
-	message.setHandler( "smolPreyPath", function(_,_, seatindex, data)
+	message.setHandler( "smolPreyData", function(_,_, seatindex, data)
 		p.occupant[seatindex].smolPreyData = data
 	end )
 
@@ -344,6 +336,7 @@ function onInteraction(args)
 		end
 	end
 end
+
 
 function p.logJson(arg)
 	sb.logInfo(sb.printJson(arg))
@@ -723,18 +716,18 @@ function p.updateOccupants(dt)
 			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode) * 3
 				if p.occupant[i].progressBarMode == 1 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
-						--p.occupant[i].progressBarFinishFunc()
+						p[p.occupant[i].progressBarFinishFuncName](i)
 						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
 				else
 					p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar <= 0 then
-						--p.occupant[i].progressBarFinishFunc()
+						p[p.occupant[i].progressBarFinishFuncName](i)
 						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
@@ -835,13 +828,14 @@ function p.edible( occupantId, seatindex, source )
 	if p.driver ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyPath", seatindex, p.getSmolPreyData())
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData())
 		return true
 	end
 end
 
 function p.getSmolPreyData()
 	return {
+		species = world.entityName( entity.id() ):sub( 5 ),
 		recieved = true,
 		path = p.directoryPath,
 		settings = p.settings,
@@ -849,6 +843,28 @@ function p.getSmolPreyData()
 		animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
 	}
 end
+
+function p.transformPrey(i)
+	local smolPreyData
+	if p.occupant[i].progressBarData ~= nil then
+		smolPreyData = p.occupant[i].progressBarData
+	else
+		smolPreyData = p.getSmolPreyData()
+	end
+	if smolPreyData ~= nil then
+		if world.entityType(p.occupant[i].id) == "player" then
+			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "loadVSOsettings", smolPreyData.species), function(settings)
+				smolPreyData.settings = settings
+				p.occupant[i].smolPreyData = smolPreyData
+				p.occupant[i].species = smolPreyData.species
+			end)
+		else -- we currently don't have any pathing behavior for this, but it does work, however it looks buggy so shall be disabled for now
+			--p.occupant[i].smolPreyData = smolPreyData
+			--p.occupant[i].species = smolPreyData.species
+		end
+	end
+end
+
 
 function p.isMonster( id )
 	if id == nil then return false end
@@ -890,7 +906,7 @@ function p.eat( occupantId, location )
 		end
 	end
 	-- lounging in edible smol thing
-	local species = world.entityName( edibles[1] ) -- "spov"..species
+	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	p.forceSeat( occupantId, "occupant"..seatindex )
@@ -909,7 +925,7 @@ function p.uneat( occupantId )
 	local occupantData = p.entity[occupantId]
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 	if occupantData.species ~= nil then
-		world.spawnVehicle( occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
+		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
 	end
 end
 

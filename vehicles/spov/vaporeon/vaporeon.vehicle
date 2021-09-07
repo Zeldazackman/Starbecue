@@ -49,7 +49,6 @@
 
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
-		"menuName": "vappy",
 		"startState": "stand",
 		"movementSettings" : {
 			"default":{

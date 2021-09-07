@@ -61,7 +61,6 @@
 
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/xeronious/victim_animations.config",
-		"menuName": "xeronious",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [

@@ -30,7 +30,7 @@ end
 function p.edible( occupantId, seatindex, source )
 	if p.getEidFromSeatname( "occupant1" ) ~= occupantId then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyPath", seatindex, p.getSmolPreyData())
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData())
 		return true
 	end
 end

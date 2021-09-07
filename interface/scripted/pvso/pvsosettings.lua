@@ -70,7 +70,7 @@ function readOccupantData()
 				setPortrait(p.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
 			else
 				setPortrait(p.occupantList.."."..listItem, {{
-					image = "/vehicles/spov/"..species.."/"..species.."icon.png",
+					image = "/vehicles/spov/"..species.."/spov/default/icon.png",
 					position = {13, 12}
 				}})
 			end
@@ -129,7 +129,7 @@ p.refreshtime = 0
 p.rpc = nil
 
 function checkRefresh(dt)
-	if p.rpc == nil then
+	if p.refreshtime >= 0.1 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
 	elseif p.rpc ~= nil and p.rpc:finished() then
 		if p.rpc:succeeded() then
@@ -147,6 +147,8 @@ function checkRefresh(dt)
 			sb.logError( p.rpc:error() )
 		end
 		p.rpc = nil
+	else
+		p.refreshtime = p.refreshtime + dt
 	end
 end
 
@@ -268,6 +270,6 @@ end
 
 function sendTransformMessage(eid)
 	if eid ~= nil and world.entityExists(eid) then
-		world.sendEntityMessage( p.vso, "transform", "spovvaporeon", eid )
+		world.sendEntityMessage( p.vso, "transform", nil, eid )
 	end
 end

@@ -124,7 +124,7 @@ function p.updateDriving(dt)
 	if p.standalone then
 		if p.pressControl(p.driverSeat, "special3") then
 			world.sendEntityMessage(
-				p.driver, "openPVSOInterface", p.vso.menuName.."settings",
+				p.driver, "openPVSOInterface", world.entityName( entity.id() ):sub( 5 ).."settings",
 				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 			)
 		end

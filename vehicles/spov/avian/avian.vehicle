@@ -62,7 +62,6 @@
 	},
 
 	"vso" : {
-		"menuName" : "avian",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
