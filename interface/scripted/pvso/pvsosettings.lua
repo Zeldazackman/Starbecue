@@ -50,13 +50,11 @@ function checkIfIdListed(id, species)
 end
 
 function readOccupantData()
-	sb.logInfo(sb.printJson(p.occupant, 1))
 	local enable = false
 	for i = 1, p.maxOccupants do
+		local i = tostring(i) -- somehow the numbers become strings when transferred over
 		if (p.occupant[i] ~= nil) and (p.occupant[i].id ~= nil) and (world.entityExists( p.occupant[i].id )) then
-			sb.logInfo("why the fuck isn't this working")
 			enable = true
-
 			local id = p.occupant[i].id
 			local species = p.occupant[i].species
 			local listEntry, listItem = checkIfIdListed(id, species)
@@ -85,6 +83,7 @@ end
 function updateHPbars(dt)
 	local listItem
 	for i = 1, p.maxOccupants do
+		local i = tostring(i) -- somehow the numbers become strings when transferred over
 		for j = 1, #p.listItems do
 			if p.listItems[j].id == p.occupant[i].id then
 				listItem = p.listItems[j].listItem
