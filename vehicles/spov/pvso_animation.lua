@@ -128,23 +128,29 @@ function p.victimAnimUpdate(entity)
 	local nextFrameIndex = nextFrame + 1
 
 	if victimAnim.prevFrame ~= frame then
-		if anim.frames then
+		if anim.frames ~= nil then
 			for i = 1, #anim.frames do
 				if (anim.frames[i] == frame) and (i ~= #anim.frames) then
-					nextFrame = anim.frames[i + 1]
-					nextFrameIndex = i + 1
-				end
-				if anim.loop and (i == #anim.frames) then
-					nextFrame = 0
-					nextFrameIndex = 1
+					victimAnim.prevFrame = frame
+					victimAnim.prevIndex = i
+
+					victimAnim.frame = anim.frames[i + 1]
+					victimAnim.index = i + 1
+				elseif anim.loop and (i == #anim.frames) then
+					victimAnim.prevFrame = frame
+					victimAnim.prevIndex = i
+
+					victimAnim.frame = 0
+					victimAnim.index = 1
 				end
 			end
-		end
-		victimAnim.prevFrame = victimAnim.frame
-		victimAnim.frame = nextFrame
+		else
+			victimAnim.prevFrame = victimAnim.frame
+			victimAnim.frame = nextFrame
 
-		victimAnim.prevIndex = victimAnim.index
-		victimAnim.index = nextFrameIndex
+			victimAnim.prevIndex = victimAnim.index
+			victimAnim.index = nextFrameIndex
+		end
 
 		if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
 			world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
