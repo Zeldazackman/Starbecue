@@ -486,7 +486,7 @@
 						"tail": "none",
 						"offset" : {}
 					},
-					"victimAnimation": "unpin",
+					"victimAnimation": "layRollover",
 					"victimAnimLocation": "hug",
 					"state": "back",
 					"chance": 10
@@ -644,7 +644,7 @@
 						"head": "rollover",
 						"tail": "none"
 					},
-					"victimAnimation": "pinned",
+					"victimAnimation": "backRollover",
 					"victimAnimLocation": "hug",
 					"state": "lay",
 					"chance": 10
