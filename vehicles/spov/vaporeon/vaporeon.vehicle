@@ -476,7 +476,7 @@
 						"body": "rollover",
 						"legs": "rollover",
 						"head": "rollover",
-						"tail": "none",
+						"tail": "rollover",
 						"offset" : {}
 					},
 					"victimAnimation": "layRollover",
@@ -635,7 +635,7 @@
 						"body": "rollover",
 						"legs": "rollover",
 						"head": "rollover",
-						"tail": "none"
+						"tail": "rollover"
 					},
 					"victimAnimation": "backRollover",
 					"victimAnimLocation": "hug",
@@ -925,6 +925,7 @@
 				}
 			},
 			"control": {
+				"clickActionsDisabled" : true,
 				"fullThreshold" : 1,
 				"ballFrames": 12,
 				"ballRadius": 2,

@@ -124,6 +124,8 @@
 					"fallasleep": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"wakeup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
+					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
+
 					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"sit.flick": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 1 },
 
@@ -330,6 +332,10 @@
 						"s_up": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
 						"s_down": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_down.<frame><directives>" } },
 
+						"smol.idle": { "properties": { "image": "spov/<skin>/smol/foreground/smol_body.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"smol.jump": { "properties": { "image": "spov/<skin>/smol/foreground/smol_body.png:<bellyoccupants>.jump.<frame><directives>" } },
+						"smol.fall": { "properties": { "image": "spov/<skin>/smol/foreground/smol_body.png:<bellyoccupants>.fall.<frame><directives>" } },
+
 						"jump": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.<state>.fall.<frame><directives>" } }
 					}
@@ -475,6 +481,7 @@
 						"fallasleep": { "properties": { "image": "spov/<skin>/tail.png:fallasleep.<frame><directives>" } },
 						"wakeup": { "properties": { "image": "spov/<skin>/tail.png:wakeup.<frame><directives>" } },
 						"asleep": { "properties": { "image": "spov/<skin>/tail.png:asleep.<frame><directives>" } },
+						"rollover": { "properties": { "image": "spov/<skin>/tail.png:<state>.rollover.<frame><directives>" } },
 
 						"sit": { "properties": { "image": "spov/<skin>/tail.png:sit.<frame><directives>" } },
 						"sit.flick": { "properties": { "image": "spov/<skin>/tail.png:sit.flick.<frame><directives>" } },
@@ -526,6 +533,7 @@
 						"fallasleep": { "properties": { "image": "spov/<skin>/foreground/tail.png:fallasleep.<frame><directives>" } },
 						"wakeup": { "properties": { "image": "spov/<skin>/foreground/tail.png:wakeup.<frame><directives>" } },
 						"asleep": { "properties": { "image": "spov/<skin>/foreground/tail.png:asleep.<frame><directives>" } },
+						"rollover": { "properties": { "image": "spov/<skin>/foreground/tail.png:<state>.rollover.<frame><directives>" } },
 
 						"sit": { "properties": { "image": "spov/<skin>/foreground/tail.png:sit.<frame><directives>" } },
 						"sit.flick": { "properties": { "image": "spov/<skin>/foreground/tail.png:sit.flick.<frame><directives>" } },

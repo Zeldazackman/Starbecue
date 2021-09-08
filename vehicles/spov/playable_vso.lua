@@ -1094,7 +1094,7 @@ function p.handleStruggles(dt)
 	if struggledata[movedir].chances ~= nil then
 		chances = struggledata[movedir].chances
 	end
-	if chances[p.settings.escapeModifier] ~= nil then
+	if chances~= nil and chances[p.settings.escapeModifier] ~= nil then
 		chances = chances[p.settings.escapeModifier]
 	end
 	if chances ~= nil and (p.settings.escapeModifier ~= "noEscape")
