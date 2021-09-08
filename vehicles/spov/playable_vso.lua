@@ -540,6 +540,7 @@ end
 function p.applyStatusLists()
 	for i = 0, #p.occupant do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
+			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
 			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", p.occupant[i].statList )
 			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {index=i, source=entity.id()})
 		end
@@ -561,6 +562,7 @@ function p.forceSeat( occupantId, seatname )
 	if occupantId then
 		vehicle.setLoungeEnabled(seatname, true)
 		local seat = p.getIndexFromSeatname(seatname)
+		world.sendEntityMessage(occupantId, "pvsoMakeNonHostile")
 		world.sendEntityMessage( occupantId, "pvsoForceSit", {index=seat, source=entity.id()})
 	end
 end
@@ -891,7 +893,6 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			world.sendEntityMessage(occupantId, "pvsoMakeNonHostile")
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.updateOccupants(0)
 			p.justAte = true
