@@ -6,9 +6,6 @@ function init()
 		if vsoMenuName then return settings[vsoMenuName] or {} end
 		return settings.global or {}
 	end)
-	message.setHandler( "saveVSOsettings", function(_,_, settings )
-		player.setProperty( "vsoSettings", settings )
-	end)
 	message.setHandler( "openPVSOInterface", function(_,_, name, args, appendSettings, sourceEntity)
 		local pane = root.assetJson("/interface/scripted/pvso/"..name.."/"..name..".config")
 		if args then

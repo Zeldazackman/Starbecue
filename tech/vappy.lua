@@ -1,8 +1,12 @@
 local pressed = true
 local rpcSettings = "send"
-local settings = {
-	bellyEffect = "",
-}
+local settings
+
+function init()
+	message.setHandler( "saveVSOsettings", function(_,_, newsettings )
+		settings = newsettings
+	end)
+end
 
 function update(args)
 	if rpcSettings == "send" then
@@ -12,7 +16,7 @@ function update(args)
 			local result = rpcSettings:result()
 			if result ~= nil then
 				if result.autoDeploy then args.moves["special1"] = true end
-				settings = sb.jsonMerge( settings, result ) -- any missing settings fill in from defaults
+				settings = result
 			end
 		else
 			sb.logError( "Couldn't load Vappy settings." )
