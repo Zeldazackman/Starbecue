@@ -130,8 +130,7 @@ function init()
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
-	p.settings = p.config.defaultSettings
-	p.settings = sb.jsonMerge(p.settings, config.getParameter( "settings", p.config.defaultSettings ))
+	p.settings = sb.jsonMerge(p.config.defaultSettings, config.getParameter( "settings", p.config.defaultSettings ))
 	p.spawner = config.getParameter("spawner")
 
 	p.setColorReplaceDirectives()
@@ -205,6 +204,7 @@ function init()
 
 	message.setHandler( "settingsMenuSet", function(_,_, val )
 		p.settings = val
+		p.setColorReplaceDirectives()
 	end )
 
 	message.setHandler( "letout", function(_,_, val )

@@ -12,7 +12,7 @@ p.escapeModifier = {
 function onInit()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
 	globalSettings = p.vsoSettings.global or {}
-	settings = p.vsoSettings[p.vsoname] or {}
+	settings = sb.jsonMerge( root.assetJson( "/vehicles/spov/pvso_general.config:defaultSettings"), p.vsoSettings[p.vsoname] or {})
 
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
@@ -22,6 +22,7 @@ function onInit()
 
 	enableActionButtons(false)
 	readOccupantData()
+	setColorLabels()
 
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
@@ -273,4 +274,69 @@ function sendTransformMessage(eid)
 	if eid ~= nil and world.entityExists(eid) and (world.entityType() == "player")then
 		world.sendEntityMessage( p.vso, "transform", nil, eid, 3)
 	end
+end
+
+function adjustColor(i, inc)
+	settings.replaceColors[i] = (settings.replaceColors[i] + inc)
+	if settings.replaceColors[i] < 1 then
+		settings.replaceColors[i] = p.replaceColorMax[i]
+	elseif settings.replaceColors[i] > p.replaceColorMax[i] then
+		settings.replaceColors[i] = 1
+	end
+	widget.setText("color"..i.."Label", tostring(settings.replaceColors[i]))
+	saveSettings()
+end
+
+function setColorLabels()
+	for i = 1, #settings.replaceColors do
+		widget.setText("color"..i.."Label", tostring(settings.replaceColors[i]))
+	end
+end
+
+function prevColor1()
+	adjustColor(1, -1)
+end
+
+function prevColor2()
+	adjustColor(2, -1)
+end
+
+function prevColor3()
+	adjustColor(3, -1)
+end
+
+function prevColor4()
+	adjustColor(4, -1)
+end
+
+function prevColor5()
+	adjustColor(5, -1)
+end
+
+function prevColor6()
+	adjustColor(6, -1)
+end
+
+function nextColor1()
+	adjustColor(1, 1)
+end
+
+function nextColor2()
+	adjustColor(2, 1)
+end
+
+function nextColor3()
+	adjustColor(3, 1)
+end
+
+function nextColor4()
+	adjustColor(4, 1)
+end
+
+function nextColor5()
+	adjustColor(5, 1)
+end
+
+function nextColor6()
+	adjustColor(6, 1)
 end
