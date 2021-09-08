@@ -4,7 +4,7 @@ p.vsoname = "vaporeon"
 
 require("/interface/scripted/pvso/pvsosettings.lua")
 
-p.replaceColorMax = {2,2,1,1,1,1}
+p.replaceColorMax = {2,2,2,2,1,1}
 
 function init()
 	onInit()

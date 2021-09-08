@@ -157,6 +157,10 @@ function init()
 		p.seats["occupant"..i] = p.occupant[i]
 	end
 
+	if p.settings.blackHoleBelly then
+		p.vso.maxOccupants.total = 7
+	end
+
 	for _, state in pairs(p.animStateData) do
 		state.animationState = {
 			anim = state.default,
@@ -688,17 +692,16 @@ function p.showEmote( emotename ) --helper function to express a emotion particl
 end
 function p.resetOccupantCount()
 	p.occupants.total = 0
-	for i = 1, #p.vso.locations.regular do
-		p.occupants[p.vso.locations.regular[i]] = 0
-	end
-	if p.vso.locations.sided then
-		for i = 1, #p.vso.locations.sided do
-			p.occupants[p.vso.locations.sided[i].."R"] = 0
-			p.occupants[p.vso.locations.sided[i].."L"] = 0
+	for location, data in pairs(p.vso.locations) do
+		if data.sided then
+			p.occupants[location.."R"] = 0
+			p.occupants[location.."L"] = 0
+		else
+			p.occupants[location] = 0
 		end
 	end
 	p.occupants.fatten = p.settings.fatten or 0
-	p.occupants.mass = 0
+	p.occupants.mass = p.occupants.fatten * (p.vso.locations.fatten.mass or 0)
 end
 
 function p.updateOccupants(dt)
@@ -707,19 +710,13 @@ function p.updateOccupants(dt)
 	local lastFilled = true
 	for i = 1, p.vso.maxOccupants.total do
 		if p.occupant[i].id and world.entityExists(p.occupant[i].id) then
-
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
-			for i = 1, #p.vso.locations.mass do
-				if p.vso.locations.mass[i] == p.occupant[i].location then
-					p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass
-				end
-			end
-
 			if not lastFilled and p.swapCooldown <= 0 then
 				p.swapOccupants( i-1, i )
 				i = i - 1
 			end
+			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * (p.vso.locations[p.occupant[i].location].mass or 0)
 			p.entity[p.occupant[i].id] = p.occupant[i]
 			p.occupant[i].index = i
 			p.occupant[i].seatname = "occupant"..i
@@ -753,38 +750,25 @@ function p.updateOccupants(dt)
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
-	for i = 1, #p.vso.locations.mass do
-		if p.vso.locations.mass[i] == "fatten" then
-			p.occupants.mass = p.occupants.mass + p.occupants.fatten
-		end
-	end
-
-	for _, combine in ipairs(p.vso.locations.combine) do
-		for j = 2, #combine do
-			p.occupants[ combine[1] ] = p.occupants[ combine[1] ]+p.occupants[ combine[j] ]
-			if p.occupants[ combine[1] ] > p.vso.maxOccupants[ combine[1] ] then
-				p.occupants[ combine[1] ] = p.vso.maxOccupants[ combine[1] ]
-			end
-			p.occupants[ combine[j] ] = p.occupants[ combine[1] ]
-		end
-	end
-
 	mcontroller.applyParameters({mass = p.movementParams.mass + p.occupants.mass})
-
 	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
-	for i = 1, #p.vso.locations.regular do
-		animator.setGlobalTag( p.vso.locations.regular[i].."occupants", tostring(p.occupants[p.vso.locations.regular[i]]) )
-	end
-
-	if p.vso.locations.sided then
-		for i = 1, #p.vso.locations.sided do
-			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-				animator.setGlobalTag( p.vso.locations.sided[i].."2occupants", tostring(p.occupants[p.vso.locations.sided[i].."R"]) )
-				animator.setGlobalTag( p.vso.locations.sided[i].."1occupants", tostring(p.occupants[p.vso.locations.sided[i].."L"]) )
-			else
-				animator.setGlobalTag( p.vso.locations.sided[i].."1occupants", tostring(p.occupants[p.vso.locations.sided[i].."R"]) )
-				animator.setGlobalTag( p.vso.locations.sided[i].."2occupants", tostring(p.occupants[p.vso.locations.sided[i].."L"]) )
+	for location, data in pairs(p.vso.locations) do
+		if data.combine ~= nil then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff
+			for _, combine in ipairs(data.combine) do
+				p.occupants[location] = p.occupants[location] + p.occupants[combine]
+				p.occupants[combine] = p.occupants[location]
 			end
+		end
+		if data.sided then
+			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
+				animator.setGlobalTag( location.."2occupants", tostring(p.occupants[location.."R"]) )
+				animator.setGlobalTag( location.."1occupants", tostring(p.occupants[location.."L"]) )
+			else
+				animator.setGlobalTag( location.."1occupants", tostring(p.occupants[location.."R"]) )
+				animator.setGlobalTag( location.."2occupants", tostring(p.occupants[location.."L"]) )
+			end
+		else
+			animator.setGlobalTag( location.."occupants", tostring(p.occupants[location]) )
 		end
 	end
 end
@@ -1036,7 +1020,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 			light.position = world.entityPosition( eid )
 			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
-			if p.isLocationDigest(p.occupant[i].location) then
+			if p.vso.locations[p.occupant[i].location].digest then
 				if (p.settings.bellySounds == true) and p.randomTimer( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
 				local hunger_change = (hungereffect * powerMultiplier * p.dt)/100
 				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
@@ -1052,14 +1036,7 @@ function p.doBellyEffects(driver, powerMultiplier)
 	end
 end
 
-function p.isLocationDigest(location)
-	for i = 1, #p.vso.locations.digest do
-		if p.vso.locations.digest[i] == location then
-			return true
-		end
-	end
-	return false
-end
+
 
 p.struggleCount = 0
 p.bellySettleDownTimer = 5

@@ -134,25 +134,12 @@
 			}
 		},
 		"locations" :{
-			"regular" :[
-				"belly",
-				"hug",
-				"shaft",
-				"knot"
-			],
-			"sided" : [
-				"balls"
-			],
-			"digest" : [
-				"belly"
-			],
-			"combine" :[
-				["belly", "fatten"]
-			],
-			"mass" : [
-				"belly",
-				"fatten"
-			]
+			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { },
+			"shaft" : { "mass": 0.1 },
+			"knot" : { "mass": 0.1 },
+			"balls" : { "sided" : true, "mass": 0.1 },
+			"fatten" : { "mass": 1 }
 		},
 		"maxOccupants" : {
 			"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu
@@ -171,8 +158,14 @@
 				["4a042e", "621041", "83395a"] // shiny
 			],
 			[
-				["545454", "8a8a8a", "b3b3b3", "e0e0e0"],// the white underbelly
-				["545454", "8a8a8a", "b3b3b3", "e0e0e0"]
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],// the white underbelly
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],
+				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"] // same yellow as the finns
+			],
+			[
+				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"], // the yellow headfins
+				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"],
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"] // the white
 			]
 		]
 	},
