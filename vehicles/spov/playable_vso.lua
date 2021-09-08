@@ -53,7 +53,7 @@ function p.clearOccupant(i)
 		progressBar = 0,
 		progressBarActive = false,
 		progressBarData = nil,
-		progressBarMode = 1,
+		progressBarMultiplier = 1,
 		progressBarFinishFunc = nil,
 		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
 		controls = {
@@ -211,13 +211,13 @@ function init()
 		p.doTransition( "escape", {id = val} )
 	end )
 
-	message.setHandler( "transform", function(_,_, data, eid )
+	message.setHandler( "transform", function(_,_, data, eid, multiplier )
 		if p.entity[eid].progressBarActive then return end
 
 		p.entity[eid].progressBarActive = true
-		p.entity[eid].progressBarMode = 1
 		p.entity[eid].progressBar = 0
 		p.entity[eid].progressBarData = data
+		p.entity[eid].progressBarMultiplier = multiplier or 1
 		p.entity[eid].progressBarFinishFuncName = "transformPrey"
 	end )
 
@@ -251,7 +251,7 @@ function init()
 	end )
 
 	p.state = "start" -- this state doesn't need to exist
-	if not config.getParameter( "uneaten" ) then
+	if not (config.getParameter( "uneaten" ) or p.settings.defaultSmall) then
 		if not p.vso.startState then
 			p.vso.startState = "stand"
 		end
@@ -727,8 +727,8 @@ function p.updateOccupants(dt)
 			vehicle.setLoungeEnabled("occupant"..i, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMode)
-				if p.occupant[i].progressBarMode == 1 then
+				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
+				if p.occupant[i].progressBarMultiplier > 0 then
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
 						p[p.occupant[i].progressBarFinishFuncName](i)
@@ -869,9 +869,9 @@ function p.transformPrey(i)
 				p.occupant[i].smolPreyData = smolPreyData
 				p.occupant[i].species = smolPreyData.species
 			end)
-		else -- we currently don't have any pathing behavior for this, but it does work, however it looks buggy so shall be disabled for now
-			--p.occupant[i].smolPreyData = smolPreyData
-			--p.occupant[i].species = smolPreyData.species
+		else
+			p.occupant[i].smolPreyData = smolPreyData
+			p.occupant[i].species = smolPreyData.species
 		end
 	end
 end

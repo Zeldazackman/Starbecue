@@ -77,7 +77,6 @@ function p.doTransition( direction, scriptargs )
 		local id = (scriptargs or {}).id
 		local index = (scriptargs or {}).index
 		if id == nil and tconfig.victimAnimLocation ~= nil then
-			sb.logInfo(tconfig.victimAnimLocation)
 			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
 		end
 		if id == nil and index ~= nil then

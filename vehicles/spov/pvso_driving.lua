@@ -1,6 +1,9 @@
 
 function p.pressControl(seat, control)
-	return p.seats[seat].controls[control.."Pressed"]
+	if p.seats[seat].controls[control.."Pressed"] then
+		p.seats[seat].controls[control.."Pressed"] = false
+		return true
+	end
 end
 
 function p.tapControl(seat, control)

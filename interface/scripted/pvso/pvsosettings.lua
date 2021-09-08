@@ -245,7 +245,7 @@ function turboDigest()
 	if selected ~= nil then
 		return sendturboDigestMessage(selected)
 	else
-		for i = 1, #p.occupant do
+		for i = 1, p.maxOccupants do
 			sendturboDigestMessage(p.occupant[i].id)
 		end
 	end
@@ -262,14 +262,15 @@ function transform()
 	if selected ~= nil then
 		return sendTransformMessage(selected)
 	else
-		for i = 1, #p.occupant do
+		for i = 1, p.maxOccupants do
 			sendTransformMessage(p.occupant[i].id)
 		end
 	end
 end
 
 function sendTransformMessage(eid)
-	if eid ~= nil and world.entityExists(eid) then
-		world.sendEntityMessage( p.vso, "transform", nil, eid )
+-- we currently don't have any pathing behavior for this, but it does work, however it looks buggy so shall be disabled for non player entities for now
+	if eid ~= nil and world.entityExists(eid) and (world.entityType() == "player")then
+		world.sendEntityMessage( p.vso, "transform", nil, eid, 3)
 	end
 end
