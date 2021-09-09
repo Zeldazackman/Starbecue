@@ -5,10 +5,12 @@
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",
-	"category" : "Tool",
+	"category" : "vehicleController",
 	"twoHanded" : true,
-	"itemTags" : ["tool"],
+	"itemTags" : ["vehiclecontroller"],
 	"inventoryIcon" : "/assetmissing.png",
+
+	"inactiveArmAngle" : -1.0,
 
 	"retainScriptStorageInItem": true,
 	"scripts" : [
