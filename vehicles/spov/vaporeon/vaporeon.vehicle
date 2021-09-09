@@ -227,10 +227,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "escape", "drivingEnabled": true },
-					"front": { "transition": "escape", "drivingEnabled": true },
-					"back": { "transition": "down" },
-					"down": { "transition": "down" },
+					"directions": {
+						"up": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "down", "indicate": "blue" },
+						"down": { "transition": "down", "indicate": "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -413,10 +415,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "down" },
-					"back": { "transition": "up" },
-					"down": { "transition": "down" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "green" },
+						"front": { "transition": "down", "indicate": "blue" },
+						"back": { "transition": "up" , "indicate": "green"},
+						"down": { "transition": "down", "indicate": "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -521,10 +525,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "down" },
-					"back": { "transition": "up" },
-					"down": { "transition": "down" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "green" },
+						"front": { "transition": "down", "indicate": "blue" },
+						"back": { "transition": "up", "indicate": "green" },
+						"down": { "transition": "down", "indicate": "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -536,9 +542,11 @@
 				},
 				"hug" : {
 					"part" : "legs",
-					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
-					"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
-					"back": { "transition": "side", "victimAnimation": "pinned.s_back" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_up" },
+						"front": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_front" },
+						"back": { "transition": "side", "indicate": "green", "victimAnimation": "pinned.s_back" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -599,10 +607,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "down" },
-					"back": { "transition": "up" },
-					"down": { "transition": "down" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "green" },
+						"front": { "transition": "down", "indicate": "blue" },
+						"back": { "transition": "up", "indicate": "green" },
+						"down": { "transition": "down", "indicate": "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -611,9 +621,11 @@
 				},
 				"hug" : {
 					"part" : "legs",
-					"up": { "transition": "up", "victimAnimation": "pinned.s_up" },
-					"front": { "transition": "up", "victimAnimation": "pinned.s_front" },
-					"back": { "transition": "up", "victimAnimation": "pinned.s_back" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_up" },
+						"front": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_front" },
+						"back": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_back" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -674,10 +686,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "side" },
-					"front": { "transition": "side" },
-					"back": { "transition": "side" },
-					"down": { "transition": "side" },
+					"directions": {
+						"up": { "transition": "side", "indicate": "green" },
+						"front": { "transition": "side", "indicate": "green" },
+						"back": { "transition": "side", "indicate": "green" },
+						"down": { "transition": "side", "indicate": "green" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -686,10 +700,12 @@
 				},
 				"hug" : {
 					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "side" },
-					"back": { "transition": "side" },
-					"down": { "transition": "down" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "red" },
+						"front": { "transition": "side", "indicate": "green" },
+						"back": { "transition": "side", "indicate": "green" },
+						"down": { "transition": "down", "indicate": "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 0, "max": 0 },
 						"normal": { "min": 0, "max": 0 },
@@ -755,10 +771,12 @@
 			"struggle": {
 				"belly" : {
 					"part" : "body",
-					"up": { "transition": "side" },
-					"front": { "transition": "side" },
-					"back": { "transition": "side" },
-					"down": { "transition": "side" },
+					"directions": {
+						"up": { "transition": "side", "indicate": "green" },
+						"front": { "transition": "side", "indicate": "green" },
+						"back": { "transition": "side", "indicate": "green" },
+						"down": { "transition": "side", "indicate": "green" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -767,10 +785,12 @@
 				},
 				"hug" : {
 					"part" : "legs",
-					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
-					"front": { "transition": "side", "victimAnimation": "hug.s_front" },
-					"back": { "transition": "side", "victimAnimation": "hug.s_back" },
-					"down": { "transition": "down", "victimAnimation": "hug.s_down" },
+					"directions": {
+						"up": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_up" },
+						"front": { "transition": "side", "indicate": "blue", "victimAnimation": "hug.s_front" },
+						"back": { "transition": "side", "indicate": "blue", "victimAnimation": "hug.s_back" },
+						"down": { "transition": "down", "indicate": "yellow", "victimAnimation": "hug.s_down" }
+					},
 					"chances": {
 						"easyEscape": { "min": 0, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
