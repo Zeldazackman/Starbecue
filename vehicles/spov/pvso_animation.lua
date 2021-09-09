@@ -45,6 +45,7 @@ function p.updateVisibilityAndSmolprey(occupant)
 				if occupant.smolPreyData.update then
 					p.smolPreyAnimPath(occupant)
 				end
+				world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")
 				animator.setAnimationState( occupant.seatname.."State", "smol", true )
 			end
 		else

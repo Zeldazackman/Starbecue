@@ -21,5 +21,6 @@ function update(dt)
 end
 
 function uninit()
+	status.setStatusProperty("pvsoDontTouchDoors", false)
 	world.sendEntityMessage(entity.id(), "pvsoRestoreDamageTeam")
 end

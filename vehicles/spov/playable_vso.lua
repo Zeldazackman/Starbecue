@@ -255,7 +255,8 @@ function init()
 		p.uneat( eid )
 	end )
 
-	message.setHandler( "smolPreyData", function(_,_, seatindex, data)
+	message.setHandler( "smolPreyData", function(_,_, seatindex, data, vso)
+		world.sendEntityMessage( vso, "despawn", true ) -- no warpout
 		p.occupant[seatindex].smolPreyData = data
 	end )
 
@@ -868,7 +869,7 @@ function p.edible( occupantId, seatindex, source )
 	if p.driver ~= occupantId then return false end
 	if p.occupants.total > 0 then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData())
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(), entity.id())
 		return true
 	end
 end
@@ -950,8 +951,6 @@ function p.eat( occupantId, location )
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	p.forceSeat( occupantId, "occupant"..seatindex )
-	world.sendEntityMessage( edibles[1], "despawn", true ) -- no warpout
-	p.occupant[seatindex].visible = false
 	p.updateOccupants(0)
 	p.justAte = true
 	return true

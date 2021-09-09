@@ -7,6 +7,7 @@ function everything_primary()
 
 	message.setHandler("pvsoForceSit", function(_,_, data)
 		status.setStatusProperty("pvsoForceSitData", data)
+		status.setStatusProperty("pvsoDontTouchDoors", true)
 
 		status.addEphemeralEffect("pvsoForceSit", 1, data.source)
 	end)

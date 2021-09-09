@@ -80,7 +80,7 @@ function p.doTransition( direction, scriptargs )
 			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
 		end
 		if id == nil and index ~= nil then
-			id = p.getEidFromIndex(index)
+			id = p.occupant[index].id
 		end
 		if id ~= nil then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
