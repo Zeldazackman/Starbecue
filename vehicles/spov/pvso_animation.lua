@@ -42,7 +42,10 @@ function p.updateVisibilityAndSmolprey(occupant)
 	if occupant.visible then
 		if occupant.species ~= nil then
 			if occupant.smolPreyData.recieved then
-				p.smolPreyAnimPath(occupant)
+				if occupant.smolPreyData.update then
+					p.smolPreyAnimPath(occupant)
+				end
+				animator.setAnimationState( occupant.seatname.."State", "smol", true )
 			end
 		else
 			world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoRemoveInvisible")
@@ -57,11 +60,8 @@ function p.smolPreyAnimPath(occupant)
 	local path = occupant.smolPreyData.path
 	local settings = occupant.smolPreyData.settings
 	local state = occupant.smolPreyData.state
-	local skin = settings.skin or "default"
 	local animatedParts = occupant.smolPreyData.animatedParts
 	local seatname = occupant.seatname
-
-	local directives = "" -- this will be fixed when I figure out the color stuff
 
 	local head = "/assetmissing.png"
 	local body = "/assetmissing.png"
@@ -72,24 +72,28 @@ function p.smolPreyAnimPath(occupant)
 	local frontarms = "/assetmissing.png"
 
 	if state.idle.head ~= nil then
-		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, directives)
+		local skin = settings.skinNames.head or "default"
+		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
 	end
 	if state.idle.body ~= nil then
-		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, directives)
+		local skin = settings.skinNames.body or "default"
+		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
 	end
 	if state.idle.tail ~= nil then
-		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, directives)
+		local skin = settings.skinNames.tail or "default"
+		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
 	end
 	if state.idle.legs ~= nil then
-		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, directives)
-		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, directives)
+		local skin = settings.skinNames.legs or "default"
+		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
 	end
 	if state.idle.arms ~= nil then
-		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.legsState[state.idle.arms].properties.image, skin, directives)
-		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.legsState[state.idle.arms].properties.image, skin, directives)
+		local skin = settings.skinNames.arms or "default"
+		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.legsState[state.idle.arms].properties.image, skin, settings)
+		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.legsState[state.idle.arms].properties.image, skin, settings)
 	end
 
-	animator.setAnimationState( occupant.seatname.."State", "smol", true )
 	animator.setPartTag(seatname, "smolpath", path..head)
 	animator.setPartTag(seatname.."body", "smolpath", path..body)
 	animator.setPartTag(seatname.."tail", "smolpath", path..tail)
@@ -97,22 +101,53 @@ function p.smolPreyAnimPath(occupant)
 	animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs)
 	animator.setPartTag(seatname.."backarms", "smolpath", path..backarms)
 	animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms)
+
+	occupant.smolPreyData.update = false
 end
 
-function p.fixPathTags(path, skin, directives)
+function p.fixPathTags(path, skin, settings)
 	return sb.replaceTags(path, {
 		skin = skin,
-		directives = directives,
+		directives = settings.directives or "",
 		bap = "",
 		frame = "1",
-		bellyoccupants = "0"
+		bellyoccupants = "0",
+		cracks = settings.cracks or "0"
 	})
 end
 
 function p.victimAnimUpdate(entity)
 	if entity == nil then return end
 	local victimAnim = p.entity[entity].victimAnim
-	if not victimAnim.enabled then return end
+	if not victimAnim.enabled then
+		local location = p.entity[entity].location
+		p.entity[entity].victimAnim.inside = true
+		if p.entity[entity].victimAnim.location ~= location then
+			p.entity[entity].victimAnim.progress = 0
+			p.entity[entity].victimAnim.location = location
+		end
+		if p.entity[entity].victimAnim.state ~= p.state then
+			p.entity[entity].victimAnim.progress = 0
+			p.entity[entity].victimAnim.state = p.state
+		end
+		if p.stateconfig[p.state].locationCenters ~= nil and p.stateconfig[p.state].locationCenters[location] ~= nil
+		and (p.entity[entity].victimAnim.progress < 1 )
+		then
+			p.entity[entity].victimAnim.progress = math.min(1, p.entity[entity].victimAnim.progress + p.dt)
+			local progress = p.entity[entity].victimAnim.progress
+			local center = p.stateconfig[p.state].locationCenters[location]
+			local seatname = p.entity[entity].seatname
+			local transformGroup = seatname.."Position"
+			local translation = { (victimAnim.last.x + ((center[1] - victimAnim.last.x) * progress)), (victimAnim.last.y + ((center[2] - victimAnim.last.y) * progress)) }
+			animator.resetTransformationGroup(transformGroup)
+			animator.translateTransformationGroup(transformGroup, translation)
+			if progress == 1 then
+				p.entity[entity].victimAnim.last.x = center[1]
+				p.entity[entity].victimAnim.last.y = center[2]
+			end
+		end
+		return
+	end
 	local statename = p.entity[entity].victimAnim.statename
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
@@ -215,6 +250,7 @@ local victimAnimArgs = {
 
 function p.doVictimAnim( occupantId, anim, statename )
 	if not p.entity[occupantId] then return end
+	local last = p.entity[occupantId].victimAnim.last or {}
 	p.entity[occupantId].victimAnim = {
 		enabled = true,
 		statename = statename,
@@ -224,13 +260,15 @@ function p.doVictimAnim( occupantId, anim, statename )
 		prevFrame = 0,
 		prevIndex = 1,
 
-		last = {}
+		last = last
 	}
-	for arg, default in pairs(victimAnimArgs) do
-		if p.victimAnimations[anim][arg] ~= nil then
-			p.entity[occupantId].victimAnim.last[arg] = p.victimAnimations[anim][arg][1]
-		else
-			p.entity[occupantId].victimAnim.last[arg] = default
+	if not last.inside then
+		for arg, default in pairs(victimAnimArgs) do
+			if p.victimAnimations[anim][arg] ~= nil then
+				p.entity[occupantId].victimAnim.last[arg] = p.victimAnimations[anim][arg][1]
+			else
+				p.entity[occupantId].victimAnim.last[arg] = default
+			end
 		end
 	end
 
@@ -424,6 +462,7 @@ function p.setColorReplaceDirectives()
 			end
 
 		end
+		p.settings.directives = colorReplaceString
 		animator.setGlobalTag( "directives", colorReplaceString )
 	end
 end
@@ -432,6 +471,7 @@ function p.setSkinPartTags()
 	if p.vso.replaceSkin ~= nil then
 		for part, index in pairs(p.settings.replaceSkin) do
 			local skin = p.vso.replaceSkin[part].skins[index]
+			p.settings.skinNames[part] = skin
 			for _, animPart in ipairs(p.vso.replaceSkin[part].parts) do
 				animator.setPartTag( animPart, "skin", skin )
 			end

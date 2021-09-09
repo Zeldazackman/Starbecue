@@ -6,7 +6,7 @@
 		"frame": "1",
 		"directives": "",
 		"smolprey": "egg",
-		"eggtype": "spov/default/smol/smol_body.png"
+		"skin": "default"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -82,27 +82,27 @@
 					"bodyState": {
 						"idle": {
 							"properties": {
-								"image": "<eggtype>:<cracks>.idle.<frame><directives>"
+								"image": "spov/<skin>/smol/smol_body.png:<cracks>.idle.<frame><directives>"
 							}
 						},
 						"s_back": {
 							"properties": {
-								"image": "<eggtype>:<cracks>.left.<frame><directives>"
+								"image": "spov/<skin>/smol/smol_body.png:<cracks>.left.<frame><directives>"
 							}
 						},
 						"s_front": {
 							"properties": {
-								"image": "<eggtype>:<cracks>.right.<frame><directives>"
+								"image": "spov/<skin>/smol/smol_body.png:<cracks>.right.<frame><directives>"
 							}
 						},
 						"s_up": {
 							"properties": {
-								"image": "<eggtype>:<cracks>.left.<frame><directives>"
+								"image": "spov/<skin>/smol/smol_body.png:<cracks>.left.<frame><directives>"
 							}
 						},
 						"s_down": {
 							"properties": {
-								"image": "<eggtype>:<cracks>.right.<frame><directives>"
+								"image": "spov/<skin>/smol/smol_body.png:<cracks>.right.<frame><directives>"
 							}
 						}
 					}

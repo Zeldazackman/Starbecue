@@ -143,6 +143,7 @@ function checkRefresh(dt)
 			if result ~= nil then
 				p.occupant = result.occupants
 				p.powerMultiplier = result.powerMultiplier
+				settings = result.settings
 				refreshListData()
 				readOccupantData()
 				p.refreshtime = 0

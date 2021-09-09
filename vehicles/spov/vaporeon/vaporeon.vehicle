@@ -261,6 +261,9 @@
 					"animationWhenMoving": { "head": "idle" }
 				}
 			},
+			"locationCenters" : {
+				"belly" : [-0.5, -2]
+			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location":"belly", "failOnFull":true},
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
@@ -450,6 +453,9 @@
 
 				}
 			},
+			"locationCenters" : {
+				"belly" : [0, -3.5]
+			},
 			"interact": {
 				"front": { "transition": "down", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
@@ -575,6 +581,9 @@
 					"animationWhenMoving": { "head": "pinlook" }
 				}
 			},
+			"locationCenters" : {
+				"belly" : [1.5, -3.5]
+			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
 				"side": { "transition": "side", "chance": 20 },
@@ -652,6 +661,9 @@
 					}
 
 				}
+			},
+			"locationCenters" : {
+				"belly" : [1.5, -3.5]
 			},
 			"interact": {
 				"front": { "transition": "up", "chance": 20 },
@@ -732,6 +744,9 @@
 					}
 
 				}
+			},
+			"locationCenters" : {
+				"belly" : [1.5, -3.5]
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
@@ -818,6 +833,9 @@
 
 				}
 			},
+			"locationCenters" : {
+				"belly" : [1.5, -3.5]
+			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
@@ -838,6 +856,9 @@
 				{ "head": "smol.blink" }
 			],
 			"struggle" : {},
+			"locationCenters" : {
+				"belly" : [-0.25, -2]
+			},
 			"control": {
 				"fullThreshold": 1,
 				"fullJumpStrength": 20,
@@ -962,6 +983,9 @@
 					"front" : {},
 					"back" : {}
 				}
+			},
+			"locationCenters" : {
+				"belly" : [-0.25, -2]
 			},
 			"control": {
 				"clickActionsDisabled" : true,

@@ -16,6 +16,32 @@ function init()
 end
 
 function update(dt)
+	checkRefresh(dt)
+end
+
+function checkRefresh(dt)
+	if p.refreshtime >= 0.1 and p.rpc == nil then
+		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
+	elseif p.rpc ~= nil and p.rpc:finished() then
+		if p.rpc:succeeded() then
+			local result = p.rpc:result()
+			if result ~= nil then
+				p.occupant = result.occupants
+				p.powerMultiplier = result.powerMultiplier
+				settings = result.settings
+				refreshListData()
+				readOccupantData()
+				p.refreshtime = 0
+				p.refreshed = true
+			end
+		else
+			sb.logError( "Couldn't refresh settings." )
+			sb.logError( p.rpc:error() )
+		end
+		p.rpc = nil
+	else
+		p.refreshtime = p.refreshtime + dt
+	end
 end
 
 function settingsMenu()

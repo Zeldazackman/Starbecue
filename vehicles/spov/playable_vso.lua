@@ -133,6 +133,7 @@ function init()
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
 	p.settings = sb.jsonMerge(p.config.defaultSettings, config.getParameter( "settings" ) or {})
 	p.spawner = config.getParameter("spawner")
+	p.settings.directives = p.vso.defaultDirectives or ""
 
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
@@ -231,7 +232,8 @@ function init()
 	message.setHandler( "settingsMenuRefresh", function(_,_)
 		return {
 			occupants = p.occupant,
-			powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
+			powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier,
+			settings = p.settings
 		}
 	end)
 
@@ -875,6 +877,7 @@ function p.getSmolPreyData()
 	return {
 		species = world.entityName( entity.id() ):sub( 5 ),
 		recieved = true,
+		update = true,
 		path = p.directoryPath,
 		settings = p.settings,
 		state = p.stateconfig.smol,
