@@ -122,14 +122,15 @@ function p.victimAnimUpdate(entity)
 	if not victimAnim.enabled then
 		local location = p.entity[entity].location
 		p.entity[entity].victimAnim.inside = true
-		if p.entity[entity].victimAnim.location ~= location then
-			p.entity[entity].victimAnim.progress = 0
+
+		if p.entity[entity].victimAnim.location ~= location or p.entity[entity].victimAnim.state ~= p.state then
+			if p.entity[entity].victimAnim.progress == nil or p.entity[entity].victimAnim.progress == 1 then
+				p.entity[entity].victimAnim.progress = 0
+			end
 			p.entity[entity].victimAnim.location = location
-		end
-		if p.entity[entity].victimAnim.state ~= p.state then
-			p.entity[entity].victimAnim.progress = 0
 			p.entity[entity].victimAnim.state = p.state
 		end
+
 		if p.stateconfig[p.state].locationCenters ~= nil and p.stateconfig[p.state].locationCenters[location] ~= nil
 		and (p.entity[entity].victimAnim.progress < 1 )
 		then
