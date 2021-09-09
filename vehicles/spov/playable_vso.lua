@@ -443,6 +443,12 @@ function p.onDeath()
 
 	if not p.nowarpout then
 		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+		for i = 0, #p.occupant do
+			if p.occupant[i].id ~= nil then
+				p.occupant[i].visible = true
+				world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoRemoveInvisible")
+			end
+		end
 	end
 
 	onEnd()
