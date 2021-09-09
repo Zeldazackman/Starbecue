@@ -93,10 +93,10 @@ function p.updateControls(dt)
 			else
 				p.occupant[i].controls.shiftReleased = p.occupant[i].controls.shift
 				p.occupant[i].controls.shift = 0
-				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", type, function(seatdata)
+				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", {type}, function(seatdata)
 					p.mergeSeatData(seatname, seatdata)
 				end)
-				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", type, function(seatdata)
+				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type}, function(seatdata)
 					p.mergeSeatData(seatname, seatdata)
 				end)
 			end

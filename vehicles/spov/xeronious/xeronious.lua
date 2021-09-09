@@ -131,7 +131,7 @@ function succ(args)
 	}
 
 	for i = 1, #entities do
-		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", data)
+		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", {data})
 	end
 	p.checkEatPosition( data.destination, "belly", "succeat", true)
 end

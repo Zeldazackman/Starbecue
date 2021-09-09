@@ -56,6 +56,7 @@ function p.clearOccupant(i)
 		progressBarMultiplier = 1,
 		progressBarFinishFunc = nil,
 		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
+		indicatorCooldown = 0,
 		controls = {
 			primaryFire = 0,
 			altFire = 0,
@@ -254,6 +255,10 @@ function init()
 
 	message.setHandler( "smolPreyData", function(_,_, seatindex, data)
 		p.occupant[seatindex].smolPreyData = data
+	end )
+
+	message.setHandler( "indicatorClosed", function(_,_, eid)
+		p.entity[eid].indicatorCooldown = 2
 	end )
 
 	p.state = "start" -- this state doesn't need to exist
@@ -455,7 +460,7 @@ p.loopedMessages = {}
 function p.loopedMessage(name, eid, message, args, callback, failCallback)
 	if p.loopedMessages[name] == nil then
 		p.loopedMessages[name] = {
-			rpc = world.sendEntityMessage(eid, message, args),
+			rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
 			callback = callback,
 			failCallback = failCallback
 		}
@@ -543,8 +548,8 @@ function p.applyStatusLists()
 	for i = 0, #p.occupant do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
-			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", p.occupant[i].statList )
-			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {index=i, source=entity.id()})
+			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", {p.occupant[i].statList} )
+			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {{index=i, source=entity.id()}})
 		end
 	end
 end
@@ -705,7 +710,7 @@ function p.resetOccupantCount()
 		end
 	end
 	p.occupants.fatten = p.settings.fatten or 0
-	p.occupants.mass = p.occupants.fatten * (p.vso.locations.fatten.mass or 0)
+	p.occupants.mass = 0
 end
 
 function p.updateOccupants(dt)
@@ -745,6 +750,34 @@ function p.updateOccupants(dt)
 					end
 				end
 			end
+			p.occupant[i].indicatorCooldown = p.occupant[i].indicatorCooldown - dt
+			if world.entityType(p.occupant[i].id) == "player" and p.occupant[i].indicatorCooldown <= 0 then
+				-- p.occupant[i].indicatorCooldown = 0.5
+				local struggledata = (p.stateconfig[p.state].struggle or {})[p.occupant[i].location] or {}
+				local directions = {}
+				if not p.transitionLock then
+					for dir, data in pairs(struggledata.directions or {}) do
+						if data and (not p.driving or data.drivingEnabled) then
+							if dir == "front" then dir = ({"left","","right"})[p.direction+2] end
+							if dir == "back" then dir = ({"right","","left"})[p.direction+2] end
+							directions[dir] = data.indicate or "default"
+						end
+					end
+				end
+				p.loopedMessage(p.occupant[i].id.."-indicator", p.occupant[i].id, -- update quickly but minimize spam
+					"openPVSOInterface", {"indicatorhud",
+					{
+						owner = entity.id(),
+						directions = directions,
+						-- progress = {
+						-- 	active = p.occupant[i].progressBarActive,
+						-- 	type = p.occupant[i].progressBarType,
+						-- 	progress = p.occupant[i].progressBar
+						-- },
+					}
+				})
+			end
+
 			lastFilled = true
 		else
 			p.occupant[i] = p.clearOccupant(i)
@@ -922,6 +955,9 @@ function p.uneat( occupantId )
 	seatindex = p.entity[occupantId].index
 	local occupantData = p.entity[occupantId]
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
+	if world.entityType(occupantId) == "player" then
+		world.sendEntityMessage(occupantId, "openPVSOInterface", "close")
+	end
 	if occupantData.species ~= nil then
 		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
 	end
@@ -1065,7 +1101,7 @@ function p.handleStruggles(dt)
 
 		if movedir then
 			struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
-			if (struggledata == nil) or (struggledata[movedir] == nil) then
+			if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
 				movedir = nil
 			elseif not p.hasAnimEnded( struggledata.part.."State" )
 			and (
@@ -1094,8 +1130,8 @@ function p.handleStruggles(dt)
 	end
 
 	local chances = struggledata.chances
-	if struggledata[movedir].chances ~= nil then
-		chances = struggledata[movedir].chances
+	if struggledata.directions[movedir].chances ~= nil then
+		chances = struggledata.directions[movedir].chances
 	end
 	if chances~= nil and chances[p.settings.escapeModifier] ~= nil then
 		chances = chances[p.settings.escapeModifier]
@@ -1103,28 +1139,28 @@ function p.handleStruggles(dt)
 	if chances ~= nil and (p.settings.escapeModifier ~= "noEscape")
 	and (chances.min ~= nil) and (chances.max ~= nil)
 	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
-	and ((not p.driving) or struggledata[movedir].drivingEnabled)
+	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
 	then
 		p.occupant[struggler].struggleCount = 0
-		p.doTransition( struggledata[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
+		p.doTransition( struggledata.directions[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
 	else
 		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1
 		p.occupant[struggler].bellySettleDownTimer = 5
 
 		sb.setLogMap("b", "struggle")
-		local animation = {offset = struggledata[movedir].offset}
+		local animation = {offset = struggledata.directions[movedir].offset}
 		animation[struggledata.part] = "s_"..movedir
 
 		p.doAnims(animation)
 
 		if not p.movement.animating then
-			p.doAnims( struggledata[movedir].animation or struggledata.animation )
+			p.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
 		else
-			p.doAnims( struggledata[movedir].animationWhenMoving or struggledata.animationWhenMoving )
+			p.doAnims( struggledata.directions[movedir].animationWhenMoving or struggledata.animationWhenMoving )
 		end
 
-		if struggledata[movedir].victimAnimation then
-			p.doVictimAnim( strugglerId, struggledata[movedir].victimAnimation, struggledata.part.."State" )
+		if struggledata.directions[movedir].victimAnimation then
+			p.doVictimAnim( strugglerId, struggledata.directions[movedir].victimAnimation, struggledata.part.."State" )
 		end
 		animator.playSound( "struggle" )
 	end
