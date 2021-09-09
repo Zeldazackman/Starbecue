@@ -180,10 +180,13 @@ function p.groundMovement(dx, dy, state, dt)
 end
 
 function p.jumpMovement(dx, dy, state, dt)
-	if dy ~= -1 then
+	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
+
+	if not mcontroller.onGround() and dy == -1 then
+		mcontroller.applyParameters{ ignorePlatformCollision = true }
+	else
 		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
-	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
 
 	p.movement.jumpProfile = "airJumpProfile"
 	if mcontroller.liquidPercentage() ~= 0 then
