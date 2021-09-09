@@ -163,8 +163,10 @@ function p.groundMovement(dx, dy, state, dt)
 			p.doAnims( state.control.animations[p.movement.groundMovement] )
 			p.movement.animating = true
 			mcontroller.applyParameters{ groundFriction = p.movementParams.ambulatingGroundFriction }
-			if (math.abs(mcontroller.xVelocity()) <= p.movementParams[p.movement.groundMovement.."Speed"]) or (not sameSign(mcontroller.xVelocity(), dx)) then
-				mcontroller.force({ dx * p.movementParams.groundForce * (1 + dt) * 1.5, 0})
+			if (math.abs(mcontroller.xVelocity()) <= p.movementParams[p.movement.groundMovement.."Speed"]) or (not p.sameSign(mcontroller.xVelocity(), dx)) then
+				mcontroller.force({ dx * p.movementParams.groundForce * (1 + dt), 0})
+			elseif p.movement.groundMovement == "walk" and (math.abs(mcontroller.xVelocity()) > p.movementParams[p.movement.groundMovement.."Speed"]) then
+				mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.groundForce * (1 + dt))
 			end
 		elseif p.movement.animating then
 			p.doAnims( state.idle )
@@ -225,7 +227,8 @@ end
 function p.airMovement( dx, dy, state, dt )
 	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDisabled then
 		p.movement.animating = true
-		if math.abs(mcontroller.xVelocity()) <= p.movementParams[p.movement.groundMovement.."Speed"] then
+
+		if math.abs(mcontroller.xVelocity()) <= p.movementParams[p.movement.groundMovement.."Speed"] or (not p.sameSign(mcontroller.xVelocity(), dx)) then
 			mcontroller.force({ dx * (p.movementParams.airForce * (dt + 1) * 2 ), 0 })
 		end
 
@@ -248,10 +251,10 @@ function p.waterMovement( dx, dy, state, dt )
 		end
 		if (dx ~= 0) or (dy ~= 0)then
 			p.doAnims( state.control.animations.swim )
-			if (dx ~= 0) and ((math.abs(mcontroller.xVelocity()) <= swimSpeed) or (not sameSign(mcontroller.xVelocity(), dx))) then
+			if (dx ~= 0) and ((math.abs(mcontroller.xVelocity()) <= swimSpeed) or (not p.sameSign(mcontroller.xVelocity(), dx))) then
 				mcontroller.force({ dx * p.movementParams.liquidForce * (1 + dt) * 1.5, 0})
 			end
-			if (dy ~= 0) and ((math.abs(mcontroller.yVelocity()) <= swimSpeed) or (not sameSign(mcontroller.yVelocity(), dy))) then
+			if (dy ~= 0) and ((math.abs(mcontroller.yVelocity()) <= swimSpeed) or (not p.sameSign(mcontroller.yVelocity(), dy))) then
 				mcontroller.force({ 0, dy * (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * (1 + dt) * 1.5})
 			end
 		else
