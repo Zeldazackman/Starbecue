@@ -180,7 +180,9 @@ function p.groundMovement(dx, dy, state, dt)
 end
 
 function p.jumpMovement(dx, dy, state, dt)
-	mcontroller.applyParameters{ ignorePlatformCollision = false }
+	if dy ~= -1 then
+		mcontroller.applyParameters{ ignorePlatformCollision = false }
+	end
 	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
 
 	p.movement.jumpProfile = "airJumpProfile"
