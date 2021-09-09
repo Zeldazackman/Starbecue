@@ -167,7 +167,26 @@
 				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"],
 				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"] // the white
 			]
-		]
+		],
+		"replaceSkin" : {
+			"head" : {
+				"skins" : ["default", "alt"],
+				"parts" : ["head", "head_foreground"]
+			},
+			"body" : {
+				"skins" : ["default", "alt"],
+				"parts" : ["body", "body_foreground"]
+			},
+			"legs" : {
+				"skins" : ["default", "alt"],
+				"parts" : ["frontlegs", "backlegs", "bapleg"]
+			},
+			"tail" : {
+				"skins" : ["default", "alt"],
+				"parts" : ["tail", "tail_foreground"]
+			}
+
+		}
 	},
 
 	"states": {

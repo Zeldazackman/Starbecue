@@ -134,6 +134,7 @@ function init()
 	p.spawner = config.getParameter("spawner")
 
 	p.setColorReplaceDirectives()
+	p.setSkinPartTags()
 	--[[
 	so, the thing is, we want this to move like an actor, even if it is a vehicle, so we have to have a little funny business,
 	both mcontrollers use the same arguments for the most part, just the actor mcontroller has more values, as well as some
@@ -209,6 +210,7 @@ function init()
 	message.setHandler( "settingsMenuSet", function(_,_, val )
 		p.settings = val
 		p.setColorReplaceDirectives()
+		p.setSkinPartTags()
 	end )
 
 	message.setHandler( "letout", function(_,_, val )

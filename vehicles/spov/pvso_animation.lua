@@ -75,7 +75,7 @@ function p.smolPreyAnimPath(occupant)
 		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, directives)
 	end
 	if state.idle.body ~= nil then
-		body = p.fixPathTags(animatedParts.parts.background.partStates.bodyState[state.idle.body].properties.image, skin, directives)
+		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, directives)
 	end
 	if state.idle.tail ~= nil then
 		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, directives)
@@ -425,5 +425,16 @@ function p.setColorReplaceDirectives()
 
 		end
 		animator.setGlobalTag( "directives", colorReplaceString )
+	end
+end
+
+function p.setSkinPartTags()
+	if p.vso.replaceSkin ~= nil then
+		for part, index in pairs(p.settings.replaceSkin) do
+			local skin = p.vso.replaceSkin[part].skins[index]
+			for _, animPart in ipairs(p.vso.replaceSkin[part].parts) do
+				animator.setPartTag( animPart, "skin", skin )
+			end
+		end
 	end
 end

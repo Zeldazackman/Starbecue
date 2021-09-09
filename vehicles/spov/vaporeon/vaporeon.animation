@@ -259,7 +259,7 @@
 			}
 		},
 		"parts": {
-			"background": {
+			"body": {
 				"properties": {
 					"centered": true,
 					 "zLevel": -2,
@@ -301,7 +301,7 @@
 					}
 				}
 			},
-			"foreground": {
+			"body_foreground": {
 				"properties": {
 					"centered": true,
 					 "zLevel": 1,
