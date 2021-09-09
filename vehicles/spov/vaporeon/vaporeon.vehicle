@@ -985,7 +985,7 @@
 				}
 			},
 			"locationCenters" : {
-				"belly" : [-0.25, -2]
+				"belly" : [0, -1]
 			},
 			"control": {
 				"clickActionsDisabled" : true,
