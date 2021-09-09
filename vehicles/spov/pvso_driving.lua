@@ -60,7 +60,7 @@ end
 function p.updateControls(dt)
 	for i = 0, #p.occupant do
 		local seatname = p.occupant[i].seatname
-		local eid = p.getEidFromSeatname(seatname)
+		local eid = p.occupant[i].id
 		if eid ~= nil and world.entityExists(eid) and not (seatname == p.driverSeat and p.isPathfinding) then
 			p.occupant[i].controls.dx = 0
 			p.occupant[i].controls.dy = 0

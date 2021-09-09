@@ -63,6 +63,7 @@ function init()
 	end)
 
 	message.setHandler("getVSOseatEquips", function(_,_, type)
+		player.setProperty( "vsoSeatType", type)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
@@ -101,14 +102,14 @@ function checkLockItem(itemDescriptor, type)
 		local essentialItem = player.essentialItem(item)
 		if essentialItem then
 			if (essentialItem.name == itemDescriptor.name) then
-				return lockEssentialItem(itemDescriptor, item)
+				return lockEssentialItem(itemDescriptor, item, type)
 			end
 		end
 	end
 
 	for i, tag in ipairs(bannedTags[type]) do
 		if root.itemHasTag(itemDescriptor.name, tag) then
-			return lockItem(itemDescriptor)
+			return lockItem(itemDescriptor, type)
 		end
 	end
 
@@ -118,23 +119,28 @@ function checkLockItem(itemDescriptor, type)
 	end
 	for i, category in ipairs(bannedCategories[type]) do
 		if category == data.config.category then
-			return lockItem(itemDescriptor)
+			return lockItem(itemDescriptor, type)
 		end
 	end
 end
 
-function lockItem(itemDescriptor)
-	local lockItemDescriptor = root.assetJson("/vehicles/spov/pvso_general.config:lockItemDescriptor")
+function lockItem(itemDescriptor, type)
+	local lockItemDescriptor = player.essentialItem("inspectiontool")
+	if lockItemDescriptor.name ~= "pvsoSecretTrick" then
+		lockEssentialItem(lockItemDescriptor, "inspectiontool", type)
+		lockItemDescriptor = player.essentialItem("inspectiontool")
+	end
+
 	local consumed = player.consumeItem(itemDescriptor, false, true)
-	--local lockItemDescriptor = player.consumeItem( baseLockItem )
 	if consumed then
 		table.insert(lockItemDescriptor.parameters.scriptStorage.itemDescriptors, consumed)
-		player.giveItem(lockItemDescriptor)
+		player.giveEssentialItem("inspectiontool", lockItemDescriptor)
 	end
 end
 
-function lockEssentialItem(itemDescriptor, slot)
+function lockEssentialItem(itemDescriptor, slot, type)
 	local lockItemDescriptor = root.assetJson("/vehicles/spov/pvso_general.config:lockItemDescriptor")
 	lockItemDescriptor.parameters.scriptStorage.lockedEssentialItems[slot] = itemDescriptor
+	lockItemDescriptor.parameters.scriptStorage.lockType = type
 	player.giveEssentialItem(slot, lockItemDescriptor)
 end
