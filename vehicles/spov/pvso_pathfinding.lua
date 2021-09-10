@@ -12,3 +12,64 @@ function p.updatePathfinding(dt)
 		p.pathfinding(dt)
 	end
 end
+
+-- extend mcontroller to add actor methods
+
+function mcontroller.controlMove(direction, run)
+	-- Controls movement in a direction.
+	-- Each control replaces the previous one.
+end
+
+function mcontroller.baseParameters()
+	-- Returns the base movement parameters.
+end
+
+function mcontroller.facingDirection()
+	-- Returns the facing direction. -1 for left, 1 for right.
+end
+
+function mcontroller.movingDirection()
+	-- Returns the direction that the actor movement controller is currently moving in. -1 for left, 1 for right.
+end
+
+function mcontroller.controlParameters(parameters)
+	-- Changes movement parameters. Parameters are merged into the base parameters.
+	-- Each control is merged into the previous one.
+end
+
+function mcontroller.controlDown()
+	-- Controls dropping through platforms.
+end
+
+function mcontroller.controlApproachVelocity(targetVelocity, maxControlForce)
+	-- Approaches the targetVelocity using the force provided.
+	-- If the current velocity is higher than the provided targetVelocity,
+	-- the targetVelocity will still be approached, effectively slowing down the entity.
+	-- Each control overrides the previous one.
+end
+
+function mcontroller.controlApproachXVelocity(targetVelocity, maxControlForce)
+	-- Approaches an X velocity. Same as using approachVelocityAlongAngle with angle 0.
+	-- Each control overrides the previous one.
+end
+
+function mcontroller.controlApproachYVelocity(targetVelocity, maxControlForce)
+	-- Approaches a Y velocity. Same as using approachVelocityAlongAngle with angle (Pi / 2).
+	-- Each control overrides the previous one.
+end
+
+function mcontroller.liquidMovement()
+	-- Returns whether the controller is currently in liquid movement mode.
+end
+
+function mcontroller.controlFly(velocity)
+	-- Controls flying in the specified velocity.
+	-- Each control overrides the previous one.
+end
+
+-- technically not part of mcontroller but it's relevant the same way
+status = {}
+function status.stat(stat)
+	-- Returns the value for the specified stat. Defaults to 0.0 if the stat does not exist.
+	-- (we only need this to support "jumpModifier")
+end
