@@ -59,7 +59,6 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
-
 			"legsState": {
 				"default": "idle",
 				"states": {
@@ -104,7 +103,6 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
-
 			"headState": {
 				"default": "idle",
 				"states": {
@@ -113,6 +111,9 @@
 					"look": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
 					"AVlook": { "frames": 3, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"lookBack": { "frames": 1, "cycle": 3, "mode": "end", "priority": 2 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"succ": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"burp": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -157,6 +158,20 @@
 				}
 			},
 			"occupant5State": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"occupant6State": {
+				"default": "empty",
+				"states": {
+					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+					"smol": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"occupant7State": {
 				"default": "empty",
 				"states": {
 					"empty": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },

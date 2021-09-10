@@ -103,12 +103,7 @@ end
 
 function state.stand.letout( args )
 	if not mcontroller.onGround() or p.movement.falling then return false end
-
-	local args = args
-	if args.id == nil then
-		args.id = p.occupant[p.occupants.total].id
-	end
-	return p.doEscape(args, "belly", {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end
 
 function state.stand.vore()
@@ -164,7 +159,7 @@ state.lay.absorb = absorb
 function state.lay.unpin(args)
 	args.id = p.findFirstOccupantIdForLocation("hug")
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape(args, "hug", {}, {})
+	returnval[1], returnval[2], returnval[3] = p.doEscape(args, {}, {})
 	return true, returnval[2], returnval[3]
 end
 

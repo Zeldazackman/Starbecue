@@ -18,6 +18,11 @@ end
 function p.pathfinding(dt)
 end
 
+-- for letting out prey, some VSOs might wand more specific logic regarding this
+function p.letout(id)
+	return p.doTransition( "escape", {id = id} )
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]

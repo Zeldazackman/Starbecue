@@ -216,8 +216,8 @@ function init()
 		p.setSkinPartTags()
 	end )
 
-	message.setHandler( "letout", function(_,_, val )
-		p.doTransition( "escape", {id = val} )
+	message.setHandler( "letout", function(_,_, id )
+		p.letout(id)
 	end )
 
 	message.setHandler( "transform", function(_,_, data, eid, multiplier )
@@ -634,17 +634,13 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
-function p.doEscape(args, location, statuses, afterstatus )
-	if p.locationEmpty(location) then return false end
+function p.doEscape(args, statuses, afterstatus )
 	local victim = args.id
+	if not victim then return false end -- could be part of above but no need to log an error here
 
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
 	vehicle.setInteractive( false )
 	--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 	p.transitionLock = true
-
 	return true, function()
 		p.transitionLock = false
 		vehicle.setInteractive( true )
@@ -969,6 +965,7 @@ function p.uneat( occupantId )
 	if occupantData.species ~= nil then
 		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
 	end
+	return true
 end
 
 -------------------------------------------------------------------------------

@@ -49,35 +49,19 @@ function p.whenFalling()
 	end
 end
 
-function checkEscapes(args)
-	local location = p.occupant[args.index].location
-	local returnval = {}
-	local direction = "escapeoral"
-	local status = {"vsoindicatemaw"}
-	local move = args.direction or "up"
-
-	if (p.occupant[args.index].species == "xeronious_egg"
-	or vehicle.controlHeld(p.driverSeat, "down")) and location ~= "tail" then
-		move = "down"
-	end
-
-	if location == "tail" then
-		direction = "escapetail"
-	elseif location == "belly" and move == "down" then
-		status = {"vsoindicateout"}
-		direction = "escapeanalvore"
+function p.letout(id)
+	local location = p.entity[id].location
+	if location == "belly" then
+		if p.heldControl(p.driverSeat, "down") or p.entity[id].species == "egg" then
+			return p.doTransition("escapeAnal", {id = id})
+		else
+			return p.doTransition("escapeOral", {id = id})
+		end
+	elseif location == "tail" then
+		return p.doTransition("escapeTail", {id = id})
 	elseif location == "hug" then
-		p.setState("sit")
-		return p.doEscape(args.index, "hug", {}, {})
+		return p.uneat(id)
 	end
-
-	if not (p.doTransition(direction, args) == "success") then return false end
-
-	returnval[1], returnval[2] = p.doEscape(args, location, status, {"droolsoaked", 5})
-
-	returnval[3] = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
-
-	return returnval[1], returnval[2], returnval[3]
 end
 
 function p.extraBellyEffects(i, eid, health)
@@ -152,6 +136,17 @@ function checkAnal()
 	return p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore")
 end
 
+function escapeOral(args)
+	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end
+
+function escapeAnal(args)
+	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+end
+
+function escapeTail(args)
+	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+end
 
 function checkVore()
 	if checkOral() then return true end
@@ -171,15 +166,18 @@ function state.stand.update()
 	end
 end
 
-state.stand.checkletout = checkEscapes
-state.stand.bellytotail = bellyToTail
-state.stand.tailtobelly = tailToBelly
+state.stand.bellyToTail = bellyToTail
+state.stand.tailToBelly = tailToBelly
 state.stand.eat = oralEat
-state.stand.taileat = tailEat
+state.stand.tailEat = tailEat
 
 state.stand.vore = checkVore
 state.stand.oralVore = checkOral
 state.stand.tailVore = checkTail
+
+state.stand.escapeOral = escapeOral
+state.stand.escapeAnal = escapeAnal
+state.stand.escapeTail = escapeTail
 
 state.stand.succ = succ
 
@@ -203,16 +201,17 @@ function state.sit.hug( args )
 	return p.eat(args.id, "hug", {})
 end
 
-state.sit.checkletout = checkEscapes
-state.sit.bellytotail = bellyToTail
-state.sit.tailtobelly = tailToBelly
+state.sit.bellyToTail = bellyToTail
+state.sit.tailToBelly = tailToBelly
 state.sit.eat = oralEat
-state.sit.taileat = tailEat
+state.sit.tailEat = tailEat
 
 state.sit.vore = checkVore
 state.sit.oralVore = checkOral
 state.sit.tailVore = checkTail
 
+state.sit.escapeOral = escapeOral
+state.sit.escapeTail = escapeTail
 
 -------------------------------------------------------------------------------
 
@@ -226,16 +225,17 @@ function state.hug.unhug( args )
 	p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
-state.hug.checkletout = checkEscapes
-state.hug.bellytotail = bellyToTail
-state.hug.tailtobelly = tailToBelly
+state.hug.bellyToTail = bellyToTail
+state.hug.tailToBelly = tailToBelly
 state.hug.eat = oralEat
-state.hug.taileat = tailEat
+state.hug.tailEat = tailEat
 
 state.hug.vore = checkVore
 state.hug.oralVore = checkOral
 state.hug.tailVore = checkTail
 
+state.hug.escapeOral = escapeOral
+state.hug.escapeTail = escapeTail
 
 -------------------------------------------------------------------------------
 
@@ -259,15 +259,14 @@ function state.crouch.ending()
 	p.setMovementParams( "default" )
 end
 
-state.crouch.checkletout = checkEscapes
-state.crouch.bellytotail = bellyToTail
-state.crouch.tailtobelly = tailToBelly
+state.crouch.bellyToTail = bellyToTail
+state.crouch.tailToBelly = tailToBelly
 
-state.crouch.taileat = tailEat
+state.crouch.tailEat = tailEat
 state.crouch.tailVore = checkTail
 state.crouch.vore = checkTail
 
-
+state.crouch.escapeTail = escapeTail
 
 -------------------------------------------------------------------------------
 
@@ -302,14 +301,17 @@ function state.fly.vore()
 	if checkTail() then return true end
 end
 
-state.fly.checkletout = checkEscapes
-state.fly.bellytotail = bellyToTail
-state.fly.tailtobelly = tailToBelly
+state.fly.bellyToTail = bellyToTail
+state.fly.tailToBelly = tailToBelly
 state.fly.eat = oralEat
-state.fly.taileat = tailEat
+state.fly.tailEat = tailEat
 
 state.fly.tailVore = checkTail
 state.fly.analVore = checkAnal
+
+state.fly.escapeOral = escapeOral
+state.fly.escapeAnal = escapeAnal
+state.fly.escapeTail = escapeTail
 
 state.fly.succ = succ
 

@@ -190,17 +190,13 @@
 					"script": "eat"
 				},
 
-				"escapeoral": { // 1 occupants
+				"escapeOral": { // 1 occupants
 					"location" : "belly",
 					"animation": {
 						"body": "escape",
 						"head": "escape"
 					},
 					"victimAnimation": "escape"
-				},
-
-				"escape" : {
-					"script": "checkletout"
 				}
 
 			},

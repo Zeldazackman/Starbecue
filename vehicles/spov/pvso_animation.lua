@@ -167,13 +167,14 @@ function p.victimAnimUpdate(entity)
 	if victimAnim.prevFrame ~= frame then
 		if anim.frames ~= nil then
 			for i = 1, #anim.frames do
-				if (anim.frames[i] == frame) and (i ~= #anim.frames) then
+				if (anim.frames[i] == frame) then
 					victimAnim.prevFrame = frame
 					victimAnim.prevIndex = i
 
-					victimAnim.frame = anim.frames[i + 1]
+					victimAnim.frame = anim.frames[i + 1] or frame + 1
 					victimAnim.index = i + 1
-				elseif anim.loop and (i == #anim.frames) then
+				end
+				if anim.loop and (i == #anim.frames) then
 					victimAnim.prevFrame = frame
 					victimAnim.prevIndex = i
 

@@ -14,7 +14,7 @@ function p.updatePathfinding(dt)
 end
 
 -- extend mcontroller to add actor methods
-
+--[[ this all seems to cause it to crash, seems like you can't do that
 function mcontroller.controlMove(direction, run)
 	-- Controls movement in a direction.
 	-- Each control replaces the previous one.
@@ -73,3 +73,4 @@ function status.stat(stat)
 	-- Returns the value for the specified stat. Defaults to 0.0 if the stat does not exist.
 	-- (we only need this to support "jumpModifier")
 end
+]]

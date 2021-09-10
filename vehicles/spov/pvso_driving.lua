@@ -133,7 +133,7 @@ function p.updateDriving(dt)
 		end
 	end
 	if p.pressControl(p.driverSeat, "special2") then
-		p.doTransition("escape", {index = p.occupants.total})
+		p.letout(p.occupant[p.occupants.total].id)
 	end
 
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
