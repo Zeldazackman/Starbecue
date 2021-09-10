@@ -84,28 +84,22 @@ function succ(args)
 		pos1[1], pos2[1] = pos2[1], pos1[1]
 	end
 
-	-- local pos1 = p.localToGlobal({9,0})
-
 	local entities = world.entityQuery(pos1, pos2, {
 		withoutEntityId = p.driver,
 		includedTypes = {"creature"}
 	})
 
-	-- local entities = world.entityQuery(pos1, 10, {
-	-- 	withoutEntityId = p.driver,
-	-- 	includedTypes = {"creature"}
-	-- })
-
 	local data = {
 		destination = p.localToGlobal({3, 2.5}),
 		source = entity.id(),
-		force = 400
+		force = 10
 	}
 
 	for i = 1, #entities do
 		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", {data})
 	end
 	p.checkEatPosition( data.destination, "belly", "succeat", true)
+	return true
 end
 
 function bellyToTail(args)

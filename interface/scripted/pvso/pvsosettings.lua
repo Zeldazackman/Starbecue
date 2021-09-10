@@ -286,10 +286,11 @@ function transform()
 	end
 end
 
+p.smolPreyData = nil
 function sendTransformMessage(eid)
 -- we currently don't have any pathing behavior for this, but it does work, however it looks buggy so shall be disabled for non player entities for now
-	if eid ~= nil and world.entityExists(eid) and (world.entityType() == "player")then
-		world.sendEntityMessage( p.vso, "transform", nil, eid, 3)
+	if eid ~= nil and world.entityExists(eid) and (world.entityType() == "player") then
+		world.sendEntityMessage( p.vso, "transform", p.smolPreyData, eid, 3)
 	end
 end
 

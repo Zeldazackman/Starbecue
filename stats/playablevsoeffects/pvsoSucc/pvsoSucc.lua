@@ -19,7 +19,7 @@ function update(dt)
 	else
 		dy = -1
 	end
-	mcontroller.force({dx * data.force, dy * data.force})
+	mcontroller.addMomentum({dx * data.force, dy * data.force})
 end
 
 function uninit()
