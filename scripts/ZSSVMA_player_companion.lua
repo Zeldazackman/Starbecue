@@ -3,7 +3,7 @@ function init()
 	oldinit()
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
 		local settings = player.getProperty( "vsoSettings" ) or {}
-		if vsoMenuName then return settings[vsoMenuName] or {} end
+		if vsoMenuName then return sb.jsonMerge(settings[vsoMenuName] or {}, settings.global or {}) end
 		return settings.global or {}
 	end)
 	message.setHandler( "openPVSOInterface", function(_,_, name, args, appendSettings, sourceEntity)

@@ -13,11 +13,10 @@ function everything_primary()
 	end)
 
 	message.setHandler("getVSOseatInformation", function()
-		local seatdata = {
+		return {
 			mass = mcontroller.mass(),
 			powerMultiplier = status.stat("powerMultiplier")
 		}
-		return seatdata
 	end)
 
 	message.setHandler("pvsoSucc", function(_,_, data)
