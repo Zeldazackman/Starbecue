@@ -54,6 +54,7 @@ function p.clearOccupant(i)
 		progressBarData = nil,
 		progressBarMultiplier = 1,
 		progressBarFinishFunc = nil,
+		progressBarColor = nil,
 		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
 		indicatorCooldown = 0,
 		controls = {
@@ -225,6 +226,12 @@ function init()
 		p.entity[eid].progressBarActive = true
 		p.entity[eid].progressBar = 0
 		p.entity[eid].progressBarData = data
+		if data == nil then
+			p.entity[eid].progressBarColor = p.vso.replaceColors[1][p.settings.replaceColors[1] + 1] -- pred body color
+		else
+			-- p.entity[eid].progressBarColor = root.assetJson("something about data:vso.replaceColors.0.1")
+			-- or maybe define it some other way, I dunno
+		end
 		p.entity[eid].progressBarMultiplier = multiplier or 1
 		p.entity[eid].progressBarFinishFuncName = "transformPrey"
 	end )
@@ -778,11 +785,13 @@ function p.updateOccupants(dt)
 					{
 						owner = entity.id(),
 						directions = directions,
-						-- progress = {
-						-- 	active = p.occupant[i].progressBarActive,
-						-- 	type = p.occupant[i].progressBarType,
-						-- 	progress = p.occupant[i].progressBar
-						-- },
+						progress = {
+							active = p.occupant[i].progressBarActive,
+							color = p.occupant[i].progressBarColor,
+							percent = p.occupant[i].progressBar,
+							dx = (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier),
+						},
+						time = p.occupant[i].occupantTime
 					}
 				})
 			end
