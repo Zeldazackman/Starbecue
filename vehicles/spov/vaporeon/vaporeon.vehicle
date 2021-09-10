@@ -17,7 +17,7 @@
 			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ "breathprotectionvehicle", "pvsoInvisible"]
+			"statusEffects" : [ ]
 		},
 		"occupant1" : {
 			"part" : "occupant1",
@@ -75,6 +75,12 @@
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
 		"startState": "stand",
+		"driverStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 }
+		},
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 }
+		},
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [

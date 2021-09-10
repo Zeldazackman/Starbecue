@@ -39,8 +39,7 @@ function p.clearOccupant(i)
 		seatname = "occupant"..i,
 		index = i,
 		id = nil,
-		loungeStatList = {},
-		statList = {},
+		statList = p.vso.occupantStatusEffects or {},
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -185,6 +184,7 @@ function init()
 	p.occupant[0].id = p.driver
 	p.occupant[0].seatname = "driver"
 	p.occupant[0].visible = false
+	p.occupant[0].statList = p.vso.driverStatusEffects or {}
 	p.seats.driver = p.occupant[0]
 	p.driverSeat = "driver"
 
