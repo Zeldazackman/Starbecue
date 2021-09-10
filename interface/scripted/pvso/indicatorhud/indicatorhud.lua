@@ -90,11 +90,8 @@ function update( dt )
 	end
 
 	-- bar
-	local s = 0
-	if progress.active then
-		s = (progress.percent or 0) / 100 * bar.w
-		progress.percent = progress.percent + progress.dx * dt
-	end
+	local s = (progress.percent or 0) / 100 * bar.w
+	progress.percent = progress.percent + progress.dx * dt
 	if s < bar.w then
 		indicator:drawImageRect(
 			bar.empty,

@@ -223,6 +223,12 @@ function init()
 	message.setHandler( "transform", function(_,_, data, eid, multiplier )
 		if p.entity[eid].progressBarActive then return end
 
+		if data then
+			if data.species == p.entity[eid].species then return end
+		else
+			if p.entity[eid].species == world.entityName( entity.id() ):sub( 5 ) then return end
+		end
+
 		p.entity[eid].progressBarActive = true
 		p.entity[eid].progressBar = 0
 		p.entity[eid].progressBarData = data
@@ -754,14 +760,12 @@ function p.updateOccupants(dt)
 					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar >= 100 then
 						p[p.occupant[i].progressBarFinishFuncName](i)
-						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
 				else
 					p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
 					if p.occupant[i].progressBar <= 0 then
 						p[p.occupant[i].progressBarFinishFuncName](i)
-						p.occupant[i].progressBar = 0
 						p.occupant[i].progressBarActive = false
 					end
 				end

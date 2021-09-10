@@ -118,7 +118,6 @@ function updateHPbars(dt)
 end
 
 function secondaryBar(i, listItem, dt)
-	if not p.occupant[i].progressBarActive then return end
 	widget.setProgress( p.occupantList.."."..listItem..".secondarybar", p.occupant[i].progressBar / 100 )
 end
 
