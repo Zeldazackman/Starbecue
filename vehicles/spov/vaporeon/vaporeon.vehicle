@@ -149,23 +149,24 @@
 		"replaceColors" : [
 			[
 				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
-				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the main body blue
+				// make sure replace colors do not exactly match initial color, or they might be overwritten twice
+				["0d4f6b", "1b80a8", "42b2de", "6dc4e6"], // the main body blue
 				["760596", "bd62d5", "df77de", "ffbdff"] //shiny
 			],
 			[
 				["0b2e67", "194893", "2d66c3"],
-				["0b2e67", "194893", "2d66c3"], // the dark fin blue
+				["0b2e68", "194894", "2d66c4"], // the dark fin blue
 				["4a042e", "621041", "83395a"] // shiny
 			],
 			[
 				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],// the white underbelly
-				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],
-				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"] // same yellow as the finns
+				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"],
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"] // same yellow as the finns
 			],
 			[
 				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"], // the yellow headfins
-				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"],
-				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"] // the white
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"],
+				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"] // the white
 			]
 		],
 		"replaceSkin" : {

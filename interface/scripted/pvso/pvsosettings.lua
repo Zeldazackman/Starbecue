@@ -157,6 +157,7 @@ function checkRefresh(dt)
 				settings = result.settings
 				refreshListData()
 				readOccupantData()
+				setIconDirectives()
 				p.refreshtime = 0
 				p.refreshed = true
 			end
