@@ -580,7 +580,7 @@
 					"directions": {
 						"up": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_up" },
 						"front": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_front" },
-						"back": { "transition": "side", "indicate": "green", "victimAnimation": "pinned.s_back" }
+						"back": { "transition": "side", "indicate": "blue", "victimAnimation": "pinned.s_back" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
@@ -647,9 +647,9 @@
 					"part" : "body",
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
-						"front": { "transition": "down", "indicate": "blue" },
+						"front": { "transition": "up", "indicate": "green" },
 						"back": { "transition": "up", "indicate": "green" },
-						"down": { "transition": "down", "indicate": "blue" }
+						"down": { "transition": "up", "indicate": "green" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
@@ -662,7 +662,7 @@
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_up" },
 						"front": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_front" },
-						"back": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_back" }
+						"back": { "transition": "absorb", "indicate": "yellow", "victimAnimation": "pinned.s_back" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
