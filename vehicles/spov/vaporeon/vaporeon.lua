@@ -193,17 +193,11 @@ function state.back.update()
 end
 
 function state.back.bed( args )
-	if p.eat( args.id, "hug" ) then
-		--vsoVictimAnimSetStatus( "occupant"..index, {} );
-		return true
-	else
-		return false
-	end
+	return p.eat( args.id, "hug" )
 end
 
 function state.back.unbed(args)
-	args.id = p.findFirstOccupantIdForLocation("hug")
-	return p.doEscapeNoDelay(args, "hug", {})
+	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
 -------------------------------------------------------------------------------

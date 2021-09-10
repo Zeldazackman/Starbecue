@@ -29,12 +29,7 @@ function state.back.analescape( args )
 end
 
 function state.back.bed( args )
-	if p.eat( args.id, "hug" ) then
-		--vsoVictimAnimSetStatus( "occupant"..index, {} );
-		return true
-	else
-		return false
-	end
+	return p.eat( args.id, "hug" )
 end
 
 function state.back.update()
@@ -50,7 +45,7 @@ function state.back.update()
 end
 
 function state.back.unbed(args)
-	return p.doEscapeNoDelay({id = p.findFirstOccupantIdForLocation("hug")}, "hug", {})
+	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
 ---------------------------------------------------------------------------

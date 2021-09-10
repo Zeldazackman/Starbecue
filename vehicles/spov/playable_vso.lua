@@ -653,20 +653,6 @@ function p.doEscape(args, location, statuses, afterstatus )
 	end
 end
 
-function p.doEscapeNoDelay(args, location, afterstatus )
-	if p.locationEmpty(location) then return false end
-	local victim = args.id
-
-	if not victim then -- could be part of above but no need to log an error here
-		return false
-	end
-
-	vehicle.setInteractive( true )
-	p.uneat( victim )
-	--world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
-end
-
-
 function p.checkEatPosition(position, location, transition, noaim)
 	if not p.locationFull(location) then
 		local prey = world.entityQuery(position, 2, {
@@ -970,6 +956,7 @@ function p.eat( occupantId, location )
 end
 
 function p.uneat( occupantId )
+	if occupantId == nil or not world.entityExists(occupantId) then return end
 	world.sendEntityMessage( occupantId, "PVSOClear")
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )

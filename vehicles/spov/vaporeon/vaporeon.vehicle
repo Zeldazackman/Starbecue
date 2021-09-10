@@ -90,7 +90,10 @@
 					[3, 0.4], [2.5, 1]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"fullThreshold" : 3.2, // mass of two normal players
 				"jumpCount" : 2,
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
 				"walkSpeed": 10,
 				"runSpeed": 20,
 				"swimSpeed" : 15,
@@ -105,10 +108,13 @@
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"fullThreshold" : 1.6, // mass of one normal player
 				"walkSpeed": 10,
 				"runSpeed": 20,
 				"swimSpeed" : 15,
 				"jumpCount" : 2,
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3,
 				"liquidBuoyancy" : 0.0,
 				"bounceFactor" : 0.0
 			},
@@ -120,6 +126,7 @@
 					[-0.85, 0.22], [-1.25, -0.35]
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
+				"fullThreshold" : 0, // if you're in this state, you're full anyway
 				"jumpCount" : 0,
 				"runSpeed" : 3,
 				"walkSpeed" : 3,
@@ -278,10 +285,6 @@
 				"animation": { "head": "pet" }
 			},
 			"control": {
-				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 30,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
 				"defaultActions": ["vore", "specialAttack"],
 				"clickActions": {
 					"vore":{
@@ -867,10 +870,6 @@
 				"belly" : [-0.25, -2]
 			},
 			"control": {
-				"fullThreshold": 1,
-				"fullJumpStrength": 20,
-				"pulseEffect": "smoldoublejump",
-				"pulseSparkles": 3,
 				"defaultActions": ["physicalAttack", "specialAttack"],
 				"clickActions" : {
 					"physicalAttack": {
@@ -996,7 +995,6 @@
 			},
 			"control": {
 				"clickActionsDisabled" : true,
-				"fullThreshold" : 1,
 				"ballFrames": 12,
 				"ballRadius": 2,
 				"animations": {

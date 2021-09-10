@@ -48,7 +48,20 @@
 			"partAnchor" : "occupant5Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
 		}
+
 	},
 
 	"mouthPosition" : [ 0.0, 0.0 ],
@@ -69,6 +82,10 @@
 					[2, 3.5], [-2, 3.5],
 					[-3, 2.5], [-3, -4]
 				],
+				"fullThreshold" : 4.8, // mass of three humans
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"jumpCount" : 1,
 				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 
@@ -80,6 +97,10 @@
 					[2, 3.5], [-2, 3.5],
 					[-3, 2.5], [-3, -4]
 				],
+				"fullThreshold" : 4.8, // mass of three humans
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"jumpCount" : 0,
 				"gravityEnabled" : false,
 				"ignorePlatformCollision" : true
 			},
@@ -90,6 +111,10 @@
 					[3, 0], [-3, 0],
 					[-4, -1], [-4, -4]
 				],
+				"fullThreshold" : 0, // just forces walking only
+				"walkSpeed": 7,
+				"runSpeed": 7,
+				"jumpCount" : 0,
 				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
 			}
@@ -109,22 +134,10 @@
 			}
 		},
 		"locations" :{
-			"regular" :[
-				"belly",
-				"hug",
-				"tail"
-			],
-			"digest" : [
-				"belly",
-				"tail"
-			],
-			"combine" :[
-				["belly", "fatten"]
-			],
-			"mass" : [
-				"belly",
-				"fatten"
-			]
+			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"tail" : { "digest" : true, "mass" : 1 },
+			"hug" : { },
+			"fatten" : { "mass": 1 }
 		},
 
 		"maxOccupants" : {
@@ -320,42 +333,35 @@
 				"petAnimation": true
 			},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
-				"fullThreshold": 3, // 3 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 15,
-				"jumpCount": 1,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
-				"vore":{
-					"cooldown": 1,
-					"script": "vore"
-				},
-				"oralVore":{
-					"cooldown": 1,
-					"script": "oralVore"
-				},
-				"tailVore":{
-					"cooldown": 1,
-					"script": "tailVore"
-				},
-
-				/*
-				"primaryAction": {
-					"projectile": {
-						"name": "xeroniousbap",
-						"position": [ 3, -1.5 ],
-						"aimable": false
+				"defaultActions" : ["vore", "specialAttack"],
+				"clickActions" : {
+					"vore":{
+						"cooldown": 1,
+						"script": "vore"
 					},
-					"cooldown": 30,
-				},
-				*/
-				"specialAttack": {
-					"hold" : true,
-					"animation": {"head": "succ"},
-					"script": "succ"
+					"oralVore":{
+						"cooldown": 1,
+						"script": "oralVore"
+					},
+					"tailVore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					},
+					/*
+					"physicalAttack": {
+						"projectile": {
+							"name": "xeroniousbap",
+							"position": [ 3, -1.5 ],
+							"aimable": false
+						},
+						"cooldown": 30,
+					},
+					*/
+					"specialAttack": {
+						"hold" : true,
+						"animation": {"head": "succ"},
+						"script": "succ"
+					}
 				},
 				"animations": {
 					"walk": {
@@ -369,7 +375,11 @@
 								{"y": [2, 2, 1, 1, 0, 0, 1, 1], "groups": ["headbob", "bodybob"]}
 							]
 						}
-
+					},
+					"swim": {
+						"arms": "fly",
+						"legs": "walk",
+						"body": "idle"
 					},
 					"run": {
 						"arms": "run",
@@ -508,35 +518,21 @@
 			},
 
 			"control": {
-				"walkSpeed": 7,
-				"runSpeed": 7,
-				"swimSpeed" : 15,
-				"jumpStrength": 1,
-				"fullThreshold": 2, // 2 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 1,
-				"jumpCount": 1,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
-				"vore":{
-					"cooldown": 1,
-					"script": "tailVore"
-				},
-				"tailVore":{
-					"cooldown": 1,
-					"script": "tailVore"
+				"waterMovementDisabled":true,
+				"airMovementDisabled":true,
+				"defaultActions" : ["vore", "vore"],
+				"clickActions" : {
+					"vore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					},
+					"tailVore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					}
 				},
 				"animations": {
 					"walk": {
-						"arms": "crawl",
-						"legs": "crawl",
-						"offset" : {
-							"parts" : [
-								{"x": [12], "y": [-27], "groups": ["headbob"] },
-								{"x": [-8], "y": [-12], "groups": ["tailbob"] }
-							]
-						}
-					},
-					"run": {
 						"arms": "crawl",
 						"legs": "crawl",
 						"offset" : {
@@ -550,14 +546,13 @@
 			}
 		},
 		"fly": {
-			"noPhysicsTransition" : true,
 			"transitions": {
 				"succeat": { // 3 occupants
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "none"
 					},
 					"victimAnimation": "playersucc",
@@ -567,7 +562,7 @@
 					"location" : "belly",
 					"animation": {
 						"body": "escape",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "none"
 					},
 					"victimAnimation": "escape"
@@ -577,7 +572,7 @@
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "AVlook"
 					},
 					"victimAnimation": "playertaileat",
@@ -588,7 +583,7 @@
 					"location" : "tail",
 					"animation": {
 						"tail": "eat",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "AVlook"
 					},
 					"victimAnimation": "tailescape",
@@ -597,21 +592,21 @@
 				"digestbelly" : {
 					"animation": {
 						"body": "shrink",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "burp"
 					}
 				},
 				"digesttail" : {
 					"animation": {
 						"tail": "shrink",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "burp"
 					}
 				},
 				"analvore": { // 3 occupants
 					"animation": {
 						"body": "expand",
-						"arms": "fly2",
+						"arms": "fly",
 						"legs": "analvore",
 						"head": "AVlook"
 					},
@@ -621,7 +616,7 @@
 				"escapeanalvore": { // 3 occupants
 					"animation": {
 						"body": "shrink",
-						"arms": "fly2",
+						"arms": "fly",
 						"head": "AVlook"
 					},
 					"victimAnimation": "escapeanalvore"
@@ -629,7 +624,7 @@
 				"bellytotail" : {
 					"script": "bellytotail",
 					"animation": {
-						"arms": "fly2",
+						"arms": "fly",
 						"tail": "expand",
 						"body": "shrink"
 					}
@@ -637,7 +632,7 @@
 				"tailtobelly" : {
 					"script": "tailtobelly",
 					"animation": {
-						"arms": "fly2",
+						"arms": "fly",
 						"tail": "shrink",
 						"body": "expand"
 					}
@@ -690,32 +685,29 @@
 			},
 
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 1,
-				"fullThreshold": 3, // 3 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 1,
-				"fullWeights" : [1, 6, 11, 17, 23],
-				"jumpCount": 1,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
-				"vore":{
-					"cooldown": 1,
-					"script": "vore"
-				},
-				"oralVore":{
-					"cooldown": 1,
-					"script": "oralVore"
-				},
-				"tailVore":{
-					"cooldown": 1,
-					"script": "tailVore"
-				},
-				"specialAttack": {
-					"hold" : true,
-					"animation": {"head": "succ"},
-					"script": "succ"
+				"groundMovementDisabled" : true,
+				"jumpMovementDisabled" : true,
+				"airMovementDisabled" : true,
+				"waterMovementDisabled" : true,
+				"defaultActions" : ["vore", "specialAttack"],
+				"clickActions" : {
+					"vore":{
+						"cooldown": 1,
+						"script": "vore"
+					},
+					"oralVore":{
+						"cooldown": 1,
+						"script": "oralVore"
+					},
+					"tailVore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					},
+					"specialAttack": {
+						"hold" : true,
+						"animation": {"head": "succ"},
+						"script": "succ"
+					}
 				},
 
 				"animations": {
@@ -725,7 +717,7 @@
 							"timing": "arms",
 							"loop": true,
 							"parts" : [
-								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "groups": ["headbob", "bodybob"], "legs": true}
+								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "groups": ["headbob", "bodybob", "legsbob"]}
 							]
 						}
 					}

@@ -155,7 +155,7 @@ end
 
 function p.groundMovement(dx, dy, state, dt)
 	p.movement.groundMovement = "run"
-	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass > state.control.fullThreshold) then
+	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= p.movementParams.fullThreshold) then
 		p.movement.groundMovement = "walk"
 	end
 	if mcontroller.onGround() then
@@ -181,6 +181,7 @@ end
 
 function p.jumpMovement(dx, dy, state, dt)
 	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
+	if state.control.jumpMovementDisabled then return end
 
 	if not mcontroller.onGround() and dy == -1 then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
@@ -208,10 +209,10 @@ function p.jumpMovement(dx, dy, state, dt)
 				mcontroller.setYVelocity(p.movementParams[p.movement.jumpProfile].jumpSpeed)
 				if (p.movement.jumps > 1) and mcontroller.liquidPercentage() == 0 then
 					-- particles from effects/multiJump.effectsource
-					if state.control.pulseEffect then
-						animator.burstParticleEmitter( state.control.pulseEffect )
+					if p.movementParams.pulseEffect then
+						animator.burstParticleEmitter( p.movementParams.pulseEffect )
 						animator.playSound( "doublejump" )
-						for i = 1, state.control.pulseSparkles do
+						for i = 1, p.movementParams.pulseSparkles do
 							animator.burstParticleEmitter( "defaultblue" )
 							animator.burstParticleEmitter( "defaultlightblue" )
 						end

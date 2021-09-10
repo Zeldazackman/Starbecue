@@ -70,13 +70,8 @@
 					[1, 2], [-1, 2],
 					[-2, 1], [-2, -5]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
 				"ignorePlatformCollision" : false
 			},
 			"smol":{
@@ -86,13 +81,8 @@
 					[0.5, 1], [-0.5, 1],
 					[-1, 0.5], [-1, -2]
 				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3,
 				"ignorePlatformCollision" : false
 			}
 		},
@@ -253,15 +243,6 @@
 				"petAnimation": true
 			},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
-				"fullThreshold": 5, // 3 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 15,
-				"jumpCount": 2,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
 				"primaryAction": {
 				},
 				"altAction": {
@@ -346,15 +327,6 @@
 				"petAnimation": true
 			},
 			"control": {
-				"walkSpeed": 10,
-				"runSpeed": 20,
-				"swimSpeed" : 15,
-				"jumpStrength": 50,
-				"fullThreshold": 5, // 3 (or more) occupants and it uses fulljumpstrength and can't run
-				"fullJumpStrength": 15,
-				"jumpCount": 2,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
 				"primaryAction": {
 				},
 				"altAction": {

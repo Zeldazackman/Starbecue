@@ -8,7 +8,8 @@
 		"frame" : "1",
 		"directives" : "",
 		"bellymask" : "",
-		"smolprey": "xeronious"
+		"smolprey": "xeronious",
+		"skin": "default"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -40,16 +41,15 @@
 
 					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
-					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
-					"fly": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
-					"fly2": { "frames": 16, "cycle": 1.5, "mode": "end", "priority": 0 },
+					"fly": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"s_back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 }, // temporary dummy ones
 					"s_front": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1 },
@@ -165,7 +165,7 @@
 			}
 		},
 		"parts": {
-			"background": {
+			"body": {
 				"properties": {
 					"centered": true,
 					 "zLevel": -1,
@@ -173,25 +173,25 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
 
-						"crouch": { "properties": { "image": "spov/body.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
-						"crouchdown": { "properties": { "image": "spov/body.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
+						"crouchdown": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/body.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
+						"s_back": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/body.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
 					}
 				}
 			},
-			"foreground": {
+			"body_foreground": {
 				"properties": {
 					"centered": true,
 					"zLevel": 1,
@@ -199,21 +199,21 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
 
-						"crouch": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
-						"crouchdown": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
+						"crouchdown": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/body_fg.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
+						"s_back": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/foreground/body.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
 					}
 				}
 			},
@@ -225,25 +225,24 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/arms/arms_fg.png:idle.<frame><directives>" } },
-						"hug": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
-						"rotation": { "properties": { "image": "spov/arms/arms_fg.png:rotation.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/foreground/arms.png:idle.<frame><directives>" } },
+						"hug": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
+						"rotation": { "properties": { "image": "spov/<skin>/foreground/arms.png:rotation.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/arms/arms_fg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/arms/arms_fg.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/foreground/arms.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/foreground/arms.png:run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
-						"crawl": { "properties": { "image": "spov/arms/arms_fg.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/arms/arms_fg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/arms/arms_fg.png:fall.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
-						"fly2": { "properties": { "image": "spov/arms/arms_fg.png:fly.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/foreground/arms.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/<skin>/foreground/arms.png:fall.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/<skin>/foreground/arms.png:fly.<frame><directives>" } },
 
-						"s_back": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/arms/arms_fg.png:hug.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
 
 
 						"none": { "properties": {} }
@@ -258,25 +257,24 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
-						"hug": { "properties": { "image": "spov/arms/arms_bg.png:hug.<frame><directives>" } },
-						"rotation": { "properties": { "image": "spov/arms/arms_bg.png:rotation.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
+						"hug": { "properties": { "image": "spov/<skin>/arms.png:hug.<frame><directives>" } },
+						"rotation": { "properties": { "image": "spov/<skin>/arms.png:rotation.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/arms/arms_bg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/arms/arms_bg.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/arms.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/arms.png:run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/arms/arms_bg.png:crawl.4<directives>" } },
-						"crawl": { "properties": { "image": "spov/arms/arms_bg.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/arms.png:crawl.4<directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/arms.png:crawl.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/arms/arms_bg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/arms/arms_bg.png:fall.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
-						"fly2": { "properties": { "image": "spov/arms/arms_bg.png:fly.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/arms.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/<skin>/arms.png:fall.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/<skin>/arms.png:fly.<frame><directives>" } },
 
-						"s_back": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/arms/arms_bg.png:idle.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -290,23 +288,23 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "spov/legs/legs_fg.png:idle.<frame><directives>" } },
-						"sit": { "properties": { "image": "spov/legs/legs_fg.png:sit.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/legs/legs_fg.png:fly.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/foreground/legs.png:idle.<frame><directives>" } },
+						"sit": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/<skin>/foreground/legs.png:fly.<frame><directives>" } },
 
-						"analvore": { "properties": { "image": "spov/legs/legs_fg.png:analvore.<frame><directives>" } },
+						"analvore": { "properties": { "image": "spov/<skin>/foreground/legs.png:analvore.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/legs/legs_fg.png:sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/legs/legs_fg.png:standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/<skin>/foreground/legs.png:sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/<skin>/foreground/legs.png:standup.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/legs/legs_fg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/legs/legs_fg.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/foreground/legs.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/foreground/legs.png:run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/legs/legs_fg.png:crawl.4<directives>" } },
-						"crawl": { "properties": { "image": "spov/legs/legs_fg.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/legs.png:crawl.4<directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/foreground/legs.png:crawl.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/legs/legs_fg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/legs/legs_fg.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/foreground/legs.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/<skin>/foreground/legs.png:fall.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -320,29 +318,29 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "spov/legs/legs_bg.png:idle.<frame><directives>" } },
-						"sit": { "properties": { "image": "spov/legs/legs_bg.png:sit.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/legs/legs_bg.png:fly.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/legs.png:idle.<frame><directives>" } },
+						"sit": { "properties": { "image": "spov/<skin>/legs.png:sit.<frame><directives>" } },
+						"fly": { "properties": { "image": "spov/<skin>/legs.png:fly.<frame><directives>" } },
 
-						"analvore": { "properties": { "image": "spov/legs/legs_bg.png:analvore.<frame><directives>" } },
+						"analvore": { "properties": { "image": "spov/<skin>/legs.png:analvore.<frame><directives>" } },
 
-						"sitdown": { "properties": { "image": "spov/legs/legs_bg.png:sitdown.<frame><directives>" } },
-						"standup": { "properties": { "image": "spov/legs/legs_bg.png:standup.<frame><directives>" } },
+						"sitdown": { "properties": { "image": "spov/<skin>/legs.png:sitdown.<frame><directives>" } },
+						"standup": { "properties": { "image": "spov/<skin>/legs.png:standup.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/legs/legs_bg.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/legs/legs_bg.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/legs.png:walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/legs.png:run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
-						"crawl": { "properties": { "image": "spov/legs/legs_bg.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/legs.png:crawl.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/legs.png:crawl.<frame><directives>" } },
 
-						"jump": { "properties": { "image": "spov/legs/legs_bg.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/legs/legs_bg.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/legs.png:jump.<frame><directives>" } },
+						"fall": { "properties": { "image": "spov/<skin>/legs.png:fall.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
 				}
 			},
-			"tail_fg": {
+			"tail_foreground": {
 				"properties": {
 					"centered": true,
 					"zLevel": 2,
@@ -350,24 +348,24 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/tail/tail_fg.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/foreground/tail.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
 				}
 			},
-			"tail_bg": {
+			"tail": {
 				"properties": {
 					"centered": true,
 					"zLevel": -1,
@@ -375,18 +373,18 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "spov/tail/tail_bg.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
@@ -400,13 +398,13 @@
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "spov/head.png:idle.<frame><directives>" } },
-						"blink": { "properties": { "image": "spov/head.png:blink.<frame><directives>" } },
-						"look": { "properties": { "image": "spov/head.png:look.<frame><directives>" } },
-						"AVlook": { "properties": { "image": "spov/head.png:AVlook.<frame><directives>" } },
-						"burp": { "properties": { "image": "spov/head.png:burp.<frame><directives>" } },
-						"lookBack": { "properties": { "image": "spov/head.png:lookBack.<frame><directives>" } },
-						"succ": { "properties": { "image": "spov/head.png:succ.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/head.png:idle.<frame><directives>" } },
+						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><directives>" } },
+						"look": { "properties": { "image": "spov/<skin>/head.png:look.<frame><directives>" } },
+						"AVlook": { "properties": { "image": "spov/<skin>/head.png:AVlook.<frame><directives>" } },
+						"burp": { "properties": { "image": "spov/<skin>/head.png:burp.<frame><directives>" } },
+						"lookBack": { "properties": { "image": "spov/<skin>/head.png:lookBack.<frame><directives>" } },
+						"succ": { "properties": { "image": "spov/<skin>/head.png:succ.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -415,19 +413,19 @@
 
 
 			"driverbackarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
-				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"drivertail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "driverPosition"] },
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"driverbacklegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "driverPosition"] },
+				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"drivertail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "driverPosition"] },
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"driverbody": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "driverPosition"] },
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"driver": {
@@ -435,29 +433,29 @@
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"driverfrontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "driverPosition"] },
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"driverfrontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "driverPosition"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "driverPosition"] },
 				"partStates": { "driverState": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 
 
 			"occupant1backarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
-				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"occupant1tail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1backlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant1Position"] },
+				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant1tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1body": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1": {
@@ -465,29 +463,29 @@
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1frontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant1frontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 
 
 			"occupant2backarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
-				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"occupant2tail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2backlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant2Position"] },
+				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant2tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2body": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2": {
@@ -495,29 +493,29 @@
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2frontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant2frontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 
 
 			"occupant3backarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
-				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"occupant3tail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3backlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant3Position"] },
+				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant3tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3body": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3": {
@@ -525,28 +523,29 @@
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3frontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant3frontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 
+
 			"occupant4backarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
-				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"occupant4tail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant4backlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant4Position"] },
+				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant4tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant4body": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant4": {
@@ -554,28 +553,29 @@
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant4frontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant4frontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 
+
 			"occupant5backarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
-				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
-			},
-			"occupant5tail": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant5backlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant5Position"] },
+				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant5tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant5body": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant5": {
@@ -583,12 +583,72 @@
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant5frontlegs": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
 			"occupant5frontarm": {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"] },
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+
+
+			"occupant6backarm": {
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6backlegs": {
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6body": {
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant6Position"], "occupant6Position": [0.0, 0.0] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6frontlegs": {
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant6frontarm": {
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant6Position"] },
+				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+
+
+			"occupant7backarm": {
+				"properties": { "centered": true, "zLevel": -0.4, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7backlegs": {
+				"properties": { "centered": true, "zLevel": -0.3, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7tail": {
+				"properties": { "centered": true, "zLevel": -0.2, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7body": {
+				"properties": { "centered": true, "zLevel": -0.1, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7": {
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant7Position"], "occupant7Position": [0.0, 0.0] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7frontlegs": {
+				"properties": { "centered": true, "zLevel": 0.1, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
+			},
+			"occupant7frontarm": {
+				"properties": { "centered": true, "zLevel": 0.2, "transformationGroups": ["flip", "occupant7Position"] },
+				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		}
 	},
@@ -612,6 +672,13 @@
 		"occupant5Position": {
 			"interpolated": true
 		},
+		"occupant6Position": {
+			"interpolated": true
+		},
+		"occupant7Position": {
+			"interpolated": true
+		},
+
 		"headbob": {
 			"interpolated": false
 		},
