@@ -8,6 +8,8 @@ function init()
 	p.powerMultiplier = config.getParameter( "powerMultiplier" )
 
 	settings = sb.jsonMerge( root.assetJson( "/vehicles/spov/pvso_general.config:defaultSettings"), p.vsoSettings[p.vsoname] or {})
+	setIconDirectives()
+
 	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
 	p.replaceColors = p.vsoConfig.replaceColors
 	p.replaceSkin = p.vsoConfig.replaceSkin
@@ -19,6 +21,7 @@ function update(dt)
 	checkRefresh(dt)
 end
 
+p.refreshtime = 0
 function checkRefresh(dt)
 	if p.refreshtime >= 0.1 and p.rpc == nil then
 		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
@@ -29,8 +32,7 @@ function checkRefresh(dt)
 				p.occupant = result.occupants
 				p.powerMultiplier = result.powerMultiplier
 				settings = result.settings
-				refreshListData()
-				readOccupantData()
+				setIconDirectives()
 				p.refreshtime = 0
 				p.refreshed = true
 			end
@@ -42,6 +44,13 @@ function checkRefresh(dt)
 	else
 		p.refreshtime = p.refreshtime + dt
 	end
+end
+
+function setIconDirectives()
+	local species = p.vsoname
+	local skin = settings.skinNames.head or "default"
+	local directives = settings.directives or ""
+	widget.setImage("icon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
 end
 
 function settingsMenu()

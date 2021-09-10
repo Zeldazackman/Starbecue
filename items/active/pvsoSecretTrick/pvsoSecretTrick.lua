@@ -13,11 +13,23 @@ function update(dt)
 		end
 	end
 	if storage.timeUntilUnlock <= 0 then
-		for i, itemDescriptor in pairs(storage.itemDescriptors) do
-			player.giveItem(itemDescriptor)
-		end
-		for slotname, itemDescriptor in pairs(storage.lockedEssentialItems) do
-			player.giveEssentialItem(slotname, itemDescriptor)
+		local clean
+		while clean ~= true do
+			clean = true
+			local lockedItemList = player.getProperty("vsoLockedItems")
+			for i, lockedItemData in pairs(lockedItemList) do
+				player.giveItem(lockedItemData)
+				table.remove(lockedItemList, i)
+				clean = false
+			end
+
+			player.setProperty("vsoLockedItems", lockedItemList)
+
+			if clean then
+				for slotname, itemDescriptor in pairs(storage.lockedEssentialItems) do
+					player.giveEssentialItem(slotname, itemDescriptor)
+				end
+			end
 		end
 	else
 		storage.timeUntilUnlock = storage.timeUntilUnlock - dt

@@ -133,8 +133,9 @@ function lockItem(itemDescriptor, type)
 
 	local consumed = player.consumeItem(itemDescriptor, false, true)
 	if consumed then
-		table.insert(lockItemDescriptor.parameters.scriptStorage.itemDescriptors, consumed)
-		player.giveEssentialItem("inspectiontool", lockItemDescriptor)
+		local lockedItemList = player.getProperty( "vsoLockedItems" ) or {}
+		table.insert(lockedItemList, consumed)
+		player.setProperty( "vsoLockedItems", lockedItemList )
 	end
 end
 

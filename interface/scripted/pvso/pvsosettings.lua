@@ -23,6 +23,8 @@ function init()
 
 	enableActionButtons(false)
 	readOccupantData()
+	setIconDirectives()
+
 
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
@@ -42,6 +44,13 @@ end
 
 function enableActionButtons(enable) -- replace function on the specific settings menu if extra buttons are added
 	widget.setButtonEnabled( "letOut", enable )
+end
+
+function setIconDirectives()
+	local species = p.vsoname
+	local skin = settings.skinNames.head or "default"
+	local directives = settings.directives or ""
+	widget.setImage("icon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
 end
 
 p.listItems = {}
@@ -75,9 +84,11 @@ function readOccupantData()
 			if species == nil then
 				setPortrait(p.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
 			else
+				local skin = p.occupant[i].smolPreyData.settings.skinNames.head or "default"
+				local directives = p.occupant[i].smolPreyData.settings.directives or ""
 				setPortrait(p.occupantList.."."..listItem, {{
-					image = "/vehicles/spov/"..species.."/spov/default/icon.png",
-					position = {13, 12}
+					image = "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives,
+					position = {13, 20}
 				}})
 			end
 			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
