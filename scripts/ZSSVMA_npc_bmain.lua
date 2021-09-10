@@ -2,12 +2,28 @@ local oldinit = init
 function init()
 	oldinit()
 
+	message.setHandler("getVSOseatEquips", function(_,_, type)
+		return {
+			head = npc.getItemSlot("head"),
+			chest = npc.getItemSlot("chest"),
+			legs = npc.getItemSlot("legs"),
+			back = npc.getItemSlot("back"),
+			headCosmetic = npc.getItemSlot("headCosmetic"),
+			chestCosmetic = npc.getItemSlot("chestCosmetic"),
+			legsCosmetic = npc.getItemSlot("legsCosmetic"),
+			backCosmetic = npc.getItemSlot("backCosmetic"),
+		}
+	end)
+
+
 	message.setHandler("pvsoMakeNonHostile", function(_,_)
 		if (status.statusProperty("pvsoOriginalDamageTeam") == nil)
 		or (entity.damageTeam() ~= { type = "ghostly", team = 1 })
 		then
 			status.setStatusProperty("pvsoOriginalDamageTeam", entity.damageTeam())
 		end
+		npc.setAggressive(false)
+		npc.setDamageOnTouch(false)
 		status.setStatusProperty("pvsoOriginalDamageTeam", entity.damageTeam())
 		npc.setDamageTeam({ type = "ghostly", team = 1 })
 	end)

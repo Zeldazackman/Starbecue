@@ -8,6 +8,11 @@ function init()
 		then
 			status.setStatusProperty("pvsoOriginalDamageTeam", entity.damageTeam())
 		end
+		monster.setAggressive(false)
+		monster.setDamageOnTouch(false)
+		monster.setDamageSources()
+		monster.setDamageParts()
+		monster.setPhysicsForces()
 		monster.setDamageTeam({ type = "ghostly", team = 1 })
 	end)
 
