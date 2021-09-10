@@ -789,7 +789,7 @@ function p.updateOccupants(dt)
 							active = p.occupant[i].progressBarActive,
 							color = p.occupant[i].progressBarColor,
 							percent = p.occupant[i].progressBar,
-							dx = (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier),
+							dx = (math.log(p.occupant[i].controls.powerMultiplier)+1) * p.occupant[i].progressBarMultiplier,
 						},
 						time = p.occupant[i].occupantTime
 					}
