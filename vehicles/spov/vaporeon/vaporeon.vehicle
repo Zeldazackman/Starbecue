@@ -849,10 +849,10 @@
 				"belly" : {
 					"part" : "body",
 					"directions": {
-						"up": { "transition": "side", "indicate": "green" },
-						"front": { "transition": "side", "indicate": "green" },
-						"back": { "transition": "side", "indicate": "green" },
-						"down": { "transition": "side", "indicate": "green" }
+						"up": { "transition": "up", "indicate": "green" },
+						"front": { "transition": "up", "indicate": "green" },
+						"back": { "transition": "up", "indicate": "green" },
+						"down": { "transition": "up", "indicate": "green" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
@@ -864,9 +864,9 @@
 					"part" : "legs",
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_up" },
-						"front": { "transition": "side", "indicate": "blue", "victimAnimation": "hug.s_front" },
-						"back": { "transition": "side", "indicate": "blue", "victimAnimation": "hug.s_back" },
-						"down": { "transition": "down", "indicate": "yellow", "victimAnimation": "hug.s_down" }
+						"front": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_front" },
+						"back": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_back" },
+						"down": { "transition": "absorb", "indicate": "yellow", "victimAnimation": "hug.s_down" }
 					},
 					"chances": {
 						"easyEscape": { "min": 0, "max": 2 },
