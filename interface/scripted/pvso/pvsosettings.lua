@@ -12,19 +12,22 @@ p.escapeModifier = {
 
 function init()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
-	globalSettings = p.vsoSettings.global or {}
-	settings = sb.jsonMerge( root.assetJson( "/vehicles/spov/pvso_general.config:defaultSettings"), p.vsoSettings[p.vsoname] or {})
 
 	p.occupantList = "occupantScrollArea.occupantList"
 	p.vso = config.getParameter( "vso" )
 	p.occupant = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	p.powerMultiplier = config.getParameter( "powerMultiplier" )
+	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
+
+	p.config.defaultSettings.replaceColors = p.vsoConfig.defaultReplaceColors or {}
+	settings = sb.jsonMerge(p.config.defaultSettings, p.vsoSettings[p.vsoname] or {})
+	globalSettings = p.vsoSettings.global or {}
 
 	enableActionButtons(false)
 	readOccupantData()
 	setIconDirectives()
-
 
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
@@ -47,6 +50,9 @@ function enableActionButtons(enable) -- replace function on the specific setting
 end
 
 function setIconDirectives()
+	if (not settings.directives) or settings.directives == "" then
+		settings.directives = p.vsoConfig.defaultDirectives
+	end
 	local species = p.vsoname
 	local skin = settings.skinNames.head or "default"
 	local directives = settings.directives or ""
@@ -153,9 +159,6 @@ function checkRefresh(dt)
 			if result ~= nil then
 				p.occupant = result.occupants
 				p.powerMultiplier = result.powerMultiplier
-				settings = result.settings
-				refreshListData()
-				readOccupantData()
 				setIconDirectives()
 				p.refreshtime = 0
 				p.refreshed = true

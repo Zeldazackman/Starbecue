@@ -131,7 +131,10 @@ function init()
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
+
+	p.config.defaultSettings.replaceColors = p.vso.defaultReplaceColors or {}
 	p.settings = sb.jsonMerge(p.config.defaultSettings, config.getParameter( "settings" ) or {})
+
 	p.spawner = config.getParameter("spawner")
 	p.settings.directives = p.vso.defaultDirectives or ""
 

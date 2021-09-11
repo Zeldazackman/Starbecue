@@ -159,16 +159,17 @@
 			"belly" : 2,
 			"hug" : 1
 		},
+		"defaultReplaceColors" : [1,1,1,2],
 		"replaceColors" : [
 			[
 				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
 				// make sure replace colors do not exactly match initial color, or they might be overwritten twice
 				["0d4f6b", "1b80a8", "42b2de", "6dc4e6"], // the main body blue
 				["760596", "bd62d5", "df77de", "ffbdff"], //shiny (dark magenta)
-				["7d1217", "a9192a", "dc3c4f", "ed576f"], // red
-				["7d4b14", "a95f1b", "dc813c", "f29e60"], // orange
+				["7d1217", "b52335", "dc3c4f", "ed576f"], // red
+				["7f5716", "b97625", "e39542", "fbb163"], // orange
 				["ab6a13", "eac116", "fee528", "ffed6c"], // yellow
-				["3e8b13", "84ea16", "abff29", "bfff61"], // lime
+				["37681c", "6fc13b", "91e73d", "b1fa69"], // lime
 				["0d6a41", "1ba674", "43dcb0", "7bf5d1"], // teal
 				["501393", "7341c1", "916ee4", "aa8cf2"] //purble
 			],
@@ -176,9 +177,9 @@
 				["0b2e67", "194893", "2d66c3"],
 				["0b2e68", "194894", "2d66c4"], // the dark fin blue
 				["4a042e", "621041", "83395a"], // shiny (magenta)
-				["680c0e", "93231a", "b13530"], // red
-				["683c0c", "a95a23", "c46f2e"], // orange
-				["726207", "ab940e", "cfb314"], // yellow
+				["550708", "751810", "92221d"], // red
+				["683c0c", "9f531f", "c0632b"], // orange
+				["75510d", "927312", "b68e15"], // yellow
 				["0c5d12", "18881e", "16ab1d"], // green
 				["145745", "299678", "31b492"], //cyan/teal
 				["3d1c75", "642bb1", "7636d4"]// purble
@@ -196,8 +197,8 @@
 			],
 			[
 				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"], // the yellow headfins
-				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // yellow
 				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // yellow
 				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
 				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
 				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime

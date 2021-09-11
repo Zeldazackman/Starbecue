@@ -457,13 +457,18 @@ function p.setColorReplaceDirectives()
 		for i, colorGroup in ipairs(p.vso.replaceColors) do
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[p.settings.replaceColors[i] + 1]
-			if replacePalette == nil then
-				replacePalette = basePalette
+
+			if p.settings.customDirectives then
+				replacePalette = p.settings.customPalette[i]
 			end
+
+			if (replacePalette == nil) or (replacePalette == {}) then
+				replacePalette = colorGroup[p.vso.defaultReplaceColors[i] + 1]
+			end
+
 			for j, color in ipairs(replacePalette) do
 				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
 			end
-
 		end
 		p.settings.directives = colorReplaceString
 		animator.setGlobalTag( "directives", colorReplaceString )

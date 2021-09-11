@@ -1,4 +1,4 @@
-p = {}
+require("/interface/scripted/pvso/pvsoSettings.lua")
 
 function init()
 	p.vsoSettings = player.getProperty("vsoSettings") or {}
@@ -6,11 +6,14 @@ function init()
 	p.occupant = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	p.powerMultiplier = config.getParameter( "powerMultiplier" )
+	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
 
-	settings = sb.jsonMerge( root.assetJson( "/vehicles/spov/pvso_general.config:defaultSettings"), p.vsoSettings[p.vsoname] or {})
+	p.config.defaultSettings.replaceColors = p.vsoConfig.defaultReplaceColors or {}
+	settings = sb.jsonMerge(p.config.defaultSettings, p.vsoSettings[p.vsoname] or {})
+
 	setIconDirectives()
 
-	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
 	p.replaceColors = p.vsoConfig.replaceColors
 	p.replaceSkin = p.vsoConfig.replaceSkin
 
@@ -21,49 +24,35 @@ function update(dt)
 	checkRefresh(dt)
 end
 
-p.refreshtime = 0
-function checkRefresh(dt)
-	if p.refreshtime >= 0.1 and p.rpc == nil then
-		p.rpc = world.sendEntityMessage( p.vso, "settingsMenuRefresh")
-	elseif p.rpc ~= nil and p.rpc:finished() then
-		if p.rpc:succeeded() then
-			local result = p.rpc:result()
-			if result ~= nil then
-				p.occupant = result.occupants
-				p.powerMultiplier = result.powerMultiplier
-				settings = result.settings
-				setIconDirectives()
-				p.refreshtime = 0
-				p.refreshed = true
+function p.setColorReplaceDirectives()
+	if p.vsoConfig.replaceColors ~= nil then
+		local colorReplaceString = "?replace"
+		for i, colorGroup in ipairs(p.vsoConfig.replaceColors) do
+			local basePalette = colorGroup[1]
+			local replacePalette = colorGroup[settings.replaceColors[i] + 1]
+
+			if settings.customDirectives then
+				replacePalette = settings.customPalette[i]
 			end
-		else
-			sb.logError( "Couldn't refresh settings." )
-			sb.logError( p.rpc:error() )
+
+			if (replacePalette == nil) or (replacePalette == {}) then
+				replacePalette = colorGroup[p.vsoConfig.defaultReplaceColors[i] + 1]
+			end
+
+			for j, color in ipairs(replacePalette) do
+				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
+			end
 		end
-		p.rpc = nil
-	else
-		p.refreshtime = p.refreshtime + dt
+		settings.directives = colorReplaceString
 	end
 end
 
-function setIconDirectives()
-	local species = p.vsoname
-	local skin = settings.skinNames.head or "default"
-	local directives = settings.directives or ""
-	widget.setImage("icon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
-end
-
 function settingsMenu()
+	saveSettings()
 	world.sendEntityMessage(
 		player.id(), "openPVSOInterface", p.vsoname.."Settings",
 		{ vso = p.vso, occupants = p.occupant, maxOccupants = p.maxOccupants, powerMultiplier = p.powerMultiplier }, false, p.vso
 	)
-end
-
-function saveSettings()
-	world.sendEntityMessage( p.vso, "settingsMenuSet", settings )
-	p.vsoSettings[p.vsoname] = settings
-	player.setProperty( "vsoSettings", p.vsoSettings )
 end
 
 function adjustColor(i, inc)
@@ -75,6 +64,7 @@ function adjustColor(i, inc)
 		settings.replaceColors[i] = 1
 	end
 	widget.setText("labelColor"..i, tostring(settings.replaceColors[i]))
+	p.setColorReplaceDirectives()
 	saveSettings()
 end
 
