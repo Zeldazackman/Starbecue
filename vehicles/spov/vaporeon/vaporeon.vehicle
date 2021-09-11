@@ -159,53 +159,60 @@
 			"belly" : 2,
 			"hug" : 1
 		},
-		"defaultReplaceColors" : [1,1,1,2],
+		"defaultReplaceColors" : [6,6,9,3],
 		"replaceColors" : [
 			[
 				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
 				// make sure replace colors do not exactly match initial color, or they might be overwritten twice
-				["0d4f6b", "1b80a8", "42b2de", "6dc4e6"], // the main body blue
-				["760596", "bd62d5", "df77de", "ffbdff"], //shiny (dark magenta)
 				["7d1217", "b52335", "dc3c4f", "ed576f"], // red
 				["7f5716", "b97625", "e39542", "fbb163"], // orange
 				["ab6a13", "eac116", "fee528", "ffed6c"], // yellow
 				["37681c", "6fc13b", "91e73d", "b1fa69"], // lime
 				["0d6a41", "1ba674", "43dcb0", "7bf5d1"], // teal
-				["501393", "7341c1", "916ee4", "aa8cf2"] //purble
+				["0d4f6b", "1b80a8", "42b2de", "6dc4e6"], // default blue
+				["501393", "7341c1", "916ee4", "aa8cf2"], // purble
+				["760596", "bd62d5", "df77de", "ffbdff"], // shiny (dark magenta)
+				["606060", "bdbdbd", "efefef", "fefeff"], // white
+				["202020", "333333", "434343", "565656"] // dark gray
 			],
 			[
 				["0b2e67", "194893", "2d66c3"],
-				["0b2e68", "194894", "2d66c4"], // the dark fin blue
-				["4a042e", "621041", "83395a"], // shiny (magenta)
 				["550708", "751810", "92221d"], // red
 				["683c0c", "9f531f", "c0632b"], // orange
 				["75510d", "927312", "b68e15"], // yellow
 				["0c5d12", "18881e", "16ab1d"], // green
-				["145745", "299678", "31b492"], //cyan/teal
-				["3d1c75", "642bb1", "7636d4"]// purble
+				["145745", "299678", "31b492"], // teal
+				["0b2e68", "194894", "2d66c4"], // default blue
+				["3d1c75", "642bb1", "7636d4"], // purble
+				["4a042e", "621041", "83395a"], // shiny (magenta)
+				["4d4d4d", "757575", "a0a0a0"], // gray
+				["0c0c0c", "131313", "1f1f1f"] // black
 			],
 			[
-				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],// the white underbelly
-				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
-				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // same yellow as the finns
+				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"], // the white underbelly
 				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
 				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // light yellow
 				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime
 				["3e836c", "41b69d", "73b9a6", "91d7c0", "b6edda"], // light teal
 				["3e6d83", "4190b6", "73a2b9", "91c0d7", "bbdced"], // light blue
-				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"] // light purble
+				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"], // light purble
+				["6a2974", "b45acb", "e0a2e2", "f9d3f9", "ffecfe"], // lignt magenta
+				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // default white
+				["2a2a2a", "393939", "555555", "777777", "8f8f8f"] // gray
 			],
 			[
 				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"], // the yellow headfins
-				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
-				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // yellow
 				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
 				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // default light yellow
 				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime
 				["3e836c", "41b69d", "73b9a6", "91d7c0", "b6edda"], // light teal
 				["3e6d83", "4190b6", "73a2b9", "91c0d7", "bbdced"], // light blue
-				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"] // light purble
-
+				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"], // light purble
+				["6a2974", "b45acb", "e0a2e2", "f9d3f9", "ffecfe"], // lignt magenta
+				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
+				["2a2a2a", "393939", "555555", "777777", "8f8f8f"] // gray
 			]
 		],
 		"replaceSkin" : {
