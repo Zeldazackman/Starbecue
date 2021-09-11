@@ -164,7 +164,13 @@
 				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
 				// make sure replace colors do not exactly match initial color, or they might be overwritten twice
 				["0d4f6b", "1b80a8", "42b2de", "6dc4e6"], // the main body blue
-				["760596", "bd62d5", "df77de", "ffbdff"] //shiny (dark magenta)
+				["760596", "bd62d5", "df77de", "ffbdff"], //shiny (dark magenta)
+				["7d1217", "a9192a", "dc3c4f", "ed576f"], // red
+				["7d4b14", "a95f1b", "dc813c", "f29e60"], // orange
+				["ab6a13", "eac116", "fee528", "ffed6c"], // yellow
+				["3e8b13", "84ea16", "abff29", "bfff61"], // lime
+				["0d6a41", "1ba674", "43dcb0", "7bf5d1"], // teal
+				["501393", "7341c1", "916ee4", "aa8cf2"] //purble
 			],
 			[
 				["0b2e67", "194893", "2d66c3"],
@@ -181,13 +187,23 @@
 				["545454", "8a8a8a", "b3b3b3", "e0e0e0", "fefefe"],// the white underbelly
 				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
 				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // same yellow as the finns
-				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"] // light pink
+				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
+				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
+				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime
+				["3e836c", "41b69d", "73b9a6", "91d7c0", "b6edda"], // light teal
+				["3e6d83", "4190b6", "73a2b9", "91c0d7", "bbdced"], // light blue
+				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"] // light purble
 			],
 			[
 				["786c31", "b1a14e", "dcca6b", "f2eab4", "fdf9e3"], // the yellow headfins
 				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // yellow
 				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
-				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"] // light pink
+				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
+				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
+				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime
+				["3e836c", "41b69d", "73b9a6", "91d7c0", "b6edda"], // light teal
+				["3e6d83", "4190b6", "73a2b9", "91c0d7", "bbdced"], // light blue
+				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"] // light purble
 
 			]
 		],
