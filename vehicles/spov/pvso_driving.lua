@@ -136,6 +136,9 @@ function p.updateDriving(dt)
 
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
 		local dx = p.seats[p.driverSeat].controls.dx
+		if p.activeControls.moveDirection then
+			dx = p.activeControls.moveDirection
+		end
 		local dy = p.seats[p.driverSeat].controls.dy
 		local state = p.stateconfig[p.state]
 		if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
@@ -147,13 +150,14 @@ function p.updateDriving(dt)
 		p.waterMovement(dx, dy, state, dt)
 		p.jumpMovement(dx, dy, state, dt)
 		p.airMovement(dx, dy, state, dt)
+		p.doControls() -- set by mcontroller.control*(), used by pathfinding
 	end
 	p.driverSeatStateChange()
 end
 
 function p.groundMovement(dx, dy, state, dt)
 	p.movement.groundMovement = "run"
-	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= p.movementParams.fullThreshold) then
+	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= p.movementParams.fullThreshold) or (p.activeControls.run == false) then
 		p.movement.groundMovement = "walk"
 	end
 	if mcontroller.onGround() then
@@ -181,7 +185,7 @@ function p.jumpMovement(dx, dy, state, dt)
 	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
 	if state.control.jumpMovementDisabled then return end
 
-	if not mcontroller.onGround() and dy == -1 then
+	if not mcontroller.onGround() and (dy == -1 or p.activeControls.down) then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
 	else
 		mcontroller.applyParameters{ ignorePlatformCollision = false }

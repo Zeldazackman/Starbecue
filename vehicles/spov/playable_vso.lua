@@ -137,8 +137,8 @@ function init()
 	p.spawner = config.getParameter("spawner")
 	p.settings.directives = p.vso.defaultDirectives or ""
 
-	if mcontroller_extensions then ---@diagnostic disable-line: undefined-global
-		for k,v in pairs(mcontroller_extensions) do ---@diagnostic disable-line: undefined-global
+	if mcontroller_extensions then
+		for k,v in pairs(mcontroller_extensions) do
 			mcontroller[k] = v
 		end
 	end
@@ -155,6 +155,7 @@ function init()
 	p.movementParams = sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/player.config:movementParameters"))
 	p.movementParams = sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config:movementParameters"))
 	p.movementParams.jumpCount = 1
+	p.movementParamOverrides = {} -- for mcontroller.controlParameters
 
 	mcontroller.applyParameters(p.movementParams)
 
@@ -423,6 +424,9 @@ function p.faceDirection(x)
 end
 
 function p.setMovementParams(name)
+	if p.movementParamsName ~= name then
+		p.movementParamOverrides = {}
+	end
 	p.movementParamsName = name
 	local params = p.vso.movementSettings[name]
 	if params.flip then
@@ -430,7 +434,7 @@ function p.setMovementParams(name)
 			coords[1] = coords[1] * p.direction
 		end
 	end
-	p.movementParams = sb.jsonMerge(p.movementParams, params)
+	p.movementParams = sb.jsonMerge(sb.jsonMerge(p.movementParams, params), p.movementParamOverrides)
 	mcontroller.applyParameters(params)
 end
 
