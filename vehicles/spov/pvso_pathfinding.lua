@@ -14,55 +14,56 @@ function p.updatePathfinding(dt)
 end
 
 -- extend mcontroller to add actor methods
---[[ this all seems to cause it to crash, seems like you can't do that
-function mcontroller.controlMove(direction, run)
+local mcontroller_extensions = {}
+-- [[ this all seems to cause it to crash, seems like you can't do that
+function mcontroller_extensions.controlMove(direction, run)
 	-- Controls movement in a direction.
 	-- Each control replaces the previous one.
 end
 
-function mcontroller.baseParameters()
+function mcontroller_extensions.baseParameters()
 	-- Returns the base movement parameters.
 end
 
-function mcontroller.facingDirection()
+function mcontroller_extensions.facingDirection()
 	-- Returns the facing direction. -1 for left, 1 for right.
 end
 
-function mcontroller.movingDirection()
+function mcontroller_extensions.movingDirection()
 	-- Returns the direction that the actor movement controller is currently moving in. -1 for left, 1 for right.
 end
 
-function mcontroller.controlParameters(parameters)
+function mcontroller_extensions.controlParameters(parameters)
 	-- Changes movement parameters. Parameters are merged into the base parameters.
 	-- Each control is merged into the previous one.
 end
 
-function mcontroller.controlDown()
+function mcontroller_extensions.controlDown()
 	-- Controls dropping through platforms.
 end
 
-function mcontroller.controlApproachVelocity(targetVelocity, maxControlForce)
+function mcontroller_extensions.controlApproachVelocity(targetVelocity, maxControlForce)
 	-- Approaches the targetVelocity using the force provided.
 	-- If the current velocity is higher than the provided targetVelocity,
 	-- the targetVelocity will still be approached, effectively slowing down the entity.
 	-- Each control overrides the previous one.
 end
 
-function mcontroller.controlApproachXVelocity(targetVelocity, maxControlForce)
+function mcontroller_extensions.controlApproachXVelocity(targetVelocity, maxControlForce)
 	-- Approaches an X velocity. Same as using approachVelocityAlongAngle with angle 0.
 	-- Each control overrides the previous one.
 end
 
-function mcontroller.controlApproachYVelocity(targetVelocity, maxControlForce)
+function mcontroller_extensions.controlApproachYVelocity(targetVelocity, maxControlForce)
 	-- Approaches a Y velocity. Same as using approachVelocityAlongAngle with angle (Pi / 2).
 	-- Each control overrides the previous one.
 end
 
-function mcontroller.liquidMovement()
+function mcontroller_extensions.liquidMovement()
 	-- Returns whether the controller is currently in liquid movement mode.
 end
 
-function mcontroller.controlFly(velocity)
+function mcontroller_extensions.controlFly(velocity)
 	-- Controls flying in the specified velocity.
 	-- Each control overrides the previous one.
 end
@@ -73,4 +74,4 @@ function status.stat(stat)
 	-- Returns the value for the specified stat. Defaults to 0.0 if the stat does not exist.
 	-- (we only need this to support "jumpModifier")
 end
-]]
+--]]

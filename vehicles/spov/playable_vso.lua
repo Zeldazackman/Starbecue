@@ -137,6 +137,12 @@ function init()
 	p.spawner = config.getParameter("spawner")
 	p.settings.directives = p.vso.defaultDirectives or ""
 
+	if mcontroller_extensions then ---@diagnostic disable-line: undefined-global
+		for k,v in pairs(mcontroller_extensions) do ---@diagnostic disable-line: undefined-global
+			mcontroller[k] = v
+		end
+	end
+
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
 	--[[
