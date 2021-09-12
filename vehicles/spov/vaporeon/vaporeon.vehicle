@@ -159,10 +159,14 @@
 			"belly" : 2,
 			"hug" : 1
 		},
-		"defaultReplaceColors" : [6,6,9,3],
-		"replaceColors" : [
+		"defaultSettings" : {
+			"replaceColors" : [6,6,9,3,1,1],
+			"fullbright" : [false,false,false,false,true,false]
+		},
+		"replaceColors" : [ // every color must be defined, even if you don't plan on having a replace option for it if you want it to follow the fullbright rules
 			[
-				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the first entry in these lists will be the color to replace
+				// the first entry in these lists will be the color to replace
+				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the main body
 				// make sure replace colors do not exactly match initial color, or they might be overwritten twice
 				["7d1217", "b52335", "dc3c4f", "ed576f"], // red
 				["7f5716", "b97625", "e39542", "fbb163"], // orange
@@ -176,7 +180,7 @@
 				["202020", "333333", "434343", "565656"] // dark gray
 			],
 			[
-				["0b2e67", "194893", "2d66c3"],
+				["0b2e67", "194893", "2d66c3"], // the dorsal finns
 				["550708", "751810", "92221d"], // red
 				["683c0c", "9f531f", "c0632b"], // orange
 				["75510d", "927312", "b68e15"], // yellow
@@ -213,23 +217,31 @@
 				["6a2974", "b45acb", "e0a2e2", "f9d3f9", "ffecfe"], // lignt magenta
 				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
 				["2a2a2a", "393939", "555555", "777777", "8f8f8f"] // gray
+			],
+			[
+				["000000", "2b0b67", "ffffff"], // eyes
+				["000000", "2b0b67", "ffffff"]
+			],
+			[ // other colors, might add replacements for them later?
+				["7a235a", "99457a", "a2668c"], // 1-2: tongue/mouth 3: paw beans
+				["7a235a", "99457a", "a2668c"]
 			]
 		],
 		"replaceSkin" : {
 			"head" : {
-				"skins" : ["default", "alt"],
+				"skins" : ["default"],
 				"parts" : ["head", "head_foreground"]
 			},
 			"body" : {
-				"skins" : ["default", "alt"],
+				"skins" : ["default"],
 				"parts" : ["body", "body_foreground"]
 			},
 			"legs" : {
-				"skins" : ["default", "alt"],
+				"skins" : ["default"],
 				"parts" : ["frontlegs", "backlegs", "bapleg"]
 			},
 			"tail" : {
-				"skins" : ["default", "alt"],
+				"skins" : ["default"],
 				"parts" : ["tail", "tail_foreground"]
 			}
 

@@ -9,8 +9,7 @@ function init()
 	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
 	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
 
-	p.config.defaultSettings.replaceColors = p.vsoConfig.defaultReplaceColors or {}
-	settings = sb.jsonMerge(p.config.defaultSettings, p.vsoSettings[p.vsoname] or {})
+	settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.vsoConfig.defaultSettings or {}), p.vsoSettings[p.vsoname] or {})
 
 	setIconDirectives()
 

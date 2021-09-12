@@ -64,44 +64,91 @@ function p.smolPreyAnimPath(occupant)
 	local animatedParts = occupant.smolPreyData.animatedParts
 	local seatname = occupant.seatname
 
-	local head = "/assetmissing.png"
-	local body = "/assetmissing.png"
-	local tail = "/assetmissing.png"
-	local backlegs = "/assetmissing.png"
-	local frontlegs = "/assetmissing.png"
-	local backarms = "/assetmissing.png"
-	local frontarms = "/assetmissing.png"
+	local head = ""
+	local head_fullbright = ""
+
+	local body = ""
+	local body_fullbright = ""
+
+	local tail = ""
+	local tail_fullbright = ""
+
+	local backlegs = ""
+	local backlegs_fullbright = ""
+
+	local frontlegs = ""
+	local frontlegs_fullbright = ""
+
+	local backarms = ""
+	local backarms_fullbright = ""
+
+	local frontarms = ""
+	local frontarms_fullbright = ""
 
 	if state.idle.head ~= nil then
 		local skin = settings.skinNames.head or "default"
 		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
+		if animatedParts.parts.head_fullbright ~= nil then
+			head_fullbright = p.fixPathTags(animatedParts.parts.head_fullbright.partStates.headState[state.idle.head].properties.image, skin, settings)
+		end
 	end
 	if state.idle.body ~= nil then
 		local skin = settings.skinNames.body or "default"
 		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+		if animatedParts.parts.body_fullbright ~= nil then
+			body_fullbright = p.fixPathTags(animatedParts.parts.body_fullbright.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+		end
 	end
 	if state.idle.tail ~= nil then
 		local skin = settings.skinNames.tail or "default"
 		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+		if animatedParts.parts.tail_fullbright ~= nil then
+			tail_fullbright = p.fixPathTags(animatedParts.parts.tail_fullbright.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+		end
 	end
 	if state.idle.legs ~= nil then
 		local skin = settings.skinNames.legs or "default"
 		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
 		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		if animatedParts.parts.backlegs_fullbright ~= nil then
+			backlegs_fullbright = p.fixPathTags(animatedParts.parts.backlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		end
+		if animatedParts.parts.frontlegs_fullbright ~= nil then
+			frontlegs_fullbright = p.fixPathTags(animatedParts.parts.frontlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		end
 	end
 	if state.idle.arms ~= nil then
 		local skin = settings.skinNames.arms or "default"
-		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.legsState[state.idle.arms].properties.image, skin, settings)
-		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.legsState[state.idle.arms].properties.image, skin, settings)
+		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		if animatedParts.parts.backarms_fullbright ~= nil then
+			backarms_fullbright = p.fixPathTags(animatedParts.parts.backarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		end
+		if animatedParts.parts.frontarms_fullbright ~= nil then
+			frontarms_fullbright = p.fixPathTags(animatedParts.parts.frontarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		end
 	end
 
 	animator.setPartTag(seatname, "smolpath", path..head)
+	animator.setPartTag(seatname.."fullbright", "smolpath", path..head_fullbright)
+
 	animator.setPartTag(seatname.."body", "smolpath", path..body)
+	animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright)
+
 	animator.setPartTag(seatname.."tail", "smolpath", path..tail)
+	animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright)
+
 	animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs)
+	animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright)
+
 	animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs)
+	animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright)
+
 	animator.setPartTag(seatname.."backarms", "smolpath", path..backarms)
+	animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright)
+
 	animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms)
+	animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright)
 
 	occupant.smolPreyData.update = false
 end
@@ -109,6 +156,7 @@ end
 function p.fixPathTags(path, skin, settings)
 	return sb.replaceTags(path, {
 		skin = skin,
+		fullbrightDirectives = settings.fullbrightDirectives or "",
 		directives = settings.directives or "",
 		bap = "",
 		frame = "1",
@@ -454,23 +502,30 @@ end
 function p.setColorReplaceDirectives()
 	if p.vso.replaceColors ~= nil then
 		local colorReplaceString = "?replace"
+		local fullbrightDirectivesString = "?replace"
 		for i, colorGroup in ipairs(p.vso.replaceColors) do
 			local basePalette = colorGroup[1]
-			local replacePalette = colorGroup[p.settings.replaceColors[i] + 1]
+			local replacePalette = colorGroup[(p.settings.replaceColors[i] or p.vso.defaultSettings.replaceColors[i] or 1) + 1]
+			local fullbright = p.settings.fullbright[i]
 
 			if p.settings.customDirectives then
 				replacePalette = p.settings.customPalette[i]
 			end
 
 			if (replacePalette == nil) or (replacePalette == {}) then
-				replacePalette = colorGroup[p.vso.defaultReplaceColors[i] + 1]
+				replacePalette = colorGroup[p.vso.defaultSettings.replaceColors[i] + 1]
 			end
 
 			for j, color in ipairs(replacePalette) do
+				if not fullbright then
+					fullbrightDirectivesString = fullbrightDirectivesString..";"..basePalette[j].."=00000000"
+				end
 				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
 			end
 		end
 		p.settings.directives = colorReplaceString
+		p.settings.fullbrightDirectives = fullbrightDirectivesString
+		animator.setGlobalTag( "fullbrightDirectives", fullbrightDirectivesString )
 		animator.setGlobalTag( "directives", colorReplaceString )
 	end
 end
