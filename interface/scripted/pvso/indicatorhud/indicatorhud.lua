@@ -91,7 +91,9 @@ function update( dt )
 
 	-- bar
 	local s = (progress.percent or 0) / 100 * bar.w
-	progress.percent = progress.percent + progress.dx * dt
+	if progress.active then
+		progress.percent = progress.percent + progress.dx * dt
+	end
 	if s < bar.w then
 		indicator:drawImageRect(
 			bar.empty,
@@ -111,7 +113,7 @@ function update( dt )
 	local hours = 1 -- if >1h, show hh:mm instead of mm:ss (not enough space for hh:mm:ss)
 	if time/60 > 60 then hours = 60 end
 	indicator:drawText(
-		tostring(math.floor(time/60/hours/10%10)),
+		tostring(math.floor(time/60/hours/10)),
 		{position = {10, 9}, horizontalAnchor = "right"},
 		8, {127, 127, 127}
 	)
@@ -128,7 +130,7 @@ function update( dt )
 		)
 	end
 	indicator:drawText(
-		tostring(math.floor(time/hours/10%10)),
+		tostring(math.floor(time/hours/10%6)),
 		{position = {22, 9}, horizontalAnchor = "right"},
 		8, {127, 127, 127}
 	)
