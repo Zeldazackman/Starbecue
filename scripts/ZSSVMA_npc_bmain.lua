@@ -22,8 +22,6 @@ function init()
 		then
 			status.setStatusProperty("pvsoOriginalDamageTeam", entity.damageTeam())
 		end
-		npc.setDamageOnTouch(false)
-		status.setStatusProperty("pvsoOriginalDamageTeam", entity.damageTeam())
 		npc.setDamageTeam({ type = "ghostly", team = 1 })
 	end)
 
