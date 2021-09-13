@@ -40,7 +40,7 @@ function p.updatePathfinding(dt)
 		p.pathingState = p.pathMover:move(p.pathingTarget, dt)
 		if p.pathingState == true then -- arrived at target
 			p.isPathfinding = false
-			
+
 		end
 	end
 end
@@ -123,6 +123,7 @@ function mcontroller_extensions.controlParameters(parameters)
 	-- Changes movement parameters. Parameters are merged into the base parameters.
 	-- Each control is merged into the previous one.
 	p.movementParamOverrides = sb.jsonMerge(p.movementParamOverrides, parameters)
+	p.setMovementParams(p.movementParamsName)
 end
 
 function mcontroller_extensions.controlDown()

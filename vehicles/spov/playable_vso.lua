@@ -152,8 +152,7 @@ function init()
 	therefore, if we try and set the params to the default actor ones, and then merge the humanoid ones on top
 	that could help with the illusion yes?
 	]]
-	p.movementParams = sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/player.config:movementParameters"))
-	p.movementParams = sb.jsonMerge(p.movementParams, root.assetJson("/humanoid.config:movementParameters"))
+	p.movementParams = sb.jsonMerge(sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/humanoid.config:movementParameters")), root.assetJson("/player.config:movementParameters"))
 	p.movementParams.jumpCount = 1
 	p.movementParamOverrides = {} -- for mcontroller.controlParameters
 
