@@ -122,14 +122,6 @@ function p.updateDriving(dt)
 		local cursor = "/cursors/cursors.png:pointer"
 		world.sendEntityMessage( p.driver, "PVSOCursor", aim, cursor)
 	end
-	if p.standalone then
-		if p.pressControl(p.driverSeat, "special3") then
-			world.sendEntityMessage(
-				p.driver, "openPVSOInterface", world.entityName( entity.id() ):sub( 5 ).."Settings",
-				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
-			)
-		end
-	end
 	if p.pressControl(p.driverSeat, "special2") then
 		p.letout(p.occupant[p.occupants.total].id)
 	end

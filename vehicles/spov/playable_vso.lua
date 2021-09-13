@@ -251,6 +251,7 @@ function init()
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
+		p.settingsMenuOpen = 0.5
 		return {
 			occupants = p.occupant,
 			powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier,
@@ -320,6 +321,7 @@ function update(dt)
 	p.applyStatusLists()
 
 	p.emoteCooldown = p.emoteCooldown - dt
+	p.settingsMenuOpen = p.settingsMenuOpen - dt
 	p.update(dt)
 	p.updateState(dt)
 end
@@ -332,15 +334,29 @@ function uninit()
 	end
 end
 
+p.settingsMenuOpen = 0
 -- returns sourcePosition, sourceId, and interactPosition
 function onInteraction(args)
 	if p.transitionLock then return end
 	local stateData = p.stateconfig[p.state]
 	if p.entityLounging(args.sourceId) then
-		-- should add some sort of script for if you're already prey here?
+		if args.sourceId == p.driver then
+			-- open the settings menu if you're the driver
+			if p.settingsMenuOpen > 0 then
+				world.sendEntityMessage(p.driver, "openPVSOInterface", "close", {}, false, entity.id())
+			else
+				world.sendEntityMessage(
+					p.driver, "openPVSOInterface", world.entityName( entity.id() ):sub( 5 ).."Settings",
+					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
+				)
+			end
+		else
+			-- should add some sort of script for if you're already prey here?
+		end
 		return
 	elseif p.notMoving() then
 		p.showEmote( "emotehappy" )
+		if p.driver ~= nil then return end
 		if stateData.interact ~= nil then
 			if stateData.interact.side ~= nil  then
 				local area = mcontroller.collisionBoundBox()
@@ -1090,11 +1106,6 @@ function p.doBellyEffects(driver, powerMultiplier)
 		end
 	end
 end
-
-
-
-p.struggleCount = 0
-p.bellySettleDownTimer = 5
 
 function p.handleStruggles(dt)
 	if p.transitionLock then return end

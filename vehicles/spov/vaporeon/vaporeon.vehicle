@@ -670,6 +670,7 @@
 					"chance": 5
 				},
 				"absorb": {
+					"lock" : true,
 					"location" :"belly",
 					"failOnFull" : 1,
 					"animation": {
@@ -840,6 +841,7 @@
 					}
 				],
 				"absorb": {
+					"lock" : true,
 					"location": "belly",
 					"failOnFull": 1,
 					"animation": {
