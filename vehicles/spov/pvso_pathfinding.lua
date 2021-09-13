@@ -38,9 +38,12 @@ function p.updatePathfinding(dt)
 	end
 	if p.isPathfinding then
 		p.pathingState = p.pathMover:move(p.pathingTarget, dt)
+		sb.setLogMap("pathingState", tostring(p.pathingState))
+		if p.pathingState == "pathfinding" then
+			p.activeControls = {} -- don't keep moving while deciding what to do
+		end
 		if p.pathingState == true then -- arrived at target
-			p.isPathfinding = false
-
+			p.stopPathing()
 		end
 	end
 end
@@ -61,32 +64,31 @@ end
 
 function p.stopPathing()
 	p.isPathfinding = false
+	p.activeControls = {}
 end
 
 -- extend mcontroller to add actor methods
 mcontroller_extensions = {}
 
 p.activeControls = {}
-p.velocityControls = {}
 function p.doControls()
 	-- moveDirection, run, and down are handled in pvso_driving in relevant locations
 	if p.activeControls.fly then
 		mcontroller.setVelocty(p.activeControls.fly) -- this might be wrong?? no clue
 	end
-	if p.velocityControls.targetVelocity then
-		mcontroller.approachVelocity(p.velocityControls.targetVelocity, p.velocityControls.maxControlForce)
+	if p.activeControls.targetVelocity then
+		mcontroller.approachVelocity(p.activeControls.targetVelocity, p.activeControls.maxControlForce)
 	end
-	if p.velocityControls.targetXVelocity then
-		mcontroller.approachXVelocity(p.velocityControls.targetXVelocity, p.velocityControls.maxControlForce)
+	if p.activeControls.targetXVelocity then
+		mcontroller.approachXVelocity(p.activeControls.targetXVelocity, p.activeControls.maxControlForce)
 	end
-	if p.velocityControls.targetYVelocity then
-		mcontroller.approachYVelocity(p.velocityControls.targetYVelocity, p.velocityControls.maxControlForce)
+	if p.activeControls.targetYVelocity then
+		mcontroller.approachYVelocity(p.activeControls.targetYVelocity, p.activeControls.maxControlForce)
 	end
 end
 
 function mcontroller_extensions.clearControls() -- not used by pathing.lua? good to have anyway
 	p.activeControls = {}
-	p.velocityControls = {}
 end
 
 function mcontroller_extensions.controlMove(direction, run)
@@ -136,7 +138,7 @@ function mcontroller_extensions.controlApproachVelocity(targetVelocity, maxContr
 	-- If the current velocity is higher than the provided targetVelocity,
 	-- the targetVelocity will still be approached, effectively slowing down the entity.
 	-- Each control overrides the previous one.
-	p.velocityControls = {
+	p.activeControls = {
 		targetVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}
@@ -145,7 +147,7 @@ end
 function mcontroller_extensions.controlApproachXVelocity(targetVelocity, maxControlForce)
 	-- Approaches an X velocity. Same as using approachVelocityAlongAngle with angle 0.
 	-- Each control overrides the previous one.
-	p.velocityControls = {
+	p.activeControls = {
 		targetXVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}
@@ -154,7 +156,7 @@ end
 function mcontroller_extensions.controlApproachYVelocity(targetVelocity, maxControlForce)
 	-- Approaches a Y velocity. Same as using approachVelocityAlongAngle with angle (Pi / 2).
 	-- Each control overrides the previous one.
-	p.velocityControls = {
+	p.activeControls = {
 		targetYVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}

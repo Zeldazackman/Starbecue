@@ -218,7 +218,7 @@ function p.jumpMovement(dx, dy, state, dt)
 				end
 			end
 		end
-		if dy == -1 then
+		if dy == -1 or p.activeControls.down then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
 		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump <= p.movementParams[p.movement.jumpProfile].jumpHoldTime and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
 			mcontroller.approachYVelocity(p.movementParams[p.movement.jumpProfile].jumpSpeed, p.movementParams[p.movement.jumpProfile].jumpControlForce * (1 + dt))
