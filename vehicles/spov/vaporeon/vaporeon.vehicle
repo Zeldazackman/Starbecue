@@ -91,12 +91,15 @@
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
 				"fullThreshold" : 3.2, // mass of two normal players
-				"jumpCount" : 2,
-				"pulseEffect": "doublejump",
-				"pulseSparkles": 6,
 				"walkSpeed": 10,
 				"runSpeed": 20,
 				"swimSpeed" : 15,
+				"jumpCount" : 2,
+				"airJumpProfile" : {
+					"jumpSpeed" : 28.0
+				},
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
 				"liquidBuoyancy" : 0.0,
 				"bounceFactor" : 0.0
 			},
@@ -109,10 +112,13 @@
 				],
 				"mass" : 1.6, // mass from eating people gets added to this
 				"fullThreshold" : 1.6, // mass of one normal player
-				"walkSpeed": 10,
-				"runSpeed": 20,
+				"walkSpeed": 8,
+				"runSpeed": 16,
 				"swimSpeed" : 15,
 				"jumpCount" : 2,
+				"airJumpProfile" : {
+					"jumpSpeed" : 23.0
+				},
 				"pulseEffect": "smoldoublejump",
 				"pulseSparkles": 3,
 				"liquidBuoyancy" : 0.0,
