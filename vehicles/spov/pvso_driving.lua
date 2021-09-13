@@ -165,7 +165,7 @@ function p.groundMovement(dx, dy, state, dt)
 			p.doAnims( state.control.animations[p.movement.groundMovement] )
 			p.movement.animating = true
 			mcontroller.applyParameters{ groundFriction = p.movementParams.ambulatingGroundFriction }
-			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.groundForce * (1 + dt))
+			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.groundForce * p.movementParams.mass)
 		elseif p.movement.animating then
 			p.doAnims( state.idle )
 			p.movement.animating = false
@@ -220,8 +220,8 @@ function p.jumpMovement(dx, dy, state, dt)
 		end
 		if dy == -1 or p.activeControls.down then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump <= p.movementParams[p.movement.jumpProfile].jumpHoldTime and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
-			mcontroller.approachYVelocity(p.movementParams[p.movement.jumpProfile].jumpSpeed, p.movementParams[p.movement.jumpProfile].jumpControlForce * (1 + dt))
+		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump <= (p.movementParams[p.movement.jumpProfile].jumpHoldTime) and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
+			mcontroller.force({ 0, p.movementParams[p.movement.jumpProfile].jumpControlForce * p.movementParams.mass})
 		end
 	else
 		p.movement.jumped = false
@@ -233,7 +233,7 @@ function p.airMovement( dx, dy, state, dt )
 		p.movement.animating = true
 
 		if dx ~= 0 then
-			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * (1 + dt))
+			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
 		end
 
 		if (mcontroller.yVelocity() <= p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) then
@@ -256,10 +256,10 @@ function p.waterMovement( dx, dy, state, dt )
 		if (dx ~= 0) or (dy ~= 0)then
 			p.doAnims( state.control.animations.swim )
 			if (dx ~= 0) then
-				mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.liquidForce * (1 + dt))
+				mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.liquidForce * p.movementParams.mass)
 			end
 			if (dy ~= 0) then
-				mcontroller.approachYVelocity( dy * p.movementParams.liquidJumpProfile.jumpSpeed or p.movementParams.airJumpProfile.jumpSpeed, (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * (1 + dt))
+				mcontroller.approachYVelocity( dy * p.movementParams.liquidJumpProfile.jumpSpeed or p.movementParams.airJumpProfile.jumpSpeed, (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * p.movementParams.mass)
 			end
 		else
 			p.doAnims( state.control.animations.swimIdle )
