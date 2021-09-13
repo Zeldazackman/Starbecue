@@ -12,11 +12,11 @@
 //1
 "^cyan;So you've been turned into a Kaiju...^reset;
 
-First off, if you want to turn back, there is a menu accessible via the ^green;Tech Action 3^reset; keybind. This must be bound manually in the settings menu, recommended keybind is ^green;[H]^reset;. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu has other settings too.
+First off, if you want to turn back, there is a menu accessible by pressing ^green;[E]^reset; to interact with your new self. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu also allows you to select from various belly effects applied to your food, Player, NPC, and Monster alike.
 
-If you have selected ^yellow;soft digest^reset;, prey that get brought to 1HP will be put into ^cyan;eggs^reset;, which can then be laid.",
+The ^yellow;[Eggify]^reset; button will begin to put the selected prey into ^cyan;eggs^reset;, which can then be laid. If a specific prey isn't selected, this will happen to ALL prey.",
 //2
-"Xeronious has space for ^cyan;three prey in their belly, and one in the tail^reset;. Prey can struggle back and forth between these locations at any time.
+"Xeronious has space for ^cyan;three prey in their belly, and one in the tail^reset;. Prey can struggle back and forth between these locations if escapes are enabled.
 
 Xeronious can be positioned in ^cyan;several different states^reset;, each explained on its own page:
 

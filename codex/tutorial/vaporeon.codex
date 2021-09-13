@@ -12,7 +12,9 @@
 //1
 "^cyan;So you've been turned into a Vaporeon...^reset;
 
-First off, if you want to turn back, there is a menu accessible via the ^green;Tech Action 3^reset; keybind. This must be bound manually in the settings menu, recommended keybind is ^green;[H]^reset;. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu also allows you to select from various belly effects applied to your food, Player, NPC, and Monster alike.",
+First off, if you want to turn back, there is a menu accessible by pressing ^green;[E]^reset; to interact with your new self. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu also allows you to select from various belly effects applied to your food, Player, NPC, and Monster alike.
+
+The ^yellow;[Transform]^reset; button will transform the selected prey into a vaporeon as well! though this will not grant them the ability to change back and forth at will. If a specific prey isn't selected then all prey will be transformed.",
 //2
 "Digesting will restore your hunger, and if that is full, it'll restore your health as well.
 

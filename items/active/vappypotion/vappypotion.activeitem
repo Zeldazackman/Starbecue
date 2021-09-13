@@ -10,14 +10,15 @@
 	"category" : "Potion",
 	"twoHanded" : false,
 
+	"tech" : "vappy",
+	"spov" : "vaporeon",
 	"transformationDescription" : "a vaporeon",
+	"codex" : "vaporeoncodex",
 
 	"inventoryIcon" : "vappypotion.png",
 	"largeImage" : "vappypotionlarge.png",
 
 	"animation" : "vappypotion.animation",
 
-	"scripts" : ["vappypotion.lua"],
-	"tech" : "vappy",
-	"vehicle" : "spovvaporeon"
+	"scripts" : ["/items/active/pvsoTFpotion.lua"]
 }

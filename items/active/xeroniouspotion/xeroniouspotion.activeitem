@@ -10,12 +10,15 @@
 	"category" : "Potion",
 	"twoHanded" : false,
 
+	"tech" : "xeronious",
+	"spov" : "xeronious",
+	"transformationDescription" : "a kaiju of some sort",
+	"codex" : "xeroniouscodex",
+
 	"inventoryIcon" : "xeroniouspotion.png",
 	"largeImage" : "xeroniouspotionlarge.png",
 
 	"animation" : "xeroniouspotion.animation",
 
-	"scripts" : ["xeroniouspotion.lua"],
-	"tech" : "xeronious",
-	"vehicle" : "spovxeronious"
+	"scripts" : ["/items/active/pvsoTFpotion.lua"]
 }
