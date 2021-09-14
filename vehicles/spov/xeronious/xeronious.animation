@@ -45,7 +45,7 @@
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"crawl": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
@@ -71,11 +71,11 @@
 
 					"analvore": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
 
-					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
-					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-					"crawl": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"crawl": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },

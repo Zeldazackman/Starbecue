@@ -435,9 +435,18 @@ function p.doAnims( anims, force )
 			p.rotate( anim )
 		elseif state == "tags" then
 			p.setAnimTag( anim )
+		elseif state == "priority" then
+			p.changePriorityLength( anim )
 		else
 			p.doAnim( state.."State", anim, force)
 		end
+	end
+end
+
+function p.changePriorityLength(anim)
+	for state, data in pairs(anim) do
+		p.animStateData[state.."State"].animationState.priority = data[1] or p.animStateData[state.."State"].animationState.priority
+		p.animStateData[state.."State"].animationState.cycle = data[2] or p.animStateData[state.."State"].animationState.cycle
 	end
 end
 
