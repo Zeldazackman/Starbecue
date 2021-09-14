@@ -350,15 +350,50 @@ function p.rotationAnimUpdate()
 	local ended, times, time = p.hasAnimEnded(state)
 	if ended and not p.rotating.loop then p.rotating.enabled = false end
 	local speed = p.animStateData[state].animationState.frames / p.animStateData[state].animationState.cycle
-	local frame = math.floor(time * speed) + 1
+	local frame = math.floor(time * speed)
+	local index = frame + 1
+	local nextFrame = frame + 1
+	local nextIndex = index + 1
 
-	for _,r in ipairs(p.rotating.parts) do
-		local previousRotation = r.rotation[frame] or 0
-		local nextRotation = r.rotation[frame + 1] or previousRotation
-		local rotation = previousRotation + (nextRotation - previousRotation) * (time % 1)
-		for i = 1, #r.groups do
-			animator.resetTransformationGroup( r.groups[i] )
-			animator.rotateTransformationGroup(r.groups[i], (rotation * math.pi/180), r.center)
+	if p.rotating.prevFrame ~= frame then
+		if p.rotating.frames ~= nil then
+			for i = 1, #p.rotating.frames do
+				if (p.rotating.frames[i] == frame) then
+					p.rotating.prevFrame = frame
+					p.rotating.prevIndex = i
+
+					p.rotating.frame = p.rotating.frames[i + 1] or frame + 1
+					p.rotating.index = i + 1
+				end
+				if p.rotating.loop and (i == #p.rotating.frames) then
+					p.rotating.prevFrame = frame
+					p.rotating.prevIndex = i
+
+					p.rotating.frame = 0
+					p.rotating.index = 1
+				end
+			end
+		else
+			p.rotating.prevFrame = p.rotating.frame
+			p.rotating.frame = nextFrame
+
+			p.rotating.prevIndex = p.rotating.index
+			p.rotating.index = nextIndex
+		end
+	end
+
+	local currTime = time * speed
+	local progress = (currTime - p.rotating.prevFrame)/(math.abs(p.rotating.frame - p.rotating.prevFrame))
+
+	for _, r in ipairs(p.rotating.parts) do
+		local previousRotation = r.rotation[p.rotating.prevIndex] or r.last
+		local nextRotation = r.rotation[p.rotating.index] or previousRotation
+		local rotation = previousRotation + (nextRotation - previousRotation) * progress
+		r.last = previousRotation
+
+		for _, group in ipairs(r.groups) do
+			animator.resetTransformationGroup( group )
+			animator.rotateTransformationGroup( group, (rotation * math.pi/180), r.center)
 		end
 	end
 end
@@ -460,23 +495,36 @@ end
 
 p.rotating = {enabled = false, parts = {}}
 function p.rotate( data )
-	if data == p.rotating.data then
-		if not p.rotating.enabled then p.rotating.enabled = true end
-		return
+	if data == p.rotating.data and p.rotating.enabled then return
+	else
+		for i, part in ipairs(p.rotating.parts) do
+			for j, group in ipairs(part.groups) do
+				animator.resetTransformationGroup(group)
+			end
+		end
 	end
+
 	p.rotating = {
 		enabled = data ~= nil,
 		data = data,
+		frames = data.frames,
 		parts = {},
 		loop = data.loop or false,
-		timing = data.timing or "body"
+		timing = data.timing or "body",
+
+		frame = 1,
+		index = 2,
+		prevFrame = 0,
+		prevIndex = 1
+
 	}
 	local continue = false
-	for _,r in ipairs(data.parts or {}) do
+	for _, r in ipairs(data.parts or {}) do
 		table.insert(p.rotating.parts, {
 			groups = r.groups or {"frontarmrotation"},
 			center = r.center or {0,0},
-			rotation = r.rotation or {0}
+			rotation = r.rotation or {0},
+			last = r.rotation[1] or 0
 		})
 		if r.rotation and #r.rotation > 1 then
 			continue = true

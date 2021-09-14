@@ -186,6 +186,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
@@ -203,6 +204,7 @@
 				},
 				"succeat": { // 3 occupants
 					"location" : "belly",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
@@ -213,6 +215,7 @@
 				},
 				"escapeOral": { // 3 occupants
 					"victimAnimation": "escape",
+					"lock":true,
 					"script": "escapeOral",
 					"animation": {
 						"body": "escape",
@@ -221,6 +224,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
@@ -231,6 +235,7 @@
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
+					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
 					"script": "escapeTail",
@@ -240,6 +245,7 @@
 					}
 				},
 				"escapeAnal": { // 3 occupants
+					"lock":true,
 					"victimAnimation": "escapeAnal",
 					"script": "escapeAnal",
 					"animation": {
@@ -280,11 +286,8 @@
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle",
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				}
+				"rotate" : {},
+				"offset" : {}
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
@@ -435,6 +438,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
@@ -445,6 +449,7 @@
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
+					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
 					"script": "escapeTail",
@@ -546,6 +551,7 @@
 			"transitions": {
 				"succeat": { // 3 occupants
 					"location" : "belly",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
@@ -566,6 +572,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
@@ -577,6 +584,7 @@
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
+					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"script" : "escapeTail",
 					"timing": "tail",
@@ -601,6 +609,7 @@
 					}
 				},
 				"analvore": { // 3 occupants
+					"lock":true,
 					"animation": {
 						"body": "expand",
 						"arms": "fly",
@@ -611,6 +620,7 @@
 					"script": "analvore"
 				},
 				"escapeAnal": { // 3 occupants
+					"lock":true,
 					"victimAnimation": "escapeAnal",
 					"script" : "escapeAnal",
 					"animation": {
@@ -750,6 +760,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
@@ -767,6 +778,7 @@
 				},
 				"escapeOral": { // 3 occupants
 					"victimAnimation": "escape",
+					"lock":true,
 					"script": "escapeOral",
 					"animation": {
 						"body": "escape",
@@ -775,6 +787,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
@@ -785,6 +798,7 @@
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
+					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
 					"script": "escapeTail",
@@ -841,6 +855,7 @@
 						{"x": [-10], "y": [-17], "groups": ["headbob", "bodybob"] }
 					]
 				},
+				"rotate" : {},
 				"tags": [
 					{
 						"owner": "body",
@@ -888,7 +903,8 @@
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0]
+				"tail" : [-2.0, -2.0],
+				"hug" : [2.5, 0]
 			},
 
 			"interact": {
@@ -910,6 +926,7 @@
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
@@ -927,6 +944,7 @@
 				},
 				"escapeOral": { // 3 occupants
 					"victimAnimation": "escape",
+					"lock":true,
 					"script": "escapeOral",
 					"animation": {
 						"body": "escape",
@@ -935,6 +953,7 @@
 				},
 				"taileat": { // 1 occupant
 					"location" : "tail",
+					"lock" : true,
 					"failOnFull" : true,
 					"animation": {
 						"tail": "eat",
@@ -945,6 +964,7 @@
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
+					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
 					"script": "escapeTail",
