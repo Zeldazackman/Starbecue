@@ -710,16 +710,17 @@ function p.firstNotLounging(entityaimed)
 	end
 end
 
-function p.moveOccupantLocation(args, part, location)
+function p.moveOccupantLocation(args, location)
 	if p.locationFull(location) then return false end
-	p.occupant[args.index].location = location
-	return true
+	return true, function()
+		p.entity[args.id].location = location
+	end
 end
 
 function p.findFirstOccupantIdForLocation(location)
 	for i = 1, p.occupants.total do
 		if p.occupant[i].location == location then
-			return p.occupant[i].id
+			return p.occupant[i].id, i
 		end
 	end
 	return

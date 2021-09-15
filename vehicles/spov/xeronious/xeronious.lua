@@ -106,11 +106,11 @@ function succ(args)
 end
 
 function bellyToTail(args)
-	return p.moveOccupantLocation(args, "body", "tail")
+	return p.moveOccupantLocation(args, "tail")
 end
 
 function tailToBelly(args)
-	return p.moveOccupantLocation(args, "tail", "belly")
+	return p.moveOccupantLocation(args, "belly")
 end
 
 function grabOralEat(args)
@@ -130,6 +130,17 @@ function analEat(args)
 	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
 end
 
+function sitAnalEat(args)
+	args.id = p.findFirstOccupantIdForLocation("pinned")
+	if not args.id then return false end
+	local continue, func = p.moveOccupantLocation(args, "belly")
+	if continue then
+		p.entity[args.id].visible = false
+		func()
+	end
+	return continue
+end
+
 function checkOral()
 	return p.checkEatPosition(p.localToGlobal( {3, -1.5} ), 5, "belly", "eat")
 end
@@ -139,7 +150,19 @@ function checkTail()
 end
 
 function checkAnal()
-	return p.checkEatPosition(p.localToGlobal({0, -3}), 2, "belly", "analEat")
+	return p.checkEatPosition(p.localToGlobal({-1, -3}), 2, "belly", "analEat")
+end
+
+function sitCheckAnal()
+	local victim = p.findFirstOccupantIdForLocation("pinned")
+	local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
+		withoutEntityId = p.driver,
+		includedTypes = {"creature"}
+	})
+	if entityaimed[1] == victim then
+		p.doTransition("analEat")
+		return true
+	end
 end
 
 function escapeOral(args)
@@ -158,6 +181,13 @@ function checkVore()
 	if checkOral() then return true end
 	if checkTail() then return true end
 end
+
+function sitCheckVore()
+	if checkOral() then return true end
+	if checkTail() then return true end
+	if sitCheckAnal() then return true end
+end
+
 
 function unpin(args)
 	args.id = p.findFirstOccupantIdForLocation("pinned")
@@ -265,6 +295,13 @@ function state.stand.sitpin(args)
 	return true
 end
 
+function state.stand.vore()
+	if checkOral() then return true end
+	if checkTail() then return true end
+	if checkAnal() then return true end
+end
+
+
 state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
 state.stand.eat = grabOralEat
@@ -272,9 +309,9 @@ state.stand.succEat = oralEat
 state.stand.tailEat = tailEat
 state.stand.analEat = analEat
 
-state.stand.vore = checkVore
 state.stand.oralVore = checkOral
 state.stand.tailVore = checkTail
+state.stand.analVore = checkAnal
 
 state.stand.escapeOral = escapeOral
 state.stand.escapeAnal = escapeAnal
@@ -287,12 +324,16 @@ state.stand.succ = succ
 function state.sit.update()
 	checkEggSitup()
 
+	if p.pressControl(p.driverSeat, "jump") then
+		p.doTransition("analEat")
+	end
+
 	if p.occupants.hug > 0 then
 		p.setState("hug")
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants.hug == 0 and p.standalone then
+	if p.occupants.hug == 0 and p.standalone and not p.transitionLock then
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
@@ -310,10 +351,12 @@ state.sit.bellyToTail = bellyToTail
 state.sit.tailToBelly = tailToBelly
 state.sit.eat = grabOralEat
 state.sit.tailEat = tailEat
+state.sit.analEat = sitAnalEat
 
-state.sit.vore = checkVore
+state.sit.vore = sitCheckVore
 state.sit.oralVore = checkOral
 state.sit.tailVore = checkTail
+state.sit.analVore = sitCheckAnal
 
 state.sit.escapeOral = escapeOral
 state.sit.escapeTail = escapeTail
@@ -331,6 +374,10 @@ function state.hug.begin()
 end
 
 function state.hug.update()
+	if p.pressControl(p.driverSeat, "jump") then
+		p.doTransition("analEat")
+	end
+
 	if p.occupants.hug < 1 then
 		p.setState("sit")
 	end
@@ -344,10 +391,12 @@ state.hug.bellyToTail = bellyToTail
 state.hug.tailToBelly = tailToBelly
 state.hug.eat = grabOralEat
 state.hug.tailEat = tailEat
+state.hug.analEat = sitAnalEat
 
-state.hug.vore = checkVore
+state.hug.vore = sitCheckVore
 state.hug.oralVore = checkOral
 state.hug.tailVore = checkTail
+state.hug.analVore = sitCheckAnal
 
 state.hug.escapeOral = escapeOral
 state.hug.escapeTail = escapeTail
@@ -406,10 +455,6 @@ end
 
 function state.fly.ending()
 	p.setMovementParams( "default" )
-end
-
-function state.fly.analEat(args)
-	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
 end
 
 function state.fly.vore()

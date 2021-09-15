@@ -138,9 +138,7 @@ function absorb(args)
 	if not args.id then return false end
 
 	animator.playSound( "slurp" )
-	return true, function()
-		p.entity[args.id].location = "belly"
-	end
+	return p.moveOccupantLocation(args, "belly")
 end
 
 function state.lay.update()

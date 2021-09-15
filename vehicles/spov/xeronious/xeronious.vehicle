@@ -368,6 +368,10 @@
 						"cooldown": 1,
 						"script": "tailVore"
 					},
+					"analVore":{
+						"cooldown": 1,
+						"script": "analVore"
+					},
 					/*
 					"physicalAttack": {
 						"projectile": {
@@ -732,6 +736,10 @@
 						"cooldown": 1,
 						"script": "tailVore"
 					},
+					"analVore":{
+						"cooldown": 1,
+						"script": "analVore"
+					},
 					"specialAttack": {
 						"hold" : true,
 						"animation": {"head": "succ"},
@@ -826,13 +834,11 @@
 				"analEat": { // 3 occupants
 					"location" : "belly",
 					"failOnFull" : true,
-					"victimAnimLocation" : "pinned",
 					"lock":true,
 					"animation": {
 						"body": "expand",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playeranalEat",
 					"script": "analEat"
 				},
 				"digestbelly" : {
@@ -862,13 +868,6 @@
 					}
 				},
 				"hug": {
-					"location" : "hug",
-					"failOnFull" : true,
-					"animation": {
-						"arms": "hug"
-					},
-					"state": "hug",
-					"victimAnimation": "hugcenter",
 					"script": "hug"
 				}
 			},
@@ -942,12 +941,55 @@
 				"tail" : [-2.0, -2.0],
 				"hug" : [2.5, 0]
 			},
-
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "failOnFull": true},
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
+			},
+			"control": {
+				"groundMovementDisabled" : true,
+				"jumpMovementDisabled" : true,
+				"airMovementDisabled" : true,
+				"waterMovementDisabled" :true,
+				"defaultActions" : ["grab", "specialAttack"],
+				"clickActions" : {
+					"grab":{
+						"cooldown": 1,
+						"script": "grab"
+					},
+					"vore":{
+						"cooldown": 1,
+						"script": "vore"
+					},
+					"oralVore":{
+						"cooldown": 1,
+						"script": "oralVore"
+					},
+					"tailVore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					},
+					"analVore":{
+						"cooldown": 1,
+						"script": "analVore"
+					},
+					/*
+					"physicalAttack": {
+						"projectile": {
+							"name": "xeroniousbap",
+							"position": [ 3, -1.5 ],
+							"aimable": false
+						},
+						"cooldown": 30,
+					},
+					*/
+					"specialAttack": {
+						"hold" : true,
+						"animation": {"head": "succ"},
+						"script": "succ"
+					}
+				}
 			}
 		},
 		"hug": {
@@ -1025,13 +1067,11 @@
 				"analEat": { // 3 occupants
 					"location" : "belly",
 					"failOnFull" : true,
-					"victimAnimLocation" : "pinned",
 					"lock":true,
 					"animation": {
 						"body": "expand",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playeranalEat",
 					"script": "analEat"
 				},
 				"digestbelly" : {
@@ -1147,6 +1187,50 @@
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
+			},
+			"control": {
+				"groundMovementDisabled" : true,
+				"jumpMovementDisabled" : true,
+				"airMovementDisabled" : true,
+				"waterMovementDisabled" :true,
+				"defaultActions" : ["grab", "specialAttack"],
+				"clickActions" : {
+					"grab":{
+						"cooldown": 1,
+						"script": "grab"
+					},
+					"vore":{
+						"cooldown": 1,
+						"script": "vore"
+					},
+					"oralVore":{
+						"cooldown": 1,
+						"script": "oralVore"
+					},
+					"tailVore":{
+						"cooldown": 1,
+						"script": "tailVore"
+					},
+					"analVore":{
+						"cooldown": 1,
+						"transition": "analVore"
+					},
+					/*
+					"physicalAttack": {
+						"projectile": {
+							"name": "xeroniousbap",
+							"position": [ 3, -1.5 ],
+							"aimable": false
+						},
+						"cooldown": 30,
+					},
+					*/
+					"specialAttack": {
+						"hold" : true,
+						"animation": {"head": "succ"},
+						"script": "succ"
+					}
+				}
 			}
 		}
 	}
