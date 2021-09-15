@@ -146,6 +146,7 @@ function p.updateDriving(dt)
 		p.waterMovement(dx, dy, state, dt)
 		p.jumpMovement(dx, dy, state, dt)
 		p.airMovement(dx, dy, state, dt)
+		p.flyMovement(dx, dy, state, dt)
 		p.doControls() -- set by mcontroller.control*(), used by pathfinding
 	end
 	p.driverSeatStateChange()
@@ -156,7 +157,7 @@ function p.groundMovement(dx, dy, state, dt)
 	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= p.movementParams.fullThreshold) or (p.activeControls.run == false) then
 		p.movement.groundMovement = "walk"
 	end
-	if mcontroller.onGround() then
+	if mcontroller.onGround() and not p.movement.flying then
 		if dx ~= 0 and not state.control.groundMovementDisabled then
 			p.movingDX = dx
 			p.doAnims( state.control.animations[p.movement.groundMovement] )
@@ -176,7 +177,6 @@ end
 
 function p.jumpMovement(dx, dy, state, dt)
 	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
-	if state.control.jumpMovementDisabled then return end
 
 	if not mcontroller.onGround() and (dy == -1 or p.activeControls.down) then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
@@ -188,6 +188,8 @@ function p.jumpMovement(dx, dy, state, dt)
 	if mcontroller.liquidPercentage() ~= 0 then
 		p.movement.jumpProfile = "liquidJumpProfile"
 	end
+
+	if state.control.jumpMovementDisabled or p.movement.flying then return end
 
 	if p.heldControl( p.driverSeat, "jump" ) then
 		if (p.movement.jumps < p.movementParams.jumpCount) and (p.movement.sinceLastJump >= p.movementParams[p.movement.jumpProfile].reJumpDelay)
@@ -226,46 +228,56 @@ function p.jumpMovement(dx, dy, state, dt)
 end
 
 function p.airMovement( dx, dy, state, dt )
-	if ((not p.underWater()) and (not mcontroller.onGround())) and not state.control.airMovementDisabled then
-		p.movement.animating = true
+	if p.underWater() or mcontroller.onGround() or state.control.airMovementDisabled or p.movement.flying then return end
 
-		if dx ~= 0 then
-			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
-		end
+	p.movement.animating = true
 
-		if (mcontroller.yVelocity() <= p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) then
-			p.doAnims( state.control.animations.fall )
-			p.movement.falling = true
-		elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then
-			p.doAnims( state.control.animations.jump )
-			p.movement.falling = false
-		end
+	if dx ~= 0 then
+		mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
+	end
+
+	if (mcontroller.yVelocity() <= p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) then
+		p.doAnims( state.control.animations.fall )
+		p.movement.falling = true
+	elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then
+		p.doAnims( state.control.animations.jump )
+		p.movement.falling = false
 	end
 end
 
 function p.waterMovement( dx, dy, state, dt )
-	if (p.underWater() and (not mcontroller.onGround())) and not state.control.waterMovementDisabled then
-		local swimSpeed = p.movementParams.swimSpeed or p.movementParams[p.movement.groundMovement.."Speed"]
-		local dy = dy
-		if p.heldControl(p.driverSeat, "jump") and (dy ~= 1) then
-			dy = dy + 1
-		end
-		if (dx ~= 0) or (dy ~= 0)then
-			p.doAnims( state.control.animations.swim )
-			if (dx ~= 0) then
-				mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.liquidForce * p.movementParams.mass)
-			end
-			if (dy ~= 0) then
-				mcontroller.approachYVelocity( dy * p.movementParams.liquidJumpProfile.jumpSpeed or p.movementParams.airJumpProfile.jumpSpeed, (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * p.movementParams.mass)
-			end
-		else
-			p.doAnims( state.control.animations.swimIdle )
-		end
-		p.movement.animating = true
-		p.movement.jumps = 0
-		p.movement.falling = false
-		p.movement.airtime = 0
+	if not p.underWater() or mcontroller.onGround() or state.control.waterMovementDisabled then return end
+
+	local swimSpeed = p.movementParams.swimSpeed or p.movementParams[p.movement.groundMovement.."Speed"]
+	local dy = dy
+	if p.heldControl(p.driverSeat, "jump") and (dy ~= 1) then
+		dy = dy + 1
 	end
+	if (dx ~= 0) or (dy ~= 0)then
+		p.doAnims( state.control.animations.swim )
+		if (dx ~= 0) then
+			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.liquidForce * p.movementParams.mass)
+		end
+		if (dy ~= 0) then
+			mcontroller.approachYVelocity( dy * p.movementParams.liquidJumpProfile.jumpSpeed or p.movementParams.airJumpProfile.jumpSpeed, (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * p.movementParams.mass)
+		end
+	else
+		p.doAnims( state.control.animations.swimIdle )
+	end
+	p.movement.animating = true
+	p.movement.jumps = 0
+	p.movement.falling = false
+	p.movement.airtime = 0
+end
+
+function p.flyMovement( dx, dy, state, dt )
+	if p.movementParams.flySpeed == 0 or state.control.flyMovementDisabled or mcontroller.onGround() or p.underWater() or not p.movement.flying then return end
+
+	p.doAnims( state.control.animations.fly )
+	mcontroller.approachXVelocity( dx * p.movementParams.flySpeed, p.movementParams.airForce * p.movementParams.mass)
+	mcontroller.approachYVelocity( dy * p.movementParams.flySpeed, p.movementParams.airForce * p.movementParams.mass)
+	p.movement.animating = true
+
 end
 
 p.clickActionCooldowns = {

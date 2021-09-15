@@ -266,13 +266,13 @@ function state.stand.update()
 				transition = "analEat"
 			end
 			p.doTransition(transition, {id = victim})
-			p.timer("restoreClickActions", 1, function()
+			p.timer("restoreClickActions", 0.5, function()
 				p.movement.clickActionsDisabled = false
 			end)
 		elseif p.pressControl(p.driverSeat, "altFire") then
 			p.uneat(p.grabbing)
 			p.grabbing = nil
-			p.timer("restoreClickActions", 1, function()
+			p.timer("restoreClickActions", 0.5, function()
 				p.movement.clickActionsDisabled = false
 			end)
 		end
@@ -285,6 +285,7 @@ function state.stand.update()
 		elseif not mcontroller.onGround() and p.pressControl(p.driverSeat, "jump") then
 			letGrabGo()
 			p.setState( "fly" )
+			return
 		end
 	end
 end
@@ -459,8 +460,6 @@ state.crouch.escapeTail = escapeTail
 -------------------------------------------------------------------------------
 
 function state.fly.update()
-	p.doAnims(p.stateconfig[p.state].control.animations.fly)
-
 	if not p.transitionLock then
 		if p.pressControl( p.driverSeat, "jump" )
 		or ((p.occupants.mass >= p.movementParams.fullThreshold) and mcontroller.onGround())
@@ -474,10 +473,12 @@ end
 
 function state.fly.begin()
 	letGrabGo()
+	p.movement.flying = true
 	p.setMovementParams( "fly" )
 end
 
 function state.fly.ending()
+	p.movement.flying = false
 	p.setMovementParams( "default" )
 end
 

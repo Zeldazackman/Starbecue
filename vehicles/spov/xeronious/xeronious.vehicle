@@ -85,6 +85,7 @@
 				"fullThreshold" : 4.8, // mass of three humans
 				"walkSpeed": 10,
 				"runSpeed": 20,
+				"flySpeed" : 0,
 				"jumpCount" : 1,
 				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
@@ -100,6 +101,7 @@
 				"fullThreshold" : 4.8, // mass of three humans
 				"walkSpeed": 10,
 				"runSpeed": 20,
+				"flySpeed" : 15,
 				"jumpCount" : 0,
 				"gravityEnabled" : false,
 				"ignorePlatformCollision" : true
@@ -114,6 +116,7 @@
 				"fullThreshold" : 0, // just forces walking only
 				"walkSpeed": 7,
 				"runSpeed": 7,
+				"flySpeed" : 0,
 				"jumpCount" : 0,
 				"gravityEnabled" : true,
 				"ignorePlatformCollision" : false
@@ -749,6 +752,7 @@
 
 				"animations": {
 					"fly": {
+						"head": "idle",
 						"arms": "fly",
 						"offset" : {
 							"timing": "arms",
