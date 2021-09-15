@@ -184,6 +184,13 @@ end
 
 -------------------------------------------------------------------------------
 
+function state.stand.begin()
+	local hugged = p.findFirstOccupantIdForLocation("hug")
+	if hugged ~= nil then
+		p.grabbing = hugged
+	end
+end
+
 function state.stand.update()
 	if p.movement.clickActionsDisabled then
 		if p.pressControl(p.driverSeat, "primaryFire") then
@@ -251,6 +258,10 @@ state.stand.succ = succ
 function state.sit.update()
 	checkEggSitup()
 
+	if p.occupants.hug > 0 then
+		p.setState("hug")
+	end
+
 	-- simulate npc interaction when nearby
 	if p.occupants.total == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
@@ -279,6 +290,14 @@ state.sit.escapeOral = escapeOral
 state.sit.escapeTail = escapeTail
 
 -------------------------------------------------------------------------------
+
+function state.hug.begin()
+	local victim = p.findFirstOccupantIdForLocation("hug")
+	if victim then
+		p.grabbing = nil
+		p.doVictimAnim( victim, "hugcenter", "bodyState")
+	end
+end
 
 function state.hug.update()
 	if p.occupants.hug < 1 then

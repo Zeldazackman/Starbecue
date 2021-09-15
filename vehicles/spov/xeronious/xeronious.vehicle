@@ -750,7 +750,6 @@
 				"up": {
 					"animation": {
 						"body": "idle",
-						"arms": "idle",
 						"legs": "standup",
 						"offset" : {
 							"timing": "legs",
@@ -930,13 +929,30 @@
 		},
 		"hug": {
 			"transitions": {
+				"unhug" : {
+					"script": "unhug"
+				},
 				"up": {
 					"animation": {
-						"arms": "idle"
+						"body": "idle",
+						"legs": "standup",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-6, -3], "y": [-11, -5], "groups": ["headbob", "bodybob"] }
+							]
+						},
+						"tags": [
+							{
+								"owner": "body",
+								"part": "global",
+								"name": "bellymask",
+								"value": ""
+							}
+						]
 					},
-					"timing": "arms",
-					"state": "sit",
-					"script": "unhug"
+					"timing": "legs",
+					"state": "stand"
 				},
 				"eat": { // 3 occupants
 					"location" : "belly",
@@ -1035,7 +1051,7 @@
 			"struggle": {
 				"hug" : {
 					"part" : "arms", // can be an arms struggle anim later maybe
-					"up": { "transition": "up", "drivingEnabled": true },
+					"up": { "transition": "unhug", "drivingEnabled": true },
 					"front": {},
 					"back": {},
 					"down": {},
