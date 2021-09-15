@@ -330,8 +330,8 @@
 				"backarms" : [17, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [34, -3],
-				"backarms" : [43, -3]
+				"frontarms" : [37, 8],
+				"backarms" : [46, 8]
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],
@@ -911,8 +911,8 @@
 				"backarms" : [17, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [34, -3],
-				"backarms" : [43, -3]
+				"frontarms" : [37, 8],
+				"backarms" : [46, 8]
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],
@@ -1097,8 +1097,8 @@
 				"backarms" : [17, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [34, -3],
-				"backarms" : [43, -3]
+				"frontarms" : [37, 8],
+				"backarms" : [46, 8]
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],

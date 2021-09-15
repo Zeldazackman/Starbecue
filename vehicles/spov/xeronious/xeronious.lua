@@ -166,6 +166,7 @@ function p.setGrabTarget()
 		p.armRotation.enabledR = true
 		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
 		p.armRotation.groupsR = {}
+		p.armRotation.groupsL = {}
 	elseif p.wasEating then
 		p.wasEating = false
 		p.grabbing = nil
@@ -175,10 +176,12 @@ function p.setGrabTarget()
 		p.armRotation.enabledR = true
 		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
 		p.armRotation.groupsR = {p.entity[p.grabbing].seatname.."Position"}
+		p.armRotation.groupsL = {p.entity[p.grabbing].seatname.."Position"}
 	else
 		p.armRotation.enabledL = false
 		p.armRotation.enabledR = false
 		p.armRotation.groupsR = {}
+		p.armRotation.groupsL = {}
 	end
 end
 

@@ -48,11 +48,11 @@ function p.armRotationUpdate()
 		p.faceDirection(p.armRotation.target[1]*p.direction)
 	end
 	if p.direction > 0 then
-		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR)
 		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL)
+		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR)
 	else
-		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL)
 		p.rotateArm( p.armRotation.enabledR, "backarms", p.armRotation.groupsR)
+		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL)
 	end
 end
 
