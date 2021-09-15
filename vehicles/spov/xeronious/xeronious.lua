@@ -50,6 +50,7 @@ function p.whenFalling()
 end
 
 function p.letout(id)
+	if not id then return end
 	local location = p.entity[id].location
 	if location == "belly" then
 		if p.heldControl(p.driverSeat, "down") or p.entity[id].species == "egg" then
@@ -150,6 +151,8 @@ end
 -------------------------------------------------------------------------------
 
 function state.stand.update()
+	p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
+	p.armRotation.enabledR = true
 	if not p.transitionLock then
 		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
 			p.doTransition( "crouch" )

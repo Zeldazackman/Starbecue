@@ -190,17 +190,7 @@
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"arms": "rotation",
-						"head": "eat",
-						"rotate": {
-							"parts": [
-								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-							]
-						},
-						"priority": {
-							"arms" : [4, 1.5] // higher priority and length so arms aren't overwritten during the animation
-						}
+						"head": "eat"
 					},
 					"victimAnimation": "playereat",
 					"script": "eat"
@@ -296,7 +286,6 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
-
 			"struggle": {
 				"belly" : {
 					"part" : "body",
@@ -326,6 +315,15 @@
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
 				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [8, 8],
+				"backarms" : [17, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [34, -3],
+				"backarms" : [43, -3]
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],
@@ -767,17 +765,7 @@
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"arms": "rotation",
-						"head": "eat",
-						"rotate": {
-							"parts": [
-								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-							]
-						},
-						"priority": {
-							"arms" : [4, 1.5] // higher priority and length so arms aren't overwritten during the animation
-						}
+						"head": "eat"
 					},
 					"victimAnimation": "playereat",
 					"script": "eat"
@@ -907,6 +895,15 @@
 				}
 
 			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [8, 8],
+				"backarms" : [17, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [34, -3],
+				"backarms" : [43, -3]
+			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],
 				"tail" : [-2.0, -2.0],
@@ -936,17 +933,7 @@
 					"failOnFull" : true,
 					"animation": {
 						"body": "eat",
-						"arms": "rotation",
-						"head": "eat",
-						"rotate": {
-							"parts": [
-								{ "groups": ["frontarmrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "groups": ["backarmrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-							]
-						},
-						"priority": {
-							"arms" : [4, 1.5] // higher priority and length so arms aren't overwritten during the animation
-						}
+						"head": "eat"
 					},
 					"victimAnimation": "playereat",
 					"script": "eat"
@@ -1076,6 +1063,15 @@
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
 				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [8, 8],
+				"backarms" : [17, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [34, -3],
+				"backarms" : [43, -3]
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -1.5],

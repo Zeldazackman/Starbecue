@@ -259,7 +259,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					 "transformationGroups": ["flip", "frontarmrotation", "bodybob"]
+					 "transformationGroups": ["flip", "frontarmsrotation", "bodybob"]
 				},
 				"partStates": {
 					"armsState": {
@@ -297,7 +297,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -3,
-					 "transformationGroups": ["flip", "backarmrotation", "bodybob"]
+					 "transformationGroups": ["flip", "backarmsrotation", "bodybob"]
 				},
 				"partStates": {
 					"armsState": {
@@ -450,10 +450,10 @@
 		"tailbob": {
 			"interpolated": false
 		},
-		"frontarmrotation": {
+		"frontarmsrotation": {
 			"interpolated": true
 		},
-		"backarmrotation": {
+		"backarmsrotation": {
 			"interpolated": true
 		}
 	},

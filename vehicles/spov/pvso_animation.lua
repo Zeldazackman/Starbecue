@@ -10,6 +10,7 @@ function p.updateAnims(dt)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
+	p.armRotationUpdate()
 
 	for statename, state in pairs(p.animStateData) do
 		if state.animationState.time >= state.animationState.cycle then
@@ -31,6 +32,53 @@ function p.endAnim(state)
 			animator.setPartTag( state.tag.part, state.tag.name, "" )
 		end
 		state.tag = nil
+	end
+end
+
+p.armRotation = {
+	target = {0,0},
+	enabledR = false,
+	enabledL = false,
+	groupsR = {},
+	groupsL = {}
+}
+function p.armRotationUpdate()
+	if p.direction > 0 then
+		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR)
+		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL)
+	else
+		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL)
+		p.rotateArm( p.armRotation.enabledR, "backarms", p.armRotation.groupsR)
+	end
+end
+
+function p.rotateArm(enabled, arm, groups)
+	if enabled then
+		animator.setAnimationState(arm.."_rotationState", p.stateconfig[p.state].rotationArmState or "rotation", true )
+
+		local target = p.armRotation.target
+		local center = {(p.stateconfig[p.state].rotationCenters[arm][1] or 0) / 8, (p.stateconfig[p.state].rotationCenters[arm][2] or 0) / 8}
+		local handOffset = {(p.stateconfig[p.state].handOffsets[arm][1] or 0) / 8, (p.stateconfig[p.state].handOffsets[arm][2] or 0) / 8}
+		local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
+
+		animator.resetTransformationGroup(arm.."rotation")
+		animator.rotateTransformationGroup(arm.."rotation", angle, center)
+
+		for i, group in ipairs(groups) do
+			animator.resetTransformationGroup(group)
+			animator.translateTransformationGroup(group, handOffset)
+			animator.rotateTransformationGroup(group, angle, center)
+		end
+
+		animator.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
+		animator.setPartTag( arm.."_fullbright", "armVisible", "?multiply=FFFFFF00" )
+		animator.setPartTag( arm.."_rotation", "armVisible", "" )
+		animator.setPartTag( arm.."_fullbright_rotation", "armVisible", "" )
+	else
+		animator.setPartTag( arm, "armVisible", "" )
+		animator.setPartTag( arm.."_fullbright", "armVisible", "" )
+		animator.setPartTag( arm.."_rotation", "armVisible", "?multiply=FFFFFF00" )
+		animator.setPartTag( arm.."_fullbright_rotation", "armVisible", "?multiply=FFFFFF00" )
 	end
 end
 
@@ -530,7 +578,7 @@ function p.rotate( data )
 	local continue = false
 	for _, r in ipairs(data.parts or {}) do
 		table.insert(p.rotating.parts, {
-			groups = r.groups or {"frontarmrotation"},
+			groups = r.groups or {"frontarmsrotation"},
 			center = r.center or {0,0},
 			rotation = r.rotation or {0},
 			last = r.rotation[1] or 0

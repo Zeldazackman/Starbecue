@@ -59,6 +59,18 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
+			"frontarms_rotationState": {
+				"default": "rotation",
+				"states": {
+					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"backarms_rotationState": {
+				"default": "rotation",
+				"states": {
+					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
 			"legsState": {
 				"default": "idle",
 				"states": {
@@ -183,8 +195,8 @@
 			"body": {
 				"properties": {
 					"centered": true,
-					 "zLevel": -1,
-					 "transformationGroups": ["flip", "bodybob"]
+					"zLevel": -1,
+					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -210,7 +222,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 1,
-					 "transformationGroups": ["flip", "bodybob"]
+					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -232,35 +244,59 @@
 					}
 				}
 			},
+			"frontarms_rotation": {
+				"properties": {
+					"centered": true,
+					"zLevel": 4,
+					"transformationGroups": ["flip", "frontarmsrotation", "armsbob", "bodybob"],
+					"armVisible" : "?multiply=FFFFFF00"
+				},
+				"partStates":{
+					"frontarms_rotationState": {
+						"rotation": { "properties": { "image": "spov/<skin>/foreground/arms.png:rotation.<frame><directives><armVisible>" } }
+					}
+				}
+			},
 			"frontarms": {
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					 "transformationGroups": ["flip", "frontarmrotation", "bodybob"]
+					"transformationGroups": ["flip", "armsbob", "bodybob"]
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/<skin>/foreground/arms.png:idle.<frame><directives>" } },
-						"hug": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
-						"rotation": { "properties": { "image": "spov/<skin>/foreground/arms.png:rotation.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/foreground/arms.png:idle.<frame><directives><armVisible>" } },
+						"hug": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/foreground/arms.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/foreground/arms.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/foreground/arms.png:walk.<frame><directives><armVisible>" } },
+						"run": { "properties": { "image": "spov/<skin>/foreground/arms.png:run.<frame><directives><armVisible>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives><armVisible>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives><armVisible>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/foreground/arms.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/foreground/arms.png:fall.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/<skin>/foreground/arms.png:fly.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/foreground/arms.png:jump.<frame><directives><armVisible>" } },
+						"fall": { "properties": { "image": "spov/<skin>/foreground/arms.png:fall.<frame><directives><armVisible>" } },
+						"fly": { "properties": { "image": "spov/<skin>/foreground/arms.png:fly.<frame><directives><armVisible>" } },
 
-						"s_back": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives>" } },
-
+						"s_back": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } },
 
 						"none": { "properties": {} }
+					}
+				}
+			},
+			"backarms_rotation": {
+				"properties": {
+					"centered": true,
+					"zLevel": -3,
+					"transformationGroups": ["flip", "backarmsrotation", "armsbob", "bodybob"],
+					"armVisible" : "?multiply=FFFFFF00"
+				},
+				"partStates":{
+					"backarms_rotationState": {
+						"rotation": { "properties": { "image": "spov/<skin>/arms.png:rotation.<frame><directives><armVisible>" } }
 					}
 				}
 			},
@@ -268,28 +304,27 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -3,
-					 "transformationGroups": ["flip", "backarmrotation", "bodybob"]
+					"transformationGroups": ["flip", "armsbob", "bodybob"]
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
-						"hug": { "properties": { "image": "spov/<skin>/arms.png:hug.<frame><directives>" } },
-						"rotation": { "properties": { "image": "spov/<skin>/arms.png:rotation.<frame><directives>" } },
+						"idle": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } },
+						"hug": { "properties": { "image": "spov/<skin>/arms.png:hug.<frame><directives><armVisible>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/arms.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/arms.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/arms.png:walk.<frame><directives><armVisible>" } },
+						"run": { "properties": { "image": "spov/<skin>/arms.png:run.<frame><directives><armVisible>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/arms.png:crawl.4<directives>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/arms.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/arms.png:crawl.4<directives><armVisible>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/arms.png:crawl.<frame><directives><armVisible>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/arms.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "spov/<skin>/arms.png:fall.<frame><directives>" } },
-						"fly": { "properties": { "image": "spov/<skin>/arms.png:fly.<frame><directives>" } },
+						"jump": { "properties": { "image": "spov/<skin>/arms.png:jump.<frame><directives><armVisible>" } },
+						"fall": { "properties": { "image": "spov/<skin>/arms.png:fall.<frame><directives><armVisible>" } },
+						"fly": { "properties": { "image": "spov/<skin>/arms.png:fly.<frame><directives><armVisible>" } },
 
-						"s_back": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } }, //temp dummies
-						"s_front": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
-						"s_up": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
-						"s_down": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } }, //temp dummies
+						"s_front": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } },
 
 						"none": { "properties": {} }
 					}
@@ -299,7 +334,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 3,
-					 "transformationGroups": ["flip", "legsbob"]
+					"transformationGroups": ["flip", "legsbob"]
 				},
 				"partStates": {
 					"legsState": {
@@ -329,7 +364,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -2,
-					 "transformationGroups": ["flip", "legsbob"]
+					"transformationGroups": ["flip", "legsbob"]
 				},
 				"partStates": {
 					"legsState": {
@@ -359,7 +394,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 2,
-					 "transformationGroups": ["flip", "bodybob", "tailbob"]
+					"transformationGroups": ["flip", "bodybob", "tailbob"]
 				},
 				"partStates": {
 					"tailState": {
@@ -384,7 +419,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1,
-					 "transformationGroups": ["flip", "bodybob", "tailbob"]
+					"transformationGroups": ["flip", "bodybob", "tailbob"]
 				},
 				"partStates": {
 					"tailState": {
@@ -409,7 +444,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 3,
-					 "transformationGroups": ["flip", "headbob"]
+					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
@@ -706,10 +741,13 @@
 		"tailbob": {
 			"interpolated": false
 		},
-		"frontarmrotation": {
+		"armsbob": {
+			"interpolated": false
+		},
+		"frontarmsrotation": {
 			"interpolated": true
 		},
-		"backarmrotation": {
+		"backarmsrotation": {
 			"interpolated": true
 		}
 	},
@@ -723,10 +761,10 @@
 	},
 	"particleEmitters": {
 		"emotehappy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+		 "emissionRate" : 1,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/happy.animation",
 				"position" : [-0.2, 3.3],
@@ -737,16 +775,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 
 		"emotesad" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+		 "emissionRate" : 1,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/sad.animation",
 				"position" : [-0.2, 3.3],
@@ -757,16 +795,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 
 		"emoteconfused" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+		 "emissionRate" : 1,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/confused.animation",
 				"position" : [-0.2, 3.3],
@@ -777,16 +815,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 
 		"emotesleepy" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+		 "emissionRate" : 1,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/emotes/sleepy.animation",
 				"position" : [-0.2, 3.3],
@@ -797,16 +835,16 @@
 				"layer" : "front",
 				"timeToLive" : 0.8,
 				"flippable" : false
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 
 		"drips" : {
-		  "emissionRate" : 15,
-		  "particles" : [
+		 "emissionRate" : 15,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "ember",
 				"layer" : "front",
 				"size" : 1.0,
@@ -821,21 +859,21 @@
 				"approach" : [3, 10],
 				"timeToLive" : 0.5,
 				"variance" : {
-				  "initialVelocity" : [0.2, 0.0],
-				  "size" : 0.5,
-				  "position" : [0.3, 0]
+				 "initialVelocity" : [0.2, 0.0],
+				 "size" : 0.5,
+				 "position" : [0.3, 0]
 				},
 				"flippable" : true
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 
 		"doublejump" : {
-		  "emissionRate" : 1,
-		  "particles" : [
+		 "emissionRate" : 1,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "animated",
 				"animation" : "/animations/doublejump/doublejump.animation",
 				"position" : [0, -5],
@@ -847,17 +885,17 @@
 				"light" : [70, 100, 140],
 				"fade" : 0.5,
 				"variance" : {
-				  "initialVelocity" : [0.0, 0.0]
+				 "initialVelocity" : [0.0, 0.0]
 				}
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 		"defaultblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
+		 "emissionRate" : 6,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "ember",
 				"size" : 1.0,
 				"color" : [49, 166, 255, 255],
@@ -869,18 +907,18 @@
 				"timeToLive" : 0.8,
 				"layer" : "middle",
 				"variance" : {
-				  "initialVelocity" : [2, 3.0],
-				  "size" : 0.5
+				 "initialVelocity" : [2, 3.0],
+				 "size" : 0.5
 				}
-			  }
+			 }
 			}
-		  ]
+		 ]
 		},
 		"defaultlightblue" : {
-		  "emissionRate" : 6,
-		  "particles" : [
+		 "emissionRate" : 6,
+		 "particles" : [
 			{
-			  "particle" : {
+			 "particle" : {
 				"type" : "ember",
 				"size" : 1.0,
 				"color" : [155, 212, 255, 255],
@@ -895,11 +933,11 @@
 				"light" : [46, 63, 76],
 				"layer" : "back",
 				"variance" : {
-				  "initialVelocity" : [6, 6.0]
+				 "initialVelocity" : [6, 6.0]
 				}
-			  }
+			 }
 			}
-		  ]
+		 ]
 		}
 	}
 }
