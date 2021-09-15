@@ -353,7 +353,7 @@
 				"defaultActions" : ["grab", "specialAttack"],
 				"clickActions" : {
 					"grab":{
-						"cooldown": 1,
+						"cooldown": 0.5,
 						"script": "grab"
 					},
 					"vore":{
@@ -379,7 +379,7 @@
 							"position": [ 3, -1.5 ],
 							"aimable": false
 						},
-						"cooldown": 30,
+						"cooldown": 1,
 					},
 					*/
 					"specialAttack": {
@@ -955,7 +955,7 @@
 				"defaultActions" : ["grab", "specialAttack"],
 				"clickActions" : {
 					"grab":{
-						"cooldown": 1,
+						"cooldown": 0.5,
 						"script": "grab"
 					},
 					"vore":{
@@ -981,7 +981,7 @@
 							"position": [ 3, -1.5 ],
 							"aimable": false
 						},
-						"cooldown": 30,
+						"cooldown": 1,
 					},
 					*/
 					"specialAttack": {
@@ -1196,7 +1196,7 @@
 				"defaultActions" : ["grab", "specialAttack"],
 				"clickActions" : {
 					"grab":{
-						"cooldown": 1,
+						"cooldown": 0.5,
 						"script": "grab"
 					},
 					"vore":{
@@ -1222,7 +1222,7 @@
 							"position": [ 3, -1.5 ],
 							"aimable": false
 						},
-						"cooldown": 30,
+						"cooldown": 1,
 					},
 					*/
 					"specialAttack": {

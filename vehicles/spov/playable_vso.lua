@@ -356,7 +356,6 @@ function onInteraction(args)
 		return
 	elseif p.notMoving() then
 		p.showEmote( "emotehappy" )
-		if p.driver ~= nil then return end
 		if stateData.interact ~= nil then
 			if stateData.interact.side ~= nil  then
 				local area = mcontroller.collisionBoundBox()
@@ -390,6 +389,7 @@ function onInteraction(args)
 end
 
 function p.interactChance(stateData, direction, args)
+	if not (stateData.interact[direction].drivingEnabled or (not p.driver)) then return end
 	if stateData.interact[direction].chance then
 		if math.random() <= (stateData.interact[direction].chance/100) then
 			p.doTransition( p.occupantArray(stateData.interact[direction]).transition, {id=args.sourceId} )
@@ -678,24 +678,31 @@ function p.doEscape(args, statuses, afterstatus )
 	end
 end
 
+function p.checkValidAim(seat, range)
+	local entityaimed = world.entityQuery(p.seats[seat].controls.aim, range or 2, {
+		withoutEntityId = p.driver,
+		includedTypes = {"creature"}
+	})
+	local target = p.firstNotLounging(entityaimed)
+
+	if target and entity.entityInSight(target) then
+		return target
+	end
+end
+
 function p.checkEatPosition(position, range, location, transition, noaim, aimrange)
 	if not p.locationFull(location) then
+		local target = p.checkValidAim(p.driverSeat, aimrange)
+
 		local prey = world.entityQuery(position, range, {
 			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
-		local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, aimrange or 2, {
-			withoutEntityId = p.driver,
-			includedTypes = {"creature"}
-		})
-		local aimednotlounging = p.firstNotLounging(entityaimed)
 
-		if #prey > 0 then
-			for i = 1, #prey do
-				if (noaim or (prey[i] == entityaimed[aimednotlounging])) and not p.entityLounging(prey[i]) then
-					p.doTransition( transition, {id=prey[i]} )
-					return true
-				end
+		for _, entity in ipairs(prey) do
+			if (noaim or (entity == target)) and not p.entityLounging(entity) then
+				p.doTransition( transition, {id=entity} )
+				return true
 			end
 		end
 		return false
@@ -705,7 +712,7 @@ end
 function p.firstNotLounging(entityaimed)
 	for i = 1, #entityaimed do
 		if not p.entityLounging(entityaimed[i]) then
-			return i
+			return entityaimed[i]
 		end
 	end
 end

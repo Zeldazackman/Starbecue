@@ -105,6 +105,16 @@ function succ(args)
 	return true
 end
 
+function letGrabGo()
+	local victim = p.findFirstOccupantIdForLocation("hug")
+	p.grabbing = nil
+	p.armRotation.enabledL = false
+	p.armRotation.enabledR = false
+	p.armRotation.groupsR = {}
+	p.armRotation.groupsL = {}
+	p.uneat(victim)
+end
+
 function bellyToTail(args)
 	return p.moveOccupantLocation(args, "tail")
 end
@@ -222,6 +232,20 @@ function p.setGrabTarget()
 	end
 end
 
+function p.grab()
+	local target = p.checkValidAim(p.driverSeat, 2)
+
+	local prey = world.entityQuery(mcontroller.position(), 5, {
+		withoutEntityId = p.driver,
+		includedTypes = {"creature"}
+	})
+	for _, entity in ipairs(prey) do
+		if entity == target then
+			return target
+		end
+	end
+end
+
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
@@ -255,22 +279,20 @@ function state.stand.update()
 	end
 	if not p.transitionLock then
 		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
+			letGrabGo()
 			p.doTransition( "crouch" )
 			return
 		elseif not mcontroller.onGround() and p.pressControl(p.driverSeat, "jump") then
+			letGrabGo()
 			p.setState( "fly" )
 		end
 	end
 end
 
 function state.stand.grab()
-	local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
-		withoutEntityId = p.driver,
-		includedTypes = {"creature"}
-	})
-	local aimednotlounging = p.firstNotLounging(entityaimed)
-	if p.eat(entityaimed[aimednotlounging], "hug") then
-		p.grabbing = entityaimed[aimednotlounging]
+	local grabbing = p.grab()
+	if p.eat(grabbing, "hug") then
+		p.grabbing = grabbing
 		p.movement.clickActionsDisabled = true
 		return true
 	end
@@ -417,6 +439,7 @@ function state.crouch.update()
 end
 
 function state.crouch.begin()
+	letGrabGo()
 	p.setMovementParams( "crouch" )
 end
 
@@ -450,6 +473,7 @@ function state.fly.update()
 end
 
 function state.fly.begin()
+	letGrabGo()
 	p.setMovementParams( "fly" )
 end
 

@@ -269,10 +269,11 @@ p.clickActionCooldowns = {
 }
 
 function p.doClickActions(state, dt)
-	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
 	for name, cooldown in pairs(p.clickActionCooldowns) do
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
+	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
+
 	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire or state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire or state.control.defaultActions[2], "altFire")
