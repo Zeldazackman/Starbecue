@@ -135,7 +135,7 @@ function p.updateDriving(dt)
 		local dy = p.seats[p.driverSeat].controls.dy
 		local state = p.stateconfig[p.state]
 		if (dx ~= 0) then
-			if (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
+			if (p.movement.aimingLock <= 0) then
 				p.faceDirection( dx )
 			end
 			animator.setGlobalTag("direction", p.direction * dx)

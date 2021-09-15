@@ -80,28 +80,30 @@ function checkEggSitup()
 end
 
 function succ(args)
-	local pos1 = p.localToGlobal({-5,-8})
-	local pos2 = p.localToGlobal({30,8})
-	if pos1[1] > pos2[1] then
-		pos1[1], pos2[1] = pos2[1], pos1[1]
-	end
+	if p.transitionLock then return end
+	p.facePoint(p.seats[p.driverSeat].controls.aim[1])
+	p.movement.aimingLock = 0.1
 
-	local entities = world.entityQuery(pos1, pos2, {
-		withoutEntityId = p.driver,
-		includedTypes = {"creature"}
+	local globalSuccPosition = p.localToGlobal(p.stateconfig[p.state].control.clickActions.succ.position or {0,0})
+	local aim = p.seats[p.driverSeat].controls.aim
+
+	local entities = world.entityLineQuery(globalSuccPosition, aim, {
+		withoutEntityId = entity.id()
 	})
 
 	local data = {
-		destination = p.localToGlobal({3, 2.5}),
+		destination = globalSuccPosition,
 		source = entity.id(),
-		speed = 30,
-		force = 100
+		speed = 20,
+		force = 200
 	}
 
-	for i = 1, #entities do
-		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", {data})
+	for i, id in ipairs(entities) do
+		if id and entity.entityInSight(id) then
+			p.loopedMessage("succ"..i, id, "pvsoSucc", {data})
+		end
 	end
-	p.checkEatPosition( data.destination, "belly", "succEat", true)
+	p.checkEatPosition( globalSuccPosition, 2, "belly", "succEat", true)
 	return true
 end
 
@@ -373,6 +375,7 @@ end
 state.sit.bellyToTail = bellyToTail
 state.sit.tailToBelly = tailToBelly
 state.sit.eat = grabOralEat
+state.sit.succEat = oralEat
 state.sit.tailEat = tailEat
 state.sit.analEat = sitAnalEat
 
@@ -413,6 +416,7 @@ end
 state.hug.bellyToTail = bellyToTail
 state.hug.tailToBelly = tailToBelly
 state.hug.eat = grabOralEat
+state.hug.succEat = oralEat
 state.hug.tailEat = tailEat
 state.hug.analEat = sitAnalEat
 
@@ -451,6 +455,7 @@ end
 state.crouch.bellyToTail = bellyToTail
 state.crouch.tailToBelly = tailToBelly
 
+state.crouch.succEat = oralEat
 state.crouch.tailEat = tailEat
 state.crouch.tailVore = checkTail
 state.crouch.vore = checkTail
@@ -490,6 +495,7 @@ end
 state.fly.bellyToTail = bellyToTail
 state.fly.tailToBelly = tailToBelly
 state.fly.eat = oralEat
+state.fly.succEat = oralEat
 state.fly.tailEat = tailEat
 state.fly.analEat = analEat
 

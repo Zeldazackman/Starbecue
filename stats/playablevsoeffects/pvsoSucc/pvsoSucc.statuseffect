@@ -1,7 +1,7 @@
 {
 	"name" : "pvsoSucc",
 	"effectConfig" : {},
-	"defaultDuration" : 1,
+	"defaultDuration" : 0.1,
 
 	"scripts" : [
 	"pvsoSucc.lua"
