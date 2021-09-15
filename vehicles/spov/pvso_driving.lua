@@ -126,6 +126,7 @@ function p.updateDriving(dt)
 		p.letout(p.occupant[p.occupants.total].id)
 	end
 
+	p.movement.aimingLock = math.max(0, p.movement.aimingLock - dt)
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
 		local dx = p.seats[p.driverSeat].controls.dx
 		if p.activeControls.moveDirection then
@@ -272,9 +273,6 @@ function p.doClickActions(state, dt)
 	for name, cooldown in pairs(p.clickActionCooldowns) do
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
-
-	p.movement.aimingLock = p.movement.aimingLock - dt
-
 	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire, "primaryFire")
 		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire, "altFire")

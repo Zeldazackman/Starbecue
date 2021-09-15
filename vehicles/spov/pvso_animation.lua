@@ -43,6 +43,10 @@ p.armRotation = {
 	groupsL = {}
 }
 function p.armRotationUpdate()
+	if p.armRotation.enabledR or p.armRotation.enabledL then
+		p.movement.aimingLock = 0.1
+		p.faceDirection(p.armRotation.target[1]*p.direction)
+	end
 	if p.direction > 0 then
 		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR)
 		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL)
