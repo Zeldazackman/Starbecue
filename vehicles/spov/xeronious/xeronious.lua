@@ -38,6 +38,7 @@ end
 
 function p.update(dt)
 	p.whenFalling()
+	p.setGrabTarget()
 end
 
 -------------------------------------------------------------------------------
@@ -111,6 +112,11 @@ function tailToBelly(args)
 	return p.moveOccupantLocation(args, "tail", "belly")
 end
 
+function grabOralEat(args)
+	p.grabbing = args.id
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end
+
 function oralEat(args)
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end
@@ -124,11 +130,11 @@ function checkOral()
 end
 
 function checkTail()
-	return p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "taileat")
+	return p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "tailEat")
 end
 
 function checkAnal()
-	return p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analvore")
+	return p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analEat")
 end
 
 function escapeOral(args)
@@ -148,11 +154,31 @@ function checkVore()
 	if checkTail() then return true end
 end
 
+function p.setGrabTarget()
+	if p.justAte ~= nil and p.justAte == p.grabbing then
+		p.wasEating = true
+		p.armRotation.enabledL = true
+		p.armRotation.enabledR = true
+		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
+		p.armRotation.groupsR = {}
+	elseif p.wasEating then
+		p.wasEating = false
+		p.grabbing = nil
+	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
+		p.armRotation.enabledL = true
+		p.armRotation.enabledR = true
+		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
+		p.armRotation.groupsR = {p.entity[p.grabbing].seatname.."Position"}
+	else
+		p.armRotation.enabledL = false
+		p.armRotation.enabledR = false
+		p.armRotation.groupsR = {}
+	end
+end
+
 -------------------------------------------------------------------------------
 
 function state.stand.update()
-	p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
-	p.armRotation.enabledR = true
 	if not p.transitionLock then
 		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
 			p.doTransition( "crouch" )
@@ -163,9 +189,14 @@ function state.stand.update()
 	end
 end
 
+function state.stand.grab()
+
+	return true
+end
+
 state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
-state.stand.eat = oralEat
+state.stand.eat = grabOralEat
 state.stand.tailEat = tailEat
 
 state.stand.vore = checkVore
@@ -200,7 +231,7 @@ end
 
 state.sit.bellyToTail = bellyToTail
 state.sit.tailToBelly = tailToBelly
-state.sit.eat = oralEat
+state.sit.eat = grabOralEat
 state.sit.tailEat = tailEat
 
 state.sit.vore = checkVore
@@ -224,7 +255,7 @@ end
 
 state.hug.bellyToTail = bellyToTail
 state.hug.tailToBelly = tailToBelly
-state.hug.eat = oralEat
+state.hug.eat = grabOralEat
 state.hug.tailEat = tailEat
 
 state.hug.vore = checkVore
@@ -289,7 +320,7 @@ function state.fly.ending()
 	p.setMovementParams( "default" )
 end
 
-function state.fly.analvore(args)
+function state.fly.analEat(args)
 	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
 end
 

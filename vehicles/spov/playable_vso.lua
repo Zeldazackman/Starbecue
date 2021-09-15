@@ -647,11 +647,13 @@ end
 
 function p.doVore(args, location, statuses, sound )
 	if p.eat( args.id, location ) then
+		p.justAte = args.id
 		vehicle.setInteractive( false )
 		p.showEmote("emotehappy")
 		p.transitionLock = true
 		--vsoVictimAnimSetStatus( "occupant"..i, statuses );
 		return true, function()
+			p.justAte = nil
 			p.transitionLock = false
 			vehicle.setInteractive( true )
 			if sound then animator.playSound( sound ) end
@@ -962,7 +964,6 @@ function p.eat( occupantId, location )
 			p.occupant[seatindex].id = occupantId
 			p.forceSeat( occupantId, "occupant"..seatindex )
 			p.updateOccupants(0)
-			p.justAte = true
 			return true -- not lounging
 		else
 			return false -- lounging in something inedible
@@ -974,7 +975,6 @@ function p.eat( occupantId, location )
 	p.occupant[seatindex].species = species
 	p.forceSeat( occupantId, "occupant"..seatindex )
 	p.updateOccupants(0)
-	p.justAte = true
 	return true
 end
 

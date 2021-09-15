@@ -215,7 +215,7 @@
 						"head": "escape"
 					}
 				},
-				"taileat": { // 1 occupant
+				"tailEat": { // 1 occupant
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -223,8 +223,8 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertaileat",
-					"script": "taileat",
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
@@ -274,7 +274,6 @@
 				}
 			},
 			"idle": {
-				"rotate" : {},
 				"offset" : {},
 				"body": "idle",
 				"arms": "idle",
@@ -332,12 +331,16 @@
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
+				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
 			"control": {
-				"defaultActions" : ["vore", "specialAttack"],
+				"defaultActions" : ["grab", "specialAttack"],
 				"clickActions" : {
+					"grab":{
+						"cooldown": 1,
+						"script": "grab"
+					},
 					"vore":{
 						"cooldown": 1,
 						"script": "vore"
@@ -437,7 +440,7 @@
 					},
 					"state": "stand"
 				},
-				"taileat": { // 1 occupant
+				"tailEat": { // 1 occupant
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -445,8 +448,8 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertaileat",
-					"script": "taileat",
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
@@ -571,7 +574,7 @@
 						"head": "escape"
 					}
 				},
-				"taileat": { // 1 occupant
+				"tailEat": { // 1 occupant
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -580,8 +583,8 @@
 						"arms": "fly",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertaileat",
-					"script": "taileat",
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
@@ -609,16 +612,16 @@
 						"head": "burp"
 					}
 				},
-				"analvore": { // 3 occupants
+				"analEat": { // 3 occupants
 					"lock":true,
 					"animation": {
 						"body": "expand",
 						"arms": "fly",
-						"legs": "analvore",
+						"legs": "analEat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playeranalvore",
-					"script": "analvore"
+					"victimAnimation": "playeranalEat",
+					"script": "analEat"
 				},
 				"escapeAnal": { // 3 occupants
 					"lock":true,
@@ -779,7 +782,7 @@
 						"head": "escape"
 					}
 				},
-				"taileat": { // 1 occupant
+				"tailEat": { // 1 occupant
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -787,8 +790,8 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertaileat",
-					"script": "taileat",
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
@@ -839,7 +842,6 @@
 				}
 			},
 			"idle": {
-				"rotate" : {},
 				"body": "idle",
 				"arms": "idle",
 				"legs": "sit",
@@ -913,7 +915,7 @@
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "failOnFull": true},
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
+				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			}
 		},
@@ -947,7 +949,7 @@
 						"head": "escape"
 					}
 				},
-				"taileat": { // 1 occupant
+				"tailEat": { // 1 occupant
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -955,8 +957,8 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertaileat",
-					"script": "taileat",
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
 					"timing": "tail"
 				},
 				"escapeTail": { // 1 occupant
@@ -1080,7 +1082,7 @@
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "taileat", "chance": 100, "location": "tail", "failOnFull": true},
+				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			}
 		}

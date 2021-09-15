@@ -81,7 +81,7 @@
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-					"analvore": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"analEat": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
@@ -342,7 +342,7 @@
 						"sit": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.<frame><directives>" } },
 						"fly": { "properties": { "image": "spov/<skin>/foreground/legs.png:fly.<frame><directives>" } },
 
-						"analvore": { "properties": { "image": "spov/<skin>/foreground/legs.png:analvore.<frame><directives>" } },
+						"analEat": { "properties": { "image": "spov/<skin>/foreground/legs.png:analEat.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/<skin>/foreground/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/foreground/legs.png:standup.<frame><directives>" } },
@@ -372,7 +372,7 @@
 						"sit": { "properties": { "image": "spov/<skin>/legs.png:sit.<frame><directives>" } },
 						"fly": { "properties": { "image": "spov/<skin>/legs.png:fly.<frame><directives>" } },
 
-						"analvore": { "properties": { "image": "spov/<skin>/legs.png:analvore.<frame><directives>" } },
+						"analEat": { "properties": { "image": "spov/<skin>/legs.png:analEat.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "spov/<skin>/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/legs.png:standup.<frame><directives>" } },
