@@ -134,8 +134,11 @@ function p.updateDriving(dt)
 		end
 		local dy = p.seats[p.driverSeat].controls.dy
 		local state = p.stateconfig[p.state]
-		if (dx ~= 0) and (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
-			p.faceDirection( dx )
+		if (dx ~= 0) then
+			if (p.movement.aimingLock <= 0) and (p.underWater() or mcontroller.onGround()) then
+				p.faceDirection( dx )
+			end
+			animator.setGlobalTag("direction", p.direction * dx)
 		end
 
 		p.doClickActions(state, dt)
@@ -155,6 +158,7 @@ function p.groundMovement(dx, dy, state, dt)
 	end
 	if mcontroller.onGround() then
 		if dx ~= 0 and not state.control.groundMovementDisabled then
+			p.movingDX = dx
 			p.doAnims( state.control.animations[p.movement.groundMovement] )
 			p.movement.animating = true
 			mcontroller.applyParameters{ groundFriction = p.movementParams.ambulatingGroundFriction }

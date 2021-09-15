@@ -5,15 +5,33 @@
 		"names" : [
 			[ "idle.1", "hug.1", "rotation.1"],
 			[],
-			[ "run.1", "run.2", "run.3", "run.4", "run.5"],
-			[ "crawl.1", "crawl.2", "crawl.3", "crawl.4", "crawl.5", "crawl.6", "crawl.7", "crawl.8"],
+			[ "1.run.1", "1.run.2", "1.run.3", "1.run.4", "1.run.5"],
+			[ "1.crawl.1", "1.crawl.2", "1.crawl.3", "1.crawl.4", "1.crawl.5", "1.crawl.6", "1.crawl.7", "1.crawl.8"],
 			[ "fly.1", "fly.2", "fly.3", "fly.4", "fly.5", "fly.6", "fly.7", "fly.8"]
 		]
 	},
 	"aliases" : {
-		"run.6" : "run.4",
-		"run.7" : "run.3",
-		"run.8" : "run.2",
+		"1.run.6" : "1.run.4",
+		"1.run.7" : "1.run.3",
+		"1.run.8" : "1.run.2",
+
+		"-1.run.1" : "1.run.8",
+		"-1.run.2" : "1.run.7",
+		"-1.run.3" : "1.run.6",
+		"-1.run.4" : "1.run.5",
+		"-1.run.5" : "1.run.4",
+		"-1.run.6" : "1.run.3",
+		"-1.run.7" : "1.run.2",
+		"-1.run.8" : "1.run.1",
+
+		"-1.crawl.1" : "1.crawl.8",
+		"-1.crawl.2" : "1.crawl.7",
+		"-1.crawl.3" : "1.crawl.6",
+		"-1.crawl.4" : "1.crawl.5",
+		"-1.crawl.5" : "1.crawl.4",
+		"-1.crawl.6" : "1.crawl.3",
+		"-1.crawl.7" : "1.crawl.2",
+		"-1.crawl.8" : "1.crawl.1",
 
 		"jump.1" : "fly.1",
 		"jump.2" : "fly.2",
@@ -23,26 +41,7 @@
 		"fall.1" : "fly.3",
 		"fall.2" : "fly.2",
 		"fall.3" : "fly.1",
-		"fall.4" : "fly.8",
-
-
-		"fly.9" : "fly.1",
-		"fly.10" : "fly.2",
-		"fly.11" : "fly.3",
-		"fly.12" : "fly.4",
-		"fly.13" : "fly.3",
-		"fly.14" : "fly.2",
-		"fly.15" : "fly.1",
-		"fly.16" : "fly.8",
-		"fly.17" : "fly.1",
-		"fly.18" : "fly.2",
-		"fly.19" : "fly.3",
-		"fly.20" : "fly.4",
-		"fly.21" : "fly.3",
-		"fly.22" : "fly.2",
-		"fly.23" : "fly.1",
-		"fly.24" : "fly.8"
-
+		"fall.4" : "fly.8"
 
 	}
 }

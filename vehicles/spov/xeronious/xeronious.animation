@@ -9,7 +9,8 @@
 		"directives" : "",
 		"bellymask" : "",
 		"smolprey": "xeronious",
-		"skin": "default"
+		"skin": "default",
+		"direction": "1"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -268,11 +269,11 @@
 						"idle": { "properties": { "image": "spov/<skin>/foreground/arms.png:idle.<frame><directives><armVisible>" } },
 						"hug": { "properties": { "image": "spov/<skin>/foreground/arms.png:hug.<frame><directives><armVisible>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/foreground/arms.png:walk.<frame><directives><armVisible>" } },
-						"run": { "properties": { "image": "spov/<skin>/foreground/arms.png:run.<frame><directives><armVisible>" } },
+						"walk": { "properties": { "image": "spov/<skin>/foreground/arms.png:<direction>.walk.<frame><directives><armVisible>" } },
+						"run": { "properties": { "image": "spov/<skin>/foreground/arms.png:<direction>.run.<frame><directives><armVisible>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives><armVisible>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/foreground/arms.png:crawl.<frame><directives><armVisible>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/arms.png:<direction>.crawl.<frame><directives><armVisible>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/foreground/arms.png:<direction>.crawl.<frame><directives><armVisible>" } },
 
 						"jump": { "properties": { "image": "spov/<skin>/foreground/arms.png:jump.<frame><directives><armVisible>" } },
 						"fall": { "properties": { "image": "spov/<skin>/foreground/arms.png:fall.<frame><directives><armVisible>" } },
@@ -311,11 +312,11 @@
 						"idle": { "properties": { "image": "spov/<skin>/arms.png:idle.<frame><directives><armVisible>" } },
 						"hug": { "properties": { "image": "spov/<skin>/arms.png:hug.<frame><directives><armVisible>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/arms.png:walk.<frame><directives><armVisible>" } },
-						"run": { "properties": { "image": "spov/<skin>/arms.png:run.<frame><directives><armVisible>" } },
+						"walk": { "properties": { "image": "spov/<skin>/arms.png:<direction>.walk.<frame><directives><armVisible>" } },
+						"run": { "properties": { "image": "spov/<skin>/arms.png:<direction>.run.<frame><directives><armVisible>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/arms.png:crawl.4<directives><armVisible>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/arms.png:crawl.<frame><directives><armVisible>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/arms.png:<direction>.crawl.4<directives><armVisible>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/arms.png:<direction>.crawl.<frame><directives><armVisible>" } },
 
 						"jump": { "properties": { "image": "spov/<skin>/arms.png:jump.<frame><directives><armVisible>" } },
 						"fall": { "properties": { "image": "spov/<skin>/arms.png:fall.<frame><directives><armVisible>" } },
@@ -347,11 +348,11 @@
 						"sitdown": { "properties": { "image": "spov/<skin>/foreground/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/foreground/legs.png:standup.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/foreground/legs.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/foreground/legs.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/foreground/legs.png:<direction>.walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/foreground/legs.png:<direction>.run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/foreground/legs.png:crawl.4<directives>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/foreground/legs.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/foreground/legs.png:<direction>.crawl.4<directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/foreground/legs.png:<direction>.crawl.<frame><directives>" } },
 
 						"jump": { "properties": { "image": "spov/<skin>/foreground/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/foreground/legs.png:fall.<frame><directives>" } },
@@ -377,11 +378,11 @@
 						"sitdown": { "properties": { "image": "spov/<skin>/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "spov/<skin>/legs.png:standup.<frame><directives>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/legs.png:walk.<frame><directives>" } },
-						"run": { "properties": { "image": "spov/<skin>/legs.png:run.<frame><directives>" } },
+						"walk": { "properties": { "image": "spov/<skin>/legs.png:<direction>.walk.<frame><directives>" } },
+						"run": { "properties": { "image": "spov/<skin>/legs.png:<direction>.run.<frame><directives>" } },
 
-						"crouch": { "properties": { "image": "spov/<skin>/legs.png:crawl.<frame><directives>" } },
-						"crawl": { "properties": { "image": "spov/<skin>/legs.png:crawl.<frame><directives>" } },
+						"crouch": { "properties": { "image": "spov/<skin>/legs.png:<direction>.crawl.<frame><directives>" } },
+						"crawl": { "properties": { "image": "spov/<skin>/legs.png:<direction>.crawl.<frame><directives>" } },
 
 						"jump": { "properties": { "image": "spov/<skin>/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/legs.png:fall.<frame><directives>" } },
