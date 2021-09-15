@@ -7,6 +7,7 @@
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
+		"fullbrightDirectives" : "",
 		"bellymask" : "",
 		"smolprey": "xeronious",
 		"skin": "default",
@@ -196,7 +197,7 @@
 			"body": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
+					"zLevel": -2,
 					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
@@ -291,7 +292,7 @@
 			"backarms_rotation": {
 				"properties": {
 					"centered": true,
-					"zLevel": -3,
+					"zLevel": -4,
 					"transformationGroups": ["flip", "backarmsrotation", "armsbob", "bodybob"],
 					"armVisible" : "?multiply=FFFFFF00"
 				},
@@ -304,7 +305,7 @@
 			"backarms": {
 				"properties": {
 					"centered": true,
-					"zLevel": -3,
+					"zLevel": -4,
 					"transformationGroups": ["flip", "armsbob", "bodybob"]
 				},
 				"partStates": {
@@ -364,7 +365,7 @@
 			"backlegs": {
 				"properties": {
 					"centered": true,
-					"zLevel": -2,
+					"zLevel": -3,
 					"transformationGroups": ["flip", "legsbob"]
 				},
 				"partStates": {
@@ -419,7 +420,7 @@
 			"tail": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
+					"zLevel": -2.1,
 					"transformationGroups": ["flip", "bodybob", "tailbob"]
 				},
 				"partStates": {
@@ -441,10 +442,37 @@
 					}
 				}
 			},
+			"tail_fullbright": {
+				"properties": {
+					"centered": true,
+					"zLevel": -2,
+					"transformationGroups": ["flip", "bodybob", "tailbob"],
+					"fullbright" : true
+				},
+				"partStates": {
+					"tailState": {
+						"idle": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.idle.<frame><fullbrightDirectives><directives><bellymask>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.eat.<frame><fullbrightDirectives><directives><bellymask>" } },
+						"escape": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.escape.<frame><fullbrightDirectives><directives><bellymask>" } },
+
+						"expand": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.expand.<frame><fullbrightDirectives><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.shrink.<frame><fullbrightDirectives><directives><bellymask>" } },
+
+						"s_back": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_back.<frame><fullbrightDirectives><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_front.<frame><fullbrightDirectives><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_up.<frame><fullbrightDirectives><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "spov/<skin>/tail.png:<tailoccupants>.s_down.<frame><fullbrightDirectives><directives><bellymask>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+
 			"head": {
 				"properties": {
 					"centered": true,
-					"zLevel": 3,
+					"zLevel": -1.1,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -457,10 +485,85 @@
 						"lookBack": { "properties": { "image": "spov/<skin>/head.png:lookBack.<frame><directives>" } },
 						"succ": { "properties": { "image": "spov/<skin>/head.png:succ.<frame><directives>" } },
 
+						"eat": { "properties": { "image": "spov/<skin>/head.png:eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/head.png:escape.<frame><directives>" } },
+
 						"none": { "properties": {} }
 					}
 				}
 			},
+			"head_fullbright": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1,
+					"transformationGroups": ["flip", "headbob"],
+					"fullbright" : true
+				},
+				"partStates": {
+					"headState": {
+						"idle": { "properties": { "image": "spov/<skin>/head.png:idle.<frame><fullbrightDirectives><directives>" } },
+						"blink": { "properties": { "image": "spov/<skin>/head.png:blink.<frame><fullbrightDirectives><directives>" } },
+						"look": { "properties": { "image": "spov/<skin>/head.png:look.<frame><fullbrightDirectives><directives>" } },
+						"AVlook": { "properties": { "image": "spov/<skin>/head.png:AVlook.<frame><fullbrightDirectives><directives>" } },
+						"burp": { "properties": { "image": "spov/<skin>/head.png:burp.<frame><fullbrightDirectives><directives>" } },
+						"lookBack": { "properties": { "image": "spov/<skin>/head.png:lookBack.<frame><fullbrightDirectives><directives>" } },
+						"succ": { "properties": { "image": "spov/<skin>/head.png:succ.<frame><fullbrightDirectives><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/head.png:eat.<frame><fullbrightDirectives><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/head.png:escape.<frame><fullbrightDirectives><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"head_foreground": {
+				"properties": {
+					"centered": true,
+					"zLevel": 3,
+					"transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"idle": { "properties": { "image": "spov/<skin>/foreground/head.png:idle.<frame><directives>" } },
+						"blink": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><directives>" } },
+						"look": { "properties": { "image": "spov/<skin>/foreground/head.png:look.<frame><directives>" } },
+						"AVlook": { "properties": { "image": "spov/<skin>/foreground/head.png:AVlook.<frame><directives>" } },
+						"burp": { "properties": { "image": "spov/<skin>/foreground/head.png:burp.<frame><directives>" } },
+						"lookBack": { "properties": { "image": "spov/<skin>/foreground/head.png:lookBack.<frame><directives>" } },
+						"succ": { "properties": { "image": "spov/<skin>/foreground/head.png:succ.<frame><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/foreground/head.png:eat.<frame><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/head.png:escape.<frame><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"head_foreground_fullbright": {
+				"properties": {
+					"centered": true,
+					"zLevel": 3.1,
+					"transformationGroups": ["flip", "headbob"],
+					"fullbright" : true
+				},
+				"partStates": {
+					"headState": {
+						"idle": { "properties": { "image": "spov/<skin>/foreground/head.png:idle.<frame><fullbrightDirectives><directives>" } },
+						"blink": { "properties": { "image": "spov/<skin>/foreground/head.png:blink.<frame><fullbrightDirectives><directives>" } },
+						"look": { "properties": { "image": "spov/<skin>/foreground/head.png:look.<frame><fullbrightDirectives><directives>" } },
+						"AVlook": { "properties": { "image": "spov/<skin>/foreground/head.png:AVlook.<frame><fullbrightDirectives><directives>" } },
+						"burp": { "properties": { "image": "spov/<skin>/foreground/head.png:burp.<frame><fullbrightDirectives><directives>" } },
+						"lookBack": { "properties": { "image": "spov/<skin>/foreground/head.png:lookBack.<frame><fullbrightDirectives><directives>" } },
+						"succ": { "properties": { "image": "spov/<skin>/foreground/head.png:succ.<frame><fullbrightDirectives><directives>" } },
+
+						"eat": { "properties": { "image": "spov/<skin>/foreground/head.png:eat.<frame><fullbrightDirectives><directives>" } },
+						"escape": { "properties": { "image": "spov/<skin>/foreground/head.png:escape.<frame><fullbrightDirectives><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+
 
 
 			"driverbackarm": {

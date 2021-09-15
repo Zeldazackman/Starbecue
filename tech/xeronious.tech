@@ -7,7 +7,7 @@
 	"description" : "Turn into a kaiju that can eat people! ^green;[F]",
 	"shortDescription" : "Xeronious",
 	"rarity" : "Uncommon",
-	"icon" : "/vehicles/spov/xeronious/xeroniousicon.png",
+	"icon" : "/vehicles/spov/xeronious/spov/default/icon.png",
 
 	"chipCost" : 8
 }

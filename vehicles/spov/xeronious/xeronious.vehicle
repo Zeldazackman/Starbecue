@@ -123,7 +123,6 @@
 			}
 
 		},
-
 		"lights" : {
 			"driver" : {
 				"color" : [100, 100, 100],
@@ -143,13 +142,34 @@
 			"pinned" : { },
 			"fatten" : { "mass": 1 }
 		},
-
 		"maxOccupants" : {
 			"total" : 4, // could be 5 but making just 4 so I don't have to fuck with the menu
 			"belly" : 3,
 			"hug" : 1,
 			"tail" : 1
-		}
+		},
+		"defaultSettings" : {
+			"replaceColors" : [1,1,1,1],
+			"fullbright" : [false,false,false,true]
+		},
+		"replaceColors" : [ // I don't think having actual replacement colors here should be a thing since its someone's OC
+			[
+				["0e0e0e", "292929", "3f3f3f", "575757"], // Dark Grey body 1
+				["0e0e0e", "292929", "3f3f3f", "575757"]
+			],
+			[
+				["656565", "838383", "a6a6a6"], // Light Grey body 2
+				["656565", "838383", "a6a6a6"]
+			],
+			[
+				["969696", "b4b4b4", "d4d4d4", "efefef"], // horns
+				["969696", "b4b4b4", "d4d4d4", "efefef"]
+			],
+			[
+				["4a2400", "cc711a", "ff962e", "19ce2c"], // eyes and burp
+				["4a2400", "cc711a", "ff962e", "19ce2c"]
+			]
+		]
 	},
 
 
