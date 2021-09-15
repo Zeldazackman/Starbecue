@@ -443,7 +443,7 @@ function p.setMovementParams(name)
 		p.movementParamOverrides = {}
 	end
 	p.movementParamsName = name
-	local params = p.vso.movementSettings[name]
+	local params = config.getParameter("vso").movementSettings[name]
 	if params.flip then
 		for _, coords in ipairs(params.collisionPoly) do
 			coords[1] = coords[1] * p.direction
