@@ -94,13 +94,14 @@ function succ(args)
 	local data = {
 		destination = p.localToGlobal({3, 2.5}),
 		source = entity.id(),
-		force = 10
+		speed = 30,
+		force = 100
 	}
 
 	for i = 1, #entities do
 		p.loopedMessage("succ"..i, entities[i], "pvsoSucc", {data})
 	end
-	p.checkEatPosition( data.destination, "belly", "succeat", true)
+	p.checkEatPosition( data.destination, "belly", "succEat", true)
 	return true
 end
 
@@ -125,16 +126,20 @@ function tailEat(args)
 	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
 end
 
+function analEat(args)
+	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
+end
+
 function checkOral()
-	return p.checkEatPosition(p.localToGlobal( {3, -1.5} ), "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( {3, -1.5} ), 5, "belly", "eat")
 end
 
 function checkTail()
-	return p.checkEatPosition(p.localToGlobal({-5, -2}), "tail", "tailEat")
+	return p.checkEatPosition(p.localToGlobal({-5, -2}), 2, "tail", "tailEat")
 end
 
 function checkAnal()
-	return p.checkEatPosition(p.localToGlobal({0, -3}), "belly", "analEat")
+	return p.checkEatPosition(p.localToGlobal({0, -3}), 2, "belly", "analEat")
 end
 
 function escapeOral(args)
@@ -165,6 +170,7 @@ function p.setGrabTarget()
 		p.wasEating = false
 		p.grabbing = nil
 	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
+		p.movement.clickActionsDisabled = true
 		p.armRotation.enabledL = true
 		p.armRotation.enabledR = true
 		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
@@ -179,6 +185,27 @@ end
 -------------------------------------------------------------------------------
 
 function state.stand.update()
+	if p.movement.clickActionsDisabled then
+		if p.pressControl(p.driverSeat, "primaryFire") then
+			p.uneat(p.grabbing)
+			local transition = "eat"
+			local victim = p.grabbing
+			if p.armRotation.target[1] < 2 and p.armRotation.target[2] < 0 then
+				p.grabbing = nil
+				transition = "analEat"
+			end
+			p.doTransition(transition, {id = victim})
+			p.timer("restoreClickActions", 1, function()
+				p.movement.clickActionsDisabled = false
+			end)
+		elseif p.pressControl(p.driverSeat, "altFire") then
+			p.uneat(p.grabbing)
+			p.grabbing = nil
+			p.timer("restoreClickActions", 1, function()
+				p.movement.clickActionsDisabled = false
+			end)
+		end
+	end
 	if not p.transitionLock then
 		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
 			p.doTransition( "crouch" )
@@ -190,14 +217,24 @@ function state.stand.update()
 end
 
 function state.stand.grab()
-
-	return true
+	local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
+		withoutEntityId = p.driver,
+		includedTypes = {"creature"}
+	})
+	local aimednotlounging = p.firstNotLounging(entityaimed)
+	if p.eat(entityaimed[aimednotlounging], "hug") then
+		p.grabbing = entityaimed[aimednotlounging]
+		p.movement.clickActionsDisabled = true
+		return true
+	end
 end
 
 state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
 state.stand.eat = grabOralEat
+state.stand.succEat = oralEat
 state.stand.tailEat = tailEat
+state.stand.analEat = analEat
 
 state.stand.vore = checkVore
 state.stand.oralVore = checkOral
@@ -333,6 +370,7 @@ state.fly.bellyToTail = bellyToTail
 state.fly.tailToBelly = tailToBelly
 state.fly.eat = oralEat
 state.fly.tailEat = tailEat
+state.fly.analEat = analEat
 
 state.fly.tailVore = checkTail
 state.fly.analVore = checkAnal

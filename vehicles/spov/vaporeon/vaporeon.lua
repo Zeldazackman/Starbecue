@@ -107,7 +107,7 @@ function state.stand.letout( args )
 end
 
 function state.stand.vore()
-	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.clickActions.oralVore.position ), "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.control.clickActions.oralVore.position ), 2, "belly", "eat")
 end
 
 -------------------------------------------------------------------------------

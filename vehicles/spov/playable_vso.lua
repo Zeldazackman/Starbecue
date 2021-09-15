@@ -678,13 +678,13 @@ function p.doEscape(args, statuses, afterstatus )
 	end
 end
 
-function p.checkEatPosition(position, location, transition, noaim)
+function p.checkEatPosition(position, range, location, transition, noaim, aimrange)
 	if not p.locationFull(location) then
-		local prey = world.entityQuery(position, 2, {
+		local prey = world.entityQuery(position, range, {
 			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
-		local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
+		local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, aimrange or 2, {
 			withoutEntityId = p.driver,
 			includedTypes = {"creature"}
 		})
@@ -692,7 +692,7 @@ function p.checkEatPosition(position, location, transition, noaim)
 
 		if #prey > 0 then
 			for i = 1, #prey do
-				if ((prey[i] == entityaimed[aimednotlounging]) or noaim) and not p.entityLounging(prey[i]) then
+				if (noaim or (prey[i] == entityaimed[aimednotlounging])) and not p.entityLounging(prey[i]) then
 					p.doTransition( transition, {id=prey[i]} )
 					return true
 				end
@@ -1153,7 +1153,11 @@ function p.handleStruggles(dt)
 
 	if struggledata.script ~= nil then
 		local statescript = state[p.state][struggledata.script]
-		statescript({index = struggler, id = strugglerId, direction = movedir})
+		if statescript ~= nil then
+			statescript({index = struggler, id = strugglerId, direction = movedir})
+		else
+			sb.logError("no script named: ["..struggledata.script.."] in state: ["..p.state.."]")
+		end
 	end
 
 	local chances = struggledata.chances

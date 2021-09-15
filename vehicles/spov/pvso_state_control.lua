@@ -41,9 +41,13 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.script then
 		local statescript = state[p.state][tconfig.script]
 		local _continue, _tconfig
-		_continue, after, _tconfig = statescript( scriptargs or {} )
-		if _continue ~= nil then continue = _continue end
-		if _tconfig ~= nil then tconfig = _tconfig end
+		if statescript ~= nil then
+			_continue, after, _tconfig = statescript( scriptargs or {} )
+			if _continue ~= nil then continue = _continue end
+			if _tconfig ~= nil then tconfig = _tconfig end
+		else
+			sb.logError("no script named: ["..tconfig.script.."] in state: ["..p.state.."]")
+		end
 	end
 	if not continue then return "script fail" end
 	local scriptargs = scriptargs

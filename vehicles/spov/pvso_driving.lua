@@ -294,8 +294,12 @@ function p.clickAction(stateData, name, control)
 	or (p.heldControl(p.driverSeat, control) and stateData.control.clickActions[name].hold)
 	then
 		local continue = true
-		if stateData.control.clickActions[name].script ~= nil and state[p.state][stateData.control.clickActions[name].script] ~= nil then
-			continue = state[p.state][stateData.control.clickActions[name].script]()
+		if stateData.control.clickActions[name].script ~= nil then
+			if state[p.state][stateData.control.clickActions[name].script] ~= nil then
+				continue = state[p.state][stateData.control.clickActions[name].script]()
+			else
+				sb.logError("no script named: ["..stateData.control.clickActions[name].script.."] in state: ["..p.state.."]")
+			end
 		end
 		if continue then
 			p.clickActionCooldowns[name] = stateData.control.clickActions[name].cooldown or 0
