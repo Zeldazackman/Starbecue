@@ -159,6 +159,13 @@ function checkVore()
 	if checkTail() then return true end
 end
 
+function unpin(args)
+	args.id = p.findFirstOccupantIdForLocation("pinned")
+	local returnval = {}
+	returnval[1], returnval[2], returnval[3] = p.doEscape(args, {}, {})
+	return true, returnval[2], returnval[3]
+end
+
 function p.setGrabTarget()
 	if p.justAte ~= nil and p.justAte == p.grabbing then
 		p.wasEating = true
@@ -239,6 +246,25 @@ function state.stand.grab()
 	end
 end
 
+function state.stand.sitpin(args)
+	local pinnable = { args.id }
+	-- if not interact target or target isn't in front
+	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
+		local pinbounds = {
+			p.localToGlobal({-3, -4}),
+			p.localToGlobal({-1, -5})
+		}
+		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
+		if #pinnable == 0 and p.driving then
+			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
+		end
+	end
+	if #pinnable >= 1 and p.eat( pinnable[1], "pinned" ) then
+		--vsoVictimAnimSetStatus( "occupant"..index , {} )
+	end
+	return true
+end
+
 state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
 state.stand.eat = grabOralEat
@@ -266,11 +292,11 @@ function state.sit.update()
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants.total == 0 and p.standalone then
+	if p.occupants.hug == 0 and p.standalone then
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
-				p.doTransition( "hug", {id=npcs[1]} )
+				p.eat(npcs[1], "hug", {})
 			end
 		end
 	end
@@ -291,6 +317,8 @@ state.sit.tailVore = checkTail
 
 state.sit.escapeOral = escapeOral
 state.sit.escapeTail = escapeTail
+state.sit.unpin = unpin
+
 
 -------------------------------------------------------------------------------
 
@@ -323,6 +351,7 @@ state.hug.tailVore = checkTail
 
 state.hug.escapeOral = escapeOral
 state.hug.escapeTail = escapeTail
+state.hug.unpin = unpin
 
 -------------------------------------------------------------------------------
 

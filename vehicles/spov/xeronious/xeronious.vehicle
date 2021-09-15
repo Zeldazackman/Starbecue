@@ -137,6 +137,7 @@
 			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"tail" : { "digest" : true, "mass" : 1 },
 			"hug" : { },
+			"pinned" : { },
 			"fatten" : { "mass": 1 }
 		},
 
@@ -165,6 +166,9 @@
 							]
 						}
 					},
+					"script": "sitpin",
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "sitpinned",
 					"state": "sit",
 					"timing": "legs",
 					"chance": 5 // percent, ignored when driver has control
@@ -238,6 +242,8 @@
 					}
 				},
 				"analEat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
 					"lock":true,
 					"animation": {
 						"body": "expand",
@@ -622,6 +628,8 @@
 					}
 				},
 				"analEat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
 					"lock":true,
 					"animation": {
 						"body": "expand",
@@ -766,6 +774,9 @@
 							}
 						]
 					},
+					"script": "unpin",
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "situnpin",
 					"state": "stand",
 					"timing": "legs",
 					"chance": 5
@@ -811,6 +822,18 @@
 						"tail": "escape",
 						"head": "AVlook"
 					}
+				},
+				"analEat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
+					"victimAnimLocation" : "pinned",
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playeranalEat",
+					"script": "analEat"
 				},
 				"digestbelly" : {
 					"animation": {
@@ -951,6 +974,9 @@
 							}
 						]
 					},
+					"script": "unpin",
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "situnpin",
 					"timing": "legs",
 					"state": "stand"
 				},
@@ -995,6 +1021,18 @@
 						"tail": "escape",
 						"head": "AVlook"
 					}
+				},
+				"analEat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
+					"victimAnimLocation" : "pinned",
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playeranalEat",
+					"script": "analEat"
 				},
 				"digestbelly" : {
 					"animation": {
