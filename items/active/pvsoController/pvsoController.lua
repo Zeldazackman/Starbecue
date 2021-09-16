@@ -1,6 +1,10 @@
 function init()
 	activeItem.setHoldingItem(false)
 	local hand = activeItem.hand()
+	if storage.clickAction == nil then
+		storage.clickAction = "unassigned"
+	end
+	activeItem.setInventoryIcon("/items/active/pvsoController/"..storage.clickAction..".png")
 
 	message.setHandler( hand.."ItemData", function(_,_, data)
 		if data.assignClickAction ~= nil then
@@ -11,47 +15,23 @@ function init()
 			activeItem.setInventoryIcon("/items/active/pvsoController/"..data.defaultClickAction..".png")
 		end
 	end)
-	if storage.clickAction ~= nil then
-		activeItem.setInventoryIcon("/items/active/pvsoController/"..storage.clickAction..".png")
-	end
 end
-
-local voreActionList = {
-	"vore",
-	"oralVore",
-	"analVore",
-	"tailVore",
-	"cockVore",
-	"breastVore",
-	"physicalAttack",
-	"specialAttack",
-	"grab",
-	"succ"
-}
 
 function update(dt, fireMode, shiftHeld, controls)
 	if not player.isLounging() and fireMode == "primary" and not clicked then
-		sb.logInfo("clicky")
 		clicked = true
-		if storage.clickAction == nil then
-			storage.clickAction = "vore"
-		else
-			getNextAction()
-		end
-		if storage.clickAction ~= nil then
-			activeItem.setInventoryIcon("/items/active/pvsoController/"..storage.clickAction..".png")
-		else
-			activeItem.setInventoryIcon("/items/active/pvsoController/unassigned.png")
-		end
+		getNextAction()
+		activeItem.setInventoryIcon("/items/active/pvsoController/"..storage.clickAction..".png")
 	elseif fireMode ~= "primary" then
 		clicked = false
 	end
 end
 
 function getNextAction()
-	for i, action in ipairs(voreActionList) do
+	local actions = config.getParameter("actions")
+	for i, action in ipairs(actions) do
 		if storage.clickAction == action then
-			storage.clickAction = voreActionList[i+1]
+			storage.clickAction = actions[i+1] or "unassigned"
 			return
 		end
 	end
