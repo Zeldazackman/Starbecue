@@ -21,6 +21,8 @@ p = {
 
 p.settings = {}
 
+p.modifierItem = {}
+
 p.movement = {
 	jumps = 0,
 	jumped = false,
@@ -334,11 +336,90 @@ function uninit()
 	end
 end
 
+function p.eatFeedableHandItems(entity)
+	if p.eatHandItem(entity, "primary") then return true end
+	if p.eatHandItem(entity, "alt") then return true end
+end
+
+function p.eatHandItem(entity, hand)
+	local item = world.entityHandItem(entity, hand)
+	local modifierType = p.checkModifierItem(item)
+	if modifierType ~= nil and p.modifierItem[modifierType] ~= nil then
+		p.modifierItem[modifierType](entity, item)
+		world.sendEntityMessage(entity, "pvsoEatItem", item)
+		world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
+	else
+		-- probably can make it eat normal items here
+	end
+end
+
+function p.modifierItem.none(entity, item)
+	p.settings.bellyEffect = "pvsoRemoveBellyEffects"
+	p.settings.displayDamage = false
+end
+
+function p.modifierItem.heal(entity, item)
+	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoVoreHeal")
+end
+
+function p.modifierItem.digest(entity, item)
+	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoDigest")
+end
+
+function p.modifierItem.softDigest(entity, item)
+	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoSoftDigest")
+end
+
+function p.modifierItem.displayDamage(entity, item)
+	p.settings.displayDamage = true
+	p.settings.bellyEffect = p.getDisplayBellyEffect(p.settings.bellyEffect)
+end
+
+function p.modifierItem.easyEscape(entity, item)
+	if p.settings.escapeModifier == "antiEscape" then
+		p.settings.escapeModifier = "normal"
+	else
+		p.settings.escapeModifier = "easyEscape"
+	end
+end
+
+function p.modifierItem.antiEscape(entity, item)
+	if p.settings.escapeModifier == "easyEscape" then
+		p.settings.escapeModifier = "normal"
+	else
+		p.settings.escapeModifier = "antiEscape"
+	end
+end
+
+function p.getDisplayBellyEffect(effect)
+	local displayEffect = p.config.bellyDisplayStatusEffects[effect]
+	if p.settings.displayDamage and displayEffect ~= nil then
+		return displayEffect
+	else
+		return effect
+	end
+end
+
+function p.checkModifierItem(item)
+	for modifierType, modifierItemList in pairs(p.config.pvsoModifiers) do
+		for i, modifierItem in ipairs(modifierItemList) do
+			if item == modifierItem then
+				return modifierType
+			end
+		end
+	end
+end
+
 p.settingsMenuOpen = 0
 -- returns sourcePosition, sourceId, and interactPosition
 function onInteraction(args)
 	if p.transitionLock then return end
 	local stateData = p.stateconfig[p.state]
+
+	if not p.driver then
+		if p.eatFeedableHandItems(args.sourceId) then p.showEmote( "emotehappy" ) return end
+	end
+
 	if p.entityLounging(args.sourceId) then
 		if args.sourceId == p.driver then
 			-- open the settings menu if you're the driver

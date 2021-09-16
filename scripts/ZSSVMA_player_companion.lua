@@ -84,6 +84,11 @@ function init()
 			player.giveItem("pvsoController")
 		end
 	end)
+
+	message.setHandler("pvsoEatItem", function(_,_, item)
+		player.consumeItem(item, true)
+	end)
+
 end
 
 local essentialItems = {"beamaxe", "wiretool", "painttool", "inspectiontool"}
