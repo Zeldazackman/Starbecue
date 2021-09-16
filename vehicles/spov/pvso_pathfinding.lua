@@ -51,20 +51,32 @@ end
 p.pathMover = nil
 p.pathingTarget = nil
 
-function p.pathTo(target, exact)
+function p.pathTo(target, options)
+	options = sb.jsonMerge({
+		maximumCorrection = math.abs(mcontroller.localBoundBox()[3] - mcontroller.localBoundBox()[1]),
+		flying = false,
+	}, options)
+	if not target then return false end
 	p.isPathfinding = true
-	p.pathingTarget = target
-	if not exact then
-		p.pathingTarget = findGroundPosition(
-			p.pathingTarget, -- target
+	target = world.resolvePolyCollision(
+		p.movementParams.collisionPoly, target,
+		options.maximumCorrection
+	)
+	if not target then return false end
+	if not options.flying then
+		target = findGroundPosition(
+			target, -- target
 			-10, 10 -- min/max height
-		)
+		) or target
 	end
+	if not target then return false end
+	p.pathingTarget = target or mcontroller.position()
 end
 
 function p.stopPathing()
 	p.isPathfinding = false
 	p.activeControls = {}
+	p.pathMover.downHoldTimer2 = nil
 end
 
 -- extend mcontroller to add actor methods
@@ -124,13 +136,16 @@ end
 function mcontroller_extensions.controlParameters(parameters)
 	-- Changes movement parameters. Parameters are merged into the base parameters.
 	-- Each control is merged into the previous one.
-	p.movementParamOverrides = sb.jsonMerge(p.movementParamOverrides, parameters)
+	p.activeControls.parameters = sb.jsonMerge(p.activeControls.parameters, parameters)
 	p.setMovementParams(p.movementParamsName)
 end
 
 function mcontroller_extensions.controlDown()
 	-- Controls dropping through platforms.
-	p.activeControls.controlDown = true -- no override
+	p.activeControls.drop = true -- no override
+	if p.pathMover.downHoldTimer2 == nil then
+		p.pathMover.downHoldTimer2 = 0.1 -- hack because downHoldTimer gets reset too soon
+	end
 end
 
 function mcontroller_extensions.controlApproachVelocity(targetVelocity, maxControlForce)
@@ -181,7 +196,7 @@ function status.stat(stat)
 	-- Returns the value for the specified stat. Defaults to 0.0 if the stat does not exist.
 	-- (we only need this to support "jumpModifier")
 	if stat == "jumpModifier" then
-		return 0.0 -- this'll probably change later but I don't think anything affects this yet
+		return 0.45 -- this'll probably change later but I don't think anything affects this yet
 	else
 		return 0.0
 	end
