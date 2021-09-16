@@ -290,12 +290,21 @@ function p.doClickActions(state, dt)
 	end
 	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
 
-	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions ~= nil) then
-		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.primaryFire or state.control.defaultActions[1], "primaryFire")
-		p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickActions.altFire or state.control.defaultActions[2], "altFire")
-	elseif (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") or ((p.seats[p.driverSeat].controls.primaryHandItem == nil) and (p.seats[p.driverSeat].controls.altHandItem == nil)) then
+	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") then
 		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, state.control.defaultActions[2], "altFire")
+	else
+		if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") then
+			p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction or state.control.defaultActions[1], "primaryFire")
+		elseif (p.seats[p.driverSeat].controls.primaryHandItem == nil) then
+			p.clickAction(state, state.control.defaultActions[1], "primaryFire")
+		end
+
+		if (p.seats[p.driverSeat].controls.altHandItem == "pvsoController") then
+			p.clickAction(state, p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction or state.control.defaultActions[2], "altFire")
+		elseif (p.seats[p.driverSeat].controls.altHandItem == nil) then
+			p.clickAction(state, state.control.defaultActions[2], "altFire")
+		end
 	end
 end
 

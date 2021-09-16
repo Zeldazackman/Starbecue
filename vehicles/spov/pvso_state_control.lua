@@ -14,6 +14,14 @@ function p.updateState(dt)
 		if state[p.state] ~= nil and state[p.state].begin ~= nil then
 			state[p.state].begin(dt)
 		end
+		if p.stateconfig[p.state].control ~= nil and p.stateconfig[p.state].control.defaultActions ~= nil and p.driver ~= nil then
+			world.sendEntityMessage(p.driver, "primaryItemData", {
+				defaultClickAction = p.stateconfig[p.state].control.defaultActions[1]
+			})
+			world.sendEntityMessage(p.driver, "altItemData", {
+				defaultClickAction = p.stateconfig[p.state].control.defaultActions[2]
+			})
+		end
 		p.prevState = p.state
 	end
 end

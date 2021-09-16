@@ -6,9 +6,9 @@
 	"maxStack" : 1,
 	"rarity" : "common",
 	"category" : "vehicleController",
-	"twoHanded" : true,
+	"twoHanded" : false,
 	"itemTags" : ["vehiclecontroller"],
-	"inventoryIcon" : "/assetmissing.png",
+	"inventoryIcon" : "oralVore.png",
 
 	"inactiveArmAngle" : -1.0,
 
