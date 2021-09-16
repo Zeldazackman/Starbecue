@@ -1,7 +1,7 @@
 {
 	"itemName" : "pvsoController",
 	"shortdescription" : "Vore Controller",
-	"description" : "Triggers the default actions of a playable VSO. \nUse when not in a vehicle to cycle its action.",
+	"description" : "Triggers the default actions of a PVSO. \nUse when not in a vehicle to cycle its action.",
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",
@@ -24,20 +24,20 @@
 		"succ"
 	],
 	"descriptions" : {
-		"unassigned" : {"shortdescription" : "Vore Controller", "description" : "Triggers the default actions of a playable VSO."},
-		"vore" : {"shortdescription" : "Vore Controller", "description" : "Triggers any vore action of a playable VSO."},
-		"oralVore" : {"shortdescription" : "Oral Vore Controller", "description" : "Triggers the oral vore action of a playable VSO."},
-		"analVore" : {"shortdescription" : "Anal Vore Controller", "description" : "Triggers the anal vore action of a playable VSO."},
-		"tailVore" : {"shortdescription" : "Tail Vore Controller", "description" : "Triggers the tail vore action of a playable VSO."},
-		"cockVore" : {"shortdescription" : "Cock Vore Controller", "description" : "Triggers the cock vore action of a playable VSO."},
-		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a playable VSO."},
-		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a playable VSO."},
-		"specialAttack" : {"shortdescription" : "Special Attack Controller", "description" : "Triggers the special attack of a playable VSO."},
-		"grab" : {"shortdescription" : "Grabbing Controller", "description" : "Triggers the grab action of a playable VSO."},
-		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a playable VSO."}
+		"unassigned" : {"shortdescription" : "Vore Controller", "description" : "Triggers the default actions of a PVSO."},
+		"vore" : {"shortdescription" : "Vore Controller", "description" : "Triggers any vore action of a PVSO."},
+		"oralVore" : {"shortdescription" : "Oral Vore Controller", "description" : "Triggers the oral vore action of a PVSO."},
+		"analVore" : {"shortdescription" : "Anal Vore Controller", "description" : "Triggers the anal vore action of a PVSO."},
+		"tailVore" : {"shortdescription" : "Tail Vore Controller", "description" : "Triggers the tail vore action of a PVSO."},
+		"cockVore" : {"shortdescription" : "Cock Vore Controller", "description" : "Triggers the cock vore action of a PVSO."},
+		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a PVSO."},
+		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a PVSO."},
+		"specialAttack" : {"shortdescription" : "Special Attack Controller", "description" : "Triggers the special attack of a PVSO."},
+		"grab" : {"shortdescription" : "Grabbing Controller", "description" : "Triggers the grab action of a PVSO."},
+		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a PVSO."}
 	},
 
-	"appendedDescription" : " Use when not in a vehicle to cycle its action.",
+	"appendedDescription" : " Use when not in a vehicle to cycle actions.",
 
 	"retainScriptStorageInItem": true,
 	"builder" : "/items/active/pvsoController/pvsoControllerBuilder.lua",
