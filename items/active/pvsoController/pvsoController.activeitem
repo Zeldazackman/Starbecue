@@ -8,7 +8,7 @@
 	"category" : "vehicleController",
 	"twoHanded" : false,
 	"itemTags" : ["vehiclecontroller"],
-	"inventoryIcon" : "oralVore.png",
+	"inventoryIcon" : "unassigned.png",
 
 	"inactiveArmAngle" : -1.0,
 
