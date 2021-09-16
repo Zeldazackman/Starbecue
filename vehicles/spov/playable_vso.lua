@@ -156,7 +156,6 @@ function init()
 	]]
 	p.movementParams = sb.jsonMerge(sb.jsonMerge(root.assetJson("/default_actor_movement.config"), root.assetJson("/humanoid.config:movementParameters")), root.assetJson("/player.config:movementParameters"))
 	p.movementParams.jumpCount = 1
-	p.movementParamOverrides = {} -- for mcontroller.controlParameters
 
 	mcontroller.applyParameters(p.movementParams)
 
@@ -521,7 +520,7 @@ end
 
 function p.setMovementParams(name)
 	if p.movementParamsName ~= name then
-		p.movementParamOverrides = {}
+		p.activeControls.parameters = {}
 	end
 	p.movementParamsName = name
 	local params = config.getParameter("vso").movementSettings[name]
@@ -530,7 +529,7 @@ function p.setMovementParams(name)
 			coords[1] = coords[1] * p.direction
 		end
 	end
-	p.movementParams = sb.jsonMerge(sb.jsonMerge(p.movementParams, params), p.movementParamOverrides)
+	p.movementParams = sb.jsonMerge(sb.jsonMerge(p.movementParams, params), p.activeControls.parameters)
 	mcontroller.applyParameters(params)
 end
 

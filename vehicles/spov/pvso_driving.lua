@@ -178,8 +178,10 @@ end
 function p.jumpMovement(dx, dy, state, dt)
 	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
 
-	if not mcontroller.onGround() and (dy == -1 or p.activeControls.down) then
+	if not mcontroller.onGround() and (dy == -1 or p.activeControls.drop) then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
+	elseif p.isPathfinding and p.pathMover.downHoldTimer2 and p.pathMover.downHoldTimer2 > 0 then
+		p.pathMover.downHoldTimer2 = p.pathMover.downHoldTimer2 - dt
 	else
 		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
@@ -191,9 +193,9 @@ function p.jumpMovement(dx, dy, state, dt)
 
 	if state.control.jumpMovementDisabled or p.movement.flying then return end
 
-	if p.heldControl( p.driverSeat, "jump" ) then
+	if p.heldControl( p.driverSeat, "jump" ) or p.activeControls.drop then
 		if (p.movement.jumps < p.movementParams.jumpCount) and (p.movement.sinceLastJump >= p.movementParams[p.movement.jumpProfile].reJumpDelay)
-		and ((not p.movement.jumped) or p.movementParams[p.movement.jumpProfile].autoJump) and ((not p.underWater()) or mcontroller.onGround())
+		and ((not p.movement.jumped) or p.movementParams[p.movement.jumpProfile].autoJump) and ((not p.underWater()) or mcontroller.onGround()) and not p.activeControls.drop
 		then
 			if state.control.jumpMovementDisabled then return end
 			p.movement.sinceLastJump = 0
@@ -217,7 +219,7 @@ function p.jumpMovement(dx, dy, state, dt)
 				end
 			end
 		end
-		if dy == -1 or p.activeControls.down then
+		if dy == -1 or p.activeControls.drop then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
 		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump <= (p.movementParams[p.movement.jumpProfile].jumpHoldTime) and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
 			mcontroller.force({ 0, p.movementParams[p.movement.jumpProfile].jumpControlForce * p.movementParams.mass})
