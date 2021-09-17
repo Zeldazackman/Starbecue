@@ -29,7 +29,6 @@ end
 
 function state.stand.update()
 	if p.driving then
-		if p.standalone then
 			if vehicle.controlHeld( p.driverSeat, "Special2" ) then
 				if p.occupants.total > 0 then
 					--p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
@@ -48,7 +47,6 @@ function state.stand.update()
 			else
 				p.movement.wasspecial1 = false
 			end
-		end
 	end
 end
 
@@ -59,7 +57,7 @@ function state.smol.begin()
 end
 
 function state.smol.update()
-	if p.standalone and vehicle.controlHeld( p.driverSeat, "Special1" ) then
+	if vehicle.controlHeld( p.driverSeat, "Special1" ) then
 		if not p.movement.wasspecial1 then
 			-- p.doAnim( "bodyState", "unsmolify" )
 			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect

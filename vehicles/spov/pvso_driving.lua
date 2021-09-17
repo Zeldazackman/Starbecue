@@ -75,7 +75,7 @@ function p.updateControls(dt)
 			p.updateControl(seatname, "primaryFire", dt)
 			p.updateControl(seatname, "altFire", dt)
 
-			p.occupant[i].controls.aim = vehicle.aimPosition( p.driverSeat ) or {0,0}
+			p.occupant[i].controls.aim = vehicle.aimPosition( seatname ) or {0,0}
 			p.occupant[i].controls.species = world.entitySpecies(eid) or world.monsterType(eid)
 			p.occupant[i].controls.primaryHandItem = world.entityHandItem(eid, "primary")
 			p.occupant[i].controls.altHandItem = world.entityHandItem(eid, "alt")
@@ -452,7 +452,7 @@ function p.fireProjectile( projectiledata, driver )
 		params.powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
 		world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
 	else
-		params.powerMultiplier = p.standalonePowerLevel()
+		params.powerMultiplier = p.objectPowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
 	end
 end

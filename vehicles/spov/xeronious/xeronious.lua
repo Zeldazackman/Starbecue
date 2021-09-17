@@ -358,7 +358,7 @@ function state.sit.update()
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants.hug == 0 and p.standalone and not p.transitionLock then
+	if p.occupants.hug == 0 and not p.isObject and not p.transitionLock then
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then

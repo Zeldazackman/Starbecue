@@ -38,8 +38,12 @@ p.seats = {} -- meant to be a redirect pointers to the occupant data
 p.entity = {}
 
 function p.clearOccupant(i)
+	local seatname = "occupant"..i
+	if i == 0 then
+		seatname = "driver"
+	end
 	return {
-		seatname = "occupant"..i,
+		seatname = seatname,
 		index = i,
 		id = nil,
 		statList = p.vso.occupantStatusEffects or {},
@@ -170,10 +174,6 @@ function init()
 		p.seats["occupant"..i] = p.occupant[i]
 	end
 
-	if p.settings.blackHoleBelly then
-		p.vso.maxOccupants.total = 7
-	end
-
 	for _, state in pairs(p.animStateData) do
 		state.animationState = {
 			anim = state.default,
@@ -192,26 +192,36 @@ function init()
 
 	p.driver = config.getParameter( "driver" )
 	p.occupant[0] = p.clearOccupant(0)
-	p.occupant[0].id = p.driver
-	p.occupant[0].seatname = "driver"
-	p.occupant[0].visible = false
-	p.occupant[0].statList = p.vso.driverStatusEffects or {}
-	p.seats.driver = p.occupant[0]
-	p.driverSeat = "driver"
 
 	if p.driver ~= nil then
+		p.occupant[0].id = p.driver
+		p.driverSeat = "driver"
+		p.seats.driver = p.occupant[0]
+		p.occupant[0].visible = false
+		p.occupant[0].statList = p.vso.driverStatusEffects or {}
+
 		p.entity[p.driver] = p.occupant[0]
-		p.standalone = true
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
 		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
-		p.occupant[0].controls.powerMultiplier = p.standalonePowerLevel()
+		p.seats.objectControls = p.clearOccupant(0)
+		p.seats.objectControls.seatname = "objectControls"
+		p.seats.objectControls.controls.powerMultiplier = p.objectPowerLevel()
+		p.driverSeat = "objectControls"
+		p.includeDriver = true
 		p.driving = false
-		p.standalone = false
+		p.isObject = true
 		vehicle.setLoungeEnabled( "driver", false )
 	end
+	if p.settings.blackHoleBelly then
+		p.vso.maxOccupants.total = 7
+		if p.includeDriver then
+			p.vso.maxOccupants.total = 8
+		end
+	end
+
 	p.spawnerUUID = world.entityUniqueId(p.spawner)
 
 	if entity.uniqueId() ~= nil then
@@ -855,7 +865,11 @@ function p.updateOccupants(dt)
 	p.resetOccupantCount()
 
 	local lastFilled = true
-	for i = 1, p.vso.maxOccupants.total do
+	local start = 1
+	if p.includeDriver then
+		start = 0
+	end
+	for i = start, p.vso.maxOccupants.total do
 		if p.occupant[i].id and world.entityExists(p.occupant[i].id) then
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
@@ -866,9 +880,13 @@ function p.updateOccupants(dt)
 			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * (p.vso.locations[p.occupant[i].location].mass or 0)
 			p.entity[p.occupant[i].id] = p.occupant[i]
 			p.occupant[i].index = i
-			p.occupant[i].seatname = "occupant"..i
-			p.seats["occupant"..i] = p.occupant[i]
-			vehicle.setLoungeEnabled("occupant"..i, true)
+			local seatname = "occupant"..i
+			if i == 0 then
+				seatname = "driver"
+			end
+			p.occupant[i].seatname = seatname
+			p.seats[p.occupant[i].seatname] = p.occupant[i]
+			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
 			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
 			if p.occupant[i].progressBarActive == true then
 				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
@@ -921,7 +939,7 @@ function p.updateOccupants(dt)
 			p.refreshList = true
 			p.occupant[i] = p.clearOccupant(i)
 			lastFilled = false
-			vehicle.setLoungeEnabled("occupant"..i, false)
+			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
@@ -1168,7 +1186,7 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.standalonePowerLevel()
+function p.objectPowerLevel()
 	local power = world.threatLevel()
 	if type(power) ~= "number" or power < 1 then return 1 end
 	return power
@@ -1180,8 +1198,12 @@ function p.doBellyEffects(dt)
 	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
 	local hungereffect = p.settings.hungerEffect or 0
 	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
+	local start = 1
+	if p.includeDriver then
+		start = 0
+	end
 
-	for i = 1, p.vso.maxOccupants.total do
+	for i = start, p.vso.maxOccupants.total do
 		local eid = p.occupant[i].id
 
 		if eid and world.entityExists(eid) then
@@ -1197,9 +1219,9 @@ function p.doBellyEffects(dt)
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
 				if p.driver then
 					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
-				else
-					p.hunger = math.min(100, p.hunger + hunger_change)
 				end
+				p.hunger = math.min(100, p.hunger + hunger_change)
+
 				p.extraBellyEffects(i, eid, health, status)
 			else
 				p.otherLocationEffects(i, eid, health, status)
@@ -1232,7 +1254,7 @@ function p.handleStruggles(dt)
 		movedir = p.getSeatDirections( p.occupant[struggler].seatname )
 		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)
 
-		if p.occupant[struggler].seatname == p.driverSeat then
+		if (p.occupant[struggler].seatname == p.driverSeat) and not p.includeDriver then
 			movedir = nil
 		end
 		if p.occupant[struggler].bellySettleDownTimer <= 0 then

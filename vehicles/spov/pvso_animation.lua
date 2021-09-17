@@ -116,26 +116,26 @@ function p.smolPreyAnimPath(occupant)
 	local animatedParts = occupant.smolPreyData.animatedParts
 	local seatname = occupant.seatname
 
-	local head = ""
-	local head_fullbright = ""
+	local head
+	local head_fullbright
 
-	local body = ""
-	local body_fullbright = ""
+	local body
+	local body_fullbright
 
-	local tail = ""
-	local tail_fullbright = ""
+	local tail
+	local tail_fullbright
 
-	local backlegs = ""
-	local backlegs_fullbright = ""
+	local backlegs
+	local backlegs_fullbright
 
-	local frontlegs = ""
-	local frontlegs_fullbright = ""
+	local frontlegs
+	local frontlegs_fullbright
 
-	local backarms = ""
-	local backarms_fullbright = ""
+	local backarms
+	local backarms_fullbright
 
-	local frontarms = ""
-	local frontarms_fullbright = ""
+	local frontarms
+	local frontarms_fullbright
 
 	if state.idle.head ~= nil then
 		local skin = settings.skinNames.head or "default"
@@ -181,26 +181,26 @@ function p.smolPreyAnimPath(occupant)
 		end
 	end
 
-	animator.setPartTag(seatname, "smolpath", path..head)
-	animator.setPartTag(seatname.."fullbright", "smolpath", path..head_fullbright)
+	if head then animator.setPartTag(seatname, "smolpath", path..head) end
+	if head_fullbright then animator.setPartTag(seatname.."fullbright", "smolpath", path..head_fullbright) end
 
-	animator.setPartTag(seatname.."body", "smolpath", path..body)
-	animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright)
+	if body then animator.setPartTag(seatname.."body", "smolpath", path..body) end
+	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright) end
 
-	animator.setPartTag(seatname.."tail", "smolpath", path..tail)
-	animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright)
+	if tail then animator.setPartTag(seatname.."tail", "smolpath", path..tail) end
+	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright) end
 
-	animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs)
-	animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright)
+	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs) end
+	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright) end
 
-	animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs)
-	animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright)
+	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs) end
+	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright) end
 
-	animator.setPartTag(seatname.."backarms", "smolpath", path..backarms)
-	animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright)
+	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", path..backarms) end
+	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright) end
 
-	animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms)
-	animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright)
+	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms) end
+	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright) end
 
 	occupant.smolPreyData.update = false
 end
@@ -213,7 +213,7 @@ function p.fixPathTags(path, skin, settings)
 		bap = "",
 		frame = "1",
 		bellyoccupants = "0",
-		cracks = settings.cracks or "0"
+		cracks = tostring(settings.cracks) or "0"
 	})
 end
 

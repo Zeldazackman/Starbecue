@@ -4,7 +4,7 @@
 require("/vehicles/spov/playable_vso.lua")
 
 state = {
-	stand = {}
+	smol = {}
 }
 
 -------------------------------------------------------------------------------
@@ -13,11 +13,18 @@ function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, 
 
 end
 
-function onBegin()	--This sets up the VSO ONCE.
+function onBegin()
 	p.driverSeat = "occupant1"
 	p.occupant[0].location = "egg"
 	p.occupants.total = 1
 	p.occupants.egg = 1
+	p.includeDriver = true
+
+	if not p.settings.cracks then
+		p.settings.cracks = 0
+	end
+
+	animator.setGlobalTag( "cracks", p.settings.cracks )
 end
 
 function onEnd()
@@ -27,20 +34,18 @@ end
 -------------------------------------------------------------------------------
 
 function p.edible( occupantId, seatindex, source )
-	if p.getEidFromSeatname( "driver" ) ~= occupantId then return false end
+	if p.occupant[0].id ~= occupantId then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData())
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(), entity.id())
 		return true
 	end
 end
 
-p.cracks = 0
-
 function state.smol.crack( args )
-	p.cracks = p.cracks + 1
+	p.settings.cracks = p.settings.cracks + 1
 
-	if p.cracks > 3 then p.onDeath()
-	else animator.setGlobalTag( "cracks", tostring(p.cracks) )
+	if p.settings.cracks > 3 then p.onDeath()
+	else animator.setGlobalTag( "cracks", p.settings.cracks )
 	end
 end
 
