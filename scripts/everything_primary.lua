@@ -24,4 +24,17 @@ function everything_primary()
 
 		status.addEphemeralEffect("pvsoSucc", 1, data.source)
 	end)
+
+	message.setHandler("addHungerHealth", function( _, _, amount)
+		if status.resourcePercentage("food") < 1 then
+			status.modifyResourcePercentage( "food", amount)
+			return 1
+		elseif status.resourcePercentage("health") < 1 then
+			status.modifyResourcePercentage( "health", amount)
+			return 2
+		else
+			return 3
+		end
+	end )
+
 end

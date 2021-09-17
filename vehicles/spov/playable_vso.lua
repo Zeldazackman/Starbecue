@@ -16,7 +16,8 @@ p = {
 	justLetout = false,
 	nextIdle = 0,
 	swapCooldown = 0,
-	isPathfinding = false
+	isPathfinding = false,
+	hunger = 100
 }
 
 p.settings = {}
@@ -206,6 +207,7 @@ function init()
 		p.forceSeat( p.driver, "driver" )
 		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
+		p.occupant[0].controls.powerMultiplier = p.standalonePowerLevel()
 		p.driving = false
 		p.standalone = false
 		vehicle.setLoungeEnabled( "driver", false )
@@ -318,7 +320,7 @@ function update(dt)
 
 	p.updateOccupants(dt)
 	p.handleStruggles(dt)
-	p.handleBelly()
+	p.doBellyEffects(dt)
 	p.applyStatusLists()
 
 	p.emoteCooldown = p.emoteCooldown - dt
@@ -1158,26 +1160,18 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.handleBelly()
-	if p.occupants.total > 0 then
-		if p.driver ~= nil then
-			p.doBellyEffects(p.driver, math.log(p.seats[p.driverSeat].controls.powerMultiplier)+1)
-		else
-			p.doBellyEffects(false, p.standalonePowerLevel())
-		end
-	end
-end
-
 function p.standalonePowerLevel()
 	local power = world.threatLevel()
 	if type(power) ~= "number" or power < 1 then return 1 end
 	return power
 end
 
-p.restoreHunger = 0
-function p.doBellyEffects(driver, powerMultiplier)
+function p.doBellyEffects(dt)
+	if p.occupants.total <= 0 then return end
+
 	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
 	local hungereffect = p.settings.hungerEffect or 0
+	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
 
 	for i = 1, p.vso.maxOccupants.total do
 		local eid = p.occupant[i].id
@@ -1190,11 +1184,13 @@ function p.doBellyEffects(driver, powerMultiplier)
 
 			if p.vso.locations[p.occupant[i].location].digest then
 				if (p.settings.bellySounds == true) and p.randomTimer( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
-				local hunger_change = (hungereffect * powerMultiplier * p.dt)/100
+				local hunger_change = (hungereffect * powerMultiplier * dt)/100
 				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
-				if driver then
-					world.sendEntityMessage( driver, "addHungerHealth", hunger_change)
+				if p.driver then
+					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
+				else
+					p.hunger = math.min(100, p.hunger + hunger_change)
 				end
 				p.extraBellyEffects(i, eid, health, status)
 			else
