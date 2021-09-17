@@ -2,31 +2,31 @@
 	"objectName": "spovspawnervaporeon",
 	"colonyTags": ["vore"],
 	"rarity": "Rare",
-	"shortdescription": "Vaporeon",
 	"race": "generic",
 	"category": "other",
 	"price": 500,
 	"health" : 5,
-	"path" : "/objects/vore/spov/spovvaporeon.object",
 
-	"tooltipKind" : "vso",
-	"objectImage" : "/vehicles/spov/vaporeon/vaporeon.png:normal",
-	"description": "A big vaporeon of your very own!",
-	"tooltipFields": {
-		"statusLabel": "A big vaporeon of your very own!",
-		"modifyLabel": "A big <fattenAdjective><hungryAdjective>vaporeon of your very own!",
-		"fattenAdjectives": ["", "chubby", "chonky", "chunky"],
-		"hungryAdjectives": {
-			"pvsoRemoveBellyEffects": "",
-			"pvsoVoreHeal": "healing",
-			"pvsoDigest": "hungry",
-			"pvsoSoftDigest": "soft digest",
-			"pvsoDisplayVoreHeal": "display healing",
-			"pvsoDisplayDigest": "display digest",
-			"pvsoDisplaySoftDigest": "display soft digest"
-		}
+	"tooltipKind" : "pvsoSpawner",
+
+	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png",
+	"shortdescription": "Vaporeon",
+
+	"tooltipFields" : {
+		"statusLabel": "A big vaporeon of your very own!"
 	},
-	"tooltipSubtitle" : "fishcat",
+
+	"descriptionWithTags": "A big <fattenAdjective><hungryAdjective>vaporeon of your very own!",
+	"fattenAdjectives": ["", "chubby ", "chonky ", "chunky "],
+	"hungryAdjectives": {
+		"pvsoRemoveBellyEffects": "",
+		"pvsoVoreHeal": "healing ",
+		"pvsoDigest": "hungry ",
+		"pvsoSoftDigest": "soft digest ",
+		"pvsoDisplayVoreHeal": "display healing ",
+		"pvsoDisplayDigest": "display digest ",
+		"pvsoDisplaySoftDigest": "display soft digest "
+	},
 
 	"orientations": [
 		{
@@ -50,8 +50,6 @@
 		}
 	],
 
-	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png",
-
 	"spov": {
 		"types": ["spovvaporeon"],
 		"position": [-1.5, 5]	// in blocks
@@ -65,7 +63,7 @@
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false,
-	//"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
+	"builder" : "/objects/vore/spov/pvsoItemBuilder.lua",
 	"scripts": [
 		"/objects/vore/spov/pvsoSpawner.lua"
 	]

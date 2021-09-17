@@ -4,17 +4,19 @@ function init()
 	if object.uniqueId() ~= nil then
 		object.setUniqueId(sb.makeUuid())
 	end
-	s.defaultValues = root.assetJson(config.getParameter("path"))
-	s.vehicle = s.defaultValues.spov.types[math.random(#s.defaultValues.spov.types)]
+	storage = config.getParameter("scriptStorage")
+	s.spov = config.getParameter("spov")
+
+	s.vehicle = s.spov.types[math.random(#s.spov.types)]
 	s.position = object.position()
-	s.spawnPosition = localToGlobal(s.defaultValues.spov.position)
+	s.spawnPosition = localToGlobal(s.spov.position)
 
 	message.setHandler( "saveVSOsettings", function(_,_, settings )
 		storage.settings = settings
 	end)
 
-	if storage.settings == nil and s.defaultValues.spov.settings ~= nil then
-		storage.settings = sb.jsonMerge(root.assetJson("/vehicles/spov/pvso_general.config:defaultSettings"), s.defaultValues.spov.settings)
+	if storage.settings == nil and s.spov.settings ~= nil then
+		storage.settings = sb.jsonMerge(root.assetJson("/vehicles/spov/pvso_general.config:defaultSettings"), s.spov.settings)
 	end
 end
 
@@ -37,7 +39,7 @@ function update(dt)
 end
 
 function die()
-	if s.vsoEid ~= nil then
+	if s.vsoEid ~= nil and world.entityExists(s.vsoEid) then
 		world.sendEntityMessage(s.vsoEid, "despawn")
 	end
 
