@@ -37,6 +37,11 @@ function init()
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
 	p.refreshed = true
+
+	onInit()
+end
+
+function onInit()
 end
 
 function update( dt )
@@ -70,11 +75,14 @@ function checkIfIdListed(id, species)
 end
 
 function readOccupantData()
+	getSelectedId()
+
 	local enable = false
-	for i = 1, p.maxOccupants do
-		local i = tostring(i) -- somehow the numbers become strings when transferred over
-		if (p.occupant[i] ~= nil) and (p.occupant[i].id ~= nil) and (world.entityExists( p.occupant[i].id )) then
-			enable = true
+	for i, occupant in pairs(p.occupant) do
+		if not ((i == "0") or (i == 0)) and (p.occupant[i] ~= nil) and (p.occupant[i].id ~= nil) and (world.entityExists( p.occupant[i].id )) then
+			if not p.locked then
+				enable = true
+			end
 			local id = p.occupant[i].id
 			local species = p.occupant[i].species
 			local listEntry, listItem = checkIfIdListed(id, species)
@@ -91,10 +99,7 @@ function readOccupantData()
 			else
 				local skin = p.occupant[i].smolPreyData.settings.skinNames.head or "default"
 				local directives = p.occupant[i].smolPreyData.settings.directives or ""
-				setPortrait(p.occupantList.."."..listItem, {{
-					image = "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives,
-					position = {13, 20}
-				}})
+				widget.setImage(p.occupantList.."."..listItem..".portraitIcon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
 			end
 			widget.setText(p.occupantList.."."..listItem..".name", world.entityName( id ))
 		end
@@ -104,20 +109,19 @@ end
 
 function updateHPbars(dt)
 	local listItem
-	for i = 1, p.maxOccupants do
-		local i = tostring(i) -- somehow the numbers become strings when transferred over
-		for j = 1, #p.listItems do
-			if p.listItems[j].id == p.occupant[i].id then
-				listItem = p.listItems[j].listItem
+	for i, occupant in pairs(p.occupant) do
+		if not ((i == "0") or (i == 0)) then
+			for j = 1, #p.listItems do
+				if p.listItems[j].id == p.occupant[i].id then
+					listItem = p.listItems[j].listItem
+				end
 			end
-		end
-		if p.occupant[i] and p.occupant[i].id and world.entityExists( p.occupant[i].id ) then
-			local health = world.entityHealth( p.occupant[i].id )
-			widget.setProgress( p.occupantList.."."..listItem..".healthbar", health[1] / health[2] )
+			if listItem ~= nil and (p.occupant[i] ~= nil) and (p.occupant[i].id ~= nil) and world.entityExists( p.occupant[i].id ) then
+				local health = world.entityHealth( p.occupant[i].id )
+				widget.setProgress( p.occupantList.."."..listItem..".healthbar", health[1] / health[2] )
 
-			secondaryBar(i, listItem, dt)
-		else
-			p.refreshList = true
+				secondaryBar(i, listItem, dt)
+			end
 		end
 	end
 end
@@ -138,7 +142,7 @@ end
 
 function refreshListData()
 	if not p.refreshList then return end
-	p.refreshList = false
+	p.refreshList = nil
 
 	getSelectedId()
 
@@ -160,6 +164,12 @@ function checkRefresh(dt)
 				p.powerMultiplier = result.powerMultiplier
 				setIconDirectives()
 				p.refreshtime = 0
+				p.refreshList = result.refreshList or p.refreshList
+				p.locked = result.locked
+
+				refreshListData()
+				readOccupantData()
+
 				p.refreshed = true
 			end
 		else
@@ -251,13 +261,8 @@ function setPortrait( canvasName, data )
 end
 
 function letOut()
-	if p.refreshed then
-		p.refreshed = false
-		p.refreshtime = 0
-		p.refreshList = true
-		enableActionButtons(false)
-		world.sendEntityMessage( p.vso, "letout", getSelectedId() )
-	end
+	enableActionButtons(false)
+	world.sendEntityMessage( p.vso, "letout", getSelectedId() )
 end
 
 function turboDigest()
@@ -265,8 +270,10 @@ function turboDigest()
 	if selected ~= nil then
 		return sendturboDigestMessage(selected)
 	else
-		for i = 1, p.maxOccupants do
-			sendturboDigestMessage(p.occupant[i].id)
+		for i, occupant in pairs(p.occupant) do
+			if not (i == 0 or i == "0") then
+				sendturboDigestMessage(p.occupant[i].id)
+			end
 		end
 	end
 end
@@ -282,8 +289,10 @@ function transform()
 	if selected ~= nil then
 		return sendTransformMessage(selected)
 	else
-		for i = 1, p.maxOccupants do
-			sendTransformMessage(p.occupant[i].id)
+		for i, occupant in pairs(p.occupant) do
+			if not (i == 0 or i == "0") then
+				sendTransformMessage(p.occupant[i].id)
+			end
 		end
 	end
 end
@@ -291,7 +300,7 @@ end
 p.smolPreyData = nil
 function sendTransformMessage(eid)
 -- we currently don't have any pathing behavior for this, but it does work, however it looks buggy so shall be disabled for non player entities for now
-	if eid ~= nil and world.entityExists(eid) and (world.entityType() == "player") then
+	if eid ~= nil and world.entityExists(eid) then
 		world.sendEntityMessage( p.vso, "transform", p.smolPreyData, eid, 3)
 	end
 end

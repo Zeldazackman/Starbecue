@@ -17,13 +17,49 @@
 			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ "voreheal" ]
+			"statusEffects" : [ ]
 		},
 		"occupant1" : {
 			"part" : "occupant1",
 			"partAnchor" : "occupant1Position",
 			"orientation" : "stand",
-			"statusEffects" : [ "voreheal" ]
+			"statusEffects" : [ ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupant2Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
 		}
 	},
 
@@ -36,6 +72,7 @@
 	},
 
 	"vso" : {
+		"startState" : "smol",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -43,16 +80,14 @@
 					[2, -1], [2, 1],
 					[1, 2], [-1, 2],
 					[-2, 1], [-2, -1]
-				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
-				"ignorePlatformCollision" : false
+				]
 			}
+		},
+		"driverStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 }
+		},
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 }
 		},
 
 		"lights" : {
@@ -61,22 +96,17 @@
 			}
 		},
 		"locations" :{
-			"regular" :[
-				"other"
-			]
+			"egg" : { "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},
 		"maxOccupants" : {
 			"total" : 1,
 			"other" : 1
 		},
-
 		"victimAnimations": "/vehicles/spov/egg/victim_animations.config"
 	},
 
-
-
 	"states": {
-		"stand": {
+		"smol": {
 			"edible": true,
 			"transitions": {
 				// directional = driver can press that direction to transition
@@ -85,16 +115,18 @@
 				}
 			},
 			"idle": {
+				"body": "idle"
 			},
-			"idleAnimations": [
-			],
+			"idleAnimations": [],
 			"struggle": {
 				"other" : {
-					"part" : "body",
-					"up": { "transition": "crack" },
-					"front": { "transition": "crack" },
-					"back": { "transition": "crack" },
-					"down": { "transition": "crack" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "crack", "indicate" : "red" },
+						"front": { "transition": "crack", "indicate" : "red" },
+						"back": { "transition": "crack", "indicate" : "red" },
+						"down": { "transition": "crack", "indicate" : "red" }
+					},
 					"chances": {
 						"easyEscape": { "min": 0, "max": 2 },
 						"normal": { "min": 1, "max": 3 },

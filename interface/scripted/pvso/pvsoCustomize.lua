@@ -77,6 +77,11 @@ function adjustSkin(part, inc)
 		i = 1
 	end
 	settings.replaceSkin[part] = i
+
+	for _, animPart in ipairs(p.replaceSkin[part].parts) do
+		settings.skinNames[animPart] = p.replaceSkin[part].skins[i]
+	end
+
 	widget.setText("label"..part, p.replaceSkin[part].skins[i])
 	saveSettings()
 end

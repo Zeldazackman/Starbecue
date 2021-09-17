@@ -20,6 +20,10 @@ end
 
 -- for letting out prey, some VSOs might wand more specific logic regarding this
 function p.letout(id)
+	local id = id
+	if id == nil then
+		id = p.occupant[p.occupants.total].id
+	end
 	return p.doTransition( "escape", {id = id} )
 end
 

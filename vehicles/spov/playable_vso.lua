@@ -245,6 +245,8 @@ function init()
 		p.entity[eid].progressBarData = data
 		if data == nil then
 			p.entity[eid].progressBarColor = p.vso.replaceColors[1][p.settings.replaceColors[1] + 1] -- pred body color
+		elseif data.barColor ~= nil then
+			p.entity[eid].progressBarColor = data.barColor
 		else
 			-- p.entity[eid].progressBarColor = root.assetJson("something about data:vso.replaceColors.0.1")
 			-- or maybe define it some other way, I dunno
@@ -255,10 +257,14 @@ function init()
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
 		p.settingsMenuOpen = 0.5
+		local refreshList = p.refreshList
+		p.refreshList = nil
 		return {
 			occupants = p.occupant,
 			powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier,
-			settings = p.settings
+			settings = p.settings,
+			refreshList = refreshList,
+			locked = p.transitionLock
 		}
 	end)
 
@@ -912,6 +918,7 @@ function p.updateOccupants(dt)
 
 			lastFilled = true
 		else
+			p.refreshList = true
 			p.occupant[i] = p.clearOccupant(i)
 			lastFilled = false
 			vehicle.setLoungeEnabled("occupant"..i, false)
@@ -1017,7 +1024,7 @@ function p.transformPrey(i)
 		smolPreyData = p.getSmolPreyData()
 	end
 	if smolPreyData ~= nil then
-		if world.entityType(p.occupant[i].id) == "player" then
+		if world.entityType(p.occupant[i].id) == "player" and not smolPreyData.forceSettings then
 			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "loadVSOsettings", smolPreyData.species), function(settings)
 				smolPreyData.settings = settings
 				p.occupant[i].smolPreyData = smolPreyData
@@ -1028,6 +1035,7 @@ function p.transformPrey(i)
 			p.occupant[i].species = smolPreyData.species
 		end
 	end
+	p.refreshList = true
 end
 
 

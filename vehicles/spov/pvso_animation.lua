@@ -640,13 +640,7 @@ function p.setColorReplaceDirectives()
 end
 
 function p.setSkinPartTags()
-	if p.vso.replaceSkin ~= nil then
-		for part, index in pairs(p.settings.replaceSkin) do
-			local skin = p.vso.replaceSkin[part].skins[index]
-			p.settings.skinNames[part] = skin
-			for _, animPart in ipairs(p.vso.replaceSkin[part].parts) do
-				animator.setPartTag( animPart, "skin", skin )
-			end
-		end
+	for animPart, skin in pairs(p.settings.skinNames) do
+		animator.setPartTag( animPart, "skin", skin )
 	end
 end
