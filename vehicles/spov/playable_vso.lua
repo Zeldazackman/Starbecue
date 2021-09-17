@@ -52,7 +52,7 @@ function p.clearOccupant(i)
 		dance = "idle",
 		location = nil,
 		species = nil,
-		smolPreyData = {recieved = false},
+		smolPreyData = {},
 		struggleCount = 0,
 		bellySettleDownTimer = 0,
 		occupantTime = 0,
@@ -221,6 +221,8 @@ function init()
 			p.vso.maxOccupants.total = 8
 		end
 	end
+	p.seats[p.driverSeat].smolPreyData = config.getParameter("layer") or {}
+	p.seats[p.driverSeat].species = p.seats[p.driverSeat].smolPreyData.species
 
 	p.spawnerUUID = world.entityUniqueId(p.spawner)
 
@@ -1042,6 +1044,9 @@ function p.transformPrey(i)
 		smolPreyData = p.getSmolPreyData()
 	end
 	if smolPreyData ~= nil then
+		if smolPreyData.layer == true then
+			smolPreyData.layer = p.occupant[i].smolPreyData
+		end
 		if world.entityType(p.occupant[i].id) == "player" and not smolPreyData.forceSettings then
 			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "loadVSOsettings", smolPreyData.species), function(settings)
 				smolPreyData.settings = settings
@@ -1115,7 +1120,7 @@ function p.uneat( occupantId )
 		world.sendEntityMessage(occupantId, "openPVSOInterface", "close")
 	end
 	if occupantData.species ~= nil then
-		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true } )
+		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, layer = occupantData.smolPreyData.layer } )
 	end
 	return true
 end

@@ -189,26 +189,26 @@ function p.smolPreyAnimPath(occupant)
 		end
 	end
 
-	if head then animator.setPartTag(seatname, "smolpath", path..head) end
-	if head_fullbright then animator.setPartTag(seatname.."fullbright", "smolpath", path..head_fullbright) end
+	if head then animator.setPartTag(seatname, "smolpath", path..head) else animator.setPartTag(seatname, "smolpath", "/assetmissing") end
+	if head_fullbright then animator.setPartTag(seatname.."_fullbright", "smolpath", path..head_fullbright) else animator.setPartTag(seatname.."_fullbright", "smolpath", "/assetmissing") end
 
-	if body then animator.setPartTag(seatname.."body", "smolpath", path..body) end
-	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright) end
+	if body then animator.setPartTag(seatname.."body", "smolpath", path..body) else animator.setPartTag(seatname.."body", "smolpath", "/assetmissing") end
+	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright) else animator.setPartTag(seatname.."body_fullbright", "smolpath", "/assetmissing") end
 
-	if tail then animator.setPartTag(seatname.."tail", "smolpath", path..tail) end
-	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright) end
+	if tail then animator.setPartTag(seatname.."tail", "smolpath", path..tail) else animator.setPartTag(seatname.."tail", "smolpath", "/assetmissing") end
+	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright) else animator.setPartTag(seatname.."tail_fullbright", "smolpath", "/assetmissing") end
 
-	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs) end
-	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright) end
+	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs) else animator.setPartTag(seatname.."backlegs", "smolpath", "/assetmissing") end
+	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright) else animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/assetmissing") end
 
-	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs) end
-	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright) end
+	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs) else animator.setPartTag(seatname.."frontlegs", "smolpath", "/assetmissing") end
+	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright) else animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/assetmissing") end
 
-	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", path..backarms) end
-	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright) end
+	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", path..backarms) else animator.setPartTag(seatname.."backarms", "smolpath", "/assetmissing") end
+	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright) else animator.setPartTag(seatname.."backarms_fullbright", "smolpath", "/assetmissing") end
 
-	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms) end
-	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright) end
+	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms) else animator.setPartTag(seatname.."frontarms", "smolpath", "/assetmissing") end
+	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright) else animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/assetmissing") end
 
 	occupant.smolPreyData.update = false
 end

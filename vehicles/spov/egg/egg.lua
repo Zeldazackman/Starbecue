@@ -19,6 +19,7 @@ function onBegin()
 	p.occupants.egg = 1
 	p.includeDriver = true
 	p.driving = false
+	p.nowarpout = true
 
 	if not p.settings.cracks then
 		p.settings.cracks = 0
@@ -32,7 +33,7 @@ function onBegin()
 end
 
 function onEnd()
-
+	p.uneat(p.driver)
 end
 
 -------------------------------------------------------------------------------
