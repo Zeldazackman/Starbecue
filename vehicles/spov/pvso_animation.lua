@@ -40,7 +40,9 @@ p.armRotation = {
 	enabledR = false,
 	enabledL = false,
 	groupsR = {},
-	groupsL = {}
+	groupsL = {},
+	occupantR = nil,
+	occupantL = nil
 }
 function p.armRotationUpdate()
 	if p.armRotation.enabledR or p.armRotation.enabledL then
@@ -48,15 +50,15 @@ function p.armRotationUpdate()
 		p.faceDirection(p.armRotation.target[1]*p.direction)
 	end
 	if p.direction > 0 then
-		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL)
-		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR)
+		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL, p.armRotation.occupantL)
+		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR, p.armRotation.occupantR)
 	else
-		p.rotateArm( p.armRotation.enabledR, "backarms", p.armRotation.groupsR)
-		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL)
+		p.rotateArm( p.armRotation.enabledR, "backarms", p.armRotation.groupsR, p.armRotation.occupantR)
+		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL, p.armRotation.occupantL)
 	end
 end
 
-function p.rotateArm(enabled, arm, groups)
+function p.rotateArm(enabled, arm, groups, occupantId)
 	if enabled then
 		animator.setAnimationState(arm.."_rotationState", p.stateconfig[p.state].rotationArmState or "rotation", true )
 
@@ -72,6 +74,12 @@ function p.rotateArm(enabled, arm, groups)
 			animator.resetTransformationGroup(group)
 			animator.translateTransformationGroup(group, handOffset)
 			animator.rotateTransformationGroup(group, angle, center)
+		end
+
+		if occupantId ~= nil then
+			local victimAnim = p.entity[occupantId].victimAnim
+			victimAnim.last.x = math.cos(angle) * handOffset[1]
+			victimAnim.last.y = math.sin(angle) * handOffset[2]
 		end
 
 		animator.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
@@ -222,21 +230,21 @@ function p.victimAnimUpdate(entity)
 	local victimAnim = p.entity[entity].victimAnim
 	if not victimAnim.enabled then
 		local location = p.entity[entity].location
-		p.entity[entity].victimAnim.inside = true
+		victimAnim.inside = true
 
-		if p.entity[entity].victimAnim.location ~= location or p.entity[entity].victimAnim.state ~= p.state then
-			if p.entity[entity].victimAnim.progress == nil or p.entity[entity].victimAnim.progress == 1 then
-				p.entity[entity].victimAnim.progress = 0
+		if victimAnim.location ~= location or victimAnim.state ~= p.state then
+			if victimAnim.progress == nil or victimAnim.progress == 1 then
+				victimAnim.progress = 0
 			end
-			p.entity[entity].victimAnim.location = location
-			p.entity[entity].victimAnim.state = p.state
+			victimAnim.location = location
+			victimAnim.state = p.state
 		end
 
 		if p.stateconfig[p.state].locationCenters ~= nil and p.stateconfig[p.state].locationCenters[location] ~= nil
-		and (p.entity[entity].victimAnim.progress < 1 )
+		and (victimAnim.progress < 1 )
 		then
-			p.entity[entity].victimAnim.progress = math.min(1, p.entity[entity].victimAnim.progress + p.dt)
-			local progress = p.entity[entity].victimAnim.progress
+			victimAnim.progress = math.min(1, victimAnim.progress + p.dt)
+			local progress = victimAnim.progress
 			local center = p.stateconfig[p.state].locationCenters[location]
 			local seatname = p.entity[entity].seatname
 			local transformGroup = seatname.."Position"
@@ -244,13 +252,13 @@ function p.victimAnimUpdate(entity)
 			animator.resetTransformationGroup(transformGroup)
 			animator.translateTransformationGroup(transformGroup, translation)
 			if progress == 1 then
-				p.entity[entity].victimAnim.last.x = center[1]
-				p.entity[entity].victimAnim.last.y = center[2]
+				victimAnim.last.x = center[1]
+				victimAnim.last.y = center[2]
 			end
 		end
 		return
 	end
-	local statename = p.entity[entity].victimAnim.statename
+	local statename = victimAnim.statename
 	local ended, times, time = p.hasAnimEnded(statename)
 	local anim = p.victimAnimations[victimAnim.anim]
 	if ended and not anim.loop then

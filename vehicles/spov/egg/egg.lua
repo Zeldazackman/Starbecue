@@ -14,7 +14,6 @@ function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, 
 end
 
 function onBegin()
-	p.driverSeat = "occupant1"
 	p.occupant[0].location = "egg"
 	p.occupants.total = 1
 	p.occupants.egg = 1

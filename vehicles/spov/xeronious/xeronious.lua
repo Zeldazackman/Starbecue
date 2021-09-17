@@ -226,11 +226,15 @@ function p.setGrabTarget()
 		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
 		p.armRotation.groupsR = {p.entity[p.grabbing].seatname.."Position"}
 		p.armRotation.groupsL = {p.entity[p.grabbing].seatname.."Position"}
+		p.armRotation.occupantR = p.grabbing
+		p.armRotation.occupantL = p.grabbing
 	else
 		p.armRotation.enabledL = false
 		p.armRotation.enabledR = false
 		p.armRotation.groupsR = {}
 		p.armRotation.groupsL = {}
+		p.armRotation.occupantR = nil
+		p.armRotation.occupantL = nil
 	end
 end
 
