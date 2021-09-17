@@ -24,6 +24,10 @@ function onBegin()
 		p.settings.cracks = 0
 	end
 
+	if p.settings.escapeModifier == "noEscape" then
+		p.settings.escapeModifier = "antiEscape"
+	end
+
 	animator.setGlobalTag( "cracks", p.settings.cracks )
 end
 
