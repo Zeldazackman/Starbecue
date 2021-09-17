@@ -88,11 +88,13 @@ function p.doTransition( direction, scriptargs )
 	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
 		local id = (scriptargs or {}).id
 		local index = (scriptargs or {}).index
-		if id == nil and tconfig.victimAnimLocation ~= nil then
-			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
-		end
-		if id == nil and index ~= nil then
+		if index ~= nil then
 			id = p.occupant[index].id
+		elseif id == nil then
+			id = p.justAte
+		end
+		if tconfig.victimAnimLocation ~= nil then
+			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
 		end
 		if id ~= nil then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
