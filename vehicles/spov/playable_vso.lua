@@ -390,6 +390,15 @@ function p.modifierItem.antiEscape(entity, item)
 	end
 end
 
+function p.modifierItem.fatten(entity, item)
+	p.settings.fatten = math.max(0, p.settings.fatten + 1)
+end
+
+function p.modifierItem.diet(entity, item)
+	p.settings.fatten = math.max(0, p.settings.fatten - 1)
+end
+
+
 function p.getDisplayBellyEffect(effect)
 	local displayEffect = p.config.bellyDisplayStatusEffects[effect]
 	if p.settings.displayDamage and displayEffect ~= nil then
