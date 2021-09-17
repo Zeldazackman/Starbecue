@@ -310,7 +310,7 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
@@ -497,7 +497,7 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
 						"front": { "transition": "down", "indicate": "blue" },
@@ -610,7 +610,7 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
 						"front": { "transition": "down", "indicate": "blue" },
@@ -627,7 +627,7 @@
 
 				},
 				"hug" : {
-					"part" : "legs",
+					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_up" },
 						"front": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_front" },
@@ -696,7 +696,7 @@
 			"idleAnimations": [],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
 						"front": { "transition": "up", "indicate": "green" },
@@ -710,7 +710,7 @@
 					}
 				},
 				"hug" : {
-					"part" : "legs",
+					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_up" },
 						"front": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_front" },
@@ -778,7 +778,7 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "side", "indicate": "green" },
 						"front": { "transition": "side", "indicate": "green" },
@@ -792,19 +792,19 @@
 					}
 				},
 				"hug" : {
-					"part" : "body",
+					"parts" : ["legs"],
 					"directions": {
-						"up": { "transition": "up", "indicate": "red" },
+						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
+						"up": { "transition": "up", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "side", "indicate": "green" },
 						"back": { "transition": "side", "indicate": "green" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
 					"chances": {
-						"easyEscape": { "min": 0, "max": 0 },
-						"normal": { "min": 0, "max": 0 },
-						"antiEscape": { "min": 0, "max": 0 }
+						"easyEscape": { "min": 1, "max": 1 },
+						"normal": { "min": 1, "max": 1 },
+						"antiEscape": { "min": 1, "max": 1 }
 					}
-
 				}
 			},
 			"locationCenters" : {
@@ -867,7 +867,7 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
+					"parts" : ["body"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
 						"front": { "transition": "up", "indicate": "green" },
@@ -881,7 +881,7 @@
 					}
 				},
 				"hug" : {
-					"part" : "legs",
+					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_up" },
 						"front": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_front" },
@@ -1037,10 +1037,12 @@
 			"idleAnimations": [],
 			"struggle" : {
 				"belly" :{
-					"part" : "ball",
+					"parts" : ["ball"],
 					"script" : "nudge",
-					"front" : {},
-					"back" : {}
+					"directions" : {
+						"front" : { "indicate" : "blue"},
+						"back" : { "indicate" : "blue"}
+					}
 				}
 			},
 			"locationCenters" : {

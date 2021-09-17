@@ -21,19 +21,43 @@
 		},
 		"occupant1" : {
 			"part" : "occupant1",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant1Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant2" : {
 			"part" : "occupant2",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant2Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		},
 		"occupant3" : {
 			"part" : "occupant3",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
 			"orientation" : "stand",
 			"statusEffects" : [ ]
 		}
@@ -56,15 +80,7 @@
 					[-3, -3.4], [-2.5, -4],
 					[2.5, -4], [3, -3.4],
 					[3, 0.4], [2.5, 1]
-				],
-				"gravityMultiplier" : 0.0,
-				"liquidBuoyancy" : 0.0,
-				"airBuoyancy" : 0.0,
-				"bounceFactor" : 0.0,
-				"collisionEnabled" : true,
-				"frictionEnabled" : true,
-				"gravityEnabled" : false, // using custom gravity instead, for snappier falls
-				"ignorePlatformCollision" : false
+				]
 			}
 		},
 		"lights" : {
@@ -80,23 +96,15 @@
 			}
 		},
 		"locations" :{
-			"regular" :[
-				"belly",
-				"hug"
-			],
-			"digest" : [
-				"belly"
-			],
-			"combine" :[
-				["belly", "fatten"]
-			]
+			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { },
+			"fatten" : { "mass": 1 }
 		},
 		"maxOccupants" : {
 			"total" : 2,
 			"belly" : 1,
 			"hug" : 1
 		},
-
 
 		"victimAnimations": "/vehicles/spov/charem/victim_animations.config"
 	},
@@ -166,11 +174,13 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "side" },
-					"front": { "transition": "side" },
-					"back": { "transition": "analescape" },
-					"down": { "transition": "side" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { },
+						"front": { },
+						"back": { "transition": "analescape", "indicate" : "red" },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -178,11 +188,13 @@
 					}
 				},
 				"hug" : {
-					"part" : "body",
-					"up": { "transition": "up" },
-					"front": { "transition": "up" },
-					"back": { "transition": "up" },
-					"down": { "transition": "down" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "red" },
+						"front": { "transition": "up", "indicate" : "red" },
+						"back": { "transition": "up", "indicate" : "red" },
+						"down": { "transition": "down", "indicate" : "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 0, "max": 0 },
 						"normal": { "min": 0, "max": 0 },
@@ -266,11 +278,13 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "side" },
-					"front": { "transition": "side" },
-					"back": { "transition": "analescape" },
-					"down": { "transition": "side" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { },
+						"front": { },
+						"back": { "transition": "analescape", "indicate" : "red" },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
 						"normal": { "min": 10, "max": 20 },
@@ -278,13 +292,15 @@
 					}
 				},
 				"hug" : {
-					"part" : "legs",
-					"up": { "transition": "up", "victimAnimation": "hug.s_up" },
-					"front": { "transition": "side", "victimAnimation": "hug.s_front" },
-					"back": { "transition": "side", "victimAnimation": "hug.s_back" },
-					"down": { "transition": "down", "victimAnimation": "hug.s_down" },
+					"parts" : ["legs"],
+					"directions" : {
+						"up": { "transition": "up", "victimAnimation": "hug.s_up", "indicate" : "green" },
+						"front": { "victimAnimation": "hug.s_front" },
+						"back": { "victimAnimation": "hug.s_back" },
+						"down": { "victimAnimation": "hug.s_down" }
+					},
 					"chances": {
-						"easyEscape": { "min": 0, "max": 2 },
+						"easyEscape": { "min": 1, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
 						"antiEscape": { "min": 15, "max": 25 }
 					}

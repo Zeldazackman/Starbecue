@@ -7,15 +7,11 @@
 	"category": "other",
 	"price": 500,
 	"health" : 5,
-	"path" : "/objects/vore/spov/spovcharem.object",
 
-	"tooltipKind" : "vso",
-	"objectImage" : "/vehicles/spov/charem/charem.png:normal",
-	"description": "A lazy hungry shadox.",
+	"tooltipKind" : "pvsoSpawner",
 	"tooltipFields": {
 		"statusLabel": "A lazy hungry shadox, why don't you bring him something to eat?"
 	},
-	"tooltipSubtitle" : "charem",
 
 	"orientations": [
 		{
@@ -35,7 +31,7 @@
 		}
 	],
 
-	"inventoryIcon": "/vehicles/spov/charem/charemicon.png",
+	"inventoryIcon": "/vehicles/spov/charem/spov/default/icon.png",
 
 	"spov": {
 		"types": ["spovcharem"],

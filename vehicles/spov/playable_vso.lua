@@ -1200,6 +1200,19 @@ function p.doBellyEffects(dt)
 	end
 end
 
+function p.partsAreStruggling(parts)
+	for _, part in ipairs(parts) do
+		if not p.hasAnimEnded( part.."State" )
+		and (
+			p.animationIs( part.."State", "s_up" ) or
+			p.animationIs( part.."State", "s_front" ) or
+			p.animationIs( part.."State", "s_back" ) or
+			p.animationIs( part.."State", "s_down" )
+		)
+		then return true end
+	end
+end
+
 function p.handleStruggles(dt)
 	if p.transitionLock then return end
 	local struggler = -1
@@ -1223,13 +1236,7 @@ function p.handleStruggles(dt)
 			struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 			if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
 				movedir = nil
-			elseif not p.hasAnimEnded( struggledata.part.."State" )
-			and (
-				p.animationIs( struggledata.part.."State", "s_up" ) or
-				p.animationIs( struggledata.part.."State", "s_front" ) or
-				p.animationIs( struggledata.part.."State", "s_back" ) or
-				p.animationIs( struggledata.part.."State", "s_down" )
-			)then
+			elseif p.partsAreStruggling(struggledata.parts) then
 				movedir = nil
 			else
 				for i = 1, #p.config.speciesStrugglesDisabled do
@@ -1271,9 +1278,10 @@ function p.handleStruggles(dt)
 		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1
 		p.occupant[struggler].bellySettleDownTimer = 5
 
-		sb.setLogMap("b", "struggle")
 		local animation = {offset = struggledata.directions[movedir].offset}
-		animation[struggledata.part] = "s_"..movedir
+		for _, part in ipairs(struggledata.parts) do
+			animation[part] = "s_"..movedir
+		end
 
 		p.doAnims(animation)
 
@@ -1284,7 +1292,7 @@ function p.handleStruggles(dt)
 		end
 
 		if struggledata.directions[movedir].victimAnimation then
-			p.doVictimAnim( strugglerId, struggledata.directions[movedir].victimAnimation, struggledata.part.."State" )
+			p.doVictimAnim( strugglerId, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
 		end
 		animator.playSound( "struggle" )
 	end

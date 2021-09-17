@@ -325,11 +325,13 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "escapeOral", "drivingEnabled": true  },
-					"front": { "transition": "down" },
-					"back": { "transition": "bellyToTail", "drivingEnabled": true },
-					"down": { "transition": "escapeAnal", "drivingEnabled": true },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "down", "indicate" : "blue" },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -339,11 +341,13 @@
 					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
-					"part" : "tail",
-					"up": { "transition": "up" },
-					"front": { "transition": "tailToBelly", "drivingEnabled": true },
-					"back": { "transition": "escapeTail", "drivingEnabled": true  },
-					"down": { "transition": "down" },
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue"  },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"down": { "transition": "down", "indicate" : "blue" }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -547,12 +551,30 @@
 				{ "head": "idle" }
 			],
 			"struggle": {
+				"belly" : {
+					"parts" : [],
+					"directions" : {
+						"up": { },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"front": { },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				},
 				"tail" : {
-					"part" : "tail",
-					"up": { "transition": "up" },
-					"front": { "transition": "tailToBelly", "drivingEnabled": true },
-					"back": { "transition": "escapeTail", "drivingEnabled": true },
-					"down": { "transition": "down" },
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -714,11 +736,13 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "escapeOral", "drivingEnabled": true  },
-					"front": { "transition": "escapeOral", "drivingEnabled": true  },
-					"back": { "transition": "bellyToTail", "drivingEnabled": true },
-					"down": { "transition": "escapeAnal", "drivingEnabled": true },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -728,11 +752,13 @@
 					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
-					"part" : "tail",
-					"up": { "transition": "up" },
-					"front": { "transition": "tailToBelly", "drivingEnabled": true },
-					"back": { "transition": "escapeTail", "drivingEnabled": true },
-					"down": { "transition": "down" },
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true  },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -930,11 +956,13 @@
 			],
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "escapeOral", "drivingEnabled": true  },
-					"front": { "transition": "up" },
-					"back": { "transition": "bellyToTail", "drivingEnabled": true },
-					"down": { "transition": "down" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "up", "indicate" : "blue"  },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -944,11 +972,13 @@
 					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
-					"part" : "tail",
-					"up": { "transition": "up" },
-					"front": { "transition": "tailToBelly", "drivingEnabled": true },
-					"back": { "transition": "escapeTail", "drivingEnabled": true  },
-					"down": { "transition": "down" },
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue" },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -1161,24 +1191,29 @@
 			],
 			"struggle": {
 				"hug" : {
-					"part" : "arms", // can be an arms struggle anim later maybe
-					"up": { "transition": "unhug", "drivingEnabled": true },
-					"front": {},
-					"back": {},
-					"down": {},
+					"parts" : ["arms"], // can be an arms struggle anim later maybe
+					"directions" : {
+						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
+						"up": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
+						"front": {},
+						"back": {},
+						"down": {}
+					},
 					"chances": {
-						"easyEscape": { "min": 1, "max": 1 },
-						"normal": { "min": 1, "max": 1 },
-						"antiEscape": { "min": 1, "max": 1 }
+						"easyEscape": { "min": 0, "max": 0 },
+						"normal": { "min": 0, "max": 0 },
+						"antiEscape": { "min": 0, "max": 0 }
 					},
 					"animation": { "head": "look" }
 				},
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "escapeOral", "drivingEnabled": true },
-					"front": { "transition": "up" },
-					"back": { "transition": "bellyToTail", "drivingEnabled": true },
-					"down": { "transition": "down" },
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "green" },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -1188,11 +1223,13 @@
 					"animationWhenMoving": { "head": "idle" }
 				},
 				"tail" : {
-					"part" : "tail",
-					"up": { "transition": "up" },
-					"front": { "transition": "tailToBelly", "drivingEnabled": true },
-					"back": { "transition": "escapeTail", "drivingEnabled": true },
-					"down": { "transition": "down" },
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue" },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },

@@ -7,15 +7,13 @@
 	"category": "other",
 	"price": 500,
 	"health" : 5,
-	"path" : "/objects/vore/spov/spovxeronious.object",
 
-	"tooltipKind" : "vso",
-	"objectImage" : "/vehicles/spov/xeronious/xeronious.png:normal",
+	"tooltipKind" : "pvsoSpawner",
+
 	"description": "A fluffy kaiju who can eat you in several ways!",
 	"tooltipFields": {
 		"statusLabel": "A fluffy kaiju who can eat you in several ways!"
 	},
-	"tooltipSubtitle" : "xeronious",
 
 	"orientations": [
 		{
@@ -35,7 +33,7 @@
 		}
 	],
 
-	"inventoryIcon": "/vehicles/spov/xeronious/xeroniousicon.png",
+	"inventoryIcon": "/vehicles/spov/xeronious/spov/default/icon.png",
 
 	"spov": {
 		"types": ["spovxeronious"],
