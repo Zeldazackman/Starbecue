@@ -36,8 +36,6 @@ function p.getSmolPreyData()
 	}
 end
 
-p.transformSpeedMultiplier = 10
-
 function enableActionButtons(enable)
 	widget.setButtonEnabled( "letOut", enable )
 	widget.setButtonEnabled( "transform", enable )

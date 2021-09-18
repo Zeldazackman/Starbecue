@@ -126,8 +126,40 @@ function updateHPbars(dt)
 	end
 end
 
+local bar = {
+	empty = "/interface/scripted/pvso/barempty2.png",
+	full = "/interface/scripted/pvso/barfull2.png",
+	x = 0, y = 0, h = 5, w = 61,
+	color = {"9e9e9e", "c4c4c4", "e4e4e4", "ffffff"}, -- defaults in barfull.png
+}
+
+function replace(from, to)
+	if to == nil or #to == 0 then return "" end
+	local directive = "?replace;"
+	for i, f in ipairs(from) do
+		directive = directive .. f .. "=" .. to[i] .. ";"
+	end
+	return directive
+end
+
 function secondaryBar(i, listItem, dt)
-	widget.setProgress( p.occupantList.."."..listItem..".secondarybar", p.occupant[i].progressBar / 100 )
+	local progressBar = widget.bindCanvas( p.occupantList.."."..listItem..".secondarybar" )
+
+	local s = (p.occupant[i].progressBar or 0) / 100 * bar.w
+	if s < bar.w then
+		progressBar:drawImageRect(
+			bar.empty,
+			{s, 0, bar.w, bar.h},
+			{bar.x + s, bar.y, bar.x + bar.w, bar.y + bar.h}
+		)
+	end
+	if s > 0 then
+		progressBar:drawImageRect(
+			bar.full .. replace(bar.color, p.occupant[i].progressBarColor),
+			{0, 0, s, bar.h},
+			{bar.x, bar.y, bar.x + s, bar.y + bar.h}
+		)
+	end
 end
 
 function getSelectedId()
