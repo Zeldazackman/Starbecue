@@ -21,36 +21,46 @@
 		},
 		"occupant1" : {
 			"part" : "occupant1",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant1Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant2" : {
 			"part" : "occupant2",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant2Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant3" : {
 			"part" : "occupant3",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant3Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant4" : {
 			"part" : "occupant4",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant4Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant5" : {
 			"part" : "occupant5",
-			"partAnchor" : "occupantPosition",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		}
-
-
 	},
 
 	"mouthPosition" : [ 0.0, 0.0 ],
@@ -99,6 +109,10 @@
 				"pointLight" : true
 			}
 		},
+		"defaultSettings" : {
+			"replaceColors" : [1,1,1]
+
+		},
 
 		"replaceColors" : [
 			[
@@ -137,22 +151,18 @@
 			]
 		],
 		"locations" :{
-			"regular" :[
-				"belly",
-				"shaft"
-			],
-			"sided" : [
-				"balls"
-			],
-			"digest" : [
-				"belly"
-			],
-			"combine" :[
-				["belly", "fatten"]
-			],
-			"mass" :[
-				"belly"
-			]
+			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { },
+			"fatten" : { "mass": 1 },
+
+			"shaft" : { "mass": 0.1, "hyperMass": 1 },
+			"balls" : { "sided" : true },
+			"ballsL" : { "mass": 0.1, "hyperMass": 1},
+			"ballsR" : { "mass": 0.1, "hyperMass": 1},
+
+			"breasts" : { "sided" : true },
+			"breastsL" : { "mass": 0.1, "hyperMass": 1},
+			"breastsR" : { "mass": 0.1, "hyperMass": 1}
 		},
 
 		"maxOccupants" : {
@@ -239,9 +249,9 @@
 				"petAnimation": true
 			},
 			"control": {
-				"primaryAction": {
-				},
-				"altAction": {
+				"defaultClickActions" : [],
+				"clickActions" : {
+
 				},
 				"animations": {
 					"walk": {
@@ -323,9 +333,9 @@
 				"petAnimation": true
 			},
 			"control": {
-				"primaryAction": {
-				},
-				"altAction": {
+				"defaultClickActions" : [],
+				"clickActions" : {
+
 				},
 				"animations": {
 					"walk": {

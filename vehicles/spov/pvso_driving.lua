@@ -154,7 +154,7 @@ end
 
 function p.groundMovement(dx, dy, state, dt)
 	p.movement.groundMovement = "run"
-	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= p.movementParams.fullThreshold) or (p.activeControls.run == false) then
+	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= (p.movementParams.fullThreshold or 1)) or (p.activeControls.run == false) then
 		p.movement.groundMovement = "walk"
 	end
 	if mcontroller.onGround() and not p.movement.flying then

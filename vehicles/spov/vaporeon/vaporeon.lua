@@ -62,6 +62,7 @@ end
 
 function p.update(dt)
 	p.whenFalling()
+	p.changeSize()
 end
 
 function p.whenFalling()
@@ -78,23 +79,21 @@ function p.whenFalling()
 	end
 end
 
--------------------------------------------------------------------------------
-
-function state.stand.update()
-	if p.driving then
-		if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
-			world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
-			if p.occupants.belly < 2 then
-				p.setState( "smol" )
-				p.doAnims( p.stateconfig.smol.idle, true )
-			else
-				p.setState( "chonk_ball" )
-				p.doAnims( p.stateconfig.chonk_ball.idle, true )
-			end
-			return
+function p.changeSize()
+	if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
+		local changeSize = "smol"
+		if p.occupants.belly >= 2 then
+			changeSize = "chonk_ball"
 		end
+		if p.state == changeSize then
+			changeSize = "stand"
+		end
+		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		p.setState( changeSize )
 	end
 end
+
+-------------------------------------------------------------------------------
 
 function state.stand.eat( args )
 	if not mcontroller.onGround() or p.movement.falling then return false end
@@ -196,7 +195,7 @@ end
 -------------------------------------------------------------------------------
 
 function state.hug.update()
-	if p.driving and p.pressControl( p.driverSeat, "jump" ) then
+	if p.pressControl( p.driverSeat, "jump" ) then
 		p.doTransition( "absorb" )
 	end
 end
@@ -204,14 +203,6 @@ end
 state.hug.absorb = absorb
 
 -------------------------------------------------------------------------------
-
-function state.smol.update()
-	if p.driving and p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-		p.setState( "stand" )
-		p.doAnims( p.stateconfig.stand.idle, true )
-	end
-end
 
 function state.smol.begin()
 	p.setMovementParams( "smol" )
@@ -230,15 +221,6 @@ function state.chonk_ball.update(dt)
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 
 		p.setState( "smol" )
-		p.doAnims( p.stateconfig.smol.idle, true )
-	end
-	if p.driving then
-		if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
-			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-			p.setState( "stand" )
-			p.doAnims( p.stateconfig.stand.idle, true )
-			return
-		end
 	end
 end
 

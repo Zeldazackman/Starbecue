@@ -18,7 +18,21 @@ function onBegin()	--This sets up the VSO ONCE.
 end
 
 function onEnd()
+end
 
+function p.update(dt)
+	p.changeSize()
+end
+
+function p.changeSize()
+	if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
+		local changeSize = "smol"
+		if p.state == changeSize then
+			changeSize = "stand"
+		end
+		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		p.setState( changeSize )
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -27,48 +41,10 @@ function state.stand.eat( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
 end
 
-function state.stand.update()
-	if p.driving then
-			if vehicle.controlHeld( p.driverSeat, "Special2" ) then
-				if p.occupants.total > 0 then
-					--p.doTransition( "escape", {index=p.occupants.total} ) -- last eaten
-				end
-			end
-
-			if vehicle.controlHeld( p.driverSeat, "Special1" ) then
-				if not p.movement.wasspecial1 then
-					-- p.doAnim( "bodyState", "unsmolify" )
-					world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-
-					p.setState( "smol" )
-					p.doAnims( p.stateconfig.smol.idle, true )
-				end
-				p.movement.wasspecial1 = true
-			else
-				p.movement.wasspecial1 = false
-			end
-	end
-end
-
 -------------------------------------------------------------------------------
 
 function state.smol.begin()
 	p.setMovementParams( "smol" )
-end
-
-function state.smol.update()
-	if vehicle.controlHeld( p.driverSeat, "Special1" ) then
-		if not p.movement.wasspecial1 then
-			-- p.doAnim( "bodyState", "unsmolify" )
-			world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
-
-			p.setState( "stand" )
-			p.doAnims( p.stateconfig.stand.idle, true )
-		end
-		p.movement.wasspecial1 = true
-	else
-		p.movement.wasspecial1 = false
-	end
 end
 
 function state.smol.ending()

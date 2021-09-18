@@ -887,7 +887,11 @@ function p.updateOccupants(dt)
 				p.swapOccupants( i-1, i )
 				i = i - 1
 			end
-			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * (p.vso.locations[p.occupant[i].location].mass or 0)
+			local massMultiplier = p.vso.locations[p.occupant[i].location].mass or 0
+			if p.settings[p.occupant[i].location] ~= nil and p.settings[p.occupant[i].location].hyper then
+				massMultiplier = p.vso.locations[p.occupant[i].location].hyperMass or massMultiplier
+			end
+			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * massMultiplier
 			p.entity[p.occupant[i].id] = p.occupant[i]
 			p.occupant[i].index = i
 			local seatname = "occupant"..i
