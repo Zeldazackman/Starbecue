@@ -17,37 +17,37 @@
 			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant1" : {
 			"part" : "occupant1",
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant2" : {
 			"part" : "occupant2",
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant3" : {
 			"part" : "occupant3",
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant4" : {
 			"part" : "occupant4",
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant5" : {
 			"part" : "occupant5",
 			"partAnchor" : "occupantPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		}
 
 

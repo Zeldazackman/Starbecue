@@ -1,0 +1,9 @@
+{
+	"name" : "pvsoNormalSeatDetector",
+	"effectConfig" : {},
+	"defaultDuration" : 0.1,
+
+	"scripts" : [
+	"pvsoNormalSeatDetector.lua"
+	]
+}

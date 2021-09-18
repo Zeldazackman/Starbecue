@@ -17,49 +17,49 @@
 			"part" : "driver",
 			"partAnchor" : "driverPosition",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant1" : {
 			"part" : "occupant1",
 			"partAnchor" : "occupant1Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant2" : {
 			"part" : "occupant2",
 			"partAnchor" : "occupant2Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant3" : {
 			"part" : "occupant3",
 			"partAnchor" : "occupant3Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant4" : {
 			"part" : "occupant4",
 			"partAnchor" : "occupant4Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant5" : {
 			"part" : "occupant5",
 			"partAnchor" : "occupant5Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant6" : {
 			"part" : "occupant6",
 			"partAnchor" : "occupant6Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
 		"occupant7" : {
 			"part" : "occupant7",
 			"partAnchor" : "occupant7Position",
 			"orientation" : "stand",
-			"statusEffects" : [ ]
+			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		}
 	},
 

@@ -307,6 +307,14 @@ function init()
 		p.entity[eid].indicatorCooldown = 2
 	end )
 
+	message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
+		vehicle.setLoungeEnabled(p.entity[eid].seatname, false)
+		p.timer(p.entity[eid].seatname.."Enable", 0.1, function()
+			vehicle.setLoungeEnabled(p.entity[eid].seatname, true)
+		end)
+	end )
+
+
 	p.state = "start" -- this state doesn't need to exist
 	if not (config.getParameter( "uneaten" ) or p.settings.defaultSmall) then
 		if not p.vso.startState then
