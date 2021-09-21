@@ -136,7 +136,7 @@ function init()
 	p.stateconfig = config.getParameter("states")
 	p.loungePositions = config.getParameter("loungePositions")
 	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
-	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.config = root.assetJson( "/pvso_general.config")
 	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.vso.defaultSettings or {}), config.getParameter( "settings" ) or {})

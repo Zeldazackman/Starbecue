@@ -44,6 +44,21 @@ function p.doTransition( direction, scriptargs )
 	if p.transitionLock then return "locked" end
 	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
 	if tconfig == nil then return "no data" end
+	local id = p.getTransitionVictimId(scriptargs, tconfig)
+
+	if tconfig.voreType ~= nil and id ~= nil then
+		p.addRPC(world.sendEntityMessage(id, "pvsoIsPreyEnabled", tconfig.voreType), function(enabled)
+			if enabled then
+				p.doingTransition(tconfig, direction, scriptargs)
+			end
+		end)
+	else
+		return p.doingTransition(tconfig, direction, scriptargs)
+	end
+end
+
+function p.doingTransition(tconfig, direction, scriptargs)
+	if p.transitionLock then return "locked" end
 	local continue = true
 	local after
 	if tconfig.script then
@@ -86,19 +101,24 @@ function p.doTransition( direction, scriptargs )
 		end)
 	end
 	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
-		local id = (scriptargs or {}).id
-		local index = (scriptargs or {}).index
-		if index ~= nil then
-			id = p.occupant[index].id
-		elseif id == nil then
-			id = p.justAte
-		end
-		if tconfig.victimAnimLocation ~= nil then
-			id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
-		end
+		local id = p.getTransitionVictimId(scriptargs, tconfig)
 		if id ~= nil then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
 	return "success", p.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
+end
+
+function p.getTransitionVictimId(scriptargs, tconfig)
+	local id = (scriptargs or {}).id
+	local index = (scriptargs or {}).index
+	if index ~= nil then
+		id = p.occupant[index].id
+	elseif id == nil then
+		id = p.justAte
+	end
+	if tconfig.victimAnimLocation ~= nil then
+		id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
+	end
+	return id
 end
 
 function p.idleStateChange()

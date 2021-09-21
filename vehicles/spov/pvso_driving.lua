@@ -86,28 +86,20 @@ function p.updateControls(dt)
 			if (seatname == p.driverSeat) then
 				type = "driver"
 			end
-			if p.occupant[i].controls.primaryHandItem == "pvsoController" or p.occupant[i].controls.primaryHandItem == "pvsoSecretTrick" then
-				p.mergeSeatData(i, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
-			elseif p.occupant[i].controls.altHandItem == "pvsoController" or p.occupant[i].controls.primaryHandItem == "pvsoSecretTrick" then
-				p.mergeSeatData(i, p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata)
+			if p.occupant[i].controls.primaryHandItem ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
+			elseif p.occupant[i].controls.altHandItem ~= nil and p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata)
 			else
 				p.occupant[i].controls.shiftReleased = p.occupant[i].controls.shift
 				p.occupant[i].controls.shift = 0
 				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", {type}, function(seatdata)
-					p.mergeSeatData(i, seatdata)
+					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
 				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type}, function(seatdata)
-					p.mergeSeatData(i, seatdata)
+					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
 			end
-		end
-	end
-end
-
-function p.mergeSeatData(i, seatdata)
-	if seatdata ~= nil then
-		for name, data in pairs(seatdata) do
-			p.occupant[i].controls[name] = data
 		end
 	end
 end

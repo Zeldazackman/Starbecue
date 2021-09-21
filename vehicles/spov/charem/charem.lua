@@ -28,6 +28,10 @@ function state.back.analescape( args )
 	return p.doEscape(args, {"vsoindicateguts"}, {"droolsoaked", 5} )
 end
 
+function state.back.escape( args )
+	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+end
+
 function state.back.bed( args )
 	return p.eat( args.id, "hug" )
 end
@@ -60,4 +64,8 @@ end
 
 function state.hug.analescape( args )
 	return p.doEscape(args, {"vsoindicateguts"}, {"droolsoaked", 5} )
+end
+
+function state.hug.escape( args )
+	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
 end

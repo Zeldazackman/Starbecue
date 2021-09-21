@@ -273,6 +273,7 @@
 				},
 				// non directional = not accessible via controls, except from script
 				"eat": { // 2 occupants
+					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
@@ -285,6 +286,7 @@
 					"script": "eat"
 				},
 				"escape": { // 2 occupants
+					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
 					"animation": {
@@ -472,6 +474,7 @@
 							]
 						}
 					},
+					"voreType" : "held",
 					"victimAnimation": "sitpinned",
 					"victimAnimLocation": "hug",
 					"state": "lay",
@@ -574,6 +577,7 @@
 					"chance": 10
 				},
 				"absorb": {
+					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
 					"failOnFull" : 1,
@@ -669,6 +673,7 @@
 					"chance": 5
 				},
 				"absorb": {
+					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
 					"failOnFull" : 1,
@@ -747,6 +752,7 @@
 					"chance": 10
 				},
 				"bed": {
+					"voreType" : "held",
 					"victimAnimation": "bellybed",
 					"script": "bed"
 				},
@@ -840,6 +846,7 @@
 					}
 				],
 				"absorb": {
+					"voreType" : "absorbVore",
 					"lock" : true,
 					"location": "belly",
 					"failOnFull": 1,

@@ -209,6 +209,12 @@ function unpin(args)
 end
 
 function p.setGrabTarget()
+	local controls = p.seats[p.driverSeat].controls
+	if not (((controls.primaryHandItem == "pvsoController") or (controls.altHandItem == "pvsoController"))
+	or ((controls.primaryHandItem == nil) and (controls.altHandItem == nil)))
+	then
+		p.grabbing = nil
+	end
 	if p.justAte ~= nil and p.justAte == p.grabbing then
 		p.wasEating = true
 		p.armRotation.enabledL = true
@@ -240,15 +246,24 @@ end
 
 function p.grab()
 	local target = p.checkValidAim(p.driverSeat, 2)
-
-	local prey = world.entityQuery(mcontroller.position(), 5, {
-		withoutEntityId = p.driver,
-		includedTypes = {"creature"}
-	})
-	for _, entity in ipairs(prey) do
-		if entity == target then
-			return target
-		end
+	if target then
+		p.addRPC(world.sendEntityMessage(target, "pvsoIsPreyEnabled", "held"), function(enabled)
+			if enabled then
+				local prey = world.entityQuery(mcontroller.position(), 5, {
+					withoutEntityId = p.driver,
+					includedTypes = {"creature"}
+				})
+				for _, entity in ipairs(prey) do
+					if entity == target then
+						if p.eat(target, "hug") then
+							p.grabbing = target
+							p.movement.clickActionsDisabled = true
+						end
+					end
+				end
+			end
+		end)
+		return true
 	end
 end
 
@@ -296,14 +311,7 @@ function state.stand.update()
 	end
 end
 
-function state.stand.grab()
-	local grabbing = p.grab()
-	if p.eat(grabbing, "hug") then
-		p.grabbing = grabbing
-		p.movement.clickActionsDisabled = true
-		return true
-	end
-end
+state.stand.grab = p.grab
 
 function state.stand.sitpin(args)
 	local pinnable = { args.id }
@@ -366,7 +374,7 @@ function state.sit.update()
 		if p.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
-				p.eat(npcs[1], "hug", {})
+				p.doTransition( "hug", {id=npcs[1]} )
 			end
 		end
 	end

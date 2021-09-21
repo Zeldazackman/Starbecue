@@ -113,6 +113,7 @@
 		"back": {
 			"transitions": {
 				"eat":{
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
@@ -124,6 +125,7 @@
 					"victimAnimation": "backeat"
 				},
 				"anal":{
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
@@ -134,6 +136,7 @@
 					"victimAnimation": "backanal"
 				},
 				"analescape":{
+					"voreType" : "analVore",
 					"location" : "belly",
 					"animation": {
 						"body": "analescape",
@@ -142,8 +145,18 @@
 					"script": "analescape",
 					"victimAnimation": "backanalescape"
 				},
+				"escape":{
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"animation": {
+						"body": "escape"
+					},
+					"script": "escape",
+					"victimAnimation": "backescape"
+				},
 
 				"bed": {
+					"voreType" : "held",
 					"victimAnimation": "bellybed",
 					"script": "bed"
 				},
@@ -177,7 +190,7 @@
 					"parts" : ["body"],
 					"directions" : {
 						"up": { },
-						"front": { },
+						"front": { "transition": "escape", "indicate" : "red" },
 						"back": { "transition": "analescape", "indicate" : "red" },
 						"down": { }
 					},
@@ -212,6 +225,7 @@
 		"hug": {
 			"transitions": {
 				"eat":{
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
@@ -223,6 +237,7 @@
 					"victimAnimation": "backeat"
 				},
 				"anal":{
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
@@ -233,6 +248,7 @@
 					"victimAnimation": "backanal"
 				},
 				"analescape":{
+					"voreType" : "analVore",
 					"location" : "belly",
 					"animation": {
 						"body": "analescape",
@@ -240,6 +256,15 @@
 					},
 					"script": "analescape",
 					"victimAnimation": "backanalescape"
+				},
+				"escape":{
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"animation": {
+						"body": "escape"
+					},
+					"script": "escape",
+					"victimAnimation": "backescape"
 				},
 
 				"up": [
@@ -281,7 +306,7 @@
 					"parts" : ["body"],
 					"directions" : {
 						"up": { },
-						"front": { },
+						"front": { "transition": "escape", "indicate" : "red" },
 						"back": { "transition": "analescape", "indicate" : "red" },
 						"down": { }
 					},

@@ -1,0 +1,17 @@
+{
+	"itemName" : "pvsoPreyEnabler",
+	"shortdescription" : "Prey Enabler",
+	"description" : "Enables and disables what vore actions can be performed on you.",
+	"price" : 1,
+	"maxStack" : 1,
+	"rarity" : "common",
+	"category" : "tool",
+	"twoHanded" : true,
+	"itemTags" : ["tool"],
+	"inventoryIcon" : "unassigned.png",
+
+	"scripts" : [
+		"pvsoPreyEnabler.lua",
+		"/items/active/pvsoController/pvsoControllerData.lua"
+	]
+}

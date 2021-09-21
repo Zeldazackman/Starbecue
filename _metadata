@@ -5,5 +5,5 @@
 	"description" : "SSVM addons made by Zygan (aka Notnat Tlikehis or Alpaca53382) and Wasabi_Raptor (aka LokiVulpix)",
 	"name" : "ZyganSSVMAddons",
 	"friendlyName" : "ZyganSSVMAddons",
-	"includes" : ["StarboundSimpleVoreModVSO"]
+	"includes" : ["StarboundSimpleVoreModVSO", "ssvm"]
 }

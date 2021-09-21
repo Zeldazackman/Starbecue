@@ -95,9 +95,9 @@ local essentialItems = {"beamaxe", "wiretool", "painttool", "inspectiontool"}
 
 function checkLockItem(itemDescriptor, type)
 	if not itemDescriptor then return end
-	allowedItems = root.assetJson("/vehicles/spov/pvso_general.config:pvsoAllowedItems")
-	bannedTags = root.assetJson("/vehicles/spov/pvso_general.config:pvsoBannedTags")
-	bannedCategories = root.assetJson("/vehicles/spov/pvso_general.config:pvsoBannedCategories")
+	allowedItems = root.assetJson("/pvso_general.config:pvsoAllowedItems")
+	bannedTags = root.assetJson("/pvso_general.config:pvsoBannedTags")
+	bannedCategories = root.assetJson("/pvso_general.config:pvsoBannedCategories")
 
 	for i, item in ipairs(allowedItems[type]) do
 		if itemDescriptor.name == item then return end
@@ -145,7 +145,7 @@ function lockItem(itemDescriptor, type)
 end
 
 function lockEssentialItem(itemDescriptor, slot, type)
-	local lockItemDescriptor = root.assetJson("/vehicles/spov/pvso_general.config:lockItemDescriptor")
+	local lockItemDescriptor = root.assetJson("/pvso_general.config:lockItemDescriptor")
 	lockItemDescriptor.parameters.scriptStorage.lockedEssentialItems[slot] = itemDescriptor
 	lockItemDescriptor.parameters.scriptStorage.lockType = type
 	player.giveEssentialItem(slot, lockItemDescriptor)

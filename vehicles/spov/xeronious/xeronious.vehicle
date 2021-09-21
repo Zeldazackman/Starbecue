@@ -211,7 +211,8 @@
 					},
 					"state": "crouch"
 				},
-				"eat": { // 3 occupants
+				"eat": {
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
@@ -222,7 +223,8 @@
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
-				"succEat": { // 3 occupants
+				"succEat": {
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
@@ -233,7 +235,8 @@
 					"victimAnimation": "playersucc",
 					"script": "succEat"
 				},
-				"escapeOral": { // 3 occupants
+				"escapeOral": {
+					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "escapeOral",
@@ -242,7 +245,8 @@
 						"head": "escape"
 					}
 				},
-				"tailEat": { // 1 occupant
+				"tailEat": {
+					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -254,7 +258,8 @@
 					"script": "tailEat",
 					"timing": "tail"
 				},
-				"escapeTail": { // 1 occupant
+				"escapeTail": {
+					"voreType" : "tailVore",
 					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
@@ -264,7 +269,8 @@
 						"head": "AVlook"
 					}
 				},
-				"analEat": { // 3 occupants
+				"analEat": {
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock":true,
@@ -275,7 +281,8 @@
 					"victimAnimation": "playeranalEat",
 					"script": "analEat"
 				},
-				"escapeAnal": { // 3 occupants
+				"escapeAnal": {
+					"voreType" : "analVore",
 					"lock":true,
 					"victimAnimation": "escapeAnal",
 					"script": "escapeAnal",
@@ -487,7 +494,8 @@
 					},
 					"state": "stand"
 				},
-				"tailEat": { // 1 occupant
+				"tailEat": {
+					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -499,7 +507,8 @@
 					"script": "tailEat",
 					"timing": "tail"
 				},
-				"escapeTail": { // 1 occupant
+				"escapeTail": {
+					"voreType" : "tailVore",
 					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
@@ -624,7 +633,8 @@
 		},
 		"fly": {
 			"transitions": {
-				"succEat": { // 3 occupants
+				"succEat": {
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
@@ -636,7 +646,8 @@
 					"victimAnimation": "playersucc",
 					"script": "eat"
 				},
-				"escapeOral": { // 3 occupants
+				"escapeOral": {
+					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"script" : "escapeOral",
 					"animation": {
@@ -645,7 +656,8 @@
 						"head": "escape"
 					}
 				},
-				"tailEat": { // 1 occupant
+				"tailEat": {
+					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -658,7 +670,8 @@
 					"script": "tailEat",
 					"timing": "tail"
 				},
-				"escapeTail": { // 1 occupant
+				"escapeTail": {
+					"voreType" : "tailVore",
 					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"script" : "escapeTail",
@@ -683,7 +696,8 @@
 						"head": "burp"
 					}
 				},
-				"analEat": { // 3 occupants
+				"analEat": {
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock":true,
@@ -696,7 +710,8 @@
 					"victimAnimation": "playeranalEat",
 					"script": "analEat"
 				},
-				"escapeAnal": { // 3 occupants
+				"escapeAnal": {
+					"voreType" : "analVore",
 					"lock":true,
 					"victimAnimation": "escapeAnal",
 					"script" : "escapeAnal",
@@ -847,7 +862,8 @@
 					"timing": "legs",
 					"chance": 5
 				},
-				"eat": { // 3 occupants
+				"eat": {
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
@@ -858,7 +874,8 @@
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
-				"escapeOral": { // 3 occupants
+				"escapeOral": {
+					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "escapeOral",
@@ -867,7 +884,8 @@
 						"head": "escape"
 					}
 				},
-				"tailEat": { // 1 occupant
+				"tailEat": {
+					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -879,7 +897,8 @@
 					"script": "tailEat",
 					"timing": "tail"
 				},
-				"escapeTail": { // 1 occupant
+				"escapeTail": {
+					"voreType" : "tailVore",
 					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
@@ -889,7 +908,8 @@
 						"head": "AVlook"
 					}
 				},
-				"analEat": { // 3 occupants
+				"analEat": {
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock":true,
@@ -926,6 +946,7 @@
 					}
 				},
 				"hug": {
+					"voreType" : "held",
 					"script": "hug"
 				}
 			},
@@ -1085,7 +1106,8 @@
 					"timing": "legs",
 					"state": "stand"
 				},
-				"eat": { // 3 occupants
+				"eat": {
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
@@ -1096,7 +1118,8 @@
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
-				"escapeOral": { // 3 occupants
+				"escapeOral": {
+					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "escapeOral",
@@ -1105,7 +1128,8 @@
 						"head": "escape"
 					}
 				},
-				"tailEat": { // 1 occupant
+				"tailEat": {
+					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
 					"failOnFull" : true,
@@ -1117,7 +1141,8 @@
 					"script": "tailEat",
 					"timing": "tail"
 				},
-				"escapeTail": { // 1 occupant
+				"escapeTail": {
+					"voreType" : "tailVore",
 					"lock" : true,
 					"victimAnimation": "escapeTail",
 					"timing": "tail",
@@ -1127,7 +1152,8 @@
 						"head": "AVlook"
 					}
 				},
-				"analEat": { // 3 occupants
+				"analEat": {
+					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock":true,

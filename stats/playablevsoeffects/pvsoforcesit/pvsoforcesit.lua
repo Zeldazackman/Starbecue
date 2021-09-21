@@ -9,10 +9,8 @@ function update(dt)
 		mcontroller.controlModifiers({movementSuppressed = true, facingSuppressed = true, runningSuppressed = true, jumpingSuppressed = true})
 
 		local anchorEntity, seatindex = mcontroller.anchorState()
-		--sb.logInfo("Seat Index:"..seatindex)
 
 		if (anchorEntity ~= data.source) and (seatindex ~= data.index) then
-			mcontroller.resetAnchorState()
 			pcall(mcontroller.setAnchorState, data.source, data.index )
 		end
 	else

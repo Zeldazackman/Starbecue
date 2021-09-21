@@ -29,4 +29,7 @@ function init()
 		npc.setDamageTeam(status.statusProperty("pvsoOriginalDamageTeam"))
 	end)
 
+	if config.getParameter("preyEnabled") ~= nil then
+		status.setStatusProperty("pvsoPreyEnabled", config.getParameter("preyEnabled"))
+	end
 end

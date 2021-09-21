@@ -18,7 +18,7 @@ function init()
 	p.occupant = config.getParameter( "occupants" )
 	p.maxOccupants = config.getParameter( "maxOccupants" )
 	p.powerMultiplier = config.getParameter( "powerMultiplier" )
-	p.config = root.assetJson( "/vehicles/spov/pvso_general.config")
+	p.config = root.assetJson( "/pvso_general.config")
 	p.vsoConfig = root.assetJson( "/vehicles/spov/"..p.vsoname.."/"..p.vsoname..".vehicle" ).vso
 
 	settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.vsoConfig.defaultSettings or {}), p.vsoSettings[p.vsoname] or {})
@@ -224,7 +224,7 @@ function setBellyEffect()
 		settings.hungerEffect = 0
 	end
 	if globalSettings.displayDamage then
-		local bellyDisplayEffectList = root.assetJson("/vehicles/spov/pvso_general.config:bellyDisplayStatusEffects")
+		local bellyDisplayEffectList = root.assetJson("/pvso_general.config:bellyDisplayStatusEffects")
 		if bellyDisplayEffectList[bellyEffect] ~= nil then
 			bellyEffect = bellyDisplayEffectList[bellyEffect]
 		end
