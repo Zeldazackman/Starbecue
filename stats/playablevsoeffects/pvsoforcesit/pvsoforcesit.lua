@@ -11,6 +11,7 @@ function update(dt)
 		local anchorEntity, seatindex = mcontroller.anchorState()
 
 		if (anchorEntity ~= data.source) and (seatindex ~= data.index) then
+			mcontroller.resetAnchorState()
 			if not pcall(mcontroller.setAnchorState, data.source, data.index ) then
 				sb.logInfo("didn't anchor to "..data.source.." "..data.index)
 			end

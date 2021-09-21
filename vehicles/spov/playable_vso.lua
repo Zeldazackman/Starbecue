@@ -725,8 +725,9 @@ function p.applyStatusLists()
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
 			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", {p.occupant[i].statList} )
 			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {{index=i, source=entity.id()}})
+		else
+			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 		end
-		vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 	end
 end
 
