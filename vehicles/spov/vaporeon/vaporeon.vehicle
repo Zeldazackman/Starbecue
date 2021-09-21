@@ -13,9 +13,9 @@
 	"animation" : "vaporeon.animation",
 
 	"loungePositions" : {
-		"driver" : {
-			"part" : "driver",
-			"partAnchor" : "driverPosition",
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},

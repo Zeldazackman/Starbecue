@@ -11,6 +11,7 @@ p = {
 		total = 0
 	},
 	occupant = {},
+	occupantSlots = 7, -- 0 indexed
 	occupantOffset = 1,
 	justAte = false,
 	justLetout = false,
@@ -38,12 +39,8 @@ p.seats = {} -- meant to be a redirect pointers to the occupant data
 p.lounging = {}
 
 function p.clearOccupant(i)
-	local seatname = "occupant"..i
-	if i == 0 then
-		seatname = "driver"
-	end
 	return {
-		seatname = seatname,
+		seatname = "occupant"..i,
 		index = i,
 		id = nil,
 		statList = p.vso.occupantStatusEffects or {},
@@ -169,7 +166,7 @@ function init()
 
 	p.resetOccupantCount()
 
-	for i = 1, p.vso.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		p.occupant[i] = p.clearOccupant(i)
 		p.seats["occupant"..i] = p.occupant[i]
 	end
@@ -190,20 +187,21 @@ function init()
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 	end
 
-	p.driver = config.getParameter( "driver" )
-	p.occupant[0] = p.clearOccupant(0)
 
+	p.driver = config.getParameter( "driver" )
 	if p.driver ~= nil then
 		p.occupant[0].id = p.driver
-		p.driverSeat = "driver"
-		p.seats.driver = p.occupant[0]
+		p.driverSeat = "occupant0"
+
+		p.seats[p.driverSeat] = p.occupant[0]
+		p.lounging[p.driver] = p.occupant[0]
+
 		p.occupant[0].visible = false
 		p.occupant[0].statList = p.vso.driverStatusEffects or {}
 
-		p.lounging[p.driver] = p.occupant[0]
 		p.driving = true
 		p.spawner = p.driver
-		p.forceSeat( p.driver, "driver" )
+		p.forceSeat( p.driver, 0 )
 		world.sendEntityMessage( p.driver, "giveVoreController")
 	else
 		p.seats.objectControls = p.clearOccupant(0)
@@ -213,8 +211,10 @@ function init()
 		p.includeDriver = true
 		p.driving = false
 		p.isObject = true
-		vehicle.setLoungeEnabled( "driver", false )
 	end
+
+		p.logJson(p.seats)
+
 	if p.settings.blackHoleBelly then
 		p.vso.maxOccupants.total = 7
 		if p.includeDriver then
@@ -595,7 +595,7 @@ end
 
 function p.onForcedReset()
 	animator.setAnimationRate( 1.0 );
-	for i = 1, p.vso.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		vehicle.setLoungeEnabled( "occupant"..i, false )
 	end
 
@@ -719,12 +719,14 @@ function p.applyStatusEffects(eid, statuses)
 end
 
 function p.applyStatusLists()
-	for i = 0, #p.occupant do
+	for i = 0, p.occupantSlots do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
+			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
 			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", {p.occupant[i].statList} )
 			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {{index=i, source=entity.id()}})
 		end
+		vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 	end
 end
 
@@ -739,12 +741,11 @@ function p.removeStatusFromList(index, status)
 	p.occupant[index].statList[status] = nil
 end
 
-function p.forceSeat( occupantId, seatname )
+function p.forceSeat( occupantId, seatindex )
 	if occupantId then
-		vehicle.setLoungeEnabled(seatname, true)
-		local seat = p.getIndexFromSeatname(seatname)
+		vehicle.setLoungeEnabled("occupant"..seatindex, true)
 		world.sendEntityMessage(occupantId, "pvsoMakeNonHostile")
-		world.sendEntityMessage( occupantId, "pvsoForceSit", {index=seat, source=entity.id()})
+		world.sendEntityMessage( occupantId, "pvsoForceSit", {index=seatindex, source=entity.id()})
 	end
 end
 
@@ -885,91 +886,82 @@ function p.updateOccupants(dt)
 
 	local lastFilled = true
 
-	for i = 0, p.vso.maxOccupants.total do
-		if i == 0 and not p.includeDriver then
-			i = 1
-		end
-		sb.logInfo(tostring(p.occupant[i].id))
-		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-			sb.logInfo("entity exists")
+	for i = 0, p.occupantSlots do
+		if not (i == 0 and not p.includeDriver) then
+			if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 
-			p.occupants.total = p.occupants.total + 1
-			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
-			if not lastFilled and p.swapCooldown <= 0 then
-				p.swapOccupants( i-1, i )
-				i = i - 1
-			end
-			local massMultiplier = p.vso.locations[p.occupant[i].location].mass or 0
-			if p.settings[p.occupant[i].location] ~= nil and p.settings[p.occupant[i].location].hyper then
-				massMultiplier = p.vso.locations[p.occupant[i].location].hyperMass or massMultiplier
-			end
-			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * massMultiplier
-			p.lounging[p.occupant[i].id] = p.occupant[i]
-			p.occupant[i].index = i
-			local seatname = "occupant"..i
-			if i == 0 then
-				seatname = "driver"
-			end
-			p.occupant[i].seatname = seatname
-			p.seats[p.occupant[i].seatname] = p.occupant[i]
-			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
-			p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
-			if p.occupant[i].progressBarActive == true then
-				p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
-				if p.occupant[i].progressBarMultiplier > 0 then
-					p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
-					if p.occupant[i].progressBar >= 100 then
-						p[p.occupant[i].progressBarFinishFuncName](i)
-						p.occupant[i].progressBarActive = false
-					end
-				else
-					p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
-					if p.occupant[i].progressBar <= 0 then
-						p[p.occupant[i].progressBarFinishFuncName](i)
-						p.occupant[i].progressBarActive = false
-					end
+				p.occupants.total = p.occupants.total + 1
+				p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
+				if not lastFilled and p.swapCooldown <= 0 then
+					p.swapOccupants( i-1, i )
+					i = i - 1
 				end
-			end
-			p.occupant[i].indicatorCooldown = p.occupant[i].indicatorCooldown - dt
-			if world.entityType(p.occupant[i].id) == "player" and p.occupant[i].indicatorCooldown <= 0 then
-				-- p.occupant[i].indicatorCooldown = 0.5
-				local struggledata = (p.stateconfig[p.state].struggle or {})[p.occupant[i].location] or {}
-				local directions = {}
-				if not p.transitionLock then
-					for dir, data in pairs(struggledata.directions or {}) do
-						if data and (not p.driving or data.drivingEnabled) then
-							if dir == "front" then dir = ({"left","","right"})[p.direction+2] end
-							if dir == "back" then dir = ({"right","","left"})[p.direction+2] end
-							directions[dir] = data.indicate or "default"
+				local massMultiplier = p.vso.locations[p.occupant[i].location].mass or 0
+				if p.settings[p.occupant[i].location] ~= nil and p.settings[p.occupant[i].location].hyper then
+					massMultiplier = p.vso.locations[p.occupant[i].location].hyperMass or massMultiplier
+				end
+				p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * massMultiplier
+				p.lounging[p.occupant[i].id] = p.occupant[i]
+				p.occupant[i].index = i
+				local seatname = "occupant"..i
+				p.occupant[i].seatname = seatname
+				p.seats[p.occupant[i].seatname] = p.occupant[i]
+				p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
+				if p.occupant[i].progressBarActive == true then
+					p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
+					if p.occupant[i].progressBarMultiplier > 0 then
+						p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
+						if p.occupant[i].progressBar >= 100 then
+							p[p.occupant[i].progressBarFinishFuncName](i)
+							p.occupant[i].progressBarActive = false
+						end
+					else
+						p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
+						if p.occupant[i].progressBar <= 0 then
+							p[p.occupant[i].progressBarFinishFuncName](i)
+							p.occupant[i].progressBarActive = false
 						end
 					end
 				end
-				p.loopedMessage(p.occupant[i].id.."-indicator", p.occupant[i].id, -- update quickly but minimize spam
-					"openPVSOInterface", {"indicatorhud",
-					{
-						owner = entity.id(),
-						directions = directions,
-						progress = {
-							active = p.occupant[i].progressBarActive,
-							color = p.occupant[i].progressBarColor,
-							percent = p.occupant[i].progressBar,
-							dx = (math.log(p.occupant[i].controls.powerMultiplier)+1) * p.occupant[i].progressBarMultiplier,
-						},
-						time = p.occupant[i].occupantTime
-					}
-				})
-			end
+				p.occupant[i].indicatorCooldown = p.occupant[i].indicatorCooldown - dt
+				if world.entityType(p.occupant[i].id) == "player" and p.occupant[i].indicatorCooldown <= 0 then
+					-- p.occupant[i].indicatorCooldown = 0.5
+					local struggledata = (p.stateconfig[p.state].struggle or {})[p.occupant[i].location] or {}
+					local directions = {}
+					if not p.transitionLock then
+						for dir, data in pairs(struggledata.directions or {}) do
+							if data and (not p.driving or data.drivingEnabled) then
+								if dir == "front" then dir = ({"left","","right"})[p.direction+2] end
+								if dir == "back" then dir = ({"right","","left"})[p.direction+2] end
+								directions[dir] = data.indicate or "default"
+							end
+						end
+					end
+					p.loopedMessage(p.occupant[i].id.."-indicator", p.occupant[i].id, -- update quickly but minimize spam
+						"openPVSOInterface", {"indicatorhud",
+						{
+							owner = entity.id(),
+							directions = directions,
+							progress = {
+								active = p.occupant[i].progressBarActive,
+								color = p.occupant[i].progressBarColor,
+								percent = p.occupant[i].progressBar,
+								dx = (math.log(p.occupant[i].controls.powerMultiplier)+1) * p.occupant[i].progressBarMultiplier,
+							},
+							time = p.occupant[i].occupantTime
+						}
+					})
+				end
 
-			sb.logInfo("enabled "..p.occupant[i].seatname)
-			lastFilled = true
-		elseif p.occupant[i].id ~= nil and not world.entityExists(p.occupant[i].id) then
-			p.occupant[i] = p.clearOccupant(i)
-			p.refreshList = true
-		else
-			lastFilled = false
-			p.occupant[i] = p.clearOccupant(i)
-			sb.logInfo("disabled "..p.occupant[i].seatname)
-			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
+				lastFilled = true
+			elseif p.occupant[i].id ~= nil and not world.entityExists(p.occupant[i].id) then
+				p.occupant[i] = p.clearOccupant(i)
+				p.refreshList = true
+				lastFilled = false
+			else
+				lastFilled = false
+				p.occupant[i] = p.clearOccupant(i)
+			end
 		end
 	end
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
@@ -1036,7 +1028,7 @@ function p.swapOccupants(a, b)
 end
 
 function p.entityLounging( entity )
-	for i = 0, p.vso.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		if entity == p.occupant[i].id then return true end
 	end
 	return false
@@ -1122,7 +1114,7 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			p.forceSeat( occupantId, p.occupant[seatindex].seatname)
+			p.forceSeat( occupantId, seatindex)
 			p.updateOccupants(0)
 			return true -- not lounging
 		else
@@ -1133,7 +1125,7 @@ function p.eat( occupantId, location )
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
-	p.forceSeat( occupantId, p.occupant[seatindex].seatname )
+	p.forceSeat( occupantId, seatindex )
 	p.updateOccupants(0)
 	return true
 end
@@ -1235,15 +1227,10 @@ function p.doBellyEffects(dt)
 	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
 	local hungereffect = p.settings.hungerEffect or 0
 	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
-	local start = 1
-	if p.includeDriver then
-		start = 0
-	end
 
-	for i = start, p.vso.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		local eid = p.occupant[i].id
-
-		if eid and world.entityExists(eid) then
+		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
 			local health = world.entityHealth(eid)
 			local light = p.vso.lights.prey
 			light.position = world.entityPosition( eid )
@@ -1286,7 +1273,7 @@ function p.handleStruggles(dt)
 	local struggledata
 	local movedir = nil
 
-	while (movedir == nil) and struggler < p.vso.maxOccupants.total do
+	while (movedir == nil) and struggler < p.occupantSlots do
 		struggler = struggler + 1
 		movedir = p.getSeatDirections( p.occupant[struggler].seatname )
 		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)

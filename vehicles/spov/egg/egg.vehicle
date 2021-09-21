@@ -13,9 +13,9 @@
 	"animation" : "egg.animation",
 
 	"loungePositions" : {
-		"driver" : {
-			"part" : "driver",
-			"partAnchor" : "driverPosition",
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
 			"orientation" : "stand",
 			"statusEffects" : [ "pvsoNormalSeatDetector" ]
 		},
@@ -83,7 +83,7 @@
 				]
 			}
 		},
-		"driverStatusEffects": {
+		"occupant0StatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},
 		"occupantStatusEffects": {
@@ -91,7 +91,7 @@
 		},
 
 		"lights" : {
-			"driver" : {
+			"occupant0" : {
 				"color" : [100, 100, 100],
 				"position" : [0,0],
 				"pointLight" : true
@@ -117,7 +117,7 @@
 		"smol": {
 			"edible": true,
 			"transitions": {
-				// directional = driver can press that direction to transition
+				// directional = occupant0 can press that direction to transition
 				"crack" : {
 					"script" : "crack"
 				}

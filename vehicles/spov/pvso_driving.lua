@@ -58,7 +58,7 @@ function p.updateDirectionControl(seatname, control, direction, val, dt, forceHo
 end
 
 function p.updateControls(dt)
-	for i = 0, #p.occupant do
+	for i = 0, p.occupantSlots do
 		local seatname = p.occupant[i].seatname
 		local eid = p.occupant[i].id
 		if eid ~= nil and world.entityExists(eid) and not (seatname == p.driverSeat and p.isPathfinding) then
