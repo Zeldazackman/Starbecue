@@ -118,6 +118,10 @@ function p.updateDriving(dt)
 		p.letout(p.occupant[p.occupants.total].id)
 	end
 
+	if not mcontroller.onGround() and not p.underWater() then
+		p.movement.airtime = p.movement.airtime + dt
+	end
+
 	p.movement.aimingLock = math.max(0, p.movement.aimingLock - dt)
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
 		local dx = p.seats[p.driverSeat].controls.dx
@@ -230,7 +234,7 @@ function p.airMovement( dx, dy, state, dt )
 		mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
 	end
 
-	if (mcontroller.yVelocity() <= p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) then
+	if (mcontroller.yVelocity() < p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) and p.movement.airtime >= 0.1 then
 		p.doAnims( state.control.animations.fall )
 		p.movement.falling = true
 	elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then

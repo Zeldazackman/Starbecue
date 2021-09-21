@@ -52,9 +52,9 @@ end
 
 function p.letout(id)
 	if not id then return end
-	local location = p.entity[id].location
+	local location = p.lounging[id].location
 	if location == "belly" then
-		if p.heldControl(p.driverSeat, "down") or p.entity[id].species == "egg" then
+		if p.heldControl(p.driverSeat, "down") or p.lounging[id].species == "egg" then
 			return p.doTransition("escapeAnal", {id = id})
 		else
 			return p.doTransition("escapeOral", {id = id})
@@ -147,7 +147,7 @@ function sitAnalEat(args)
 	if not args.id then return false end
 	local continue, func = p.moveOccupantLocation(args, "belly")
 	if continue then
-		p.entity[args.id].visible = false
+		p.lounging[args.id].visible = false
 		func()
 	end
 	return continue
@@ -230,8 +230,8 @@ function p.setGrabTarget()
 		p.armRotation.enabledL = true
 		p.armRotation.enabledR = true
 		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
-		p.armRotation.groupsR = {p.entity[p.grabbing].seatname.."Position"}
-		p.armRotation.groupsL = {p.entity[p.grabbing].seatname.."Position"}
+		p.armRotation.groupsR = {p.lounging[p.grabbing].seatname.."Position"}
+		p.armRotation.groupsL = {p.lounging[p.grabbing].seatname.."Position"}
 		p.armRotation.occupantR = p.grabbing
 		p.armRotation.occupantL = p.grabbing
 	else

@@ -35,7 +35,7 @@ p.movement = {
 }
 
 p.seats = {} -- meant to be a redirect pointers to the occupant data
-p.entity = {}
+p.lounging = {}
 
 function p.clearOccupant(i)
 	local seatname = "occupant"..i
@@ -200,7 +200,7 @@ function init()
 		p.occupant[0].visible = false
 		p.occupant[0].statList = p.vso.driverStatusEffects or {}
 
-		p.entity[p.driver] = p.occupant[0]
+		p.lounging[p.driver] = p.occupant[0]
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, "driver" )
@@ -226,11 +226,6 @@ function init()
 
 	p.spawnerUUID = world.entityUniqueId(p.spawner)
 
-	if entity.uniqueId() ~= nil then
-		world.setUniqueId(entity.id(), sb.makeUuid())
-		sb.logInfo("uuid"..entity.uniqueId())
-	end
-
 	p.onForcedReset()	--Do a forced reset once.
 
 	message.setHandler( "settingsMenuSet", function(_,_, val )
@@ -244,27 +239,27 @@ function init()
 	end )
 
 	message.setHandler( "transform", function(_,_, data, eid, multiplier )
-		if p.entity[eid].progressBarActive then return end
+		if p.lounging[eid].progressBarActive then return end
 
 		if data then
-			if data.species == p.entity[eid].species then return end
+			if data.species == p.lounging[eid].species then return end
 		else
-			if p.entity[eid].species == world.entityName( entity.id() ):sub( 5 ) then return end
+			if p.lounging[eid].species == world.entityName( entity.id() ):sub( 5 ) then return end
 		end
 
-		p.entity[eid].progressBarActive = true
-		p.entity[eid].progressBar = 0
-		p.entity[eid].progressBarData = data
+		p.lounging[eid].progressBarActive = true
+		p.lounging[eid].progressBar = 0
+		p.lounging[eid].progressBarData = data
 		if data == nil then
-			p.entity[eid].progressBarColor = p.vso.replaceColors[1][p.settings.replaceColors[1] + 1] -- pred body color
+			p.lounging[eid].progressBarColor = p.vso.replaceColors[1][p.settings.replaceColors[1] + 1] -- pred body color
 		elseif data.barColor ~= nil then
-			p.entity[eid].progressBarColor = data.barColor
+			p.lounging[eid].progressBarColor = data.barColor
 		else
-			-- p.entity[eid].progressBarColor = root.assetJson("something about data:vso.replaceColors.0.1")
+			-- p.lounging[eid].progressBarColor = root.assetJson("something about data:vso.replaceColors.0.1")
 			-- or maybe define it some other way, I dunno
 		end
-		p.entity[eid].progressBarMultiplier = multiplier or 1
-		p.entity[eid].progressBarFinishFuncName = "transformPrey"
+		p.lounging[eid].progressBarMultiplier = multiplier or 1
+		p.lounging[eid].progressBarFinishFuncName = "transformPrey"
 	end )
 
 	message.setHandler( "settingsMenuRefresh", function(_,_)
@@ -304,13 +299,23 @@ function init()
 	end )
 
 	message.setHandler( "indicatorClosed", function(_,_, eid)
-		p.entity[eid].indicatorCooldown = 2
+		if p.lounging[eid] ~= nil then
+			p.lounging[eid].indicatorCooldown = 2
+		end
 	end )
 
 	message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
-		vehicle.setLoungeEnabled(p.entity[eid].seatname, false)
-		p.timer(p.entity[eid].seatname.."Enable", 0.1, function()
-			vehicle.setLoungeEnabled(p.entity[eid].seatname, true)
+		if p.lounging[eid] == nil then
+			for seatname, _ in pairs(p.seats) do
+				if eid == vehicle.entityLoungingIn(seatname) then
+					vehicle.setLoungeEnabled(seatname, false)
+				end
+			end
+			return
+		end
+		vehicle.setLoungeEnabled(p.lounging[eid].seatname, false)
+		p.timer(p.lounging[eid].seatname.."Enable", 0.1, function()
+			vehicle.setLoungeEnabled(p.lounging[eid].seatname, true)
 		end)
 	end )
 
@@ -467,8 +472,11 @@ function onInteraction(args)
 					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 				)
 			end
-		else
-			-- should add some sort of script for if you're already prey here?
+		elseif p.lounging[args.sourceId].location ~= nil and stateData.struggle ~= nil then
+			local struggleData = stateData.struggle[p.lounging[args.sourceId].location]
+			if struggleData.directions.interact ~= nil and p.struggleChance(struggleData, p.lounging[args.sourceId].index, "interact") then
+				p.doTransition( stateData.struggle[p.lounging[args.sourceId].location].directions.interact.transition, { id = args.sourceId } )
+			end
 		end
 		return
 	elseif p.notMoving() then
@@ -742,6 +750,7 @@ end
 
 function p.unForceSeat(occupantId)
 	if occupantId then
+		vehicle.setLoungeEnabled(p.lounging[occupantId].seatname, false)
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveForceSit", 1, entity.id())
 	end
 end
@@ -827,9 +836,9 @@ function p.checkEatPosition(position, range, location, transition, noaim, aimran
 end
 
 function p.firstNotLounging(entityaimed)
-	for i = 1, #entityaimed do
-		if not p.entityLounging(entityaimed[i]) then
-			return entityaimed[i]
+	for _, eid in ipairs(entityaimed) do
+		if not p.entityLounging(eid) then
+			return eid
 		end
 	end
 end
@@ -837,12 +846,12 @@ end
 function p.moveOccupantLocation(args, location)
 	if p.locationFull(location) then return false end
 	return true, function()
-		p.entity[args.id].location = location
+		p.lounging[args.id].location = location
 	end
 end
 
 function p.findFirstOccupantIdForLocation(location)
-	for i = 1, p.occupants.total do
+	for i = 0, p.occupants.total do
 		if p.occupant[i].location == location then
 			return p.occupant[i].id, i
 		end
@@ -875,12 +884,15 @@ function p.updateOccupants(dt)
 	p.resetOccupantCount()
 
 	local lastFilled = true
-	local start = 1
-	if p.includeDriver then
-		start = 0
-	end
-	for i = start, p.vso.maxOccupants.total do
-		if p.occupant[i].id and world.entityExists(p.occupant[i].id) then
+
+	for i = 0, p.vso.maxOccupants.total do
+		if i == 0 and not p.includeDriver then
+			i = 1
+		end
+		sb.logInfo(tostring(p.occupant[i].id))
+		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
+			sb.logInfo("entity exists")
+
 			p.occupants.total = p.occupants.total + 1
 			p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
 			if not lastFilled and p.swapCooldown <= 0 then
@@ -892,7 +904,7 @@ function p.updateOccupants(dt)
 				massMultiplier = p.vso.locations[p.occupant[i].location].hyperMass or massMultiplier
 			end
 			p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * massMultiplier
-			p.entity[p.occupant[i].id] = p.occupant[i]
+			p.lounging[p.occupant[i].id] = p.occupant[i]
 			p.occupant[i].index = i
 			local seatname = "occupant"..i
 			if i == 0 then
@@ -948,11 +960,15 @@ function p.updateOccupants(dt)
 				})
 			end
 
+			sb.logInfo("enabled "..p.occupant[i].seatname)
 			lastFilled = true
-		else
-			p.refreshList = true
+		elseif p.occupant[i].id ~= nil and not world.entityExists(p.occupant[i].id) then
 			p.occupant[i] = p.clearOccupant(i)
+			p.refreshList = true
+		else
 			lastFilled = false
+			p.occupant[i] = p.clearOccupant(i)
+			sb.logInfo("disabled "..p.occupant[i].seatname)
 			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 		end
 	end
@@ -1020,8 +1036,7 @@ function p.swapOccupants(a, b)
 end
 
 function p.entityLounging( entity )
-	if entity == p.driver then return true end
-	for i = 1, p.vso.maxOccupants.total do
+	for i = 0, p.vso.maxOccupants.total do
 		if entity == p.occupant[i].id then return true end
 	end
 	return false
@@ -1088,7 +1103,10 @@ function p.inedible(occupantId)
 end
 
 function p.eat( occupantId, location )
-	local seatindex = p.occupants.total + 1
+	local seatindex = p.occupants.total
+	if not p.includeDriver then
+		seatindex = seatindex + 1
+	end
 
 	if occupantId == nil or p.entityLounging(occupantId) or p.inedible(occupantId) or p.locationFull(location) then return false end -- don't eat self
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
@@ -1104,7 +1122,7 @@ function p.eat( occupantId, location )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
-			p.forceSeat( occupantId, "occupant"..seatindex )
+			p.forceSeat( occupantId, p.occupant[seatindex].seatname)
 			p.updateOccupants(0)
 			return true -- not lounging
 		else
@@ -1115,7 +1133,7 @@ function p.eat( occupantId, location )
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
-	p.forceSeat( occupantId, "occupant"..seatindex )
+	p.forceSeat( occupantId, p.occupant[seatindex].seatname )
 	p.updateOccupants(0)
 	return true
 end
@@ -1125,41 +1143,43 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "PVSOClear")
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )
-	seatindex = p.entity[occupantId].index
-	local occupantData = p.entity[occupantId]
-	p.occupant[seatindex] = p.clearOccupant(seatindex)
+	local seatindex = p.lounging[occupantId].index
+	local occupantData = p.lounging[occupantId]
 	if world.entityType(occupantId) == "player" then
 		world.sendEntityMessage(occupantId, "openPVSOInterface", "close")
 	end
 	if occupantData.species ~= nil then
 		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, layer = occupantData.smolPreyData.layer } )
 	end
+	p.lounging[occupantId] = nil
+	p.occupant[seatindex] = p.clearOccupant(seatindex)
+	p.updateOccupants(0)
 	return true
 end
 
 -------------------------------------------------------------------------------
 
 function p.getOccupantFromEid(eid)
-	if p.entity[eid] ~= nil then
-		return p.entity[eid].index
+	if p.lounging[eid] ~= nil then
+		return p.lounging[eid].index
 	end
 end
 
 function p.getSeatnameFromEid(eid)
-	if p.entity[eid] ~= nil then
-		return p.entity[eid].seatname
+	if p.lounging[eid] ~= nil then
+		return p.lounging[eid].seatname
 	end
 end
 
 function p.getLocationFromEid(eid)
-	if p.entity[eid] ~= nil then
-		return p.entity[eid].location
+	if p.lounging[eid] ~= nil then
+		return p.lounging[eid].location
 	end
 end
 
 function p.getIndexFromEid(eid)
-	if p.entity[eid] ~= nil then
-		return p.entity[eid].index
+	if p.lounging[eid] ~= nil then
+		return p.lounging[eid].index
 	end
 end
 
@@ -1301,26 +1321,15 @@ function p.handleStruggles(dt)
 	if struggledata.script ~= nil then
 		local statescript = state[p.state][struggledata.script]
 		if statescript ~= nil then
-			statescript({index = struggler, id = strugglerId, direction = movedir})
+			statescript({id = strugglerId, direction = movedir})
 		else
 			sb.logError("no script named: ["..struggledata.script.."] in state: ["..p.state.."]")
 		end
 	end
 
-	local chances = struggledata.chances
-	if struggledata.directions[movedir].chances ~= nil then
-		chances = struggledata.directions[movedir].chances
-	end
-	if chances ~= nil and chances[p.settings.escapeModifier] ~= nil then
-		chances = chances[p.settings.escapeModifier]
-	end
-	if chances ~= nil and (p.settings.escapeModifier ~= "noEscape")
-	and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
-	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
-	then
+	if p.struggleChance(struggledata, struggler, movedir) then
 		p.occupant[struggler].struggleCount = 0
-		p.doTransition( struggledata.directions[movedir].transition, {index = struggler, direction = movedir, id = strugglerId} )
+		p.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId} )
 	else
 		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1
 		p.occupant[struggler].bellySettleDownTimer = 5
@@ -1339,10 +1348,28 @@ function p.handleStruggles(dt)
 		end
 
 		if struggledata.directions[movedir].victimAnimation then
-			p.doVictimAnim( strugglerId, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
+			local id = strugglerId
+			if struggledata.directions[movedir].victimAnimLocation ~= nil then
+				id = p.findFirstOccupantIdForLocation(struggledata.directions[movedir].victimAnimLocation)
+			end
+			p.doVictimAnim( id, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
 		end
 		animator.playSound( "struggle" )
 	end
+end
+
+function p.struggleChance(struggledata, struggler, movedir)
+	local chances = struggledata.chances
+	if struggledata.directions[movedir].chances ~= nil then
+		chances = struggledata.directions[movedir].chances
+	end
+	if chances ~= nil and chances[p.settings.escapeModifier] ~= nil then
+		chances = chances[p.settings.escapeModifier]
+	end
+	return (p.settings.escapeModifier ~= "noEscape")
+	and chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
+	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
+	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
 end
 
 function p.randomChance(percent)

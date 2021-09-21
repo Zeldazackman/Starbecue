@@ -34,6 +34,6 @@ function everything_primary()
 			local defaults = root.assetJson("/pvso_general.config:defaultPreyEnabled")
 			status.setStatusProperty("pvsoPreyEnabled", sb.jsonMerge( defaults[entityType], curEnabled))
 		end
-		return status.statusProperty("pvsoPreyEnabled", {})[type]
+		return (status.statusProperty("pvsoPreyEnabled") or {})[type]
 	end)
 end

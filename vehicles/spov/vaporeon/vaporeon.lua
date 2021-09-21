@@ -66,7 +66,7 @@ function p.update(dt)
 end
 
 function p.whenFalling()
-	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" then return end
+	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" or p.totalTimeAlive < 1 then return end
 	if not mcontroller.onGround() then
 		p.setState( "stand" )
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
@@ -91,6 +91,14 @@ function p.changeSize()
 		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 		p.setState( changeSize )
 	end
+end
+
+function escapeAnal(args)
+	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+end
+
+function eatAnal(args)
+	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
 end
 
 -------------------------------------------------------------------------------
@@ -192,6 +200,9 @@ function state.back.unbed(args)
 	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
+state.back.escapeAnal = escapeAnal
+state.back.eatAnal = eatAnal
+
 -------------------------------------------------------------------------------
 
 function state.hug.update()
@@ -201,6 +212,8 @@ function state.hug.update()
 end
 
 state.hug.absorb = absorb
+state.hug.escapeAnal = escapeAnal
+state.hug.eatAnal = eatAnal
 
 -------------------------------------------------------------------------------
 

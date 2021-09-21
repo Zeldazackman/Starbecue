@@ -73,7 +73,7 @@
 
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
-		"startState": "stand",
+		"startState": "back",
 		"driverStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},
@@ -474,7 +474,6 @@
 							]
 						}
 					},
-					"voreType" : "held",
 					"victimAnimation": "sitpinned",
 					"victimAnimLocation": "hug",
 					"state": "lay",
@@ -580,7 +579,7 @@
 					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
-					"failOnFull" : 1,
+					"failOnFull" : true,
 					"animation": {
 						"body": "absorb",
 						"head": "pinlook"
@@ -617,7 +616,7 @@
 					"directions": {
 						"up": { "transition": "up", "indicate": "green" },
 						"front": { "transition": "down", "indicate": "blue" },
-						"back": { "transition": "up", "indicate": "green" },
+						"back": { "transition": "side", "indicate": "green" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
 					"chances": {
@@ -676,7 +675,7 @@
 					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
-					"failOnFull" : 1,
+					"failOnFull" : true,
 					"animation": {
 						"body": "absorb"
 					},
@@ -752,7 +751,8 @@
 					"chance": 10
 				},
 				"bed": {
-					"voreType" : "held",
+					"location" : "hug",
+					"failOnFull" : true,
 					"victimAnimation": "bellybed",
 					"script": "bed"
 				},
@@ -766,9 +766,26 @@
 					"state": "hug",
 					"chance": 10
 				},
-				"up": {
-					"state": "back",
+				"unhug": {
 					"script": "unbed"
+				},
+				"escapeAnal": {
+					"voreType" : "analVore",
+					"lock" : true,
+					"animation":{
+						"body":"backanalescape"
+					},
+					"victimAnimation": "backanalescape",
+					"script": "escapeAnal"
+				},
+				"eatAnal": {
+					"voreType" : "analVore",
+					"lock" : true,
+					"animation":{
+						"body":"backanaleat"
+					},
+					"victimAnimation": "backanaleat",
+					"script": "eatAnal"
 				}
 			},
 			"idle": {
@@ -785,10 +802,10 @@
 				"belly" : {
 					"parts" : ["body"],
 					"directions": {
-						"up": { "transition": "side", "indicate": "green" },
-						"front": { "transition": "side", "indicate": "green" },
-						"back": { "transition": "side", "indicate": "green" },
-						"down": { "transition": "side", "indicate": "green" }
+						"up": { "transition": "side", "indicate": "blue" },
+						"front": { "transition": "side", "indicate": "blue" },
+						"back": { "transition": "escapeAnal", "indicate": "red" },
+						"down": { "transition": "side", "indicate": "blue" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
@@ -800,15 +817,15 @@
 					"parts" : ["legs"],
 					"directions": {
 						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
-						"up": { "transition": "up", "indicate": "red", "drivingEnabled": true },
-						"front": { "transition": "side", "indicate": "green" },
-						"back": { "transition": "side", "indicate": "green" },
+						"up": { "transition": "unhug", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "unhug", "indicate": "green" },
+						"back": { "transition": "unhug", "indicate": "green" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
 					"chances": {
-						"easyEscape": { "min": 1, "max": 1 },
-						"normal": { "min": 1, "max": 1 },
-						"antiEscape": { "min": 1, "max": 1 }
+						"easyEscape": { "min": 0, "max": 0 },
+						"normal": { "min": 0, "max": 0 },
+						"antiEscape": { "min": 0, "max": 0 }
 					}
 				}
 			},
@@ -818,33 +835,21 @@
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "bed", "chance": 100 },
-				"back": { "transition": "side", "chance": 20 }
+				"back": { "transition": "eatAnal", "chance": 100 }
 			}
 		},
 		"hug": {
 			"transitions": {
-				"up": [
-					{
-						"location": "hug",
-						"animation": {
-							"legs": "grab"
-						},
-						"victimAnimation": "bellybed",
-						"victimAnimLocation": "hug",
-						"timing" : "legs",
-						"state": "back",
-						"chance": 10
+				"up": {
+					"animation": {
+						"legs": "grab"
 					},
-					{
-						"animation": {
-							"legs": "grab"
-						},
-						"victimAnimation": "bellybed",
-						"victimAnimLocation": "hug",
-						"timing" : "legs",
-						"state": "back"
-					}
-				],
+					"victimAnimation": "bellybed",
+					"victimAnimLocation": "hug",
+					"timing" : "legs",
+					"state": "back"
+				},
+
 				"absorb": {
 					"voreType" : "absorbVore",
 					"lock" : true,
@@ -859,6 +864,24 @@
 					"state": "back",
 					"chance": 10,
 					"script": "absorb"
+				},
+				"escapeAnal": {
+					"voreType" : "analVore",
+					"lock" : true,
+					"animation":{
+						"body":"backanalescape"
+					},
+					"victimAnimation": "backanalescape",
+					"script": "escapeAnal"
+				},
+				"eatAnal": {
+					"voreType" : "analVore",
+					"lock" : true,
+					"animation":{
+						"body":"backanaleat"
+					},
+					"victimAnimation": "backanaleat",
+					"script": "eatAnal"
 				}
 			},
 			"idle": {
@@ -873,12 +896,12 @@
 			],
 			"struggle": {
 				"belly" : {
-					"parts" : ["body"],
+					"parts" : ["body", "legs"],
 					"directions": {
-						"up": { "transition": "up", "indicate": "green" },
-						"front": { "transition": "up", "indicate": "green" },
-						"back": { "transition": "up", "indicate": "green" },
-						"down": { "transition": "up", "indicate": "green" }
+						"up": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_up", "victimAnimLocation" : "hug" },
+						"front": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug" },
+						"back": { "transition": "escapeAnal", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
+						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 10 },
@@ -895,7 +918,7 @@
 						"down": { "transition": "absorb", "indicate": "yellow", "victimAnimation": "hug.s_down" }
 					},
 					"chances": {
-						"easyEscape": { "min": 0, "max": 2 },
+						"easyEscape": { "min": 1, "max": 2 },
 						"normal": { "min": 5, "max": 10 },
 						"antiEscape": { "min": 15, "max": 25 }
 					}
@@ -908,7 +931,7 @@
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
 				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "side", "chance": 20 }
+				"back": { "transition": "eatAnal", "chance": 100 }
 			}
 		},
 		"smol": {

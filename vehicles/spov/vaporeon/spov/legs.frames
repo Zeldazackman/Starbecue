@@ -83,6 +83,30 @@
 		"hug.s_up.5" : "hug.1",
 		"hug.s_down.3" : "hug.s_down.2",
 		"hug.s_down.4" : "hug.s_down.1",
-		"hug.s_down.5" : "hug.1"
+		"hug.s_down.5" : "hug.1",
+
+		"back.s_front.1" : "hug.s_front.1",
+		"back.s_front.2" : "hug.s_front.2",
+		"back.s_front.3" : "hug.s_front.3",
+		"back.s_front.4" : "hug.s_front.4",
+		"back.s_front.5" : "hug.s_front.5",
+
+		"back.s_back.1" : "hug.s_back.1",
+		"back.s_back.2" : "hug.s_back.2",
+		"back.s_back.3" : "hug.s_back.3",
+		"back.s_back.4" : "hug.s_back.4",
+		"back.s_back.5" : "hug.s_back.5",
+
+		"back.s_up.1" : "hug.s_up.1",
+		"back.s_up.2" : "hug.s_up.2",
+		"back.s_up.3" : "hug.s_up.3",
+		"back.s_up.4" : "hug.s_up.4",
+		"back.s_up.5" : "hug.s_up.5",
+
+		"back.s_down.1" : "hug.s_down.1",
+		"back.s_down.2" : "hug.s_down.2",
+		"back.s_down.3" : "hug.s_down.3",
+		"back.s_down.4" : "hug.s_down.4",
+		"back.s_down.5" : "hug.s_down.5"
 	}
 }

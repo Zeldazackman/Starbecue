@@ -38,6 +38,9 @@
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 4 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 
+					"backanaleat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"backanalescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },

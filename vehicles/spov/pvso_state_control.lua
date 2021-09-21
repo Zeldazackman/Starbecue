@@ -73,7 +73,7 @@ function p.doingTransition(tconfig, direction, scriptargs)
 		end
 	end
 	if not continue then return "script fail" end
-	local scriptargs = scriptargs
+
 	if tconfig.timing == nil then
 		tconfig.timing = "body"
 	end
@@ -109,10 +109,7 @@ end
 
 function p.getTransitionVictimId(scriptargs, tconfig)
 	local id = (scriptargs or {}).id
-	local index = (scriptargs or {}).index
-	if index ~= nil then
-		id = p.occupant[index].id
-	elseif id == nil then
+	if id == nil then
 		id = p.justAte
 	end
 	if tconfig.victimAnimLocation ~= nil then

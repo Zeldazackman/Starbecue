@@ -77,7 +77,7 @@ function p.rotateArm(enabled, arm, groups, occupantId)
 		end
 
 		if occupantId ~= nil then
-			local victimAnim = p.entity[occupantId].victimAnim
+			local victimAnim = p.lounging[occupantId].victimAnim
 			victimAnim.last.x = math.cos(angle) * handOffset[1]
 			victimAnim.last.y = math.sin(angle) * handOffset[2]
 		end
@@ -227,10 +227,10 @@ end
 
 function p.victimAnimUpdate(entity)
 	if entity == nil then return end
-	local victimAnim = p.entity[entity].victimAnim
+	local victimAnim = p.lounging[entity].victimAnim
 	if not victimAnim.enabled then
-		local location = p.entity[entity].location
-		victimAnim.inside = true
+		local location = p.lounging[entity].location
+		victimAnim.last.inside = true
 
 		if victimAnim.location ~= location or victimAnim.state ~= p.state then
 			if victimAnim.progress == nil or victimAnim.progress == 1 then
@@ -246,7 +246,7 @@ function p.victimAnimUpdate(entity)
 			victimAnim.progress = math.min(1, victimAnim.progress + p.dt)
 			local progress = victimAnim.progress
 			local center = p.stateconfig[p.state].locationCenters[location]
-			local seatname = p.entity[entity].seatname
+			local seatname = p.lounging[entity].seatname
 			local transformGroup = seatname.."Position"
 			local translation = { (victimAnim.last.x + ((center[1] - victimAnim.last.x) * progress)), (victimAnim.last.y + ((center[2] - victimAnim.last.y) * progress)) }
 			animator.resetTransformationGroup(transformGroup)
@@ -266,7 +266,7 @@ function p.victimAnimUpdate(entity)
 		time = p.animStateData[statename].animationState.cycle
 	end
 
-	local seatname = p.entity[entity].seatname
+	local seatname = p.lounging[entity].seatname
 	local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
 	local frame = math.floor(time * speed)
 	local nextFrame = frame + 1
@@ -302,14 +302,14 @@ function p.victimAnimUpdate(entity)
 			world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
 		end
 		if anim.visible ~= nil and anim.visible[victimAnim.prevIndex] ~= nil then
-			p.entity[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
+			p.lounging[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
 		end
 		if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
 			vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
 		end
 		if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
 			vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
-			p.entity[entity].emote = anim.emote[victimAnim.prevIndex]
+			p.lounging[entity].emote = anim.emote[victimAnim.prevIndex]
 		end
 		if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
 			vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
@@ -360,9 +360,9 @@ local victimAnimArgs = {
 }
 
 function p.doVictimAnim( occupantId, anim, statename )
-	if not p.entity[occupantId] then return end
-	local last = p.entity[occupantId].victimAnim.last or {}
-	p.entity[occupantId].victimAnim = {
+	if not p.lounging[occupantId] then return end
+	local last = p.lounging[occupantId].victimAnim.last or {}
+	p.lounging[occupantId].victimAnim = {
 		enabled = true,
 		statename = statename,
 		anim = anim,
@@ -376,9 +376,9 @@ function p.doVictimAnim( occupantId, anim, statename )
 	if not last.inside then
 		for arg, default in pairs(victimAnimArgs) do
 			if p.victimAnimations[anim][arg] ~= nil then
-				p.entity[occupantId].victimAnim.last[arg] = p.victimAnimations[anim][arg][1]
+				p.lounging[occupantId].victimAnim.last[arg] = p.victimAnimations[anim][arg][1]
 			else
-				p.entity[occupantId].victimAnim.last[arg] = default
+				p.lounging[occupantId].victimAnim.last[arg] = default
 			end
 		end
 	end

@@ -8,7 +8,6 @@ function build( directory, config, parameters, level, seed )
 
 		local skin = settings.skinNames.head or "default"
 
-		sb.logInfo(sb.printJson(parameters, 1))
 		config.inventoryIcon = "/vehicles/spov/"..config.spov.types[1]:sub( 5 ).."/spov/"..skin.."/icon.png"..settings.directives
 
 		config.tooltipFields.statusLabel = sb.replaceTags(config.descriptionWithTags, {
