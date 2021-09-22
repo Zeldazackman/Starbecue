@@ -297,18 +297,26 @@ function p.doClickActions(state, dt)
 	end
 	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
 
-	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") then
+	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") or (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoPreyEnabler") then
 		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, state.control.defaultActions[2], "altFire")
 	else
 		if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") then
-			p.clickAction(state, p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction or state.control.defaultActions[1], "primaryFire")
+			local action = p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
+			if not action or action == "unassigned" then
+				action = state.control.defaultActions[1]
+			end
+			p.clickAction(state, action, "primaryFire")
 		elseif (p.seats[p.driverSeat].controls.primaryHandItem == nil) then
 			p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		end
 
 		if (p.seats[p.driverSeat].controls.altHandItem == "pvsoController") then
-			p.clickAction(state, p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction or state.control.defaultActions[2], "altFire")
+			local action = p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
+			if not action or action == "unassigned" then
+				action = state.control.defaultActions[2]
+			end
+			p.clickAction(state, action, "altFire")
 		elseif (p.seats[p.driverSeat].controls.altHandItem == nil) then
 			p.clickAction(state, state.control.defaultActions[2], "altFire")
 		end

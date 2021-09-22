@@ -42,7 +42,9 @@ p.armRotation = {
 	groupsR = {},
 	groupsL = {},
 	occupantR = nil,
-	occupantL = nil
+	occupantL = nil,
+	backarmsAngle = 0,
+	frontarmsAngle = 0
 }
 function p.armRotationUpdate()
 	if p.armRotation.enabledR or p.armRotation.enabledL then
@@ -67,6 +69,8 @@ function p.rotateArm(enabled, arm, groups, occupantId)
 		local handOffset = {(p.stateconfig[p.state].handOffsets[arm][1] or 0) / 8, (p.stateconfig[p.state].handOffsets[arm][2] or 0) / 8}
 		local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
 
+		p.armRotation[arm.."Angle"] = angle
+
 		animator.resetTransformationGroup(arm.."rotation")
 		animator.rotateTransformationGroup(arm.."rotation", angle, center)
 
@@ -76,7 +80,7 @@ function p.rotateArm(enabled, arm, groups, occupantId)
 			animator.rotateTransformationGroup(group, angle, center)
 		end
 
-		if occupantId ~= nil then
+		if occupantId ~= nil and p.lounging[occupantId] ~= nil then
 			local victimAnim = p.lounging[occupantId].victimAnim
 			victimAnim.last.x = math.cos(angle) * handOffset[1]
 			victimAnim.last.y = math.sin(angle) * handOffset[2]

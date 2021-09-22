@@ -270,23 +270,25 @@ end
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
-	local hugged = p.findFirstOccupantIdForLocation("hug")
-	if hugged ~= nil then
-		p.grabbing = hugged
-	end
+	p.grabbing = p.findFirstOccupantIdForLocation("hug")
 end
 
 function state.stand.update()
-	if p.movement.clickActionsDisabled then
+	if p.movement.clickActionsDisabled and p.grabbing ~= nil then
 		if p.pressControl(p.driverSeat, "primaryFire") then
 			p.uneat(p.grabbing)
-			local transition = "eat"
+			local transition
 			local victim = p.grabbing
-			if p.armRotation.target[1] < 2 and p.armRotation.target[2] < 0 then
-				p.grabbing = nil
+			p.grabbing = nil
+			local angle = p.armRotation.frontarmsAngle * 180/math.pi
+
+			if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
+				transition = "eat"
+			elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
 				transition = "analEat"
 			end
 			p.doTransition(transition, {id = victim})
+
 			p.timer("restoreClickActions", 0.5, function()
 				p.movement.clickActionsDisabled = false
 			end)
@@ -315,8 +317,22 @@ state.stand.grab = p.grab
 
 function state.stand.sitpin(args)
 	local pinnable = { args.id }
-	-- if not interact target or target isn't in front
-	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
+	local sat
+
+	if p.grabbing ~= nil then
+		local angle = p.armRotation.frontarmsAngle * 180/math.pi
+		if (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
+			p.uneat(p.grabbing)
+			pinnable = { p.grabbing }
+			p.grabbing = nil
+			sat = true
+			p.timer("restoreClickActions", 0.5, function()
+				p.movement.clickActionsDisabled = false
+			end)
+		end
+	end
+	-- if not interact target or target isn't too far away
+	if not sat and (args.id == nil or math.abs(p.globalToLocal( world.entityPosition( args.id ) )[1]) > 3) then
 		local pinbounds = {
 			p.localToGlobal({-3, -4}),
 			p.localToGlobal({-1, -5})

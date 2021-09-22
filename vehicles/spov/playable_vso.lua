@@ -804,7 +804,7 @@ function p.checkValidAim(seat, range)
 	})
 	local target = p.firstNotLounging(entityaimed)
 
-	if target and entity.entityInSight(target) then
+	if target and target ~= entity.id() and entity.entityInSight(target) then
 		return target
 	end
 end
@@ -1101,11 +1101,11 @@ function p.eat( occupantId, location )
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
 		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id() }
 	} )
-	p.occupant[seatindex].location = location
 
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
+			p.occupant[seatindex].location = location
 			p.forceSeat( occupantId, seatindex)
 			p.updateOccupants(0)
 			return true -- not lounging
@@ -1117,6 +1117,7 @@ function p.eat( occupantId, location )
 	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
+	p.occupant[seatindex].location = location
 	p.forceSeat( occupantId, seatindex )
 	p.updateOccupants(0)
 	return true
