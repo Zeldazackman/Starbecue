@@ -66,21 +66,19 @@ function p.update(dt)
 end
 
 function p.whenFalling()
-	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" or p.totalTimeAlive < 1 then return end
-	if not mcontroller.onGround() then
+	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" then return end
+	if not mcontroller.onGround() and p.totalTimeAlive > 1 then
 		p.setState( "stand" )
 		p.doAnims( p.stateconfig[p.state].control.animations.fall )
 		p.movement.falling = true
-		for i = 1, p.occupants.total do
-			if p.occupant[i].location == "hug" then
-				p.uneat(p.occupant[i].id)
-			end
-		end
+		p.uneat(p.findFirstOccupantIdForLocation("hug"))
 	end
 end
 
 function p.changeSize()
 	if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
+		p.uneat(p.findFirstOccupantIdForLocation("hug"))
+
 		local changeSize = "smol"
 		if p.occupants.belly >= 2 then
 			changeSize = "chonk_ball"
@@ -132,8 +130,15 @@ function state.sit.pin( args )
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	if #pinnable >= 1 and p.eat( pinnable[1], "hug" ) then
-		--vsoVictimAnimSetStatus( "occupant"..index , {} )
+	if #pinnable >= 1 then
+		p.addRPC(world.sendEntityMessage(pinnable[1], "pvsoIsPreyEnabled", "held"), function(enabled)
+			if enabled then
+				p.eat( pinnable[1], "hug" )
+			end
+			p.doTransition("lay")
+		end)
+	else
+		p.doTransition("lay")
 	end
 	return true
 end

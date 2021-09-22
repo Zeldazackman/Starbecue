@@ -339,16 +339,16 @@ end
 
 function p.getPrevVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
-		victimAnim.last[valName] = p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex]
+		victimAnim.last[valName] = p.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] or 0
 	end
-	return victimAnim.last[valName]
+	return victimAnim.last[valName] or 0
 end
 
 function p.getNextVictimAnimValue(victimAnim, valName)
 	if p.victimAnimations[victimAnim.anim][valName] ~= nil and p.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
-		return p.victimAnimations[victimAnim.anim][valName][victimAnim.index]
+		return p.victimAnimations[victimAnim.anim][valName][victimAnim.index] or 0
 	end
-	return victimAnim.last[valName]
+	return victimAnim.last[valName] or 0
 end
 
 local victimAnimArgs = {

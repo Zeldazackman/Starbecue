@@ -178,6 +178,9 @@
 			"transitions": {
 				// directional = driver can press that direction to transition
 				"down": {
+					"script": "sitpin"
+				},
+				"sit": {
 					"animation": {
 						"body": "idle",
 						"arms": "idle",
@@ -189,7 +192,6 @@
 							]
 						}
 					},
-					"script": "sitpin",
 					"victimAnimLocation" : "pinned",
 					"victimAnimation" : "sitpinned",
 					"state": "sit",

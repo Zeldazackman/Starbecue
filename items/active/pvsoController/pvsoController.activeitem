@@ -7,7 +7,7 @@
 	"rarity" : "common",
 	"category" : "vehicleController",
 	"twoHanded" : false,
-	"itemTags" : ["vehiclecontroller"],
+	"itemTags" : ["vehiclecontroller", "vore"],
 	"inventoryIcon" : "unassigned.png",
 
 	"actions" : [

@@ -463,7 +463,10 @@
 					"state": "stand",
 					"chance": 5
 				},
-				"down": {
+				"down" : {
+					"script": "pin"
+				},
+				"lay": {
 					"animation": {
 						"body": "laydown",
 						"legs": "laydown",
@@ -477,8 +480,7 @@
 					"victimAnimation": "sitpinned",
 					"victimAnimLocation": "hug",
 					"state": "lay",
-					"chance": 7,
-					"script": "pin" // may override animation/state
+					"chance": 7
 				}
 			},
 			"idle": {
@@ -751,8 +753,10 @@
 					"chance": 10
 				},
 				"bed": {
+					"voreType" : "held",
 					"location" : "hug",
 					"failOnFull" : true,
+					"victimAnimLocation": "hug",
 					"victimAnimation": "bellybed",
 					"script": "bed"
 				},

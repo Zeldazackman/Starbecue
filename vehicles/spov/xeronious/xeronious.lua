@@ -46,7 +46,7 @@ end
 function p.whenFalling()
 	if not (p.state == "stand" or p.state == "fly" or p.state == "crouch") and not mcontroller.onGround() then
 		p.setState( "stand" )
-		p.uneat(p.findFirstOccupantIdForLocation("hug"))
+		p.grabbing = p.findFirstOccupantIdForLocation("hug")
 	end
 end
 
@@ -326,10 +326,16 @@ function state.stand.sitpin(args)
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
-	if #pinnable >= 1 and p.eat( pinnable[1], "pinned" ) then
-		--vsoVictimAnimSetStatus( "occupant"..index , {} )
+	if #pinnable >= 1 then
+		p.addRPC(world.sendEntityMessage(pinnable[1], "pvsoIsPreyEnabled", "held"), function(enabled)
+			if enabled then
+				p.eat( pinnable[1], "pinned" )
+			end
+			p.doTransition("sit")
+		end)
+	else
+		p.doTransition("sit")
 	end
-	return true
 end
 
 function state.stand.vore()
@@ -381,7 +387,11 @@ function state.sit.update()
 end
 
 function state.sit.hug( args )
-	return p.eat(args.id, "hug", {})
+	p.addRPC(world.sendEntityMessage(args.id, "pvsoIsPreyEnabled", "held"), function(enabled)
+		if enabled then
+			return p.eat(args.id, "hug", {})
+		end
+	end)
 end
 
 state.sit.bellyToTail = bellyToTail
