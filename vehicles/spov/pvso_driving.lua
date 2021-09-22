@@ -137,6 +137,15 @@ function p.updateDriving(dt)
 			animator.setGlobalTag("direction", p.direction * dx)
 		end
 
+		if p.stateconfig[p.state].control.defaultActions ~= nil and p.driver ~= nil then
+			p.loopedMessage("primaryItemData", p.driver, "primaryItemData", {{
+				defaultClickAction = p.stateconfig[p.state].control.defaultActions[1]
+			}})
+			p.loopedMessage("altItemData", p.driver, "altItemData", {{
+				defaultClickAction = p.stateconfig[p.state].control.defaultActions[2]
+			}})
+		end
+
 		p.doClickActions(state, dt)
 		p.groundMovement(dx, dy, state, dt)
 		p.waterMovement(dx, dy, state, dt)

@@ -13,5 +13,8 @@
 		"op": "add",
 		"path": "/deploymentConfig/scripts/-",
 		"value": "/scripts/ZSSVMA_player_deployment.lua"
-	}
+	},
+	{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoController" } },
+	{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoPreyEnabler" } }
+
 ]

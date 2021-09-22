@@ -26,7 +26,7 @@ function everything_primary()
 	end)
 
 	message.setHandler("pvsoIsPreyEnabled", function(_,_, type)
-		if (status.statusProperty("pvsoPreyEnabled") or {}).all == false then return false end
+		if (status.statusProperty("pvsoPreyEnabled") or {}).enabled == false then return false end
 
 		if (status.statusProperty("pvsoPreyEnabled") or {})[type] == nil then
 			local entityType = world.entityType(entity.id())

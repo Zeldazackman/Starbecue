@@ -11,7 +11,7 @@ function init()
 			storage.clickAction = data.assignClickAction
 			activeItem.setInventoryIcon("/items/active/pvsoController/"..data.assignClickAction..".png")
 		end
-		if not storage.clickAction and data.defaultClickAction ~= nil then
+		if ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
 			activeItem.setInventoryIcon("/items/active/pvsoController/"..data.defaultClickAction..".png")
 		end
 	end)
@@ -22,7 +22,10 @@ function update(dt, fireMode, shiftHeld, controls)
 		clicked = true
 		getNextAction()
 		setIconAndDescription()
-	elseif fireMode ~= "primary" then
+	elseif fireMode == "none" then
+		if not player.isLounging() then
+			setIconAndDescription()
+		end
 		clicked = false
 	end
 end

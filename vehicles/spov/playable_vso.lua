@@ -303,14 +303,7 @@ function init()
 	end )
 
 	message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
-		if p.lounging[eid] == nil then
-			for seatname, _ in pairs(p.seats) do
-				if eid == vehicle.entityLoungingIn(seatname) then
-					vehicle.setLoungeEnabled(seatname, false)
-				end
-			end
-			return
-		end
+		if p.lounging[eid] == nil then return end
 		vehicle.setLoungeEnabled(p.lounging[eid].seatname, false)
 		p.timer(p.lounging[eid].seatname.."Enable", 0.1, function()
 			vehicle.setLoungeEnabled(p.lounging[eid].seatname, true)

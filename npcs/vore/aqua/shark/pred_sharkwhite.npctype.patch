@@ -3,7 +3,7 @@
 		"op": "add",
 		"path": "/scriptConfig/preyEnabled",
 		"value": {
-			"all" : false
+			"enabled" : false
 		}
 	}
 ]

@@ -1,4 +1,5 @@
 function init()
+	activeItem.setHoldingItem(false)
 end
 
 function update(dt)

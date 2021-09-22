@@ -3,19 +3,13 @@ function init()
 end
 
 function update(dt, fireMode, shiftHeld, controls)
-	if not player.isLounging() and fireMode ~= nil and not clicked then
+	if not player.isLounging() and fireMode == "primary" and not clicked then
 		clicked = true
-		status.setStatusProperty("pvsoPreyEnabled",{
-			held = true,
-			oralVore = true,
-			analVore = true,
-			tailVore = true,
-			cockVore = true,
-			breastVore = true,
-			absorbVore = true
-		})
-
-	elseif fireMode ~= "primary" then
+		world.sendEntityMessage(entity.id(), "openPVSOInterface", "preyenabler")
+	elseif not player.isLounging() and fireMode == "alt" and not clicked then
+		clicked = true
+		world.sendEntityMessage(entity.id(), "openPVSOInterface", "close")
+	elseif fireMode == "none" then
 		clicked = false
 	end
 end

@@ -29,6 +29,8 @@
 		"oralVore" : {"shortdescription" : "Oral Vore Controller", "description" : "Triggers the oral vore action of a PVSO."},
 		"analVore" : {"shortdescription" : "Anal Vore Controller", "description" : "Triggers the anal vore action of a PVSO."},
 		"tailVore" : {"shortdescription" : "Tail Vore Controller", "description" : "Triggers the tail vore action of a PVSO."},
+		"absorbVore" : {"shortdescription" : "Absorbtion Controller", "description" : "Triggers the absorbtion action of a PVSO."},
+		"unbirth" : {"shortdescription" : "Unbirth Controller", "description" : "Triggers the unbirth action of a PVSO."},
 		"cockVore" : {"shortdescription" : "Cock Vore Controller", "description" : "Triggers the cock vore action of a PVSO."},
 		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a PVSO."},
 		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a PVSO."},
