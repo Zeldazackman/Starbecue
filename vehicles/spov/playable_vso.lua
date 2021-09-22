@@ -213,8 +213,6 @@ function init()
 		p.isObject = true
 	end
 
-		p.logJson(p.seats)
-
 	if p.settings.blackHoleBelly then
 		p.vso.maxOccupants.total = 7
 		if p.includeDriver then
