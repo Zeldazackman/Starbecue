@@ -56,7 +56,7 @@ function init()
 		local settings = player.getProperty( "vsoSettings" ) or {}
 		if settings.vsos == nil then settings.vsos = {} end
 		if not settings.vsos[name] then
-			settings.vsos[name] = {}
+			settings.vsos[name] = { enable = true }
 		end
 		player.setProperty( "vsoSettings", settings )
 	end)

@@ -52,7 +52,6 @@ function update(args)
 		pressedTime = 0
 		closeMenu()
 		radialMenuOpen = false
-		activated = true
 		rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
 		rpcCallback = function(result)
 			if result == "cancel" then
@@ -80,20 +79,23 @@ function openRadialMenu()
 		icon = "/interface/title/modsover.png"
 	}}
 	if settings and settings.vsos then
-		for vsoname, vsoenabled in pairs(settings.vsos) do
-			-- if k == current then
-			-- 	table.insert(options, {
-			-- 		name = "despawn",
-			-- 		icon = "/interface/bookmarks/icons/beamparty.png"
-			-- 	})
-			if vsoenabled then
+		for vsoname, data in pairs(settings.vsos) do
+			if data.enable then
 				local skin = settings[vsoname].skinNames.head or "default"
 				local directives = settings[vsoname].directives or ""
-
-				table.insert(options, {
-					name = vsoname,
-					icon = "/vehicles/spov/"..vsoname.."/spov/"..skin.."/icon.png"..directives
-				})
+				if #options <= 10 then
+					if data.index ~= nil and data.index+1 <= #options then
+						table.insert(options, data.index+1, {
+							name = vsoname,
+							icon = "/vehicles/spov/"..vsoname.."/spov/"..skin.."/icon.png"..directives
+						})
+					else
+						table.insert(options, {
+							name = vsoname,
+							icon = "/vehicles/spov/"..vsoname.."/spov/"..skin.."/icon.png"..directives
+						})
+					end
+				end
 			end
 		end
 	end

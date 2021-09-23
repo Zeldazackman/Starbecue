@@ -27,13 +27,9 @@ function update(dt, fireMode, shiftHeld)
 			animator.playSound("activate")
 
 			settings.selected = self.vso
-			if settings.vsos ~= nil then
-				if settings.vsos[self.vso] ~= false then
-					settings.vsos[self.vso] = true
-				end
-			else
-				settings.vsos = {}
-				settings.vsos[self.vso] = true
+			if settings.vsos == nil then settings.vsos = {} end
+			if not settings.vsos[self.vso] then
+				settings.vsos[self.vso] = { enable = true }
 			end
 
 			player.setProperty("vsoSettings", settings)
