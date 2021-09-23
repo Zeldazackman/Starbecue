@@ -9,7 +9,17 @@
 	},
 	"aliases" : {
 		"idle.default" : "back.1",
-		"idle.1" : "back.1"
+		"idle.1" : "back.1",
+
+		"back.escape.1" : "back.eat.8",
+		"back.escape.2" : "back.eat.7",
+		"back.escape.3" : "back.eat.6",
+		"back.escape.4" : "back.eat.4",
+		"back.escape.5" : "back.eat.3",
+		"back.escape.6" : "back.eat.2",
+		"back.escape.7" : "back.eat.2",
+		"back.escape.8" : "back.eat.1"
+
 
 	}
 }

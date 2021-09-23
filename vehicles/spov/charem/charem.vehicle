@@ -149,6 +149,7 @@
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"animation": {
+						"head": "escape",
 						"body": "escape"
 					},
 					"script": "escape",
@@ -189,7 +190,12 @@
 					"parts" : ["body"],
 					"directions" : {
 						"up": { },
-						"front": { "transition": "escape", "indicate" : "red" },
+						"front": { "transition": "escape", "indicate" : "red",
+							"chances": {
+								"easyEscape": { "min": 7, "max": 15 },
+								"normal": { "min": 15, "max": 25 },
+								"antiEscape": { "min": 25, "max": 45 }
+							}},
 						"back": { "transition": "analescape", "indicate" : "red" },
 						"down": { }
 					},
@@ -260,6 +266,7 @@
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"animation": {
+						"head": "escape",
 						"body": "escape"
 					},
 					"script": "escape",
@@ -305,7 +312,12 @@
 					"parts" : ["body", "legs"],
 					"directions" : {
 						"up": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_up", "victimAnimLocation" : "hug" },
-						"front": { "transition": "escape", "indicate": "red", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug" },
+						"front": { "transition": "escape", "indicate": "red", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug",
+							"chances": {
+								"easyEscape": { "min": 7, "max": 15 },
+								"normal": { "min": 15, "max": 25 },
+								"antiEscape": { "min": 25, "max": 45 }
+							}},
 						"back": { "transition": "escapeAnal", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
 						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
