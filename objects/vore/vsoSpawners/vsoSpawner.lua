@@ -1,7 +1,9 @@
 s = {}
 
 function init()
-	storage = config.getParameter("scriptStorage")
+	if not storage.spov then
+		storage = config.getParameter("scriptStorage")
+	end
 
 	reload()
 
