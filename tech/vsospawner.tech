@@ -7,7 +7,7 @@
 	"description" : "Press ^green;[F]^reset; to transform, hold to choose which.",
 	"shortDescription" : "VSO Spawner",
 	"rarity" : "Rare",
-	"icon" : "/tech/vsospawner/vsospawner.png",
+	"icon" : "/items/active/pvsoController/oralVore.png",
 
 	"chipCost" : 8
 }

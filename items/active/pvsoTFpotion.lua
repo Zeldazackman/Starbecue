@@ -1,5 +1,4 @@
 function init()
-	self.tech = config.getParameter("tech")
 	self.vehicle = "spov"..config.getParameter("spov")
 	self.vso = config.getParameter("spov")
 	activeItem.setArmAngle(-math.pi/4)
@@ -22,27 +21,32 @@ function update(dt, fireMode, shiftHeld)
 		elseif self.useTimer < 5.5 then
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
-			if self.rpc == nil then
-				self.rpc = world.sendEntityMessage( entity.id(), "loadVSOsettings", self.vso )
-			end
-		end
-	end
-	if self.rpc ~= nil and self.rpc:finished() then
-		if self.rpc:succeeded() then
 			local position = mcontroller.position()
-			local settings = self.rpc:result()
+			local settings = player.getProperty("vsoSettings") or {}
 
 			animator.playSound("activate")
 
-			player.makeTechAvailable(self.tech)
-			player.enableTech(self.tech)
-			player.equipTech(self.tech)
+			settings.selected = self.vso
+			if settings.vsos ~= nil then
+				if settings.vsos[self.vso] ~= false then
+					settings.vsos[self.vso] = true
+				end
+			else
+				settings.vsos = {}
+				settings.vsos[self.vso] = true
+			end
+
+			player.setProperty("vsoSettings", settings)
+
+			player.makeTechAvailable("vsospawner")
+			player.enableTech("vsospawner")
+			player.equipTech("vsospawner")
 
 			if config.getParameter("codex") then
 				world.spawnItem(config.getParameter("codex").."-codex", position, 1)
 			end
 
-			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings } )
+			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings[self.vso] } )
 
 			player.radioMessage({
 				messageId = self.vehicle.."1", unique = false,
@@ -54,10 +58,6 @@ function update(dt, fireMode, shiftHeld)
 			}, 5)
 
 			item.consume(1)
-		else
-			sb.logError( "Couldn't load "..self.vso.." settings." )
-			sb.logError( self.rpc:error() )
 		end
-		self.rpc = nil
 	end
 end

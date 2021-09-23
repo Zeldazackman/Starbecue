@@ -4,7 +4,6 @@ function build( directory, config, parameters, level, seed )
 	if parameters.scriptStorage ~= nil then
 		config.scriptStorage = sb.jsonMerge(config.scriptStorage, parameters.scriptStorage)
 
-		sb.logInfo(sb.printJson(config.scriptStorage, 1))
 		local settings = parameters.scriptStorage.settings or {}
 		local skins = settings.skinNames or {}
 		local skin = skins.head or "default"

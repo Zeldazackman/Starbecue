@@ -73,7 +73,6 @@
 
 	"vso" : {
 		"victimAnimations": "/vehicles/spov/vaporeon/victim_animations.config",
-		"startState": "back",
 		"driverStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},

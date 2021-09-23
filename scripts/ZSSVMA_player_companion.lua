@@ -4,7 +4,10 @@ function init()
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
 		local settings = player.getProperty( "vsoSettings" ) or {}
 		if vsoMenuName then return sb.jsonMerge(settings[vsoMenuName] or {}, settings.global or {}) end
-		return settings.global or {}
+		return settings
+	end)
+	message.setHandler( "playerSaveVSOsettings", function(_,_, settings )
+		player.setProperty( "vsoSettings", settings )
 	end)
 	message.setHandler( "openPVSOInterface", function(_,_, name, args, appendSettings, sourceEntity)
 		local pane = root.assetJson("/interface/scripted/pvso/"..name.."/"..name..".config")
