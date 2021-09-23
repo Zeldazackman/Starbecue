@@ -62,11 +62,7 @@ function init()
 	end)
 
 	message.setHandler("getRadialSelection", function(_,_, stat)
-		local radialSelection = player.getProperty("radialSelection") or {}
-		return radialSelection[1], radialSelection[2], radialSelection[3], radialSelection[4]
-	end)
-	message.setHandler("clearRadialSelection", function(_,_)
-		player.setProperty("radialSelection", nil)
+		return player.getProperty("radialSelection") or {}
 	end)
 
 	message.setHandler("getVSOseatEquips", function(_,_, type)
