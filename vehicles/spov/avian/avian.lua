@@ -25,7 +25,7 @@ function p.update(dt)
 end
 
 function p.changeSize()
-	if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
+	if p.tapControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
 		local changeSize = "smol"
 		if p.state == changeSize then
 			changeSize = "stand"

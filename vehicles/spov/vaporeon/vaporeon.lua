@@ -76,7 +76,7 @@ function p.whenFalling()
 end
 
 function p.changeSize()
-	if p.pressControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
+	if p.tapControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
 		p.uneat(p.findFirstOccupantIdForLocation("hug"))
 
 		local changeSize = "smol"

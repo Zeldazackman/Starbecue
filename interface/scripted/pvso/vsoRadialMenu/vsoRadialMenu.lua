@@ -1,11 +1,14 @@
 local settings
 local options
-
+local menuType
 local canvas
+local button
+local pressed
 
 function init()
 	settings = config.getParameter( "settings", {} )
 	options = config.getParameter( "options" )
+	menuType = config.getParameter("type")
 	if not options then
 		pane.dismiss() -- empty radial menu, uh oh
 	end
@@ -113,8 +116,13 @@ function update( dt )
 
 	-- save selection
 	if activeSegment == -1 then
-		player.setProperty( "radialSelection", "cancel")
+		player.setProperty( "radialSelection", {selection = "cancel", type = menuType, button = button, pressed = pressed})
 	else
-		player.setProperty( "radialSelection", options[activeSegment].name )
+		player.setProperty( "radialSelection", {selection = options[activeSegment].name, type = menuType, button = button, pressed = pressed} )
 	end
+end
+
+function canvasClickEvent(position, mouseButton, isButtonDown)
+	button = mouseButton
+	pressed = isButtonDown
 end

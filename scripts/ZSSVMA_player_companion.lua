@@ -62,7 +62,11 @@ function init()
 	end)
 
 	message.setHandler("getRadialSelection", function(_,_, stat)
-		return player.getProperty("radialSelection")
+		local radialSelection = player.getProperty("radialSelection") or {}
+		return radialSelection[1], radialSelection[2], radialSelection[3], radialSelection[4]
+	end)
+	message.setHandler("clearRadialSelection", function(_,_)
+		player.setProperty("radialSelection", nil)
 	end)
 
 	message.setHandler("getVSOseatEquips", function(_,_, type)
@@ -87,6 +91,11 @@ function init()
 			player.giveItem("pvsoController")
 		end
 	end)
+
+	message.setHandler("pvsoGiveItem", function(_,_, item)
+		player.giveItem(item)
+	end)
+
 
 	message.setHandler("pvsoEatItem", function(_,_, item, partial, match)
 		player.consumeItem(item, partial, match )

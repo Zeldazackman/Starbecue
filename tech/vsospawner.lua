@@ -17,7 +17,7 @@ function loadSettings()
 	rpc = world.sendEntityMessage( entity.id(), "loadVSOsettings" )
 	rpcCallback = function(result)
 		settings = result
-		if settings.selected ~= nil and settings[settings.selected].autoDeploy and not reload then
+		if settings ~= nil and settings.selected ~= nil and settings[settings.selected] ~= nil and settings[settings.selected].autoDeploy and not reload then
 			spawnVSO(settings.selected)
 		end
 	end
@@ -53,13 +53,13 @@ function update(args)
 		closeMenu()
 		radialMenuOpen = false
 		rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
-		rpcCallback = function(result)
-			if result == "cancel" then
+		rpcCallback = function(data)
+			if data.selection == "cancel" or data.selection == nil or data.type ~= "vsoSelect" then
 				-- do nothing
-			elseif result == "settings" then
+			elseif data.selection == "settings" then
 				openSettingsMenu()
 			else -- any other selection
-				spawnVSO(result)
+				spawnVSO(data.selection)
 			end
 		end
 	end
@@ -70,7 +70,7 @@ function spawnVSO(type)
 	settings.selected = type
 	world.sendEntityMessage( entity.id(), "playerSaveVSOsettings", settings )
 	local position = mcontroller.position()
-	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sb.jsonMerge(settings[type], settings.global), direction = mcontroller.facingDirection()  } )
+	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
 end
 
 function openRadialMenu()
@@ -100,7 +100,7 @@ function openRadialMenu()
 		end
 	end
 
-	world.sendEntityMessage( entity.id(), "openPVSOInterface", "vsoRadialMenu", {options = options}, true )
+	world.sendEntityMessage( entity.id(), "openPVSOInterface", "vsoRadialMenu", {options = options, type = "vsoSelect"}, true )
 end
 function openSettingsMenu()
 	world.sendEntityMessage( entity.id(), "openPVSOInterface", "vsoSpawnerSettings" )

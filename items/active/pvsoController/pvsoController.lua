@@ -9,9 +9,8 @@ function init()
 	message.setHandler( hand.."ItemData", function(_,_, data)
 		if data.assignClickAction ~= nil then
 			storage.clickAction = data.assignClickAction
-			activeItem.setInventoryIcon("/items/active/pvsoController/"..data.assignClickAction..".png")
-		end
-		if ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
+			setIconAndDescription()
+		elseif ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
 			activeItem.setInventoryIcon("/items/active/pvsoController/"..data.defaultClickAction..".png")
 		end
 	end)

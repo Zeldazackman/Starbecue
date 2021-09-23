@@ -7,7 +7,7 @@ function p.pressControl(seat, control)
 end
 
 function p.tapControl(seat, control)
-	return (( p.seats[seat].controls[control.."Released"] > 0 ) and ( p.seats[seat].controls[control.."Released"] < 0.15 ))
+	return (( p.seats[seat].controls[control.."Released"] > 0 ) and ( p.seats[seat].controls[control.."Released"] < 0.19 ))
 end
 
 function p.heldControl(seat, control, min)
@@ -297,6 +297,45 @@ function p.doClickActions(state, dt)
 	end
 	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
 
+	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
+		if not p.movement.assignClickActionRadial then
+			p.movement.assignClickActionRadial = true
+			p.assignClickActionMenu(state)
+		else
+			p.loopedMessage("radialSelection", p.driver, "getRadialSelection", {}, function(data)
+
+				if data.selection ~= nil and data.selection ~= "cancel" and data.type == "actionSelect" then
+					if data.button == 0 and data.pressed and not p.click then
+						p.click = true
+						if p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController" then
+							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection})
+						elseif p.seats[p.driverSeat].controls.primaryHandItem == nil then
+							world.sendEntityMessage(p.driver, "pvsoGiveItem", {
+								name = "pvsoController",
+								parameters = { scriptStorage = { clickAction = data.selection } }
+							})
+						end
+					elseif data.button == 2 and data.pressed and not p.click then
+						p.click = true
+						if p.seats[p.driverSeat].controls.altHandItem == "pvsoController" then
+							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection})
+						elseif p.seats[p.driverSeat].controls.altHandItem == nil then
+							world.sendEntityMessage(p.driver, "pvsoGiveItem", {
+								name = "pvsoController",
+								parameters = { scriptStorage = { clickAction = data.selection } }
+							})
+						end
+					elseif not data.pressed then
+						p.click = false
+					end
+				end
+			end)
+		end
+	elseif p.movement.assignClickActionRadial then
+		world.sendEntityMessage( p.driver, "openPVSOInterface", "close" )
+		p.movement.assignClickActionRadial = nil
+	end
+
 	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") or (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoPreyEnabler") then
 		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
 		p.clickAction(state, state.control.defaultActions[2], "altFire")
@@ -352,6 +391,21 @@ function p.clickAction(stateData, name, control)
 			p.projectile(stateData.control.clickActions[name].projectile)
 		end
 	end
+end
+
+function p.assignClickActionMenu(state)
+	local options = {{
+			name = "unassigned",
+			icon = "/items/active/pvsoController/unassigned.png"
+		}}
+	for action, _ in pairs(state.control.clickActions) do
+		table.insert(options, {
+			name = action,
+			icon = "/items/active/pvsoController/"..action..".png"
+		})
+	end
+
+	world.sendEntityMessage( p.driver, "openPVSOInterface", "vsoRadialMenu", {options = options, type = "actionSelect" }, true )
 end
 
 p.monsterstrugglecooldown = {}
