@@ -1230,7 +1230,7 @@ function p.doBellyEffects(dt)
 			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
 
 			if p.vso.locations[p.occupant[i].location].digest then
-				if (p.settings.bellySounds == true) and p.randomTimer( "gurgle", 1.0, 8.0 ) then animator.playSound( "digest" ) end
+				if (p.settings.bellySounds == true) then p.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				local hunger_change = (hungereffect * powerMultiplier * dt)/100
 				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end

@@ -5,6 +5,7 @@ local radialMenuOpen = false
 local settings
 local inited = false
 local reload = false
+local radialSelectionData = {}
 
 function init()
 	message.setHandler( "saveVSOsettings", function() -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
@@ -17,8 +18,11 @@ function loadSettings()
 	rpc = world.sendEntityMessage( entity.id(), "loadVSOsettings" )
 	rpcCallback = function(result)
 		settings = result
-		if settings ~= nil and settings.selected ~= nil and settings[settings.selected] ~= nil and settings[settings.selected].autoDeploy and not reload then
-			spawnVSO(settings.selected)
+		if settings ~= nil and settings.selected ~= nil then
+			radialSelectionData.selection = settings.selected
+			if settings[settings.selected] ~= nil and settings[settings.selected].autoDeploy and not reload then
+				spawnVSO(settings.selected)
+			end
 		end
 	end
 end
@@ -54,23 +58,29 @@ function update(args)
 		radialMenuOpen = false
 		rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
 		rpcCallback = function(data)
-			if data.selection == "cancel" or data.selection == nil or data.type ~= "vsoSelect" then
-				-- do nothing
-			elseif data.selection == "settings" then
+			if data.selection ~= "cancel" and data.selection ~= nil and data.type == "vsoSelect" then
+				radialSelectionData = data
+			end
+		end
+		if radialSelectionData ~= nil then
+			if radialSelectionData.selection == "settings" then
 				openSettingsMenu()
 			else -- any other selection
-				spawnVSO(data.selection)
+				spawnVSO(radialSelectionData.selection)
 			end
 		end
 	end
 	pressed = args.moves["special1"]
 end
 
+local spawnedVehicle = nil
 function spawnVSO(type)
-	settings.selected = type
-	world.sendEntityMessage( entity.id(), "playerSaveVSOsettings", settings )
-	local position = mcontroller.position()
-	world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+	if not spawnedVehicle or not world.entityExists(spawnedVehicle) then
+		settings.selected = type
+		world.sendEntityMessage( entity.id(), "playerSaveVSOsettings", settings )
+		local position = mcontroller.position()
+		spawnedVehicle = world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+	end
 end
 
 function openRadialMenu()

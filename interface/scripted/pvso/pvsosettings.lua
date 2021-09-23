@@ -32,7 +32,7 @@ function init()
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
 
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
-	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
+	widget.setChecked( "bellySounds", globalSettings.bellySounds or true )
 
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
 	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
@@ -163,6 +163,7 @@ function secondaryBar(i, listItem, dt)
 end
 
 function getSelectedId()
+	if not p.occupantList then return end
 	local selected = widget.getListSelected(p.occupantList)
 	for j = 1, #p.listItems do
 		if p.listItems[j].listItem == selected then
@@ -256,7 +257,9 @@ function changeGlobalSetting(settingname)
 	settings[settingname] = value
 	saveSettings()
 end
-
+function bellySounds()
+	changeGlobalSetting( "bellySounds" )
+end
 function displayDamage()
 	changeGlobalSetting( "displayDamage" )
 end

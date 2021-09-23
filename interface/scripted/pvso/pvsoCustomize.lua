@@ -67,6 +67,12 @@ function adjustColor(i, inc)
 	saveSettings()
 end
 
+function adjustFullbright(i)
+	local value = widget.getChecked( "glowColor"..i )
+	settings.fullbright[i] = value
+	saveSettings()
+end
+
 function adjustSkin(part, inc)
 	if p.replaceSkin == nil or p.replaceSkin[part] == nil then return end
 	local i = settings.replaceSkin[part] or 1
@@ -89,6 +95,7 @@ end
 function setLabels()
 	for i = 1, #settings.replaceColors do
 		widget.setText("labelColor"..i, tostring(settings.replaceColors[i]))
+		widget.setChecked("glowColor"..i, settings.fullbright[i] or false)
 	end
 	for part, data in pairs(p.replaceSkin) do
 		local i = settings.replaceSkin[part] or 1
@@ -142,6 +149,30 @@ end
 
 function nextColor6()
 	adjustColor(6, 1)
+end
+
+function glowColor1()
+	adjustFullbright(1)
+end
+
+function glowColor2()
+	adjustFullbright(2)
+end
+
+function glowColor3()
+	adjustFullbright(3)
+end
+
+function glowColor4()
+	adjustFullbright(4)
+end
+
+function glowColor5()
+	adjustFullbright(5)
+end
+
+function glowColor6()
+	adjustFullbright(6)
 end
 
 function prevhead()
