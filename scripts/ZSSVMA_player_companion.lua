@@ -85,8 +85,8 @@ function init()
 		end
 	end)
 
-	message.setHandler("pvsoEatItem", function(_,_, item)
-		player.consumeItem(item, true)
+	message.setHandler("pvsoEatItem", function(_,_, item, partial, match)
+		player.consumeItem(item, partial, match )
 	end)
 
 end

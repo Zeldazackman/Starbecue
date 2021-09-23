@@ -1,0 +1,32 @@
+{
+	"itemName" : "spovAugmentCharem",
+	"price" : 1000,
+	"rarity" : "Rare",
+	"category" : "Vore",
+	"maxStack" : 1,
+
+	"tooltipKind" : "vsoSpawner",
+
+	"inventoryIcon": "/vehicles/spov/charem/spov/default/icon.png",
+	"shortdescription": "Charem",
+
+	"tooltipFields" : {
+		"statusLabel": "A lazy shadox of your very own! Interact with an empty spawner to place it inside."
+	},
+
+	"augment" : {
+	  "type" : "vso"
+	},
+
+	"spov": {
+		"type": "spovcharem",
+		"position": [0, 4],	// in blocks
+		"settings": {
+			"bellyEffect" : "pvsoSoftDigest"
+		}
+	},
+
+	"scripts" : [ "/items/spov/spovAugment.lua" ]
+	//"builder" : "/objects/vore/spov/pvsoItemBuilder.lua"
+
+  }

@@ -1,0 +1,51 @@
+{
+	"objectName": "vsoSpawnerInvisible",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 10,
+	"health" : 5,
+
+	"tooltipKind" : "vsoSpawner",
+
+	"inventoryIcon": "/items/throwables/capturepod.png",
+	"shortdescription": "Invisible VSO Spawner",
+
+	"tooltipFields" : {
+		"statusLabel": "For a more discrete VSO spawn location."
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "vsoSpawnerInvisible.png" } ],
+			"imagePosition": [0, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		},
+		{
+			"imageLayers" : [ { "image" : "vsoSpawnerInvisible.png" } ],
+			"imagePosition": [0, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		}
+	],
+
+	"acceptsAugmentType" : "vso",
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"builder" : "/objects/vore/vsoSpawners/vsoItemBuilder.lua",
+	"scripts": [
+		"/objects/vore/vsoSpawners/vsoSpawner.lua"
+	]
+}

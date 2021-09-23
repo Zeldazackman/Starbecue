@@ -1,0 +1,56 @@
+{
+	"objectName": "vsoSpawnerVappyBed",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"tooltipKind" : "vsoSpawner",
+
+	"inventoryIcon": "vaporeonbedicon.png",
+	"shortdescription": "Water bed",
+
+	"tooltipFields" : {
+		"statusLabel": "A special waterbed favored by a certain kind of fishcat."
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "vaporeonbed.png" } ],
+			"imagePosition": [-64, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [7, 0], [6, 0], [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0], [-1, 0], [-2, 0], [-3, 0], [-4, 0] ]
+		},
+		{
+			"imageLayers" : [ { "image" : "vaporeonbed.png" } ],
+			"imagePosition": [-64, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [-8, 0], [-7, 0], [-6, 0], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+		}
+	],
+	"spawnOffset" : [-1.5, 1],
+
+	"acceptsAugmentType" : "vso",
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"builder" : "/objects/vore/vsoSpawners/vsoItemBuilder.lua",
+	"scripts": [
+		"/objects/vore/vsoSpawners/vsoSpawner.lua"
+	]
+}

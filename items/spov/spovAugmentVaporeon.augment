@@ -1,0 +1,29 @@
+{
+	"itemName" : "spovAugmentVaporeon",
+	"price" : 1000,
+	"rarity" : "Rare",
+	"category" : "Vore",
+	"maxStack" : 1,
+
+	"tooltipKind" : "vsoSpawner",
+
+	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png",
+	"shortdescription": "Vaporeon",
+
+	"tooltipFields" : {
+		"statusLabel": "A big vaporeon of your very own! Interact with an empty spawner to place it inside."
+	},
+
+	"augment" : {
+	  "type" : "vso"
+	},
+
+	"spov": {
+		"type": "spovvaporeon",
+		"position": [0, 4]	// in blocks
+	},
+
+	"scripts" : [ "/items/spov/spovAugment.lua" ]
+	//"builder" : "/objects/vore/spov/pvsoItemBuilder.lua"
+
+  }
