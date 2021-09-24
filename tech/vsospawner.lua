@@ -6,6 +6,8 @@ local settings
 local inited = false
 local reload = false
 local radialSelectionData = {}
+local spawnCooldown = 0
+local spawnedVehicle = nil
 
 function init()
 	message.setHandler( "saveVSOsettings", function() -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
@@ -43,7 +45,6 @@ function update(args)
 			sb.logError( rpc:error() )
 		end
 		rpc = nil
-		rpcType = nil
 	end
 	if args.moves["special1"] then
 		sb.setLogMap("pressedTime", pressedTime)
@@ -52,17 +53,21 @@ function update(args)
 			openRadialMenu()
 			radialMenuOpen = true
 		end
-	elseif pressedTime > 0 then
+	elseif pressedTime > 0 or radialSelectionData.gotData then
 		pressedTime = 0
 		closeMenu()
 		radialMenuOpen = false
-		rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
-		rpcCallback = function(data)
-			if data.selection ~= "cancel" and data.selection ~= nil and data.type == "vsoSelect" then
-				radialSelectionData = data
+		if not radialSelectionData.gotData and rpc == nil then
+			rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
+			rpcCallback = function(data)
+				if data.selection ~= "cancel" and data.selection ~= nil and data.type == "vsoSelect" then
+					radialSelectionData = data
+					radialSelectionData.gotData = true
+				end
 			end
 		end
-		if radialSelectionData ~= nil then
+		radialSelectionData.gotData = nil
+		if radialSelectionData.selection ~= nil then
 			if radialSelectionData.selection == "settings" then
 				openSettingsMenu()
 			else -- any other selection
@@ -70,12 +75,13 @@ function update(args)
 			end
 		end
 	end
+	spawnCooldown = math.max(0, spawnCooldown - args.dt)
 	pressed = args.moves["special1"]
 end
 
-local spawnedVehicle = nil
 function spawnVSO(type)
-	if not spawnedVehicle or not world.entityExists(spawnedVehicle) then
+	if (not spawnedVehicle or not world.entityExists(spawnedVehicle)) and spawnCooldown <= 0 then
+		spawnCooldown = 1
 		settings.selected = type
 		world.sendEntityMessage( entity.id(), "playerSaveVSOsettings", settings )
 		local position = mcontroller.position()
@@ -84,6 +90,7 @@ function spawnVSO(type)
 end
 
 function openRadialMenu()
+	radialSelectionData.selection = nil
 	local options = {{
 		name = "settings",
 		icon = "/interface/title/modsover.png"

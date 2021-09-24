@@ -95,7 +95,8 @@ function succ(args)
 		destination = globalSuccPosition,
 		source = entity.id(),
 		speed = 20,
-		force = 200
+		force = 200,
+		direction = p.direction
 	}
 
 	for i, id in ipairs(entities) do
@@ -103,6 +104,17 @@ function succ(args)
 			p.loopedMessage("succ"..i, id, "pvsoSucc", {data})
 		end
 	end
+
+	p.randomTimer("succ", 0, 0.3, function ()
+		local effectPosition = { aim[1]+math.random(-3,3)*math.random(), aim[2]+math.random(-3,3)*math.random() }
+
+		local aimLine = world.lineCollision(globalSuccPosition, effectPosition, { "Null", "block", "slippery" })
+		if aimLine ~= nil then
+			effectPosition = aimLine
+		end
+		world.spawnProjectile( "succEffect", effectPosition, entity.id(), world.distance( globalSuccPosition, effectPosition ), false, {data = data} )
+	end)
+
 	p.checkEatPosition( globalSuccPosition, 2, "belly", "succEat", true)
 	return true
 end

@@ -1,0 +1,12 @@
+{
+	"projectileName" : "succEffect",
+	"image" : "succEffect.png",
+	"physics" : "succ",
+	"frameNumber" : 1,
+	"speed" : 0,
+	"animationLoops" : false,
+	"flippable" : true,
+	"scripts" : [ "succEffect.lua" ],
+	"scriptDelta" : 1
+
+  }

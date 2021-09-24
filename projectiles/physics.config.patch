@@ -1,0 +1,19 @@
+[
+	{
+		"op": "add",
+		"path": "/succ",
+		"value": {
+			"mass" : 1.0,
+			"gravityMultiplier" : 0,
+			"bounceFactor" : 0.0,
+			"stopOnFirstBounce" : true,
+			"maxMovementPerStep" : 0.4,
+			"collisionPoly" : [ [0, 0], [0, 0], [0, 0]],
+			"ignorePlatformCollision" : true,
+			"airFriction" : 0.0,
+			"liquidFriction" : 8.0,
+			"groundFriction" : 0,
+			"maximumCorrection" : 0.75
+		}
+	}
+]

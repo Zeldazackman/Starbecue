@@ -517,9 +517,9 @@ function p.fireProjectile( projectiledata, driver )
 
 	if driver then
 		params.powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
-		world.spawnProjectile( projectiledata.name, position, driver, direction, true, params )
+		world.spawnProjectile( projectiledata.name, position, driver, direction, projectiledata.relative, params )
 	else
 		params.powerMultiplier = p.objectPowerLevel()
-		world.spawnProjectile( projectiledata.name, position, entity.Id(), direction, true, params )
+		world.spawnProjectile( projectiledata.name, position, entity.id(), direction, projectiledata.relative, params )
 	end
 end
