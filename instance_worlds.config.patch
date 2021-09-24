@@ -1,0 +1,26 @@
+[
+	{
+		"op" : "add",
+		"path" : "/voreWorld",
+		"value" : {
+			"type" : "FloatingDungeon",
+			"dungeonWorld" : "voreWorld",
+			"seed" : 1234,
+			"persistent" : false,
+			"beamUpRule" : "Anywhere",
+			"spawningEnabled" : true,
+			"disableDeathDrops" : true,
+
+			"skyParameters" : {
+				"spaceLevel" : 3000,
+				"ambientLightLevel" : [ 180, 180, 180 ],
+
+				"skyType" : "atmospheric",
+				"horizonImages" : [ ],
+				"dayLength" : 1153.36,
+				"surfaceLevel" : 80,
+				"seed" : -5288806180628666923
+			}
+		}
+	}
+]

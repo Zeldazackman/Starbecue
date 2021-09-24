@@ -1,0 +1,17 @@
+[
+	{
+		"op" : "add",
+		"path" : "/voreWorld",
+		"value" : {
+			"primaryDungeon" : "voreWorld",
+			"threatLevel" : 0,
+			"gravity" : 100,
+			"worldSize" : [1000, 1000],
+			"dungeonBaseHeight" : 1000,
+			"dungeonSurfaceHeight" : 500,
+			"ambientLightLevel" : [200, 255, 200],
+			"musicTrack" : "/music/buy.ogg",
+			"biome": "snow"
+		}
+	}
+]
