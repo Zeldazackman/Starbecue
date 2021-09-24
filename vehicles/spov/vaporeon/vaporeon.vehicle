@@ -164,8 +164,10 @@
 			"hug" : 1
 		},
 		"defaultSettings" : {
-			"replaceColors" : [6,6,9,3,1,1],
-			"fullbright" : [false,false,false,false,true,false]
+			"replaceColors" : [6,6,9,3,9,1,1],
+			"fullbright" : [false,false,false,false,false,true,false],
+			"directives" : "?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff" // a default value to make sure the neck fins don't show up as pink
+
 		},
 		"replaceColors" : [ // every color must be defined, even if you don't plan on having a replace option for it if you want it to follow the fullbright rules
 			[
@@ -220,6 +222,19 @@
 				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"], // light purble
 				["6a2974", "b45acb", "e0a2e2", "f9d3f9", "ffecfe"], // lignt magenta
 				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // white
+				["2a2a2a", "393939", "555555", "777777", "8f8f8f"] // gray
+			],
+			[
+				["a34c9a", "cc72c3", "ef99e7", "ffcfe9", "fae2ef"], // the white neck fins (pink in the files)
+				["a34c99", "cc72c2", "ef99e6", "ffcfe8", "fae2ee"], // light pink
+				["785131", "986943", "dca76a", "f2d4b5", "fae9d8"], // orange cream
+				["786c32", "b1a14f", "dcca6c", "f2eab5", "fdf9e4"], // light yellow
+				["3c802c", "4ca636", "6fd158", "92ef7b", "b6f7a6"], // light lime
+				["3e836c", "41b69d", "73b9a6", "91d7c0", "b6edda"], // light teal
+				["3e6d83", "4190b6", "73a2b9", "91c0d7", "bbdced"], // light blue
+				["573f83", "7955bc", "8973b9", "a591d7", "cabdea"], // light purble
+				["6a2974", "b45acb", "e0a2e2", "f9d3f9", "ffecfe"], // lignt magenta
+				["545455", "8a8a8b", "b3b3b4", "e0e0e1", "fefeff"], // default white
 				["2a2a2a", "393939", "555555", "777777", "8f8f8f"] // gray
 			],
 			[

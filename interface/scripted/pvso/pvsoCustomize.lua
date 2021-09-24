@@ -28,7 +28,7 @@ function p.setColorReplaceDirectives()
 		local colorReplaceString = "?replace"
 		for i, colorGroup in ipairs(p.vsoConfig.replaceColors) do
 			local basePalette = colorGroup[1]
-			local replacePalette = colorGroup[settings.replaceColors[i] + 1]
+			local replacePalette = colorGroup[(settings.replaceColors[i] or p.vsoConfig.defaultSettings.replaceColors[i] or 1) + 1]
 
 			if settings.customDirectives then
 				replacePalette = settings.customPalette[i]
@@ -56,10 +56,10 @@ end
 
 function adjustColor(i, inc)
 	if p.replaceColors == nil then return end
-	settings.replaceColors[i] = (settings.replaceColors[i] + inc)
+	settings.replaceColors[i] = ((settings.replaceColors[i] or p.vsoConfig.defaultSettings.replaceColors[i]) + inc)
 	if settings.replaceColors[i] < 1 then
-		settings.replaceColors[i] = #p.replaceColors[i] -1
-	elseif settings.replaceColors[i] > #p.replaceColors[i] -1 then
+		settings.replaceColors[i] = (#p.replaceColors[i] -1)
+	elseif settings.replaceColors[i] > (#p.replaceColors[i] -1) then
 		settings.replaceColors[i] = 1
 	end
 	widget.setText("labelColor"..i, tostring(settings.replaceColors[i]))

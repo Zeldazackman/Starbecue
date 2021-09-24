@@ -7,7 +7,7 @@
 
 	"tooltipKind" : "vsoSpawner",
 
-	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png",
+	"inventoryIcon": "/vehicles/spov/vaporeon/spov/default/icon.png?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff",
 	"shortdescription": "Vaporeon",
 
 	"tooltipFields" : {
