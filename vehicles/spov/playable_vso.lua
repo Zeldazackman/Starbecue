@@ -274,9 +274,6 @@ function init()
 	end)
 
 	message.setHandler( "despawn", function(_,_, nowarpout)
-		if p.driver then
-			world.sendEntityMessage(p.driver, "PVSOClear")
-		end
 		p.nowarpout = nowarpout
 		p.onDeath()
 	end )
@@ -606,6 +603,7 @@ function p.onDeath()
 			if p.occupant[i].id ~= nil then
 				p.occupant[i].visible = true
 				world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoRemoveInvisible")
+				world.sendEntityMessage(p.occupant[i].id, "PVSOClear")
 			end
 		end
 	end

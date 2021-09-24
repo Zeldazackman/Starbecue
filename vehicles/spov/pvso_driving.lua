@@ -305,6 +305,7 @@ function p.doClickActions(state, dt)
 			p.loopedMessage("radialSelection", p.driver, "getRadialSelection", {}, function(data)
 
 				if data.selection ~= nil and data.selection ~= "cancel" and data.type == "actionSelect" then
+					p.lastRadialSelection = data.selection
 					if data.button == 0 and data.pressed and not p.click then
 						p.click = true
 						if p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController" then
@@ -333,6 +334,9 @@ function p.doClickActions(state, dt)
 		end
 	elseif p.movement.assignClickActionRadial then
 		world.sendEntityMessage( p.driver, "openPVSOInterface", "close" )
+		if p.lastRadialSelection == "despawn" then
+			p.onDeath()
+		end
 		p.movement.assignClickActionRadial = nil
 	end
 
@@ -394,10 +398,15 @@ function p.clickAction(stateData, name, control)
 end
 
 function p.assignClickActionMenu(state)
-	local options = {{
+	local options = {}
+	table.insert(options, {
+			name = "despawn",
+			icon = "/interface/xhover.png"
+		})
+	table.insert(options, {
 			name = "unassigned",
 			icon = "/items/active/pvsoController/unassigned.png"
-		}}
+		})
 	for action, _ in pairs(state.control.clickActions) do
 		table.insert(options, {
 			name = action,
