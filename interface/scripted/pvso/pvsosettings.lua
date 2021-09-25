@@ -58,7 +58,7 @@ function setIconDirectives()
 		settings.directives = p.vsoConfig.defaultDirectives
 	end
 	local species = p.vsoname
-	local skin = settings.skinNames.head or "default"
+	local skin = (settings.skinNames or {}).head or "default"
 	local directives = settings.directives or ""
 	widget.setImage("icon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
 end
@@ -97,7 +97,7 @@ function readOccupantData()
 			if species == nil then
 				setPortrait(p.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
 			else
-				local skin = p.occupant[i].smolPreyData.settings.skinNames.head or "default"
+				local skin = (p.occupant[i].smolPreyData.settings.skinNames or {}).head or "default"
 				local directives = p.occupant[i].smolPreyData.settings.directives or ""
 				widget.setImage(p.occupantList.."."..listItem..".portraitIcon", "/vehicles/spov/"..species.."/spov/"..skin.."/icon.png"..directives)
 			end

@@ -8,7 +8,7 @@ function init()
 	if p.settings and p.settings.vsos then
 		local i = 1
 		for vsoname, data in pairs(p.settings.vsos) do
-			local skin = p.settings[vsoname].skinNames.head or "default"
+			local skin = (p.settings[vsoname].skinNames or {}).head or "default"
 			local directives = p.settings[vsoname].directives or ""
 
 			local listItem = widget.addListItem(p.occupantList)

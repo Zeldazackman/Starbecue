@@ -99,14 +99,8 @@ function openRadialMenu()
 	if settings and settings.vsos then
 		for vsoname, data in pairs(settings.vsos) do
 			if data.enable then
-				local skin = "default"
-				local directives = ""
-				if settings[vsoname] ~= nil then
-					if settings[vsoname].skinNames ~= nil then
-						skin = settings[vsoname].skinNames.head or "default"
-					end
-					directives = settings[vsoname].directives or ""
-				end
+				local skin = (settings[vsoname].skinNames or {}).head or "default"
+				local directives = settings[vsoname].directives or ""
 				if #options <= 10 then
 					if data.index ~= nil and data.index+1 <= #options then
 						table.insert(options, data.index+1, {

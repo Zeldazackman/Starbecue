@@ -150,28 +150,28 @@ function p.smolPreyAnimPath(occupant)
 	local frontarms_fullbright
 
 	if state.idle.head ~= nil then
-		local skin = settings.skinNames.head or "default"
+		local skin = (settings.skinNames or {}).head or "default"
 		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
 		if animatedParts.parts.head_fullbright ~= nil then
 			head_fullbright = p.fixPathTags(animatedParts.parts.head_fullbright.partStates.headState[state.idle.head].properties.image, skin, settings)
 		end
 	end
 	if state.idle.body ~= nil then
-		local skin = settings.skinNames.body or "default"
+		local skin = (settings.skinNames or {}).body or "default"
 		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
 		if animatedParts.parts.body_fullbright ~= nil then
 			body_fullbright = p.fixPathTags(animatedParts.parts.body_fullbright.partStates.bodyState[state.idle.body].properties.image, skin, settings)
 		end
 	end
 	if state.idle.tail ~= nil then
-		local skin = settings.skinNames.tail or "default"
+		local skin = (settings.skinNames or {}).tail or "default"
 		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
 		if animatedParts.parts.tail_fullbright ~= nil then
 			tail_fullbright = p.fixPathTags(animatedParts.parts.tail_fullbright.partStates.tailState[state.idle.tail].properties.image, skin, settings)
 		end
 	end
 	if state.idle.legs ~= nil then
-		local skin = settings.skinNames.legs or "default"
+		local skin = (settings.skinNames or {}).legs or "default"
 		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
 		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
 		if animatedParts.parts.backlegs_fullbright ~= nil then
@@ -182,7 +182,7 @@ function p.smolPreyAnimPath(occupant)
 		end
 	end
 	if state.idle.arms ~= nil then
-		local skin = settings.skinNames.arms or "default"
+		local skin = (settings.skinNames or {}).arms or "default"
 		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
 		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
 		if animatedParts.parts.backarms_fullbright ~= nil then
@@ -652,7 +652,7 @@ function p.setColorReplaceDirectives()
 end
 
 function p.setSkinPartTags()
-	for animPart, skin in pairs(p.settings.skinNames) do
+	for animPart, skin in pairs(p.settings.skinNames or {}) do
 		animator.setPartTag( animPart, "skin", skin )
 	end
 end
