@@ -60,7 +60,7 @@ function update(args)
 		if not radialSelectionData.gotData and rpc == nil then
 			rpc = world.sendEntityMessage( entity.id(), "getRadialSelection" )
 			rpcCallback = function(data)
-				if data.selection ~= "cancel" and data.selection ~= nil and data.type == "vsoSelect" then
+				if data.selection ~= nil and data.type == "vsoSelect" then
 					radialSelectionData = data
 					radialSelectionData.gotData = true
 				end
@@ -68,7 +68,8 @@ function update(args)
 		end
 		radialSelectionData.gotData = nil
 		if radialSelectionData.selection ~= nil then
-			if radialSelectionData.selection == "settings" then
+			if radialSelectionData.selection == "cancel" then
+			elseif radialSelectionData.selection == "settings" then
 				openSettingsMenu()
 			else -- any other selection
 				spawnVSO(radialSelectionData.selection)
@@ -98,8 +99,14 @@ function openRadialMenu()
 	if settings and settings.vsos then
 		for vsoname, data in pairs(settings.vsos) do
 			if data.enable then
-				local skin = settings[vsoname].skinNames.head or "default"
-				local directives = settings[vsoname].directives or ""
+				local skin = "default"
+				local directives = ""
+				if settings[vsoname] ~= nil then
+					if settings[vsoname].skinNames ~= nil then
+						skin = settings[vsoname].skinNames.head or "default"
+					end
+					directives = settings[vsoname].directives or ""
+				end
 				if #options <= 10 then
 					if data.index ~= nil and data.index+1 <= #options then
 						table.insert(options, data.index+1, {

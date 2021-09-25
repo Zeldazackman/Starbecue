@@ -23,6 +23,8 @@ function update(dt, fireMode, shiftHeld)
 		else
 			local position = mcontroller.position()
 			local settings = player.getProperty("vsoSettings") or {}
+			local vsoSettings = sb.jsonMerge(sb.jsonMerge(root.assetJson( "/pvso_general.config"), root.assetJson( "/vehicles/spov/"..self.vso.."/"..self.vso..".vehicle" ).vso.defaultSettings or {}), settings[self.vso] or {})
+			settings[self.vso] = vsoSettings
 
 			animator.playSound("activate")
 
@@ -42,7 +44,7 @@ function update(dt, fireMode, shiftHeld)
 				world.spawnItem(config.getParameter("codex").."-codex", position, 1)
 			end
 
-			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings[self.vso] } )
+			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = vsoSettings } )
 
 			player.radioMessage({
 				messageId = self.vehicle.."1", unique = false,

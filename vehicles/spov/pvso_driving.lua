@@ -304,8 +304,9 @@ function p.doClickActions(state, dt)
 		else
 			p.loopedMessage("radialSelection", p.driver, "getRadialSelection", {}, function(data)
 
-				if data.selection ~= nil and data.selection ~= "cancel" and data.type == "actionSelect" then
+				if data.selection ~= nil and data.type == "actionSelect" then
 					p.lastRadialSelection = data.selection
+					if data.selection == "cancel" then return end
 					if data.button == 0 and data.pressed and not p.click then
 						p.click = true
 						if p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController" then
