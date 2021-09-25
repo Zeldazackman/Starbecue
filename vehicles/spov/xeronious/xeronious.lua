@@ -84,7 +84,7 @@ function succ(args)
 	p.facePoint(p.seats[p.driverSeat].controls.aim[1])
 	p.movement.aimingLock = 0.1
 
-	local globalSuccPosition = p.localToGlobal(p.stateconfig[p.state].control.clickActions.succ.position or {0,0})
+	local globalSuccPosition = p.localToGlobal(p.stateconfig[p.state].actions.succ.position or {0,0})
 	local aim = p.seats[p.driverSeat].controls.aim
 
 	local entities = world.entityLineQuery(globalSuccPosition, aim, {
@@ -95,7 +95,7 @@ function succ(args)
 		destination = globalSuccPosition,
 		source = entity.id(),
 		speed = 20,
-		force = 200,
+		force = 900,
 		direction = p.direction
 	}
 
@@ -115,18 +115,16 @@ function succ(args)
 		world.spawnProjectile( "succEffect", effectPosition, entity.id(), world.distance( globalSuccPosition, effectPosition ), false, {data = data} )
 	end)
 
-	p.checkEatPosition( globalSuccPosition, 2, "belly", "succEat", true)
+	p.checkEatPosition( globalSuccPosition, 3, "belly", "succEat", true)
 	return true
 end
 
-function letGrabGo()
-	local victim = p.findFirstOccupantIdForLocation("hug")
-	p.grabbing = nil
-	p.armRotation.enabledL = false
-	p.armRotation.enabledR = false
-	p.armRotation.groupsR = {}
-	p.armRotation.groupsL = {}
-	p.uneat(victim)
+function grab()
+	p.grab("hug")
+end
+
+function hugGrab()
+	return p.checkEatPosition(mcontroller.position, 5, "hug", "hug")
 end
 
 function bellyToTail(args)
@@ -220,65 +218,6 @@ function unpin(args)
 	return true, returnval[2], returnval[3]
 end
 
-function p.setGrabTarget()
-	local controls = p.seats[p.driverSeat].controls
-	if not (((controls.primaryHandItem == "pvsoController") or (controls.altHandItem == "pvsoController"))
-	or ((controls.primaryHandItem == nil) and (controls.altHandItem == nil)))
-	then
-		p.grabbing = nil
-	end
-	if p.justAte ~= nil and p.justAte == p.grabbing then
-		p.wasEating = true
-		p.armRotation.enabledL = true
-		p.armRotation.enabledR = true
-		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
-		p.armRotation.groupsR = {}
-		p.armRotation.groupsL = {}
-	elseif p.wasEating then
-		p.wasEating = false
-		p.grabbing = nil
-	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
-		p.movement.clickActionsDisabled = true
-		p.armRotation.enabledL = true
-		p.armRotation.enabledR = true
-		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
-		p.armRotation.groupsR = {p.lounging[p.grabbing].seatname.."Position"}
-		p.armRotation.groupsL = {p.lounging[p.grabbing].seatname.."Position"}
-		p.armRotation.occupantR = p.grabbing
-		p.armRotation.occupantL = p.grabbing
-	else
-		p.armRotation.enabledL = false
-		p.armRotation.enabledR = false
-		p.armRotation.groupsR = {}
-		p.armRotation.groupsL = {}
-		p.armRotation.occupantR = nil
-		p.armRotation.occupantL = nil
-	end
-end
-
-function p.grab()
-	local target = p.checkValidAim(p.driverSeat, 2)
-	if target then
-		p.addRPC(world.sendEntityMessage(target, "pvsoIsPreyEnabled", "held"), function(enabled)
-			if enabled then
-				local prey = world.entityQuery(mcontroller.position(), 5, {
-					withoutEntityId = p.driver,
-					includedTypes = {"creature"}
-				})
-				for _, entity in ipairs(prey) do
-					if entity == target then
-						if p.eat(target, "hug") then
-							p.grabbing = target
-							p.movement.clickActionsDisabled = true
-						end
-					end
-				end
-			end
-		end)
-		return true
-	end
-end
-
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
@@ -286,46 +225,18 @@ function state.stand.begin()
 end
 
 function state.stand.update()
-	if p.movement.clickActionsDisabled and p.grabbing ~= nil then
-		if p.pressControl(p.driverSeat, "primaryFire") then
-			p.uneat(p.grabbing)
-			local transition
-			local victim = p.grabbing
-			p.grabbing = nil
-			local angle = p.armRotation.frontarmsAngle * 180/math.pi
-
-			if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
-				transition = "eat"
-			elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
-				transition = "analEat"
-			end
-			p.doTransition(transition, {id = victim})
-
-			p.timer("restoreClickActions", 0.5, function()
-				p.movement.clickActionsDisabled = false
-			end)
-		elseif p.pressControl(p.driverSeat, "altFire") then
-			p.uneat(p.grabbing)
-			p.grabbing = nil
-			p.timer("restoreClickActions", 0.5, function()
-				p.movement.clickActionsDisabled = false
-			end)
-		end
-	end
 	if not p.transitionLock then
 		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
-			letGrabGo()
+			p.letGrabGo("hug")
 			p.doTransition( "crouch" )
 			return
 		elseif not mcontroller.onGround() and p.pressControl(p.driverSeat, "jump") then
-			letGrabGo()
+			p.letGrabGo("hug")
 			p.setState( "fly" )
 			return
 		end
 	end
 end
-
-state.stand.grab = p.grab
 
 function state.stand.sitpin(args)
 	local pinnable = { args.id }
@@ -389,6 +300,7 @@ state.stand.escapeAnal = escapeAnal
 state.stand.escapeTail = escapeTail
 
 state.stand.succ = succ
+state.stand.grab = grab
 
 -------------------------------------------------------------------------------
 
@@ -438,6 +350,8 @@ state.sit.escapeOral = escapeOral
 state.sit.escapeTail = escapeTail
 state.sit.unpin = unpin
 
+state.sit.succ = succ
+state.sit.grab = grab
 
 -------------------------------------------------------------------------------
 
@@ -479,6 +393,8 @@ state.hug.escapeOral = escapeOral
 state.hug.escapeTail = escapeTail
 state.hug.unpin = unpin
 
+state.hug.succ = succ
+
 -------------------------------------------------------------------------------
 
 function state.crouch.update()
@@ -494,7 +410,7 @@ function state.crouch.update()
 end
 
 function state.crouch.begin()
-	letGrabGo()
+	p.letGrabGo("hug")
 	p.setMovementParams( "crouch" )
 end
 
@@ -527,7 +443,7 @@ function state.fly.update()
 end
 
 function state.fly.begin()
-	letGrabGo()
+	p.letGrabGo("hug")
 	p.movement.flying = true
 	p.setMovementParams( "fly" )
 end

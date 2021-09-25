@@ -350,49 +350,49 @@
 				"back": { "transition": "down", "chance": 20 },
 				"animation": { "head": "pet" }
 			},
-			"control": {
-				"defaultActions": ["vore", "specialAttack"],
-				"clickActions": {
-					"vore":{
-						"cooldown": 1,
-						"script": "vore"
+			"defaultActions": ["vore", "specialAttack"],
+			"actions": {
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "vore",
+					"position": [ 3, -2.5 ]
+				},
+				"physicalAttack": {
+					"cooldown": 0.5,
+					"projectile": {
+						"name": "vapbap",
+						"position": [ 3, -2.5 ],
+						"aimable": false
 					},
-					"oralVore":{
-						"cooldown": 1,
-						"script": "vore",
-						"position": [ 3, -2.5 ]
-					},
-					"physicalAttack": {
-						"cooldown": 0.5,
-						"projectile": {
-							"name": "vapbap",
-							"position": [ 3, -2.5 ],
-							"aimable": false
-						},
-						"animation": {
-							"bap": "bap",
-							"tags": [
-								{
-									"owner": "bap",
-									"part": "global",
-									"name": "bap",
-									"value": "bap/"
-								}
-							]
-						}
-					},
-					"specialAttack": {
-						"hold" : true,
-						"animation": { "head" : "waterspray"},
-						"projectile": {
-							"name": "vapwatergun",
-							"position": [ 2.75, -0.125 ],
-							"aimable": true,
-							"energy": true,
-							"cost": 1
-						}
+					"animation": {
+						"bap": "bap",
+						"tags": [
+							{
+								"owner": "bap",
+								"part": "global",
+								"name": "bap",
+								"value": "bap/"
+							}
+						]
 					}
 				},
+				"specialAttack": {
+					"hold" : true,
+					"animation": { "head" : "waterspray"},
+					"projectile": {
+						"name": "vapwatergun",
+						"position": [ 2.75, -0.125 ],
+						"aimable": true,
+						"energy": true,
+						"cost": 1
+					}
+				}
+			},
+			"control": {
 				"animations": {
 					"swim": {
 						"legs": "swim",
@@ -969,39 +969,40 @@
 			"locationCenters" : {
 				"belly" : [-0.25, -2]
 			},
-			"control": {
-				"defaultActions": ["physicalAttack", "specialAttack"],
-				"clickActions" : {
-					"physicalAttack": {
-						"cooldown": 0.5,
-						"projectile": {
-							"name": "smolvapbap",
-							"position": [ 0, -1.5 ],
-							"aimable": false
-						},
-						"animation": {
-							"bap": "smol.bap",
-							"tags": [
-								{
-									"owner": "bap",
-									"part": "global",
-									"name": "bap",
-									"value": "bap/"
-								}
-							]
-						}
+			"defaultActions": ["physicalAttack", "specialAttack"],
+			"actions" : {
+				"physicalAttack": {
+					"cooldown": 0.5,
+					"projectile": {
+						"name": "smolvapbap",
+						"position": [ 0, -1.5 ],
+						"aimable": false
 					},
-					"specialAttack": {
-						"hold" : true,
-						"projectile": {
-							"name": "vapwatergun",
-							"position": [ 1.5, -0.625 ],
-							"aimable": true,
-							"energy": true,
-							"cost": 1
-						}
+					"animation": {
+						"bap": "smol.bap",
+						"tags": [
+							{
+								"owner": "bap",
+								"part": "global",
+								"name": "bap",
+								"value": "bap/"
+							}
+						]
 					}
 				},
+				"specialAttack": {
+					"hold" : true,
+					"projectile": {
+						"name": "vapwatergun",
+						"position": [ 1.5, -0.625 ],
+						"aimable": true,
+						"energy": true,
+						"cost": 1
+					}
+				}
+			},
+
+			"control": {
 				"animations": {
 					"walk": {
 						"legs": "smol.walk",
@@ -1096,7 +1097,6 @@
 				"belly" : [0, -1]
 			},
 			"control": {
-				"clickActionsDisabled" : true,
 				"ballFrames": 12,
 				"ballRadius": 2,
 				"animations": {

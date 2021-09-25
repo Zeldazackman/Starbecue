@@ -250,7 +250,7 @@
 			},
 			"control": {
 				"defaultClickActions" : [],
-				"clickActions" : {
+				"actions" : {
 
 				},
 				"animations": {
@@ -334,7 +334,7 @@
 			},
 			"control": {
 				"defaultClickActions" : [],
-				"clickActions" : {
+				"actions" : {
 
 				},
 				"animations": {

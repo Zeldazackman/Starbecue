@@ -385,46 +385,46 @@
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
-			"control": {
-				"defaultActions" : ["grab", "succ"],
-				"clickActions" : {
-					"grab":{
-						"cooldown": 0.5,
-						"script": "grab"
-					},
-					"vore":{
-						"cooldown": 1,
-						"script": "vore"
-					},
-					"oralVore":{
-						"cooldown": 1,
-						"script": "oralVore"
-					},
-					"tailVore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"analVore":{
-						"cooldown": 1,
-						"script": "analVore"
-					},
-					/*
-					"physicalAttack": {
-						"projectile": {
-							"name": "xeroniousbap",
-							"position": [ 3, -1.5 ],
-							"aimable": false
-						},
-						"cooldown": 1,
-					},
-					*/
-					"succ": {
-						"hold" : true,
-						"position" : [3, 1.5],
-						"animation": {"head": "succ"},
-						"script": "succ"
-					}
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
 				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "xeroniousbap",
+						"position": [ 3, -1.5 ],
+						"aimable": false
+					},
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"position" : [3, 1.5],
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
+			"control": {
 				"animations": {
 					"walk": {
 						"arms": "idle",
@@ -599,26 +599,26 @@
 				"belly" : [1.5, -1.5],
 				"tail" : [-2.0, -2.0]
 			},
+			"defaultActions" : ["vore", "vore"],
+			"actions" : {
+				"vore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"succ": {
+					"hold" : true,
+					"position" : [4.5, -2],
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
 			"control": {
 				"waterMovementDisabled":true,
 				"airMovementDisabled":true,
-				"defaultActions" : ["vore", "vore"],
-				"clickActions" : {
-					"vore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"tailVore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"succ": {
-						"hold" : true,
-						"position" : [4.5, -2],
-						"animation": {"head": "succ"},
-						"script": "succ"
-					}
-				},
 				"animations": {
 					"walk": {
 						"arms": "crawl",
@@ -789,38 +789,36 @@
 				"belly" : [1.5, -1.5],
 				"tail" : [-2.0, -2.0]
 			},
-
+			"defaultActions" : ["vore", "succ"],
+			"actions" : {
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				"succ": {
+					"position" : [3, 1.5],
+					"hold" : true,
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
 			"control": {
 				"groundMovementDisabled" : true,
 				"jumpMovementDisabled" : true,
 				"airMovementDisabled" : true,
 				"waterMovementDisabled" : true,
-				"defaultActions" : ["vore", "succ"],
-				"clickActions" : {
-					"vore":{
-						"cooldown": 1,
-						"script": "vore"
-					},
-					"oralVore":{
-						"cooldown": 1,
-						"script": "oralVore"
-					},
-					"tailVore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"analVore":{
-						"cooldown": 1,
-						"script": "analVore"
-					},
-					"succ": {
-						"position" : [3, 1.5],
-						"hold" : true,
-						"animation": {"head": "succ"},
-						"script": "succ"
-					}
-				},
-
 				"animations": {
 					"fly": {
 						"head": "idle",
@@ -1032,49 +1030,43 @@
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
-			"control": {
-				"groundMovementDisabled" : true,
-				"jumpMovementDisabled" : true,
-				"airMovementDisabled" : true,
-				"waterMovementDisabled" :true,
-				"defaultActions" : ["grab", "succ"],
-				"clickActions" : {
-					"grab":{
-						"cooldown": 0.5,
-						"script": "grab"
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
+				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "xeroniousbap",
+						"position": [ 3, -1.5 ],
+						"aimable": false
 					},
-					"vore":{
-						"cooldown": 1,
-						"script": "vore"
-					},
-					"oralVore":{
-						"cooldown": 1,
-						"script": "oralVore"
-					},
-					"tailVore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"analVore":{
-						"cooldown": 1,
-						"script": "analVore"
-					},
-					/*
-					"physicalAttack": {
-						"projectile": {
-							"name": "xeroniousbap",
-							"position": [ 3, -1.5 ],
-							"aimable": false
-						},
-						"cooldown": 1,
-					},
-					*/
-					"succ": {
-						"hold" : true,
-						"position" : [2, -0.5],
-						"animation": {"head": "succ"},
-						"script": "succ"
-					}
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"position" : [2, -0.5],
+					"animation": {"head": "succ"},
+					"script": "succ"
 				}
 			}
 		},
@@ -1286,48 +1278,42 @@
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
-			"control": {
-				"groundMovementDisabled" : true,
-				"jumpMovementDisabled" : true,
-				"airMovementDisabled" : true,
-				"waterMovementDisabled" :true,
-				"defaultActions" : ["grab", "succ"],
-				"clickActions" : {
-					"grab":{
-						"cooldown": 0.5,
-						"script": "grab"
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
+				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"transition": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "xeroniousbap",
+						"position": [ 3, -1.5 ],
+						"aimable": false
 					},
-					"vore":{
-						"cooldown": 1,
-						"script": "vore"
-					},
-					"oralVore":{
-						"cooldown": 1,
-						"script": "oralVore"
-					},
-					"tailVore":{
-						"cooldown": 1,
-						"script": "tailVore"
-					},
-					"analVore":{
-						"cooldown": 1,
-						"transition": "analVore"
-					},
-					/*
-					"physicalAttack": {
-						"projectile": {
-							"name": "xeroniousbap",
-							"position": [ 3, -1.5 ],
-							"aimable": false
-						},
-						"cooldown": 1,
-					},
-					*/
-					"succ": {
-						"hold" : true,
-						"animation": {"head": "succ"},
-						"script": "succ"
-					}
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"animation": {"head": "succ"},
+					"script": "succ"
 				}
 			}
 		}

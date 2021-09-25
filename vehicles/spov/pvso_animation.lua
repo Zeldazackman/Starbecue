@@ -47,6 +47,8 @@ p.armRotation = {
 	frontarmsAngle = 0
 }
 function p.armRotationUpdate()
+	p.setGrabTarget()
+
 	if p.armRotation.enabledR or p.armRotation.enabledL then
 		p.movement.aimingLock = 0.1
 		p.faceDirection(p.armRotation.target[1]*p.direction)
@@ -97,6 +99,43 @@ function p.rotateArm(enabled, arm, groups, occupantId)
 		animator.setPartTag( arm.."_fullbright_rotation", "armVisible", "?multiply=FFFFFF00" )
 	end
 end
+
+function p.setGrabTarget()
+	local controls = p.seats[p.driverSeat].controls
+	if p.driver and (not (((controls.primaryHandItem == "pvsoController") or (controls.altHandItem == "pvsoController"))
+	or ((controls.primaryHandItem == nil) and (controls.altHandItem == nil))))
+	then
+		p.grabbing = nil
+	end
+	if p.justAte ~= nil and p.justAte == p.grabbing then
+		p.wasEating = true
+		p.armRotation.enabledL = true
+		p.armRotation.enabledR = true
+		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
+		p.armRotation.groupsR = {}
+		p.armRotation.groupsL = {}
+	elseif p.wasEating then
+		p.wasEating = nil
+		p.grabbing = nil
+	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
+		p.movement.clickActionsDisabled = true
+		p.armRotation.enabledL = true
+		p.armRotation.enabledR = true
+		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
+		p.armRotation.groupsR = {p.lounging[p.grabbing].seatname.."Position"}
+		p.armRotation.groupsL = {p.lounging[p.grabbing].seatname.."Position"}
+		p.armRotation.occupantR = p.grabbing
+		p.armRotation.occupantL = p.grabbing
+	else
+		p.armRotation.enabledL = false
+		p.armRotation.enabledR = false
+		p.armRotation.groupsR = {}
+		p.armRotation.groupsL = {}
+		p.armRotation.occupantR = nil
+		p.armRotation.occupantL = nil
+	end
+end
+
 
 function p.updateVisibilityAndSmolprey(occupant)
 	if occupant.id == nil then

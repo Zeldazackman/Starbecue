@@ -7,7 +7,7 @@ function update(dt)
 	if data == nil then return end
 	local distance = world.distance( data.destination, mcontroller.position() )
 
-	if (not ((data.direction < 0 and distance[1] > 0) or (data.direction > 0 and distance[1] < 0))) then
+	if (not ((data.direction < 0 and (distance[1] + data.direction) > 0) or (data.direction > 0 and (distance[1] + data.direction) < 0))) then
 		effect.expire()
 	end
 

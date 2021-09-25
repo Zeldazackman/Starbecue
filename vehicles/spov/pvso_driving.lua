@@ -122,6 +122,9 @@ function p.updateDriving(dt)
 		p.movement.airtime = p.movement.airtime + dt
 	end
 
+	local state = p.stateconfig[p.state]
+	p.doClickActions(state, dt)
+
 	p.movement.aimingLock = math.max(0, p.movement.aimingLock - dt)
 	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
 		local dx = p.seats[p.driverSeat].controls.dx
@@ -129,7 +132,6 @@ function p.updateDriving(dt)
 			dx = p.activeControls.moveDirection
 		end
 		local dy = p.seats[p.driverSeat].controls.dy
-		local state = p.stateconfig[p.state]
 		if (dx ~= 0) then
 			if (p.movement.aimingLock <= 0) then
 				p.faceDirection( dx )
@@ -137,16 +139,15 @@ function p.updateDriving(dt)
 			animator.setGlobalTag("direction", p.direction * dx)
 		end
 
-		if p.stateconfig[p.state].control.defaultActions ~= nil and p.driver ~= nil then
+		if p.stateconfig[p.state].defaultActions ~= nil and p.driver ~= nil then
 			p.loopedMessage("primaryItemData", p.driver, "primaryItemData", {{
-				defaultClickAction = p.stateconfig[p.state].control.defaultActions[1]
+				defaultClickAction = p.stateconfig[p.state].defaultActions[1]
 			}})
 			p.loopedMessage("altItemData", p.driver, "altItemData", {{
-				defaultClickAction = p.stateconfig[p.state].control.defaultActions[2]
+				defaultClickAction = p.stateconfig[p.state].defaultActions[2]
 			}})
 		end
 
-		p.doClickActions(state, dt)
 		p.groundMovement(dx, dy, state, dt)
 		p.waterMovement(dx, dy, state, dt)
 		p.jumpMovement(dx, dy, state, dt)
@@ -295,7 +296,27 @@ function p.doClickActions(state, dt)
 	for name, cooldown in pairs(p.clickActionCooldowns) do
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
-	if state.control.clickActionsDisabled or p.movement.clickActionsDisabled then return end
+	if not (state.actions ~= nil and state.defaultActions ~= nil) then return end
+	if p.grabbing ~= nil then
+		if p.pressControl(p.driverSeat, "primaryFire") then
+			p.uneat(p.grabbing)
+			local transition
+			local victim = p.grabbing
+			p.grabbing = nil
+			local angle = p.armRotation.frontarmsAngle * 180/math.pi
+
+			if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
+				transition = "eat"
+			elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
+				transition = "analEat"
+			end
+			p.doTransition(transition, {id = victim})
+
+		elseif p.pressControl(p.driverSeat, "altFire") then
+			p.uneat(p.grabbing)
+		end
+		return
+	end
 
 	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
 		if not p.movement.assignClickActionRadial then
@@ -306,7 +327,7 @@ function p.doClickActions(state, dt)
 
 				if data.selection ~= nil and data.type == "actionSelect" then
 					p.lastRadialSelection = data.selection
-					if data.selection == "cancel" then return end
+					if data.selection == "cancel" or data.selection == "despawn" then return end
 					if data.button == 0 and data.pressed and not p.click then
 						p.click = true
 						if p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController" then
@@ -337,63 +358,65 @@ function p.doClickActions(state, dt)
 		world.sendEntityMessage( p.driver, "openPVSOInterface", "close" )
 		if p.lastRadialSelection == "despawn" then
 			p.onDeath()
+		elseif p.lastRadialSelection ~= "cancel" and p.lastRadialSelection ~= nil then
+			p.action(state, p.lastRadialSelection, "force")
 		end
 		p.movement.assignClickActionRadial = nil
 	end
 
 	if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoSecretTrick") or (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoPreyEnabler") then
-		p.clickAction(state, state.control.defaultActions[1], "primaryFire")
-		p.clickAction(state, state.control.defaultActions[2], "altFire")
+		p.action(state, state.defaultActions[1], "primaryFire")
+		p.action(state, state.defaultActions[2], "altFire")
 	else
 		if (p.seats[p.driverSeat].controls.primaryHandItem == "pvsoController") then
 			local action = p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
-				action = state.control.defaultActions[1]
+				action = state.defaultActions[1]
 			end
-			p.clickAction(state, action, "primaryFire")
+			p.action(state, action, "primaryFire")
 		elseif (p.seats[p.driverSeat].controls.primaryHandItem == nil) then
-			p.clickAction(state, state.control.defaultActions[1], "primaryFire")
+			p.action(state, state.defaultActions[1], "primaryFire")
 		end
 
 		if (p.seats[p.driverSeat].controls.altHandItem == "pvsoController") then
 			local action = p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
-				action = state.control.defaultActions[2]
+				action = state.defaultActions[2]
 			end
-			p.clickAction(state, action, "altFire")
+			p.action(state, action, "altFire")
 		elseif (p.seats[p.driverSeat].controls.altHandItem == nil) then
-			p.clickAction(state, state.control.defaultActions[2], "altFire")
+			p.action(state, state.defaultActions[2], "altFire")
 		end
 	end
 end
 
-function p.clickAction(stateData, name, control)
-	if stateData.control.clickActions[name] == nil then return end
+function p.action(stateData, name, control)
+	if stateData.actions[name] == nil then return end
 	if not p.clickActionCooldowns[name] then
 		p.clickActionCooldowns[name] = 0
 	end
 
 	if p.clickActionCooldowns[name] > 0 then return end
 
-	if (p.pressControl(p.driverSeat, control))
-	or (p.heldControl(p.driverSeat, control) and stateData.control.clickActions[name].hold)
+	if control == "force" or (p.pressControl(p.driverSeat, control))
+	or (p.heldControl(p.driverSeat, control) and stateData.actions[name].hold)
 	then
 		local continue = true
-		if stateData.control.clickActions[name].script ~= nil then
-			if state[p.state][stateData.control.clickActions[name].script] ~= nil then
-				continue = state[p.state][stateData.control.clickActions[name].script]()
+		if stateData.actions[name].script ~= nil then
+			if state[p.state][stateData.actions[name].script] ~= nil then
+				continue = state[p.state][stateData.actions[name].script]()
 			else
-				sb.logError("no script named: ["..stateData.control.clickActions[name].script.."] in state: ["..p.state.."]")
+				sb.logError("no script named: ["..stateData.actions[name].script.."] in state: ["..p.state.."]")
 			end
 		end
 		if continue then
-			p.clickActionCooldowns[name] = stateData.control.clickActions[name].cooldown or 0
+			p.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
 		end
-		if continue and stateData.control.clickActions[name].animation ~= nil then
-			p.doAnims(stateData.control.clickActions[name].animation)
+		if continue and stateData.actions[name].animation ~= nil then
+			p.doAnims(stateData.actions[name].animation)
 		end
-		if continue and stateData.control.clickActions[name].projectile ~= nil then
-			p.projectile(stateData.control.clickActions[name].projectile)
+		if continue and stateData.actions[name].projectile ~= nil then
+			p.projectile(stateData.actions[name].projectile)
 		end
 	end
 end
@@ -408,7 +431,7 @@ function p.assignClickActionMenu(state)
 			name = "unassigned",
 			icon = "/items/active/pvsoController/unassigned.png"
 		})
-	for action, _ in pairs(state.control.clickActions) do
+	for action, _ in pairs(state.actions) do
 		table.insert(options, {
 			name = action,
 			icon = "/items/active/pvsoController/"..action..".png"
@@ -532,4 +555,37 @@ function p.fireProjectile( projectiledata, driver )
 		params.powerMultiplier = p.objectPowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.id(), direction, projectiledata.relative, params )
 	end
+end
+
+function p.grab(location, aimrange, grabrange)
+	local target = p.checkValidAim(p.driverSeat, aimrange or 2)
+	if target then
+		p.addRPC(world.sendEntityMessage(target, "pvsoIsPreyEnabled", "held"), function(enabled)
+			if enabled then
+				local prey = world.entityQuery(mcontroller.position(), grabrange or 5, {
+					withoutEntityId = p.driver,
+					includedTypes = {"creature"}
+				})
+				for _, entity in ipairs(prey) do
+					if entity == target then
+						if p.eat(target, location) then
+							p.grabbing = target
+							p.movement.clickActionsDisabled = true
+						end
+					end
+				end
+			end
+		end)
+		return true
+	end
+end
+
+function p.letGrabGo(location)
+	local victim = p.findFirstOccupantIdForLocation(location)
+	p.grabbing = nil
+	p.armRotation.enabledL = false
+	p.armRotation.enabledR = false
+	p.armRotation.groupsR = {}
+	p.armRotation.groupsL = {}
+	p.uneat(victim)
 end
