@@ -33,7 +33,6 @@ function onBegin()
 end
 
 function onEnd()
-	p.uneat(p.driver)
 end
 
 -------------------------------------------------------------------------------

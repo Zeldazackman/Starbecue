@@ -85,6 +85,7 @@ function adjustSkin(part, inc)
 	settings.replaceSkin[part] = i
 
 	for _, animPart in ipairs(p.replaceSkin[part].parts) do
+		if not settings.skinNames then settings.skinNames = {} end
 		settings.skinNames[animPart] = p.replaceSkin[part].skins[i]
 	end
 
