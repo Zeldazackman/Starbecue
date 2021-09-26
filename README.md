@@ -63,7 +63,7 @@ To replace the one used by SSVM
 - will be further improved by allowing player prey to warp with you when warping to another world
 - may have a setting to warp prey into a special "belly" world for that predator player
 
-# Vore Teanants
+# Vore Tenants
 A system to replace the one used by SSVM
 - will make it be compatible with our prey enabling system
 
