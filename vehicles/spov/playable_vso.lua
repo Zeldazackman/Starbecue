@@ -184,7 +184,7 @@ function init()
 	end
 
 	if not config.getParameter( "uneaten" ) then
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		p.warpInEffect()
 	end
 
 
@@ -273,9 +273,8 @@ function init()
 		}
 	end)
 
-	message.setHandler( "despawn", function(_,_, nowarpout)
-		p.nowarpout = nowarpout
-		p.onDeath()
+	message.setHandler( "despawn", function(_,_, eaten)
+		p.onDeath(eaten)
 	end )
 
 	message.setHandler( "digest", function(_,_, eid)
@@ -594,11 +593,11 @@ function p.onForcedReset()
 	onForcedReset()
 end
 
-function p.onDeath()
+function p.onDeath(eaten)
 	world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
 
-	if not p.nowarpout then
-		world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+	if not eaten then
+		p.warpOutEffect()
 		for i = 0, #p.occupant do
 			p.uneat(p.occupant[i].id)
 		end
@@ -1129,6 +1128,8 @@ function p.uneat( occupantId )
 	end
 	if occupantData.species ~= nil then
 		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, layer = occupantData.smolPreyData.layer } )
+	else
+		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveInvisible")
 	end
 	p.lounging[occupantId] = nil
 	p.occupant[seatindex] = p.clearOccupant(seatindex)

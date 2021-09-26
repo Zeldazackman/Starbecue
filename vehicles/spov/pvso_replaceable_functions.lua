@@ -27,6 +27,14 @@ function p.letout(id)
 	return p.doTransition( "escape", {id = id} )
 end
 
+-- warp in/out effect should be replaceable if needed
+function p.warpInEffect()
+	world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+end
+function p.warpOutEffect()
+	world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]

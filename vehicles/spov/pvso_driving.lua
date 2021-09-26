@@ -107,8 +107,10 @@ end
 function p.updateDriving(dt)
 	if p.driver then
 		local light = p.vso.lights.driver
-		light.position = world.entityPosition( p.driver )
-		world.sendEntityMessage( p.driver, "PVSOAddLocalLight", light )
+		if light then
+			light.position = world.entityPosition( p.driver )
+			world.sendEntityMessage( p.driver, "PVSOAddLocalLight", light )
+		end
 
 		local aim = vehicle.aimPosition(p.driverSeat)
 		local cursor = "/cursors/cursors.png:pointer"

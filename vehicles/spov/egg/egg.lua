@@ -19,7 +19,6 @@ function onBegin()
 	p.occupants.egg = 1
 	p.includeDriver = true
 	p.driving = false
-	p.nowarpout = true
 
 	if not p.settings.cracks then
 		p.settings.cracks = 0
@@ -34,6 +33,10 @@ end
 
 function onEnd()
 end
+
+-- don't want warp effects on this ever
+function p.warpInEffect() end
+function p.warpOutEffect() end
 
 -------------------------------------------------------------------------------
 

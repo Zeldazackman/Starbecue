@@ -91,7 +91,7 @@
 		},
 
 		"lights" : {
-			"occupant0" : {
+			"driver" : {
 				"color" : [100, 100, 100],
 				"position" : [0,0],
 				"pointLight" : true

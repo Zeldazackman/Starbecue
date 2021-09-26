@@ -21,25 +21,25 @@
 					},
 					"s_back": {
 						"frames": 2,
-						"cycle": 0.25,
+						"cycle": 1,
 						"mode": "end",
 						"priority": 1
 					},
 					"s_front": {
 						"frames": 2,
-						"cycle": 0.25,
+						"cycle": 1,
 						"mode": "end",
 						"priority": 1
 					},
 					"s_up": {
 						"frames": 2,
-						"cycle": 0.25,
+						"cycle": 1,
 						"mode": "end",
 						"priority": 1
 					},
 					"s_down": {
 						"frames": 2,
-						"cycle": 0.25,
+						"cycle": 1,
 						"mode": "end",
 						"priority": 1
 					}
