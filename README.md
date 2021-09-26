@@ -8,25 +8,13 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ## Features
 
-### Vaporeon
+### Prey Enabler
 
-![](/vehicles/spov/vaporeon/vaporeon.png)
+Some people don't like certain kinds of vore, some people don't like vore at all! but they still might want to play games with other people who do, and this is meant to make that much easier.
 
-This extra large fishcat can eat up to 2 people at once, and comes with extra features such as:
-- Letting you lay on top of its belly, instead of inside;
-- Rolling over and laying on top of you in return;
-- Using its fluid nature to suck you directly into its stomach!
+Players can craft an item called the "Prey Enabler" with their empty hands for one pixel, this item brings up a window with a bunch of checkboxes, this allows you to opt in and out of what types of vore can be done to you, check it if you're ok being prey for it, uncheck if you aren't, if you don't want to be prey at all just uncheck the "Prey Enabled" at the bottom of the menu, which overrides all the others.
 
-Additionally, you can feed it the standard easy/anti-escape and heal/digest pills, along with a new fattening donut to make its belly a bit bigger without needing anyone inside. The donut and a diet pill to reverse its effect are purchasable in the same places as the other pills, of course.
-
-Last but not least, even more functionality can be unlocked through the Playable VSO system (detailed more below), including walking around, shrinking smaller to fit through tight gaps, spraying water at your enemies, and more!
-
-### Xeronious
-
-This commissioned kaiju is able to fit a total of three prey in his belly! he can also eat one with his tail
-- Sitting down and hugging you
-- Letting you struggle and between the belly and tail
-- Soft digest putting you in an egg they can lay
+Currently this does not affect whether any other vore mods can or can't perform vore on the player.
 
 ### Playable VSOs
 
@@ -34,17 +22,21 @@ Special items can be purchased from the vendor at the food hall under the VSO ta
 
 Full use of this system requires you to bind Tech Action 2 and 3 in the options if they aren't already bound. We recommend the G and H keyes respectively, because they're right by F, and that's what they were back in really old versions of the game when they were actually used in vanilla.
 
-To eat people, npcs, or monsters, simply walk up to them and left-click on them to swipe at and grab them. This same action will also do some damage to enemies.
-The same movement keys are also used to transition between different poses, like standing or sitting or sleeping, etc.
-To let people out that you previously ate, simply press Tech Action 2 (G). Alternatively, you can let them out via the menu, accessible by pressing Tech Action 3 (H). This menu also has settings to heal/digest your prey, as well as automatically activating the tech when you warp to a different world, and the button to deactivate it when you want to return to your normal self.
+When turning into a VSO you will be given a controller item, this is required for the VSO to detect some keys being pressed, such as Shift, as well as pass some more data to the vehicle that it cannot detect without it.
+
+Holding Tech Action 1 (F) while in a VSO allows you to bring up its action wheel, the X at the bottom will despawn the VSO, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a VSO might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the VSO does not have will not result in anything.
+
+Most VSOs will have the same movement controls a player would, but tapping movment keys can be used to transition between different poses, like standing or sitting or sleeping, etc.
+
+To let people out that you previously ate, simply press Tech Action 2 (G). Alternatively, you can let them out via the menu, accessible by interacting with yourself. When This menu also has settings to heal/digest your prey, how easy it is to escape, if DoT numbers should display, and whether you want your belly to be noisy, said options are global and apply to every VSO, so you won't have to set those settings for each one, further settings will only apply to that specific VSO such as if it will automatically deploy when you warp to another world (will only trigger if it was the most recent one selected) and some VSOs may have settings specific to it, some may also have customization options, which will be accessed from clicking the color palette button in the top right of the menu, and you can return to the settings from the gear in the same place in that menu.
 
 # Support Us!
 
 https://www.patreon.com/LokiVulpix
 
-Vote on what should be the next playable VSO! with your support there's more likely to be more of them!
+Vote on what should be the next feature worked on!
 
-## Credits
+## Main Credits
 
 ### Zygan (Zygahedron)
 
@@ -65,6 +57,17 @@ Helps out with debugging and coding a little here and there.
 
 
 ## Potential Future Additions
+
+# Vore RP tech
+To replace the one used by SSVM
+- will be further improved by allowing player prey to warp with you when warping to another world
+- may have a setting to warp prey into a special "belly" world for that predator player
+
+# Vore Teanants
+A system to replace the one used by SSVM
+- will make it be compatible with our prey enabling system
+
+# VSOs
 
 From Scratch
 - Eevee
