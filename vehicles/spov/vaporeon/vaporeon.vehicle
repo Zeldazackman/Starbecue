@@ -156,7 +156,8 @@
 			"shaft" : { "mass": 0.1 },
 			"knot" : { "mass": 0.1 },
 			"balls" : { "sided" : true, "mass": 0.1 },
-			"fatten" : { "mass": 1 }
+			"fatten" : { "mass": 1 },
+			"digesting" : { }
 		},
 		"maxOccupants" : {
 			"total" : 3, // could potentially be 3 but making it so I don't have ot fuck with the menu

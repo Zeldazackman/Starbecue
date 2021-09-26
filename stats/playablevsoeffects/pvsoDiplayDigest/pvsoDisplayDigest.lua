@@ -52,16 +52,19 @@ function update(dt)
 			if self.cdt >= self.targetTime then
 				--world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
 				status.modifyResourcePercentage("health", -1)
+			else
+				status.setResource("health", 1)
 			end
 		elseif self.rpc == nil then
+			status.setResource("health", 1)
 			self.rpc = world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
-		elseif self.rpc ~= nil and self.rpc:finished() then
+		elseif self.rpc ~= nil and self.rpc:finished() and not self.digested then
 			if self.rpc:succeeded() then
 				local result = self.rpc:result()
 				if result.success == "success" then
 					self.digested = true
 					self.targetTime = result.timing
-				elseif result.success == "doesn't exist" or result.success == "no data" then
+				elseif result.success == "no data" then
 					self.digested = true
 				end
 			end

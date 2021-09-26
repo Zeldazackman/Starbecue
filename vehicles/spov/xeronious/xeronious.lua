@@ -51,8 +51,13 @@ function p.whenFalling()
 end
 
 function p.letout(id)
+	local id = id
+	if id == nil then
+		id = p.occupant[p.occupants.total].id
+	end
 	if not id then return end
 	local location = p.lounging[id].location
+
 	if location == "belly" then
 		if p.heldControl(p.driverSeat, "down") or p.lounging[id].species == "egg" then
 			return p.doTransition("escapeAnal", {id = id})
@@ -62,6 +67,7 @@ function p.letout(id)
 	elseif location == "tail" then
 		return p.doTransition("escapeTail", {id = id})
 	elseif location == "hug" then
+		p.grabbing = nil
 		return p.uneat(id)
 	end
 end
@@ -94,8 +100,8 @@ function succ(args)
 	local data = {
 		destination = globalSuccPosition,
 		source = entity.id(),
-		speed = 20,
-		force = 900,
+		speed = 15,
+		force = 500,
 		direction = p.direction
 	}
 
@@ -164,7 +170,7 @@ function sitAnalEat(args)
 end
 
 function checkOral()
-	return p.checkEatPosition(p.localToGlobal( {3, -1.5} ), 5, "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "eat")
 end
 
 function checkTail()

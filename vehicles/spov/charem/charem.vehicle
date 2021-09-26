@@ -98,7 +98,8 @@
 		"locations" :{
 			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"hug" : { },
-			"fatten" : { "mass": 1 }
+			"fatten" : { "mass": 1 },
+			"digesting" : { }
 		},
 		"maxOccupants" : {
 			"total" : 2,

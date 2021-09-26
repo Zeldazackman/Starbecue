@@ -130,7 +130,7 @@
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 
 					"succ": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 3 },
-					"burp": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"burp": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }

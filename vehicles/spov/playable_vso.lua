@@ -278,9 +278,12 @@ function init()
 	end )
 
 	message.setHandler( "digest", function(_,_, eid)
-		local location = p.getLocationFromEid(eid)
-		local success, timing = p.doTransition("digest"..location)
-		return {success=success, timing=timing}
+		if eid ~= nil and p.lounging[eid] ~= nil then
+			local location = p.lounging[eid].location
+			local success, timing = p.doTransition("digest"..location)
+			p.lounging[eid].location = "digesting"
+			return {success=success, timing=timing}
+		end
 	end )
 
 	message.setHandler( "uneat", function(_,_, eid)
@@ -831,9 +834,7 @@ end
 
 function p.moveOccupantLocation(args, location)
 	if p.locationFull(location) then return false end
-	return true, function()
-		p.lounging[args.id].location = location
-	end
+	p.lounging[args.id].location = location
 end
 
 function p.findFirstOccupantIdForLocation(location)
