@@ -853,7 +853,7 @@
 			},
 			"interact": {
 				"front": { "transition": "side", "chance": 20 },
-				"side": { "transition": "bed", "chance": 100 },
+				"side": { "transition": "bed", "chance": 100, "drivingEnabled": true },
 				"back": { "transition": "eatAnal", "chance": 100 }
 			}
 		},

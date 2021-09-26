@@ -1027,7 +1027,7 @@
 			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
-				"side": { "transition": "hug", "chance": 100, "controlled": true, "location": "hug", "failOnFull": true},
+				"side": { "transition": "hug", "chance": 100, "drivingEnabled": true },
 				"back": { "transition": "tailEat", "chance": 100, "location": "tail", "failOnFull": true},
 				"petAnimation": true
 			},
