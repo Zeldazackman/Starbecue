@@ -207,6 +207,7 @@
 					}
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions" : {
 						"up": { "transition": "up", "indicate" : "red" },
@@ -329,6 +330,7 @@
 					}
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions" : {
 						"up": { "transition": "up", "victimAnimation": "hug.s_up", "indicate" : "green" },

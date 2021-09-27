@@ -646,6 +646,7 @@
 
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_up" },
@@ -730,6 +731,7 @@
 					}
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_up" },
@@ -833,6 +835,7 @@
 					}
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions": {
 						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
@@ -929,6 +932,7 @@
 					}
 				},
 				"hug" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions": {
 						"up": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_up" },

@@ -72,9 +72,9 @@ function p.clearOccupant(i)
 			down = 0,
 			jump = 0,
 			shift = 0,
-			special1 = 1, --so that it doesn't trip p.tapControl from using the tech
-			special2 = 1,
-			special3 = 1,
+			special1 = 0,
+			special2 = 0,
+			special3 = 0,
 
 			primaryFireReleased = 0,
 			altFireReleased = 0,
@@ -1330,7 +1330,16 @@ function p.handleStruggles(dt)
 			end
 			p.doVictimAnim( id, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
 		end
-		animator.playSound( "struggle" )
+
+		local sound = struggledata.sound
+		if struggledata.directions[movedir].sound ~= nil then
+			sound = struggledata.directions[movedir].sound
+		end
+		if sound == nil then
+			animator.playSound( "struggle" )
+		elseif sound then
+			animator.playSound( sound )
+		end
 	end
 end
 

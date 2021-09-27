@@ -797,34 +797,34 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "spov/<skin>/tail.png:stand.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:stand.<frame>" } },
-						"flick": { "properties": { "image": "spov/<skin>/tail.png:stand.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:stand.flick.<frame>" } },
+						"idle": { "properties": { "image": "spov/<skin>/tail.png:stand.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:stand.<frame>" } },
+						"flick": { "properties": { "image": "spov/<skin>/tail.png:stand.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:stand.flick.<frame>" } },
 
-						"sitdown": { "properties": { "image": "spov/<skin>/tail.png:sitdown.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:sitdown.<frame>" } },
-						"standup": { "properties": { "image": "spov/<skin>/tail.png:standup.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:standup.<frame>" } },
+						"sitdown": { "properties": { "image": "spov/<skin>/tail.png:sitdown.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:sitdown.<frame>" } },
+						"standup": { "properties": { "image": "spov/<skin>/tail.png:standup.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:standup.<frame>" } },
 
-						"fallasleep": { "properties": { "image": "spov/<skin>/tail.png:fallasleep.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:fallasleep.<frame>" } },
-						"wakeup": { "properties": { "image": "spov/<skin>/tail.png:wakeup.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:wakeup.<frame>" } },
-						"asleep": { "properties": { "image": "spov/<skin>/tail.png:asleep.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:asleep.<frame>" } },
-						"rollover": { "properties": { "image": "spov/<skin>/tail.png:<state>.rollover.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:<state>.rollover.<frame>" } },
+						"fallasleep": { "properties": { "image": "spov/<skin>/tail.png:fallasleep.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:fallasleep.<frame>" } },
+						"wakeup": { "properties": { "image": "spov/<skin>/tail.png:wakeup.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:wakeup.<frame>" } },
+						"asleep": { "properties": { "image": "spov/<skin>/tail.png:asleep.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:asleep.<frame>" } },
+						"rollover": { "properties": { "image": "spov/<skin>/tail.png:<state>.rollover.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:<state>.rollover.<frame>" } },
 
-						"sit": { "properties": { "image": "spov/<skin>/tail.png:sit.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:sit.<frame>" } },
-						"sit.flick": { "properties": { "image": "spov/<skin>/tail.png:sit.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:sit.flick.<frame>" } },
+						"sit": { "properties": { "image": "spov/<skin>/tail.png:sit.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:sit.<frame>" } },
+						"sit.flick": { "properties": { "image": "spov/<skin>/tail.png:sit.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:sit.flick.<frame>" } },
 
-						"lay": { "properties": { "image": "spov/<skin>/tail.png:lay.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:lay.<frame>" } },
-						"lay.flick": { "properties": { "image": "spov/<skin>/tail.png:lay.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:lay.flick.<frame>" } },
+						"lay": { "properties": { "image": "spov/<skin>/tail.png:lay.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:lay.<frame>" } },
+						"lay.flick": { "properties": { "image": "spov/<skin>/tail.png:lay.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/foreground/<skin>/tail.png:lay.flick.<frame>" } },
 
-						"back": { "properties": { "image": "spov/<skin>/tail.png:back.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:back.<frame>" } },
-						"back.flick": { "properties": { "image": "spov/<skin>/tail.png:back.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:back.flick.<frame>" } },
+						"back": { "properties": { "image": "spov/<skin>/tail.png:back.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:back.<frame>" } },
+						"back.flick": { "properties": { "image": "spov/<skin>/tail.png:back.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:back.flick.<frame>" } },
 
-						"walk": { "properties": { "image": "spov/<skin>/tail.png:walk.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:walk.<frame>" } },
-						"run": { "properties": { "image": "spov/<skin>/tail.png:run.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:run.<frame>" } },
+						"walk": { "properties": { "image": "spov/<skin>/tail.png:walk.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:walk.<frame>" } },
+						"run": { "properties": { "image": "spov/<skin>/tail.png:run.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:run.<frame>" } },
 
-						"jump": { "properties": { "image": "spov/<skin>/tail.png:jump.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:jump.<frame>" } },
-						"fall": { "properties": { "image": "spov/<skin>/tail.png:fall.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:fall.<frame>" } },
+						"jump": { "properties": { "image": "spov/<skin>/tail.png:jump.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:jump.<frame>" } },
+						"fall": { "properties": { "image": "spov/<skin>/tail.png:fall.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:fall.<frame>" } },
 
-						"swimidle": { "properties": { "image": "spov/<skin>/tail.png:swimidle.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:swimidle.<frame>" } },
-						"swim": { "properties": { "image": "spov/<skin>/tail.png:swim.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/tail.png:swim.<frame>" } },
+						"swimidle": { "properties": { "image": "spov/<skin>/tail.png:swimidle.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:swimidle.<frame>" } },
+						"swim": { "properties": { "image": "spov/<skin>/tail.png:swim.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:swim.<frame>" } },
 
 						"none": { "properties": {} }
 					}

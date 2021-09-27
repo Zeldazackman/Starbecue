@@ -1212,6 +1212,7 @@
 			],
 			"struggle": {
 				"hug" : {
+					"sound" : false,
 					"parts" : ["arms"], // can be an arms struggle anim later maybe
 					"directions" : {
 						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },

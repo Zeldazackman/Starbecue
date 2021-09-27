@@ -128,6 +128,7 @@
 			"idleAnimations": [],
 			"struggle": {
 				"egg" : {
+					"sound" : false,
 					"parts" : ["body"],
 					"directions" : {
 						"front": { "transition": "crack", "indicate" : "red" },
