@@ -108,7 +108,7 @@
 		},
 		"maxOccupants" : {
 			"total" : 1,
-			"other" : 1
+			"egg" : 1
 		},
 		"victimAnimations": "/vehicles/spov/egg/victim_animations.config"
 	},

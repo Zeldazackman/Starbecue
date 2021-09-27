@@ -1,0 +1,10 @@
+{
+	"name" : "eggify",
+	"effectConfig" : {},
+	"defaultDuration" : 0.1,
+
+	"scripts" : [
+	"eggify.lua"
+	]
+
+}

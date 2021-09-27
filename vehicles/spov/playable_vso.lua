@@ -222,7 +222,9 @@ function init()
 	p.seats[p.driverSeat].smolPreyData = config.getParameter("layer") or {}
 	p.seats[p.driverSeat].species = p.seats[p.driverSeat].smolPreyData.species
 
-	p.spawnerUUID = world.entityUniqueId(p.spawner)
+	if p.spawner then
+		p.spawnerUUID = world.entityUniqueId(p.spawner)
+	end
 
 	p.onForcedReset()	--Do a forced reset once.
 
@@ -565,7 +567,7 @@ function p.setMovementParams(name)
 end
 
 function p.checkSpawnerExists()
-	if world.entityExists(p.spawner) then
+	if p.spawner and world.entityExists(p.spawner) then
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "pvsoPreyWarpRequest", {},
 		function(data)
@@ -593,7 +595,9 @@ function p.onForcedReset()
 end
 
 function p.onDeath(eaten)
-	world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
+	if p.spawner then
+		world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
+	end
 
 	if not eaten then
 		p.warpOutEffect()
