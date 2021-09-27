@@ -739,7 +739,6 @@ end
 
 function p.unForceSeat(occupantId)
 	if occupantId then
-		vehicle.setLoungeEnabled(p.lounging[occupantId].seatname, false)
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveForceSit", 1, entity.id())
 	end
 end
