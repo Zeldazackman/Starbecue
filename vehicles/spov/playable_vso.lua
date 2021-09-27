@@ -1023,10 +1023,12 @@ function p.edible( occupantId, seatindex, source )
 end
 
 function p.getSmolPreyData()
+	local layer = p.seats[p.driverSeat].smolPreyData
 	return {
 		species = world.entityName( entity.id() ):sub( 5 ),
 		recieved = true,
 		update = true,
+		layer = layer,
 		path = p.directoryPath,
 		settings = p.settings,
 		state = p.state,

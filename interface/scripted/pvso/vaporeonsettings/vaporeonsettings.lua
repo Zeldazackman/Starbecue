@@ -5,7 +5,7 @@ p.vsoname = "vaporeon"
 
 function onInit()
 	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
-
+	setStartState()
 end
 
 function enableActionButtons(enable)
@@ -14,6 +14,7 @@ function enableActionButtons(enable)
 end
 
 function defaultSmall()
+	setStartState()
 	changeSetting( "defaultSmall" )
 end
 
