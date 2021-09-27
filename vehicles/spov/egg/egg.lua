@@ -38,6 +38,13 @@ end
 function p.warpInEffect() end
 function p.warpOutEffect() end
 
+function p.edible( occupantId, seatindex, source )
+	if p.driver ~= occupantId then return false end
+	if p.stateconfig[p.state].edible then
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(), entity.id())
+		return true
+	end
+end
 -------------------------------------------------------------------------------
 
 function state.smol.crack( args )

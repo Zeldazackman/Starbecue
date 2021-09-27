@@ -1073,10 +1073,7 @@ function p.isMonster( id )
 end
 
 function p.inedible(occupantId)
-	for i = 1, #p.config.inedibleCreatures do
-		if world.entityType(occupantId) == p.config.inedibleCreatures[i] then return true end
-	end
-	return false
+	return p.config.inedibleCreatures[world.entityType(occupantId)]
 end
 
 function p.eat( occupantId, location )
@@ -1280,11 +1277,9 @@ function p.handleStruggles(dt)
 				movedir = nil
 			elseif p.partsAreStruggling(struggledata.parts) then
 				movedir = nil
-			else
-				for i = 1, #p.config.speciesStrugglesDisabled do
-					if p.occupant[struggler].species == p.config.speciesStrugglesDisabled[i] then
-						movedir = nil
-					end
+			elseif config.getParameter("name") ~= "spovegg" then
+				if p.occupant[struggler].species ~= nil and p.config.speciesStrugglesDisabled[p.occupant[struggler].species] then
+					movedir = nil
 				end
 			end
 		end

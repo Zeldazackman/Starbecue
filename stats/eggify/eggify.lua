@@ -13,14 +13,14 @@ function init()
 		callScript = "p.edible", callScriptArgs = { entity.id(), 0, entity.id() }
 	} )
 	if edibles[1] == nil then
-		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection()} )
+		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), settings = { escapeModifier = "easyEscape"}} )
 	end
 end
 
 
 function update(dt)
 	if vsoSpawned == nil and smolPreyData ~= nil then
-		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), layer = smolPreyData} )
+		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), layer = smolPreyData, settings = { escapeModifier = "easyEscape"}} )
 	end
 end
 
