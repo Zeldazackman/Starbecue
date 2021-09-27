@@ -1,0 +1,8 @@
+{
+	"projectileName" : "eggShard",
+	"image" : "/vehicles/spov/egg/spov/default/smol/smol_body.png:0.idle.1?addmask=/vehicles/spov/egg/spov/shards.png:1",
+	"physics" : "grenade",
+	"animationLoops" : false,
+	"flippable" : false,
+	"speed" : 10
+  }

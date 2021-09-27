@@ -40,18 +40,19 @@ function p.warpOutEffect() end
 
 -------------------------------------------------------------------------------
 
-function p.edible( occupantId, seatindex, source )
-	if p.occupant[0].id ~= occupantId then return false end
-	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(), entity.id())
-		return true
-	end
-end
-
 function state.smol.crack( args )
 	p.settings.cracks = p.settings.cracks + 1
+	animator.playSound("crack")
 
-	if p.settings.cracks > 3 then p.onDeath()
+	if p.settings.cracks > 3 then
+		local path = "/vehicles/spov/egg/spov/"..(p.settings.skinNames.body or "default" ).."/smol/smol_body.png:0.idle.1?addmask=/vehicles/spov/egg/spov/shards.png:"
+
+		for i = 1, 10 do
+			world.spawnProjectile( "eggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
+				image = path..tostring(i)
+			})
+		end
+		p.onDeath()
 	else animator.setGlobalTag( "cracks", p.settings.cracks )
 	end
 end
