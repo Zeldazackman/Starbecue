@@ -56,10 +56,14 @@ function state.smol.crack( args )
 		local path = "?addmask=/vehicles/spov/egg/spov/shards.png:"
 		local skinNames = p.settings.skinNames or {}
 		local skin = skinNames.body or "default"
+		local flip = ""
+		if p.direction < 0 then
+			flip = "?flipx"
+		end
 
 		for i = 1, 10 do
 			world.spawnProjectile( skin.."eggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
-				processing = p.settings.directives..path..tostring(i),
+				processing = p.settings.directives..path..tostring(i)..flip,
 				timeToLive = math.random(0,3) + math.random(),
 				speed = math.random(5,10) + math.random()
 			})

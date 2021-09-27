@@ -6,6 +6,7 @@
 	"flippable" : false,
 	"renderLayer" : "Player+1",
 	"orientationLocked" : true,
+	"scripts" : ["/projectiles/eggShard/eggshard.lua"],
 	"speed" : 10,
 	"bounces": -1
   }
