@@ -661,8 +661,8 @@ end
 
 function p.setColorReplaceDirectives()
 	if p.vso.replaceColors ~= nil then
-		local colorReplaceString = "?replace"
-		local fullbrightDirectivesString = "?replace"
+		local colorReplaceString = ""
+		local fullbrightDirectivesString = ""
 		for i, colorGroup in ipairs(p.vso.replaceColors) do
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[(p.settings.replaceColors[i] or p.vso.defaultSettings.replaceColors[i] or 1) + 1]
@@ -678,9 +678,9 @@ function p.setColorReplaceDirectives()
 
 			for j, color in ipairs(replacePalette) do
 				if not fullbright then
-					fullbrightDirectivesString = fullbrightDirectivesString..";"..basePalette[j].."=00000000"
+					fullbrightDirectivesString = fullbrightDirectivesString.."?replace;"..basePalette[j].."=00000000"
 				end
-				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
+				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
 			end
 		end
 		p.settings.directives = colorReplaceString

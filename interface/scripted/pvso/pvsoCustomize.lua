@@ -25,7 +25,7 @@ end
 
 function p.setColorReplaceDirectives()
 	if p.vsoConfig.replaceColors ~= nil then
-		local colorReplaceString = "?replace"
+		local colorReplaceString = ""
 		for i, colorGroup in ipairs(p.vsoConfig.replaceColors) do
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[(settings.replaceColors[i] or p.vsoConfig.defaultSettings.replaceColors[i] or 1) + 1]
@@ -39,7 +39,7 @@ function p.setColorReplaceDirectives()
 			end
 
 			for j, color in ipairs(replacePalette) do
-				colorReplaceString = colorReplaceString..";"..basePalette[j].."="..color
+				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
 			end
 		end
 		settings.directives = colorReplaceString
