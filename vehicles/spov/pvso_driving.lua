@@ -58,7 +58,7 @@ function p.updateDirectionControl(seatname, control, direction, val, dt, forceHo
 end
 
 function p.updateControls(dt)
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupants.total do
 		local seatname = p.occupant[i].seatname
 		local eid = p.occupant[i].id
 		if eid ~= nil and world.entityExists(eid) and not (seatname == p.driverSeat and p.isPathfinding) then
@@ -102,13 +102,14 @@ function p.updateControls(dt)
 			else
 				p.occupant[i].controls.shiftReleased = p.occupant[i].controls.shift
 				p.occupant[i].controls.shift = 0
+
 				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", {type}, function(seatdata)
 					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
-				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type, data}, function(seatdata)
-					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
-				end)
 			end
+			p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type, data}, function(seatdata)
+				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
+			end)
 		end
 	end
 end

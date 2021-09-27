@@ -10,9 +10,9 @@ local spawnCooldown = 0
 local spawnedVehicle = nil
 
 function init()
-	message.setHandler( "saveVSOsettings", function() -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
-		reload = true
-		loadSettings()
+	message.setHandler( "refreshVSOsettings", function(_, _, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
+		settings = newSettings
+		radialSelectionData.selection = settings.selected
 	end)
 end
 

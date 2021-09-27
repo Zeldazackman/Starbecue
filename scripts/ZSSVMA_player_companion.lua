@@ -99,6 +99,11 @@ function init()
 		player.consumeItem(item, partial, match )
 	end)
 
+	message.setHandler("vsoDespawned", function ()
+		world.sendEntityMessage(player.id(), "refreshVSOsettings", player.getProperty( "vsoSettings") or {} )
+		player.setProperty( "vsoCurrentData", nil)
+	end)
+
 	initStage = 1 -- init has run
 end
 

@@ -57,7 +57,7 @@ function toggle()
 
 	p.settings.vsos[name].enable = enabled
 	player.setProperty("vsoSettings", p.settings)
-	world.sendEntityMessage(pane.sourceEntity(), "saveVSOsettings")
+	world.sendEntityMessage(pane.sourceEntity(), "refreshVSOsettings", p.settings)
 end
 
 function textbox()
@@ -74,5 +74,5 @@ function textbox()
 
 	p.settings.vsos[name].index = index
 	player.setProperty("vsoSettings", p.settings)
-	world.sendEntityMessage(pane.sourceEntity(), "saveVSOsettings")
+	world.sendEntityMessage(pane.sourceEntity(), "refreshVSOsettings", p.settings)
 end
