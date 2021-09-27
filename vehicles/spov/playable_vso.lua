@@ -310,17 +310,13 @@ function init()
 	end )
 
 
-	p.state = "start" -- this state doesn't need to exist
-	if not (config.getParameter( "uneaten" ) or p.settings.defaultSmall) then
-		if not p.vso.startState then
-			p.vso.startState = "stand"
-		end
-		p.setState( p.vso.startState )
-		p.doAnims( p.stateconfig[p.vso.startState].idle, true )
-	else -- released from larger pred
-		p.setState( "smol" )
-		p.doAnims( p.stateconfig.smol.idle, true )
+	if (config.getParameter( "uneaten" ) or p.settings.defaultSmall) and p.stateconfig.smol then
+		p.vso.startState = "smol"
 	end
+	if not p.vso.startState then
+		p.vso.startState = "stand"
+	end
+	p.setState( p.vso.startState )
 
 	onBegin()
 end
@@ -464,7 +460,7 @@ function onInteraction(args)
 			end
 		elseif p.lounging[args.sourceId].location ~= nil and stateData.struggle ~= nil then
 			local struggleData = stateData.struggle[p.lounging[args.sourceId].location]
-			if struggleData.directions.interact ~= nil and p.struggleChance(struggleData, p.lounging[args.sourceId].index, "interact") then
+			if struggleData and struggleData.directions and struggleData.directions.interact ~= nil and p.struggleChance(struggleData, p.lounging[args.sourceId].index, "interact") then
 				p.doTransition( stateData.struggle[p.lounging[args.sourceId].location].directions.interact.transition, { id = args.sourceId } )
 			end
 		end
@@ -492,7 +488,7 @@ function onInteraction(args)
 				p.interactChance(stateData, "back", args)
 				return
 			end
-		elseif stateData.interact.animation ~= nil then
+		elseif stateData.interact ~= nil and stateData.interact.animation ~= nil then
 			p.doAnims( stateData.interact.animation )
 		end
 		if state[p.state].interact ~= nil then

@@ -21,6 +21,11 @@ end
 function p.setState(state)
 	if state == nil then
 		sb.logError( "nil state from ".. p.state )
+		return
+	end
+	if not p.stateconfig[state] then
+		sb.logError( "invalid state "..state.." from ".. p.state)
+		return
 	end
 	p.prevState = p.state
 	p.state = state
