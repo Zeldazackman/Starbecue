@@ -11,7 +11,7 @@ function build( directory, config, parameters, level, seed )
 
 		if config.scriptStorage.spov ~= nil then
 			config.rarity = "Rare"
-			config.inventoryIcon = "/vehicles/spov/"..config.scriptStorage.spov.type:sub( 5 ).."/spov/"..skin.."/icon.png"..directives
+			config.inventoryIcon = "/vehicles/spov/"..config.scriptStorage.spov.type:gsub("^spov","").."/spov/"..skin.."/icon.png"..directives
 		end
 
 		--config.tooltipFields.statusLabel = sb.replaceTags(config.descriptionWithTags, {

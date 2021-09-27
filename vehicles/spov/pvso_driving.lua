@@ -82,9 +82,18 @@ function p.updateControls(dt)
 			p.occupant[i].controls.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
 			p.occupant[i].controls.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
 
-			local type = "prey"
+			local type
+			local data
 			if (seatname == p.driverSeat) then
 				type = "driver"
+				data = {
+					species = world.entityName(entity.id()):gsub("^spov",""),
+					layer = p.occupant[0].smolPreyData,
+					state = p.state
+				}
+			else
+				type = "prey"
+				data = p.occupant[0].smolPreyData
 			end
 			if p.occupant[i].controls.primaryHandItem ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
 				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
@@ -96,7 +105,7 @@ function p.updateControls(dt)
 				p.loopedMessage(seatname.."Info", eid, "getVSOseatInformation", {type}, function(seatdata)
 					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
-				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type}, function(seatdata)
+				p.loopedMessage(seatname.."Equips", eid, "getVSOseatEquips", {type, data}, function(seatdata)
 					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
 			end

@@ -244,7 +244,7 @@ function init()
 		if data then
 			if data.species == p.lounging[eid].species then return end
 		else
-			if p.lounging[eid].species == world.entityName( entity.id() ):sub( 5 ) then return end
+			if p.lounging[eid].species == world.entityName( entity.id() ):gsub("^spov","") then return end
 		end
 
 		p.lounging[eid].progressBarActive = true
@@ -450,7 +450,7 @@ function onInteraction(args)
 				world.sendEntityMessage(p.driver, "openPVSOInterface", "close", {}, false, entity.id())
 			else
 				world.sendEntityMessage(
-					p.driver, "openPVSOInterface", world.entityName( entity.id() ):sub( 5 ).."Settings",
+					p.driver, "openPVSOInterface", world.entityName( entity.id() ):gsub("^spov","").."Settings",
 					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 				)
 			end
@@ -1025,7 +1025,7 @@ end
 function p.getSmolPreyData()
 	local layer = p.seats[p.driverSeat].smolPreyData
 	return {
-		species = world.entityName( entity.id() ):sub( 5 ),
+		species = world.entityName( entity.id() ):gsub("^spov",""),
 		recieved = true,
 		update = true,
 		layer = layer,
@@ -1196,7 +1196,7 @@ function p.eat( occupantId, location )
 		end
 	end
 	-- lounging in edible smol thing
-	local species = world.entityName( edibles[1] ):sub( 5 ) -- "spov"..species
+	local species = world.entityName( edibles[1] ):gsub("^spov","") -- "spov"..species
 	p.occupant[seatindex].id = occupantId
 	p.occupant[seatindex].species = species
 	p.occupant[seatindex].location = location

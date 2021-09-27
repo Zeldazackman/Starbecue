@@ -1,3 +1,4 @@
+local initStage = 0
 local oldinit = init
 function init()
 	oldinit()
@@ -65,8 +66,9 @@ function init()
 		return player.getProperty("radialSelection") or {}
 	end)
 
-	message.setHandler("getVSOseatEquips", function(_,_, type)
+	message.setHandler("getVSOseatEquips", function(_,_, type, current)
 		player.setProperty( "vsoSeatType", type)
+		player.setProperty( "vsoCurrentData", current)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
@@ -97,6 +99,25 @@ function init()
 		player.consumeItem(item, partial, match )
 	end)
 
+	initStage = 1 -- init has run
+end
+
+local oldupdate = update
+function update(dt)
+	oldupdate(dt)
+	-- make sure init has happened
+	if initStage ~= 1 then return end
+	-- make sure the world is loaded
+	if world.pointTileCollision(entity.position(), {"Null"}) then return end
+	-- now we can actually do things
+	local current = player.getProperty("vsoCurrentData")
+	if current then
+		world.spawnVehicle("spov"..current.species, entity.position(), {
+			driver = player.id(), layer = current.layer, startState = current.state,
+			settings = player.getProperty( "vsoSettings", {} )[current.species] or {},
+		})
+	end
+	initStage = 2 -- post-init finished
 end
 
 local essentialItems = {"beamaxe", "wiretool", "painttool", "inspectiontool"}
