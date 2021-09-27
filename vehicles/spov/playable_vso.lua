@@ -311,14 +311,8 @@ function init()
 		end)
 	end )
 
-
-	if (config.getParameter( "uneaten" ) or p.settings.defaultSmall) and p.stateconfig.smol then
-		p.vso.startState = "smol"
-	end
-	if not p.vso.startState then
-		p.vso.startState = "stand"
-	end
-	p.setState( p.vso.startState )
+	local startState = config.getParameter( "startState" ) or p.settings.startState or p.vso.startState or "stand"
+	p.setState( startState )
 
 	onBegin()
 end
@@ -706,7 +700,7 @@ function p.applyStatusEffects(eid, statuses)
 end
 
 function p.applyStatusLists()
-	for i = 0, p.occupantSlots do
+	for i = 0, p.maxOccupants.total do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
@@ -837,7 +831,7 @@ function p.moveOccupantLocation(args, location)
 end
 
 function p.findFirstOccupantIdForLocation(location)
-	for i = 0, p.occupants.total do
+	for i = 0, p.maxOccupants.total do
 		if p.occupant[i].location == location then
 			return p.occupant[i].id, i
 		end
@@ -871,7 +865,7 @@ function p.updateOccupants(dt)
 
 	local lastFilled = true
 
-	for i = 0, p.occupantSlots do
+	for i = 0, p.maxOccupants.total do
 		if not (i == 0 and not p.includeDriver) then
 			if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 
@@ -1009,11 +1003,11 @@ function p.swapOccupants(a, b)
 	p.occupant[a] = B
 	p.occupant[b] = A
 
-	p.swapCooldown = 100 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
+	p.swapCooldown = 10 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
 
 function p.entityLounging( entity )
-	for i = 0, p.occupantSlots do
+	for i = 0, p.maxOccupants.total do
 		if entity == p.occupant[i].id then return true end
 	end
 	return false
@@ -1035,8 +1029,102 @@ function p.getSmolPreyData()
 		update = true,
 		path = p.directoryPath,
 		settings = p.settings,
-		state = p.stateconfig.smol,
-		animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
+		state = p.state,
+		images = p.smolPreyAnimationPaths()
+	}
+end
+
+function p.smolPreyAnimationPaths()
+	local settings = p.settings
+	local state = p.stateconfig[p.state]
+	local animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
+
+	local head
+	local head_fullbright
+
+	local body
+	local body_fullbright
+
+	local tail
+	local tail_fullbright
+
+	local backlegs
+	local backlegs_fullbright
+
+	local frontlegs
+	local frontlegs_fullbright
+
+	local backarms
+	local backarms_fullbright
+
+	local frontarms
+	local frontarms_fullbright
+
+	if state.idle.head ~= nil then
+		local skin = (settings.skinNames or {}).head or "default"
+		head = p.fixSmolPreyPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
+		if animatedParts.parts.head_fullbright ~= nil then
+			head_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.head_fullbright.partStates.headState[state.idle.head].properties.image, skin, settings)
+		end
+	end
+	if state.idle.body ~= nil then
+		local skin = (settings.skinNames or {}).body or "default"
+		body = p.fixSmolPreyPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+		if animatedParts.parts.body_fullbright ~= nil then
+			body_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.body_fullbright.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+		end
+	end
+	if state.idle.tail ~= nil then
+		local skin = (settings.skinNames or {}).tail or "default"
+		tail = p.fixSmolPreyPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+		if animatedParts.parts.tail_fullbright ~= nil then
+			tail_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.tail_fullbright.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+		end
+	end
+	if state.idle.legs ~= nil then
+		local skin = (settings.skinNames or {}).legs or "default"
+		backlegs = p.fixSmolPreyPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		frontlegs = p.fixSmolPreyPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		if animatedParts.parts.backlegs_fullbright ~= nil then
+			backlegs_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.backlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		end
+		if animatedParts.parts.frontlegs_fullbright ~= nil then
+			frontlegs_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.frontlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		end
+	end
+	if state.idle.arms ~= nil then
+		local skin = (settings.skinNames or {}).arms or "default"
+		backarms = p.fixSmolPreyPathTags(animatedParts.parts.backarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		frontarms = p.fixSmolPreyPathTags(animatedParts.parts.frontarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		if animatedParts.parts.backarms_fullbright ~= nil then
+			backarms_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.backarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		end
+		if animatedParts.parts.frontarms_fullbright ~= nil then
+			frontarms_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.frontarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		end
+	end
+
+	return {
+		head = head,
+		head_fullbright = head_fullbright,
+
+		body = body,
+		body_fullbright = body_fullbright,
+
+		tail = tail,
+		tail_fullbright = tail_fullbright,
+
+		backlegs = backlegs,
+		backlegs_fullbright = backlegs_fullbright,
+
+		frontlegs = frontlegs,
+		frontlegs_fullbright = frontlegs_fullbright,
+
+		backarms = backarms,
+		backarms_fullbright = backarms_fullbright,
+
+		frontarms = frontarms,
+		frontarms_fullbright = frontarms_fullbright
 	}
 end
 
@@ -1046,6 +1134,9 @@ function p.transformPrey(i)
 		smolPreyData = p.occupant[i].progressBarData
 	else
 		smolPreyData = p.getSmolPreyData()
+		-- making sure it doesn't get the state YOU are in, just the smol one
+		smolPreyData.stateconfig = p.stateconfig.smol
+		smolPreyData.state = "smol"
 	end
 	if smolPreyData ~= nil then
 		if smolPreyData.layer == true then
@@ -1064,7 +1155,6 @@ function p.transformPrey(i)
 	end
 	p.refreshList = true
 end
-
 
 function p.isMonster( id )
 	if id == nil then return false end
@@ -1124,7 +1214,7 @@ function p.uneat( occupantId )
 		world.sendEntityMessage(occupantId, "openPVSOInterface", "close")
 	end
 	if occupantData.species ~= nil then
-		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, layer = occupantData.smolPreyData.layer } )
+		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } )
 	else
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveInvisible")
 	end
@@ -1213,7 +1303,7 @@ function p.doBellyEffects(dt)
 	local hungereffect = p.settings.hungerEffect or 0
 	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
 
-	for i = 0, p.occupantSlots do
+	for i = 0, p.maxOccupants.total do
 		local eid = p.occupant[i].id
 		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
 			local health = world.entityHealth(eid)

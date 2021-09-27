@@ -161,111 +161,51 @@ function p.updateVisibilityAndSmolprey(occupant)
 end
 
 function p.smolPreyAnimPath(occupant)
-	local path = occupant.smolPreyData.path
-	local settings = occupant.smolPreyData.settings
-	local state = occupant.smolPreyData.state
-	local animatedParts = occupant.smolPreyData.animatedParts
 	local seatname = occupant.seatname
 
-	local head
-	local head_fullbright
+	local head = occupant.smolPreyData.images.head
+	local head_fullbright = occupant.smolPreyData.images.head_fullbright
 
-	local body
-	local body_fullbright
+	local body = occupant.smolPreyData.images.body
+	local body_fullbright = occupant.smolPreyData.images.body_fullbright
 
-	local tail
-	local tail_fullbright
+	local tail = occupant.smolPreyData.images.tail
+	local tail_fullbright = occupant.smolPreyData.images.tail_fullbright
 
-	local backlegs
-	local backlegs_fullbright
+	local backlegs = occupant.smolPreyData.images.backlegs
+	local backlegs_fullbright = occupant.smolPreyData.images.backlegs_fullbright
 
-	local frontlegs
-	local frontlegs_fullbright
+	local frontlegs = occupant.smolPreyData.images.frontlegs
+	local frontlegs_fullbright = occupant.smolPreyData.images.frontlegs_fullbright
 
-	local backarms
-	local backarms_fullbright
+	local backarms = occupant.smolPreyData.images.backarms
+	local backarms_fullbright = occupant.smolPreyData.images.backarms_fullbright
 
-	local frontarms
-	local frontarms_fullbright
+	local frontarms = occupant.smolPreyData.images.frontarms
+	local frontarms_fullbright = occupant.smolPreyData.images.frontarms_fullbright
 
-	if state.idle.head ~= nil then
-		local skin = (settings.skinNames or {}).head or "default"
-		head = p.fixPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
-		if animatedParts.parts.head_fullbright ~= nil then
-			head_fullbright = p.fixPathTags(animatedParts.parts.head_fullbright.partStates.headState[state.idle.head].properties.image, skin, settings)
-		end
-	end
-	if state.idle.body ~= nil then
-		local skin = (settings.skinNames or {}).body or "default"
-		body = p.fixPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
-		if animatedParts.parts.body_fullbright ~= nil then
-			body_fullbright = p.fixPathTags(animatedParts.parts.body_fullbright.partStates.bodyState[state.idle.body].properties.image, skin, settings)
-		end
-	end
-	if state.idle.tail ~= nil then
-		local skin = (settings.skinNames or {}).tail or "default"
-		tail = p.fixPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
-		if animatedParts.parts.tail_fullbright ~= nil then
-			tail_fullbright = p.fixPathTags(animatedParts.parts.tail_fullbright.partStates.tailState[state.idle.tail].properties.image, skin, settings)
-		end
-	end
-	if state.idle.legs ~= nil then
-		local skin = (settings.skinNames or {}).legs or "default"
-		backlegs = p.fixPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
-		frontlegs = p.fixPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
-		if animatedParts.parts.backlegs_fullbright ~= nil then
-			backlegs_fullbright = p.fixPathTags(animatedParts.parts.backlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
-		end
-		if animatedParts.parts.frontlegs_fullbright ~= nil then
-			frontlegs_fullbright = p.fixPathTags(animatedParts.parts.frontlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
-		end
-	end
-	if state.idle.arms ~= nil then
-		local skin = (settings.skinNames or {}).arms or "default"
-		backarms = p.fixPathTags(animatedParts.parts.backarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
-		frontarms = p.fixPathTags(animatedParts.parts.frontarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
-		if animatedParts.parts.backarms_fullbright ~= nil then
-			backarms_fullbright = p.fixPathTags(animatedParts.parts.backarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
-		end
-		if animatedParts.parts.frontarms_fullbright ~= nil then
-			frontarms_fullbright = p.fixPathTags(animatedParts.parts.frontarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
-		end
-	end
+	if head then animator.setPartTag(seatname, "smolpath", head) else animator.setPartTag(seatname, "smolpath", "/empty_image.png") end
+	if head_fullbright then animator.setPartTag(seatname.."_fullbright", "smolpath", head_fullbright) else animator.setPartTag(seatname.."_fullbright", "smolpath", "/empty_image.png") end
 
-	if head then animator.setPartTag(seatname, "smolpath", path..head) else animator.setPartTag(seatname, "smolpath", "/assetmissing") end
-	if head_fullbright then animator.setPartTag(seatname.."_fullbright", "smolpath", path..head_fullbright) else animator.setPartTag(seatname.."_fullbright", "smolpath", "/assetmissing") end
+	if body then animator.setPartTag(seatname.."body", "smolpath", body) else animator.setPartTag(seatname.."body", "smolpath", "/empty_image.png") end
+	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", body_fullbright) else animator.setPartTag(seatname.."body_fullbright", "smolpath", "/empty_image.png") end
 
-	if body then animator.setPartTag(seatname.."body", "smolpath", path..body) else animator.setPartTag(seatname.."body", "smolpath", "/assetmissing") end
-	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", path..body_fullbright) else animator.setPartTag(seatname.."body_fullbright", "smolpath", "/assetmissing") end
+	if tail then animator.setPartTag(seatname.."tail", "smolpath", tail) else animator.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
+	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", tail_fullbright) else animator.setPartTag(seatname.."tail_fullbright", "smolpath", "/empty_image.png") end
 
-	if tail then animator.setPartTag(seatname.."tail", "smolpath", path..tail) else animator.setPartTag(seatname.."tail", "smolpath", "/assetmissing") end
-	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", path..tail_fullbright) else animator.setPartTag(seatname.."tail_fullbright", "smolpath", "/assetmissing") end
+	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", backlegs) else animator.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
+	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", backlegs_fullbright) else animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/empty_image.png") end
 
-	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", path..backlegs) else animator.setPartTag(seatname.."backlegs", "smolpath", "/assetmissing") end
-	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", path..backlegs_fullbright) else animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/assetmissing") end
+	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else animator.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
+	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", frontlegs_fullbright) else animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/empty_image.png") end
 
-	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", path..frontlegs) else animator.setPartTag(seatname.."frontlegs", "smolpath", "/assetmissing") end
-	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", path..frontlegs_fullbright) else animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/assetmissing") end
+	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", backarms) else animator.setPartTag(seatname.."backarms", "smolpath", "/empty_image.png") end
+	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", backarms_fullbright) else animator.setPartTag(seatname.."backarms_fullbright", "smolpath", "/empty_image.png") end
 
-	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", path..backarms) else animator.setPartTag(seatname.."backarms", "smolpath", "/assetmissing") end
-	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", path..backarms_fullbright) else animator.setPartTag(seatname.."backarms_fullbright", "smolpath", "/assetmissing") end
-
-	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", path..frontarms) else animator.setPartTag(seatname.."frontarms", "smolpath", "/assetmissing") end
-	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", path..frontarms_fullbright) else animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/assetmissing") end
+	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", frontarms) else animator.setPartTag(seatname.."frontarms", "smolpath", "/empty_image.png") end
+	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", frontarms_fullbright) else animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/empty_image.png") end
 
 	occupant.smolPreyData.update = false
-end
-
-function p.fixPathTags(path, skin, settings)
-	return sb.replaceTags(path, {
-		skin = skin,
-		fullbrightDirectives = settings.fullbrightDirectives or "",
-		directives = settings.directives or "",
-		bap = "",
-		frame = "1",
-		bellyoccupants = "0",
-		cracks = tostring(settings.cracks) or "0"
-	})
 end
 
 function p.victimAnimUpdate(entity)

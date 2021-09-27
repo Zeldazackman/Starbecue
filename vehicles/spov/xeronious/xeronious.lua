@@ -72,12 +72,9 @@ function p.letout(id)
 	end
 end
 
-function p.extraBellyEffects(i, eid, health)
-end
-
 function checkEggSitup()
 	if not p.driving then
-		for i = 1, p.occupants.total do
+		for i = 0, p.maxOccupants.total do
 			if p.occupant[i].species == "xeronious_egg" then
 				return p.doTransition("up")
 			end

@@ -50,6 +50,7 @@ end
 function state.smol.crack( args )
 	p.settings.cracks = p.settings.cracks + 1
 	animator.playSound("crack")
+	p.doAnim("bodyState", "s_"..args.direction)
 
 	if p.settings.cracks > 3 then
 		local path = "?addmask=/vehicles/spov/egg/spov/shards.png:"

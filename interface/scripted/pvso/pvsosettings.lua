@@ -35,7 +35,6 @@ function init()
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or true )
 
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
-	widget.setChecked( "defaultSmall", settings.defaultSmall or false )
 	p.refreshed = true
 
 	onInit()
@@ -266,9 +265,6 @@ end
 
 function autoDeploy()
 	changeSetting( "autoDeploy" )
-end
-function defaultSmall()
-	changeSetting( "defaultSmall" )
 end
 
 function saveSettings()

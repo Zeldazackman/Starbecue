@@ -812,7 +812,7 @@
 						"sit.flick": { "properties": { "image": "spov/<skin>/tail.png:sit.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:sit.flick.<frame>" } },
 
 						"lay": { "properties": { "image": "spov/<skin>/tail.png:lay.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:lay.<frame>" } },
-						"lay.flick": { "properties": { "image": "spov/<skin>/tail.png:lay.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/foreground/<skin>/tail.png:lay.flick.<frame>" } },
+						"lay.flick": { "properties": { "image": "spov/<skin>/tail.png:lay.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:lay.flick.<frame>" } },
 
 						"back": { "properties": { "image": "spov/<skin>/tail.png:back.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:back.<frame>" } },
 						"back.flick": { "properties": { "image": "spov/<skin>/tail.png:back.flick.<frame><directives>?addmask=/vehicles/spov/vaporeon/spov/<skin>/foreground/tail.png:back.flick.<frame>" } },
