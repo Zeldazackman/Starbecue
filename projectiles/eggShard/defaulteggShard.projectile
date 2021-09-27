@@ -1,0 +1,10 @@
+{
+	"projectileName" : "defaulteggShard",
+	"image" : "/vehicles/spov/egg/spov/default/smol/smol_body.png",
+	"physics" : "grenade",
+	"animationLoops" : false,
+	"flippable" : false,
+	"renderLayer" : "Player+1",
+	"orientationLocked" : true,
+	"speed" : 10
+  }

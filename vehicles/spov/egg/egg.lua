@@ -45,11 +45,13 @@ function state.smol.crack( args )
 	animator.playSound("crack")
 
 	if p.settings.cracks > 3 then
-		local path = "/vehicles/spov/egg/spov/"..(p.settings.skinNames.body or "default" ).."/smol/smol_body.png:0.idle.1?addmask=/vehicles/spov/egg/spov/shards.png:"
+		local path = "?addmask=/vehicles/spov/egg/spov/shards.png:"
+		local skinNames = p.settings.skinNames or {}
+		local skin = skinNames.body or "default"
 
 		for i = 1, 10 do
-			world.spawnProjectile( "eggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
-				image = path..tostring(i)
+			world.spawnProjectile( skin.."eggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
+				processing = path..tostring(i)
 			})
 		end
 		p.onDeath()

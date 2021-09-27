@@ -10,6 +10,7 @@
 		]
 	},
 	"aliases" : {
+		"0" : "0.idle.1",
 		"smolprey" : "0.idle.1",
 
 		"0.left.2" : "0.idle.1",
