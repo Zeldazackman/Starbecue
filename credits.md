@@ -29,3 +29,4 @@
 	xyoshi
 	The_Gamer_Eagle
 	Avar
+	Canary

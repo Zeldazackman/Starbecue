@@ -29,10 +29,10 @@ end
 
 -- warp in/out effect should be replaceable if needed
 function p.warpInEffect()
-	world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+	world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true)
 end
 function p.warpOutEffect()
-	world.spawnProjectile( "spovwarpouteffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+		world.spawnProjectile( "vsowarpouteffect", mcontroller.position(), p.driver or entity.id(), {0,0}, true)
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------

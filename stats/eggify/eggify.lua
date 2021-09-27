@@ -17,7 +17,7 @@ function init()
 		callScript = "p.edible", callScriptArgs = { entity.id(), 0, entity.id() }
 	} )
 	if edibles[1] == nil then
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+		world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true)
 		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), settings = { replaceColors = replaceColors, escapeModifier = "easyEscape"}} )
 	end
 end
@@ -25,7 +25,7 @@ end
 
 function update(dt)
 	if vsoSpawned == nil and smolPreyData ~= nil then
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true)
+		world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true)
 		vsoSpawned = world.spawnVehicle( "spovegg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), layer = smolPreyData, settings = { replaceColors = replaceColors, escapeModifier = "easyEscape"}} )
 	end
 end

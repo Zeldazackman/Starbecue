@@ -86,7 +86,7 @@ function p.changeSize()
 		if p.state == changeSize then
 			changeSize = "stand"
 		end
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 		p.setState( changeSize )
 	end
 end
@@ -236,7 +236,7 @@ function state.chonk_ball.update(dt)
 	roll_chonk_ball(dt)
 	p.movement.aimingLock = 0.1
 	if p.occupants.belly < 2 and not p.transitionLock then
-		world.spawnProjectile( "spovwarpineffectprojectile", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
 
 		p.setState( "smol" )
 	end
