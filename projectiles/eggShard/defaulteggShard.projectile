@@ -6,5 +6,6 @@
 	"flippable" : false,
 	"renderLayer" : "Player+1",
 	"orientationLocked" : true,
-	"speed" : 10
+	"speed" : 10,
+	"bounces": -1
   }

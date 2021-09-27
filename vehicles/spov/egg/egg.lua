@@ -51,7 +51,8 @@ function state.smol.crack( args )
 
 		for i = 1, 10 do
 			world.spawnProjectile( skin.."eggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
-				processing = path..tostring(i)
+				processing = path..tostring(i),
+				timeToLive = math.random(0,3) + math.random()
 			})
 		end
 		p.onDeath()
