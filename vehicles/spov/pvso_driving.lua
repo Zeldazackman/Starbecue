@@ -85,15 +85,19 @@ function p.updateControls(dt)
 			local type
 			local data
 			if (seatname == p.driverSeat) then
-				type = "driver"
+				if p.driving then
+					type = "driver"
+				else
+					type = "prey"
+				end
 				data = {
 					species = world.entityName(entity.id()):gsub("^spov",""),
-					layer = p.occupant[0].smolPreyData,
+					layer = p.occupant[i].smolPreyData,
 					state = p.state
 				}
 			else
 				type = "prey"
-				data = p.occupant[0].smolPreyData
+				data = p.occupant[i].smolPreyData
 			end
 			if p.occupant[i].controls.primaryHandItem ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
 				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)

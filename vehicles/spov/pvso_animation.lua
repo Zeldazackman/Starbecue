@@ -105,7 +105,11 @@ function p.setGrabTarget()
 	if p.driver and (not (((controls.primaryHandItem == "pvsoController") or (controls.altHandItem == "pvsoController"))
 	or ((controls.primaryHandItem == nil) and (controls.altHandItem == nil))))
 	then
-		p.grabbing = nil
+		if p.armRotation.occupantL ~= nil or p.armRotation.occupantR ~= nil then
+			p.grabbing = nil
+			p.uneat(p.armRotation.occupantL)
+			p.uneat(p.armRotation.occupantR)
+		end
 	end
 	if p.justAte ~= nil and p.justAte == p.grabbing then
 		p.wasEating = true
@@ -114,6 +118,8 @@ function p.setGrabTarget()
 		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
 		p.armRotation.groupsR = {}
 		p.armRotation.groupsL = {}
+		p.armRotation.occupantR = nil
+		p.armRotation.occupantL = nil
 	elseif p.wasEating then
 		p.wasEating = nil
 		p.grabbing = nil
