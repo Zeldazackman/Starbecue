@@ -213,12 +213,11 @@ function init()
 		p.isObject = true
 	end
 
-	if p.settings.blackHoleBelly then
-		p.vso.maxOccupants.total = 7
-		if p.includeDriver then
-			p.vso.maxOccupants.total = 8
-		end
+	p.vso.maxOccupants.total = 7
+	if p.includeDriver then
+		p.vso.maxOccupants.total = 8
 	end
+
 	p.seats[p.driverSeat].smolPreyData = config.getParameter("layer") or {}
 	p.seats[p.driverSeat].species = p.seats[p.driverSeat].smolPreyData.species
 

@@ -102,7 +102,6 @@
 			"digesting" : { }
 		},
 		"maxOccupants" : {
-			"total" : 2,
 			"belly" : 1,
 			"hug" : 1
 		},

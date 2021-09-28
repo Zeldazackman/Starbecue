@@ -144,7 +144,6 @@
 			"digesting" : { }
 		},
 		"maxOccupants" : {
-			"total" : 4, // could be 5 but making just 4 so I don't have to fuck with the menu
 			"belly" : 3,
 			"hug" : 1,
 			"tail" : 1
