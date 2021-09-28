@@ -186,6 +186,9 @@
 				{ "tail": "back.wag" },
 				{ "head": "back.blink" }
 			],
+			"locationCenters" : {
+				"belly" : [-0.5, -2]
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],
@@ -309,6 +312,9 @@
 				{ "tail": "back.wag" },
 				{ "head": "back.blink" }
 			],
+			"locationCenters" : {
+				"belly" : [-0.5, -2]
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body", "legs"],
