@@ -127,7 +127,11 @@ function grab()
 end
 
 function hugGrab()
-	return p.checkEatPosition(mcontroller.position, 5, "hug", "hug")
+	return p.checkEatPosition(mcontroller.position(), 5, "hug", "hug")
+end
+
+function hugUnGrab()
+	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
 function bellyToTail(args)
@@ -198,8 +202,8 @@ function escapeTail(args)
 end
 
 function checkVore()
-	if checkOral() then return true end
 	if checkTail() then return true end
+	if checkOral() then return true end
 end
 
 function sitCheckVore()
@@ -349,7 +353,7 @@ state.sit.escapeTail = escapeTail
 state.sit.unpin = unpin
 
 state.sit.succ = succ
-state.sit.grab = grab
+state.sit.grab = hugGrab
 
 -------------------------------------------------------------------------------
 
@@ -392,6 +396,7 @@ state.hug.escapeTail = escapeTail
 state.hug.unpin = unpin
 
 state.hug.succ = succ
+state.hug.grab = hugUnGrab
 
 -------------------------------------------------------------------------------
 
