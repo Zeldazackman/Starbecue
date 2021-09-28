@@ -885,7 +885,7 @@ function p.doBellyEffects(dt)
 	local hungereffect = p.settings.hungerEffect or 0
 	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
 
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		local eid = p.occupant[i].id
 		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
 			local health = world.entityHealth(eid)

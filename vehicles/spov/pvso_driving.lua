@@ -631,5 +631,7 @@ function p.letGrabGo(location)
 	p.armRotation.enabledR = false
 	p.armRotation.groupsR = {}
 	p.armRotation.groupsL = {}
+	p.armRotation.occupantL = nil
+	p.armRotation.occupantR = nil
 	p.uneat(victim)
 end

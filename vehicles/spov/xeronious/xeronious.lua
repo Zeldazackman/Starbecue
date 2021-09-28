@@ -74,7 +74,7 @@ end
 
 function checkEggSitup()
 	if not p.driving then
-		for i = 0, p.maxOccupants.total do
+		for i = 0, p.occupantSlotss do
 			if p.occupant[i].species == "xeronious_egg" then
 				return p.doTransition("up")
 			end
@@ -158,12 +158,7 @@ end
 function sitAnalEat(args)
 	args.id = p.findFirstOccupantIdForLocation("pinned")
 	if not args.id then return false end
-	local continue, func = p.moveOccupantLocation(args, "belly")
-	if continue then
-		p.lounging[args.id].visible = false
-		func()
-	end
-	return continue
+	return p.moveOccupantLocation(args, "belly")
 end
 
 function checkOral()

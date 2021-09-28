@@ -118,7 +118,6 @@ function p.setGrabTarget()
 		p.wasEating = nil
 		p.grabbing = nil
 	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
-		p.movement.clickActionsDisabled = true
 		p.armRotation.enabledL = true
 		p.armRotation.enabledR = true
 		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
@@ -213,8 +212,6 @@ function p.victimAnimUpdate(entity)
 	local victimAnim = p.lounging[entity].victimAnim
 	if not victimAnim.enabled then
 		local location = p.lounging[entity].location
-		victimAnim.last.inside = true
-
 		if victimAnim.location ~= location or victimAnim.state ~= p.state then
 			if victimAnim.progress == nil or victimAnim.progress == 1 then
 				victimAnim.progress = 0
@@ -247,6 +244,7 @@ function p.victimAnimUpdate(entity)
 	if ended and not anim.loop then
 		victimAnim.enabled = false
 		time = p.animStateData[statename].animationState.cycle
+		victimAnim.inside = p.victimAnimations[victimAnim.anim].endInside
 	end
 
 	local seatname = p.lounging[entity].seatname

@@ -83,10 +83,11 @@ end
 function p.moveOccupantLocation(args, location)
 	if p.locationFull(location) then return false end
 	p.lounging[args.id].location = location
+	return true
 end
 
 function p.findFirstOccupantIdForLocation(location)
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		if p.occupant[i].location == location then
 			return p.occupant[i].id, i
 		end
