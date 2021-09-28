@@ -36,6 +36,10 @@ function p.changeSize()
 end
 
 -------------------------------------------------------------------------------
+function state.stand.begin()
+	p.setMovementParams( "default" )
+	p.resolvePosition(5)
+end
 
 function state.stand.eat( args )
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
@@ -45,10 +49,7 @@ end
 
 function state.smol.begin()
 	p.setMovementParams( "smol" )
-end
-
-function state.smol.ending()
-	p.setMovementParams( "default" )
+	p.resolvePosition(3)
 end
 
 -------------------------------------------------------------------------------

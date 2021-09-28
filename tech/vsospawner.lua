@@ -86,7 +86,7 @@ function spawnVSO(type)
 		settings.selected = type
 		world.sendEntityMessage( entity.id(), "playerSaveVSOsettings", settings )
 		local position = mcontroller.position()
-		spawnedVehicle = world.spawnVehicle( "spov"..type, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+		spawnedVehicle = world.spawnVehicle( "spov"..type, { position[1], position[2] }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
 	end
 end
 

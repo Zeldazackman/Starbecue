@@ -229,6 +229,8 @@ function init()
 
 	local startState = config.getParameter( "startState" ) or p.settings.startState or p.vso.startState or "stand"
 	p.setState( startState )
+	p.updateState(0)
+	p.resolvePosition(5)
 
 	for _, script in ipairs(p.config.scripts) do
 		require(script)
@@ -266,6 +268,13 @@ function uninit()
 	--or (world.entityHealth(entity.id()) <= 0) -- vehicles don't have health?
 	then
 		p.onDeath()
+	end
+end
+
+function p.resolvePosition(range)
+	local resolvePosition = world.resolvePolyCollision(p.movementParams.collisionPoly, mcontroller.position(), range or 5)
+	if resolvePosition ~= nil then
+		mcontroller.setPosition(resolvePosition)
 	end
 end
 

@@ -101,6 +101,11 @@ end
 
 -------------------------------------------------------------------------------
 
+function state.stand.begin()
+	p.setMovementParams( "default" )
+	p.resolvePosition(5)
+end
+
 function state.stand.eat( args )
 	if not mcontroller.onGround() or p.movement.falling then return false end
 	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
@@ -224,10 +229,7 @@ state.hug.eatAnal = eatAnal
 
 function state.smol.begin()
 	p.setMovementParams( "smol" )
-end
-
-function state.smol.ending()
-	p.setMovementParams( "default" )
+	p.resolvePosition(3)
 end
 
 -------------------------------------------------------------------------------
@@ -245,15 +247,11 @@ end
 function state.chonk_ball.begin()
 	animator.setGlobalTag("rotationFlip", p.direction * -1)
 	p.setMovementParams( "chonk_ball" )
+	p.resolvePosition(3)
 	self.ballFrames = p.stateconfig.chonk_ball.control.ballFrames
 	self.ballRadius = p.stateconfig.chonk_ball.control.ballRadius
 	self.angularVelocity = 0
 	self.angle = 0
-end
-
-
-function state.chonk_ball.ending()
-	p.setMovementParams( "default" )
 end
 
 function state.chonk_ball.nudge(args)

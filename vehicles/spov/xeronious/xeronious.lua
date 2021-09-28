@@ -224,6 +224,9 @@ end
 
 function state.stand.begin()
 	p.grabbing = p.findFirstOccupantIdForLocation("hug")
+	p.movement.flying = nil
+	p.setMovementParams( "default" )
+	p.resolvePosition(5)
 end
 
 function state.stand.update()
@@ -415,10 +418,7 @@ end
 function state.crouch.begin()
 	p.letGrabGo("hug")
 	p.setMovementParams( "crouch" )
-end
-
-function state.crouch.ending()
-	p.setMovementParams( "default" )
+	p.resolvePosition(5)
 end
 
 state.crouch.bellyToTail = bellyToTail
@@ -449,11 +449,6 @@ function state.fly.begin()
 	p.letGrabGo("hug")
 	p.movement.flying = true
 	p.setMovementParams( "fly" )
-end
-
-function state.fly.ending()
-	p.movement.flying = false
-	p.setMovementParams( "default" )
 end
 
 function state.fly.vore()
