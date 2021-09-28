@@ -368,16 +368,16 @@
 			},
 			"rotationArmState" : "rotation",
 			"rotationCenters" : {
-				"frontarms" : [8, 8],
-				"backarms" : [17, 8]
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [37, 8],
-				"backarms" : [46, 8]
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
 			},
 			"locationCenters" : {
-				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0]
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
 			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
@@ -596,8 +596,8 @@
 				}
 			},
 			"locationCenters" : {
-				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0]
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
 			},
 			"defaultActions" : ["vore", "vore"],
 			"actions" : {
@@ -786,8 +786,8 @@
 				}
 			},
 			"locationCenters" : {
-				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0]
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
 			},
 			"defaultActions" : ["vore", "succ"],
 			"actions" : {
@@ -1012,17 +1012,17 @@
 			},
 			"rotationArmState" : "rotation",
 			"rotationCenters" : {
-				"frontarms" : [8, 8],
-				"backarms" : [17, 8]
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [37, 8],
-				"backarms" : [46, 8]
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
 			},
 			"locationCenters" : {
-				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0],
-				"hug" : [2.5, 0]
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0],
+				"hug" : [1.5, 0]
 			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
@@ -1262,16 +1262,16 @@
 			},
 			"rotationArmState" : "rotation",
 			"rotationCenters" : {
-				"frontarms" : [8, 8],
-				"backarms" : [17, 8]
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
 			},
 			"handOffsets" : {
-				"frontarms" : [37, 8],
-				"backarms" : [46, 8]
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
 			},
 			"locationCenters" : {
-				"belly" : [1.5, -1.5],
-				"tail" : [-2.0, -2.0]
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
 			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },

@@ -51,42 +51,56 @@ function p.armRotationUpdate()
 
 	if p.armRotation.enabledR or p.armRotation.enabledL then
 		p.movement.aimingLock = 0.1
-		p.faceDirection(p.armRotation.target[1]*p.direction)
+		local LR = "L"
+		if p.direction > 0 then
+			LR = "R"
+		end
+
+		p.faceDirection(p.armRotation["target"..LR][1]*p.direction)
 	end
 	if p.direction > 0 then
-		p.rotateArm( p.armRotation.enabledL, "backarms", p.armRotation.groupsL, p.armRotation.occupantL)
-		p.rotateArm( p.armRotation.enabledR, "frontarms", p.armRotation.groupsR, p.armRotation.occupantR)
+		p.rotateArm( p.armRotation.enabledL, "backarms", "L")
+		p.rotateArm( p.armRotation.enabledR, "frontarms", "R")
 	else
-		p.rotateArm( p.armRotation.enabledR, "backarms", p.armRotation.groupsR, p.armRotation.occupantR)
-		p.rotateArm( p.armRotation.enabledL, "frontarms", p.armRotation.groupsL, p.armRotation.occupantL)
+		p.rotateArm( p.armRotation.enabledR, "backarms", "R")
+		p.rotateArm( p.armRotation.enabledL, "frontarms", "L")
 	end
 end
 
-function p.rotateArm(enabled, arm, groups, occupantId)
+function p.rotateArm(enabled, arm, LR)
 	if enabled then
 		animator.setAnimationState(arm.."_rotationState", p.stateconfig[p.state].rotationArmState or "rotation", true )
 
-		local target = p.armRotation.target
+
+		local occupantId = p.armRotation["occupant"..LR]
+		local groups = p.armRotation["groups"..LR]
+
 		local center = {(p.stateconfig[p.state].rotationCenters[arm][1] or 0) / 8, (p.stateconfig[p.state].rotationCenters[arm][2] or 0) / 8}
 		local handOffset = {(p.stateconfig[p.state].handOffsets[arm][1] or 0) / 8, (p.stateconfig[p.state].handOffsets[arm][2] or 0) / 8}
-		local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
 
-		p.armRotation[arm.."Angle"] = angle
+		local target = p.armRotation["target"..LR]
+		if target ~= nil then
+			local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
+
+			p.armRotation[arm.."Angle"] = angle
+			p.armRotation["armAngle"..LR] = angle
+		end
 
 		animator.resetTransformationGroup(arm.."rotation")
-		animator.rotateTransformationGroup(arm.."rotation", angle, center)
+		animator.rotateTransformationGroup(arm.."rotation", p.armRotation[arm.."Angle"], center)
 
 		for i, group in ipairs(groups) do
 			animator.resetTransformationGroup(group)
 			animator.translateTransformationGroup(group, handOffset)
-			animator.rotateTransformationGroup(group, angle, center)
+			animator.rotateTransformationGroup(group, p.armRotation[arm.."Angle"], center)
 		end
 
 		if occupantId ~= nil and p.lounging[occupantId] ~= nil then
 			local victimAnim = p.lounging[occupantId].victimAnim
-			victimAnim.last.x = math.cos(angle) * handOffset[1]
-			victimAnim.last.y = math.sin(angle) * handOffset[2]
+			victimAnim.last.x = math.cos(p.armRotation[arm.."Angle"]) * handOffset[1]
+			victimAnim.last.y = math.sin(p.armRotation[arm.."Angle"]) * handOffset[2]
 		end
+
 
 		animator.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
 		animator.setPartTag( arm.."_fullbright", "armVisible", "?multiply=FFFFFF00" )
@@ -115,7 +129,8 @@ function p.setGrabTarget()
 		p.wasEating = true
 		p.armRotation.enabledL = true
 		p.armRotation.enabledR = true
-		p.armRotation.target = p.globalToLocal(world.entityPosition(p.justAte))
+		p.armRotation.targetL = p.globalToLocal(world.entityPosition(p.justAte))
+		p.armRotation.targetR = p.armRotation.targetL
 		p.armRotation.groupsR = {}
 		p.armRotation.groupsL = {}
 		p.armRotation.occupantR = nil
@@ -126,7 +141,8 @@ function p.setGrabTarget()
 	elseif p.grabbing ~= nil and p.entityLounging(p.grabbing) then
 		p.armRotation.enabledL = true
 		p.armRotation.enabledR = true
-		p.armRotation.target = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
+		p.armRotation.targetL = p.globalToLocal(p.seats[p.driverSeat].controls.aim)
+		p.armRotation.targetR = p.armRotation.targetL
 		p.armRotation.groupsR = {p.lounging[p.grabbing].seatname.."Position"}
 		p.armRotation.groupsL = {p.lounging[p.grabbing].seatname.."Position"}
 		p.armRotation.occupantR = p.grabbing
