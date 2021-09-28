@@ -635,3 +635,16 @@ function p.setSkinPartTags()
 		animator.setPartTag( animPart, "skin", skin )
 	end
 end
+
+function p.partsAreStruggling(parts)
+	for _, part in ipairs(parts) do
+		if not p.hasAnimEnded( part.."State" )
+		and (
+			p.animationIs( part.."State", "s_up" ) or
+			p.animationIs( part.."State", "s_front" ) or
+			p.animationIs( part.."State", "s_back" ) or
+			p.animationIs( part.."State", "s_down" )
+		)
+		then return true end
+	end
+end

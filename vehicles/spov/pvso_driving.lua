@@ -453,6 +453,38 @@ function p.assignClickActionMenu(state)
 	world.sendEntityMessage( p.driver, "openPVSOInterface", "vsoRadialMenu", {options = options, type = "actionSelect" }, true )
 end
 
+function p.checkValidAim(seat, range)
+	local entityaimed = world.entityQuery(p.seats[seat].controls.aim, range or 2, {
+		withoutEntityId = p.driver,
+		includedTypes = {"creature"}
+	})
+	local target = p.firstNotLounging(entityaimed)
+
+	if target and target ~= entity.id() and entity.entityInSight(target) then
+		return target
+	end
+end
+
+function p.checkEatPosition(position, range, location, transition, noaim, aimrange)
+	if not p.locationFull(location) then
+		local target = p.checkValidAim(p.driverSeat, aimrange)
+
+		local prey = world.entityQuery(position, range, {
+			withoutEntityId = p.driver,
+			includedTypes = {"creature"}
+		})
+
+		for _, entity in ipairs(prey) do
+			if (noaim or (entity == target)) and not p.entityLounging(entity) then
+				p.doTransition( transition, {id=entity} )
+				return true
+			end
+		end
+		return false
+	end
+end
+
+
 p.monsterstrugglecooldown = {}
 
 function p.getSeatDirections(seatname)
