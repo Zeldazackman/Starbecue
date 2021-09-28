@@ -151,7 +151,7 @@ function p.applyStatusEffects(eid, statuses)
 end
 
 function p.applyStatusLists()
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
@@ -193,7 +193,7 @@ function p.updateOccupants(dt)
 
 	local lastFilled = true
 
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		if not (i == 0 and not p.includeDriver) then
 			if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
 
@@ -306,7 +306,7 @@ function p.swapOccupants(a, b)
 end
 
 function p.entityLounging( entity )
-	for i = 0, p.maxOccupants.total do
+	for i = 0, p.occupantSlots do
 		if entity == p.occupant[i].id then return true end
 	end
 	return false
