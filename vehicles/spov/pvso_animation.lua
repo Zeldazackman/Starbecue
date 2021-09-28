@@ -209,7 +209,7 @@ function p.smolPreyAnimPath(occupant)
 end
 
 function p.victimAnimUpdate(entity)
-	if entity == nil then return end
+	if entity == nil or not p.lounging[entity] then return end
 	local victimAnim = p.lounging[entity].victimAnim
 	if not victimAnim.enabled then
 		local location = p.lounging[entity].location

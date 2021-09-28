@@ -1130,6 +1130,7 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "PVSOClear")
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
 	p.unForceSeat( occupantId )
+	if not p.lounging[occupantId] then return end
 	local seatindex = p.lounging[occupantId].index
 	local occupantData = p.lounging[occupantId]
 	if world.entityType(occupantId) == "player" then
