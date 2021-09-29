@@ -20,7 +20,7 @@ function update(dt, fireMode, shiftHeld, controls)
 	storage.seatdata.backCosmetic = player.equippedItem("backCosmetic")
 
 	if shiftHeld then
-		storage.seatdata.shift = storage.seatdata.shift + dt
+		storage.seatdata.shift = (storage.seatdata.shift or 0) + dt
 		storage.seatdata.shiftReleased = 0
 	else
 		storage.seatdata.shiftReleased = storage.seatdata.shift

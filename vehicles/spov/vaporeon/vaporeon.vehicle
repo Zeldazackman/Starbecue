@@ -1093,6 +1093,10 @@
 			}
 		},
 		"chonk_ball": {
+			"edible": true,
+			"edibleAnims" : {
+				"body": "chonk_ball"
+			},
 			"transitions": {},
 			"idle": {
 				"body": "chonk_ball",

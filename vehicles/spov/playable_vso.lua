@@ -742,14 +742,14 @@ function p.smolPreyAnimationPaths(settings, species, state)
 end
 
 function p.fixSmolPreyPathTags(directory, path, skin, settings)
-	return directory..sb.replaceTags(path, {
-		skin = skin,
-		fullbrightDirectives = settings.fullbrightDirectives or "",
-		directives = settings.directives or "",
+	return directory..sb.replaceTags(path or "default", { -- empty string here causes full game crash, wow!
+		skin = tostring(skin or ""),
+		fullbrightDirectives = tostring(settings.fullbrightDirectives or ""),
+		directives = tostring(settings.directives or ""),
 		bap = "",
 		frame = "1",
 		bellyoccupants = "0",
-		cracks = tostring(settings.cracks) or "0"
+		cracks = tostring(settings.cracks or "0"),
 	})
 end
 
