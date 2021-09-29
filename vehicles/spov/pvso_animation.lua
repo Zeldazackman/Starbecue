@@ -27,9 +27,9 @@ function p.endAnim(state)
 
 	if (state.tag ~= nil) and state.tag.reset then
 		if state.tag.part == "global" then
-			animator.setGlobalTag( state.tag.name, "" )
+			p.setPartTag( "global", state.tag.name, "" )
 		else
-			animator.setPartTag( state.tag.part, state.tag.name, "" )
+			p.setPartTag( state.tag.part, state.tag.name, "" )
 		end
 		state.tag = nil
 	end
@@ -102,15 +102,15 @@ function p.rotateArm(enabled, arm, LR)
 		end
 
 
-		animator.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
-		animator.setPartTag( arm.."_fullbright", "armVisible", "?multiply=FFFFFF00" )
-		animator.setPartTag( arm.."_rotation", "armVisible", "" )
-		animator.setPartTag( arm.."_fullbright_rotation", "armVisible", "" )
+		p.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
+		p.setPartTag( arm.."_fullbright", "armVisible", "?multiply=FFFFFF00" )
+		p.setPartTag( arm.."_rotation", "armVisible", "" )
+		p.setPartTag( arm.."_fullbright_rotation", "armVisible", "" )
 	else
-		animator.setPartTag( arm, "armVisible", "" )
-		animator.setPartTag( arm.."_fullbright", "armVisible", "" )
-		animator.setPartTag( arm.."_rotation", "armVisible", "?multiply=FFFFFF00" )
-		animator.setPartTag( arm.."_fullbright_rotation", "armVisible", "?multiply=FFFFFF00" )
+		p.setPartTag( arm, "armVisible", "" )
+		p.setPartTag( arm.."_fullbright", "armVisible", "" )
+		p.setPartTag( arm.."_rotation", "armVisible", "?multiply=FFFFFF00" )
+		p.setPartTag( arm.."_fullbright_rotation", "armVisible", "?multiply=FFFFFF00" )
 	end
 end
 
@@ -205,26 +205,26 @@ function p.smolPreyAnimPath(occupant)
 	local frontarms = occupant.smolPreyData.images.frontarms
 	local frontarms_fullbright = occupant.smolPreyData.images.frontarms_fullbright
 
-	if head then animator.setPartTag(seatname, "smolpath", head) else animator.setPartTag(seatname, "smolpath", "/empty_image.png") end
-	if head_fullbright then animator.setPartTag(seatname.."_fullbright", "smolpath", head_fullbright) else animator.setPartTag(seatname.."_fullbright", "smolpath", "/empty_image.png") end
+	if head then p.setPartTag(seatname, "smolpath", head) else p.setPartTag(seatname, "smolpath", "/empty_image.png") end
+	if head_fullbright then p.setPartTag(seatname.."_fullbright", "smolpath", head_fullbright) else p.setPartTag(seatname.."_fullbright", "smolpath", "/empty_image.png") end
 
-	if body then animator.setPartTag(seatname.."body", "smolpath", body) else animator.setPartTag(seatname.."body", "smolpath", "/empty_image.png") end
-	if body_fullbright then animator.setPartTag(seatname.."body_fullbright", "smolpath", body_fullbright) else animator.setPartTag(seatname.."body_fullbright", "smolpath", "/empty_image.png") end
+	if body then p.setPartTag(seatname.."body", "smolpath", body) else p.setPartTag(seatname.."body", "smolpath", "/empty_image.png") end
+	if body_fullbright then p.setPartTag(seatname.."body_fullbright", "smolpath", body_fullbright) else p.setPartTag(seatname.."body_fullbright", "smolpath", "/empty_image.png") end
 
-	if tail then animator.setPartTag(seatname.."tail", "smolpath", tail) else animator.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
-	if tail_fullbright then animator.setPartTag(seatname.."tail_fullbright", "smolpath", tail_fullbright) else animator.setPartTag(seatname.."tail_fullbright", "smolpath", "/empty_image.png") end
+	if tail then p.setPartTag(seatname.."tail", "smolpath", tail) else p.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
+	if tail_fullbright then p.setPartTag(seatname.."tail_fullbright", "smolpath", tail_fullbright) else p.setPartTag(seatname.."tail_fullbright", "smolpath", "/empty_image.png") end
 
-	if backlegs then animator.setPartTag(seatname.."backlegs", "smolpath", backlegs) else animator.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
-	if backlegs_fullbright then animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", backlegs_fullbright) else animator.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/empty_image.png") end
+	if backlegs then p.setPartTag(seatname.."backlegs", "smolpath", backlegs) else p.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
+	if backlegs_fullbright then p.setPartTag(seatname.."backlegs_fullbright", "smolpath", backlegs_fullbright) else p.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/empty_image.png") end
 
-	if frontlegs then animator.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else animator.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
-	if frontlegs_fullbright then animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", frontlegs_fullbright) else animator.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/empty_image.png") end
+	if frontlegs then p.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else p.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
+	if frontlegs_fullbright then p.setPartTag(seatname.."frontlegs_fullbright", "smolpath", frontlegs_fullbright) else p.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/empty_image.png") end
 
-	if backarms then animator.setPartTag(seatname.."backarms", "smolpath", backarms) else animator.setPartTag(seatname.."backarms", "smolpath", "/empty_image.png") end
-	if backarms_fullbright then animator.setPartTag(seatname.."backarms_fullbright", "smolpath", backarms_fullbright) else animator.setPartTag(seatname.."backarms_fullbright", "smolpath", "/empty_image.png") end
+	if backarms then p.setPartTag(seatname.."backarms", "smolpath", backarms) else p.setPartTag(seatname.."backarms", "smolpath", "/empty_image.png") end
+	if backarms_fullbright then p.setPartTag(seatname.."backarms_fullbright", "smolpath", backarms_fullbright) else p.setPartTag(seatname.."backarms_fullbright", "smolpath", "/empty_image.png") end
 
-	if frontarms then animator.setPartTag(seatname.."frontarms", "smolpath", frontarms) else animator.setPartTag(seatname.."frontarms", "smolpath", "/empty_image.png") end
-	if frontarms_fullbright then animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", frontarms_fullbright) else animator.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/empty_image.png") end
+	if frontarms then p.setPartTag(seatname.."frontarms", "smolpath", frontarms) else p.setPartTag(seatname.."frontarms", "smolpath", "/empty_image.png") end
+	if frontarms_fullbright then p.setPartTag(seatname.."frontarms_fullbright", "smolpath", frontarms_fullbright) else p.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/empty_image.png") end
 
 	occupant.smolPreyData.update = false
 end
@@ -521,9 +521,9 @@ function p.setAnimTag(anim)
 			reset = tag.reset or true
 		}
 		if tag.part == "global" then
-			animator.setGlobalTag( tag.name, tag.value )
+			p.setPartTag( "global", tag.name, tag.value )
 		else
-			animator.setPartTag( tag.part, tag.name, tag.value )
+			p.setPartTag( tag.part, tag.name, tag.value )
 		end
 	end
 end
@@ -645,14 +645,14 @@ function p.setColorReplaceDirectives()
 		end
 		p.settings.directives = colorReplaceString
 		p.settings.fullbrightDirectives = fullbrightDirectivesString
-		animator.setGlobalTag( "fullbrightDirectives", fullbrightDirectivesString )
-		animator.setGlobalTag( "directives", colorReplaceString )
+		p.setPartTag( "global", "fullbrightDirectives", fullbrightDirectivesString )
+		p.setPartTag( "global", "directives", colorReplaceString )
 	end
 end
 
 function p.setSkinPartTags()
 	for animPart, skin in pairs(p.settings.skinNames or {}) do
-		animator.setPartTag( animPart, "skin", skin )
+		p.setPartTag( animPart, "skin", skin )
 	end
 end
 
@@ -666,5 +666,19 @@ function p.partsAreStruggling(parts)
 			p.animationIs( part.."State", "s_down" )
 		)
 		then return true end
+	end
+end
+
+function p.setPartTag(part, tag, value)
+	if p.partTags[part] == nil then
+		p.partTags[part] = {}
+	end
+
+	p.partTags[part][tag] = value
+
+	if part == "global" then
+		animator.setGlobalTag( tag, value )
+	else
+		animator.setPartTag( part, tag, value )
 	end
 end

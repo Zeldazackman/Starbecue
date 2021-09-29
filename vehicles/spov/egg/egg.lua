@@ -28,7 +28,7 @@ function onBegin()
 		p.settings.escapeModifier = "antiEscape"
 	end
 
-	animator.setGlobalTag( "cracks", p.settings.cracks )
+	p.setPartTag( "global", "cracks", p.settings.cracks )
 end
 
 function onEnd()
@@ -62,7 +62,7 @@ function state.smol.crack( args )
 			})
 		end
 		p.onDeath()
-	else animator.setGlobalTag( "cracks", p.settings.cracks )
+	else p.setPartTag( "global", "cracks", p.settings.cracks )
 	end
 end
 

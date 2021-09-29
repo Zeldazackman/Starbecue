@@ -88,7 +88,17 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	end
 	if total > emptyslots or total > locationslots then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(p.settings, world.entityName( entity.id() ):gsub("^spov",""), p.state, p.seats[p.driverSeat].smolPreyData), entity.id())
+		world.sendEntityMessage(source, "smolPreyData", seatindex,
+			p.getSmolPreyData(
+				p.settings,
+				world.entityName( entity.id() ):gsub("^spov",""),
+				p.state,
+				p.partTags,
+				p.seats[p.driverSeat].smolPreyData
+			),
+			entity.id()
+		)
+
 		local nextSlot = 1
 		for i = 1, p.occupantSlots do
 			if p.occupant[i].id ~= nil then
@@ -292,10 +302,21 @@ function p.updateOccupants(dt)
 
 				if location == "nested" then
 					local owner = p.occupant[i].nestedPreyData.owner
-					location = p.lounging[owner].location
 					mass = mass * p.occupant[i].nestedPreyData.massMultiplier
-					animator.resetTransformationGroup(seatname.."Position")
-					animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+					if world.entityExists(owner) and p.lounging[owner] then
+						location = p.lounging[owner].location
+						p.occupant[i].nestedPreyData.ownerLocation = location
+
+						animator.resetTransformationGroup(seatname.."Position")
+						animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+					else
+						if p.occupant[i].nestedPreyData.nestedPreyData ~= nil then
+							p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
+						else
+							location = p.occupant[i].nestedPreyData.ownerLocation
+							p.occupant[i].location = location
+						end
+					end
 				end
 
 				p.occupants[location] = p.occupants[location] + 1
@@ -370,7 +391,7 @@ function p.updateOccupants(dt)
 	p.swapCooldown = math.max(0, p.swapCooldown - 1)
 
 	mcontroller.applyParameters({mass = p.movementParams.mass + p.occupants.mass})
-	animator.setGlobalTag( "totaloccupants", tostring(p.occupants.total) )
+	p.setPartTag( "global", "totaloccupants", tostring(p.occupants.total) )
 	for location, data in pairs(p.vso.locations) do
 		if data.combine ~= nil then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff
 			for _, combine in ipairs(data.combine) do
@@ -380,14 +401,14 @@ function p.updateOccupants(dt)
 		end
 		if data.sided then
 			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-				animator.setGlobalTag( location.."2occupants", tostring(p.occupants[location.."R"]) )
-				animator.setGlobalTag( location.."1occupants", tostring(p.occupants[location.."L"]) )
+				p.setPartTag( "global", location.."2occupants", tostring(p.occupants[location.."R"]) )
+				p.setPartTag( "global", location.."1occupants", tostring(p.occupants[location.."L"]) )
 			else
-				animator.setGlobalTag( location.."1occupants", tostring(p.occupants[location.."R"]) )
-				animator.setGlobalTag( location.."2occupants", tostring(p.occupants[location.."L"]) )
+				p.setPartTag( "global", location.."1occupants", tostring(p.occupants[location.."R"]) )
+				p.setPartTag( "global", location.."2occupants", tostring(p.occupants[location.."L"]) )
 			end
 		else
-			animator.setGlobalTag( location.."occupants", tostring(p.occupants[location]) )
+			p.setPartTag( "global", location.."occupants", tostring(p.occupants[location]) )
 		end
 	end
 end

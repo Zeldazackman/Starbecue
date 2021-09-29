@@ -59,7 +59,7 @@ message.setHandler( "digest", function(_,_, eid)
 		for i = 0, p.occupantSlots do
 			if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == eid then
 				p.occupant[i].location = location
-				p.occupant[i].nestedPreyData = nil
+				p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
 			end
 		end
 		return {success=success, timing=timing}

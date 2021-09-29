@@ -152,7 +152,7 @@ function p.updateDriving(dt)
 			if (p.movement.aimingLock <= 0) then
 				p.faceDirection( dx )
 			end
-			animator.setGlobalTag("direction", p.direction * dx)
+			p.setPartTag( "global","direction", p.direction * dx)
 		end
 
 		if p.stateconfig[p.state].defaultActions ~= nil and p.driver ~= nil then

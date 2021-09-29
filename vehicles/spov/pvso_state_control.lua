@@ -29,7 +29,7 @@ function p.setState(state)
 	end
 	p.prevState = p.state
 	p.state = state
-	animator.setGlobalTag( "state", state )
+	p.setPartTag( "global", "state", state )
 	p.doAnims( p.stateconfig[state].idle, true )
 end
 
