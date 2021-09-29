@@ -29,7 +29,7 @@ function p.eat( occupantId, location )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.vso.maxOccupants[location] }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.vso.locations[location].max }
 	} )
 
 	if edibles[1] == nil then
@@ -167,10 +167,10 @@ end
 
 
 function p.locationFull(location)
-	if p.occupants.total == p.vso.maxOccupants.total then
+	if p.occupants.total == p.occupants.maximum then
 		return true
 	else
-		return p.occupants[location] == p.vso.maxOccupants[location]
+		return p.occupants[location] == p.vso.locations[location].max
 	end
 end
 

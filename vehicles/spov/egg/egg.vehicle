@@ -130,10 +130,7 @@
 
 
 		"locations" :{
-			"egg" : { "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
-		},
-		"maxOccupants" : {
-			"egg" : 1
+			"egg" : { "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},
 		"victimAnimations": "/vehicles/spov/egg/victim_animations.config"
 	},
