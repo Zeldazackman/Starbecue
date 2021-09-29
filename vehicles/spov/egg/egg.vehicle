@@ -141,6 +141,9 @@
 	"states": {
 		"smol": {
 			"edible": true,
+			"edibleAnims": {
+				"body": "idle"
+			},
 			"transitions": {
 				// directional = occupant0 can press that direction to transition
 				"crack" : {

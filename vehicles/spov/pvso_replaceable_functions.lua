@@ -35,20 +35,6 @@ function p.warpOutEffect()
 	world.spawnProjectile( "vsowarpouteffect", mcontroller.position(), p.driver or entity.id(), {0,0}, true)
 end
 
--- each VSO may need to modify which tags are replaced when getting smolpreydata
-function p.fixSmolPreyPathTags(path, skin, settings)
-	return p.directoryPath..sb.replaceTags(path, {
-		skin = skin,
-		fullbrightDirectives = settings.fullbrightDirectives or "",
-		directives = settings.directives or "",
-		bap = "",
-		frame = "1",
-		bellyoccupants = "0",
-		cracks = tostring(settings.cracks) or "0"
-	})
-end
-
-
 ---------------------------------------------------------------------------------------------------------------------------------
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]

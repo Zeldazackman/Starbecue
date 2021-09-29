@@ -50,6 +50,7 @@ function p.clearOccupant(i)
 		location = nil,
 		species = nil,
 		smolPreyData = {},
+		nestedPreyData = {},
 		struggleCount = 0,
 		bellySettleDownTimer = 0,
 		occupantTime = 0,
@@ -658,34 +659,22 @@ function p.occupantArray( maybearray )
 	end
 end
 
-
-function p.edible( occupantId, seatindex, source )
-	if p.driver ~= occupantId then return false end
-	if p.occupants.total > 0 then return false end
-	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(), entity.id())
-		return true
-	end
-end
-
-function p.getSmolPreyData()
-	local layer = p.seats[p.driverSeat].smolPreyData
+function p.getSmolPreyData(settings, species, state, layer)
 	return {
-		species = world.entityName( entity.id() ):gsub("^spov",""),
+		species = species,
 		recieved = true,
 		update = true,
 		layer = layer,
-		path = p.directoryPath,
-		settings = p.settings,
-		state = p.state,
-		images = p.smolPreyAnimationPaths()
+		settings = settings,
+		state = state,
+		images = p.smolPreyAnimationPaths(settings, species, state)
 	}
 end
 
-function p.smolPreyAnimationPaths()
-	local settings = p.settings
-	local state = p.stateconfig[p.state]
-	local animatedParts = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts
+function p.smolPreyAnimationPaths(settings, species, state)
+	local directory = "/vehicles/spov/"..species.."/"
+	local animatedParts = root.assetJson( "/vehicles/spov/"..species.."/"..species..".animation" ).animatedParts
+	local edibleAnims = root.assetJson( "/vehicles/spov/"..species.."/"..species..".vehicle" ).states[state].edibleAnims
 
 	local head
 	local head_fullbright
@@ -708,47 +697,47 @@ function p.smolPreyAnimationPaths()
 	local frontarms
 	local frontarms_fullbright
 
-	if state.idle.head ~= nil then
+	if edibleAnims.head ~= nil then
 		local skin = (settings.skinNames or {}).head or "default"
-		head = p.fixSmolPreyPathTags(animatedParts.parts.head.partStates.headState[state.idle.head].properties.image, skin, settings)
+		head = p.fixSmolPreyPathTags( directory, animatedParts.parts.head.partStates.headState[edibleAnims.head].properties.image, skin, settings)
 		if animatedParts.parts.head_fullbright ~= nil then
-			head_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.head_fullbright.partStates.headState[state.idle.head].properties.image, skin, settings)
+			head_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.head_fullbright.partStates.headState[edibleAnims.head].properties.image, skin, settings)
 		end
 	end
-	if state.idle.body ~= nil then
+	if edibleAnims.body ~= nil then
 		local skin = (settings.skinNames or {}).body or "default"
-		body = p.fixSmolPreyPathTags(animatedParts.parts.body.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+		body = p.fixSmolPreyPathTags( directory, animatedParts.parts.body.partStates.bodyState[edibleAnims.body].properties.image, skin, settings)
 		if animatedParts.parts.body_fullbright ~= nil then
-			body_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.body_fullbright.partStates.bodyState[state.idle.body].properties.image, skin, settings)
+			body_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.body_fullbright.partStates.bodyState[edibleAnims.body].properties.image, skin, settings)
 		end
 	end
-	if state.idle.tail ~= nil then
+	if edibleAnims.tail ~= nil then
 		local skin = (settings.skinNames or {}).tail or "default"
-		tail = p.fixSmolPreyPathTags(animatedParts.parts.tail.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+		tail = p.fixSmolPreyPathTags( directory, animatedParts.parts.tail.partStates.tailState[edibleAnims.tail].properties.image, skin, settings)
 		if animatedParts.parts.tail_fullbright ~= nil then
-			tail_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.tail_fullbright.partStates.tailState[state.idle.tail].properties.image, skin, settings)
+			tail_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.tail_fullbright.partStates.tailState[edibleAnims.tail].properties.image, skin, settings)
 		end
 	end
-	if state.idle.legs ~= nil then
+	if edibleAnims.legs ~= nil then
 		local skin = (settings.skinNames or {}).legs or "default"
-		backlegs = p.fixSmolPreyPathTags(animatedParts.parts.backlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
-		frontlegs = p.fixSmolPreyPathTags(animatedParts.parts.frontlegs.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+		backlegs = p.fixSmolPreyPathTags( directory, animatedParts.parts.backlegs.partStates.legsState[edibleAnims.legs].properties.image, skin, settings)
+		frontlegs = p.fixSmolPreyPathTags( directory, animatedParts.parts.frontlegs.partStates.legsState[edibleAnims.legs].properties.image, skin, settings)
 		if animatedParts.parts.backlegs_fullbright ~= nil then
-			backlegs_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.backlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+			backlegs_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.backlegs_fullbright.partStates.legsState[edibleAnims.legs].properties.image, skin, settings)
 		end
 		if animatedParts.parts.frontlegs_fullbright ~= nil then
-			frontlegs_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.frontlegs_fullbright.partStates.legsState[state.idle.legs].properties.image, skin, settings)
+			frontlegs_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.frontlegs_fullbright.partStates.legsState[edibleAnims.legs].properties.image, skin, settings)
 		end
 	end
-	if state.idle.arms ~= nil then
+	if edibleAnims.arms ~= nil then
 		local skin = (settings.skinNames or {}).arms or "default"
-		backarms = p.fixSmolPreyPathTags(animatedParts.parts.backarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
-		frontarms = p.fixSmolPreyPathTags(animatedParts.parts.frontarms.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+		backarms = p.fixSmolPreyPathTags( directory, animatedParts.parts.backarms.partStates.armsState[edibleAnims.arms].properties.image, skin, settings)
+		frontarms = p.fixSmolPreyPathTags( directory, animatedParts.parts.frontarms.partStates.armsState[edibleAnims.arms].properties.image, skin, settings)
 		if animatedParts.parts.backarms_fullbright ~= nil then
-			backarms_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.backarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+			backarms_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.backarms_fullbright.partStates.armsState[edibleAnims.arms].properties.image, skin, settings)
 		end
 		if animatedParts.parts.frontarms_fullbright ~= nil then
-			frontarms_fullbright = p.fixSmolPreyPathTags(animatedParts.parts.frontarms_fullbright.partStates.armsState[state.idle.arms].properties.image, skin, settings)
+			frontarms_fullbright = p.fixSmolPreyPathTags( directory, animatedParts.parts.frontarms_fullbright.partStates.armsState[edibleAnims.arms].properties.image, skin, settings)
 		end
 	end
 
@@ -776,15 +765,23 @@ function p.smolPreyAnimationPaths()
 	}
 end
 
+function p.fixSmolPreyPathTags(directory, path, skin, settings)
+	return directory..sb.replaceTags(path, {
+		skin = skin,
+		fullbrightDirectives = settings.fullbrightDirectives or "",
+		directives = settings.directives or "",
+		bap = "",
+		frame = "1",
+		bellyoccupants = "0",
+		cracks = tostring(settings.cracks) or "0"
+	})
+end
+
+
 function p.transformPrey(i)
 	local smolPreyData
 	if p.occupant[i].progressBarData ~= nil then
 		smolPreyData = p.occupant[i].progressBarData
-	else
-		smolPreyData = p.getSmolPreyData()
-		-- making sure it doesn't get the state YOU are in, just the smol one
-		smolPreyData.stateconfig = p.stateconfig.smol
-		smolPreyData.state = "smol"
 	end
 	if smolPreyData ~= nil then
 		if smolPreyData.layer == true then
@@ -799,6 +796,17 @@ function p.transformPrey(i)
 		else
 			p.occupant[i].smolPreyData = smolPreyData
 			p.occupant[i].species = smolPreyData.species
+		end
+	else
+		local species = world.entityName( entity.id() ):gsub("^spov","")
+		if world.entityType(p.occupant[i].id) == "player" then
+			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "loadVSOsettings", species), function(settings)
+				p.occupant[i].smolPreyData = p.getSmolPreyData(settings, species, "smol")
+				p.occupant[i].species = species
+			end)
+		else
+			p.occupant[i].smolPreyData = p.getSmolPreyData(p.settings, species, "smol")
+			p.occupant[i].species = species
 		end
 	end
 	p.refreshList = true

@@ -14,18 +14,22 @@ end
 
 function p.eat( occupantId, location )
 	local seatindex = p.occupants.total
+	local emptyslots = p.occupantSlots - p.occupants.total
 	if not p.includeDriver then
 		seatindex = seatindex + 1
+		emptyslots = emptyslots - 1
 	end
 
 	if occupantId == nil or p.entityLounging(occupantId) or p.inedible(occupantId) or p.locationFull(location) then return false end -- don't eat self
+
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
 		callScript = "p.entityLounging", callScriptArgs = { occupantId }
 	} )
+
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id() }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.vso.maxOccupants[location] }
 	} )
 
 	if edibles[1] == nil then
@@ -60,17 +64,79 @@ function p.uneat( occupantId )
 	if world.entityType(occupantId) == "player" then
 		world.sendEntityMessage(occupantId, "openPVSOInterface", "close")
 	end
+
 	if occupantData.species ~= nil then
-		world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } )
+		table.insert(p.preyRecepients, {
+			vso = world.spawnVehicle( "spov"..occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } ),
+			owner = occupantId
+		})
 	else
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveInvisible")
 	end
+
 	p.lounging[occupantId] = nil
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 	p.updateOccupants(0)
 	return true
 end
 
+function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
+	if p.driver ~= occupantId then return false end
+	local total = p.occupants.total
+	if not p.includeDriver then
+		total = total + 1
+	end
+	if total > emptyslots or total > locationslots then return false end
+	if p.stateconfig[p.state].edible then
+		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(p.settings, world.entityName( entity.id() ):gsub("^spov",""), p.state, p.seats[p.driverSeat].smolPreyData), entity.id())
+
+		local nextSlot = 1
+
+		for i = 1, p.occupantSlots do
+			if p.occupant[i].id ~= nil then
+				local location = p.occupant[i].location
+				local occupantData = p.clearOccupant(seatindex + nextSlot)
+				local massMultiplier = p.vso.locations[location].mass or 0
+
+				occupantData.location = "nested"
+				if p.settings[location] ~= nil and p.settings[location].hyper then
+					massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
+				end
+
+				occupantData = sb.jsonMerge(occupantData, {
+					occupantTime = p.occupant[i].occupantTime,
+					smolPreyData = p.occupant[i].smolPreyData,
+					nestedPreyData = {
+						owner = p.driver,
+						location = location,
+						massMultiplier = massMultiplier
+				}})
+				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
+				nextSlot = nextSlot+1
+			end
+		end
+
+		return true
+	end
+end
+
+p.preyRecepients = {}
+
+function p.sendPreyTo()
+	for _, recepient in ipairs(p.preyRecepients) do
+		local nextSlot = 1
+		for i = 0, p.occupantSlots do
+			if world.entityExists(recepient.vso) and p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
+				local occupantData = sb.jsonMerge(p.occupant[i], {
+					location = p.occupant[i].nestedPreyData.location,
+				})
+				world.sendEntityMessage( recepient.vso, "addPrey", nextSlot, occupantData)
+				p.occupant[i].id = nil
+				nextSlot = nextSlot+1
+			end
+		end
+	end
+end
 
 function p.firstNotLounging(entityaimed)
 	for _, eid in ipairs(entityaimed) do
@@ -197,41 +263,60 @@ function p.updateOccupants(dt)
 	for i = 0, p.occupantSlots do
 		if not (i == 0 and not p.includeDriver) then
 			if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-
 				p.occupants.total = p.occupants.total + 1
-				p.occupants[p.occupant[i].location] = p.occupants[p.occupant[i].location] + 1
 				if not lastFilled and p.swapCooldown <= 0 then
 					p.swapOccupants( i-1, i )
 					i = i - 1
 				end
-				local massMultiplier = p.vso.locations[p.occupant[i].location].mass or 0
-				if p.settings[p.occupant[i].location] ~= nil and p.settings[p.occupant[i].location].hyper then
-					massMultiplier = p.vso.locations[p.occupant[i].location].hyperMass or massMultiplier
-				end
-				p.occupants.mass = p.occupants.mass + p.occupant[i].controls.mass * massMultiplier
-				p.lounging[p.occupant[i].id] = p.occupant[i]
+
 				p.occupant[i].index = i
 				local seatname = "occupant"..i
 				p.occupant[i].seatname = seatname
+				p.lounging[p.occupant[i].id] = p.occupant[i]
 				p.seats[p.occupant[i].seatname] = p.occupant[i]
 				p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
+
+				local massMultiplier = 0
+				local mass = p.occupant[i].controls.mass
+				local location = p.occupant[i].location
+
+				if location == "nested" then
+					local owner = p.occupant[i].nestedPreyData.owner
+					location = p.lounging[owner].location
+					mass = mass * p.occupant[i].nestedPreyData.massMultiplier
+					animator.resetTransformationGroup(seatname.."Position")
+					animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+				end
+
+				p.occupants[location] = p.occupants[location] + 1
+
+				massMultiplier = p.vso.locations[location].mass or 0
+
+				if p.settings[location] ~= nil and p.settings[location].hyper then
+					massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
+				end
+
+				p.occupants.mass = p.occupants.mass + mass * massMultiplier
+
 				if p.occupant[i].progressBarActive == true then
 					p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
 					if p.occupant[i].progressBarMultiplier > 0 then
 						p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
-						if p.occupant[i].progressBar >= 100 then
+						if p.occupant[i].progressBar >= 100 and p.occupant[i].progressBarFinishFuncName ~= nil then
 							p[p.occupant[i].progressBarFinishFuncName](i)
 							p.occupant[i].progressBarActive = false
 						end
 					else
 						p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
-						if p.occupant[i].progressBar <= 0 then
+						if p.occupant[i].progressBar <= 0 and p.occupant[i].progressBarFinishFuncName ~= nil then
 							p[p.occupant[i].progressBarFinishFuncName](i)
 							p.occupant[i].progressBarActive = false
 						end
 					end
 				end
+
 				p.occupant[i].indicatorCooldown = p.occupant[i].indicatorCooldown - dt
+
 				if world.entityType(p.occupant[i].id) == "player" and p.occupant[i].indicatorCooldown <= 0 then
 					-- p.occupant[i].indicatorCooldown = 0.5
 					local struggledata = (p.stateconfig[p.state].struggle or {})[p.occupant[i].location] or {}

@@ -958,6 +958,12 @@
 		},
 		"smol": {
 			"edible": true,
+			"edibleAnims" : {
+				"body": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"tail": "smol.idle"
+			},
 			"transitions": {},
 			"idle": {
 				"body": "smol.idle",

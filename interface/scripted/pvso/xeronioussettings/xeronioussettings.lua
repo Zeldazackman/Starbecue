@@ -17,11 +17,8 @@ function p.getSmolPreyData()
 		barColor = {"aa720a", "e4a126", "ffb62e", "ffca69"},
 		forceSettings = true,
 		layer = true,
-
+		state = "smol",
 		species = "egg",
-		recieved = true,
-		update = true,
-		path = "/vehicles/spov/egg/",
 		settings = {
 			cracks = 0,
 			bellyEffect = "pvsoVoreHeal",
@@ -30,9 +27,7 @@ function p.getSmolPreyData()
 				head = "xeronious",
 				body = "xeronious"
 			}
-		},
-		state = root.assetJson( "/vehicles/spov/egg/egg.vehicle" ).states.smol,
-		animatedParts = root.assetJson( "/vehicles/spov/egg/egg.animation" ).animatedParts
+		}
 	}
 end
 

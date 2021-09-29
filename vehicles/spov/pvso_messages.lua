@@ -9,10 +9,12 @@ message.setHandler( "letout", function(_,_, id )
 end )
 
 message.setHandler( "transform", function(_,_, data, eid, multiplier )
-	if p.lounging[eid].progressBarActive then return end
+	if p.lounging[eid] == nil or p.lounging[eid].progressBarActive  then return end
 
 	if data then
-		if data.species == p.lounging[eid].species then return end
+		if data.species ~= p.lounging[eid].species then
+			data = sb.jsonMerge(data, p.getSmolPreyData(data.settings, data.species, data.state))
+		else return end
 	else
 		if p.lounging[eid].species == world.entityName( entity.id() ):gsub("^spov","") then return end
 	end
@@ -54,6 +56,12 @@ message.setHandler( "digest", function(_,_, eid)
 		local location = p.lounging[eid].location
 		local success, timing = p.doTransition("digest"..location)
 		p.lounging[eid].location = "digesting"
+		for i = 0, p.occupantSlots do
+			if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == eid then
+				p.occupant[i].location = location
+				p.occupant[i].nestedPreyData = nil
+			end
+		end
 		return {success=success, timing=timing}
 	end
 end )
@@ -80,3 +88,7 @@ message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
 		vehicle.setLoungeEnabled(p.lounging[eid].seatname, true)
 	end)
 end )
+
+message.setHandler( "addPrey", function (_,_, seatindex, data)
+	p.occupant[seatindex] = data
+end)
