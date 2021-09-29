@@ -96,14 +96,10 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
-			"hug" : { },
+			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { "max": 1 },
 			"fatten" : { "mass": 1 },
 			"digesting" : { }
-		},
-		"maxOccupants" : {
-			"belly" : 1,
-			"hug" : 1
 		},
 
 		"victimAnimations": "/vehicles/spov/charem/victim_animations.config"

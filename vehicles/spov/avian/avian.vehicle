@@ -151,27 +151,21 @@
 			]
 		],
 		"locations" :{
-			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"hug" : { },
 			"fatten" : { "mass": 1 },
 			"digesting" : { },
 
-			"shaft" : { "mass": 0.1, "hyperMass": 1 },
+			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
 			"balls" : { "sided" : true },
-			"ballsL" : { "mass": 0.1, "hyperMass": 1},
-			"ballsR" : { "mass": 0.1, "hyperMass": 1},
+			"ballsL" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"ballsR" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
 
 			"breasts" : { "sided" : true },
-			"breastsL" : { "mass": 0.1, "hyperMass": 1},
-			"breastsR" : { "mass": 0.1, "hyperMass": 1}
+			"breastsL" : { "mass": 0.1, "hyperMass": 1 },
+			"breastsR" : { "mass": 0.1, "hyperMass": 1 }
 		},
 
-		"maxOccupants" : {
-			"belly" : 1,
-			"shaft" : 1,
-			"ballsL" : 1,
-			"ballsR" : 1
-		},
 		"victimAnimations": "/vehicles/spov/avian/victim_animations.config"
 	},
 

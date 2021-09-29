@@ -4,10 +4,8 @@
 state = {}
 
 p = {
-	maxOccupants = { --basically everything I think we'd need
-		total = 0
-	},
 	occupants = {
+		maximum = 0,
 		total = 0
 	},
 	occupant = {},
@@ -214,9 +212,9 @@ function init()
 		p.isObject = true
 	end
 
-	p.vso.maxOccupants.total = 7
+	p.occupants.maximum = 7
 	if p.includeDriver then
-		p.vso.maxOccupants.total = 8
+		p.occupants.maximum = 8
 	end
 
 	p.seats[p.driverSeat].smolPreyData = config.getParameter("layer") or {}
@@ -358,7 +356,7 @@ function onInteraction(args)
 			else
 				world.sendEntityMessage(
 					p.driver, "openPVSOInterface", world.entityName( entity.id() ):gsub("^spov","").."Settings",
-					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.vso.maxOccupants.total, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
+					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.occupants.maximum, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
 				)
 			end
 		elseif p.lounging[args.sourceId].location ~= nil and stateData.struggle ~= nil then

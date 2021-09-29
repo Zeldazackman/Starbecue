@@ -151,17 +151,13 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
-			"hug" : { },
+			"belly" : { "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { "max": 1 },
 			"shaft" : { "mass": 0.1 },
 			"knot" : { "mass": 0.1 },
 			"balls" : { "sided" : true, "mass": 0.1 },
 			"fatten" : { "mass": 1 },
 			"digesting" : { }
-		},
-		"maxOccupants" : {
-			"belly" : 2,
-			"hug" : 1
 		},
 		"defaultSettings" : {
 			"replaceColors" : [6,6,9,3,9,1,1],

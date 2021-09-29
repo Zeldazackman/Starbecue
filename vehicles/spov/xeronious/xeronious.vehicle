@@ -136,17 +136,12 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "digest" : true, "combine":["fatten"], "mass" : 1 },
-			"tail" : { "digest" : true, "mass" : 1 },
-			"hug" : { },
-			"pinned" : { },
+			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"tail" : { "max": 1, "digest" : true, "mass" : 1 },
+			"hug" : { "max": 1 },
+			"pinned" : { "max": 1 },
 			"fatten" : { "mass": 1 },
 			"digesting" : { }
-		},
-		"maxOccupants" : {
-			"belly" : 3,
-			"hug" : 1,
-			"tail" : 1
 		},
 		"defaultSettings" : {
 			"replaceColors" : [1,1,1,1],
