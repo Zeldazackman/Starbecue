@@ -217,18 +217,7 @@ end
 function setBellyEffect()
 	local value = widget.getSelectedOption( "bellyEffect" )
 	local bellyEffect = p.bellyEffects[value]
-	globalSettings.selectedBellyEffect = bellyEffect
-	if (bellyEffect == "pvsoDigest") or (bellyEffect == "pvsoSoftDigest") then
-		settings.hungerEffect = 1
-	else
-		settings.hungerEffect = 0
-	end
-	if globalSettings.displayDamage then
-		local bellyDisplayEffectList = root.assetJson("/pvso_general.config:bellyDisplayStatusEffects")
-		if bellyDisplayEffectList[bellyEffect] ~= nil then
-			bellyEffect = bellyDisplayEffectList[bellyEffect]
-		end
-	end
+
 	globalSettings.bellyEffect = bellyEffect
 	settings.bellyEffect = bellyEffect
 	saveSettings()

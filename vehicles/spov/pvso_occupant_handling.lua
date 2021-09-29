@@ -409,8 +409,17 @@ end
 function p.doBellyEffects(dt)
 	if p.occupants.total <= 0 then return end
 
-	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
-	local hungereffect = p.settings.hungerEffect or 0
+	local bellyEffect = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
+	local hungereffect = 0
+	if (bellyEffect == "pvsoDigest") or (bellyEffect == "pvsoSoftDigest") then
+		hungereffect = 1
+	end
+	if p.settings.displayDamage then
+		if p.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
+			bellyEffect = p.config.bellyDisplayStatusEffects[bellyEffect]
+		end
+	end
+
 	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
 
 	for i = 0, p.occupantSlots do
@@ -425,22 +434,23 @@ function p.doBellyEffects(dt)
 				local owner = p.occupant[i].nestedPreyData.owner
 				local settings = p.lounging[owner].smolPreyData.settings or {}
 				local status = settings.bellyEffect or "pvsoRemoveBellyEffects"
+				local powerMultiplier = math.log(p.lounging[owner].controls.powerMultiplier) + 1
 				if p.occupant[i].nestedPreyData.digest then
 					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
 				end
 			elseif p.vso.locations[p.occupant[i].location].digest then
 				if (p.settings.bellySounds == true) then p.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				local hunger_change = (hungereffect * powerMultiplier * dt)/100
-				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
-				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
+				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id() ) end
+				if (p.settings.bellyEffect == "pvsoSoftDigest") and health[1] <= 1 then hunger_change = 0 end
 				if p.driver then
 					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
 				end
 				p.hunger = math.min(100, p.hunger + hunger_change)
 
-				p.extraBellyEffects(i, eid, health, status)
+				p.extraBellyEffects(i, eid, health, bellyEffect)
 			else
-				p.otherLocationEffects(i, eid, health, status)
+				p.otherLocationEffects(i, eid, health, bellyEffect)
 			end
 		end
 	end

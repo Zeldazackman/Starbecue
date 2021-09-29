@@ -285,78 +285,56 @@ function p.eatFeedableHandItems(entity)
 end
 
 function p.eatHandItem(entity, hand)
-	local item = world.entityHandItem(entity, hand)
-	local modifierType = p.checkModifierItem(item)
-	if modifierType ~= nil and p.modifierItem[modifierType] ~= nil then
-		p.modifierItem[modifierType](entity, item)
-		world.sendEntityMessage(entity, "pvsoEatItem", item)
-		world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
-	else
-		-- probably can make it eat normal items here
-	end
-end
+	local item = world.entityHandItemDescriptor(entity, hand)
+	if item ~= nil then
+		local config = root.itemConfig(item).config
+		item.count = 1
+		if config.vsoModifier ~= nil then
+			local modifier = config.vsoModifier
+			local allowed = p.vso.allowedModifiers
+			local default = p.vso.defaultSettings
 
-function p.modifierItem.none(entity, item)
-	p.settings.bellyEffect = "pvsoRemoveBellyEffects"
-	p.settings.displayDamage = false
-end
-
-function p.modifierItem.heal(entity, item)
-	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoVoreHeal")
-end
-
-function p.modifierItem.digest(entity, item)
-	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoDigest")
-end
-
-function p.modifierItem.softDigest(entity, item)
-	p.settings.bellyEffect = p.getDisplayBellyEffect("pvsoSoftDigest")
-end
-
-function p.modifierItem.displayDamage(entity, item)
-	p.settings.displayDamage = true
-	p.settings.bellyEffect = p.getDisplayBellyEffect(p.settings.bellyEffect)
-end
-
-function p.modifierItem.easyEscape(entity, item)
-	if p.settings.escapeModifier == "antiEscape" then
-		p.settings.escapeModifier = "normal"
-	else
-		p.settings.escapeModifier = "easyEscape"
-	end
-end
-
-function p.modifierItem.antiEscape(entity, item)
-	if p.settings.escapeModifier == "easyEscape" then
-		p.settings.escapeModifier = "normal"
-	else
-		p.settings.escapeModifier = "antiEscape"
-	end
-end
-
-function p.modifierItem.fatten(entity, item)
-	p.settings.fatten = math.max(0, p.settings.fatten + 1)
-end
-
-function p.modifierItem.diet(entity, item)
-	p.settings.fatten = math.max(0, p.settings.fatten - 1)
-end
-
-
-function p.getDisplayBellyEffect(effect)
-	local displayEffect = p.config.bellyDisplayStatusEffects[effect]
-	if p.settings.displayDamage and displayEffect ~= nil then
-		return displayEffect
-	else
-		return effect
-	end
-end
-
-function p.checkModifierItem(item)
-	for modifierType, modifierItemList in pairs(p.config.pvsoModifiers) do
-		for i, modifierItem in ipairs(modifierItemList) do
-			if item == modifierItem then
-				return modifierType
+			if allowed then
+				local changed = false
+				for k,v in pairs(modifier) do
+					if not allowed[k] then
+						sb.logInfo("can't apply: not allowed")
+						return nil
+					end
+					if allowed[k].min and allowed[k].min > v then
+						sb.logInfo("can't apply: "..k.." too low ("..v.." smaller than minimum "..allowed[k]..")")
+						return nil
+					end
+					if allowed[k].max and allowed[k].max < v then
+						sb.logInfo("can't apply: "..k.." too high ("..v.." larger than maximum "..allowed[k]..")")
+						return nil
+					end
+					if not allowed[k].min and not allowed[k].max then
+						local found
+						for _,a in allowed[k] do
+							if a == k then found = true end
+						end
+						if not found then
+							sb.logInfo("can't apply: "..k.." not valid (got \""..v.."\", allowed "..sb.printJson(allowed[k])..")")
+							return nil
+						end
+					end
+					if (p.settings[k] or default[k]) ~= v then
+						p.settings[k] = v
+						changed = true
+					end
+				end
+				if changed then
+					world.sendEntityMessage(entity, "pvsoEatItem", item, true, true)
+					world.sendEntityMessage(p.spawner, "saveVSOsettings", p.settings)
+					return true
+				end
+			end
+		elseif config.foodValue ~= nil then
+			if p.hunger < 100 then
+				p.hunger = math.min(100, p.hunger + config.foodValue)
+				world.sendEntityMessage(entity, "pvsoEatItem", item, true, false)
+				return true
 			end
 		end
 	end

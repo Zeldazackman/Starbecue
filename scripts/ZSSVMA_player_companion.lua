@@ -115,8 +115,8 @@ function update(dt)
 	-- make sure the world is loaded
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	-- now we can actually do things
-	local current = player.getProperty("vsoCurrentData")
-	if current then
+	local current = player.getProperty("vsoCurrentData") or {}
+	if current.species then
 		world.spawnVehicle("spov"..current.species, entity.position(), {
 			driver = player.id(), layer = current.layer, startState = current.state,
 			settings = player.getProperty( "vsoSettings", {} )[current.species] or {},
