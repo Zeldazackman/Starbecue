@@ -8,6 +8,11 @@
 	"shortdescription" : "Diet Pill",
 	"itemTags" : [ "reagent", "vsopill" ],
 
-	"pillAdd" : {},
-	"pillRemove" : ["fatten"]
+	// "pillAdd" : {},
+	// "pillRemove" : ["fatten"],
+
+	"scripts": ["/items/spov/pills/pillAugment.lua"],
+	"vsoModifier": {
+		"fatten": 0
+	}
 }

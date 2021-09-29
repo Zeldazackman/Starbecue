@@ -8,13 +8,18 @@
 	"shortdescription" : "Fattening Donut",
 	"itemTags" : [ "reagent", "vsopill" ],
 
-	"pillAdd" : {
-		"fatten" : {
-			"name" : "Fattened",
-			"icon" : "/items/spov/pills/spovpilldonut.png",
-			"description" : "Add pudge to the belly.",
-			"value":1.0
-		}
-	},
-	"pillRemove" : []
+	// "pillAdd" : {
+	// 	"fatten" : {
+	// 		"name" : "Fattened",
+	// 		"icon" : "/items/spov/pills/spovpilldonut.png",
+	// 		"description" : "Add pudge to the belly.",
+	// 		"value":1.0
+	// 	}
+	// },
+	// "pillRemove" : [],
+
+	"scripts": ["/items/spov/pills/pillAugment.lua"],
+	"vsoModifier": {
+		"fatten": 1
+	}
 }

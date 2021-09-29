@@ -1,20 +1,29 @@
 [
-	{
-		"op": "add",
-		"path": "/statusControllerSettings/primaryScriptSources/-",
-		"value": "/scripts/ZSSVMA_player_primary.lua"
-	},
-	{
-		"op": "add",
-		"path": "/companionsConfig/scripts/-",
-		"value": "/scripts/ZSSVMA_player_companion.lua"
-	},
-	{
-		"op": "add",
-		"path": "/deploymentConfig/scripts/-",
-		"value": "/scripts/ZSSVMA_player_deployment.lua"
-	},
-	{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoController" } },
-	{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoPreyEnabler" } }
-
+	[
+		{
+			"op": "add",
+			"path": "/statusControllerSettings/primaryScriptSources/-",
+			"value": "/scripts/ZSSVMA_player_primary.lua"
+		},
+		{
+			"op": "add",
+			"path": "/companionsConfig/scripts/-",
+			"value": "/scripts/ZSSVMA_player_companion.lua"
+		},
+		{
+			"op": "add",
+			"path": "/deploymentConfig/scripts/-",
+			"value": "/scripts/ZSSVMA_player_deployment.lua"
+		},
+		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoController" } },
+		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "pvsoPreyEnabler" } }
+	],
+	[
+		{ "op": "test", "path": "/inventoryFilters/objectBag/tagBlacklist", "inverse": true },
+		{ "op": "add", "path": "/inventoryFilters/objectBag/tagBlacklist", "value": [] }
+	],
+	[
+		{ "op": "add", "path": "/inventoryFilters/objectBag/tagBlacklist/-", "value": "pvsoSpawner" },
+		{ "op": "add", "path": "/inventoryFilters/reagentBag/tagWhitelist/-", "value": "pvsoSpawner" }
+	]
 ]

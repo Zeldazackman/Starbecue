@@ -169,6 +169,20 @@
 			"directives" : "?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff" // a default value to make sure the neck fins don't show up as pink
 
 		},
+		"allowedModifiers": {
+			"fatten": {"min": 0, "max": 2},
+			"escapeDifficulty": {"min": -1, "max": 1},
+			"bellyEffect": ["none", "heal", "digest", "softDigest"],
+			"bellyMultiplier": {"min": 0, "max": 100},
+			"displayDamage": [false, true]
+		},
+		"defaultModifiers": {
+			"fatten": 0,
+			"escapeDifficulty": 0,
+			"bellyEffect": "none",
+			"bellyMultiplier": 1,
+			"displayDamage": false
+		},
 		"replaceColors" : [ // every color must be defined, even if you don't plan on having a replace option for it if you want it to follow the fullbright rules
 			[
 				// the first entry in these lists will be the color to replace

@@ -6,6 +6,7 @@
 	"category": "other",
 	"price": 10,
 	"health" : 5,
+	"itemTags": ["pvsoSpawner"],
 
 	"tooltipKind" : "vsoSpawner",
 
