@@ -84,9 +84,7 @@ end )
 message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
 	if p.lounging[eid] == nil then return end
 	vehicle.setLoungeEnabled(p.lounging[eid].seatname, false)
-	p.timer(p.lounging[eid].seatname.."Enable", 0.1, function()
-		vehicle.setLoungeEnabled(p.lounging[eid].seatname, true)
-	end)
+	p.weirdFixFrame = true
 end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)

@@ -258,8 +258,8 @@ function update(dt)
 	p.doBellyEffects(dt)
 	p.applyStatusLists()
 
-	p.emoteCooldown = p.emoteCooldown - dt
-	p.settingsMenuOpen = p.settingsMenuOpen - dt
+	p.emoteCooldown =  math.max( 0, p.emoteCooldown - dt )
+	p.settingsMenuOpen = math.max( 0, p.settingsMenuOpen - dt )
 	p.update(dt)
 	p.updateState(dt)
 end
@@ -892,39 +892,6 @@ function p.objectPowerLevel()
 	local power = world.threatLevel()
 	if type(power) ~= "number" or power < 1 then return 1 end
 	return power
-end
-
-function p.doBellyEffects(dt)
-	if p.occupants.total <= 0 then return end
-
-	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
-	local hungereffect = p.settings.hungerEffect or 0
-	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
-
-	for i = 0, p.occupantSlots do
-		local eid = p.occupant[i].id
-		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
-			local health = world.entityHealth(eid)
-			local light = p.vso.lights.prey
-			light.position = world.entityPosition( eid )
-			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
-
-			if p.vso.locations[p.occupant[i].location].digest then
-				if (p.settings.bellySounds == true) then p.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
-				local hunger_change = (hungereffect * powerMultiplier * dt)/100
-				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
-				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
-				if p.driver then
-					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
-				end
-				p.hunger = math.min(100, p.hunger + hunger_change)
-
-				p.extraBellyEffects(i, eid, health, status)
-			else
-				p.otherLocationEffects(i, eid, health, status)
-			end
-		end
-	end
 end
 
 function p.randomChance(percent)

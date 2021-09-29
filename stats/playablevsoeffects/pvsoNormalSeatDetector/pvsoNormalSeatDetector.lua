@@ -6,16 +6,15 @@ function init()
 		we don't care about if NPCs have the normal seat behavior, in fact we probably prefer it for them, so we don't
 		do anything if this gets on an NPC
 	]]
+end
+
+function update(dt)
 	if world.entityType(entity.id()) == "player" then
 		local data = status.statusProperty("pvsoForceSitData")
 		if world.entityExists(data.source) then
 			world.sendEntityMessage(data.source, "pvsoFixWeirdSeatBehavior", entity.id())
 		end
 	end
-end
-
-function update(dt)
-	effect.expire()
 end
 
 function uninit()

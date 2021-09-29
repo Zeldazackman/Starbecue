@@ -89,9 +89,7 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if total > emptyslots or total > locationslots then return false end
 	if p.stateconfig[p.state].edible then
 		world.sendEntityMessage( source, "smolPreyData", seatindex, p.getSmolPreyData(p.settings, world.entityName( entity.id() ):gsub("^spov",""), p.state, p.seats[p.driverSeat].smolPreyData), entity.id())
-
 		local nextSlot = 1
-
 		for i = 1, p.occupantSlots do
 			if p.occupant[i].id ~= nil then
 				local location = p.occupant[i].location
@@ -104,18 +102,20 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 				end
 
 				occupantData = sb.jsonMerge(occupantData, {
+					id = p.occupant[i].id,
+					visible = false,
 					occupantTime = p.occupant[i].occupantTime,
 					smolPreyData = p.occupant[i].smolPreyData,
 					nestedPreyData = {
 						owner = p.driver,
 						location = location,
-						massMultiplier = massMultiplier
+						massMultiplier = massMultiplier,
+						digest = p.vso.locations[location].digest
 				}})
 				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
 				nextSlot = nextSlot+1
 			end
 		end
-
 		return true
 	end
 end
@@ -123,17 +123,21 @@ end
 p.preyRecepients = {}
 
 function p.sendPreyTo()
-	for _, recepient in ipairs(p.preyRecepients) do
+	for j, recepient in ipairs(p.preyRecepients) do
 		local nextSlot = 1
-		for i = 0, p.occupantSlots do
-			if world.entityExists(recepient.vso) and p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
-				local occupantData = sb.jsonMerge(p.occupant[i], {
-					location = p.occupant[i].nestedPreyData.location,
-				})
-				world.sendEntityMessage( recepient.vso, "addPrey", nextSlot, occupantData)
-				p.occupant[i].id = nil
-				nextSlot = nextSlot+1
+		if world.entityExists(recepient.vso) then
+			for i = 0, p.occupantSlots do
+				if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
+					local occupantData = sb.jsonMerge(p.occupant[i], {
+						location = p.occupant[i].nestedPreyData.location,
+						visible = false
+					})
+					world.sendEntityMessage( recepient.vso, "addPrey", nextSlot, occupantData)
+					p.occupant[i].id = nil
+					nextSlot = nextSlot+1
+				end
 			end
+			table.remove(p.preyRecepients, j)
 		end
 	end
 end
@@ -220,7 +224,9 @@ end
 function p.applyStatusLists()
 	for i = 0, p.occupantSlots do
 		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-			vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
+			if not p.weirdFixFrame then
+				vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
+			end
 			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "pvsoMakeNonHostile")
 			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "pvsoApplyStatusEffects", {p.occupant[i].statList} )
 			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "pvsoForceSit", {{index=i, source=entity.id()}})
@@ -228,6 +234,7 @@ function p.applyStatusLists()
 			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
 		end
 	end
+	p.weirdFixFrame = nil
 end
 
 function p.addStatusToList(index, status, power, source)
@@ -256,6 +263,7 @@ function p.resetOccupantCount()
 end
 
 function p.updateOccupants(dt)
+	p.sendPreyTo()
 	p.resetOccupantCount()
 
 	local lastFilled = true
@@ -396,6 +404,46 @@ function p.entityLounging( entity )
 		if entity == p.occupant[i].id then return true end
 	end
 	return false
+end
+
+function p.doBellyEffects(dt)
+	if p.occupants.total <= 0 then return end
+
+	local status = p.settings.bellyEffect or "pvsoRemoveBellyEffects"
+	local hungereffect = p.settings.hungerEffect or 0
+	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
+
+	for i = 0, p.occupantSlots do
+		local eid = p.occupant[i].id
+		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
+			local health = world.entityHealth(eid)
+			local light = p.vso.lights.prey
+			light.position = world.entityPosition( eid )
+			world.sendEntityMessage( eid, "PVSOAddLocalLight", light )
+
+			if p.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
+				local owner = p.occupant[i].nestedPreyData.owner
+				local settings = p.lounging[owner].smolPreyData.settings or {}
+				local status = settings.bellyEffect or "pvsoRemoveBellyEffects"
+				if p.occupant[i].nestedPreyData.digest then
+					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
+				end
+			elseif p.vso.locations[p.occupant[i].location].digest then
+				if (p.settings.bellySounds == true) then p.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
+				local hunger_change = (hungereffect * powerMultiplier * dt)/100
+				if status ~= nil and status ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, entity.id() ) end
+				if (p.settings.bellyEffect == "pvsoSoftDigest" or p.settings.bellyEffect == "pvsoDisplaySoftDigest") and health[1] <= 1 then hunger_change = 0 end
+				if p.driver then
+					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
+				end
+				p.hunger = math.min(100, p.hunger + hunger_change)
+
+				p.extraBellyEffects(i, eid, health, status)
+			else
+				p.otherLocationEffects(i, eid, health, status)
+			end
+		end
+	end
 end
 
 function p.handleStruggles(dt)

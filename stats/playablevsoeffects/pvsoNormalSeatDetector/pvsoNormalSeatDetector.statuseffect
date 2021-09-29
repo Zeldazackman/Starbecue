@@ -5,5 +5,8 @@
 
 	"scripts" : [
 	"pvsoNormalSeatDetector.lua"
-	]
+	],
+
+	"label" : "Whoops, error",
+	"icon" : "/stats/playablevsoeffects/digest.png"
 }
