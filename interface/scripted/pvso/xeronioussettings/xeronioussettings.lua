@@ -19,6 +19,7 @@ function p.getSmolPreyData()
 		layer = true,
 		state = "smol",
 		species = "egg",
+		layerLocation = "egg",
 		settings = {
 			cracks = 0,
 			bellyEffect = "pvsoVoreHeal",

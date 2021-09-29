@@ -762,6 +762,13 @@ function p.transformPrey(i)
 	if smolPreyData ~= nil then
 		if smolPreyData.layer == true then
 			smolPreyData.layer = p.occupant[i].smolPreyData
+			for j = 0, p.occupantSlots do
+				if p.occupant[j].location == "nested" and p.occupant[j].nestedPreyData.owner == p.occupant[i].id then
+					local nestedPreyData = p.occupant[j].nestedPreyData
+					p.occupant[j].nestedPreyData.nestedPreyData = nestedPreyData
+					p.occupant[j].nestedPreyData.location = smolPreyData.layerLocation
+				end
+			end
 		end
 		if world.entityType(p.occupant[i].id) == "player" and not smolPreyData.forceSettings then
 			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "loadVSOsettings", smolPreyData.species), function(settings)

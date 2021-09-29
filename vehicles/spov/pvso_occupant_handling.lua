@@ -110,7 +110,8 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 						owner = p.driver,
 						location = location,
 						massMultiplier = massMultiplier,
-						digest = p.vso.locations[location].digest
+						digest = p.vso.locations[location].digest,
+						nestedPreyData = p.occupant[i].nestedPreyData
 				}})
 				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
 				nextSlot = nextSlot+1
@@ -130,7 +131,8 @@ function p.sendPreyTo()
 				if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
 					local occupantData = sb.jsonMerge(p.occupant[i], {
 						location = p.occupant[i].nestedPreyData.location,
-						visible = false
+						visible = false,
+						nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
 					})
 					world.sendEntityMessage( recepient.vso, "addPrey", nextSlot, occupantData)
 					p.occupant[i].id = nil

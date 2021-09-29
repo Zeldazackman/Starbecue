@@ -74,7 +74,7 @@ end
 
 function checkEggSitup()
 	if not p.driving then
-		for i = 0, p.occupantSlotss do
+		for i = 0, p.occupantSlots do
 			if p.occupant[i].species == "xeronious_egg" then
 				return p.doTransition("up")
 			end
