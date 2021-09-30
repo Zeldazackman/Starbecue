@@ -376,28 +376,43 @@ function onInteraction(args)
 	elseif p.notMoving() then
 		p.showEmote( "emotehappy" )
 		if stateData.interact ~= nil then
-			if stateData.interact.side ~= nil  then
-				local area = mcontroller.collisionBoundBox()
-				local entities = world.entityQuery({area[1], area[2]}, {area[3], area[4]}, {
-					includedTypes = {"creature"}
-				})
-				for i = 1, #entities do
-					if entities[i] == args.sourceId then
-						p.interactChance(stateData, "side", args)
-						return
-					end
+			-- find closest interaction point, 4d voronoi style
+			local pos = p.globalToLocal(args.sourcePosition)
+			local aim = p.globalToLocal(args.interactPosition)
+			local closest = nil
+			local distance = math.huge
+			for _,v in pairs(stateData.interact) do
+				local p = v.pos
+				local a = v.aim
+				if not p and not a then
+					-- no pos or aim, just make this one happen
+					p = pos
+					a = aim
+				elseif a and not p then
+					-- pos isn't specified, default to same as aim but less weight
+					p = {
+						(a[1] + pos[1])/2,
+						(a[2] + pos[2])/2
+					}
+				elseif p and not a then
+					-- aim isn't specified, default to same as pos but less weight
+					a = {
+						(p[1] + aim[1])/2,
+						(p[2] + aim[2])/2
+					}
+				end
+				local d = math.sqrt(
+					(pos[1] - p[1])^2 +
+					(pos[2] - p[2])^2 +
+					(aim[1] - a[1])^2 +
+					(aim[2] - a[2])^2
+				)
+				if d < distance then
+					distance = d
+					closest = v
 				end
 			end
-			local interactPosition = p.globalToLocal( args.sourcePosition )
-			if interactPosition[1] > 0 then
-				p.interactChance(stateData, "front", args)
-				return
-			else
-				p.interactChance(stateData, "back", args)
-				return
-			end
-		elseif stateData.interact ~= nil and stateData.interact.animation ~= nil then
-			p.doAnims( stateData.interact.animation )
+			return p.interactChance(closest, args)
 		end
 		if state[p.state].interact ~= nil then
 			if state[p.state].interact() then
@@ -407,14 +422,16 @@ function onInteraction(args)
 	end
 end
 
-function p.interactChance(stateData, direction, args)
-	if not (stateData.interact[direction].drivingEnabled or (not p.driver)) then return end
-	if stateData.interact[direction].chance then
-		if math.random() <= (stateData.interact[direction].chance/100) then
-			p.doTransition( p.occupantArray(stateData.interact[direction]).transition, {id=args.sourceId} )
+function p.interactChance(data, args)
+	if not (data.drivingEnabled or (not p.driver)) then return end
+	if data.chance then
+		if math.random() <= (data.chance/100) then
+			p.doTransition( p.occupantArray(data).transition, {id=args.sourceId} )
+		elseif data.animation then
+			p.doAnims(data.animation)
 		end
 	else
-		p.doTransition( p.occupantArray(stateData.interact[direction]).transition, {id=args.sourceId} )
+		p.doTransition( p.occupantArray(data).transition, {id=args.sourceId} )
 	end
 end
 

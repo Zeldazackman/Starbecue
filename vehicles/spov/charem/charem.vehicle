@@ -222,9 +222,18 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100 },
-				"side": { "transition": "bed", "chance": 100 },
-				"back": { "transition": "anal", "chance": 100 }
+				"eat": {
+					"pos": [5, -2], "aim": [4, -2],
+					"transition": "eat", "chance": 100
+				},
+				"bed": {
+					"pos": [2, -2], "aim": [2, -2],
+					"transition": "bed", "chance": 100
+				},
+				"anal": {
+					"pos": [-3, -3], "aim": [-1, -3],
+					"transition": "anal", "chance": 100
+				}
 			}
 		},
 		"hug": {
@@ -348,9 +357,18 @@
 				}
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 20 },
-				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "anal", "chance": 20 }
+				"eat": {
+					"pos": [5, -2], "aim": [4, -2],
+					"transition": "eat", "chance": 20
+				},
+				"unhug": {
+					"aim": [2, -2],
+					"transition": "up", "chance": 20
+				},
+				"anal": {
+					"pos": [-3, -3], "aim": [-1, -3],
+					"transition": "anal", "chance": 20
+				}
 			}
 		}
 	}
