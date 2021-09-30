@@ -160,9 +160,12 @@ function analEat(args)
 end
 
 function sitAnalEat(args)
-	args.id = p.findFirstOccupantIdForLocation("pinned")
+	local args = { id = p.findFirstOccupantIdForLocation("pinned")}
 	if not args.id then return false end
-	return p.moveOccupantLocation(args, "belly")
+	if p.moveOccupantLocation(args, "belly") then
+		p.lounging[args.id].visible = false
+		return true
+	end
 end
 
 function checkOral()

@@ -339,7 +339,7 @@ function p.updateOccupants(dt)
 					p.occupants.mass = p.occupants.mass + mass * massMultiplier
 
 					if p.vso.locations[location].transformGroups ~= nil then
-						p.applyTransformationFromGroupsToGroup(p.vso.locations[location].transformGroups, seatname.."Position")
+						p.copyTransformationFromGroupsToGroup(p.vso.locations[location].transformGroups, seatname.."Position")
 					end
 				end
 

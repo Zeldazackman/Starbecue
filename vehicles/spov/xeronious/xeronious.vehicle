@@ -1002,8 +1002,22 @@
 					},
 					"animation": { "head": "lookBack" },
 					"animationWhenMoving": { "head": "idle" }
+				},
+				"pinned" : {
+					"parts" : ["legs"],
+					"directions" : {
+						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
+						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
 				}
-
 			},
 			"rotationArmState" : "rotation",
 			"rotationCenters" : {
@@ -1245,6 +1259,22 @@
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
 						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
 						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"pinned" : {
+					"sound" : false,
+					"parts" : ["legs"],
+					"directions" : {
+						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
+						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },

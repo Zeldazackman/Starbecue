@@ -1,0 +1,11 @@
+{
+	"name" : "none",
+	"states" : ["idle", "walk", "sit", "lay", "duck"],
+	"cycle" : 1.0,
+	"cyclic" : false,
+	"duration" : 1.0,
+	"steps" : [
+		// body, frontArm, backArm, headOffset, frontArmOffset, backArmOffset
+		[ null, null, null, null, null, null ]
+	]
+}

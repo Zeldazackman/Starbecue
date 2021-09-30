@@ -304,23 +304,25 @@ function p.victimAnimUpdate(entity)
 			victimAnim.prevIndex = victimAnim.index
 			victimAnim.index = nextFrameIndex
 		end
+	end
 
-		if anim.e ~= nil and anim.e[victimAnim.prevIndex] ~= nil then
-			world.sendEntityMessage(entity, "applyStatusEffect", anim.e[victimAnim.prevIndex], (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
-		end
-		if anim.visible ~= nil and anim.visible[victimAnim.prevIndex] ~= nil then
-			p.lounging[entity].visible = (anim.visible[victimAnim.prevIndex] == 1)
-		end
-		if anim.sitpos ~= nil and anim.sitpos[victimAnim.prevIndex] ~= nil then
-			vehicle.setLoungeOrientation(seatname, anim.sitpos[victimAnim.prevIndex])
-		end
-		if anim.emote ~= nil and anim.emote[victimAnim.prevIndex] ~= nil then
-			vehicle.setLoungeEmote(seatname, anim.emote[victimAnim.prevIndex])
-			p.lounging[entity].emote = anim.emote[victimAnim.prevIndex]
-		end
-		if anim.dance ~= nil and anim.dance[victimAnim.prevIndex] ~= nil then
-			vehicle.setLoungeDance(seatname, anim.dance[victimAnim.prevIndex])
-		end
+	p.lounging[entity].visible = (p.getPrevVictimAnimValue(victimAnim, "visible") == 1)
+
+	local e = p.getPrevVictimAnimValue(victimAnim, "e")
+	if e ~= 0 then
+		world.sendEntityMessage(entity, "applyStatusEffect", e, (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
+	end
+	local sitpos = p.getPrevVictimAnimValue(victimAnim, "sitpos")
+	if sitpos ~= 0 then
+		vehicle.setLoungeOrientation(seatname, sitpos)
+	end
+	local emote = p.getPrevVictimAnimValue(victimAnim, "emote")
+	if emote ~= 0 then
+		vehicle.setLoungeOrientation(seatname, sitpos)
+	end
+	local dance = p.getPrevVictimAnimValue(victimAnim, "dance")
+	if dance ~= 0 then
+		vehicle.setLoungeOrientation(seatname, sitpos)
 	end
 
 	local currTime = time * speed
@@ -690,33 +692,26 @@ end
 p.transformGroupData = {}
 function p.resetTransformationGroup(transformGroup)
 	p.transformGroupData[transformGroup] = { scale = {}, rotate = {}, translate = {}, translateBR = {} }
-	animator.resetTransformationGroup(transformGroup)
 end
 
 function p.scaleTransformationGroup(transformGroup, scale)
 	table.insert(p.transformGroupData[transformGroup].scale, scale)
-	animator.scaleTransformationGroup(transformGroup, scale)
 end
 
 function p.rotateTransformationGroup(transformGroup, angle, center)
 	table.insert(p.transformGroupData[transformGroup].rotate, {angle, center})
-	animator.rotateTransformationGroup(transformGroup, angle, center)
 end
 
 function p.translateTransformationGroup(transformGroup, translation, beforeRotate)
 	if beforeRotate then
 		table.insert(p.transformGroupData[transformGroup].translateBR, translation)
-		animator.translateTransformationGroup(transformGroup, translation)
 	else
 		table.insert(p.transformGroupData[transformGroup].translate, translation)
-		animator.translateTransformationGroup(transformGroup, translation)
 	end
 end
 
 
-function p.applyTransformationFromGroupsToGroup(transformGroups, resultTransformGroup)
-	animator.resetTransformationGroup(resultTransformGroup) -- to make sure things on on in the correct order after
-
+function p.copyTransformationFromGroupsToGroup(transformGroups, resultTransformGroup)
 	for _, transformGroup in ipairs(transformGroups) do
 		for _, transformation in ipairs(p.transformGroupData[transformGroup].scale) do
 			table.insert(p.transformGroupData[resultTransformGroup].scale, transformation )
@@ -731,18 +726,23 @@ function p.applyTransformationFromGroupsToGroup(transformGroups, resultTransform
 			table.insert(p.transformGroupData[resultTransformGroup].translateBR, transformation )
 		end
 	end
+end
 
-	-- apply all the transformations
-	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].translateBR) do
-		animator.translateTransformationGroup(resultTransformGroup, transformation )
-	end
-	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].scale) do
-		animator.scaleTransformationGroup(resultTransformGroup, transformation )
-	end
-	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].rotate) do
-		animator.rotateTransformationGroup(resultTransformGroup, transformation[1], transformation[2] )
-	end
-	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].translate) do
-		animator.translateTransformationGroup(resultTransformGroup, transformation )
+function p.applyTransformations()
+	for transformGroup in pairs(p.transformGroups) do
+		animator.resetTransformationGroup(transformGroup)
+		-- apply all the transformations
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].translateBR) do
+			animator.translateTransformationGroup(transformGroup, transformation )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].scale) do
+			animator.scaleTransformationGroup(transformGroup, transformation )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].rotate) do
+			animator.rotateTransformationGroup(transformGroup, transformation[1], transformation[2] )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].translate) do
+			animator.translateTransformationGroup(transformGroup, transformation )
+		end
 	end
 end

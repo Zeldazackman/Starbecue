@@ -267,6 +267,7 @@ function update(dt)
 	p.settingsMenuOpen = math.max( 0, p.settingsMenuOpen - dt )
 	p.update(dt)
 	p.updateState(dt)
+	p.applyTransformations()
 end
 
 function uninit()

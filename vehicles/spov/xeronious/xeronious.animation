@@ -94,6 +94,11 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 
 				}
@@ -358,6 +363,10 @@
 						"jump": { "properties": { "image": "spov/<skin>/foreground/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/foreground/legs.png:fall.<frame><directives>" } },
 
+						"s_front": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.1<directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.1<directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/foreground/legs.png:sit.1<directives>" } },
+
 						"none": { "properties": {} }
 					}
 				}
@@ -387,6 +396,10 @@
 
 						"jump": { "properties": { "image": "spov/<skin>/legs.png:jump.<frame><directives>" } },
 						"fall": { "properties": { "image": "spov/<skin>/legs.png:fall.<frame><directives>" } },
+
+						"s_front": { "properties": { "image": "spov/<skin>/legs.png:sit.1<directives>" } },
+						"s_back": { "properties": { "image": "spov/<skin>/legs.png:sit.1<directives>" } },
+						"s_up": { "properties": { "image": "spov/<skin>/legs.png:sit.1<directives>" } },
 
 						"none": { "properties": {} }
 					}
