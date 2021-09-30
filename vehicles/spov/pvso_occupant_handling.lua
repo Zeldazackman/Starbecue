@@ -315,8 +315,8 @@ function p.updateOccupants(dt)
 						location = p.lounging[owner].location
 						p.occupant[i].nestedPreyData.ownerLocation = location
 
-						animator.resetTransformationGroup(seatname.."Position")
-						animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+						p.resetTransformationGroup(seatname.."Position")
+						p.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
 					else
 						if p.occupant[i].nestedPreyData.nestedPreyData ~= nil then
 							p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
@@ -327,7 +327,7 @@ function p.updateOccupants(dt)
 					end
 				end
 
-				if location ~= nil and location ~= "nested" then
+				if location ~= nil and p.vso.locations[location] ~= nil then
 					p.occupants[location] = p.occupants[location] + 1
 
 					massMultiplier = p.vso.locations[location].mass or 0
@@ -337,6 +337,10 @@ function p.updateOccupants(dt)
 					end
 
 					p.occupants.mass = p.occupants.mass + mass * massMultiplier
+
+					if p.vso.locations[location].transformGroups ~= nil then
+						p.applyTransformationFromGroupsToGroup(p.vso.locations[location].transformGroups, seatname.."Position")
+					end
 				end
 
 				if p.occupant[i].progressBarActive == true then

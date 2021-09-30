@@ -86,13 +86,13 @@ function p.rotateArm(enabled, arm, LR)
 			p.armRotation["armAngle"..LR] = angle
 		end
 
-		animator.resetTransformationGroup(arm.."rotation")
-		animator.rotateTransformationGroup(arm.."rotation", p.armRotation[arm.."Angle"], center)
+		p.resetTransformationGroup(arm.."rotation")
+		p.rotateTransformationGroup(arm.."rotation", p.armRotation[arm.."Angle"], center)
 
 		for i, group in ipairs(groups) do
-			animator.resetTransformationGroup(group)
-			animator.translateTransformationGroup(group, handOffset)
-			animator.rotateTransformationGroup(group, p.armRotation[arm.."Angle"], center)
+			p.resetTransformationGroup(group)
+			p.translateTransformationGroup(group, handOffset, true)
+			p.rotateTransformationGroup(group, p.armRotation[arm.."Angle"], center)
 		end
 
 		if occupantId ~= nil and p.lounging[occupantId] ~= nil then
@@ -241,6 +241,11 @@ function p.victimAnimUpdate(entity)
 			victimAnim.location = location
 			victimAnim.state = p.state
 		end
+		local seatname = p.lounging[entity].seatname
+		local transformGroup = seatname.."Position"
+		p.resetTransformationGroup(transformGroup)
+		p.scaleTransformationGroup(transformGroup, {victimAnim.last.xs, victimAnim.last.ys})
+		p.rotateTransformationGroup(transformGroup, (victimAnim.last.r * math.pi/180))
 
 		if p.stateconfig[p.state].locationCenters ~= nil and p.stateconfig[p.state].locationCenters[location] ~= nil
 		and (victimAnim.progress < 1 )
@@ -248,15 +253,14 @@ function p.victimAnimUpdate(entity)
 			victimAnim.progress = math.min(1, victimAnim.progress + p.dt)
 			local progress = victimAnim.progress
 			local center = p.stateconfig[p.state].locationCenters[location]
-			local seatname = p.lounging[entity].seatname
-			local transformGroup = seatname.."Position"
 			local translation = { (victimAnim.last.x + ((center[1] - victimAnim.last.x) * progress)), (victimAnim.last.y + ((center[2] - victimAnim.last.y) * progress)) }
-			animator.resetTransformationGroup(transformGroup)
-			animator.translateTransformationGroup(transformGroup, translation)
+			p.translateTransformationGroup(transformGroup, translation)
 			if progress == 1 then
 				victimAnim.last.x = center[1]
 				victimAnim.last.y = center[2]
 			end
+		else
+			p.translateTransformationGroup(transformGroup, {victimAnim.last.x, victimAnim.last.y})
 		end
 		return
 	end
@@ -329,11 +333,11 @@ function p.victimAnimUpdate(entity)
 	local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
 	local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
 
-	animator.resetTransformationGroup(transformGroup)
+	p.resetTransformationGroup(transformGroup)
 	--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
-	animator.scaleTransformationGroup(transformGroup, scale)
-	animator.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
-	animator.translateTransformationGroup(transformGroup, translation)
+	p.scaleTransformationGroup(transformGroup, scale)
+	p.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
+	p.translateTransformationGroup(transformGroup, translation)
 end
 
 function p.getVictimAnimInterpolatedValue(victimAnim, valName, progress)
@@ -401,8 +405,8 @@ function p.offsetAnimUpdate()
 		local x = r.x[ frame ] or r.x[#r.x] or 0
 		local y = r.y[ frame ] or r.y[#r.y] or 0
 		for i = 1, #r.groups do
-			animator.resetTransformationGroup( r.groups[i] )
-			animator.translateTransformationGroup( r.groups[i], { x / 8, y / 8 } )
+			p.resetTransformationGroup( r.groups[i] )
+			p.translateTransformationGroup( r.groups[i], { x / 8, y / 8 } )
 		end
 	end
 end
@@ -455,8 +459,8 @@ function p.rotationAnimUpdate()
 		r.last = previousRotation
 
 		for _, group in ipairs(r.groups) do
-			animator.resetTransformationGroup( group )
-			animator.rotateTransformationGroup( group, (rotation * math.pi/180), r.center)
+			p.resetTransformationGroup( group )
+			p.rotateTransformationGroup( group, (rotation * math.pi/180), r.center)
 		end
 	end
 end
@@ -536,7 +540,7 @@ function p.offsetAnim( data )
 	else
 		for i, part in ipairs(p.offsets.parts) do
 			for j, group in ipairs(part.groups) do
-				animator.resetTransformationGroup(group)
+				p.resetTransformationGroup(group)
 			end
 		end
 	end
@@ -571,7 +575,7 @@ function p.rotate( data )
 	else
 		for i, part in ipairs(p.rotating.parts) do
 			for j, group in ipairs(part.groups) do
-				animator.resetTransformationGroup(group)
+				p.resetTransformationGroup(group)
 			end
 		end
 	end
@@ -680,5 +684,65 @@ function p.setPartTag(part, tag, value)
 		animator.setGlobalTag( tag, value )
 	else
 		animator.setPartTag( part, tag, value )
+	end
+end
+
+p.transformGroupData = {}
+function p.resetTransformationGroup(transformGroup)
+	p.transformGroupData[transformGroup] = { scale = {}, rotate = {}, translate = {}, translateBR = {} }
+	animator.resetTransformationGroup(transformGroup)
+end
+
+function p.scaleTransformationGroup(transformGroup, scale)
+	table.insert(p.transformGroupData[transformGroup].scale, scale)
+	animator.scaleTransformationGroup(transformGroup, scale)
+end
+
+function p.rotateTransformationGroup(transformGroup, angle, center)
+	table.insert(p.transformGroupData[transformGroup].rotate, {angle, center})
+	animator.rotateTransformationGroup(transformGroup, angle, center)
+end
+
+function p.translateTransformationGroup(transformGroup, translation, beforeRotate)
+	if beforeRotate then
+		table.insert(p.transformGroupData[transformGroup].translateBR, translation)
+		animator.translateTransformationGroup(transformGroup, translation)
+	else
+		table.insert(p.transformGroupData[transformGroup].translate, translation)
+		animator.translateTransformationGroup(transformGroup, translation)
+	end
+end
+
+
+function p.applyTransformationFromGroupsToGroup(transformGroups, resultTransformGroup)
+	animator.resetTransformationGroup(resultTransformGroup) -- to make sure things on on in the correct order after
+
+	for _, transformGroup in ipairs(transformGroups) do
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].scale) do
+			table.insert(p.transformGroupData[resultTransformGroup].scale, transformation )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].rotate) do
+			table.insert(p.transformGroupData[resultTransformGroup].rotate, transformation )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].translate) do
+			table.insert(p.transformGroupData[resultTransformGroup].translate, transformation )
+		end
+		for _, transformation in ipairs(p.transformGroupData[transformGroup].translateBR) do
+			table.insert(p.transformGroupData[resultTransformGroup].translateBR, transformation )
+		end
+	end
+
+	-- apply all the transformations
+	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].translateBR) do
+		animator.translateTransformationGroup(resultTransformGroup, transformation )
+	end
+	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].scale) do
+		animator.scaleTransformationGroup(resultTransformGroup, transformation )
+	end
+	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].rotate) do
+		animator.rotateTransformationGroup(resultTransformGroup, transformation[1], transformation[2] )
+	end
+	for _, transformation in ipairs(p.transformGroupData[resultTransformGroup].translate) do
+		animator.translateTransformationGroup(resultTransformGroup, transformation )
 	end
 end

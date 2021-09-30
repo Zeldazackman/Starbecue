@@ -58,7 +58,7 @@ function p.clearOccupant(i)
 		progressBarMultiplier = 1,
 		progressBarFinishFunc = nil,
 		progressBarColor = nil,
-		victimAnim = { enabled = false, last = { x = 0, y = 0 } },
+		victimAnim = { enabled = false, last = { x = 0, y = 0, xs = 1, ys = 1, r = 0 } },
 		indicatorCooldown = 0,
 		controls = {
 			primaryFire = 0,
@@ -145,6 +145,10 @@ function init()
 		for k,v in pairs(mcontroller_extensions) do
 			mcontroller[k] = v
 		end
+	end
+
+	for transformGroup, _ in pairs(p.transformGroups) do
+		p.resetTransformationGroup(transformGroup)
 	end
 
 	p.setColorReplaceDirectives()
