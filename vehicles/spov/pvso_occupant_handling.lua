@@ -303,7 +303,7 @@ function p.updateOccupants(dt)
 				if location == "nested" then
 					local owner = p.occupant[i].nestedPreyData.owner
 					mass = mass * p.occupant[i].nestedPreyData.massMultiplier
-					if world.entityExists(owner) and p.lounging[owner] then
+					if world.entityExists(owner) and p.lounging[owner] ~= nil then
 						location = p.lounging[owner].location
 						p.occupant[i].nestedPreyData.ownerLocation = location
 

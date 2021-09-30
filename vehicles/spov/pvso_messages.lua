@@ -89,4 +89,5 @@ end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)
 	p.occupant[seatindex] = data
+	p.updateOccupants(0)
 end)
