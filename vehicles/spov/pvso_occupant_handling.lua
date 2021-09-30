@@ -171,7 +171,15 @@ function p.firstNotLounging(entityaimed)
 end
 
 function p.moveOccupantLocation(args, location)
-	if p.locationFull(location) then return false end
+	if p.occupants[location] >= p.vso.locations[location].max then return false end
+	local maxNested = p.vso.locations[location].maxNested or ( p.vso.locations[location].max - 1 )
+	local nestCount = 0
+	for i = 0, p.occupantSlots do
+		if p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == args.id then
+			nestCount = nestCount + 1
+		end
+	end
+	if nestCount > maxNested and (not maxNested == -1) then return false end
 	p.lounging[args.id].location = location
 	return true
 end

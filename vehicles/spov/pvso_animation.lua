@@ -4,9 +4,9 @@ function p.updateAnims(dt)
 		state.animationState.time = state.animationState.time + dt
 	end
 
-	for i = 0, #p.occupant do
+	for i = 0, p.occupantSlots do
 		p.victimAnimUpdate(p.occupant[i].id)
-		p.updateVisibilityAndSmolprey(p.occupant[i])
+		p.updateVisibilityAndSmolprey(i)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
@@ -158,26 +158,26 @@ function p.setGrabTarget()
 end
 
 
-function p.updateVisibilityAndSmolprey(occupant)
-	if occupant.id == nil then
-		animator.setAnimationState( occupant.seatname.."State", "empty", true )
+function p.updateVisibilityAndSmolprey(i)
+	if p.occupant[i].id == nil then
+		animator.setAnimationState( p.occupant[i].seatname.."State", "empty", true )
 		return
 	end
-	if occupant.visible then
-		if occupant.species ~= nil then
-			if occupant.smolPreyData.recieved then
-				if occupant.smolPreyData.update then
-					p.smolPreyAnimPath(occupant)
+	if p.occupant[i].visible then
+		if p.occupant[i].species ~= nil then
+			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoInvisible")
+			if p.occupant[i].smolPreyData.recieved then
+				if p.occupant[i].smolPreyData.update then
+					p.smolPreyAnimPath(p.occupant[i])
 				end
-				world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")
-				animator.setAnimationState( occupant.seatname.."State", "smol", true )
+				animator.setAnimationState( p.occupant[i].seatname.."State", "smol", true )
 			end
 		else
-			world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoRemoveInvisible")
+			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoRemoveInvisible")
 		end
 	else
-		world.sendEntityMessage(occupant.id, "applyStatusEffect", "pvsoInvisible")
-		animator.setAnimationState( occupant.seatname.."State", "empty", true )
+		world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "pvsoInvisible")
+		animator.setAnimationState( p.occupant[i].seatname.."State", "empty", true )
 	end
 end
 
@@ -365,7 +365,10 @@ local victimAnimArgs = {
 	ys = 1,
 	x = 0,
 	y = 0,
-	r = 0
+	r = 0,
+	sitpos = "stand",
+	emote = "idle",
+	dance = "none"
 }
 
 function p.doVictimAnim( occupantId, anim, statename )

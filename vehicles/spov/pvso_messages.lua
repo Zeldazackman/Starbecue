@@ -83,7 +83,12 @@ end )
 
 message.setHandler( "pvsoFixWeirdSeatBehavior", function(_,_, eid)
 	if p.lounging[eid] == nil then return end
-	vehicle.setLoungeEnabled(p.lounging[eid].seatname, false)
+	for i = 0, p.occupantSlots do
+		local seatname = "occupant"..i
+		if eid == vehicle.entityLoungingIn("occupant"..i) then
+			vehicle.setLoungeEnabled(seatname, false)
+		end
+	end
 	p.weirdFixFrame = true
 end )
 
