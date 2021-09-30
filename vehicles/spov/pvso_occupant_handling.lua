@@ -309,26 +309,20 @@ function p.updateOccupants(dt)
 
 						animator.resetTransformationGroup(seatname.."Position")
 						animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
-					else
-						if p.occupant[i].nestedPreyData.nestedPreyData ~= nil then
-							p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
-						else
-							location = p.occupant[i].nestedPreyData.ownerLocation
-							p.occupant[i].location = location
-						end
 					end
 				end
-				if location ~= nil and p.occupants[location] ~= nil then
+
+				if location ~= nil and location ~= "nested" then
 					p.occupants[location] = p.occupants[location] + 1
+
+					massMultiplier = p.vso.locations[location].mass or 0
+
+					if p.settings[location] ~= nil and p.settings[location].hyper then
+						massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
+					end
+
+					p.occupants.mass = p.occupants.mass + mass * massMultiplier
 				end
-
-				massMultiplier = p.vso.locations[location].mass or 0
-
-				if p.settings[location] ~= nil and p.settings[location].hyper then
-					massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
-				end
-
-				p.occupants.mass = p.occupants.mass + mass * massMultiplier
 
 				if p.occupant[i].progressBarActive == true then
 					p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
