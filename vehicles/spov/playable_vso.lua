@@ -681,28 +681,24 @@ function p.smolPreyAnimationPaths(settings, species, state, tags)
 	local frontarms_fullbright
 
 	if edibleAnims.head ~= nil then
-		local skin = (settings.skinNames or {}).head or "default"
 		head = p.fixSmolPreyPathTags(directory, animatedParts, "head", "head", edibleAnims.head, settings, tags)
 		if animatedParts.parts.head_fullbright ~= nil then
 			head_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "head_fullbright", "head", edibleAnims.head, settings, tags)
 		end
 	end
 	if edibleAnims.body ~= nil then
-		local skin = (settings.skinNames or {}).body or "default"
 		body = p.fixSmolPreyPathTags(directory, animatedParts, "body", "body", edibleAnims.body, settings, tags)
 		if animatedParts.parts.body_fullbright ~= nil then
 			body_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "body_fullbright", "body", edibleAnims.body, settings, tags)
 		end
 	end
 	if edibleAnims.tail ~= nil then
-		local skin = (settings.skinNames or {}).tail or "default"
 		tail = p.fixSmolPreyPathTags(directory, animatedParts, "tail", "tail", edibleAnims.tail, settings, tags)
 		if animatedParts.parts.tail_fullbright ~= nil then
 			tail_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "tail_fullbright", "tail", edibleAnims.tail, settings, tags)
 		end
 	end
 	if edibleAnims.legs ~= nil then
-		local skin = (settings.skinNames or {}).legs or "default"
 		backlegs = p.fixSmolPreyPathTags(directory, animatedParts, "backlegs", "legs", edibleAnims.legs, settings, tags)
 		frontlegs = p.fixSmolPreyPathTags(directory, animatedParts, "frontlegs", "legs", edibleAnims.legs, settings, tags)
 		if animatedParts.parts.backlegs_fullbright ~= nil then
@@ -713,7 +709,6 @@ function p.smolPreyAnimationPaths(settings, species, state, tags)
 		end
 	end
 	if edibleAnims.arms ~= nil then
-		local skin = (settings.skinNames or {}).arms or "default"
 		backarms = p.fixSmolPreyPathTags(directory, animatedParts, "backarms", "arms", edibleAnims.arms, settings, tags)
 		frontarms = p.fixSmolPreyPathTags(directory, animatedParts, "frontarms", "arms", edibleAnims.arms, settings, tags)
 		if animatedParts.parts.backarms_fullbright ~= nil then

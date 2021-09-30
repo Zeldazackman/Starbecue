@@ -103,10 +103,19 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 		for i = 1, p.occupantSlots do
 			if p.occupant[i].id ~= nil then
 				local location = p.occupant[i].location
-				local massMultiplier = p.vso.locations[location].mass or 0
+				local massMultiplier = 0
+
+				if location == "nested" then
+					location = p.occupant[i].nestedPreyData.ownerLocation
+				end
+				massMultiplier = p.vso.locations[location].mass or 0
 
 				if p.settings[location] ~= nil and p.settings[location].hyper then
 					massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
+				end
+
+				if p.occupant[i].location == "nested" then
+					massMultiplier = massMultiplier * p.occupant[i].nestedPreyData.massMultiplier
 				end
 
 				local occupantData = sb.jsonMerge(p.occupant[i], {
@@ -114,7 +123,7 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 					visible = false,
 					nestedPreyData = {
 						owner = p.driver,
-						location = location,
+						location = p.occupant[i].location,
 						massMultiplier = massMultiplier,
 						digest = p.vso.locations[location].digest,
 						nestedPreyData = p.occupant[i].nestedPreyData
