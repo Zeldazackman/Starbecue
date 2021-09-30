@@ -1014,6 +1014,7 @@
 					"animationWhenMoving": { "head": "idle" }
 				},
 				"pinned" : {
+					"sound" : false,
 					"parts" : ["legs"],
 					"directions" : {
 						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
