@@ -353,10 +353,16 @@
 				"belly" : [-0.5, -2]
 			},
 			"interact": {
-				"front": { "transition": "eat", "chance": 100, "location":"belly", "failOnFull":true},
-				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "down", "chance": 20 },
-				"animation": { "head": "pet" }
+				"eat": {
+					"pos": [3, -2], "aim": [3, 0],
+					"transition": "eat", "chance": 100,
+					"location":"belly", "failOnFull":true
+				},
+				"sit": {
+					"aim": [-1, 0],
+					"transition": "down", "chance": 20,
+					"animation": { "head": "pet" }
+				}
 			},
 			"defaultActions": ["vore", "specialAttack"],
 			"actions": {
@@ -543,10 +549,16 @@
 				"belly" : [0, -3.5]
 			},
 			"interact": {
-				"front": { "transition": "down", "chance": 20 },
-				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "down", "chance": 20 },
-				"animation": { "head": "pet" }
+				"stand": {
+					"aim": [0, 1],
+					"transition": "up", "chance": 20,
+					"animation": { "head": "pet" }
+				},
+				"lay": {
+					"aim": [0, -3],
+					"transition": "down", "chance": 20,
+					"animation": { "head": "pet" }
+				}
 			}
 		},
 		"lay": {
@@ -673,10 +685,21 @@
 				"belly" : [1.5, -3.5]
 			},
 			"interact": {
-				"front": { "transition": "up", "chance": 20 },
-				"side": { "transition": "side", "chance": 20 },
-				"back": { "transition": "down", "chance": 20 },
-				"animation": { "head": "pet" }
+				"sit": {
+					"aim": [0, 1],
+					"transition": "up", "chance": 20,
+					"animation": { "head": "pet" }
+				},
+				"sleep": {
+					"aim": [-1, -3],
+					"transition": "down", "chance": 20,
+					"animation": { "head": "pet" }
+				},
+				"rollover": {
+					"aim": [4, -3],
+					"transition": "side", "chance": 20,
+					"animation": { "head": "pet" }
+				}
 			}
 		},
 		"sleep": {
@@ -757,9 +780,9 @@
 				"belly" : [1.5, -3.5]
 			},
 			"interact": {
-				"front": { "transition": "up", "chance": 20 },
-				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "up", "chance": 20 }
+				"wake": {
+					"transition": "up", "chance": 20
+				}
 			}
 		},
 		"back": {
@@ -862,9 +885,19 @@
 				"belly" : [1.5, -3.5]
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 20 },
-				"side": { "transition": "bed", "chance": 100, "drivingEnabled": true },
-				"back": { "transition": "eatAnal", "chance": 100 }
+				"bed": {
+					"pos": [1, -2], "aim": [1, -2],
+					"transition": "bed", "chance": 100,
+					"drivingEnabled": true
+				},
+				"anal": {
+					"pos": [-5, -3], "aim": [-3, -3],
+					"transition": "eatAnal", "chance": 100
+				},
+				"rollover": {
+					"aim": [4, -3],
+					"transition": "side", "chance": 20
+				}
 			}
 		},
 		"hug": {
@@ -959,9 +992,18 @@
 				"belly" : [1.5, -3.5]
 			},
 			"interact": {
-				"front": { "transition": "side", "chance": 20 },
-				"side": { "transition": "up", "chance": 20 },
-				"back": { "transition": "eatAnal", "chance": 100 }
+				"unhug": {
+					"pos": [1, -2], "aim": [1, -2],
+					"transition": "up", "chance": 20
+				},
+				"anal": {
+					"pos": [-5, -3], "aim": [-3, -3],
+					"transition": "eatAnal", "chance": 100
+				},
+				"rollover": {
+					"aim": [4, -3],
+					"transition": "side", "chance": 20
+				}
 			}
 		},
 		"smol": {
