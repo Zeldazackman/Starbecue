@@ -28,11 +28,11 @@ function init()
 	readOccupantData()
 	setIconDirectives()
 
-	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.selectedBellyEffect or "pvsoRemoveBellyEffects"] )
+	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "pvsoRemoveBellyEffects"] )
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
 
 	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
-	widget.setChecked( "bellySounds", globalSettings.bellySounds or true )
+	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
 	p.refreshed = true
