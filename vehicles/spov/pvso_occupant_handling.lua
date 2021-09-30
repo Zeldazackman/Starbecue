@@ -103,26 +103,23 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 		for i = 1, p.occupantSlots do
 			if p.occupant[i].id ~= nil then
 				local location = p.occupant[i].location
-				local occupantData = p.clearOccupant(seatindex + nextSlot)
 				local massMultiplier = p.vso.locations[location].mass or 0
 
-				occupantData.location = "nested"
 				if p.settings[location] ~= nil and p.settings[location].hyper then
 					massMultiplier = p.vso.locations[location].hyperMass or massMultiplier
 				end
 
-				occupantData = sb.jsonMerge(occupantData, {
-					id = p.occupant[i].id,
+				local occupantData = sb.jsonMerge(p.occupant[i], {
+					location = "nested",
 					visible = false,
-					occupantTime = p.occupant[i].occupantTime,
-					smolPreyData = p.occupant[i].smolPreyData,
 					nestedPreyData = {
 						owner = p.driver,
 						location = location,
 						massMultiplier = massMultiplier,
 						digest = p.vso.locations[location].digest,
 						nestedPreyData = p.occupant[i].nestedPreyData
-				}})
+					}
+				})
 				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
 				nextSlot = nextSlot+1
 			end
@@ -139,13 +136,15 @@ function p.sendPreyTo()
 		if world.entityExists(recepient.vso) then
 			for i = 0, p.occupantSlots do
 				if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
+
 					local occupantData = sb.jsonMerge(p.occupant[i], {
 						location = p.occupant[i].nestedPreyData.location,
 						visible = false,
 						nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
 					})
 					world.sendEntityMessage( recepient.vso, "addPrey", nextSlot, occupantData)
-					p.occupant[i].id = nil
+
+					p.occupant[i] = p.clearOccupant(i)
 					nextSlot = nextSlot+1
 				end
 			end
@@ -309,6 +308,13 @@ function p.updateOccupants(dt)
 
 						animator.resetTransformationGroup(seatname.."Position")
 						animator.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+					else
+						if p.occupant[i].nestedPreyData.nestedPreyData ~= nil then
+							p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
+						else
+							location = p.occupant[i].nestedPreyData.ownerLocation
+							p.occupant[i].location = location
+						end
 					end
 				end
 
