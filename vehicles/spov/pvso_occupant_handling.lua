@@ -318,8 +318,9 @@ function p.updateOccupants(dt)
 						end
 					end
 				end
-
-				p.occupants[location] = p.occupants[location] + 1
+				if location ~= nil and p.occupants[location] ~= nil then
+					p.occupants[location] = p.occupants[location] + 1
+				end
 
 				massMultiplier = p.vso.locations[location].mass or 0
 
