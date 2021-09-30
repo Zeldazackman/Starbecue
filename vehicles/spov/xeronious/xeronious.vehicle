@@ -138,8 +138,8 @@
 		"locations" :{
 			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"tail" : { "max": 1, "digest" : true, "mass" : 1 },
-			"hug" : { "max": 1 },
-			"pinned" : { "max": 1 },
+			"hug" : { "max": 1, "maxNested": -1 },
+			"pinned" : { "max": 1, "maxNested": 2 },
 			"fatten" : { "mass": 1 },
 			"digesting" : { }
 		},

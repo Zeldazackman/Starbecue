@@ -29,7 +29,7 @@ function p.eat( occupantId, location )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.vso.locations[location].max }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.vso.locations[location].maxNested or p.vso.locations[location].max }
 	} )
 
 	if edibles[1] == nil then
@@ -86,7 +86,7 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if not p.includeDriver then
 		total = total + 1
 	end
-	if total > emptyslots or total > locationslots then return false end
+	if total > emptyslots or (total > locationslots and locationslots ~= -1) then return false end
 	if p.stateconfig[p.state].edible then
 		world.sendEntityMessage(source, "smolPreyData", seatindex,
 			p.getSmolPreyData(

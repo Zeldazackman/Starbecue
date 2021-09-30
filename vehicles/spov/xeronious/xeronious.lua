@@ -247,7 +247,7 @@ function state.stand.sitpin(args)
 	local pinnable = { args.id }
 	local sat
 
-	if p.grabbing ~= nil then
+	if p.grabbing ~= nil and p.occupants.hug <= p.vso.locations.pin.maxNested then
 		local angle = p.armRotation.frontarmsAngle * 180/math.pi
 		if (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
 			p.uneat(p.grabbing)

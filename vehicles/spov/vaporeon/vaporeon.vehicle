@@ -152,7 +152,7 @@
 		},
 		"locations" :{
 			"belly" : { "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1 },
-			"hug" : { "max": 1 },
+			"hug" : { "max": 1, "maxNested": 2 },
 			"shaft" : { "mass": 0.1 },
 			"knot" : { "mass": 0.1 },
 			"balls" : { "sided" : true, "mass": 0.1 },
