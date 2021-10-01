@@ -1,0 +1,22 @@
+{
+
+  "frameGrid" : {
+    "size" : [16, 24],
+    "dimensions" : [4, 3],
+    "names" : [
+      [ "housing.floor", "housing.across", "housing.wall", "housing.top"],
+      [ "on.1", "on.2", "on.3", "on.4"],
+      [ "combined.floor", "combined.across", "combined.wall", "combined.top"]
+    ]
+  },
+
+  "aliases" : {
+    "default.default" : "combined.floor",
+    "off" : "on.1",
+    "on.5" : "on.4",
+    "on.6" : "on.3",
+    "on.7" : "on.2",
+    "on.8" : "on.1"
+    
+  }
+}

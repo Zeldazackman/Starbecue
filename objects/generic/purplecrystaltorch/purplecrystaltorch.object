@@ -22,12 +22,6 @@
 
   "lightColor" : [235, 200, 255],
 
-  "flickerPeriod" : 4,
-  "flickerMinIntensity" : 0.8,
-  "flickerMaxIntensity" : 1,
-  "flickerPeriodVariance" : 0,
-  "flickerIntensityVariance" : 0,
-
   "inventoryIcon" : "purplecrystaltorchicon.png",
   "orientations" : [
     {
@@ -54,10 +48,6 @@
   ],
 
   "animation" : "purplecrystaltorch.animation",
-  "animationParts" : {
-    "mount" : "purplecrystaltorch.png",
-    "crystal" : "purplecrystaltorch.png"
-  },
 
   "scripts" : [ "/objects/wired/light/light.lua" ],
   "scriptDelta" : 60,

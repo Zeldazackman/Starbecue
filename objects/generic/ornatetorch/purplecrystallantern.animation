@@ -15,10 +15,10 @@
     },
 
     "parts" : {
-      "mount" : {
+      "housing" : {
         "properties" : {
           "centered" : false,
-          "image" : "purplecrystaltorch.png:mount"
+          "image" : "purplecrystallantern.png:housing.<partImage>"
         }
       },
       "crystal" : {
@@ -30,13 +30,13 @@
           "light" : {
             "off" : {
               "properties" : {
-                "image" : "purplecrystaltorch.png:off"
+                "image" : "purplecrystallantern.png:off"
               }
             },
 
             "on" : {
               "properties" : {
-                "image" : "purplecrystaltorch.png:on.<frame>",
+                "image" : "purplecrystallantern.png:on.<frame>",
                 "fullbright" : true
               }
             }
