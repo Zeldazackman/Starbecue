@@ -1,0 +1,49 @@
+{
+	"objectName": "voreShopCounter",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
+	"shortdescription": "Vore Shop Counter",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "voreShopCounter.png" } ],
+			"imagePosition": [-56, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+		},
+		{
+			"imageLayers" : [ { "image" : "voreShopCounter.png" } ],
+			"imagePosition": [-56, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+		}
+	],
+
+	"animation" : "/objects/vore/voreShop/voreShopCounter/voreShopCounter.animation",
+	"animationPosition" : [-4, 44],
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : true,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false
+
+}

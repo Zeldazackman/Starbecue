@@ -1,0 +1,47 @@
+{
+	"objectName": "voreShopAuri",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
+	"shortdescription": "Vore Shop Auri",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "voreShopAuri.png?addmask=/objects/vore/voreShop/voreShopAuri/voreShopAuriPlacingMask.png" } ],
+			"imagePosition": [-48, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"]
+		},
+		{
+			"imageLayers" : [ { "image" : "voreShopAuri.png?addmask=/objects/vore/voreShop/voreShopAuri/voreShopAuriPlacingMask.png" } ],
+			"imagePosition": [-48, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"]
+		}
+	],
+
+	"animation" : "/objects/vore/voreShop/voreShopAuri/voreShopAuri.animation",
+	"animationPosition" : [4, 44],
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : true,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"scripts": [
+		"voreShopAuri.lua"
+	]
+}

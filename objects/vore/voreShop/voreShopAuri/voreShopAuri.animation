@@ -1,0 +1,50 @@
+{
+	"globalTagDefaults" : {
+		"placedMask" : "?addmask=/objects/vore/voreShop/voreShopAuri/voreShopAuriPlacedMask.png"
+	},
+	"animatedParts": {
+		"stateTypes": {
+			"auriState" : {
+				"default" : "idle",
+				"states" : {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			}
+
+		},
+		"parts": {
+			"auri" : {
+				"properties": {
+					"centered": true,
+					"zLevel": 0,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"auriState" : {
+						"idle": { "properties": { "image": "voreShopAuri.png<placedMask>" } }
+					}
+				}
+			},
+			"auri_fullbright" : {
+				"properties": {
+					"centered": true,
+					"zLevel": 0,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"auriState" : {
+						"idle": { "properties": { "image": "voreShopAuri_fullbright.png<placedMask>" } }
+					}
+				}
+			}
+
+		}
+	},
+	"transformationGroups": {
+
+	},
+	"sounds": {
+	},
+	"particleEmitters": {
+	}
+}
