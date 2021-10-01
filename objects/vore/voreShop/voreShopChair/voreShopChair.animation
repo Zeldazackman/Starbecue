@@ -3,7 +3,13 @@
 	},
 	"animatedParts": {
 		"stateTypes": {
-			"auriState" : {
+			"counterState" : {
+				"default" : "closed",
+				"states" : {
+					"closed": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"chairState" : {
 				"default" : "idle",
 				"states" : {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
@@ -12,32 +18,30 @@
 
 		},
 		"parts": {
-			"auri" : {
+			"counter" : {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
+					"zLevel": 2,
 					"transformationGroups": []
 				},
 				"partStates": {
-					"auriState" : {
-						"idle": { "properties": { "image": "voreShopAuri.png" } }
+					"counterState" : {
+						"closed": { "properties": { "image": "voreShopCounter.png" } }
 					}
 				}
 			},
-			"auri_fullbright" : {
+			"chair" : {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
-					"transformationGroups": [],
-					"fullbright" : true
+					"zLevel": -1,
+					"transformationGroups": []
 				},
 				"partStates": {
-					"auriState" : {
-						"idle": { "properties": { "image": "voreShopAuri_fullbright.png" } }
+					"chairState" : {
+						"idle": { "properties": { "image": "voreShopChair.png" } }
 					}
 				}
 			}
-
 		}
 	},
 	"transformationGroups": {
