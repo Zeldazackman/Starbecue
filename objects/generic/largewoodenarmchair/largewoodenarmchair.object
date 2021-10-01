@@ -1,0 +1,48 @@
+{
+  "objectName" : "largewoodenarmchair",
+  "colonyTags" : ["avian","avianvillage"],
+  "rarity" : "Common",
+  "description" : "A large comfy wooden armchair.",
+  "shortdescription" : "Large Wooden Armchair",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 85,
+
+  "apexDescription" : "This armchair looks nice and comfy... although a bit big.",
+  "avianDescription" : "Colourful and comfortable... and large",
+  "floranDescription" : "Big sssoft chair with sssmooth wooden arms.",
+  "glitchDescription" : "Content. I could happily while away the hours in this oversized chair.",
+  "humanDescription" : "A big wooden armchair.",
+  "hylotlDescription" : "Comfortable... not sure about humble.",
+  "novakidDescription" : "An attractive lookin' armchair, I reckon t'was made for larger folk.",
+
+  "inventoryIcon" : "/objects/generic/woodenarmchair1/woodenarmchair1icon.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+  "orientations" : [
+    {
+      "image" : "largewoodenarmchair.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+      "imagePosition" : [-24, 0],
+      "sitCoverImage" : "/objects/generic/largewoodenarmchair/largewoodenarmchaircover.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+      "direction" : "left",
+      "flipImages" : true,
+
+      "sitPosition" : [4, 31],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "largewoodenarmchair.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+      "imagePosition" : [-24, 0],
+      "sitCoverImage" : "/objects/generic/largewoodenarmchair/largewoodenarmchaircover.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+      "direction" : "right",
+
+      "sitPosition" : [4, 31],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false
+}

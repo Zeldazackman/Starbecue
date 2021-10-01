@@ -38,7 +38,7 @@
 				},
 				"partStates": {
 					"chairState" : {
-						"idle": { "properties": { "image": "voreShopChair.png" } }
+						"idle": { "properties": { "image": "voreShopChair.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7" } }
 					}
 				}
 			}
