@@ -16,21 +16,17 @@
 			"imagePosition": [-56, 0],
 			"direction": "left",
 			"flipImages": true,
-			"spaceScan": 0.1,
-			"spaces" : [[0,0]],
 			"anchors": ["bottom"],
 			"collision" : "platform",
-			"collisionSpaces" : [ [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+			"collisionSpaces" : [ [7, 3], [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
 		},
 		{
 			"imageLayers" : [ { "image" : "voreShopCounter.png" } ],
 			"imagePosition": [-56, 0],
 			"direction": "right",
-			"spaceScan": 0.1,
-			"spaces" : [[0,0]],
 			"anchors": ["bottom"],
 			"collision" : "platform",
-			"collisionSpaces" : [ [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+			"collisionSpaces" : [ [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-7, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
 		}
 	],
 
@@ -41,7 +37,7 @@
 	"isWired" : false,
 	"printable" : false,
 	"scannable" : false,
-	"interactive" : true,
+	"interactive" : false,
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false

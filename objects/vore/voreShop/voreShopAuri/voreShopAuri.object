@@ -12,22 +12,20 @@
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "voreShopAuri.png?addmask=/objects/vore/voreShop/voreShopAuri/voreShopPlacingMask.png" } ],
+			"imageLayers" : [ { "image" : "voreShopAuri.png" } ],
 			"imagePosition": [-48, 0],
 			"direction": "left",
 			"flipImages": true,
 			"spaceScan": 0.1,
 			"renderLayer" : "Object-1",
-			"spaces" : [[0,0]],
 			"anchors": ["bottom"]
 		},
 		{
-			"imageLayers" : [ { "image" : "voreShopAuri.png?addmask=/objects/vore/voreShop/voreShopAuri/voreShopPlacingMask.png" } ],
+			"imageLayers" : [ { "image" : "voreShopAuri.png" } ],
 			"imagePosition": [-48, 0],
 			"direction": "right",
 			"spaceScan": 0.1,
 			"renderLayer" : "Object-1",
-			"spaces" : [[0,0]],
 			"anchors": ["bottom"]
 		}
 	],

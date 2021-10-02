@@ -12,20 +12,18 @@
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "voreShopCounter.png?addmask=/objects/vore/voreShop/voreShopChair/voreShopPlacingMask.png" } ],
+			"imageLayers" : [ { "image" : "voreShopCounter.png" } ],
 			"imagePosition": [-40, 0],
 			"direction": "left",
 			"flipImages": true,
-			"spaceScan": 0.1,
 			"spaces" : [[0,0]],
 			"anchors": ["bottom"],
 			"renderLayer" : "Object-2"
 		},
 		{
-			"imageLayers" : [ { "image" : "voreShopCounter.png?addmask=/objects/vore/voreShop/voreShopChair/voreShopPlacingMask.png" } ],
+			"imageLayers" : [ { "image" : "voreShopCounter.png" } ],
 			"imagePosition": [-40, 0],
 			"direction": "right",
-			"spaceScan": 0.1,
 			"spaces" : [[0,0]],
 			"anchors": ["bottom"],
 			"renderLayer" : "Object-2"
@@ -39,7 +37,7 @@
 	"isWired" : false,
 	"printable" : false,
 	"scannable" : false,
-	"interactive" : true,
+	"interactive" : false,
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false
