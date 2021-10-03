@@ -30,3 +30,6 @@
 	The_Gamer_Eagle
 	Avar
 	Canary
+	Silverwind93
+	amber310
+	Q.S.
