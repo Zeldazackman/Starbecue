@@ -1,0 +1,21 @@
+{
+	"objectName" : "voreShopBookshelfBG",
+	"colonyTags" : ["generic"],
+	"rarity" : "Common",
+	"category" : "decorative",
+	"price" : 60,
+
+	"description" : "A thingy",
+	"shortdescription" : "bookshelf BG",
+	"race" : "generic",
+
+	"inventoryIcon" : "/assetmissing.png",
+	"orientations" : [
+		{
+			"image" : "voreShopBookshelfBG.png",
+			"imagePosition" : [0, 0],
+			"renderLayer" : "BackgroundTile-10",
+			"anchors" : [ ]
+		}
+	]
+}
