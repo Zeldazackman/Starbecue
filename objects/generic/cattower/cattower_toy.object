@@ -1,0 +1,43 @@
+{
+  "objectName" : "cattower_toy",
+  "rarity" : "Common",
+  "description" : "Dangly things, a cat's worst enemy!",
+  "shortdescription" : "Cat Tower Toy",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 85,
+  "printable" : false,
+
+  "apexDescription" : "This armchair looks nice and comfy... although a bit big.",
+  "avianDescription" : "Colourful and comfortable... and large",
+  "floranDescription" : "Big sssoft chair with sssmooth wooden arms.",
+  "glitchDescription" : "Content. I could happily while away the hours in this oversized chair.",
+  "humanDescription" : "A big wooden armchair.",
+  "hylotlDescription" : "Comfortable... not sure about humble.",
+  "novakidDescription" : "These things drive those critters mad.",
+
+  "inventoryIcon" : "cattowericon.png",
+  "orientations" : [
+    {
+      "image" : "cattower_toy.png",
+      "imagePosition" : [-5, 0],
+      "animationPosition" : [-5, 0],
+      "direction" : "left",
+      "flipImages" : false,
+
+      "spaces" : [ [0, 0], [0, 1] ]
+    },
+    {
+      "image" : "cattower_toy.png",
+      "imagePosition" : [-3, 0],
+      "animationPosition" : [-3, 0],
+      "direction" : "right",
+      "flipImages" : false,
+
+      "spaces" : [ [0, 0], [0, 1] ]
+    }
+  ],
+
+  "objectType" : "object",
+  "interactive" : true
+}

@@ -23,8 +23,8 @@ function init()
 		end
 		player.interact("ScriptPane", pane, sourceEntity or entity.id())
 	end)
-	message.setHandler( "isLounging", function()
-		return player.isLounging(), player.loungingIn()
+	message.setHandler( "loungingIn", function()
+		return player.loungingIn()
 	end)
 
 	message.setHandler("spawnSmolPrey", function(_,_, species )

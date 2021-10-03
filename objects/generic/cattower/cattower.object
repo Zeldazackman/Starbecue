@@ -1,0 +1,66 @@
+{
+  "objectName" : "cattower",
+  "rarity" : "Common",
+  "description" : "A towering spire, fit for a cat.",
+  "shortdescription" : "Cat Tower",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 150,
+  "printable" : true,
+
+  "apexDescription" : "This armchair looks nice and comfy... although a bit big.",
+  "avianDescription" : "Colourful and comfortable... and large",
+  "floranDescription" : "Big sssoft chair with sssmooth wooden arms.",
+  "glitchDescription" : "Content. I could happily while away the hours in this oversized chair.",
+  "humanDescription" : "A big wooden armchair.",
+  "hylotlDescription" : "Comfortable... not sure about humble.",
+  "novakidDescription" : "Some sorta climbing thimgamajig.",
+
+  "objectType" : "physics",
+
+  "inventoryIcon" : "cattowericon.png",
+  "orientations" : [
+    {
+      "image" : "cattower.png",
+      "imagePosition" : [-24, 0],
+      "animationPosition" : [-24, 0],
+      "direction" : "right",
+
+      "spaceScan" : 0.2,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "physicsCollisions" : {
+    "top" : {
+      "collisionKind" : "platform",
+      "position" : [0, 0],
+      "collision" : [
+        [-2.25, 7.625],
+        [1.25, 7.625],
+        [1.25, 8.75],
+        [-2.25, 8.75]
+      ]
+    },
+    "box" : {
+      "collisionKind" : "platform",
+      "position" : [0, 0],
+      "collision" : [
+        [-0.5, 4],
+        [3.25, 4],
+        [3.25, 7],
+        [-0.5, 7]
+      ]
+    },
+    "platform" : {
+      "collisionKind" : "platform",
+      "position" : [0, 0],
+      "collision" : [
+        [-2.25, 3.25],
+        [2.25, 3.25],
+        [2.25, 3.625],
+        [-2.5, 3.625]
+      ]
+    }
+  }
+}

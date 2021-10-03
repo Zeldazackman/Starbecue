@@ -1,0 +1,10 @@
+{
+	"name" : "pvsoLoungeDirectives",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+	"pvsoLoungeDirectives.lua"
+	]
+
+}
