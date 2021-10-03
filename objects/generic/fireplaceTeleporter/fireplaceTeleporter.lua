@@ -1,7 +1,8 @@
 function init()
 	if storage.state == nil then storage.state = config.getParameter("defaultLightState", true) end
+	if storage.interactive == nil then storage.interactive = true end
 
-	object.setInteractive(storage.state)
+	object.setInteractive(storage.interactive)
 	setLightState(storage.state)
 end
 
@@ -41,11 +42,12 @@ function processWireInput()
 	end
 
 	if (not storage.linked) or (object.isOutputNodeConnected(0) and storage.destinations ~= nil and storage.destinations[1] ~= nil) then
-		object.setInteractive(storage.state)
+		storage.interactive = storage.state
 	else
-		object.setInteractive(false)
+		storage.interactive = false
 	end
 
+	object.setInteractive(storage.interactive)
 	setLightState(storage.state)
 	object.setOutputNodeLevel(0, storage.state)
 end
@@ -61,7 +63,7 @@ function addDestination(id)
 		table.insert(storage.destinations, {
 			name = "Somewhere else...",
 			planetName = "???",
-			warpAction = "nowhere="..coords[1].."."..coords[2],
+			warpAction = "nowhere="..math.floor(coords[1]).."."..math.floor(coords[2]),
 			icon = "default"
 		})
 	end
