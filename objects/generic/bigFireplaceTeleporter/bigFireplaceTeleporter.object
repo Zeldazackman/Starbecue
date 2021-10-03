@@ -64,7 +64,13 @@
 	],
 	"scriptDelta" : 60,
 
-	"inputNodes" : [ [0, 0] ],
+	"inputNodes" : [
+		[0, 0],
+		[0, 7]
+	],
+	"outputNodes" : [
+		[0, 8]
+	],
 	"teleporterFootPosition" : [0, 0],
 	"interactive" : true
 

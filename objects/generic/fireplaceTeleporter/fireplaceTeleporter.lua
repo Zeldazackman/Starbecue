@@ -1,42 +1,70 @@
+function init()
+	if storage.state == nil then storage.state = config.getParameter("defaultLightState", true) end
+
+	object.setInteractive(storage.state)
+	setLightState(storage.state)
+end
+
 function onInteraction(args)
-	--[[
 	if storage.linked then
-
-
+		if storage.destinations ~= nil and storage.destinations[1] ~= nil then
+			return { "OpenTeleportDialog", {
+				canBookmark = false,
+				includePlayerBookmarks = false,
+				destinations = storage.destinations
+			}}
+		end
 		return
-	end]]
+	end
 	return { "OpenTeleportDialog", config.getParameter("teleporterConfig", root.assetJson("/interface/warping/remoteteleporter.config")) }
 end
 
-
 function processWireInput()
-	if object.isInputNodeConnected(0) then
-		storage.state = object.getInputNodeLevel(0)
-		setLightState(storage.state)
-		object.setInteractive(storage.state)
-	end
-	--[[
 	if object.isInputNodeConnected(1) or object.isOutputNodeConnected(0) then
 		storage.linked = true
-		storage.destinations = {}
-
-		table.insert(storage.destinations, {
-			canBookmark = false,
-			includePlayerBookmarks = false,
-			destinations = {
-				{
-					name = "Somewhere else...",
-					planetName = "???",
-					warpAction = "OwnShip",
-					icon = "beamup"
-				}
-			}
-		})
-
+		if object.isOutputNodeConnected(0) then
+			storage.destinations = {}
+			local connectedDestinations = object.getOutputNodeIds(0)
+			sb.logInfo(sb.printJson(connectedDestinations))
+			for id, index in pairs(connectedDestinations) do
+				addDestination(id)
+			end
+		end
 	else
 		storage.linked = false
 	end
-	]]
+
+	if object.isInputNodeConnected(0) then
+		storage.state = object.getInputNodeLevel(0)
+	else
+		storage.state = config.getParameter("defaultLightState", true)
+	end
+
+	if (not storage.linked) or (object.isOutputNodeConnected(0) and storage.destinations ~= nil and storage.destinations[1] ~= nil) then
+		object.setInteractive(storage.state)
+	else
+		object.setInteractive(false)
+	end
+
+	setLightState(storage.state)
+	object.setOutputNodeLevel(0, storage.state)
+end
+
+function addDestination(id)
+	sb.logInfo(sb.printJson(id))
+	local continue = true
+	if object.getInputNodeIds(1)[id] ~= nil and not object.getInputNodeLevel(1) then
+		continue = false
+	end
+	if continue then
+		local coords = world.entityPosition(id)
+		table.insert(storage.destinations, {
+			name = "Somewhere else...",
+			planetName = "???",
+			warpAction = "nowhere="..coords[1].."."..coords[2],
+			icon = "default"
+		})
+	end
 end
 
 function setLightState(newState)
