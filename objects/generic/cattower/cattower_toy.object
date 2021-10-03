@@ -20,8 +20,8 @@
   "orientations" : [
     {
       "image" : "cattower_toy.png",
-      "imagePosition" : [-5, 0],
-      "animationPosition" : [-5, 0],
+      "imagePosition" : [-6, 0],
+      "animationPosition" : [-6, 0],
       "direction" : "left",
       "flipImages" : false,
 

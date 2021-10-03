@@ -34,10 +34,6 @@ function update(dt)
 					x = math.floor(-playerpos[1] + sitpos[1] - imagepos[1] + 0.5), -- +0.5 to round instead of floor
 					y = math.floor(-playerpos[2] + sitpos[2] - imagepos[2] + 0.5), -- since there's no math.round in lua
 				}
-				sb.logInfo(sb.print(objPosition))
-				sb.logInfo(sb.print(playerpos))
-				sb.logInfo(sb.print(sitpos))
-				sb.logInfo(sb.print(imagepos))
 			end
 		end
 		promise = nil
