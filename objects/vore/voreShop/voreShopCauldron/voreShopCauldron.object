@@ -283,7 +283,6 @@
 		"coloryellow" : "?hueshift=57",
 		"glow" : "?replace;ff0000=fff57b;ff5454=fffcd1;ffa0a0=ffffff",
 		"glueslow" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
-		"heal" : "",
 		"jumpboost" : "?hueshift=244",
 		"levitation" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
 		"lowgrav" : "?hueshift=270",
