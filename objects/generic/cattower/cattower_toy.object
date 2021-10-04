@@ -20,8 +20,8 @@
   "orientations" : [
     {
       "image" : "cattower_toy.png",
-      "imagePosition" : [-6, 0],
-      "animationPosition" : [-6, 0],
+      "imagePosition" : [-10, 0],
+      "animationPosition" : [-10, 0],
       "direction" : "left",
       "flipImages" : false,
 
@@ -29,8 +29,8 @@
     },
     {
       "image" : "cattower_toy.png",
-      "imagePosition" : [-3, 0],
-      "animationPosition" : [-3, 0],
+      "imagePosition" : [-7, 0],
+      "animationPosition" : [-7, 0],
       "direction" : "right",
       "flipImages" : false,
 
@@ -39,5 +39,6 @@
   ],
 
   "objectType" : "object",
-  "interactive" : true
+  "scripts": [ "cattower_toy.lua" ],
+  "animation": "cattower_toy.animation"
 }

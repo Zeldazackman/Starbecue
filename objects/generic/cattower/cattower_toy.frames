@@ -1,10 +1,20 @@
 {
 
   "frameGrid" : {
-    "size" : [16, 16],
-    "dimensions" : [1, 1],
+    "size" : [24, 16],
+    "dimensions" : [4, 8],
     "names" : [
-      [ "default" ]
+      [ "right.0", "right.1", "right.2", "right.3" ],
+      [ "right.4", "right.5", "right.6", "right.7" ],
+      [ "right.8", "right.9", "right.10", "right.11" ],
+      [ "right.12", "right.13", "right.14", "right.15" ],
+      [ "left.0", "left.1", "left.2", "left.3" ],
+      [ "left.4", "left.5", "left.6", "left.7" ],
+      [ "left.8", "left.9", "left.10", "left.11" ],
+      [ "left.12", "left.13", "left.14", "left.15" ]
     ]
+  },
+  "aliases": {
+    "default": "right.0"
   }
 }
