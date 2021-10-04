@@ -4,7 +4,8 @@
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoInvisible.lua"
+		"pvsoInvisible.lua",
+		"/stats/speciesAnimOverride/storeDirectives.lua"
 	]
 
 }

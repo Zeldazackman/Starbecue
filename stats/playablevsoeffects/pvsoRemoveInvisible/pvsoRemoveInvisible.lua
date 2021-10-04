@@ -1,6 +1,5 @@
 function init()
 	status.removeEphemeralEffect("pvsoInvisible")
-	effect.setParentDirectives("multiply=FFFFFFFF")
 end
 
 function update(dt)

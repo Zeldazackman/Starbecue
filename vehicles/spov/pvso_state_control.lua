@@ -115,7 +115,7 @@ function p.getTransitionVictimId(scriptargs, tconfig)
 	return id
 end
 
-function p.idleStateChange()
+function p.idleStateChange(dt)
 	if not p.notMoving() or p.movement.animating or p.transitionLock then return end
 
 	if p.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well

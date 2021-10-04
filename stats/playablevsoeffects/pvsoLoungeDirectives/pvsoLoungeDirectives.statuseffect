@@ -4,7 +4,8 @@
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"pvsoLoungeDirectives.lua"
+		"pvsoLoungeDirectives.lua",
+		"/stats/speciesAnimOverride/storeDirectives.lua"
 	]
 
 }

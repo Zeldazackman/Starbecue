@@ -478,7 +478,7 @@ function p.queueAnimEndFunction(state, func, newPriority)
 end
 
 function p.doAnim( state, anim, force)
-	local oldPriority = p.animStateData[state].animationState.priority
+	local oldPriority = (p.animStateData[state].animationState or {}).priority or 0
 	local newPriority = (p.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = p.animationIs( state, anim )
 	local force = force
