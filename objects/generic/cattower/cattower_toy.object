@@ -19,7 +19,7 @@
   "inventoryIcon" : "cattowericon.png",
   "orientations" : [
     {
-      "image" : "cattower_toy.png",
+      "image" : "cattower_toy.png:default",
       "imagePosition" : [-10, 0],
       "animationPosition" : [-10, 0],
       "direction" : "left",
@@ -28,7 +28,7 @@
       "spaces" : [ [0, 0], [0, 1] ]
     },
     {
-      "image" : "cattower_toy.png",
+      "image" : "cattower_toy.png:default",
       "imagePosition" : [-7, 0],
       "animationPosition" : [-7, 0],
       "direction" : "right",
