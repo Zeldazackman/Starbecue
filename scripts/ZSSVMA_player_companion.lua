@@ -164,6 +164,10 @@ function checkLockItem(itemDescriptor, type)
 end
 
 function lockItem(itemDescriptor, type)
+	if itemDescriptor.parameters ~= nil and itemDescriptor.parameters.itemHasOverrideLockScript then
+		return world.sendEntityMessage(entity.id(), itemDescriptor.name.."Lock", true)
+	end
+
 	local lockItemDescriptor = player.essentialItem("inspectiontool")
 	if lockItemDescriptor.name ~= "pvsoSecretTrick" then
 		lockEssentialItem(lockItemDescriptor, "inspectiontool", type)

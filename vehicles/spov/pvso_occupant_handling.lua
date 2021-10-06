@@ -57,6 +57,8 @@ function p.uneat( occupantId )
 	if occupantId == nil or not world.entityExists(occupantId) then return end
 	world.sendEntityMessage( occupantId, "PVSOClear")
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "pvsoRemoveBellyEffects")
+	world.sendEntityMessage( occupantId, "primaryItemLock", false)
+	world.sendEntityMessage( occupantId, "altItemLock", false)
 	p.unForceSeat( occupantId )
 	if not p.lounging[occupantId] then return end
 	local seatindex = p.lounging[occupantId].index

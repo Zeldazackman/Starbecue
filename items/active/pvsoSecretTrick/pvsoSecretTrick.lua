@@ -16,6 +16,10 @@ function update(dt)
 	if (storage.timeUntilUnlock or 0) <= 0 then
 		local clean
 		while clean ~= true do
+
+			world.sendEntityMessage(entity.id(), "primaryItemLock", false)
+			world.sendEntityMessage(entity.id(), "altItemLock", false)
+
 			clean = true
 			local lockedItemList = player.getProperty("vsoLockedItems")
 			for i, lockedItemData in pairs(lockedItemList or {}) do

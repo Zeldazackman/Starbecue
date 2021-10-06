@@ -536,7 +536,7 @@ end
 
 p.rpcList = {}
 function p.addRPC(rpc, callback, failCallback)
-	if callback ~= nil then
+	if callback ~= nil or failCallback ~= nil  then
 		table.insert(p.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
 	end
 end
