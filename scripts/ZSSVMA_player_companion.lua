@@ -167,11 +167,14 @@ function lockItem(itemDescriptor, type)
 	if itemDescriptor.parameters ~= nil and itemDescriptor.parameters.itemHasOverrideLockScript then
 		return world.sendEntityMessage(entity.id(), itemDescriptor.name.."Lock", true)
 	end
+	if root.itemType(itemDescriptor.name) == "activeitem" and (not itemDescriptor.parameters or not itemDescriptor.parameters.itemHasOverrideLockScript) then
+		return world.sendEntityMessage( entity.id(), "giveHeldItemOverrideLockScript", itemDescriptor )
+	end
 
-	local lockItemDescriptor = player.essentialItem("inspectiontool")
+	local lockItemDescriptor = player.essentialItem("painttool")
 	if lockItemDescriptor.name ~= "pvsoSecretTrick" then
-		lockEssentialItem(lockItemDescriptor, "inspectiontool", type)
-		lockItemDescriptor = player.essentialItem("inspectiontool")
+		lockEssentialItem(lockItemDescriptor, "painttool", type)
+		lockItemDescriptor = player.essentialItem("painttool")
 	end
 
 	local consumed = player.consumeItem(itemDescriptor, false, true)
