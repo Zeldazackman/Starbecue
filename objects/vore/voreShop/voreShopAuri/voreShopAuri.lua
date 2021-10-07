@@ -28,40 +28,38 @@ function eyeTracking()
 
 		local angle = math.atan(targetDist[2], targetDist[1]) * 180/math.pi
 		local distance = world.magnitude(worldHeadPos, targetPos)
-		if distance > 1 then
-			if angle <= 15 and angle >= -15 then
-				X = 1 * object.direction()
-				Y = 0
-			elseif angle <= 75 and angle > 15 then
-				X = 1 * object.direction()
-				Y = 1
-			elseif angle <= 105 and angle > 75 then
-				X = 0
-				Y = 1
-			elseif angle <= 165 and angle > 105 then
-				X = -1 * object.direction()
-				Y = 1
-			elseif angle > 165 then
-				X = -1 * object.direction()
-				Y = 0
+		if angle <= 15 and angle >= -15 then
+			X = 1 * object.direction()
+			Y = 0
+		elseif angle <= 75 and angle > 15 then
+			X = 1 * object.direction()
+			Y = 1
+		elseif angle <= 105 and angle > 75 then
+			X = 0
+			Y = 1
+		elseif angle <= 165 and angle > 105 then
+			X = -1 * object.direction()
+			Y = 1
+		elseif angle > 165 then
+			X = -1 * object.direction()
+			Y = 0
 
-			elseif angle >= -75 and angle < -15 then
-				X = 1 * object.direction()
-				Y = -1
-			elseif angle >= -105 and angle < -75 then
-				X = 0
-				Y = -1
-			elseif angle >= -165 and angle < -105 then
-				X = -1 * object.direction()
-				Y = -1
-			elseif angle < -165 then
-				X = -1 * object.direction()
-				Y = 0
-			end
+		elseif angle >= -75 and angle < -15 then
+			X = 1 * object.direction()
+			Y = -1
+		elseif angle >= -105 and angle < -75 then
+			X = 0
+			Y = -1
+		elseif angle >= -165 and angle < -105 then
+			X = -1 * object.direction()
+			Y = -1
+		elseif angle < -165 then
+			X = -1 * object.direction()
+			Y = 0
+		end
 
-			if distance > 5 then
-				X = X * 2
-			end
+		if distance > 5 then
+			X = X * 2
 		end
 	end
 	animator.setGlobalTag("eyesX", X)
