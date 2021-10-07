@@ -12,6 +12,7 @@
 
 	"inventoryIcon": "/items/throwables/capturepod.png",
 	"shortdescription": "Invisible VSO Spawner",
+	"description": "For a more discrete VSO spawn location.",
 
 	"tooltipFields" : {
 		"statusLabel": "For a more discrete VSO spawn location."

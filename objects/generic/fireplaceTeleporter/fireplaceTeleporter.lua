@@ -26,7 +26,6 @@ function processWireInput()
 		if object.isOutputNodeConnected(0) then
 			storage.destinations = {}
 			local connectedDestinations = object.getOutputNodeIds(0)
-			sb.logInfo(sb.printJson(connectedDestinations))
 			for id, index in pairs(connectedDestinations) do
 				addDestination(id)
 			end
@@ -53,7 +52,6 @@ function processWireInput()
 end
 
 function addDestination(id)
-	sb.logInfo(sb.printJson(id))
 	local continue = true
 	if object.getInputNodeIds(1)[id] ~= nil and not object.getInputNodeLevel(1) then
 		continue = false

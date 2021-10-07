@@ -9,9 +9,10 @@
 
 	"inventoryIcon": "/vehicles/spov/charem/spov/default/icon.png",
 	"shortdescription": "Charem",
+	"description" : "A lazy shadox of your very own! Use on an empty spawner to place him inside.",
 
 	"tooltipFields" : {
-		"statusLabel": "A lazy shadox of your very own! Interact with an empty spawner to place it inside."
+		"statusLabel": "A lazy shadox of your very own! Use on an empty spawner to place him inside."
 	},
 
 	"augment" : {

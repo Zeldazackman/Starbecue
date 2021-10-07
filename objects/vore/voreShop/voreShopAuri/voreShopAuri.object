@@ -10,6 +10,21 @@
 	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
 	"shortdescription": "Vore Shop Auri",
 
+	"interactAction" : "OpenCraftingInterface",
+	"interactData" : {
+		"config" : "/interface/windowconfig/craftingmerchant.config",
+		"filter" : ["auriShop"],
+		"paneLayoutOverride" : {
+			"windowtitle" : {
+				"title" : "Auri's Vore Shop",
+				"subtitle" : "For some of your large vorny needs.",
+				"icon" : {
+					"file" : "/items/active/pvsoController/oralVore.png"
+				}
+			}
+		}
+	},
+
 	"orientations": [
 		{
 			"imageLayers" : [ { "image" : "voreShopAuri.png" } ],
@@ -40,8 +55,8 @@
 	"interactive" : true,
 	"inspectable" : false,
 	"allowScanning" : false,
-	"isContainer" : false,
-	"scripts": [
-		"voreShopAuri.lua"
-	]
+	"isContainer" : false
+	//"scripts": [
+	//	"voreShopAuri.lua"
+	//]
 }

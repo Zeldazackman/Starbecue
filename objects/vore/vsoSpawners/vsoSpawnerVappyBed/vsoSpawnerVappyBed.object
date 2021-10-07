@@ -12,6 +12,7 @@
 
 	"inventoryIcon": "vaporeonbedicon.png",
 	"shortdescription": "Water bed",
+	"description": "A special waterbed favored by a certain kind of fishcat.",
 
 	"tooltipFields" : {
 		"statusLabel": "A special waterbed favored by a certain kind of fishcat."
