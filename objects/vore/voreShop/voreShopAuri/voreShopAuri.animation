@@ -1,43 +1,85 @@
 {
 	"globalTagDefaults" : {
+		"eyesX" : "0",
+		"eyesY" : "0"
 	},
 	"animatedParts": {
 		"stateTypes": {
-			"auriState" : {
+			"bodyState" : {
+				"default" : "idle",
+				"states" : {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"headState" : {
+				"default" : "idle",
+				"states" : {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"hairState" : {
+				"default" : "idle",
+				"states" : {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"eyesState" : {
 				"default" : "idle",
 				"states" : {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			}
-
 		},
 		"parts": {
-			"auri" : {
+			"body" : {
 				"properties": {
 					"centered": true,
 					"zLevel": 0,
 					"transformationGroups": []
 				},
 				"partStates": {
-					"auriState" : {
-						"idle": { "properties": { "image": "voreShopAuri.png" } }
+					"bodyState" : {
+						"idle": { "properties": { "image": "auri/body.png" } }
 					}
 				}
 			},
-			"auri_fullbright" : {
+			"head" : {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
+					"zLevel": 1,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"headState" : {
+						"idle": { "properties": { "image": "auri/head.png:idle.1" } }
+					}
+				}
+			},
+			"hair" : {
+				"properties": {
+					"centered": true,
+					"zLevel": -1,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"headState" : {
+						"idle": { "properties": { "image": "auri/hair.png" } }
+					}
+				}
+			},
+			"eyes" : {
+				"properties": {
+					"centered": true,
+					"zLevel": 2,
 					"transformationGroups": [],
 					"fullbright" : true
 				},
 				"partStates": {
-					"auriState" : {
-						"idle": { "properties": { "image": "voreShopAuri_fullbright.png" } }
+					"eyesState" : {
+						"idle": { "properties": { "image": "auri/eyes.png:<eyesX>.<eyesY>" } }
 					}
 				}
 			}
-
 		}
 	},
 	"transformationGroups": {

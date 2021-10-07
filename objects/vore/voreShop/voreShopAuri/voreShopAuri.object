@@ -55,8 +55,8 @@
 	"interactive" : true,
 	"inspectable" : false,
 	"allowScanning" : false,
-	"isContainer" : false
-	//"scripts": [
-	//	"voreShopAuri.lua"
-	//]
+	"isContainer" : false,
+	"scripts": [
+		"voreShopAuri.lua"
+	]
 }

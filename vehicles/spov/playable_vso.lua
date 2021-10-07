@@ -682,86 +682,39 @@ function p.smolPreyAnimationPaths(settings, species, state, tags)
 	end
 
 	local head
-	local head_fullbright
-
 	local body
-	local body_fullbright
-
 	local tail
-	local tail_fullbright
-
 	local backlegs
-	local backlegs_fullbright
-
 	local frontlegs
-	local frontlegs_fullbright
-
 	local backarms
-	local backarms_fullbright
-
 	local frontarms
-	local frontarms_fullbright
 
 	if edibleAnims.head ~= nil then
 		head = p.fixSmolPreyPathTags(directory, animatedParts, "head", "head", edibleAnims.head, settings, tags)
-		if animatedParts.parts.head_fullbright ~= nil then
-			head_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "head_fullbright", "head", edibleAnims.head, settings, tags)
-		end
 	end
 	if edibleAnims.body ~= nil then
 		body = p.fixSmolPreyPathTags(directory, animatedParts, "body", "body", edibleAnims.body, settings, tags)
-		if animatedParts.parts.body_fullbright ~= nil then
-			body_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "body_fullbright", "body", edibleAnims.body, settings, tags)
-		end
 	end
 	if edibleAnims.tail ~= nil then
 		tail = p.fixSmolPreyPathTags(directory, animatedParts, "tail", "tail", edibleAnims.tail, settings, tags)
-		if animatedParts.parts.tail_fullbright ~= nil then
-			tail_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "tail_fullbright", "tail", edibleAnims.tail, settings, tags)
-		end
 	end
 	if edibleAnims.legs ~= nil then
 		backlegs = p.fixSmolPreyPathTags(directory, animatedParts, "backlegs", "legs", edibleAnims.legs, settings, tags)
 		frontlegs = p.fixSmolPreyPathTags(directory, animatedParts, "frontlegs", "legs", edibleAnims.legs, settings, tags)
-		if animatedParts.parts.backlegs_fullbright ~= nil then
-			backlegs_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "backlegs_fullbright", "legs", edibleAnims.legs, settings, tags)
-		end
-		if animatedParts.parts.frontlegs_fullbright ~= nil then
-			frontlegs_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "frontlegs_fullbright", "legs", edibleAnims.legs, settings, tags)
-		end
 	end
 	if edibleAnims.arms ~= nil then
 		backarms = p.fixSmolPreyPathTags(directory, animatedParts, "backarms", "arms", edibleAnims.arms, settings, tags)
 		frontarms = p.fixSmolPreyPathTags(directory, animatedParts, "frontarms", "arms", edibleAnims.arms, settings, tags)
-		if animatedParts.parts.backarms_fullbright ~= nil then
-			backarms_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "backarms_fullbright", "arms", edibleAnims.arms, settings, tags)
-		end
-		if animatedParts.parts.frontarms_fullbright ~= nil then
-			frontarms_fullbright = p.fixSmolPreyPathTags(directory, animatedParts, "frontarms_fullbright", "arms", edibleAnims.arms, settings, tags)
-		end
 	end
 
 	return {
 		head = head,
-		head_fullbright = head_fullbright,
-
 		body = body,
-		body_fullbright = body_fullbright,
-
 		tail = tail,
-		tail_fullbright = tail_fullbright,
-
 		backlegs = backlegs,
-		backlegs_fullbright = backlegs_fullbright,
-
 		frontlegs = frontlegs,
-		frontlegs_fullbright = frontlegs_fullbright,
-
 		backarms = backarms,
-		backarms_fullbright = backarms_fullbright,
-
-		frontarms = frontarms,
-		frontarms_fullbright = frontarms_fullbright
+		frontarms = frontarms
 	}
 end
 
@@ -770,7 +723,6 @@ function p.fixSmolPreyPathTags(directory, animatedParts, partname, statename, an
 	if not path or path == "" then return end
 	local partTags = sb.jsonMerge( tags.global, sb.jsonMerge( tags[partname], {
 		directives = settings.directives,
-		fullbrightDirectives = settings.fullbrightDirectives,
 		skin = settings.skinNames[partname]
 	}))
 	return directory..sb.replaceTags(path, partTags)

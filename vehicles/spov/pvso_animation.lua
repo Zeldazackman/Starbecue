@@ -103,14 +103,10 @@ function p.rotateArm(enabled, arm, LR)
 
 
 		p.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
-		p.setPartTag( arm.."_fullbright", "armVisible", "?multiply=FFFFFF00" )
 		p.setPartTag( arm.."_rotation", "armVisible", "" )
-		p.setPartTag( arm.."_fullbright_rotation", "armVisible", "" )
 	else
 		p.setPartTag( arm, "armVisible", "" )
-		p.setPartTag( arm.."_fullbright", "armVisible", "" )
 		p.setPartTag( arm.."_rotation", "armVisible", "?multiply=FFFFFF00" )
-		p.setPartTag( arm.."_fullbright_rotation", "armVisible", "?multiply=FFFFFF00" )
 	end
 end
 
@@ -185,46 +181,20 @@ function p.smolPreyAnimPath(occupant)
 	local seatname = occupant.seatname
 
 	local head = occupant.smolPreyData.images.head
-	local head_fullbright = occupant.smolPreyData.images.head_fullbright
-
 	local body = occupant.smolPreyData.images.body
-	local body_fullbright = occupant.smolPreyData.images.body_fullbright
-
 	local tail = occupant.smolPreyData.images.tail
-	local tail_fullbright = occupant.smolPreyData.images.tail_fullbright
-
 	local backlegs = occupant.smolPreyData.images.backlegs
-	local backlegs_fullbright = occupant.smolPreyData.images.backlegs_fullbright
-
 	local frontlegs = occupant.smolPreyData.images.frontlegs
-	local frontlegs_fullbright = occupant.smolPreyData.images.frontlegs_fullbright
-
 	local backarms = occupant.smolPreyData.images.backarms
-	local backarms_fullbright = occupant.smolPreyData.images.backarms_fullbright
-
 	local frontarms = occupant.smolPreyData.images.frontarms
-	local frontarms_fullbright = occupant.smolPreyData.images.frontarms_fullbright
 
 	if head then p.setPartTag(seatname, "smolpath", head) else p.setPartTag(seatname, "smolpath", "/empty_image.png") end
-	if head_fullbright then p.setPartTag(seatname.."_fullbright", "smolpath", head_fullbright) else p.setPartTag(seatname.."_fullbright", "smolpath", "/empty_image.png") end
-
 	if body then p.setPartTag(seatname.."body", "smolpath", body) else p.setPartTag(seatname.."body", "smolpath", "/empty_image.png") end
-	if body_fullbright then p.setPartTag(seatname.."body_fullbright", "smolpath", body_fullbright) else p.setPartTag(seatname.."body_fullbright", "smolpath", "/empty_image.png") end
-
 	if tail then p.setPartTag(seatname.."tail", "smolpath", tail) else p.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
-	if tail_fullbright then p.setPartTag(seatname.."tail_fullbright", "smolpath", tail_fullbright) else p.setPartTag(seatname.."tail_fullbright", "smolpath", "/empty_image.png") end
-
 	if backlegs then p.setPartTag(seatname.."backlegs", "smolpath", backlegs) else p.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
-	if backlegs_fullbright then p.setPartTag(seatname.."backlegs_fullbright", "smolpath", backlegs_fullbright) else p.setPartTag(seatname.."backlegs_fullbright", "smolpath", "/empty_image.png") end
-
 	if frontlegs then p.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else p.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
-	if frontlegs_fullbright then p.setPartTag(seatname.."frontlegs_fullbright", "smolpath", frontlegs_fullbright) else p.setPartTag(seatname.."frontlegs_fullbright", "smolpath", "/empty_image.png") end
-
 	if backarms then p.setPartTag(seatname.."backarms", "smolpath", backarms) else p.setPartTag(seatname.."backarms", "smolpath", "/empty_image.png") end
-	if backarms_fullbright then p.setPartTag(seatname.."backarms_fullbright", "smolpath", backarms_fullbright) else p.setPartTag(seatname.."backarms_fullbright", "smolpath", "/empty_image.png") end
-
 	if frontarms then p.setPartTag(seatname.."frontarms", "smolpath", frontarms) else p.setPartTag(seatname.."frontarms", "smolpath", "/empty_image.png") end
-	if frontarms_fullbright then p.setPartTag(seatname.."frontarms_fullbright", "smolpath", frontarms_fullbright) else p.setPartTag(seatname.."frontarms_fullbright", "smolpath", "/empty_image.png") end
 
 	occupant.smolPreyData.update = false
 end
@@ -631,7 +601,6 @@ end
 function p.setColorReplaceDirectives()
 	if p.vso.replaceColors ~= nil then
 		local colorReplaceString = ""
-		local fullbrightDirectivesString = ""
 		for i, colorGroup in ipairs(p.vso.replaceColors) do
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[(p.settings.replaceColors[i] or p.vso.defaultSettings.replaceColors[i] or 1) + 1]
@@ -646,15 +615,13 @@ function p.setColorReplaceDirectives()
 			end
 
 			for j, color in ipairs(replacePalette) do
-				if not fullbright then
-					fullbrightDirectivesString = fullbrightDirectivesString.."?replace;"..basePalette[j].."=00000000"
+				if fullbright then
+					color = color.."fb"
 				end
 				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
 			end
 		end
 		p.settings.directives = colorReplaceString
-		p.settings.fullbrightDirectives = fullbrightDirectivesString
-		p.setPartTag( "global", "fullbrightDirectives", fullbrightDirectivesString )
 		p.setPartTag( "global", "directives", colorReplaceString )
 	end
 end
