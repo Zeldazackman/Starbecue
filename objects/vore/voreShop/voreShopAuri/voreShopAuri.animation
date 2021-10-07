@@ -8,25 +8,61 @@
 			"bodyState" : {
 				"default" : "idle",
 				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"headState" : {
 				"default" : "idle",
 				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"hairState" : {
 				"default" : "idle",
 				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
 			"eyesState" : {
 				"default" : "idle",
 				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
+			"emoteState" : {
+				"default" : "idle",
+				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"blabber": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1 },
+					"shout": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1 },
+
+					"happy": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1 },
+					"sad": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"neutral": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1 },
+					"laugh": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"annoyed": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1 },
+
+					"oh": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1 },
+					"oooh": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1 },
+
+					"blink": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1 },
+					"wink": { "frames": 5, "cycle": 0.5, "mode": "end", "priority": 1 },
+
+					"eat": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1 },
+					"sleep": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1 }
+
 				}
 			}
 		},
@@ -39,6 +75,8 @@
 				},
 				"partStates": {
 					"bodyState" : {
+						"none": { "properties": {} },
+
 						"idle": { "properties": { "image": "auri/body.png" } }
 					}
 				}
@@ -51,6 +89,8 @@
 				},
 				"partStates": {
 					"headState" : {
+						"none": { "properties": {} },
+
 						"idle": { "properties": { "image": "auri/head.png:idle.1" } }
 					}
 				}
@@ -63,6 +103,8 @@
 				},
 				"partStates": {
 					"headState" : {
+						"none": { "properties": {} },
+
 						"idle": { "properties": { "image": "auri/hair.png" } }
 					}
 				}
@@ -76,7 +118,24 @@
 				},
 				"partStates": {
 					"eyesState" : {
+						"none": { "properties": {} },
+
 						"idle": { "properties": { "image": "auri/eyes.png:<eyesX>.<eyesY>" } }
+					}
+				}
+			},
+			"emote" : {
+				"properties": {
+					"centered": true,
+					"zLevel": 2.1,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"emoteState" : {
+						"none": { "properties": {} },
+
+						"idle": { "properties": { "image": "auri/emote.png:idle.<frame>" } },
+						"blink": { "properties": { "image": "auri/emote.png:blink.<frame>" } }
 					}
 				}
 			}
