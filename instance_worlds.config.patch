@@ -8,8 +8,11 @@
 			"seed" : 1234,
 			"persistent" : false,
 			"beamUpRule" : "Anywhere",
-			"spawningEnabled" : true,
+			"spawningEnabled" : false,
 			"disableDeathDrops" : true,
+			"worldProperties" : {
+				"nonCombat" : true
+			},
 
 			"skyParameters" : {
 				"spaceLevel" : 3000,

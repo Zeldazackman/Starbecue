@@ -2,6 +2,10 @@ local initStage = 0
 local oldinit = init
 function init()
 	oldinit()
+
+	player.setUniverseFlag("voreWorld_auriShop")
+
+
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
 		local settings = player.getProperty( "vsoSettings" ) or {}
 		if vsoMenuName then return sb.jsonMerge(settings[vsoMenuName] or {}, settings.global or {}) end

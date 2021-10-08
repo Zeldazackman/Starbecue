@@ -1,0 +1,16 @@
+[
+	{
+		"op" : "add",
+		"path" : "/voreWorld_auriShop",
+		"value" : {
+			"actions" : [
+				{
+					"type" : "placeDungeon",
+					"dungeonId" : "voreWorld_auriShop",
+					"targetInstance" : "voreWorld",
+					"targetPosition" : [500, 500]
+				}
+			]
+		}
+	}
+]
