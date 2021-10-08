@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="1">
- <editorsettings>
-  <export target="auriShop.json" format="json"/>
- </editorsettings>
- <tileset firstgid="1" source="../../../../../assets/packed/tilesets/packed/materials.json"/>
- <tileset firstgid="198" source="../../../../../assets/packed/tilesets/packed/objects-by-race/glitch.json"/>
- <layer id="3" name="back" width="100" height="100">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" nextobjectid="1">
+ <tileset firstgid="1" source="../../../../../assets/packed/tilesets/packed/liquids.json"/>
+ <tileset firstgid="29" source="../../../../../assets/packed/tilesets/packed/materials.json"/>
+ <tileset firstgid="226" source="../../../../../assets/packed/tilesets/packed/miscellaneous.json"/>
+ <tileset firstgid="250" source="../../../../../assets/packed/tilesets/packed/supports.json"/>
+ <tileset firstgid="287" source="../../../../../assets/packed/tilesets/packed/objects-by-race/glitch.json"/>
+ <tileset firstgid="513" source="../../../tilesets/auriShop/auriShop.json"/>
+ <layer name="back" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt07ENwCAAA0HGy1AMT5M2FaB8cSd5gpfHAAAAAAAAAAAAAAAAAIB/PZvjLD1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRA775R4seLXo0zHd6NOjRokeLHi16tOjRokeLHi16AAAAAAAAAAAAAAAAAAAAwF0LxLF0uQ==
+   eJzt0bENACAMA8HsPwH7sQgNdSokjLiTfgG7CgAAAAAAAAAAAAAAAAAAAAAA4E9jRwZ/ZPFHFn9k8UcWf2TxRxZ/ZPHHHbOJ87q9JUmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSpNdaJY79tA==
   </data>
  </layer>
- <layer id="2" name="front" width="100" height="100">
+ <layer name="front" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2DEKAkEQRcG9kYGBVzPw8CaamC3diy+ogn+Cx9AwxwEAAAAAAAAAAAAAwFmP4dj1HI490xZ67Nloocfc9F64H9d4fXYbjh3fHjTo0aJHix4terTo0aJHix4terTo0aJHix4t/hNbvI8WPVr0AAAAgP+7XzjO06NFjxY9WvRo0QMAAAAAAAAAAAAAAACAX2848FF7
+   eJzt0TEKwCAMQFGpFNSrecEe1wyudSmFYt+DT4ZkS0oAAAAAAAAAAAAAAAAAAAAAAOzsmvEN/gEAAPBf53G/y3NXY5aoLW55ruuVAAAAAAAAAAAAAAAAAAAAAGAnA3V2G8A=
   </data>
  </layer>
- <objectgroup id="4" name="objects"/>
+ <objectgroup name="objects"/>
 </map>
