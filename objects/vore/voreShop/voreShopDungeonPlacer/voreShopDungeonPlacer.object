@@ -1,0 +1,36 @@
+{
+	"objectName": "voreShopDungeonPlacer",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 10,
+	"health" : 5,
+	"itemTags": [],
+	"shortdescription" : "dungeon placer",
+
+	"inventoryIcon": "voreShopDungeonPlacer.png",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "voreShopDungeonPlacer.png" } ],
+			"imagePosition": [0, 0]
+		}
+	],
+
+	"dungeon" : "voreWorld_auriShop",
+	"dungeonId" : 8,
+	"protect" : true,
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"scripts": [
+		"voreShopDungeonPlacer.lua"
+	]
+}
