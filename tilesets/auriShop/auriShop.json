@@ -6,7 +6,7 @@
 
     },
  "spacing":0,
- "tilecount":12,
+ "tilecount":17,
  "tileheight":88,
  "tileproperties":
     {
@@ -29,6 +29,31 @@
         {
          "object":"voreShopBookshelfBG",
          "tilesetDirection":"right"
+        },
+     "12":
+        {
+         "object":"cattower_bed",
+         "tilesetDirection":"right"
+        },
+     "13":
+        {
+         "object":"cattower_box",
+         "tilesetDirection":"right"
+        },
+     "14":
+        {
+         "object":"cattower_toy",
+         "tilesetDirection":"right"
+        },
+     "15":
+        {
+         "object":"cattower_toy",
+         "tilesetDirection":"left"
+        },
+     "16":
+        {
+         "object":"largewoodenarmchair",
+         "tilesetDirection":"left"
         },
      "2":
         {
@@ -88,6 +113,26 @@
      "11":
         {
          "image":"..\/..\/objects\/vore\/voreShop\/voreShopBookshelfBG\/voreShopBookshelfBG.png"
+        },
+     "12":
+        {
+         "image":"..\/..\/objects\/generic\/cattower\/tileset\/bed.png"
+        },
+     "13":
+        {
+         "image":"..\/..\/objects\/generic\/cattower\/tileset\/box.png"
+        },
+     "14":
+        {
+         "image":"..\/..\/objects\/generic\/cattower\/tileset\/toy.png"
+        },
+     "15":
+        {
+         "image":"..\/..\/objects\/generic\/cattower\/tileset\/toy.png"
+        },
+     "16":
+        {
+         "image":"..\/..\/objects\/generic\/largewoodenarmchair\/largewoodenarmchair.png"
         },
      "2":
         {
