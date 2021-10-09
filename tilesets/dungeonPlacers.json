@@ -1,0 +1,26 @@
+{ "columns":0,
+ "margin":0,
+ "name":"dungeonPlacers",
+ "properties":
+    {
+
+    },
+ "spacing":0,
+ "tilecount":1,
+ "tileheight":8,
+ "tileproperties":
+    {
+     "0":
+        {
+         "object":"voreShopDungeonPlacer"
+        }
+    },
+ "tiles":
+    {
+     "0":
+        {
+         "image":"dungeonPlacer.png"
+        }
+    },
+ "tilewidth":8
+}

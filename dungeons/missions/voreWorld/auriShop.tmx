@@ -9,6 +9,7 @@
  <tileset firstgid="530" source="../../../../../assets/packed/tilesets/packed/objects-by-race/apex.json"/>
  <tileset firstgid="901" source="../../../../../assets/packed/tilesets/packed/objects-by-category/door.json"/>
  <tileset firstgid="1033" source="../../../../../assets/packed/tilesets/packed/objects-by-category/other.json"/>
+ <tileset firstgid="1345" source="../../../../../assets/packed/tilesets/packed/objects-by-category/generic.json"/>
  <layer name="back" width="95" height="55">
   <data encoding="base64" compression="zlib">
    eJzt2MGNwjAQRmHXRQscONACVVBHDikPiUY4QKQoSvDYjjOO/zfSO6CNkPOtY9gNob25zGKOnVsIrynvtagN9t+5U3alM1B2JeO99h7KGe819xTubft7fzYpFJvx15VMTV6PjUaD+dJ+671Ki61z/v2+5jr2vJ+a9qnPQWwt2KfZPxPCHvte7Dlz2PethX3f9pw57Puprd879vXt137m8ZwonjlK9qnrwT7f3vt/VGep9r4/cg/xPadt++VzGbt367XY2+z/vc69FnvsW7fnzPGzt+5l9v3+9rl/y2Ffbm/15Mzxtbdeiz2fta3bW/cy+x775bxXmt872VuzTM37Hs4a9tgrhj32imGPvWLYY68Y9tgrhj32imGPvWLYY68Y9tgrlur8AWU5Hh4=
@@ -16,7 +17,7 @@
  </layer>
  <layer name="front" width="95" height="55">
   <data encoding="base64" compression="zlib">
-   eJztmUtOwzAQQJO2NPzK7xDdd8GCM7BgASuOwxJ2CKSegYMgsQFxA44AexYkaixZJk4de8YzjudJo7aR7STPYzt1ikIQBIEP1xK9gcmTRG9gQX1fqQQ01PeTWkBBfR+pRgjU69ZYIoR1G5cSTqF8QQDZlq39MSHu6RD3dMRwfzgBOsHISCnvx4a4pwPL/Uu5+awmw+acqi37WPpdQ8V4fjOvLee8/23798Ozn0PJ0f1Z2R2xkeccOnLMey5gufddKxVd9XcCxs9sYN3TCGMVwz31HlWMsK0ZLpHiXhoUb0A5Hbo+5+h+yLPNtrIh/qF8zSfpuIfG17/uax5hfVkwed68nRbFwwyuPYr/BykCOeeYZblywiTn39vrgFpzdTj5x9zbcm3bLDckl5v+ueuYm/rObWuXyz7fkeU6zhnlTYPvfg+n/OfEuu73H8ccbMo2c5TP/MTZ/zHRGMRaa231BTpi+XfZ75o6lNmry+zWse8xNkqjzsWAez9AGotd/kP2Bk2uiuIrp1D3/T3970I/5tqOuB/uPtSLuPd3L3lP5z7Ui7j3dy95T+c+1Auke4i2+trHPs9QFmV3bEPcw6C7dvHegOke6l3MtnZivPOBPI9qJ6W8Hxving4M98v6+6o99ir7eFYw3H8WG/fN57KNVW/NtOH0nNN4Vr71UMdumLw7g4TLc47yrPLe1he5g533av7Rf+v9kDNY7nXn5hgw+yBXsNZa5VufY8z+MPP/3nGefO7Yu0oR2UujD3Gfjvs/Lt475w==
+   eJztmb1OwzAQgJP+UP7K30N078DAyMzAABOPwwgbAqnPwIMgsYB4AxZ22Blo1FiyjJP45y53ju+TTm0j20k+n+3UKQpBEAQ+XEm0BiaPEq2BBfV9pRLQUN9PagEF9X2kGjFQr1tDiRhWdVxIOIXyBQFkW03tDwlxT4e4p6MP9/sjoBMMjJTyfmiIezqw3D+Xm8/ZyG/OmdVlH8qwa5gxnt/Ma8s573/r/n0P7OdYcnR/Utqjb+Q5h44c854LWO5D10qFrf40YvxMPOse9zBWMdxT71H1EU1rhkukuJcGxStQTseuzzm693m26Sob4x/K19YoHffQhPrXfW31sL7MmTxv3oyL4n7iVvZ82l2G4v9BikDOOWZZrhwxyfm3+jqg1lwdTv4x97Zc2zbL+eRy1T+3lrmp7dxN7XLZ5zuwXMcpo5xRhO73cMp/TqzW/f7jmINV2WqOCpmfOPs/JBqDWGttU/1c+KK+AAt9+XfZ7xo7lNlZl9lex27A2CiNOmce976HNBZt/mP2Bk0ui+Izp1D3/T3+70I/5tqOuPd3H+tF3Ie7l7yncx/rRdyHu5e8p3Mf6wXSPURbbe1jn8eXeWmPLsQ9DLprF+8VmO6h3sV0tdPHOx/I86h2Usr7oSHu6cBwv1h/X9bHXjLax/MFw/1HsXFffS7qWLbWTBtOzzmVZ+VbD3Xsmsm7M0i4POcozyrvm/oid7DzXs0/+m+9H3IGy73u3BwDZh/kCtZaq3zrc4zZH2b+3znOk0+WvasUkb00+hD36bj/A2UZPRI=
   </data>
  </layer>
  <objectgroup name="objects"/>
