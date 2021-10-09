@@ -495,9 +495,12 @@ function p.checkSpawnerExists()
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "pvsoPreyWarpRequest", {},
 		function(data)
+			-- put function handling the data return for the preywarp request here to make the player prey warp to the pred's location and set themselves as prey again
+
 			p.spawnerUUID = nil
 		end,
 		function()
+			-- this function is for when the request fails, leave it unchanged
 			p.spawnerUUID = nil
 		end)
 	else
