@@ -1,0 +1,24 @@
+{
+	"metadata" : {
+		"name" : "gardenFireplace",
+		"species" : "generic",
+		"rules" : [
+		],
+		"anchor" : [ "gardenFireplace" ],
+		"gravity" : 80,
+		"maxRadius" : 1000,
+		"maxParts" : 1,
+		"protected" : true,
+		"extendSurfaceFreeSpace" : 5
+	},
+
+	"parts" : [
+		{
+			"name" : "gardenFireplace",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "gardenFireplace.json" ]
+		}
+	]
+}
