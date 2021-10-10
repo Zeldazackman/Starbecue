@@ -12,86 +12,120 @@
     {
      "0":
         {
+         "imagePositionX" : "-32",
+         "imagePositionY" : "0",
          "object":"bigFireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "1":
         {
+         "imagePositionX" : "-16",
+         "imagePositionY" : "0",
          "object":"fireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "10":
         {
+         "imagePositionX" : "-32",
+         "imagePositionY" : "0",
          "object":"voreShopCauldron",
-         "tilesetDirection":"left"
+         "tilesetDirection":"right"
         },
      "11":
         {
+         "imagePositionX" : "0",
+         "imagePositionY" : "0",
          "object":"voreShopBookshelfBG",
          "tilesetDirection":"right"
         },
      "12":
         {
+         "imagePositionX" : "-12",
+         "imagePositionY" : "0",
          "object":"cattower_bed",
          "tilesetDirection":"right"
         },
      "13":
         {
+         "imagePositionX" : "-12",
+         "imagePositionY" : "0",
          "object":"cattower_box",
          "tilesetDirection":"right"
         },
      "14":
         {
+         "imagePositionX" : "0",
+         "imagePositionY" : "0",
          "object":"cattower_toy",
          "tilesetDirection":"right"
         },
      "15":
         {
+         "imagePositionX" : "0",
+         "imagePositionY" : "0",
          "object":"cattower_toy",
          "tilesetDirection":"left"
         },
      "16":
         {
+         "imagePositionX" : "-24",
+         "imagePositionY" : "0",
          "object":"largewoodenarmchair",
          "tilesetDirection":"left"
         },
      "2":
         {
+         "imagePositionX" : "-24",
+         "imagePositionY" : "0",
          "object":"cattower",
          "tilesetDirection":"right"
         },
      "3":
         {
+         "imagePositionX" : "-24",
+         "imagePositionY" : "0",
          "object":"largewoodenarmchair",
          "tilesetDirection":"right"
         },
      "4":
         {
+         "imagePositionX" : "-5",
+         "imagePositionY" : "0",
          "object":"largewoodendoor",
          "tilesetDirection":"right"
         },
      "5":
         {
+         "imagePositionX" : "-8",
+         "imagePositionY" : "0",
          "object":"purplecrystallantern",
          "tilesetDirection":"right"
         },
      "6":
         {
+         "imagePositionX" : "0",
+         "imagePositionY" : "0",
          "object":"purplecrystaltorch",
          "tilesetDirection":"right"
         },
      "7":
         {
+         "imagePositionX" : "-48",
+         "imagePositionY" : "0",
          "object":"voreShopAuri",
          "tilesetDirection":"right"
         },
      "8":
         {
+         "imagePositionX" : "-40",
+         "imagePositionY" : "0",
          "object":"voreShopChair",
          "tilesetDirection":"right"
         },
      "9":
         {
+         "imagePositionX" : "-56",
+         "imagePositionY" : "0",
          "object":"voreShopCounter",
          "tilesetDirection":"right"
         }
@@ -136,7 +170,7 @@
         },
      "2":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/cattower_full.png"
+         "image":"..\/..\/objects\/generic\/cattower\/cattower.png"
         },
      "3":
         {
