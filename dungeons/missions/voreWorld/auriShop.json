@@ -38,7 +38,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"bookmarkName\" : \"Auri's Shop\",\n  \"includePartyMembers\" : true,\n  \"includePlayerBookmarks\" : true,\n  \"destinations\" : [\n    {\n      \"name\" : \"Beam to Ship\",\n      \"planetName\" : \"\",\n      \"warpAction\" : \"OwnShip\",\n      \"icon\" : \"beamup\"\n    }\n  ]\n}, \"uniqueId\" : \"auriShop\"}"
                     },
                  "rotation":0,
                  "type":"",
