@@ -11,6 +11,9 @@ function p.updateState(dt)
 		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
 			state[p.prevState].ending(dt)
 		end
+
+		p.checkDrivingInteract()
+
 		if state[p.state] ~= nil and state[p.state].begin ~= nil then
 			state[p.state].begin(dt)
 		end
@@ -31,6 +34,19 @@ function p.setState(state)
 	p.state = state
 	p.setPartTag( "global", "state", state )
 	p.doAnims( p.stateconfig[state].idle, true )
+end
+
+function p.checkDrivingInteract()
+	if p.driving and p.stateconfig[p.state].interact ~= nil then
+		for _, interaction in pairs(p.stateconfig[p.state].interact) do
+			if interaction.drivingEnabled then
+				return vehicle.setInteractive(true)
+			end
+		end
+		vehicle.setInteractive(false)
+	else
+		vehicle.setInteractive(p.stateconfig[p.state].interact ~= nil)
+	end
 end
 
 p.transitionLock = false

@@ -30,7 +30,7 @@ function p.changeSize()
 		if p.state == changeSize then
 			changeSize = "stand"
 		end
-		world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true) --Play warp in effect
+		p.warpInEffect() --Play warp in effect
 		p.setState( changeSize )
 	end
 end

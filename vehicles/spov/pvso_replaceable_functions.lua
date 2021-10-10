@@ -11,7 +11,7 @@ function p.update(dt)
 end
 
 -- the standard state called when a state's script is undefined
-function p.standardState()
+function p.standardState(dt)
 end
 
 -- the pathfinding function called if a state doesn't have its own pathfinding script
@@ -29,10 +29,19 @@ end
 
 -- warp in/out effect should be replaceable if needed
 function p.warpInEffect()
-	world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true)
+	world.spawnProjectile( "vsowarpineffect", mcontroller.position(), entity.id(), {0,0}, true, { processing = p.getWarpInOutDirectives()})
 end
 function p.warpOutEffect()
-	world.spawnProjectile( "vsowarpouteffect", mcontroller.position(), p.driver or entity.id(), {0,0}, true)
+	world.spawnProjectile( "vsowarpouteffect", mcontroller.position(), p.driver or entity.id(), {0,0}, true, { processing = p.getWarpInOutDirectives()})
+end
+
+function p.getWarpInOutDirectives()
+	if p.driver ~= nil then
+		species = world.entitySpecies(p.driver)
+		if species ~= nil then
+			return root.assetJson("/species/"..species..".species").effectDirectives
+		end
+	end
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------

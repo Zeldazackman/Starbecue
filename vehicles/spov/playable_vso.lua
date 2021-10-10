@@ -190,10 +190,6 @@ function init()
 		state.tag = nil
 	end
 
-	if not config.getParameter( "uneaten" ) then
-		p.warpInEffect()
-	end
-
 	p.driver = config.getParameter( "driver" )
 	if p.driver ~= nil then
 		p.occupant[0].id = p.driver
@@ -217,6 +213,10 @@ function init()
 		p.includeDriver = true
 		p.driving = false
 		p.isObject = true
+	end
+
+	if not config.getParameter( "uneaten" ) then
+		p.warpInEffect()
 	end
 
 	p.occupants.maximum = 7
