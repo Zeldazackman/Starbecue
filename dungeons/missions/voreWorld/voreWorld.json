@@ -48,6 +48,10 @@
                  "y":2152
                 }],
          "opacity":1,
+         "properties":
+            {
+             "parameters":"{\"dungeonId\" : 8}"
+            },
          "type":"objectgroup",
          "visible":true,
          "width":0,
