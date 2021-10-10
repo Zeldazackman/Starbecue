@@ -1,0 +1,24 @@
+{
+	"metadata" : {
+		"name" : "auriFoodhall",
+		"species" : "generic",
+		"rules" : [
+		],
+		"anchor" : [ "auriFoodhall" ],
+		"gravity" : 80,
+		"maxRadius" : 1000,
+		"maxParts" : 1,
+		"protected" : true,
+		"extendSurfaceFreeSpace" : 5
+	},
+
+	"parts" : [
+		{
+			"name" : "auriFoodhall",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "auriFoodhall.json" ]
+		}
+	]
+}

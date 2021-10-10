@@ -1,0 +1,16 @@
+[
+	{
+		"op" : "add",
+		"path" : "/foodhall_auriShop",
+		"value" : {
+			"actions" : [
+				{
+				  "type" : "placeDungeon",
+				  "dungeonId" : "auriFoodhall",
+				  "targetInstance" : "foodhall",
+				  "targetPosition" : [168, 94]
+				}
+			]
+		}
+	}
+]

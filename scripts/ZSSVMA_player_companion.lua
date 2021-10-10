@@ -3,7 +3,7 @@ local oldinit = init
 function init()
 	oldinit()
 
-	player.setUniverseFlag("voreWorld_auriShop")
+	player.setUniverseFlag("foodhall_auriShop")
 
 
 	message.setHandler( "loadVSOsettings", function(_,_, vsoMenuName )
