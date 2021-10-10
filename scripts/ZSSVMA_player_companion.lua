@@ -135,11 +135,9 @@ function checkLockItem(itemDescriptor, type)
 	if not itemDescriptor then return end
 	allowedItems = root.assetJson("/pvso_general.config:pvsoAllowedItems")
 	bannedTags = root.assetJson("/pvso_general.config:pvsoBannedTags")
-	bannedCategories = root.assetJson("/pvso_general.config:pvsoBannedCategories")
+	bannedTypes = root.assetJson("/pvso_general.config:pvsoBannedItemTypes")
 
-	for i, item in ipairs(allowedItems[type]) do
-		if itemDescriptor.name == item then return end
-	end
+	if allowedItems[type][itemDescriptor.name] then return end
 
 	for i, item in ipairs(essentialItems) do
 		local essentialItem = player.essentialItem(item)
@@ -156,15 +154,7 @@ function checkLockItem(itemDescriptor, type)
 		end
 	end
 
-	local data = root.itemConfig(itemDescriptor) or root.materialConfig(itemDescriptor.name) or root.liquidConfig(itemDescriptor.name)
-	if data == nil then
-		return lockItem(itemDescriptor)
-	end
-	for i, category in ipairs(bannedCategories[type]) do
-		if category == data.config.category then
-			return lockItem(itemDescriptor, type)
-		end
-	end
+	if bannedTypes[type][root.itemType(itemDescriptor.name)] then return lockItem(itemDescriptor, type) end
 end
 
 function lockItem(itemDescriptor, type)
