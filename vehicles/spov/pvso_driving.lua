@@ -374,6 +374,11 @@ function p.doClickActions(state, dt)
 		world.sendEntityMessage( p.driver, "openPVSOInterface", "close" )
 		if p.lastRadialSelection == "despawn" then
 			p.onDeath()
+		elseif p.lastRadialSelection == "settings" then
+			world.sendEntityMessage(
+				p.driver, "openPVSOInterface", world.entityName( entity.id() ):gsub("^spov","").."Settings",
+				{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.occupants.maximum, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
+			)
 		elseif p.lastRadialSelection ~= "cancel" and p.lastRadialSelection ~= nil then
 			p.action(state, p.lastRadialSelection, "force")
 		end
@@ -453,6 +458,10 @@ function p.assignClickActionMenu(state)
 			icon = "/items/active/pvsoController/"..action..".png"
 		})
 	end
+	table.insert(options, {
+		name = "settings",
+		icon = "/interface/title/modsover.png"
+	})
 
 	world.sendEntityMessage( p.driver, "openPVSOInterface", "vsoRadialMenu", {options = options, type = "actionSelect" }, true )
 end

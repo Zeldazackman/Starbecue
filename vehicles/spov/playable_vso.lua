@@ -358,15 +358,7 @@ function onInteraction(args)
 
 	if p.entityLounging(args.sourceId) then
 		if args.sourceId == p.driver then
-			-- open the settings menu if you're the driver
-			if p.settingsMenuOpen > 0 then
-				world.sendEntityMessage(p.driver, "openPVSOInterface", "close", {}, false, entity.id())
-			else
-				world.sendEntityMessage(
-					p.driver, "openPVSOInterface", world.entityName( entity.id() ):gsub("^spov","").."Settings",
-					{ vso = entity.id(), occupants = p.occupant, maxOccupants = p.occupants.maximum, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
-				)
-			end
+
 		elseif p.lounging[args.sourceId].location ~= nil and stateData.struggle ~= nil then
 			local struggleData = stateData.struggle[p.lounging[args.sourceId].location]
 			if struggleData and struggleData.directions and struggleData.directions.interact ~= nil and p.struggleChance(struggleData, p.lounging[args.sourceId].index, "interact") then

@@ -29,6 +29,14 @@
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
 				}
 			},
+			"tailsState" : {
+				"default" : "idle",
+				"states" : {
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 }
+				}
+			},
 			"eyesState" : {
 				"default" : "idle",
 				"states" : {
@@ -109,6 +117,21 @@
 					}
 				}
 			},
+			"tails" : {
+				"properties": {
+					"centered": true,
+					"zLevel": -2,
+					"transformationGroups": []
+				},
+				"partStates": {
+					"tailsState" : {
+						"none": { "properties": {} },
+
+						"idle": { "properties": { "image": "auri/tails.png" } }
+					}
+				}
+			},
+
 			"eyes" : {
 				"properties": {
 					"centered": true,
