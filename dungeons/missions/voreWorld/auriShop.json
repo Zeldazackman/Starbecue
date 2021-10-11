@@ -723,14 +723,14 @@
                  "gid":521,
                  "height":88,
                  "id":65,
-                 "name":"",
+                 "name":"auri's chair",
                  "properties":
                     {
 
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":true,
+                 "visible":false,
                  "width":104,
                  "x":152,
                  "y":280
@@ -739,14 +739,14 @@
                  "gid":520,
                  "height":88,
                  "id":66,
-                 "name":"",
+                 "name":"auri",
                  "properties":
                     {
 
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":true,
+                 "visible":false,
                  "width":104,
                  "x":152,
                  "y":280
@@ -755,14 +755,14 @@
                  "gid":522,
                  "height":88,
                  "id":67,
-                 "name":"",
+                 "name":"auri's desk",
                  "properties":
                     {
 
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":true,
+                 "visible":false,
                  "width":104,
                  "x":152,
                  "y":280
@@ -950,7 +950,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"smashable\":false}"
+                     "parameters":"{ \"smashable\" : false, \"unbreakable\" : true }"
                     },
                  "rotation":0,
                  "type":"",
@@ -966,7 +966,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"smashable\":false}"
+                     "parameters":"{ \"smashable\" : false, \"unbreakable\" : true }"
                     },
                  "rotation":0,
                  "type":"",
@@ -998,7 +998,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"smashable\":false}"
+                     "parameters":"{ \"smashable\" : false, \"unbreakable\" : true }"
                     },
                  "rotation":0,
                  "type":"",
@@ -1014,7 +1014,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"smashable\":false}"
+                     "parameters":"{ \"smashable\" : false, \"unbreakable\" : true }"
                     },
                  "rotation":0,
                  "type":"",
@@ -1489,8 +1489,148 @@
          "width":95,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":55,
+         "name":"mods",
+         "objects":[
+                {
+                 "height":8,
+                 "id":116,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornatetiles",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":576,
+                 "x":64,
+                 "y":24
+                }, 
+                {
+                 "height":8,
+                 "id":117,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornatetiles",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":656,
+                 "x":24,
+                 "y":64
+                }, 
+                {
+                 "height":8,
+                 "id":118,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":56,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":120,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":48,
+                 "y":48
+                }, 
+                {
+                 "height":8,
+                 "id":121,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":40,
+                 "y":56
+                }, 
+                {
+                 "height":8,
+                 "id":122,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":640,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":123,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":648,
+                 "y":48
+                }, 
+                {
+                 "height":8,
+                 "id":124,
+                 "name":"",
+                 "properties":
+                    {
+                     "material":"ornateroofing",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":656,
+                 "y":56
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":95,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":115,
+ "nextobjectid":125,
  "orientation":"orthogonal",
  "properties":
     {

@@ -19,9 +19,6 @@
 	],
 
 	"dungeon" : "voreWorld_auriShop",
-	"dungeonId" : 8,
-	"protect" : true,
-	"placeOffset" : [ 1, 35 ],
 
 	"retainObjectParametersInItem" : true,
 	"isWired" : false,
