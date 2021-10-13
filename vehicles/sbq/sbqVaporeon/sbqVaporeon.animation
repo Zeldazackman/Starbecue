@@ -37,8 +37,8 @@
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 4 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 
-					"backanaleat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
-					"backanalescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"back.anal.eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"back.anal.escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
@@ -289,6 +289,9 @@
 						"absorb": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.absorb.<frame><directives>" } },
 						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.escape.<frame><directives>" } },
 
+						"back.anal.eat": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.back.anal.eat.<frame><directives>" } },
+						"back.anal.escape": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.back.anal.escape.<frame><directives>" } },
+
 						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.s_back.<frame><directives>" } },
 						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.s_front.<frame><directives>" } },
 						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.s_up.<frame><directives>" } },
@@ -332,6 +335,9 @@
 						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.eat.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.<state>.eat.<frame>" } },
 						"absorb": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.absorb.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.<state>.absorb.<frame>" } },
 						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.escape.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.<state>.escape.<frame>" } },
+
+						"back.anal.eat": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.back.anal.eat.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.back.anal.eat.<frame>" } },
+						"back.anal.escape": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.back.anal.escape.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.back.anal.escape.<frame>" } },
 
 						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.s_back.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_back.<frame>" } },
 						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.<state>.s_front.<frame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyoccupants>.<state>.s_front.<frame>" } },

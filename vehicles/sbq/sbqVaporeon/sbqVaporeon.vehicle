@@ -824,18 +824,20 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"backanalescape"
+						"body":"back.anal.escape"
 					},
-					"victimAnimation": "backanalescape",
+					"victimAnimation": "back.anal.escape",
 					"script": "escapeAnal"
 				},
 				"eatAnal": {
 					"voreType" : "analVore",
 					"lock" : true,
+					"location": "belly",
+					"failOnFull": 1,
 					"animation":{
-						"body":"backanaleat"
+						"body":"back.anal.eat"
 					},
-					"victimAnimation": "backanaleat",
+					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
 				}
 			},
@@ -931,18 +933,20 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"backanalescape"
+						"body":"back.anal.escape"
 					},
-					"victimAnimation": "backanalescape",
+					"victimAnimation": "back.anal.escape",
 					"script": "escapeAnal"
 				},
 				"eatAnal": {
 					"voreType" : "analVore",
 					"lock" : true,
+					"location": "belly",
+					"failOnFull": 1,
 					"animation":{
-						"body":"backanaleat"
+						"body":"back.anal.eat"
 					},
-					"victimAnimation": "backanaleat",
+					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
 				}
 			},

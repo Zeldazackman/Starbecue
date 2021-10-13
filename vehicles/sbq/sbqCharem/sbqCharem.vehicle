@@ -118,7 +118,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "eat",
-					"victimAnimation": "backeat"
+					"victimAnimation": "back.eat"
 				},
 				"anal":{
 					"voreType" : "analVore",
@@ -129,7 +129,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "anal",
-					"victimAnimation": "backanal"
+					"victimAnimation": "back.anal.eat"
 				},
 				"analescape":{
 					"voreType" : "analVore",
@@ -139,7 +139,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "analescape",
-					"victimAnimation": "backanalescape"
+					"victimAnimation": "back.anal.escape"
 				},
 				"escape":{
 					"voreType" : "oralVore",
@@ -149,7 +149,7 @@
 						"body": "escape"
 					},
 					"script": "escape",
-					"victimAnimation": "backescape"
+					"victimAnimation": "back.escape"
 				},
 
 				"bed": {
@@ -248,7 +248,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "eat",
-					"victimAnimation": "backeat"
+					"victimAnimation": "back.eat"
 				},
 				"anal":{
 					"voreType" : "analVore",
@@ -259,7 +259,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "anal",
-					"victimAnimation": "backanal"
+					"victimAnimation": "back.anal.eat"
 				},
 				"analescape":{
 					"voreType" : "analVore",
@@ -269,7 +269,7 @@
 						"tail": "back.wag2"
 					},
 					"script": "analescape",
-					"victimAnimation": "backanalescape"
+					"victimAnimation": "back.anal.escape"
 				},
 				"escape":{
 					"voreType" : "oralVore",
@@ -279,7 +279,7 @@
 						"body": "escape"
 					},
 					"script": "escape",
-					"victimAnimation": "backescape"
+					"victimAnimation": "back.escape"
 				},
 
 				"up": [

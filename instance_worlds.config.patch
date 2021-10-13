@@ -14,6 +14,9 @@
 				"nonCombat" : true
 			},
 
+			"tempWorldDeleteTime" : 30000, // should give about 5 minutes between world refreshes
+			"useUniverseClock" : true,
+
 			"skyParameters" : {
 				"spaceLevel" : 3000,
 				"ambientLightLevel" : [255, 255, 255],
