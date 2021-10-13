@@ -2,10 +2,11 @@
 	"objectName" : "sbqBigFireplaceTeleporter",
 	"colonyTags" : ["glitch","glitchcastle","light"],
 	"objectType" : "teleporter",
-	"rarity" : "Common",
+	"rarity" : "Rare",
 	"category" : "teleporter",
-	"price" : 145,
+	"price" : 6000,
 	"subtitle" : "Big Warping Fireplace",
+	"printable" : true,
 
 	"description" : "A stone fireplace. A good way to warm a cold castle.",
 	"shortdescription" : "Big Warping Fireplace",
@@ -21,7 +22,7 @@
 
 	"statusEffects" : [ ],
 
-	"lightColor" : [179, 149, 107],
+	"lightColor" : [77, 253, 111],
 
 	"flickerPeriod" : 0.3,
 	"flickerMinIntensity" : 0.95,
