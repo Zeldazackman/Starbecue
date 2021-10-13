@@ -389,7 +389,7 @@ function p.doClickActions(state, dt)
 		p.action(state, state.defaultActions[1], "primaryFire")
 		p.action(state, state.defaultActions[2], "altFire")
 	else
-		if (p.seats[p.driverSeat].controls.primaryHandItem == "svqController") then
+		if (p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") then
 			local action = p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
 				action = state.defaultActions[1]
@@ -399,7 +399,7 @@ function p.doClickActions(state, dt)
 			p.action(state, state.defaultActions[1], "primaryFire")
 		end
 
-		if (p.seats[p.driverSeat].controls.altHandItem == "svqController") then
+		if (p.seats[p.driverSeat].controls.altHandItem == "sbqController") then
 			local action = p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
 				action = state.defaultActions[2]

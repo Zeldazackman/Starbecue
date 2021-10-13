@@ -1,5 +1,5 @@
 {
-	"projectileName" : "svqXeroniousMelee",
+	"projectileName" : "sbqXeroniousMelee",
 	"physics" : "default",
 	"actionOnHit" : [
 	{
@@ -17,7 +17,7 @@
 		]
 	}
 	],
-	"image" : "svqXeroniousMelee.png",
+	"image" : "sbqXeroniousMelee.png",
 	"damageKind" : "default",
 	"power": 10,
 	"knockback" : 10,
