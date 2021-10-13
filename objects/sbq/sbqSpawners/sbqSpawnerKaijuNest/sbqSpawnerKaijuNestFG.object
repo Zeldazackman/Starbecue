@@ -21,17 +21,19 @@
 	"orientations": [
 		{
 			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNestFG.png" } ],
-			"imagePosition": [-40, 0],
+			"imagePosition": [-34, 0],
 			"direction": "left",
 			"flipImages": true,
 			"anchors": ["bottom"],
+			"collision" : "solid",
 			"renderLayer" : "player+1"
 		},
 		{
 			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNestFG.png" } ],
-			"imagePosition": [-40, 0],
+			"imagePosition": [-38, 0],
 			"direction": "right",
 			"anchors": ["bottom"],
+			"collision" : "solid",
 			"renderLayer" : "player+1"
 		}
 	],

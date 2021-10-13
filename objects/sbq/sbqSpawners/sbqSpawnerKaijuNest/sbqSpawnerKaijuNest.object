@@ -21,22 +21,20 @@
 	"orientations": [
 		{
 			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNest.png" } ],
-			"imagePosition": [-48, 0],
+			"imagePosition": [-42, 0],
 			"direction": "left",
 			"flipImages": true,
 			"anchors": ["bottom"],
-			"spaces" : [ [-2,0], [0,0], [1,0], [2,0], [3,0] ],
-			"collission" : "platform",
-			"collisionSpaces" : [ [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+			"spaces" : [ [-4,0], [-3,0], [-2,0], [0,0], [1,0], [2,0], [3,0], [4,0] ],
+			"collision" : "solid"
 		},
 		{
 			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNest.png" } ],
-			"imagePosition": [-48, 0],
+			"imagePosition": [-46, 0],
 			"direction": "right",
 			"anchors": ["bottom"],
-			"spaces" : [ [-2,0], [0,0], [1,0], [2,0], [3,0] ],
-			"collission" : "platform",
-			"collisionSpaces" : [ [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+			"spaces" : [ [-4,0], [-3,0], [-2,0], [0,0], [1,0], [2,0], [3,0], [4,0] ],
+			"collision" : "solid"
 		}
 	],
 	"spawnOffset" : [0, 1],
