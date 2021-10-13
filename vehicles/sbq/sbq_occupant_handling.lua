@@ -491,7 +491,7 @@ function p.doBellyEffects(dt)
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id() ) end
 				if (p.settings.bellyEffect == "sbqSoftDigest") and health[1] <= 1 then hunger_change = 0 end
 				if p.driver then
-					world.sendEntityMessage( p.driver, "addHungerHealth", hunger_change)
+					world.sendEntityMessage( p.driver, "sbqAddHungerHealth", hunger_change)
 				end
 				p.hunger = math.min(100, p.hunger + hunger_change)
 

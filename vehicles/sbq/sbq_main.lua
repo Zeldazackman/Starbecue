@@ -204,7 +204,7 @@ function init()
 		p.driving = true
 		p.spawner = p.driver
 		p.forceSeat( p.driver, 0 )
-		world.sendEntityMessage( p.driver, "giveVoreController")
+		world.sendEntityMessage( p.driver, "sbqGiveController")
 	else
 		p.seats.objectControls = p.clearOccupant(0)
 		p.seats.objectControls.seatname = "objectControls"
@@ -836,7 +836,7 @@ function p.underWater()
 end
 
 function p.useEnergy(eid, cost, callback)
-	p.addRPC( world.sendEntityMessage(eid, "useEnergy", cost), callback)
+	p.addRPC( world.sendEntityMessage(eid, "sbqUseEnergy", cost), callback)
 end
 
 -------------------------------------------------------------------------------

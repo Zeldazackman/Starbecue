@@ -6,7 +6,7 @@ end
 
 function update(dt)
 	if promise == "send" then
-		promise = world.sendEntityMessage(effect.sourceEntity(), "loungingIn")
+		promise = world.sendEntityMessage(effect.sourceEntity(), "sbqLoungingIn")
 	end
 	if promise and promise:finished() then
 		if promise:succeeded() then

@@ -541,7 +541,7 @@ function p.relativeDirectionName(dx, dy)
 end
 
 function getDriverStat(eid, stat, callback)
-	p.addRPC( world.sendEntityMessage(eid, "getDriverStat", stat), callback)
+	p.addRPC( world.sendEntityMessage(eid, "sbqGetDriverStat", stat), callback)
 end
 
 function p.driverSeatStateChange()
