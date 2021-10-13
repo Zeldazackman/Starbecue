@@ -1,0 +1,48 @@
+{
+	"objectName": "sbqSpawnerKaijuNestFG",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 10,
+	"health" : 5,
+	"itemTags": ["sbqSpawner"],
+
+	"tooltipKind" : "sbqSpawner",
+
+	"inventoryIcon": "sbqSpawnerKaijuNestIcon.png",
+	"shortdescription": "Kaiju Nest",
+	"description": "A collection of shed feathers and fluff fashioned into a nest.",
+
+	"tooltipFields" : {
+		"statusLabel": "A collection of shed feathers and fluff fashioned into a nest."
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNestFG.png" } ],
+			"imagePosition": [-40, 0],
+			"direction": "left",
+			"flipImages": true,
+			"anchors": ["bottom"],
+			"renderLayer" : "player+1"
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerKaijuNestFG.png" } ],
+			"imagePosition": [-40, 0],
+			"direction": "right",
+			"anchors": ["bottom"],
+			"renderLayer" : "player+1"
+		}
+	],
+
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false
+}

@@ -10,7 +10,7 @@
 
 	"tooltipKind" : "sbqSpawner",
 
-	"inventoryIcon": "/items/throwables/capturepod.png",
+	"inventoryIcon": "sbqSpawnerInvisible.png",
 	"shortdescription": "Invisible Predator Spawner",
 	"description": "For a more discrete predator spawn location.",
 
