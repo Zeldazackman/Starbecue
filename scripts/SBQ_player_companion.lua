@@ -162,7 +162,7 @@ function lockItem(itemDescriptor, type)
 		return world.sendEntityMessage(entity.id(), itemDescriptor.name.."Lock", true)
 	end
 	if root.itemType(itemDescriptor.name) == "activeitem" and (not itemDescriptor.parameters or not itemDescriptor.parameters.itemHasOverrideLockScript) then
-		return world.sendEntityMessage( entity.id(), "giveHeldItemOverrideLockScript", itemDescriptor )
+		return giveHeldItemOverrideLockScript(itemDescriptor)
 	end
 
 	local lockItemDescriptor = player.essentialItem("painttool")
