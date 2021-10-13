@@ -1,0 +1,50 @@
+{
+	"itemName" : "sbqController",
+	"shortdescription" : "Vore Controller",
+	"description" : "Triggers the default actions of a predator. \nUse when not in a vehicle to cycle its action.",
+	"price" : 1,
+	"maxStack" : 1,
+	"rarity" : "common",
+	"category" : "vehicleController",
+	"twoHanded" : false,
+	"itemTags" : ["vehiclecontroller", "vore"],
+	"inventoryIcon" : "unassigned.png",
+
+	"actions" : [
+		"unassigned",
+		"vore",
+		"oralVore",
+		"analVore",
+		"tailVore",
+		"cockVore",
+		"breastVore",
+		"physicalAttack",
+		"specialAttack",
+		"grab",
+		"succ"
+	],
+	"descriptions" : {
+		"unassigned" : {"shortdescription" : "Vore Controller", "description" : "Triggers the default actions of a predator."},
+		"vore" : {"shortdescription" : "Vore Controller", "description" : "Triggers any vore action of a predator."},
+		"oralVore" : {"shortdescription" : "Oral Vore Controller", "description" : "Triggers the oral vore action of a predator."},
+		"analVore" : {"shortdescription" : "Anal Vore Controller", "description" : "Triggers the anal vore action of a predator."},
+		"tailVore" : {"shortdescription" : "Tail Vore Controller", "description" : "Triggers the tail vore action of a predator."},
+		"absorbVore" : {"shortdescription" : "Absorbtion Controller", "description" : "Triggers the absorbtion action of a predator."},
+		"unbirth" : {"shortdescription" : "Unbirth Controller", "description" : "Triggers the unbirth action of a predator."},
+		"cockVore" : {"shortdescription" : "Cock Vore Controller", "description" : "Triggers the cock vore action of a predator."},
+		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a predator."},
+		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a predator."},
+		"specialAttack" : {"shortdescription" : "Special Attack Controller", "description" : "Triggers the special attack of a predator."},
+		"grab" : {"shortdescription" : "Grabbing Controller", "description" : "Triggers the grab action of a predator."},
+		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a predator."}
+	},
+
+	"appendedDescription" : " Use when not in a vehicle to cycle actions.",
+
+	"retainScriptStorageInItem": true,
+	"builder" : "/items/active/sbqController/sbqControllerBuilder.lua",
+	"scripts" : [
+		"sbqController.lua",
+		"sbqControllerData.lua"
+	]
+}

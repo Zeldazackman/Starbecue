@@ -1,0 +1,23 @@
+{
+	"itemName" : "sbqPotionXeronious",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A decorated bottle of thick grey liquid...",
+	"shortdescription" : "Xeronious Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+
+	"vehicle" : "sbqXeronious",
+	"transformationDescription" : "a kaiju of some sort",
+	"codex" : "sbqXeroniousCodex",
+
+	"inventoryIcon" : "sbqPotionXeronious.png",
+	"largeImage" : "sbqPotionXeroniousLarge.png",
+
+	"animation" : "sbqPotionXeronious.animation",
+
+	"scripts" : ["/items/active/sbqTransformPotion.lua"]
+}

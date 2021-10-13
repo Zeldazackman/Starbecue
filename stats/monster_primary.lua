@@ -21,7 +21,7 @@ function init()
 	end)
 end
 
-require("/scripts/ZSSVMA_monster.lua")
+require("/scripts/SBQ_monster_primary.lua")
 require("/scripts/SSVM_compatibility_monster.lua")
 
 function applyDamageRequest(damageRequest)

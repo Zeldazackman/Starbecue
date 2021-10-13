@@ -1,0 +1,10 @@
+{
+	"name" : "sbqRemoveForceSit",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+	"sbqRemoveForceSit.lua"
+	]
+
+}

@@ -1,0 +1,33 @@
+{
+	"globalTagDefaults": {
+		"flip": ""	
+	},
+	"animatedParts" : {
+		"stateTypes" : {
+			"toy" : {
+				"default" : "idle",
+				"states" : {
+					"idle" : { "properties" : {} },
+					"right" : { "frames" : 15, "cycle" : 1, "mode" : "transition", "transition": "idle", "properties" : {} },
+					"left" : { "frames" : 15, "cycle" : 1, "mode" : "transition", "transition": "idle", "properties" : {} }
+				}
+			}
+		},
+
+		"parts" : {
+			"toy" : {
+				"properties" : {
+					"centered" : false
+				},
+
+				"partStates" : {
+					"toy" : {
+						"idle" : { "properties" : { "image" : "sbqCatTowerToy.png:default<flip>" } },
+						"right" : { "properties" : { "image" : "sbqCatTowerToy.png:right.<frame><flip>" } },
+						"left" : { "properties" : { "image" : "sbqCatTowerToy.png:left.<frame><flip>" } }
+					}
+				}
+			}
+		}
+	}
+}

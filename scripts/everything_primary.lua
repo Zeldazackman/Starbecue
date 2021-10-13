@@ -1,39 +1,39 @@
 function everything_primary()
-	message.setHandler("pvsoApplyStatusEffects", function(_,_, statlist)
+	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
 		for stat, data in pairs(statlist) do
 			status.addEphemeralEffect(stat, data.power, data.source)
 		end
 	end)
 
-	message.setHandler("pvsoForceSit", function(_,_, data)
-		status.setStatusProperty("pvsoForceSitData", data)
-		status.setStatusProperty("pvsoDontTouchDoors", true)
+	message.setHandler("sbqForceSit", function(_,_, data)
+		status.setStatusProperty("sbqForceSitData", data)
+		status.setStatusProperty("sbqDontTouchDoors", true)
 
-		status.addEphemeralEffect("pvsoForceSit", 1, data.source)
+		status.addEphemeralEffect("sbqForceSit", 1, data.source)
 	end)
 
-	message.setHandler("getVSOseatInformation", function()
+	message.setHandler("sbqGetSeatInformation", function()
 		return {
 			mass = mcontroller.mass(),
 			powerMultiplier = status.stat("powerMultiplier")
 		}
 	end)
 
-	message.setHandler("pvsoSucc", function(_,_, data)
-		status.setStatusProperty("pvsoSuccData", data)
+	message.setHandler("sbqSucc", function(_,_, data)
+		status.setStatusProperty("sbqSuccData", data)
 
-		status.addEphemeralEffect("pvsoSucc", 1, data.source)
+		status.addEphemeralEffect("sbqSucc", 1, data.source)
 	end)
 
-	message.setHandler("pvsoIsPreyEnabled", function(_,_, type)
-		if (status.statusProperty("pvsoPreyEnabled") or {}).enabled == false then return false end
+	message.setHandler("sbqIsPreyEnabled", function(_,_, type)
+		if (status.statusProperty("sbqPreyEnabled") or {}).enabled == false then return false end
 
-		if (status.statusProperty("pvsoPreyEnabled") or {})[type] == nil then
+		if (status.statusProperty("sbqPreyEnabled") or {})[type] == nil then
 			local entityType = world.entityType(entity.id())
-			local curEnabled = status.statusProperty("pvsoPreyEnabled") or {}
-			local defaults = root.assetJson("/pvso_general.config:defaultPreyEnabled")
-			status.setStatusProperty("pvsoPreyEnabled", sb.jsonMerge( defaults[entityType], curEnabled))
+			local curEnabled = status.statusProperty("sbqPreyEnabled") or {}
+			local defaults = root.assetJson("/sbqGeneral.config:defaultPreyEnabled")
+			status.setStatusProperty("sbqPreyEnabled", sb.jsonMerge( defaults[entityType], curEnabled))
 		end
-		return (status.statusProperty("pvsoPreyEnabled") or {})[type]
+		return (status.statusProperty("sbqPreyEnabled") or {})[type]
 	end)
 end

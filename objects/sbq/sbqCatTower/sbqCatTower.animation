@@ -1,0 +1,12 @@
+{
+  "animatedParts" : {
+    "parts" : {
+      "cattower" : {
+        "properties" : {
+          "centered" : false,
+          "image" : "sbqCatTower.png"
+        }
+      }
+    }
+  }
+}

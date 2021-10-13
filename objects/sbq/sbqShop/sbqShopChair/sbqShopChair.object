@@ -1,0 +1,45 @@
+{
+	"objectName": "sbqShopChair",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
+	"shortdescription": "Vore Shop Chair",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqShopCounter.png" } ],
+			"imagePosition": [-40, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"],
+			"renderLayer" : "Object-2"
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqShopCounter.png" } ],
+			"imagePosition": [-40, 0],
+			"direction": "right",
+			"spaces" : [[0,0]],
+			"anchors": ["bottom"],
+			"renderLayer" : "Object-2"
+		}
+	],
+
+	"animation" : "/objects/sbq/sbqShop/sbqShopChair/sbqShopChair.animation",
+	"animationPosition" : [12, 44],
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false
+
+}

@@ -1,0 +1,388 @@
+{
+	"name" : "sbqAvian",
+	"script" : "sbqAvian.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/sbq/sbqAvian/",
+	"animation" : "sbqAvian.animation",
+
+	"loungePositions" : {
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupant1Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupant2Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		}
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"sbqData" : {
+		"movementSettings" : {
+			"default":{
+				"collisionPoly" : [
+					[-1,-6], [1, -6],
+					[2,-5], [2, 1],
+					[1, 2], [-1, 2],
+					[-2, 1], [-2, -5]
+				],
+				"pulseEffect": "doublejump",
+				"pulseSparkles": 6,
+				"ignorePlatformCollision" : false
+			},
+			"smol":{
+				"collisionPoly" : [
+					[-0.5,-3], [0.5, -3],
+					[1,-2], [1, 0.5],
+					[0.5, 1], [-0.5, 1],
+					[-1, 0.5], [-1, -2]
+				],
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3,
+				"ignorePlatformCollision" : false
+			}
+		},
+
+		"lights" : {
+			"driver" : {
+				"color" : [100, 100, 100],
+				"position" : [0,0],
+				"pointLight" : true
+			},
+			"prey" : {
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
+			}
+		},
+		"defaultSettings" : {
+			"replaceColors" : [1,1,1]
+
+		},
+
+		"replaceColors" : [
+			[
+				["ffca8a", "e0975c", "a85636", "6f2919"], // the first entry in these lists will be the color to replace
+				["f0608b", "cd5061", "95484c", "6a3836"],
+				["7fdadd", "61aebf", "4e7a90", "3f566e"],
+				["add068", "85ac1b", "6e8210", "596809"],
+				["f3efa3", "e3d965", "baa94a", "98832d"],
+				["998779", "836752", "625244", "4e3b2e"],
+				["737275", "595760", "3f3e43", "212123"],
+				["eebfea", "de8ddd", "c060bb", "9a4b9c"],
+				["d18bd5", "a766bc", "814797", "693367"],
+				["f3c873", "db9c38", "b17628", "89561f"],
+				["deeded", "c5d8d8", "96aba9", "6f807e"], // last "canon" color option
+				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"] // lets give them a white option that matches the belly for fun
+			],
+			[
+				["f32200", "dc1f00", "be1b00", "951500"], // colors to be replaced
+				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"], // last "canon" color option
+				["f0608b", "cd5061", "95484c", "6a3836"], // lets give them the same options as the main feathers, birds are colorful!
+				["7fdadd", "61aebf", "4e7a90", "3f566e"],
+				["add068", "85ac1b", "6e8210", "596809"],
+				["f3efa3", "e3d965", "baa94a", "98832d"],
+				["998779", "836752", "625244", "4e3b2e"],
+				["737275", "595760", "3f3e43", "212123"],
+				["eebfea", "de8ddd", "c060bb", "9a4b9c"],
+				["d18bd5", "a766bc", "814797", "693367"],
+				["f3c873", "db9c38", "b17628", "89561f"],
+				["deeded", "c5d8d8", "96aba9", "6f807e"]
+			],
+			[
+				["d9c189", "a38d59", "735e3a"], // first is color to replace
+				["eacf60", "c1a24e", "977841"],
+				["efad56", "c5813e", "9b6638"],
+				["eae660", "c1b54e", "978841"] // last "canon" color option
+			]
+		],
+		"locations" :{
+			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { },
+			"fatten" : { "mass": 1 },
+			"digesting" : { },
+
+			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"balls" : { "sided" : true },
+			"ballsL" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"ballsR" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
+
+			"breasts" : { "sided" : true },
+			"breastsL" : { "mass": 0.1, "hyperMass": 1 },
+			"breastsR" : { "mass": 0.1, "hyperMass": 1 }
+		},
+
+		"victimAnimations": "/vehicles/sbq/sbqAvian/victim_animations.config"
+	},
+
+
+
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+				"eat": { // 3 occupants
+					"location" : "belly",
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "rotation",
+						"head": "eat",
+						"rotate": {
+							"parts": [
+								{ "groups": ["frontarmsrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
+								{ "groups": ["backarmsrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
+							]
+						}
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+
+				"escapeOral": { // 1 occupants
+					"location" : "belly",
+					"animation": {
+						"body": "escape",
+						"head": "escape"
+					},
+					"victimAnimation": "escape"
+				}
+
+			},
+			"idle": {
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle",
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				}
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+
+			"struggle": {
+				"belly" : {
+					"part" : "body",
+					"up": { "transition": "escape" },
+					"front": { "transition": "down" },
+					"back": { "transition": "down" },
+					"down": { "transition": "down" },
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					}
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"interact": {
+				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
+				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
+				"back": { "transition": "down", "chance": 20 },
+				"petAnimation": true
+			},
+			"control": {
+				"defaultClickActions" : [],
+				"actions" : {
+
+				},
+				"animations": {
+					"walk": {
+						"arms": "walk",
+						"legs": "walk",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"run": {
+						"arms": "run",
+						"legs": "run",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"jump": {
+						"legs": "jump",
+						"arms": "jump",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"fall": {
+						"legs": "fall",
+						"arms": "fall",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
+							]
+						}
+
+					}
+				}
+			}
+		},
+		"smol": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+			},
+			"idle": {
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"offset" : {
+					"parts" : [
+						{}
+					]
+				}
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+			"struggle": {
+			},
+
+			"interact": {
+				"petAnimation": true
+			},
+			"control": {
+				"defaultClickActions" : [],
+				"actions" : {
+
+				},
+				"animations": {
+					"walk": {
+						"arms": "smol.walk",
+						"legs": "smol.walk",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob"]}
+							]
+						}
+
+					},
+					"run": {
+						"arms": "smol.run",
+						"legs": "smol.run",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"jump": {
+						"legs": "smol.jump",
+						"arms": "smol.jump",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"fall": {
+						"legs": "smol.fall",
+						"arms": "smol.fall",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

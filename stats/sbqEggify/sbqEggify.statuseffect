@@ -1,0 +1,10 @@
+{
+	"name" : "sbqEggify",
+	"effectConfig" : {},
+	"defaultDuration" : 0.1,
+
+	"scripts" : [
+	"sbqEggify.lua"
+	]
+
+}

@@ -1,0 +1,62 @@
+{
+	"objectName": "sbqShopAuri",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
+	"shortdescription": "Vore Shop Auri",
+
+	"interactAction" : "OpenCraftingInterface",
+	"interactData" : {
+		"config" : "/interface/windowconfig/craftingmerchant.config",
+		"filter" : ["auriShop"],
+		"paneLayoutOverride" : {
+			"windowtitle" : {
+				"title" : "Auri's Vore Shop",
+				"subtitle" : "For some of your large vorny needs.",
+				"icon" : {
+					"file" : "/items/active/sbqController/oralVore.png"
+				}
+			}
+		}
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqShopAuri.png" } ],
+			"imagePosition": [-48, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"renderLayer" : "Object-1",
+			"anchors": ["bottom"]
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqShopAuri.png" } ],
+			"imagePosition": [-48, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"renderLayer" : "Object-1",
+			"anchors": ["bottom"]
+		}
+	],
+
+	"animation" : "/objects/sbq/sbqShop/sbqShopAuri/sbqShopAuri.animation",
+	"animationPosition" : [4, 44],
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : true,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"scripts": [
+		"sbqShopAuri.lua"
+	]
+}

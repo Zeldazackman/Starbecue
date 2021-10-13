@@ -1,0 +1,15 @@
+{
+	"name" : "sbqHealDisplay",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"sbqHealDisplay.lua"
+	],
+
+	"animationConfig" : "sbqHeal.animation",
+
+	"label" : "Healing Vore",
+	"icon" : "/stats/sbq/sbqHeal/sbqHeal.png"
+}

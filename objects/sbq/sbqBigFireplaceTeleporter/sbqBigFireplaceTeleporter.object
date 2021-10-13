@@ -1,0 +1,77 @@
+{
+	"objectName" : "sbqBigFireplaceTeleporter",
+	"colonyTags" : ["glitch","glitchcastle","light"],
+	"objectType" : "teleporter",
+	"rarity" : "Common",
+	"category" : "teleporter",
+	"price" : 145,
+	"subtitle" : "Big Warping Fireplace",
+
+	"description" : "A stone fireplace. A good way to warm a cold castle.",
+	"shortdescription" : "Big Warping Fireplace",
+	"race" : "glitch",
+
+	"apexDescription" : "The crackle of the fire puts me at ease.",
+	"avianDescription" : "A stone structure and a fire within. Likely built to provide warmth.",
+	"floranDescription" : "Floran would rather be cold than sssit by fire.",
+	"glitchDescription" : "Wistful. I adore sitting by a fire on a cold night.",
+	"humanDescription" : "A warm stone fire. All I need now is a bag of marshmallows.",
+	"hylotlDescription" : "The temperature in Hylotl cities is carefully controlled. It's nice to feel the warmth of a fire on my skin.",
+	"novakidDescription" : "Nothin' beats the sweet smell of woodsmoke.",
+
+	"statusEffects" : [ ],
+
+	"lightColor" : [179, 149, 107],
+
+	"flickerPeriod" : 0.3,
+	"flickerMinIntensity" : 0.95,
+	"flickerMaxIntensity" : 1,
+	"flickerPeriodVariance" : 0.075,
+	"flickerIntensityVariance" : 0.025,
+
+	"inventoryIcon" : "sbqBigFireplaceTeleporterIcon.png",
+	"orientations" : [
+		{
+			"image" : "sbqBigFireplaceTeleporter.png",
+			"imagePosition" : [-32, 0],
+			"animationPosition" : [-32, 0],
+			"direction" : "left",
+			"flipImages" : true,
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ],
+			"collision" : "platform"
+		},
+		{
+			"image" : "sbqBigFireplaceTeleporter.png",
+			"imagePosition" : [-32, 0],
+			"animationPosition" : [-32, 0],
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ],
+			"collision" : "platform"
+		}
+	],
+
+	"soundEffect" : "/sfx/objects/furnace.ogg",
+
+	"animation" : "sbqBigFireplaceTeleporter.animation",
+
+	"scripts" : [
+		"/objects/wired/light/light.lua",
+		"/objects/sbq/sbqFireplaceTeleporter/sbqFireplaceTeleporter.lua"
+	],
+	"scriptDelta" : 60,
+
+	"inputNodes" : [
+		[0, 0],
+		[0, 7]
+	],
+	"outputNodes" : [
+		[0, 8]
+	],
+	"teleporterFootPosition" : [0, 0],
+	"interactive" : true
+
+}

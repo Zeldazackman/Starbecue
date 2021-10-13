@@ -1,0 +1,10 @@
+{
+	"name" : "sbqSucc",
+	"effectConfig" : {},
+	"defaultDuration" : 0.1,
+
+	"scripts" : [
+	"sbqSucc.lua"
+	]
+
+}

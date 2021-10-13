@@ -3,7 +3,7 @@
 		{
 			"op" : "add",
 			"path" : "/planetTypes/garden/layers/surface/dungeons/-",
-			"value" : [ 1.0, "gardenFireplace" ]
+			"value" : [ 1.0, "sbqGardenFireplace" ]
 		}
 	],
 	[ // because patches are wonky this is all to ensure that if something else adds a dungeon to gardens it sill spawns
@@ -20,6 +20,10 @@
 	],
 	[
 		{ "op" : "test", "path" : "/planetTypes/garden/layers/surface/dungeonCountRange", "value" : [5, 5] },
+		{ "op" : "replace", "path" : "/planetTypes/garden/layers/surface/dungeonCountRange", "value" : [6, 6] }
+	],
+	[
+		{ "op" : "test", "path" : "/planetTypes/garden/layers/surface/dungeonCountRange", "value" : [6, 6] },
 		{ "op" : "replace", "path" : "/planetTypes/garden/layers/surface/dungeonCountRange", "value" : [7, 7] }
 	],
 	[

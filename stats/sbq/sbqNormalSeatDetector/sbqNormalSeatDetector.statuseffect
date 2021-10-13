@@ -1,0 +1,12 @@
+{
+	"name" : "sbqNormalSeatDetector",
+	"effectConfig" : {},
+	"defaultDuration" : 0.1,
+
+	"scripts" : [
+	"sbqNormalSeatDetector.lua"
+	],
+
+	"label" : "Whoops, error",
+	"icon" : "/stats/sbq/sbqDigest/sbqDigest.png"
+}

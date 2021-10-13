@@ -1,0 +1,12 @@
+{
+	"projectileName" : "sbqSuccEffect",
+	"image" : "sbqSuccEffect.png",
+	"physics" : "sbqSucc",
+	"frameNumber" : 1,
+	"speed" : 0,
+	"animationLoops" : false,
+	"flippable" : true,
+	"scripts" : [ "sbqSuccEffect.lua" ],
+	"scriptDelta" : 1
+
+  }

@@ -1,0 +1,58 @@
+{
+	"objectName": "sbqSpawnerVappyBed",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+	"itemTags": ["sbqSpawner"],
+
+	"tooltipKind" : "sbqSpawner",
+
+	"inventoryIcon": "sbqSpawnerVappyBedIcon.png",
+	"shortdescription": "Water bed",
+	"description": "A special waterbed favored by a certain kind of fishcat.",
+
+	"tooltipFields" : {
+		"statusLabel": "A special waterbed favored by a certain kind of fishcat."
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerVappyBed.png" } ],
+			"imagePosition": [-64, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [7, 0], [6, 0], [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0], [-1, 0], [-2, 0], [-3, 0], [-4, 0] ]
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerVappyBed.png" } ],
+			"imagePosition": [-64, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [-8, 0], [-7, 0], [-6, 0], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0] ]
+		}
+	],
+	"spawnOffset" : [-1.5, 1],
+
+	"acceptsAugmentType" : "sbqCore",
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"builder" : "/objects/sbq/sbqSpawners/sbqItemBuilder.lua",
+	"scripts": [
+		"/objects/sbq/sbqSpawners/sbqSpawner.lua"
+	]
+}

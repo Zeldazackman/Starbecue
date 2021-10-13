@@ -2,11 +2,11 @@
 	{
 		"op": "add",
 		"path": "/interactData/items/-",
-		"value": { "item" : { "name" : "spovpilldonut"} }
+		"value": { "item" : { "name" : "sbqModifierFatteningDonut"} }
 	},
 	{
 		"op": "add",
 		"path": "/interactData/items/-",
-		"value": { "item" : { "name" : "spovpilldiet"} }
+		"value": { "item" : { "name" : "sbqModifierDietPill"} }
 	}
 ]

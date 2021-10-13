@@ -14,119 +14,119 @@
         {
          "imagePositionX" : "-32",
          "imagePositionY" : "0",
-         "object":"bigFireplaceTeleporter",
+         "object":"sbqBigFireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "1":
         {
          "imagePositionX" : "-16",
          "imagePositionY" : "0",
-         "object":"fireplaceTeleporter",
+         "object":"sbqFireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "10":
         {
          "imagePositionX" : "-32",
          "imagePositionY" : "0",
-         "object":"voreShopCauldron",
+         "object":"sbqShopCauldron",
          "tilesetDirection":"right"
         },
      "11":
         {
          "imagePositionX" : "0",
          "imagePositionY" : "0",
-         "object":"voreShopBookshelfBG",
+         "object":"sbqShopBookshelfBG",
          "tilesetDirection":"right"
         },
      "12":
         {
          "imagePositionX" : "-12",
          "imagePositionY" : "0",
-         "object":"cattower_bed",
+         "object":"sbqCatTowerBed",
          "tilesetDirection":"right"
         },
      "13":
         {
          "imagePositionX" : "-12",
          "imagePositionY" : "0",
-         "object":"cattower_box",
+         "object":"sbqCatTowerBox",
          "tilesetDirection":"right"
         },
      "14":
         {
          "imagePositionX" : "0",
          "imagePositionY" : "0",
-         "object":"cattower_toy",
+         "object":"sbqCatTowerToy",
          "tilesetDirection":"right"
         },
      "15":
         {
          "imagePositionX" : "0",
          "imagePositionY" : "0",
-         "object":"cattower_toy",
+         "object":"sbqCatTowerToy",
          "tilesetDirection":"left"
         },
      "16":
         {
          "imagePositionX" : "-24",
          "imagePositionY" : "0",
-         "object":"largewoodenarmchair",
+         "object":"sbqLargeWoodenArmchair",
          "tilesetDirection":"left"
         },
      "2":
         {
          "imagePositionX" : "-24",
          "imagePositionY" : "0",
-         "object":"cattower",
+         "object":"sbqCatTower",
          "tilesetDirection":"right"
         },
      "3":
         {
          "imagePositionX" : "-24",
          "imagePositionY" : "0",
-         "object":"largewoodenarmchair",
+         "object":"sbqLargeWoodenArmchair",
          "tilesetDirection":"right"
         },
      "4":
         {
          "imagePositionX" : "-5",
          "imagePositionY" : "0",
-         "object":"largewoodendoor",
+         "object":"sbqLargeWoodenDoor",
          "tilesetDirection":"right"
         },
      "5":
         {
          "imagePositionX" : "-8",
          "imagePositionY" : "0",
-         "object":"purplecrystallantern",
+         "object":"sbqPurpleCrystalLantern",
          "tilesetDirection":"right"
         },
      "6":
         {
          "imagePositionX" : "0",
          "imagePositionY" : "0",
-         "object":"purplecrystaltorch",
+         "object":"sbqPurpleCrystalTorch",
          "tilesetDirection":"right"
         },
      "7":
         {
          "imagePositionX" : "-48",
          "imagePositionY" : "0",
-         "object":"voreShopAuri",
+         "object":"sbqShopAuri",
          "tilesetDirection":"right"
         },
      "8":
         {
          "imagePositionX" : "-40",
          "imagePositionY" : "0",
-         "object":"voreShopChair",
+         "object":"sbqShopChair",
          "tilesetDirection":"right"
         },
      "9":
         {
          "imagePositionX" : "-56",
          "imagePositionY" : "0",
-         "object":"voreShopCounter",
+         "object":"sbqShopCounter",
          "tilesetDirection":"right"
         }
     },
@@ -134,71 +134,71 @@
     {
      "0":
         {
-         "image":"..\/..\/objects\/generic\/bigFireplaceTeleporter\/bigFireplaceTeleporter.png"
+         "image":"..\/..\/objects\/sbq\/sbqBigFireplaceTeleporter\/sbqBigFireplaceTeleporter.png"
         },
      "1":
         {
-         "image":"..\/..\/objects\/generic\/fireplaceTeleporter\/fireplaceTeleporter.png"
+         "image":"..\/..\/objects\/sbq\/sbqFireplaceTeleporter\/sbqFireplaceTeleporter.png"
         },
      "10":
         {
-         "image":"..\/..\/objects\/vore\/voreShop\/voreShopCauldron\/voreShopCauldron.png"
+         "image":"..\/..\/objects\/sbq\/sbqShop\/sbqShopCauldron\/sbqShopCauldron.png"
         },
      "11":
         {
-         "image":"..\/..\/objects\/vore\/voreShop\/voreShopBookshelfBG\/voreShopBookshelfBG.png"
+         "image":"..\/..\/objects\/sbq\/sbqShop\/sbqShopBookshelfBG\/sbqShopBookshelfBG.png"
         },
      "12":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/tileset\/bed.png"
+         "image":"..\/..\/objects\/sbq\/sbqCatTower\/tileset\/bed.png"
         },
      "13":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/tileset\/box.png"
+         "image":"..\/..\/objects\/sbq\/sbqCatTower\/tileset\/box.png"
         },
      "14":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/tileset\/toy.png"
+         "image":"..\/..\/objects\/sbq\/sbqCatTower\/tileset\/toy.png"
         },
      "15":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/tileset\/toy.png"
+         "image":"..\/..\/objects\/sbq\/sbqCatTower\/tileset\/toy.png"
         },
      "16":
         {
-         "image":"..\/..\/objects\/generic\/largewoodenarmchair\/largewoodenarmchair.png"
+         "image":"..\/..\/objects\/sbq\/sbqLargeWoodenArmchair\/sbqLargewoodenarmchair.png"
         },
      "2":
         {
-         "image":"..\/..\/objects\/generic\/cattower\/cattower.png"
+         "image":"..\/..\/objects\/sbq\/sbqCatTower\/sbqCatTower.png"
         },
      "3":
         {
-         "image":"..\/..\/objects\/generic\/largewoodenarmchair\/largewoodenarmchair.png"
+         "image":"..\/..\/objects\/sbq\/sbqlargewoodenarmchair\/sbqLargewoodenarmchair.png"
         },
      "4":
         {
-         "image":"..\/..\/objects\/generic\/largewoodendoor\/door.png"
+         "image":"..\/..\/objects\/sbq\/sbqLargeWoodenDoor\/door.png"
         },
      "5":
         {
-         "image":"..\/..\/objects\/generic\/purplecrystallantern\/lantern.png"
+         "image":"..\/..\/objects\/sbq\/sbqPurpleCrystalLantern\/lantern.png"
         },
      "6":
         {
-         "image":"..\/..\/objects\/generic\/purplecrystaltorch\/torch.png"
+         "image":"..\/..\/objects\/sbq\/sbqPurpleCrystalTorch\/torch.png"
         },
      "7":
         {
-         "image":"..\/..\/objects\/vore\/voreShop\/voreShopAuri\/voreShopAuri.png"
+         "image":"..\/..\/objects\/sbq\/sbqShop\/sbqShopAuri\/sbqShopAuri.png"
         },
      "8":
         {
-         "image":"..\/..\/objects\/vore\/voreShop\/voreShopChair\/voreShopChair.png"
+         "image":"..\/..\/objects\/sbq\/sbqShop\/sbqShopChair\/sbqShopChair.png"
         },
      "9":
         {
-         "image":"..\/..\/objects\/vore\/voreShop\/voreShopChair\/voreShopCounter.png"
+         "image":"..\/..\/objects\/sbq\/sbqShop\/sbqShopChair\/sbqShopCounter.png"
         }
     },
  "tilewidth":104

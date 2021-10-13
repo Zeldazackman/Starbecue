@@ -1,0 +1,21 @@
+{
+	"objectName" : "sbqShopBookshelfBG",
+	"colonyTags" : ["generic"],
+	"rarity" : "Common",
+	"category" : "decorative",
+	"price" : 60,
+
+	"description" : "A thingy",
+	"shortdescription" : "bookshelf BG",
+	"race" : "generic",
+
+	"inventoryIcon" : "/assetmissing.png",
+	"orientations" : [
+		{
+			"image" : "sbqShopBookshelfBG.png",
+			"imagePosition" : [0, 0],
+			"renderLayer" : "BackgroundTile-10",
+			"anchors" : [ ]
+		}
+	]
+}

@@ -281,4 +281,4 @@ function setupTenant(...)
   tenant.setHome(...)
 end
 
-require("/scripts/ZSSVMA_monster_spawn.lua")
+require("/scripts/SBQ_monster_spawn.lua")

@@ -1,10 +1,10 @@
 [
 	{
 		"op" : "add",
-		"path" : "/voreWorld",
+		"path" : "/sbqHub",
 		"value" : {
 			"type" : "FloatingDungeon",
-			"dungeonWorld" : "voreWorld",
+			"dungeonWorld" : "sbqHub",
 			"seed" : 2021,
 			"persistent" : false,
 			"beamUpRule" : "Anywhere",

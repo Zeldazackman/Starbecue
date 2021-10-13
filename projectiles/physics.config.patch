@@ -1,7 +1,7 @@
 [
 	{
 		"op": "add",
-		"path": "/succ",
+		"path": "/sbqSucc",
 		"value": {
 			"mass" : 1.0,
 			"gravityMultiplier" : 0,

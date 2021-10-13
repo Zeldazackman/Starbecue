@@ -79,7 +79,7 @@ function padBoundBox(xPadding, yPadding)
 end
 
 function openDoorsAhead()
-  if status.statusProperty("pvsoDontTouchDoors") then return end -- basically we just don't want them obsessively fucking with doors
+  if status.statusProperty("sbqDontTouchDoors") then return end -- basically we just don't want them obsessively fucking with doors
 
   local bounds = rect.translate(mcontroller.boundBox(), mcontroller.position())
   bounds[2] = bounds[2] + 0.5
@@ -105,7 +105,7 @@ function openDoorsAhead()
 end
 
 function closeDoorsBehind()
-  if status.statusProperty("pvsoDontTouchDoors") then return end -- basically we just don't want them obsessively fucking with doors
+  if status.statusProperty("sbqDontTouchDoors") then return end -- basically we just don't want them obsessively fucking with doors
 
   local bounds = rect.translate(mcontroller.boundBox(), mcontroller.position())
   bounds[2] = bounds[2] + 0.5

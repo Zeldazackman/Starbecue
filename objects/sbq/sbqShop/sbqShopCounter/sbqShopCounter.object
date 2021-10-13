@@ -1,0 +1,45 @@
+{
+	"objectName": "sbqShopCounter",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 100,
+	"health" : 5,
+
+	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
+	"shortdescription": "Vore Shop Counter",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqShopCounter.png" } ],
+			"imagePosition": [-56, 0],
+			"direction": "left",
+			"flipImages": true,
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [7, 3], [6, 3], [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqShopCounter.png" } ],
+			"imagePosition": [-56, 0],
+			"direction": "right",
+			"anchors": ["bottom"],
+			"collision" : "platform",
+			"collisionSpaces" : [ [5, 3], [4, 3], [3, 3], [2, 3], [1, 3], [0, 3], [-7, 3], [-6, 3], [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3] ]
+		}
+	],
+
+	"animation" : "/objects/sbq/sbqShop/sbqShopCounter/sbqShopCounter.animation",
+	"animationPosition" : [-4, 44],
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false
+
+}

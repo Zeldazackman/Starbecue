@@ -1,0 +1,1383 @@
+{
+	"name" : "sbqXeronious",
+	"script" : "sbqXeronious.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/sbq/sbqXeronious/",
+	"animation" : "sbqXeronious.animation",
+
+	"loungePositions" : {
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupant1Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupant2Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		}
+
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"sbqData" : {
+		"victimAnimations": "/vehicles/sbq/sbqXeronious/victim_animations.config",
+		"movementSettings" : {
+			"default":{
+				"collisionPoly" : [
+					[-2.5,-5], [2.5, -5],
+					[3,-4.5], [3, 3],
+					[2.5, 3.5], [-2.5, 3.5],
+					[-3, 3], [-3, -4.5]
+				],
+				"fullThreshold" : 4.8, // mass of three humans
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"flySpeed" : 0,
+				"jumpCount" : 1,
+				"gravityEnabled" : true,
+				"ignorePlatformCollision" : false
+
+			},
+			"fly":{
+				"collisionPoly" : [
+					[-2.5,-5], [2.5, -5],
+					[3,-4.5], [3, 3],
+					[2.5, 3.5], [-2.5, 3.5],
+					[-3, 3], [-3, -4.5]
+				],
+				"fullThreshold" : 4.8, // mass of three humans
+				"walkSpeed": 10,
+				"runSpeed": 20,
+				"flySpeed" : 15,
+				"jumpCount" : 0,
+				"gravityEnabled" : false,
+				"ignorePlatformCollision" : true
+			},
+			"crouch":{
+				"collisionPoly" : [
+					[-3.5,-5], [3.5, -5],
+					[4,-4.5], [4, -0.5],
+					[3.5, 0], [-3.5, 0],
+					[-4, -0.5], [-4, -4.5]
+				],
+				"fullThreshold" : 0, // just forces walking only
+				"walkSpeed": 7,
+				"runSpeed": 7,
+				"flySpeed" : 0,
+				"jumpCount" : 0,
+				"gravityEnabled" : true,
+				"ignorePlatformCollision" : false
+			}
+
+		},
+		"lights" : {
+			"driver" : {
+				"color" : [100, 100, 100],
+				"position" : [0,0],
+				"pointLight" : true
+			},
+			"prey" : {
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
+			}
+		},
+		"locations" :{
+			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
+			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },
+			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["bodybob"] },
+			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] },
+			"fatten" : { "mass": 1 },
+			"digesting" : { }
+		},
+		"defaultSettings" : {
+			"replaceColors" : [1,1,1,1],
+			"fullbright" : [false,false,false,true]
+		},
+		"replaceColors" : [ // I don't think having actual replacement colors here should be a thing since its someone's OC
+			[
+				["0e0e0e", "292929", "3f3f3f", "575757"], // Dark Grey body 1
+				["0e0e0e", "292929", "3f3f3f", "575757"]
+			],
+			[
+				["656565", "838383", "a6a6a6"], // Light Grey body 2
+				["656565", "838383", "a6a6a6"]
+			],
+			[
+				["969696", "b4b4b4", "d4d4d4", "efefef"], // horns
+				["969696", "b4b4b4", "d4d4d4", "efefef"]
+			],
+			[
+				["4a2400", "cc711a", "ff962e", "19ce2c"], // eyes and burp
+				["4a2400", "cc711a", "ff962e", "19ce2c"]
+			]
+		]
+	},
+
+
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				"down": {
+					"script": "sitpin"
+				},
+				"sit": {
+					"animation": {
+						"body": "idle",
+						"arms": "idle",
+						"legs": "sitdown",
+						"offset": {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-3, -6], "y": [-5, -11], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "sitpinned",
+					"state": "sit",
+					"timing": "legs",
+					"chance": 5 // percent, ignored when driver has control
+				},
+				// non directional = not accessible via controls, except from script
+				"crouch": {
+					"animation": {
+						"body": "crouchdown",
+						"arms": "idle",
+						"legs": "crouch",
+						"offset": {
+							"parts" : [
+								{"x": [1], "y": [-11], "groups": ["headbob", "bodybob"]},
+								{"x": [-6], "y": [2], "groups": ["tailbob"] }
+							]
+						}
+					},
+					"state": "crouch"
+				},
+				"eat": {
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"head": "eat"
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+				"succEat": {
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"head": "eat"
+					},
+					"victimAnimation": "playersucc",
+					"script": "succEat"
+				},
+				"escapeOral": {
+					"voreType" : "oralVore",
+					"victimAnimation": "escape",
+					"lock":true,
+					"script": "escapeOral",
+					"animation": {
+						"body": "escape",
+						"head": "escape"
+					}
+				},
+				"tailEat": {
+					"voreType" : "tailVore",
+					"location" : "tail",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
+					"timing": "tail"
+				},
+				"escapeTail": {
+					"voreType" : "tailVore",
+					"lock" : true,
+					"victimAnimation": "escapeTail",
+					"timing": "tail",
+					"script": "escapeTail",
+					"animation": {
+						"tail": "escape",
+						"head": "AVlook"
+					}
+				},
+				"analEat": {
+					"voreType" : "analVore",
+					"location" : "belly",
+					"failOnFull" : true,
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playeranalEat",
+					"script": "analEat"
+				},
+				"escapeAnal": {
+					"voreType" : "analVore",
+					"lock":true,
+					"victimAnimation": "escapeAnal",
+					"script": "escapeAnal",
+					"animation": {
+						"body": "shrink",
+						"head": "AVlook"
+					}
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"head": "burp"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"bellyToTail" : {
+					"script": "bellyToTail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailToBelly" : {
+					"script": "tailToBelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				}
+			},
+			"idle": {
+				"offset" : {},
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "idle" }
+			],
+			"struggle": {
+				"belly" : {
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "down", "indicate" : "blue" },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"tail" : {
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue"  },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"down": { "transition": "down", "indicate" : "blue" }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
+			},
+			"locationCenters" : {
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
+			},
+			"interact": {
+				"mouth": {
+					"pos": [4, -3], "aim": [2, 2],
+					"transition": "eat", "chance": 100,
+					"location": "belly", "failOnFull": true
+				},
+				"sit": {
+					"aim": [0, -2],
+					"transition": "down", "chance": 20
+				},
+				"tail": {
+					"pos": [-5, -2], "aim": [-5, -2],
+					"transition": "tailEat", "chance": 100,
+					"location": "tail", "failOnFull": true
+				}
+			},
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
+				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "sbqXeroniousMelee",
+						"position": [ 3, -1.5 ],
+						"aimable": false
+					},
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"position" : [3, 1.5],
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
+			"control": {
+				"animations": {
+					"walk": {
+						"arms": "idle",
+						"legs": "walk",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 2, 1, 1, 0, 0, 1, 1], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"swim": {
+						"arms": "fly",
+						"legs": "walk",
+						"body": "idle"
+					},
+					"run": {
+						"arms": "run",
+						"legs": "run",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2, 3, 2, 1, 2, 3, 2, 1], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"jump": {
+						"legs": "jump",
+						"arms": "jump",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"parts" : [
+								{"y": [0, 1, 2, 3, 3], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					},
+					"fall": {
+						"legs": "fall",
+						"arms": "fall",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"parts" : [
+								{"y": [3, 2, 1, 0, 0], "groups": ["headbob", "bodybob"]}
+							]
+						}
+					}
+				}
+			}
+		},
+		"crouch": {
+			"transitions": {
+				"uncrouch": {
+					"animation": {
+						"body": "crouchdown",
+						"arms": "idle",
+						"legs": "crouch",
+						"offset" : {
+							"parts" : [
+								{"x": [1], "y": [-11], "groups": ["headbob", "bodybob"]},
+								{"x": [-6], "y": [2], "groups": ["tailbob"] }
+							]
+						}
+					},
+					"state": "stand"
+				},
+				"tailEat": {
+					"voreType" : "tailVore",
+					"location" : "tail",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
+					"timing": "tail"
+				},
+				"escapeTail": {
+					"voreType" : "tailVore",
+					"lock" : true,
+					"victimAnimation": "escapeTail",
+					"timing": "tail",
+					"script": "escapeTail",
+					"animation": {
+						"tail": "escape",
+						"head": "AVlook"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"digestbelly" : {
+					"animation": {
+						"head": "burp"
+					}
+				},
+				"bellyToTail" : {
+					"script": "bellyToTail",
+					"animation": {
+						"tail": "expand"
+					}
+				},
+				"tailToBelly" : {
+					"script": "tailToBelly",
+					"animation": {
+						"tail": "shrink"
+					}
+				}
+			},
+			"idle": {
+				"body": "crouch",
+				"arms": "crouch",
+				"legs": "crouch",
+				"head": "idle",
+				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [12], "y": [-27], "groups": ["headbob"] },
+						{"x": [-8], "y": [-12], "groups": ["tailbob"] }
+					]
+				}
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "idle" }
+			],
+			"struggle": {
+				"belly" : {
+					"parts" : [],
+					"directions" : {
+						"up": { },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"front": { },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"tail" : {
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"locationCenters" : {
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
+			},
+			"defaultActions" : ["vore", "vore"],
+			"actions" : {
+				"vore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"succ": {
+					"hold" : true,
+					"position" : [4.5, -2],
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
+			"control": {
+				"waterMovementDisabled":true,
+				"airMovementDisabled":true,
+				"animations": {
+					"walk": {
+						"arms": "crawl",
+						"legs": "crawl",
+						"offset" : {
+							"parts" : [
+								{"x": [12], "y": [-27], "groups": ["headbob"] },
+								{"x": [-8], "y": [-12], "groups": ["tailbob"] }
+							]
+						}
+					}
+				}
+			}
+		},
+		"fly": {
+			"transitions": {
+				"succEat": {
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"arms": "fly",
+						"head": "eat"
+					},
+					"victimAnimation": "playersucc",
+					"script": "eat"
+				},
+				"escapeOral": {
+					"voreType" : "oralVore",
+					"victimAnimation": "escape",
+					"script" : "escapeOral",
+					"animation": {
+						"body": "escape",
+						"arms": "fly",
+						"head": "escape"
+					}
+				},
+				"tailEat": {
+					"voreType" : "tailVore",
+					"location" : "tail",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"tail": "eat",
+						"arms": "fly",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
+					"timing": "tail"
+				},
+				"escapeTail": {
+					"voreType" : "tailVore",
+					"lock" : true,
+					"victimAnimation": "escapeTail",
+					"script" : "escapeTail",
+					"timing": "tail",
+					"animation": {
+						"tail": "eat",
+						"arms": "fly",
+						"head": "AVlook"
+					}
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"arms": "fly",
+						"head": "burp"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"arms": "fly",
+						"head": "burp"
+					}
+				},
+				"analEat": {
+					"voreType" : "analVore",
+					"location" : "belly",
+					"failOnFull" : true,
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"arms": "fly",
+						"legs": "analEat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playeranalEat",
+					"script": "analEat"
+				},
+				"escapeAnal": {
+					"voreType" : "analVore",
+					"lock":true,
+					"victimAnimation": "escapeAnal",
+					"script" : "escapeAnal",
+					"animation": {
+						"body": "shrink",
+						"arms": "fly",
+						"head": "AVlook"
+					}
+				},
+				"bellyToTail" : {
+					"script": "bellyToTail",
+					"animation": {
+						"arms": "fly",
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailToBelly" : {
+					"script": "tailToBelly",
+					"animation": {
+						"arms": "fly",
+						"tail": "shrink",
+						"body": "expand"
+					}
+				}
+			},
+			"idle": {
+				"body": "idle",
+				"arms": "fly",
+				"legs": "fly",
+				"head": "idle",
+				"tail": "idle"
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "idle" }
+			],
+			"struggle": {
+				"belly" : {
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"tail" : {
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true  },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"locationCenters" : {
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
+			},
+			"defaultActions" : ["vore", "succ"],
+			"actions" : {
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				"succ": {
+					"position" : [3, 1.5],
+					"hold" : true,
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			},
+			"control": {
+				"groundMovementDisabled" : true,
+				"jumpMovementDisabled" : true,
+				"airMovementDisabled" : true,
+				"waterMovementDisabled" : true,
+				"animations": {
+					"fly": {
+						"head": "idle",
+						"arms": "fly",
+						"offset" : {
+							"timing": "arms",
+							"loop": true,
+							"parts" : [
+								{"y": [1, 2, 3, 4, 3, 2, 1, 0], "groups": ["headbob", "bodybob", "legsbob"]}
+							]
+						}
+					}
+				}
+			}
+		},
+		"sit": {
+			"transitions": {
+				"up": {
+					"animation": {
+						"body": "idle",
+						"legs": "standup",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-6, -3], "y": [-11, -5], "groups": ["headbob", "bodybob"] }
+							]
+						},
+						"tags": [
+							{
+								"owner": "body",
+								"part": "global",
+								"name": "bellymask",
+								"value": ""
+							}
+						]
+					},
+					"script": "unpin",
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "situnpin",
+					"state": "stand",
+					"timing": "legs",
+					"chance": 5
+				},
+				"eat": {
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"head": "eat"
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+				"escapeOral": {
+					"voreType" : "oralVore",
+					"victimAnimation": "escape",
+					"lock":true,
+					"script": "escapeOral",
+					"animation": {
+						"body": "escape",
+						"head": "escape"
+					}
+				},
+				"tailEat": {
+					"voreType" : "tailVore",
+					"location" : "tail",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
+					"timing": "tail"
+				},
+				"escapeTail": {
+					"voreType" : "tailVore",
+					"lock" : true,
+					"victimAnimation": "escapeTail",
+					"timing": "tail",
+					"script": "escapeTail",
+					"animation": {
+						"tail": "escape",
+						"head": "AVlook"
+					}
+				},
+				"analEat": {
+					"voreType" : "analVore",
+					"location" : "belly",
+					"failOnFull" : true,
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"head": "AVlook"
+					},
+					"script": "analEat"
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"head": "burp"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"bellyToTail" : {
+					"script": "bellyToTail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailToBelly" : {
+					"script": "tailToBelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				},
+				"hug": {
+					"voreType" : "held",
+					"script": "hug"
+				}
+			},
+			"idle": {
+				"body": "idle",
+				"arms": "idle",
+				"legs": "sit",
+				"head": "idle",
+				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "groups": ["headbob", "bodybob"] }
+					]
+				},
+				"tags": [
+					{
+						"owner": "body",
+						"part": "global",
+						"name": "bellymask",
+						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png"
+					}
+				]
+
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "idle" }
+			],
+			"struggle": {
+				"belly" : {
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "up", "indicate" : "blue"  },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"tail" : {
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue" },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"pinned" : {
+					"sound" : false,
+					"parts" : ["legs"],
+					"directions" : {
+						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
+						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
+			},
+			"locationCenters" : {
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0],
+				"hug" : [1.5, 0]
+			},
+			"interact": {
+				"mouth": {
+					"pos": [3, -3], "aim": [2, 0],
+					"transition": "eat", "chance": 100,
+					"location": "belly", "failOnFull": true
+				},
+				"hug": {
+					"pos": [-1, -3], "aim": [-1, -3],
+					"transition": "hug", "chance": 100,
+					"drivingEnabled": true
+				},
+				"stand": {
+					"aim": [-1, -1],
+					"transition": "up", "chance": 20
+				},
+				"tail": {
+					"pos": [-6, -4], "aim": [-6, -4],
+					"transition": "tailEat", "chance": 100,
+					"location": "tail", "failOnFull": true
+				}
+			},
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
+				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "sbqXeroniousMelee",
+						"position": [ 3, -1.5 ],
+						"aimable": false
+					},
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"position" : [2, -0.5],
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			}
+		},
+		"hug": {
+			"transitions": {
+				"unhug" : {
+					"script": "unhug"
+				},
+				"up": {
+					"animation": {
+						"body": "idle",
+						"legs": "standup",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{"x": [-6, -3], "y": [-11, -5], "groups": ["headbob", "bodybob"] }
+							]
+						},
+						"tags": [
+							{
+								"owner": "body",
+								"part": "global",
+								"name": "bellymask",
+								"value": ""
+							}
+						]
+					},
+					"script": "unpin",
+					"victimAnimLocation" : "pinned",
+					"victimAnimation" : "situnpin",
+					"timing": "legs",
+					"state": "stand"
+				},
+				"eat": {
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"body": "eat",
+						"head": "eat"
+					},
+					"victimAnimation": "playereat",
+					"script": "eat"
+				},
+				"escapeOral": {
+					"voreType" : "oralVore",
+					"victimAnimation": "escape",
+					"lock":true,
+					"script": "escapeOral",
+					"animation": {
+						"body": "escape",
+						"head": "escape"
+					}
+				},
+				"tailEat": {
+					"voreType" : "tailVore",
+					"location" : "tail",
+					"lock" : true,
+					"failOnFull" : true,
+					"animation": {
+						"tail": "eat",
+						"head": "AVlook"
+					},
+					"victimAnimation": "playertailEat",
+					"script": "tailEat",
+					"timing": "tail"
+				},
+				"escapeTail": {
+					"voreType" : "tailVore",
+					"lock" : true,
+					"victimAnimation": "escapeTail",
+					"timing": "tail",
+					"script": "escapeTail",
+					"animation": {
+						"tail": "escape",
+						"head": "AVlook"
+					}
+				},
+				"analEat": {
+					"voreType" : "analVore",
+					"location" : "belly",
+					"failOnFull" : true,
+					"lock":true,
+					"animation": {
+						"body": "expand",
+						"head": "AVlook"
+					},
+					"script": "analEat"
+				},
+				"digestbelly" : {
+					"animation": {
+						"body": "shrink",
+						"head": "burp"
+					}
+				},
+				"digesttail" : {
+					"animation": {
+						"tail": "shrink",
+						"head": "burp"
+					}
+				},
+				"bellyToTail" : {
+					"script": "bellyToTail",
+					"animation": {
+						"tail": "expand",
+						"body": "shrink"
+					}
+				},
+				"tailToBelly" : {
+					"script": "tailToBelly",
+					"animation": {
+						"tail": "shrink",
+						"body": "expand"
+					}
+				}
+			},
+			"idle": {
+				"body": "idle",
+				"arms": "hug",
+				"legs": "sit",
+				"head": "look",
+				"tail": "idle",
+				"offset" : {
+					"parts" : [
+						{"x": [-10], "y": [-17], "groups": ["headbob", "bodybob"] }
+					]
+				},
+				"tags": [
+					{
+						"owner": "body",
+						"part": "global",
+						"name": "bellymask",
+						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png"
+					}
+				]
+
+			},
+			"idleAnimations": [
+				{ "head": "blink" },
+				{ "head": "look" }
+			],
+			"struggle": {
+				"hug" : {
+					"sound" : false,
+					"parts" : ["arms"], // can be an arms struggle anim later maybe
+					"directions" : {
+						"interact": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
+						"up": { "transition": "unhug", "indicate" : "red", "drivingEnabled": true },
+						"front": {},
+						"back": {},
+						"down": {}
+					},
+					"chances": {
+						"easyEscape": { "min": 0, "max": 0 },
+						"normal": { "min": 0, "max": 0 },
+						"antiEscape": { "min": 0, "max": 0 }
+					},
+					"animation": { "head": "look" }
+				},
+				"belly" : {
+					"parts" : ["body"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "green" },
+						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"tail" : {
+					"parts" : ["tail"],
+					"directions" : {
+						"up": { "transition": "up", "indicate" : "blue" },
+						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
+						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"down": { }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"pinned" : {
+					"sound" : false,
+					"parts" : ["legs"],
+					"directions" : {
+						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
+						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					},
+					"animation": { "head": "lookBack" },
+					"animationWhenMoving": { "head": "idle" }
+				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
+			},
+			"locationCenters" : {
+				"belly" : [0.5, -1.5],
+				"tail" : [-3.0, -2.0]
+			},
+			"interact": {
+				"mouth": {
+					"aim": [2, 0], "pos": [3, -3],
+					"transition": "eat", "chance": 100,
+					"location": "belly", "failOnFull": true
+				},
+				"unhug": {
+					"aim": [0, -3],
+					"transition": "unhug", "chance": 20
+				},
+				"tail": {
+					"pos": [-6, -4], "aim": [-6, -4],
+					"transition": "tailEat", "chance": 100,
+					"location": "tail", "failOnFull": true
+				}
+			},
+			"defaultActions" : ["grab", "succ"],
+			"actions" : {
+				"grab":{
+					"cooldown": 0.5,
+					"script": "grab"
+				},
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"oralVore":{
+					"cooldown": 1,
+					"script": "oralVore"
+				},
+				"tailVore":{
+					"cooldown": 1,
+					"script": "tailVore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"transition": "analVore"
+				},
+				/*
+				"physicalAttack": {
+					"projectile": {
+						"name": "sbqXeroniousMelee",
+						"position": [ 3, -1.5 ],
+						"aimable": false
+					},
+					"cooldown": 1,
+				},
+				*/
+				"succ": {
+					"hold" : true,
+					"animation": {"head": "succ"},
+					"script": "succ"
+				}
+			}
+		}
+	}
+}

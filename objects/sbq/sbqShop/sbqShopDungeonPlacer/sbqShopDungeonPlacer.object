@@ -1,0 +1,34 @@
+{
+	"objectName": "sbqShopDungeonPlacer",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 10,
+	"health" : 5,
+	"itemTags": [],
+	"shortdescription" : "dungeon placer",
+
+	"inventoryIcon": "sbqShopDungeonPlacer.png",
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqShopDungeonPlacer.png" } ],
+			"imagePosition": [0, 0]
+		}
+	],
+
+	"dungeon" : "sbqHub_auriShop",
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"scripts": [
+		"sbqShopDungeonPlacer.lua"
+	]
+}

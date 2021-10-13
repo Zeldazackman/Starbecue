@@ -1,0 +1,11 @@
+{
+	"name" : "sbqLoungeDirectives",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+		"sbqLoungeDirectives.lua",
+		"/stats/speciesAnimOverride/storeDirectives.lua"
+	]
+
+}

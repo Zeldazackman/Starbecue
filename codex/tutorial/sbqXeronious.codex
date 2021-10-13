@@ -1,0 +1,73 @@
+{
+	"id" : "sbqXeroniousCodex",
+	"species" : "other",
+	"title" : "Guide to being a Fluffy Kaiju",
+	"description" : "So you've been turned into a Kaiju...",
+	"icon" : "sbqXeroniousCodex.png",
+	"itemConfig" : {
+		"rarity" : "common",
+		"price" : 200
+	},
+	"contentPages" : [
+//1
+"^cyan;So you've been turned into a Kaiju...^reset;
+
+First off, if you want to turn back, there is a menu accessible by pressing ^green;[E]^reset; to interact with your new self. In the bottom right corner of this menu, the ^yellow;[Despawn]^reset; button will turn you back to your normal self. This menu also allows you to select from various belly effects applied to your food, Player, NPC, and Monster alike.
+
+The ^yellow;[Eggify]^reset; button will begin to put the selected prey into ^cyan;eggs^reset;, which can then be laid. If a specific prey isn't selected, this will happen to ALL prey.",
+//2
+"Xeronious has space for ^cyan;three prey in their belly, and one in the tail^reset;. Prey can struggle back and forth between these locations if escapes are enabled.
+
+Xeronious can be positioned in ^cyan;several different states^reset;, each explained on its own page:
+
+^cyan;
+Stand -> pg.3-5
+Crouch -> pg.6
+Fly -> pg.7-8
+Sit -> pg.9^reset;",
+
+//3
+"^cyan;Stand State^reset;
+
+In this state you can walk and jump around as you would expect! You can also ^cyan;fly (see pg.7-8)^reset; if you press ^green;space in the air^reset;!
+^green;Holding down^reset; allows you to walk at a slower pace. If you get ^cyan;too full^reset; you are also forced to walk, your jump height is nerfed, and you become unable to fly, ^darkgray;fatty~^reset;
+
+^green;Primary fire^reset;, if you are hovering your cursor over an edible creature, lets you ^cyan;eat them^reset;! ^cyan;->^reset;",
+
+//4
+"^darkgray;(There is no animation for when *not* eating currently.)^reset; If the prey you clicked on is ^green;near your tail^reset;, you can eat them ^cyan;with that as well^reset;!
+^green;Alt fire^reset; lets you inhale and ^cyan;succ nearby creatures in to eat^reset; as long as you have space!
+
+If you want to let prey out, you can either open the menu and press ^yellow;[Let Out]^reset;, or press ^green;Tech Action 2^reset; (same story here, recommended key is ^green;[G]^reset;). If you are ^green;holding down^reset; then it will ^cyan;release them anally^reset; if they were in your belly. ^cyan;->^reset;",
+//5
+"You can tap ^green;down^reset; to ^cyan;sit down (see pg.9)^reset;.
+
+If you approach a space you are ^cyan;too tall to fit through^reset;, you can ^green;hold down^reset; and attempt to ^cyan;crawl into it (see pg.6)^reset;, or have it ^yellow;automatically triggered^reset; via a menu option.",
+//6
+"^cyan;Crouch State^reset;
+
+This state lets you crawl around through small spaces. it can only be exited if there is enough space to ^cyan;stand up (see pg.3)^reset;, and if ^green;down is no longer held^reset;.
+
+Prey can only be ^cyan;let out via the tail^reset; in this state.",
+//7
+"^cyan;Fly State^reset;
+
+In this state you can fly around freely! But the more prey in you, the more you're weighed down. If you're carrying ^cyan;three prey or more^reset; you'll drop like a rock and be ^cyan;unable to fly (see pg.3)^reset;.
+
+If you hover over some prey and ^green;Primary Fire^reset; click on them, you may be able to grab them with your feet and shove them ^cyan;up your butt and into your belly^reset;!
+^cyan;->^reset;",
+//8
+"If the prey you clicked on is ^green;near your tail^reset;, you can eat them ^cyan;with that as well^reset;!
+^green;Alt fire^reset; lets you inhale and ^cyan;succ nearby creatures in to eat^reset;!
+
+If you want to let prey out, you can either open the menu and press ^yellow;[Let Out]^reset;, or press ^green;Tech Action 2^reset; (same story here, recommended key is ^green;[G]^reset;). If you are ^green;holding down^reset; then it will ^cyan;release them anally^reset; if they were in the belly.",
+//9
+"^cyan;Sit State^reset;
+
+While sitting, people can ^green;interact^reset; with you to let you ^cyan;hug them^reset;!
+
+You can tap ^green;up^reset; to ^cyan;stand back up (see pg.3)^reset;.
+
+You ^red;cannot lay eggs or release people anally^reset; while sitting, but you can still let them out of the ^cyan;tail, and orally^reset;."
+	]
+}

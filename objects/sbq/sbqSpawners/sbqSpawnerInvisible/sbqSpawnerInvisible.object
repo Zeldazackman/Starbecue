@@ -1,0 +1,53 @@
+{
+	"objectName": "sbqSpawnerInvisible",
+	"colonyTags": ["vore"],
+	"rarity": "Uncommon",
+	"race": "generic",
+	"category": "other",
+	"price": 10,
+	"health" : 5,
+	"itemTags": ["sbqSpawner"],
+
+	"tooltipKind" : "sbqSpawner",
+
+	"inventoryIcon": "/items/throwables/capturepod.png",
+	"shortdescription": "Invisible Predator Spawner",
+	"description": "For a more discrete predator spawn location.",
+
+	"tooltipFields" : {
+		"statusLabel": "For a more discrete predator spawn location."
+	},
+
+	"orientations": [
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imagePosition": [0, 0],
+			"direction": "left",
+			"flipImages": true,
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		},
+		{
+			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imagePosition": [0, 0],
+			"direction": "right",
+			"spaceScan": 0.1,
+			"anchors": ["bottom"]
+		}
+	],
+
+	"acceptsAugmentType" : "sbqCore",
+
+	"retainObjectParametersInItem" : true,
+	"isWired" : false,
+	"printable" : false,
+	"scannable" : false,
+	"interactive" : false,
+	"inspectable" : false,
+	"allowScanning" : false,
+	"isContainer" : false,
+	"builder" : "/objects/sbq/sbqSpawners/sbqItemBuilder.lua",
+	"scripts": [
+		"/objects/sbq/sbqSpawners/sbqSpawner.lua"
+	]
+}

@@ -1,0 +1,48 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "light" : {
+        "default" : "off",
+        "states" : {
+          "off" : {},
+          "on" : {
+            "frames" : 8,
+            "cycle" : 4,
+            "mode" : "loop"
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "mount" : {
+        "properties" : {
+          "centered" : false,
+          "image" : "sbqPurpleCrystalTorch.png:mount"
+        }
+      },
+      "crystal" : {
+        "properties" : {
+          "centered" : false
+        },
+
+        "partStates" : {
+          "light" : {
+            "off" : {
+              "properties" : {
+                "image" : "sbqPurpleCrystalTorch.png:off"
+              }
+            },
+
+            "on" : {
+              "properties" : {
+                "image" : "sbqPurpleCrystalTorch.png:on.<frame>",
+                "fullbright" : true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

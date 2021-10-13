@@ -1,0 +1,56 @@
+{
+	"objectName" : "sbqPurpleCrystalTorch",
+	"colonyTags" : ["light"],
+	"rarity" : "Common",
+	"category" : "light",
+	"printable" : true,
+	"price" : 60,
+
+	"description" : "A glowing crystal shard in a brass mount.",
+	"shortdescription" : "Purple Crystal Torch",
+	"race" : "generic",
+
+	"apexDescription" : "The crystal appears to be generating the light.",
+	"avianDescription" : "Where more permanent light is required, some people use crystals in place of torches. They last many thousands of years.",
+	"floranDescription" : "Eerie glowing.",
+	"glitchDescription" : "Intrigued. This crystal appears to produce its own light.",
+	"humanDescription" : "The crystal glows but is entirely cold to the touch.",
+	"hylotlDescription" : "Such beautiful technology. How did they learn to harness it?",
+	"novakidDescription" : "This shiny rock is glowin' just a like a torch.",
+
+	"statusEffects" : [ ],
+
+	"lightColor" : [235, 200, 255],
+
+	"inventoryIcon" : "sbqPurpleCrystalTorchicon.png",
+	"orientations" : [
+		{
+			"image" : "sbqPurpleCrystalTorchicon.png",
+			"imagePosition" : [-4, 0],
+
+			"direction" : "left",
+			"flipImages" : true,
+			"animationPosition" : [0, 0],
+
+			"spaces" : [ [0, 0], [0, 1] ],
+			"anchors" : [ "background" ]
+		},
+		{
+			"image" : "sbqPurpleCrystalTorchicon.png",
+			"imagePosition" : [-4, 0],
+
+			"direction" : "right",
+			"animationPosition" : [0, 0],
+
+			"spaces" : [ [0, 0], [0, 1] ],
+			"anchors" : [ "background" ]
+		}
+	],
+
+	"animation" : "sbqPurpleCrystalTorch.animation",
+
+	"scripts" : [ "/objects/wired/light/light.lua" ],
+	"scriptDelta" : 60,
+
+	"inputNodes" : [ [0, 0] ]
+}

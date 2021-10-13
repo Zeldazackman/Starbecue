@@ -1,0 +1,7 @@
+{
+	"secretEggWand" : [
+		[0, { "fill" : [
+			{"item" : "sbqEggWand"}
+		]}]
+	]
+}

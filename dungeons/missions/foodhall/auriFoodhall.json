@@ -38,7 +38,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"bookmarkName\" : \"Foodhall\",\n  \"includePartyMembers\" : false,\n  \"includePlayerBookmarks\" : true,\n  \"destinations\" : [\n    {\n      \"name\" : \"Auri's Shop\",\n      \"planetName\" : \"\",\n      \"warpAction\" : \"instanceworld:voreWorld=auriShop\",\n      \"icon\" : \"voreWorld\"\n    }\n  ]\n}, \"uniqueId\" : \"auriShop\" }"
+                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"bookmarkName\" : \"Foodhall\",\n  \"includePartyMembers\" : false,\n  \"includePlayerBookmarks\" : true,\n  \"destinations\" : [\n    {\n      \"name\" : \"Auri's Shop\",\n      \"planetName\" : \"\",\n      \"warpAction\" : \"instanceworld:sbqHub=auriShop\",\n      \"icon\" : \"sbqHub\"\n    }\n  ]\n}, \"uniqueId\" : \"auriShop\" }"
                     },
                  "rotation":0,
                  "type":"",

@@ -1,0 +1,10 @@
+{
+	"name" : "sbqRemoveInvisible",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+	"sbqRemoveInvisible.lua"
+	]
+
+}

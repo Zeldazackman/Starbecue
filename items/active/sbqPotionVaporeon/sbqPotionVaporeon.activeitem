@@ -1,0 +1,23 @@
+{
+	"itemName" : "sbqPotionVaporeon",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A decorated bottle of thick blue liquid...",
+	"shortdescription" : "Vaporeon Goo",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+
+	"vehicle" : "sbqVaporeon",
+	"transformationDescription" : "a vaporeon",
+	"codex" : "sbqVaporeonCodex",
+
+	"inventoryIcon" : "sbqPotionVaporeon.png",
+	"largeImage" : "sbqPotionVaporeonLarge.png",
+
+	"animation" : "sbqPotionVaporeon.animation",
+
+	"scripts" : ["/items/active/sbqTransformPotion.lua"]
+}

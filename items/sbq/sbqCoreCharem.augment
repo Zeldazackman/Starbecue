@@ -1,0 +1,33 @@
+{
+	"itemName" : "sbqCoreCharem",
+	"price" : 1000,
+	"rarity" : "Rare",
+	"category" : "Vore",
+	"itemTags": ["reagent"],
+
+	"tooltipKind" : "sbqSpawner",
+
+	"inventoryIcon": "/vehicles/sbq/sbqCharem/skins/default/icon.png",
+	"shortdescription": "Charem",
+	"description" : "A lazy shadox of your very own! Use on an empty spawner to place him inside.",
+
+	"tooltipFields" : {
+		"statusLabel": "A lazy shadox of your very own! Use on an empty spawner to place him inside."
+	},
+
+	"augment" : {
+	  "type" : "sbqCore"
+	},
+
+	"vehicle": {
+		"type": "sbqCharem",
+		"position": [0, 4],	// in blocks
+		"settings": {
+			"bellyEffect" : "sbqSoftDigest"
+		}
+	},
+
+	"scripts" : [ "/items/sbq/sbqCore.lua" ]
+	//"builder" : "/objects/sbq/sbqSpawners/sbqItemBuilder.lua"
+
+  }

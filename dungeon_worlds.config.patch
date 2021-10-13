@@ -1,9 +1,9 @@
 [
 	{
 		"op" : "add",
-		"path" : "/voreWorld",
+		"path" : "/sbqHub",
 		"value" : {
-			"primaryDungeon" : "voreWorld",
+			"primaryDungeon" : "sbqHub",
 			"threatLevel" : 0,
 			"gravity" : 100,
 			"worldSize" : [1000, 500],
@@ -11,7 +11,7 @@
 			"dungeonBaseHeight" : 500,
 			"dungeonSurfaceHeight" : 270,
 			"musicTrack" : "/music/forsaken-grotto.ogg", // placeholder
-			"biome": "dreamerSnow"
+			"biome": "sbqDreamerSnow"
 		}
 	}
 ]

@@ -1,0 +1,16 @@
+{
+	"name" : "sbqSoftDigestDisplay",
+	"blockingStat" : "digestionImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"sbqSoftDigestDisplay.lua"
+	],
+
+	"animationConfig" : "sbqSoftDigest.animation",
+
+	"label" : "Being Soft Digested",
+	"icon" : "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png"
+}

@@ -1,0 +1,297 @@
+{
+	"objectName" : "sbqShopCauldron",
+	"colonyTags" : ["spooky", "vore"],
+	"printable" : false,
+	"rarity" : "Common",
+	"category" : "decorative",
+	"price" : 130,
+	"description" : "A bubbling cauldron, big enough that you could fit two people inside it.",
+	"shortdescription" : "Auri's Cauldron",
+	"race" : "generic",
+
+	"apexDescription" : "It seems like a bad idea, but I wouldn't mind sitting in this.",
+	"avianDescription" : "I wonder if I'll be cooked if I sit in this for too long?",
+	"floranDescription" : "Floran not want to be boiled into sssoup.",
+	"glitchDescription" : "Questioning. How long will I have to sit in this to rust?",
+	"humanDescription" : "Sitting in this looks like it would tickle!",
+	"hylotlDescription" : "It smells odd, but sitting in this is actually relaxing.",
+	"novakidDescription" : "It's a little on the small side for a bathin' tub.",
+
+	"objectType" : "loungeable",
+	"sitFlipDirection" : false,
+	"sitOrientation" : "lay",
+	"sitAngle" : 0,
+	"sitPositions" : [
+		[-10, 44],
+		[0, 44],
+		[10, 44]
+	],
+
+	"sitStatusEffects" : [
+		"nude"
+	],
+
+	"animation" : "/objects/sbq/sbqShop/sbqShopCauldron/sbqShopCauldron.animation",
+	"animationPosition" : [0, 32],
+
+	"particleEmitters" : [
+		// Occasional Big bubble
+		{
+			"emissionRate" : 1,
+			"emissionVariance" : 0.25,
+			"pixelOrigin" : [0, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison2/poison2.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+		{
+			"emissionRate" : 1,
+			"emissionVariance" : 0.25,
+			"pixelOrigin" : [10, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison2/poison2.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+		{
+			"emissionRate" : 1,
+			"emissionVariance" : 0.25,
+			"pixelOrigin" : [-10, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison2/poison2.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+
+
+		// Rapid Small Bubble
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 1,
+			"pixelOrigin" : [0, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison/poison.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 1,
+			"pixelOrigin" : [10, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison/poison.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 1,
+			"pixelOrigin" : [-10, 40],
+
+			"particle" : {
+				"type" : "animated",
+				"animation" : "/animations/statuseffects/poison/poison.animation",
+				"position" : [0, 0],
+				"initialVelocity" : [0, 0],
+				"finalVelocity" : [0, 3],
+				"approach" : [0, 50],
+				"size" : 1.0,
+				"timeToLive" : 0.85
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 2]
+			}
+		},
+
+		// Tiny Particle Bubble
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 0.1,
+			"pixelOrigin" : [0, 40],
+
+			"particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [107, 158, 97, 255],
+				"fade" : 0.9,
+				"initialVelocity" : [0.0, 0],
+				"finalVelocity" : [0.0, 1.5],
+				"approach" : [0, 20],
+				"timeToLive" : 1.0,
+				"layer" : "back"
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 0.5]
+			}
+		},
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 0.1,
+			"pixelOrigin" : [10, 40],
+
+			"particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [107, 158, 97, 255],
+				"fade" : 0.9,
+				"initialVelocity" : [0.0, 0],
+				"finalVelocity" : [0.0, 1.5],
+				"approach" : [0, 20],
+				"timeToLive" : 1.0,
+				"layer" : "back"
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 0.5]
+			}
+		},
+		{
+			"emissionRate" : 3,
+			"emissionVariance" : 0.1,
+			"pixelOrigin" : [-10, 40],
+
+			"particle" : {
+				"type" : "ember",
+				"size" : 1.0,
+				"color" : [107, 158, 97, 255],
+				"fade" : 0.9,
+				"initialVelocity" : [0.0, 0],
+				"finalVelocity" : [0.0, 1.5],
+				"approach" : [0, 20],
+				"timeToLive" : 1.0,
+				"layer" : "back"
+			},
+			"particleVariance" : {
+				"position" : [0.9, 0],
+					"finalVelocity" : [0, 0.5]
+			}
+		}
+	],
+
+	"inventoryIcon" : "sbqShopCauldronIcon.png",
+	"orientations" : [
+		{
+			"image" : "sbqShopCauldron.png",
+			"imagePosition" : [-32, 0],
+			"direction" : "left",
+			"flipImages" : true,
+			"renderLayer" : "Object+3",
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		},
+		{
+			"image" : "sbqShopCauldron.png",
+			"imagePosition" : [-32, 0],
+			"direction" : "right",
+			"renderLayer" : "Object+3",
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		}
+	],
+
+	"soundEffect" : "/sfx/objects/spookycauldron.ogg",
+
+	"scripts": [
+		"sbqShopCauldron.lua"
+	],
+
+	"cauldronStatusEffects" : [
+		"colorblue",
+		"colorgreen",
+		"colororange",
+		"colorpurple",
+		"colorred",
+		"coloryellow",
+		"glow",
+		"glueslow",
+		"heal",
+		"jumpboost",
+		"levitation",
+		"lowgrav",
+		"nofalldamage",
+		"partytime",
+		"healingwater",
+		"runboost",
+		"slimeslow",
+		"tarslow",
+		"wet"
+	],
+	"cauldronStatusDirectives" : {
+		"colorblue" : "?hueshift=244",
+		"colorgreen" : "?hueshift=105",
+		"colororange" : "?hueshift=30",
+		"colorpurple" : "?hueshift=270",
+		"colorred" : "",
+		"coloryellow" : "?hueshift=57",
+		"glow" : "?replace;ff0000=fff57b;ff5454=fffcd1;ffa0a0=ffffff",
+		"glueslow" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
+		"jumpboost" : "?hueshift=244",
+		"levitation" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
+		"lowgrav" : "?hueshift=270",
+		"nofalldamage" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
+		"partytime" : "",
+		"healingwater" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff",
+		"runboost" : "?hueshift=105",
+		"slimeslow" : "?replace;ff0000=43cc91;ff5454=44ffd5;ffa0a0=b5fff1",
+		"tarslow" : "?replace;ff0000=1d0040;ff5454=270066;ffa0a0=5e3193",
+		"wet" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff"
+	}
+}

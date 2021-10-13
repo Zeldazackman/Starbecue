@@ -1,0 +1,13 @@
+{
+	"name" : "sbqDebug",
+	"type" : "head",
+
+	"scripts" : ["sbqDebug.lua"],
+
+	"description" : "for testing predators that shouldn't normally be accessible ^green;[F]",
+	"shortDescription" : "SBQ Debug tech",
+	"rarity" : "Uncommon",
+	"icon" : "/objects/generic/perfectlygenericitem/perfectlygenericitemicon.png",
+
+	"chipCost" : 8
+}

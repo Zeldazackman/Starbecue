@@ -1,0 +1,48 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "light" : {
+        "default" : "off",
+        "states" : {
+          "off" : {},
+          "on" : {
+            "frames" : 8,
+            "cycle" : 4,
+            "mode" : "loop"
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "housing" : {
+        "properties" : {
+          "centered" : false,
+          "image" : "sbqPurpleCrystalLantern.png:housing.<partImage>"
+        }
+      },
+      "crystal" : {
+        "properties" : {
+          "centered" : false
+        },
+
+        "partStates" : {
+          "light" : {
+            "off" : {
+              "properties" : {
+                "image" : "sbqPurpleCrystalLantern.png:off"
+              }
+            },
+
+            "on" : {
+              "properties" : {
+                "image" : "sbqPurpleCrystalLantern.png:on.<frame>",
+                "fullbright" : true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

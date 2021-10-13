@@ -1,0 +1,36 @@
+{
+  "objectName" : "sbqCatTowerBed",
+  "rarity" : "Common",
+  "description" : "The throne at the top of the tower.",
+  "shortdescription" : "Cat Tower Bed",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 85,
+  "printable" : false,
+
+  "apexDescription" : "This armchair looks nice and comfy... although a bit big.",
+  "avianDescription" : "Colourful and comfortable... and large",
+  "floranDescription" : "Big sssoft chair with sssmooth wooden arms.",
+  "glitchDescription" : "Content. I could happily while away the hours in this oversized chair.",
+  "humanDescription" : "A big wooden armchair.",
+  "hylotlDescription" : "Comfortable... not sure about humble.",
+  "novakidDescription" : "A feline's highest perch.",
+
+  "inventoryIcon" : "sbqCatTowerIcon.png",
+  "orientations" : [
+    {
+      "image" : "sbqCatTowerBed.png:default",
+      "sitCoverImage" : "/objects/sbq/sbqCatTower/sbqCatTowerBed.png:cover",
+      "imagePosition" : [-12, 0],
+      "animationPosition" : [-12, 0],
+      "direction" : "right",
+
+
+      "spaceScan" : 0.2
+    }
+  ],
+
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPositions" : [ [5, 16] ]
+}

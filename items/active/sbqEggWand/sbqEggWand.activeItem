@@ -1,0 +1,102 @@
+{
+	"itemName" : "sbqEggWand",
+	"price" : 960,
+	"maxStack" : 1,
+	"rarity" : "Rare",
+	"description" : "Who made this...?",
+	"shortdescription" : "Egg Wand",
+	"category" : "wand",
+	"twoHanded" : false,
+	"itemTags" : ["weapon","wand"],
+	"tooltipKind" : "staff",
+
+	"animation" : "/items/active/weapons/wand/generated/generatedwand.animation",
+	"animationParts" : {
+		"crown" : "/vehicles/sbq/egg/skins/default/icon.png",
+		"handle" : "/items/active/weapons/wand/generated/handle/7.png",
+		"stone" : "/items/active/weapons/wand/generated/stone/electric.png",
+		"chargeEffect" : "/items/active/weapons/wand/generated/glow/electric.png"
+	  },
+
+	"scripts" : [
+		"/items/active/weapons/staff/staff.lua",
+		"/items/active/sbqEggWand/sbqEggWand.lua"
+	],
+	"inventoryIcon" : "/vehicles/sbq/egg/skins/default/icon.png",
+
+	"baseDamageFactor" : 0,
+
+	"stances" : {
+	  "idle" : {
+		"weaponOffset" : [0, 1.0],
+
+		"armRotation" : -90,
+		"weaponRotation" : 0,
+		"twoHanded" : false,
+
+		"allowRotate" : false,
+		"allowFlip" : true
+	  },
+	  "charge" : {
+		"weaponOffset" : [0, 1.5],
+
+		"duration" : 1.0,
+		"armRotation" : 20,
+		"weaponRotation" : -20,
+		"twoHanded" : false,
+
+		"allowRotate" : false,
+		"allowFlip" : true
+	  },
+	  "charged" : {
+		"weaponOffset" : [0, 1.5],
+
+		"armRotation" : 20,
+		"weaponRotation" : -20,
+		"twoHanded" : false,
+
+		"allowRotate" : false,
+		"allowFlip" : true
+	  },
+	  "discharge" : {
+		"weaponOffset" : [0, 1.5],
+
+		"duration" : 0.5,
+		"armRotation" : -10,
+		"weaponRotation" : -50,
+		"twoHanded" : false,
+
+		"allowRotate" : true,
+		"allowFlip" : true
+	  },
+	  "cooldown" : {
+		"weaponOffset" : [0, 1.0],
+
+		"duration" : 0.5,
+		"armRotation" : -45,
+		"weaponRotation" : 0,
+		"twoHanded" : false,
+
+		"allowRotate" : false,
+		"allowFlip" : true
+	  }
+	},
+
+	"elementalType" : "physical",
+
+	"primaryAbility" : {
+		"name" : "Eggify",
+		"scripts" : ["/items/active/weapons/staff/abilities/effectzone/effectzone.lua"],
+		"class" : "EffectZone",
+
+		"energyCost" : 75,
+
+		"maxCastRange" : 25,
+
+		"projectileType" : "sbqEggify",
+		"projectileParameters" : {
+		}
+	},
+
+	"builder" : "/items/buildscripts/buildunrandweapon.lua"
+  }

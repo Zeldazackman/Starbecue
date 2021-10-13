@@ -1,0 +1,12 @@
+{
+  "projectileName" : "sbqWarpOutEffect",
+  "image" : "sbqWarpOutEffect.png",
+  "animationCycle" : 1.0,
+  "frameNumber" : 13,
+  "animationLoops" : false,
+  "timeToLive" : 1.0,
+  "piercing" : true,
+  "renderLayer" : "Player+1",
+	"orientationLocked" : true,
+  "bounces" : -1
+}

@@ -1,0 +1,16 @@
+{
+	"name" : "sbqDigestDisplay",
+	"blockingStat" : "digestionImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"sbqDigestDisplay.lua"
+	],
+
+	"animationConfig" : "sbqDigest.animation",
+
+	"label" : "Being Digested",
+	"icon" : "/stats/sbq/sbqDigest/sbqDigest.png"
+}
