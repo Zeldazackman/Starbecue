@@ -301,6 +301,8 @@
 						"smol.jump": { "properties": { "image": "skins/<skin>/smol/smol_body.png:<bellyoccupants>.jump.<frame><directives>" } },
 						"smol.fall": { "properties": { "image": "skins/<skin>/smol/smol_body.png:<bellyoccupants>.fall.<frame><directives>" } },
 
+						"smol.prey": { "properties": { "image": "skins/<skin>/smol/smol_body.png:smolprey.<frame><directives>" } },
+
 						"chonk_ball": { "properties" : { "image": "skins/<skin>/smol/chonk_ball.png:<rotationFlip>.chonk_ball.<rotationFrame><directives>" } }
 					}
 				}
@@ -396,7 +398,10 @@
 						"smol.fall": { "properties": { "image": "skins/<skin>/smol/foreground/smol_legs.png:fall.<frame><directives>" } },
 
 						"smol.swimidle": { "properties": { "image": "skins/<skin>/smol/foreground/smol_legs.png:swimidle.<frame><directives>" } },
-						"smol.swim": { "properties": { "image": "skins/<skin>/smol/foreground/smol_legs.png:swim.<frame><directives>" } }
+						"smol.swim": { "properties": { "image": "skins/<skin>/smol/foreground/smol_legs.png:swim.<frame><directives>" } },
+
+						"smol.prey": { "properties": { "image": "skins/<skin>/smol/foreground/smol_legs.png:smolprey.<frame><directives>" } }
+
 					}
 				}
 			},
@@ -451,7 +456,10 @@
 						"smol.fall": { "properties": { "image": "skins/<skin>/smol/<bap>smol_legs.png:fall.<frame><directives>" } },
 
 						"smol.swimidle": { "properties": { "image": "skins/<skin>/smol/<bap>smol_legs.png:swimidle.<frame><directives>" } },
-						"smol.swim": { "properties": { "image": "skins/<skin>/smol/<bap>smol_legs.png:swim.<frame><directives>" } }
+						"smol.swim": { "properties": { "image": "skins/<skin>/smol/<bap>smol_legs.png:swim.<frame><directives>" } },
+
+						"smol.prey": { "properties": { "image": "skins/<skin>/smol/smol_legs.png:smolprey.<frame><directives>" } }
+
 					}
 				}
 			},
@@ -519,6 +527,8 @@
 
 						"smol.swimidle": { "properties": { "image": "skins/<skin>/smol/smol_tail.png:swimidle.<frame><directives>" } },
 						"smol.swim": { "properties": { "image": "skins/<skin>/smol/smol_tail.png:swim.<frame><directives>" } },
+
+						"smol.prey": { "properties": { "image": "skins/<skin>/smol/smol_tail.png:smolprey.<frame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -598,7 +608,10 @@
 						"fallasleep": { "properties": { "image": "skins/<skin>/head.png:fallasleep.<frame><directives>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/smol/smol_head.png:idle.<frame><directives>" } },
-						"smol.blink": { "properties": { "image": "skins/<skin>/smol/smol_head.png:blink.<frame><directives>" } }
+						"smol.blink": { "properties": { "image": "skins/<skin>/smol/smol_head.png:blink.<frame><directives>" } },
+
+						"smol.prey": { "properties": { "image": "skins/<skin>/smol/smol_head.png:smolprey.<frame><directives>" } }
+
 					}
 				}
 			},

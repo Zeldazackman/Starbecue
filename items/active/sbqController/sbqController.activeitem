@@ -45,6 +45,7 @@
 	"builder" : "/items/active/sbqController/sbqControllerBuilder.lua",
 	"scripts" : [
 		"sbqController.lua",
-		"sbqControllerData.lua"
+		"sbqControllerData.lua",
+		"/items/active/activeitemOverrides.lua"
 	]
 }

@@ -1009,10 +1009,10 @@
 		"smol": {
 			"edible": true,
 			"edibleAnims" : {
-				"body": "smol.idle",
-				"legs": "smol.idle",
-				"head": "smol.idle",
-				"tail": "smol.idle"
+				"body": "smol.prey",
+				"legs": "smol.prey",
+				"head": "smol.prey",
+				"tail": "smol.prey"
 			},
 			"transitions": {},
 			"idle": {

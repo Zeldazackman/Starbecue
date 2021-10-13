@@ -20,7 +20,8 @@
 
 	"scripts" : [
 		"/items/active/weapons/staff/staff.lua",
-		"/items/active/sbqEggWand/sbqEggWand.lua"
+		"/items/active/sbqEggWand/sbqEggWand.lua",
+		"/items/active/activeitemOverrides.lua"
 	],
 	"inventoryIcon" : "/vehicles/sbq/sbqEgg/skins/default/icon.png",
 

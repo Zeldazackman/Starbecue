@@ -46,17 +46,18 @@ function state.smol.crack( args )
 	p.doAnim("bodyState", "s_"..args.direction)
 
 	if p.settings.cracks > 3 then
-		local path = "?addmask=/vehicles/sbq/sbqEgg/skins/shards.png:"
+		local shard = "?addmask=/vehicles/sbq/sbqEgg/skins/shards.png:"
 		local skinNames = p.settings.skinNames or {}
 		local skin = skinNames.body or "default"
 		local flip = ""
+		local blend = "?blendmult=/vehicles/sbq/sbqEgg/skins/"..skin.."/smol/smol_body.png:0.idle.1"
 		if p.direction < 0 then
 			flip = "?flipx"
 		end
 
 		for i = 1, 10 do
-			world.spawnProjectile( skin.."sbqEggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
-				processing = p.settings.directives..path..tostring(i)..flip,
+			world.spawnProjectile( "sbqEggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
+				processing = blend..p.settings.directives..shard..tostring(i)..flip,
 				timeToLive = math.random(0,3) + math.random(),
 				speed = math.random(5,10) + math.random()
 			})

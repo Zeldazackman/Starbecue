@@ -118,7 +118,7 @@
 				["983f97", "aa4fa9", "df61d6"], // magenta
 				["6d6d6d", "a2a2a2", "d0d0d0"], // light grey
 				["111111", "303030", "404040"], // black
-				["aaa393", "eae0c8", "fff6de"] // "tan" meant to be replaced again to make the egg color smooth with no spots
+				["a99f87", "eae0c8", "fff6de"] // "tan" meant to be replaced again to make the egg color smooth with no spots
 			],
 			[
 				["70695a", "a99f87", "eae0c8", "fff6de"], // main egg

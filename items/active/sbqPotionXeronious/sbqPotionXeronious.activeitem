@@ -19,5 +19,8 @@
 
 	"animation" : "sbqPotionXeronious.animation",
 
-	"scripts" : ["/items/active/sbqTransformPotion.lua"]
+	"scripts" : [
+		"/items/active/sbqTransformPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
 }

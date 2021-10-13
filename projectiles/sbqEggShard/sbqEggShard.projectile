@@ -1,6 +1,6 @@
 {
 	"projectileName" : "sbqEggShard",
-	"image" : "/vehicles/sbq/sbqEgg/skins/default/smol/smol_body.png",
+	"image" : "blank.png",
 	"physics" : "grenade",
 	"animationLoops" : false,
 	"flippable" : false,
