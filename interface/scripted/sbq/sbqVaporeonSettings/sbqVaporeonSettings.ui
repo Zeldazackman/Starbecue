@@ -1,0 +1,37 @@
+{ //  -*- grammar-ext: json -*-
+	"style" : "window", // window (has titlebar), panel (just a frame) etc.
+	"size" : [256, 112], // *internal* size (not including chrome)
+	"title" : "Vaporeon Settings",
+	"icon" : "/vehicles/sbq/sbqVaporeon/skins/default/icon.png?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff",
+	"uniqueBy" : "path",
+	"scripts" : [ "/interface/scripted/sbq/sbqVaporeonSettings/sbqVaporeonSettings.lua" ],
+	"children" : [
+		{ "type" : "tabField", "id" : "tabField", "layout" : "vertical", "tabWidth" : 96, "tabs" : [
+			{ "id" : "settings", "title" : "Global Settings", "icon" : "/interface/scripted/sbq/settings.png", "visible" : true, "color" : "ff00ff", "contents" : [
+
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Belly Effect", "inline" : true },
+					[{ "type" : "checkBox", "id" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
+					[{ "type" : "checkBox", "id" : "sbqHeal", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "Heal" }],
+					[{ "type" : "checkBox", "id" : "sbqDigest", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "Digest" }],
+					[{ "type" : "checkBox", "id" : "sbqSoftDigest", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "Soft Digest" }]
+				]},
+
+				[{ "type" : "checkBox", "id" : "displayDigest" }, { "type" : "label", "text" : "Display DoT Effects" } ],
+
+				[{ "type" : "checkBox", "id" : "bellySounds" }, { "type" : "label", "text" : "Belly Sounds" } ],
+
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
+					[{ "type" : "checkBox", "id" : "easyEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Easy" }],
+					[{ "type" : "checkBox", "id" : "normal", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Normal" }],
+					[{ "type" : "checkBox", "id" : "antiEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Hard" }],
+					[{ "type" : "checkBox", "id" : "noEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Impossible" }]
+				]}
+
+			]}
+		],
+			"bottomBar" : [ ]
+		}
+	]
+}
