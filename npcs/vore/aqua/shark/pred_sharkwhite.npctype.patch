@@ -1,7 +1,7 @@
 [
 	{
 		"op": "add",
-		"path": "/scriptConfig/preyEnabled",
+		"path": "/scriptConfig/sbqPreyEnabled",
 		"value": {
 			"enabled" : false
 		}

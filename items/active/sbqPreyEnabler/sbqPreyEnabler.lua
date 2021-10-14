@@ -2,6 +2,8 @@ function init()
 	activeItem.setHoldingItem(false)
 end
 
+local clicked
+
 function update(dt, fireMode, shiftHeld, controls)
 	if not player.isLounging() and fireMode == "primary" and not clicked then
 		clicked = true

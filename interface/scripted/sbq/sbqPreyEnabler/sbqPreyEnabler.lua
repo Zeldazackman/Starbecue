@@ -1,12 +1,12 @@
-p = {}
-function init()
-	p.config = root.assetJson( "/sbqGeneral.config")
-	p.preySettings = sb.jsonMerge(p.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled"))
 
-	for voreType, enabled in pairs(p.preySettings) do
+function init()
+	self.config = root.assetJson( "/sbqGeneral.config")
+	self.preySettings = sb.jsonMerge(self.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled"))
+
+	for voreType, enabled in pairs(self.preySettings) do
 		widget.setChecked(voreType, enabled or false)
 	end
-	status.setStatusProperty("sbqPreyEnabled", p.preySettings)
+	status.setStatusProperty("sbqPreyEnabled", self.preySettings)
 end
 
 function update()
@@ -16,8 +16,8 @@ function uninit()
 end
 
 function changeSetting(voreType)
-	p.preySettings[voreType] = widget.getChecked(voreType)
-	status.setStatusProperty("sbqPreyEnabled", p.preySettings)
+	self.preySettings[voreType] = widget.getChecked(voreType)
+	status.setStatusProperty("sbqPreyEnabled", self.preySettings)
 end
 
 function enabled()
