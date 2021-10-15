@@ -76,6 +76,7 @@ function p.uneat( occupantId )
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "sbqRemoveInvisible")
 	end
 
+	p.refreshList = true
 	p.lounging[occupantId] = nil
 	p.occupant[seatindex] = p.clearOccupant(seatindex)
 	p.updateOccupants(0)
@@ -461,7 +462,7 @@ function p.doBellyEffects(dt)
 	if (bellyEffect == "sbqDigest") or (bellyEffect == "sbqSoftDigest") then
 		hungereffect = 1
 	end
-	if p.settings.displayDamage then
+	if p.settings.displayDigest then
 		if p.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
 			bellyEffect = p.config.bellyDisplayStatusEffects[bellyEffect]
 		end

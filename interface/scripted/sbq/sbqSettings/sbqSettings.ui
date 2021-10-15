@@ -1,0 +1,63 @@
+{ //  -*- grammar-ext: json -*-
+	"style" : "window", // window (has titlebar), panel (just a frame) etc.
+	"size" : [256, 128], // *internal* size (not including chrome)
+	"title" : "Starbecue Settings",
+	"icon" : "/items/active/sbqController/oralVore.png",
+	"uniqueBy" : "path",
+	"scripts" : [ "sbqSettings.lua" ],
+	"children" : [
+		{ "type" : "tabField", "id" : "tabField", "layout" : "horizontal", "tabs" : [
+			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Predator", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				[[//first collumn
+					{ "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Belly Effect", "inline" : true },
+						[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
+						[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
+						[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
+						[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
+					]},
+					[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ]
+				],[// second collumn
+					{ "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
+						[{ "type" : "checkBox", "id" : "EMEasy", "value" : "easyEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Easy" }],
+						[{ "type" : "checkBox", "id" : "EMNormal", "value" : "normal", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Normal" }],
+						[{ "type" : "checkBox", "id" : "EMHard", "value" : "antiEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Hard" }],
+						[{ "type" : "checkBox", "id" : "EMImpossible", "value" : "noEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Impossible" }]
+					]},
+					[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
+				]]
+			]},
+			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				[[//first collumn
+					{ "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Questionable", "inline" : true },
+						[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
+						[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
+						[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ]
+					]}
+				],[// second collumn
+					{ "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Sexual", "inline" : true },
+						[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : "Anal Vore" } ],
+						[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : "Cock Vore" } ],
+						[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : "Breast Vore" } ],
+						[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
+					]}
+				],[// third collumn
+					{ "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Other", "inline" : true },
+						[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held" } ]
+					]}
+				]]
+			]},
+			{ "type" : "tab", "id" : "occupantsTab", "title" : "Occupants", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "scrollArea", "id" : "occupantScrollArea", "scrollDirections" : [0, 1], "children" : []}
+			]}],
+
+			"bottomBar" : [
+				{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }
+			]
+		}
+	]
+}

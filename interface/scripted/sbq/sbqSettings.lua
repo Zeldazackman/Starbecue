@@ -31,7 +31,7 @@ function init()
 	widget.setSelectedOption( "bellyEffect", p.bellyEffects[globalSettings.bellyEffect or "sbqRemoveBellyEffects"] )
 	widget.setSelectedOption( "escapeModifier", p.escapeModifier[globalSettings.escapeModifier or "normal"] )
 
-	widget.setChecked( "displayDamage", globalSettings.displayDamage or false )
+	widget.setChecked( "displayDigest", globalSettings.displayDigest or false )
 	widget.setChecked( "bellySounds", globalSettings.bellySounds or false )
 
 	widget.setChecked( "autoDeploy", settings.autoDeploy or false )
@@ -248,8 +248,8 @@ end
 function bellySounds()
 	changeGlobalSetting( "bellySounds" )
 end
-function displayDamage()
-	changeGlobalSetting( "displayDamage" )
+function displayDigest()
+	changeGlobalSetting( "displayDigest" )
 end
 
 function autoDeploy()

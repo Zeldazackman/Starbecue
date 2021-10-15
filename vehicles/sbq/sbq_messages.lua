@@ -1,5 +1,5 @@
 message.setHandler( "settingsMenuSet", function(_,_, val )
-	p.settings = val
+	p.settings = sb.jsonMerge(p.settings, val)
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
 end )
@@ -39,7 +39,8 @@ message.setHandler( "settingsMenuRefresh", function(_,_)
 	local refreshList = p.refreshList
 	p.refreshList = nil
 	return {
-		occupants = p.occupant,
+		occupants = p.occupants,
+		occupant = p.occupant,
 		powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier,
 		settings = p.settings,
 		refreshList = refreshList,

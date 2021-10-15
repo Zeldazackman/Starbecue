@@ -15,8 +15,7 @@
 			"path": "/deploymentConfig/scripts/-",
 			"value": "/scripts/SBQ_player_deployment.lua"
 		},
-		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "sbqController" } },
-		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "sbqPreyEnabler" } }
+		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "sbqController" } }
 	],
 	[
 		{ "op": "test", "path": "/inventoryFilters/objectBag/tagBlacklist", "inverse": true },

@@ -99,6 +99,8 @@ function p.updateControls(dt)
 				type = "prey"
 				data = p.occupant[i].smolPreyData
 			end
+			data.type = type
+
 			if p.occupant[i].controls.primaryHandItem ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
 				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, p.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
 			elseif p.occupant[i].controls.altHandItem ~= nil and p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage ~= nil and p.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
@@ -374,18 +376,13 @@ function p.doClickActions(state, dt)
 		world.sendEntityMessage( p.driver, "sbqOpenInterface", "sbqClose" )
 		if p.lastRadialSelection == "despawn" then
 			p.onDeath()
-		elseif p.lastRadialSelection == "settings" then
-			world.sendEntityMessage(
-				p.driver, "sbqOpenInterface", world.entityName( entity.id() ).."Settings",
-				{ vehicle = entity.id(), occupants = p.occupant, maxOccupants = p.occupants.maximum, powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier }, false, entity.id()
-			)
 		elseif p.lastRadialSelection ~= "cancel" and p.lastRadialSelection ~= nil then
 			p.action(state, p.lastRadialSelection, "force")
 		end
 		p.movement.assignClickActionRadial = nil
 	end
 
-	if (p.seats[p.driverSeat].controls.primaryHandItem == "sbqLockedItem") or (p.seats[p.driverSeat].controls.primaryHandItem == "sbqPreyEnabler") then
+	if (p.seats[p.driverSeat].controls.primaryHandItem ~= nil) and (not p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.itemHasOverrideLockScript) then
 		p.action(state, state.defaultActions[1], "primaryFire")
 		p.action(state, state.defaultActions[2], "altFire")
 	else
@@ -458,10 +455,6 @@ function p.assignClickActionMenu(state)
 			icon = "/items/active/sbqController/"..action..".png"
 		})
 	end
-	table.insert(options, {
-		name = "settings",
-		icon = "/interface/title/modsover.png"
-	})
 
 	world.sendEntityMessage( p.driver, "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "actionSelect" }, true )
 end

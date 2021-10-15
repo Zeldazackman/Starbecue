@@ -337,7 +337,7 @@ end
 function state.sit.hug( args )
 	p.addRPC(world.sendEntityMessage(args.id, "sbqIsPreyEnabled", "held"), function(enabled)
 		if enabled then
-			return p.eat(args.id, "hug", {})
+			return p.eat(args.id, "hug")
 		end
 	end)
 end

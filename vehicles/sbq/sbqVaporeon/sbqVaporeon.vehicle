@@ -168,16 +168,17 @@
 			"escapeDifficulty": 0,
 			"bellyEffect": "sbqRemoveBellyEffects",
 			"bellyMultiplier": 1,
-			"displayDamage": false
+			"displayDigest": false
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},
 			"escapeDifficulty": {"min": -1, "max": 1},
 			"bellyEffect": ["sbqRemoveBellyEffects", "sbqHeal", "sbqDigest", "sbqSoftDigest"],
 			"bellyMultiplier": {"min": 0, "max": 100},
-			"displayDamage": [false, true]
+			"displayDigest": [false, true]
 		},
-		"replaceColors" : [ // every color must be defined, even if you don't plan on having a replace option for it if you want it to follow the fullbright rules
+		"customizableColors" : [ true, true, true, true, true, false, false ],
+		"replaceColors" : [
 			[
 				// the first entry in these lists will be the color to replace
 				["0d4f6a", "1b80a7", "42b2dd", "6dc4e5"], // the main body
