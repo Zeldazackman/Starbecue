@@ -1,9 +1,14 @@
 sbq = {}
 
+sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
+sbq.occupantsTab = mainTabField:newTab( sbq.extraTabs.occupantsTab ) ---@diagnostic disable-line:undefined-global
+sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab ) ---@diagnostic disable-line:undefined-global
+
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	sbq.lastSpecies = sbq.sbqCurrentData.species
 
 	sbq.loungingIn = player.loungingIn()
 
@@ -11,11 +16,22 @@ function init()
 
 	sbq.globalSettings = sb.jsonMerge( sbq.config.defaultSettings, sbq.sbqSettings.global or {} )
 
+
 	if sbq.sbqCurrentData.species ~= nil then
-		sbq.predatorSettings = sbq.sbqSettings[sbq.sbqCurrentData.species] or sbq.globalSettings
+		sbq.predatorConfig = root.assetJson("/vehicles/sbq/sbqVaporeon/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		sbq.predatorSettings = sb.jsonMerge( sbq.predatorConfig.defaultSettings or {}, sbq.sbqSettings[sbq.sbqCurrentData.species] or sbq.globalSettings)
+
 	else
+		sbq.predatorConfig = {}
 		sbq.predatorSettings = sbq.globalSettings
 	end
+
+	if sbq.predatorConfig.customizableColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
+		sbq.customizeTab:setVisible(true)
+	else
+		sbq.customizeTab:setVisible(false)
+	end
+
 
 	sbq.predator = sbq.sbqCurrentData.species or "global"
 
@@ -40,8 +56,14 @@ function init()
 
 	held:setChecked(sbq.sbqPreyEnabled.held)---@diagnostic disable-line:undefined-global
 end
+local init = init
 
 function update()
+	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	if sbq.sbqCurrentData.species ~= sbq.lastSpecies then
+		init()
+	end
+
 	local dt = script.updateDt()
 	sbq.checkRefresh(dt)
 end
@@ -134,8 +156,7 @@ sbq.listItems = {}
 
 function sbq.readOccupantData()
 	if sbq.occupants.total > 0 then
-		--this stardust stuff is powerful but is really wonky and I'm not sure whats wrong here with making it visible and invisible as the tab is defined...
-		--occupantsTab:setVisible(true) ---@diagnostic disable-line:undefined-global
+		sbq.occupantsTab:setVisible(true) ---@diagnostic disable-line:undefined-global
 		local enable = false
 		for i, occupant in pairs(sbq.occupant) do
 			if not ((i == "0") or (i == 0)) and (sbq.occupant[i] ~= nil) and (sbq.occupant[i].id ~= nil) and (world.entityExists( sbq.occupant[i].id )) then
@@ -171,7 +192,7 @@ function sbq.readOccupantData()
 		end
 
 	else
-		--occupantsTab:setVisible(false) ---@diagnostic disable-line:undefined-global
+		sbq.occupantsTab:setVisible(false) ---@diagnostic disable-line:undefined-global
 	end
 end
 

@@ -6,7 +6,7 @@
 	"uniqueBy" : "path",
 	"scripts" : [ "sbqSettings.lua" ],
 	"children" : [
-		{ "type" : "tabField", "id" : "tabField", "layout" : "horizontal", "tabs" : [
+		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Predator", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				[[//first collumn
 					{ "type" : "panel", "style" : "convex", "children" : [
@@ -50,9 +50,6 @@
 						[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held" } ]
 					]}
 				]]
-			]},
-			{ "type" : "tab", "id" : "occupantsTab", "title" : "Occupants", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{ "type" : "scrollArea", "id" : "occupantScrollArea", "scrollDirections" : [0, 1], "children" : []}
 			]}],
 
 			"bottomBar" : [
