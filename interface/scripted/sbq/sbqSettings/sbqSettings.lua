@@ -28,10 +28,35 @@ function init()
 
 	if sbq.predatorConfig.customizableColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
 		sbq.customizeTab:setVisible(true)
+		if sbq.predatorConfig.customizableColors then
+			colorsScrollArea:clearChildren() ---@diagnostic disable-line:undefined-global
+			sbq.customizeColorsLayout = {}
+			for i, customizable in ipairs(sbq.predatorConfig.customizableColors) do
+				if customizable then
+					sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }  ---@diagnostic disable-line:undefined-global
+					sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = sbq.predatorSettings.fullbright[i] or sbq.predatorConfig.defaultSettings.fullbright[i], toolTip = "Fullbright" })
+					sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
+					sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry" })
+					sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
+					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson(sbq.predatorConfig.replaceColors[i][sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 2 ]))
+				end
+			end
+		end
+		if sbq.predatorConfig.replaceSkin then
+			skinsScrollArea:clearChildren() ---@diagnostic disable-line:undefined-global
+			sbq.customizeSkinsLayout = {}
+			for part, _ in pairs(sbq.predatorConfig.replaceSkin) do
+				sbq.customizeSkinsLayout[part] = { layout = skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }  ---@diagnostic disable-line:undefined-global
+				sbq.customizeSkinsLayout[part].prev = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
+				sbq.customizeSkinsLayout[part].textBox = sbq.customizeSkinsLayout[part].layout:addChild({ type = "textBox", id = part.."TextEntry" })
+				sbq.customizeSkinsLayout[part].next = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
+				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = part, size = {64, 10}})
+				sbq.customizeSkinsLayout[part].textBox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
+			end
+		end
 	else
 		sbq.customizeTab:setVisible(false)
 	end
-
 
 	sbq.predator = sbq.sbqCurrentData.species or "global"
 
@@ -55,6 +80,8 @@ function init()
 	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)---@diagnostic disable-line:undefined-global
 
 	held:setChecked(sbq.sbqPreyEnabled.held)---@diagnostic disable-line:undefined-global
+
+
 end
 local init = init
 
