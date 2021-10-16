@@ -1,3 +1,6 @@
+
+require( "/lib/stardust/json.lua" )
+
 sbq = {}
 
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
@@ -19,8 +22,7 @@ function init()
 
 	if sbq.sbqCurrentData.species ~= nil then
 		sbq.predatorConfig = root.assetJson("/vehicles/sbq/sbqVaporeon/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
-		sbq.predatorSettings = sb.jsonMerge( sbq.predatorConfig.defaultSettings or {}, sbq.sbqSettings[sbq.sbqCurrentData.species] or sbq.globalSettings)
-
+		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge( sbq.predatorConfig.defaultSettings or {}, sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
 		sbq.predatorSettings = sbq.globalSettings
@@ -38,7 +40,27 @@ function init()
 					sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
 					sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry" })
 					sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson(sbq.predatorConfig.replaceColors[i][sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 2 ]))
+					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( (sbq.predatorSettings.replaceColorTable or {})[i] or sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ]))
+					local prevFunc = sbq.customizeColorsLayout[i].prev
+					local textboxFunc = sbq.customizeColorsLayout[i].textBox
+					local nextFunc = sbq.customizeColorsLayout[i].next
+
+					function prevFunc:onClick()
+						sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, -1)
+					end
+					function textboxFunc:onTextChanged()
+						local decoded = json.decode(textboxFunc.text) ---@diagnostic disable-line:undefined-global
+						if type(decoded) == "table" then
+							sbq.predatorSettings.replaceColorTable[i] = decoded
+						else
+							sbq.predatorSettings.replaceColorTable[i] = nil
+						end
+						sbq.setColorReplaceDirectives()
+						sbq.saveSettings()
+					end
+					function nextFunc:onClick()
+						sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, 1)
+					end
 				end
 			end
 		end
@@ -52,6 +74,16 @@ function init()
 				sbq.customizeSkinsLayout[part].next = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
 				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = part, size = {64, 10}})
 				sbq.customizeSkinsLayout[part].textBox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
+				local prevFunc = sbq.customizeSkinsLayout[part].prev
+				local textboxFunc = sbq.customizeSkinsLayout[part].textBox
+				local nextFunc = sbq.customizeSkinsLayout[part].next
+
+				function prevFunc:onClick()
+				end
+				function textboxFunc:onTextChanged()
+				end
+				function nextFunc:onClick()
+				end
 			end
 		end
 	else
@@ -221,6 +253,27 @@ function sbq.readOccupantData()
 	else
 		sbq.occupantsTab:setVisible(false) ---@diagnostic disable-line:undefined-global
 	end
+end
+
+function sbq.changeColorSetting(textbox, color, inc)
+	if sbq.predatorConfig.replaceColors == nil then return end
+
+	sbq.predatorSettings.replaceColors[color] = ((sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color]) + inc)
+	if sbq.predatorSettings.replaceColors[color] < 1 then
+		sbq.predatorSettings.replaceColors[color] = (#sbq.predatorConfig.replaceColors[color] -1)
+	elseif sbq.predatorSettings.replaceColors[color] > (#sbq.predatorConfig.replaceColors[color] -1) then
+		sbq.predatorSettings.replaceColors[color] = 1
+	end
+
+	local colorTable = sbq.predatorConfig.replaceColors[color][ (sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color] or 1 ) + 1 ]
+	textbox:setText(sb.printJson(colorTable))
+	sbq.predatorSettings.replaceColorTable[color] = colorTable
+
+	sbq.setColorReplaceDirectives()
+	sbq.saveSettings()
+end
+
+function sbq.setColorReplaceDirectives()
 end
 
 --------------------------------------------------------------------------------------------------
