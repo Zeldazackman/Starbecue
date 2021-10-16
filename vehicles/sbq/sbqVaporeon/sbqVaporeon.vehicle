@@ -177,7 +177,7 @@
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": [false, true]
 		},
-		"customizableColors" : [ true, true, true, true, true, false, false ],
+		"customizableColors" : [ true, true, true, true, true, true, true ],
 		"replaceColors" : [
 			[
 				// the first entry in these lists will be the color to replace

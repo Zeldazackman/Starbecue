@@ -1,6 +1,6 @@
 { //  -*- grammar-ext: json -*-
 	"style" : "window", // window (has titlebar), panel (just a frame) etc.
-	"size" : [256, 128], // *internal* size (not including chrome)
+	"size" : [256, 200], // *internal* size (not including chrome)
 	"title" : "Starbecue Settings",
 	"icon" : "/items/active/sbqController/oralVore.png",
 	"uniqueBy" : "path",
@@ -30,14 +30,14 @@
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				[[//first collumn
-					{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
 						{ "type" : "label", "text" : "Questionable", "inline" : true },
 						[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
 						[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
 						[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ]
 					]}
 				],[// second collumn
-					{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
 						{ "type" : "label", "text" : "Sexual", "inline" : true },
 						[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : "Anal Vore" } ],
 						[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : "Cock Vore" } ],
@@ -45,7 +45,7 @@
 						[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
 					]}
 				],[// third collumn
-					{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
 						{ "type" : "label", "text" : "Other", "inline" : true },
 						[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held" } ]
 					]}

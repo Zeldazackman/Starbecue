@@ -1,22 +1,48 @@
 {
-	"occupantsTab" : { "type" : "tab", "id" : "occupantsTab", "title" : "Occupants", "icon" : "preySettings.png", "visible" : false, "color" : "ff00ff", "contents" : [
-		[[{ "type" : "panel", "style" : "convex", "children" : [
+	"occupantsTab" : { "type" : "tab", "id" : "occupantsTab", "title" : "Occupants", "icon" : "/interface/scripted/sbq/sbqSettings/preySettings.png", "visible" : false, "color" : "ff00ff", "contents" : [
+		[[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Occupants", "inline" : true },
-			{ "type" : "scrollArea", "id" : "occupantScrollArea", "scrollDirections" : [0, 1], "children" : []}
-		]}],[{ "type" : "panel", "style" : "convex", "children" : [
+			{ "type" : "scrollArea", "id" : "occupantScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+		]}],[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Actions", "inline" : true },
-			{ "type" : "scrollArea", "id" : "actionScrollArea", "scrollDirections" : [0, 1], "children" : [
+			{ "type" : "scrollArea", "id" : "actionScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
 				{ "type" : "button", "id" : "letOut", "caption" : "Let Out", "toolTip" : "Lets out the selected occupant, or the most recently eaten occupant"}
 			]}
 		]}]]
 	]},
-	"customizeTab" : { "type" : "tab", "id" : "customizeTab", "title" : "Customize", "icon" : "/interface/scripted/sbq/customizehover.png", "visible" : false, "color" : "ff00ff", "contents" : [
-		[[{ "type" : "panel", "style" : "convex", "children" : [
+	"customizeTab" : { "type" : "tab", "id" : "customizeTab", "title" : "Customize", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "visible" : false, "color" : "ff00ff", "contents" : [
+		[[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-			{ "type" : "scrollArea", "id" : "colorsScrollArea", "scrollDirections" : [0, 1], "children" : []}
-		]}],[{ "type" : "panel", "style" : "convex", "children" : [
+			{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+		]}],[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-			{ "type" : "scrollArea", "id" : "skinsScrollArea", "scrollDirections" : [0, 1], "children" : []}
+			{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 		]}]]
-	]}
+	]},
+	"helpTabs" : {
+		"sbqVaporeon" : { "type" : "tab", "id" : "helpTab", "title" : "Help", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "id" : "generalHelpTab", "layout" : "vertical", "tabs" : [
+				{ "type" : "tab", "id" : "generalHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "label", "text" : "General" },
+					{ "type" : "label", "text" : "Info Goes here!" }
+				]},
+				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "label", "text" : "Stand" },
+					{ "type" : "label", "text" : "Info Goes here!" }
+				]},
+				{ "type" : "tab", "id" : "sitHelpTab", "title" : "Sit", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "label", "text" : "Sit" },
+					{ "type" : "label", "text" : "Info Goes here!" }
+				]},
+				{ "type" : "tab", "id" : "layHelpTab", "title" : "Lay", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "label", "text" : "Lay" },
+					{ "type" : "label", "text" : "Info Goes here!" }
+				]},
+				{ "type" : "tab", "id" : "backHelpTab", "title" : "Back", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "label", "text" : "Back" },
+					{ "type" : "label", "text" : "Info Goes here!" }
+				]}
+			]}
+		]}
+	}
 }

@@ -1,11 +1,13 @@
 
+---@diagnostic disable:undefined-global
+
 require( "/lib/stardust/json.lua" )
 
 sbq = {}
 
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
-sbq.occupantsTab = mainTabField:newTab( sbq.extraTabs.occupantsTab ) ---@diagnostic disable-line:undefined-global
-sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab ) ---@diagnostic disable-line:undefined-global
+sbq.occupantsTab = mainTabField:newTab( sbq.extraTabs.occupantsTab )
+sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
 
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -19,9 +21,15 @@ function init()
 
 	sbq.globalSettings = sb.jsonMerge( sbq.config.defaultSettings, sbq.sbqSettings.global or {} )
 
+	if sbq.helpTab ~= nil then
+		sbq.helpTab:setVisible(false)
+	end
+	if sbq.extraTabs.helpTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTabs[sbq.sbqCurrentData.species] )
+	end
 
 	if sbq.sbqCurrentData.species ~= nil then
-		sbq.predatorConfig = root.assetJson("/vehicles/sbq/sbqVaporeon/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge( sbq.predatorConfig.defaultSettings or {}, sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
@@ -31,25 +39,30 @@ function init()
 	if sbq.predatorConfig.customizableColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
 		sbq.customizeTab:setVisible(true)
 		if sbq.predatorConfig.customizableColors then
-			colorsScrollArea:clearChildren() ---@diagnostic disable-line:undefined-global
+			colorsScrollArea:clearChildren()
 			sbq.customizeColorsLayout = {}
 			for i, customizable in ipairs(sbq.predatorConfig.customizableColors) do
 				if customizable then
-					sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }  ---@diagnostic disable-line:undefined-global
+					sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
 					sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = sbq.predatorSettings.fullbright[i] or sbq.predatorConfig.defaultSettings.fullbright[i], toolTip = "Fullbright" })
 					sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
-					sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry" })
+					sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
 					sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
 					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( (sbq.predatorSettings.replaceColorTable or {})[i] or sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ]))
 					local prevFunc = sbq.customizeColorsLayout[i].prev
 					local textboxFunc = sbq.customizeColorsLayout[i].textBox
 					local nextFunc = sbq.customizeColorsLayout[i].next
+					local fullbrightFunc = sbq.customizeColorsLayout[i].fullbright
 
+					function fullbrightFunc:onClick()
+						sbq.predatorSettings.fullbright[i] = fullbrightFunc.checked
+						sbq.saveSettings()
+					end
 					function prevFunc:onClick()
 						sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, -1)
 					end
 					function textboxFunc:onTextChanged()
-						local decoded = json.decode(textboxFunc.text) ---@diagnostic disable-line:undefined-global
+						local decoded = json.decode(textboxFunc.text)
 						if type(decoded) == "table" then
 							sbq.predatorSettings.replaceColorTable[i] = decoded
 						else
@@ -65,12 +78,12 @@ function init()
 			end
 		end
 		if sbq.predatorConfig.replaceSkin then
-			skinsScrollArea:clearChildren() ---@diagnostic disable-line:undefined-global
+			skinsScrollArea:clearChildren()
 			sbq.customizeSkinsLayout = {}
 			for part, _ in pairs(sbq.predatorConfig.replaceSkin) do
-				sbq.customizeSkinsLayout[part] = { layout = skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }  ---@diagnostic disable-line:undefined-global
+				sbq.customizeSkinsLayout[part] = { layout = skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
 				sbq.customizeSkinsLayout[part].prev = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
-				sbq.customizeSkinsLayout[part].textBox = sbq.customizeSkinsLayout[part].layout:addChild({ type = "textBox", id = part.."TextEntry" })
+				sbq.customizeSkinsLayout[part].textBox = sbq.customizeSkinsLayout[part].layout:addChild({ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists" })
 				sbq.customizeSkinsLayout[part].next = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
 				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = part, size = {64, 10}})
 				sbq.customizeSkinsLayout[part].textBox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
@@ -79,10 +92,18 @@ function init()
 				local nextFunc = sbq.customizeSkinsLayout[part].next
 
 				function prevFunc:onClick()
+					sbq.changeSkinSetting(textboxFunc, part, -1)
 				end
 				function textboxFunc:onTextChanged()
+					if textboxFunc.text ~= nil and textboxFunc.text ~= "" then
+						for i, partname in ipairs(sbq.predatorConfig.replaceSkin[part].parts) do
+							sbq.predatorSettings.skinNames[partname] = textboxFunc.text
+						end
+						sbq.saveSettings()
+					end
 				end
 				function nextFunc:onClick()
+					sbq.changeSkinSetting(textboxFunc, part, 1)
 				end
 			end
 		end
@@ -92,26 +113,26 @@ function init()
 
 	sbq.predator = sbq.sbqCurrentData.species or "global"
 
-	BENone:selectValue(sbq.globalSettings.bellyEffect) ---@diagnostic disable-line:undefined-global
-	EMEasy:selectValue(sbq.globalSettings.escapeModifier) ---@diagnostic disable-line:undefined-global
+	BENone:selectValue(sbq.globalSettings.bellyEffect)
+	EMEasy:selectValue(sbq.globalSettings.escapeModifier)
 
-	displayDigest:setChecked(sbq.globalSettings.displayDigest) ---@diagnostic disable-line:undefined-global
-	bellySounds:setChecked(sbq.globalSettings.bellySounds) ---@diagnostic disable-line:undefined-global
+	displayDigest:setChecked(sbq.globalSettings.displayDigest)
+	bellySounds:setChecked(sbq.globalSettings.bellySounds)
 
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
-	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)---@diagnostic disable-line:undefined-global
+	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
 
-	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)---@diagnostic disable-line:undefined-global
-	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)---@diagnostic disable-line:undefined-global
-	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)---@diagnostic disable-line:undefined-global
+	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
+	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
+	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)
 
-	analVore:setChecked(sbq.sbqPreyEnabled.analVore)---@diagnostic disable-line:undefined-global
-	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)---@diagnostic disable-line:undefined-global
-	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)---@diagnostic disable-line:undefined-global
-	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)---@diagnostic disable-line:undefined-global
+	analVore:setChecked(sbq.sbqPreyEnabled.analVore)
+	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)
+	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)
+	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
 
-	held:setChecked(sbq.sbqPreyEnabled.held)---@diagnostic disable-line:undefined-global
+	held:setChecked(sbq.sbqPreyEnabled.held)
 
 
 end
@@ -152,11 +173,11 @@ function sbq.changePredatorSetting(settingname, settingvalue)
 end
 
 function sbq.setBellyEffect()
-	sbq.changeGlobalSetting("bellyEffect", BENone:getGroupValue()) ---@diagnostic disable-line:undefined-global
+	sbq.changeGlobalSetting("bellyEffect", BENone:getGroupValue())
 end
 
 function sbq.setEscapeModifier()
-	sbq.changeGlobalSetting("escapeModifier", EMEasy:getGroupValue()) ---@diagnostic disable-line:undefined-global
+	sbq.changeGlobalSetting("escapeModifier", EMEasy:getGroupValue())
 end
 
 function sbq.changePreySetting(settingname, settingvalue)
@@ -204,7 +225,7 @@ end
 
 function sbq.refreshListData()
 	if not sbq.refreshList then return end
-	occupantScrollArea:clearChildren() ---@diagnostic disable-line:undefined-global
+	occupantScrollArea:clearChildren()
 	sbq.occupantList = {}
 	sbq.listItems = {}
 	sbq.refreshList = nil
@@ -215,7 +236,7 @@ sbq.listItems = {}
 
 function sbq.readOccupantData()
 	if sbq.occupants.total > 0 then
-		sbq.occupantsTab:setVisible(true) ---@diagnostic disable-line:undefined-global
+		sbq.occupantsTab:setVisible(true)
 		local enable = false
 		for i, occupant in pairs(sbq.occupant) do
 			if not ((i == "0") or (i == 0)) and (sbq.occupant[i] ~= nil) and (sbq.occupant[i].id ~= nil) and (world.entityExists( sbq.occupant[i].id )) then
@@ -226,7 +247,7 @@ function sbq.readOccupantData()
 				local species = sbq.occupant[i].species
 
 				if sbq.occupantList[id] == nil then
-					sbq.occupantList[id] = occupantScrollArea:addChild({ ---@diagnostic disable-line:undefined-global
+					sbq.occupantList[id] = occupantScrollArea:addChild({
 						type = "listItem",
 						selectionGroup = "occupantSelect",
 						children = {
@@ -251,7 +272,7 @@ function sbq.readOccupantData()
 		end
 
 	else
-		sbq.occupantsTab:setVisible(false) ---@diagnostic disable-line:undefined-global
+		sbq.occupantsTab:setVisible(false)
 	end
 end
 
@@ -276,88 +297,106 @@ end
 function sbq.setColorReplaceDirectives()
 end
 
---------------------------------------------------------------------------------------------------
+function sbq.changeSkinSetting(textbox, part, inc)
+	local skinIndex = (sbq.predatorSettings.replaceSkin[part] or 1) + inc
+	if skinIndex > #sbq.predatorConfig.replaceSkin[part].skins then
+		skinIndex = 1
+	elseif skinIndex < 1 then
+		skinIndex = #sbq.predatorConfig.replaceSkin[part].skins
+	end
 
-function BENone:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setBellyEffect()
-end
+	sbq.predatorSettings.replaceSkin[part] = skinIndex
 
-function BEHeal:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setBellyEffect()
-end
+	textbox:setText(sbq.predatorConfig.replaceSkin[part].skins[skinIndex])
 
-function BEDigest:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setBellyEffect()
-end
-
-function BESoftDigest:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setBellyEffect()
-end
-
---------------------------------------------------------------------------------------------------
-
-function EMEasy:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setEscapeModifier()
-end
-
-function EMNormal:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setEscapeModifier()
-end
-
-function EMHard:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setEscapeModifier()
-end
-
-function EMImpossible:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.setEscapeModifier()
+	for i, partname in ipairs(sbq.predatorConfig.replaceSkin[part].parts) do
+		sbq.predatorSettings.skinNames[partname] = sbq.predatorConfig.replaceSkin[part].skins[skinIndex]
+	end
+	sbq.saveSettings()
 end
 
 --------------------------------------------------------------------------------------------------
 
-function displayDigest:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changeGlobalSetting("displayDigest", displayDigest.checked) ---@diagnostic disable-line:undefined-global
+function BENone:onClick()
+	sbq.setBellyEffect()
 end
 
-function bellySounds:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changeGlobalSetting("bellySounds", bellySounds.checked) ---@diagnostic disable-line:undefined-global
+function BEHeal:onClick()
+	sbq.setBellyEffect()
+end
+
+function BEDigest:onClick()
+	sbq.setBellyEffect()
+end
+
+function BESoftDigest:onClick()
+	sbq.setBellyEffect()
 end
 
 --------------------------------------------------------------------------------------------------
 
-function preyEnabled:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("enabled", preyEnabled.checked) ---@diagnostic disable-line:undefined-global
+function EMEasy:onClick()
+	sbq.setEscapeModifier()
 end
 
-function oralVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("oralVore", oralVore.checked) ---@diagnostic disable-line:undefined-global
+function EMNormal:onClick()
+	sbq.setEscapeModifier()
 end
 
-function tailVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("tailVore", tailVore.checked) ---@diagnostic disable-line:undefined-global
+function EMHard:onClick()
+	sbq.setEscapeModifier()
 end
 
-function absorbVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("absorbVore", absorbVore.checked) ---@diagnostic disable-line:undefined-global
+function EMImpossible:onClick()
+	sbq.setEscapeModifier()
 end
 
-function analVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("analVore", analVore.checked) ---@diagnostic disable-line:undefined-global
+--------------------------------------------------------------------------------------------------
+
+function displayDigest:onClick()
+	sbq.changeGlobalSetting("displayDigest", displayDigest.checked)
 end
 
-function cockVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("cockVore", cockVore.checked) ---@diagnostic disable-line:undefined-global
+function bellySounds:onClick()
+	sbq.changeGlobalSetting("bellySounds", bellySounds.checked)
 end
 
-function breastVore:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("breastVore", breastVore.checked) ---@diagnostic disable-line:undefined-global
+--------------------------------------------------------------------------------------------------
+
+function preyEnabled:onClick()
+	sbq.changePreySetting("enabled", preyEnabled.checked)
 end
 
-function unbirth:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("unbirth", unbirth.checked) ---@diagnostic disable-line:undefined-global
+function oralVore:onClick()
+	sbq.changePreySetting("oralVore", oralVore.checked)
 end
 
-function held:onClick() ---@diagnostic disable-line:undefined-global
-	sbq.changePreySetting("held", held.checked) ---@diagnostic disable-line:undefined-global
+function tailVore:onClick()
+	sbq.changePreySetting("tailVore", tailVore.checked)
+end
+
+function absorbVore:onClick()
+	sbq.changePreySetting("absorbVore", absorbVore.checked)
+end
+
+function analVore:onClick()
+	sbq.changePreySetting("analVore", analVore.checked)
+end
+
+function cockVore:onClick()
+	sbq.changePreySetting("cockVore", cockVore.checked)
+end
+
+function breastVore:onClick()
+	sbq.changePreySetting("breastVore", breastVore.checked)
+end
+
+function unbirth:onClick()
+	sbq.changePreySetting("unbirth", unbirth.checked)
+end
+
+function held:onClick()
+	sbq.changePreySetting("held", held.checked)
 end
 
 --------------------------------------------------------------------------------------------------
