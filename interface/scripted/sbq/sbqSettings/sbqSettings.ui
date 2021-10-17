@@ -8,25 +8,31 @@
 	"children" : [
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Predator", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				[[//first collumn
-					{ "type" : "panel", "style" : "convex", "children" : [
-						{ "type" : "label", "text" : "Belly Effect", "inline" : true },
-						[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
-						[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
-						[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
-						[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
-					]},
-					[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ]
-				],[// second collumn
-					{ "type" : "panel", "style" : "convex", "children" : [
-						{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
-						[{ "type" : "checkBox", "id" : "EMEasy", "value" : "easyEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Easy" }],
-						[{ "type" : "checkBox", "id" : "EMNormal", "value" : "normal", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Normal" }],
-						[{ "type" : "checkBox", "id" : "EMHard", "value" : "antiEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Hard" }],
-						[{ "type" : "checkBox", "id" : "EMImpossible", "value" : "noEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Impossible" }]
-					]},
-					[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
-				]]
+				{"type" : "layout", "mode": "vertical", "children" : [
+					[[//first collumn
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
+							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
+							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
+							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
+							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
+						]}
+					],[// second collumn
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
+							[{ "type" : "checkBox", "id" : "EMEasy", "value" : "easyEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Easy" }],
+							[{ "type" : "checkBox", "id" : "EMNormal", "value" : "normal", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Normal" }],
+							[{ "type" : "checkBox", "id" : "EMHard", "value" : "antiEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Hard" }],
+							[{ "type" : "checkBox", "id" : "EMImpossible", "value" : "noEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Impossible" }]
+						]}
+					]]
+				]},
+				{"type" : "panel", "style" : "convex", "children" : [
+					[[
+						[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
+						[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
+					]]
+				]}
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
@@ -51,7 +57,10 @@
 							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held" } ]
 						]}
 					]],
-					[{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }]
+					{"type" : "panel", "style" : "convex", "children" : [
+						[{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }]
+					]},
+					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
 				]}
 			]}],
 

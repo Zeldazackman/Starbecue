@@ -8,6 +8,7 @@ sbq = {}
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
 sbq.occupantsTab = mainTabField:newTab( sbq.extraTabs.occupantsTab )
 sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
+sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -21,11 +22,11 @@ function init()
 
 	sbq.globalSettings = sbq.sbqSettings.global or {}
 
-	if sbq.helpTab ~= nil then
-		sbq.helpTab:setVisible(false)
+	if sbq.speciesHelpTab ~= nil then
+		sbq.speciesHelpTab:delete()
 	end
-	if sbq.extraTabs.helpTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTabs[sbq.sbqCurrentData.species] )
+	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
 	end
 
 	if sbq.sbqCurrentData.species ~= nil then
