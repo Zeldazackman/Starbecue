@@ -12,7 +12,6 @@
 
 	"vehicle" : "sbqVaporeon",
 	"transformationDescription" : "a vaporeon",
-	"codex" : "sbqVaporeonCodex",
 
 	"inventoryIcon" : "sbqPotionVaporeon.png",
 	"largeImage" : "sbqPotionVaporeonLarge.png",

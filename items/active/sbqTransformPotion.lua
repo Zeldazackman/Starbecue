@@ -39,19 +39,15 @@ function update(dt, fireMode, shiftHeld)
 			player.enableTech("sbqSpawner")
 			player.equipTech("sbqSpawner")
 
-			if config.getParameter("codex") then
-				world.spawnItem(config.getParameter("codex").."-codex", position, 1)
-			end
-
 			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sbqSettings } )
 
 			player.radioMessage({
 				messageId = self.vehicle.."1", unique = false,
-				text = "It seems that the potion you just drank transformed you into "..config.getParameter("transformationDescription")..".\nScans indicate that the ^green;[E]^reset;, ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons may be helpful in this form."
+				text = "It seems that the potion you just drank transformed you into "..config.getParameter("transformationDescription")..".\nScans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons may be helpful in this form."
 			}, 1)
 			player.radioMessage({
 				messageId = self.vehicle.."2", unique = false,
-				text = "I suggest reading the included guide for more information about how to control your new form.\n^#555;(You may have to go into settings and bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys first.)^reset;"
+				text = "I suggest reading the included guide for more information about how to control your new form.\n^#555;(Information on your transformation can be found in the ^#711;Starbecue Settings^#555; menu from the ^#711;Quickbar^#555;, You may have to bind the ^#711;Tech Action 2^#555; and ^#711;3^#555; keys as well.)^reset;"
 			}, 5)
 
 			item.consume(1)

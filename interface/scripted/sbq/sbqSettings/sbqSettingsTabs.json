@@ -21,26 +21,36 @@
 	]},
 	"helpTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "helpTab", "title" : "Help", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "id" : "generalHelpTab", "layout" : "vertical", "tabs" : [
+			{ "type" : "tabField", "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "generalHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "label", "text" : "General" },
-					{ "type" : "label", "text" : "Info Goes here!" }
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a Vaporeon...^reset;\n \nFirst off, holding ^green;[F]^reset; will allow you to bring up an action wheel, under normal circumstances the ^red;X^reset; at the bottom will return you to your original form.\n \nThe other actions on the action wheel can be clicked to assign to a ^yellow;Vore Controller^reset; in the respective hand, or will give you a new one if there isn't one in hand. Releasing ^green;[F]^reset; will attempt to perform the selected action once, if a ^yellow;Vore Controller^reset; has been assigned an action, it can be used to attempt that action at any time.\n \nVaporeon have the space for two prey to fit within their belly.\n \nYou may also be able to tap ^green;[F]^reset; to change from big to small and back.\n \nUnder certain transformation conditions the ability to revert to your original form may not be there, and you might not be able to change size either, meaning you're stuck as a vaporeon until you find a potion to cure it, or find a way to control the transformation... if you do gain control, the transformation will be unlocked in the ^yellow;Predator Selector^reset; tech for you to transform whenever you wish.\n \nFinal note, the ^green;[Shift]^reset; key can only be detected if you are holding a ^yellow;Vore Controller^reset;." }
+					]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "label", "text" : "Stand" },
-					{ "type" : "label", "text" : "Info Goes here!" }
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;Stand State^reset;\n \nWhile Standing you can move around just like a player normally can.\n \nThe ^yellow;Oral Vore^reset; action can be used to ^yellow;eat^reset; prey, you may also let prey back out of your ^yellow;mouth^reset; with the ^green;[G]^reset; key.\n \nThe ^yellow;Special Attack^reset; action can be used to spray a stream of water at your foes.\n \nThe ^yellow;Physical Attack^reset; action can be used to bap at your foes.\n \nTapping ^green;[Down]^reset; will let you ^cyan;sit^reset; down." }
+					]}
 				]},
 				{ "type" : "tab", "id" : "sitHelpTab", "title" : "Sit", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "label", "text" : "Sit" },
-					{ "type" : "label", "text" : "Info Goes here!" }
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;Sit State^reset;\n \nWhile sitting, your prey will not be able to escape your belly.\n \nTapping ^green;[Up]^reset; will let you ^cyan;stand^reset; back up.\n \nTapping ^green;[Down]^reset; will make you lay down, and if someone is in front of you when you do, they will be ^orange;pinned^reset; beneath you!" }
+					]}
 				]},
 				{ "type" : "tab", "id" : "layHelpTab", "title" : "Lay", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "label", "text" : "Lay" },
-					{ "type" : "label", "text" : "Info Goes here!" }
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;Lay State^reset;\n \nWhile laying, your prey will not be able to escape your belly.\n \nTapping ^green;[Up]^reset; will let you ^cyan;sit^reset; back up.\n \nTapping ^green;[Left]^reset; or ^green;[Right]^reset; will make you roll over onto your ^cyan;back^reset;, if you have someone ^orange;pinned^reset; they'll then be ^orange;laying^reset; on your belly.\n \nIf you have someone ^orange;pinned^reset; you'll be able to ^green;[Click]^reset; to lick them! and even ^yellow;absorb^reset; them by pressing the ^green;[Space]^reset; key." }
+					]}
 				]},
 				{ "type" : "tab", "id" : "backHelpTab", "title" : "Back", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "label", "text" : "Back" },
-					{ "type" : "label", "text" : "Info Goes here!" }
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;Back State^reset;\n \nWhile laying, on your back, your prey may be able to struggle out of your ^yellow;butt^reset;.\n \nOther players may also be able to ^green;[Interact]^reset; with you to ^orange;lay^reset; on your belly like a bed!\n \nIf you press ^green;[Down]^reset; you'll be able to ^orange;hug^reset; your belly, and whoever may be ^orange;laying^reset; on it. And if you've ^orange;hugged^reset; someone, pressing the ^green;[Space]^reset; key will let you ^yellow;absorb^reset; them!\n \nTapping ^green;[Left]^reset; or ^green;[Right]^reset; will make you roll over to ^cyan;lay^reset; on your belly, if you have someone ^orange;laying^reset; on your belly, they'll be ^orange;pinned^reset; underneath you." }
+					]}
+				]},
+				{ "type" : "tab", "id" : "smolHelpTab", "title" : "Smol", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "type" : "label", "text" : "^cyan;Smol State^reset;\n \nWhile smol, you will move around just like any player normally can, and prey will not be able to struggle out of you... but you may find it hard to move with even one inside... with two... you'd be so full you'll roll around like a ball, your prey might even be able to roll you around from the inside.\n \nSo as long as you aren't a ball...\n \nThe ^yellow;Special Attack^reset; action can be used to spray a stream of water at your foes.\n \nThe ^yellow;Physical Attack^reset; action can be used to bap at your foes." }
+					]}
 				]}
 			]}
 		]}
