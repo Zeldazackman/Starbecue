@@ -19,7 +19,7 @@ function init()
 
 	sbq.config = root.assetJson( "/sbqGeneral.config" )
 
-	sbq.globalSettings = sb.jsonMerge( sbq.config.defaultSettings, sbq.sbqSettings.global or {} )
+	sbq.globalSettings = sbq.sbqSettings.global or {}
 
 	if sbq.helpTab ~= nil then
 		sbq.helpTab:setVisible(false)
@@ -30,50 +30,49 @@ function init()
 
 	if sbq.sbqCurrentData.species ~= nil then
 		sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
-		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge( sbq.predatorConfig.defaultSettings or {}, sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
+		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
-		sbq.predatorSettings = sbq.globalSettings
+		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	if sbq.predatorConfig.customizableColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
+	if sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
 		sbq.customizeTab:setVisible(true)
-		if sbq.predatorConfig.customizableColors then
+		if sbq.predatorConfig.replaceColors then
 			colorsScrollArea:clearChildren()
 			sbq.customizeColorsLayout = {}
-			for i, customizable in ipairs(sbq.predatorConfig.customizableColors) do
-				if customizable then
-					sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
-					sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = sbq.predatorSettings.fullbright[i] or sbq.predatorConfig.defaultSettings.fullbright[i], toolTip = "Fullbright" })
-					sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
-					sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
-					sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( (sbq.predatorSettings.replaceColorTable or {})[i] or sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ]))
-					local prevFunc = sbq.customizeColorsLayout[i].prev
-					local textboxFunc = sbq.customizeColorsLayout[i].textBox
-					local nextFunc = sbq.customizeColorsLayout[i].next
-					local fullbrightFunc = sbq.customizeColorsLayout[i].fullbright
+			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
+				sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
+				sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = sbq.predatorSettings.fullbright[i] or sbq.predatorConfig.defaultSettings.fullbright[i], toolTip = "Fullbright" })
+				sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
+				sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
+				sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
+				sbq.customizeColorsLayout[i].label = sbq.customizeColorsLayout[i].layout:addChild({ type = "label", text = sbq.predatorConfig.replaceColorNames[i], size = {48, 10}})
+				sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ] ) ) )
+				local prevFunc = sbq.customizeColorsLayout[i].prev
+				local textboxFunc = sbq.customizeColorsLayout[i].textBox
+				local nextFunc = sbq.customizeColorsLayout[i].next
+				local fullbrightFunc = sbq.customizeColorsLayout[i].fullbright
 
-					function fullbrightFunc:onClick()
-						sbq.predatorSettings.fullbright[i] = fullbrightFunc.checked
-						sbq.saveSettings()
+				function fullbrightFunc:onClick()
+					sbq.predatorSettings.fullbright[i] = fullbrightFunc.checked
+					sbq.saveSettings()
+				end
+				function prevFunc:onClick()
+					sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, -1)
+				end
+				function textboxFunc:onTextChanged()
+					local decoded = json.decode(textboxFunc.text)
+					if type(decoded) == "table" then
+						sbq.predatorSettings.replaceColorTable[i] = decoded
+					else
+						sbq.predatorSettings.replaceColorTable[i] = nil
 					end
-					function prevFunc:onClick()
-						sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, -1)
-					end
-					function textboxFunc:onTextChanged()
-						local decoded = json.decode(textboxFunc.text)
-						if type(decoded) == "table" then
-							sbq.predatorSettings.replaceColorTable[i] = decoded
-						else
-							sbq.predatorSettings.replaceColorTable[i] = nil
-						end
-						sbq.setColorReplaceDirectives()
-						sbq.saveSettings()
-					end
-					function nextFunc:onClick()
-						sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, 1)
-					end
+					sbq.setColorReplaceDirectives()
+					sbq.saveSettings()
+				end
+				function nextFunc:onClick()
+					sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, 1)
 				end
 			end
 		end
@@ -85,7 +84,7 @@ function init()
 				sbq.customizeSkinsLayout[part].prev = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
 				sbq.customizeSkinsLayout[part].textBox = sbq.customizeSkinsLayout[part].layout:addChild({ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists" })
 				sbq.customizeSkinsLayout[part].next = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = part, size = {64, 10}})
+				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = sbq.predatorConfig.replaceSkin[part].name, size = {48, 10}})
 				sbq.customizeSkinsLayout[part].textBox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
 				local prevFunc = sbq.customizeSkinsLayout[part].prev
 				local textboxFunc = sbq.customizeSkinsLayout[part].textBox
@@ -280,6 +279,7 @@ function sbq.changeColorSetting(textbox, color, inc)
 	if sbq.predatorConfig.replaceColors == nil then return end
 
 	sbq.predatorSettings.replaceColors[color] = ((sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color]) + inc)
+
 	if sbq.predatorSettings.replaceColors[color] < 1 then
 		sbq.predatorSettings.replaceColors[color] = (#sbq.predatorConfig.replaceColors[color] -1)
 	elseif sbq.predatorSettings.replaceColors[color] > (#sbq.predatorConfig.replaceColors[color] -1) then
@@ -287,7 +287,9 @@ function sbq.changeColorSetting(textbox, color, inc)
 	end
 
 	local colorTable = sbq.predatorConfig.replaceColors[color][ (sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color] or 1 ) + 1 ]
+
 	textbox:setText(sb.printJson(colorTable))
+
 	sbq.predatorSettings.replaceColorTable[color] = colorTable
 
 	sbq.setColorReplaceDirectives()
@@ -295,6 +297,28 @@ function sbq.changeColorSetting(textbox, color, inc)
 end
 
 function sbq.setColorReplaceDirectives()
+	if sbq.predatorConfig.replaceColors ~= nil then
+		local colorReplaceString = ""
+		for i, colorGroup in ipairs(sbq.predatorConfig.replaceColors) do
+			local basePalette = colorGroup[1]
+			local replacePalette = colorGroup[(sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1) + 1]
+			local fullbright = sbq.predatorSettings.fullbright[i]
+
+			if sbq.predatorSettings.replaceColorTable ~= nil and sbq.predatorSettings.replaceColorTable[i] ~= nil then
+				replacePalette = sbq.predatorSettings.replaceColorTable[i]
+			else
+				replacePalette = colorGroup[sbq.predatorConfig.defaultSettings.replaceColors[i] + 1]
+			end
+
+			for j, color in ipairs(replacePalette) do
+				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
+					color = color.."fb"
+				end
+				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
+			end
+		end
+		sbq.predatorSettings.directives = colorReplaceString
+	end
 end
 
 function sbq.changeSkinSetting(textbox, part, inc)

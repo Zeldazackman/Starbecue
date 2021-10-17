@@ -606,14 +606,14 @@ function p.setColorReplaceDirectives()
 			local replacePalette = colorGroup[(p.settings.replaceColors[i] or p.sbqData.defaultSettings.replaceColors[i] or 1) + 1]
 			local fullbright = p.settings.fullbright[i]
 
-			if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] then
+			if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] ~= nil then
 				replacePalette = p.settings.replaceColorTable[i]
 			else
 				replacePalette = colorGroup[p.sbqData.defaultSettings.replaceColors[i] + 1]
 			end
 
 			for j, color in ipairs(replacePalette) do
-				if fullbright then
+				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
 					color = color.."fb"
 				end
 				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
