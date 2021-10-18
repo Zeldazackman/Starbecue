@@ -70,9 +70,9 @@ function sbq.readOccupantData()
 					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {4,y}, size = {92,31}, children = {}})}
 					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "image", noAutoCrop = true, file = "portrait.png", zlevel = 0 })
 					sbq.occupantList[id].portrait = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16}, zlevel = 1 })
-					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, text = world.entityName( id ), zlevel = 1 })
-					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5}, zlevel = 1 })
-					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}, zlevel = 1 })
+					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ), zlevel = 2 })
+					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5}, zlevel = 3 })
+					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}, zlevel = 4 })
 				end
 
 				sbq.occupantList[id].background:setFile("portrait.png")
@@ -158,7 +158,7 @@ function sbq.setPortrait( canvasName, data )
 	canvas:clear()
 	for k,v in ipairs(data or {}) do
 		local pos = v.position or {0, 0}
-		canvas:drawImage(v.image, { pos[1], pos[2] } )
+		canvas:drawImage(v.image, { pos[1]+8, pos[2]+2}, 1, nil, true )
 	end
 end
 
