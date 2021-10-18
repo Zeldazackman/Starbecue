@@ -68,14 +68,18 @@ function sbq.readOccupantData()
 				last = id
 				if sbq.occupantList[id] == nil then
 					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {4,y}, size = {92,31}, children = {}})}
-					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "image", noAutoCrop = true, file = "portrait.png", zlevel = 0 })
-					sbq.occupantList[id].portrait = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16}, zlevel = 1 })
-					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ), zlevel = 2 })
-					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5}, zlevel = 3 })
-					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}, zlevel = 4 })
+					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "iconButton", noAutoCrop = true, image = "portrait.png" })
+					sbq.occupantList[id].portrait = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} })
+					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) })
+					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} })
+					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}})
+					local occupantButton = sbq.occupantList[id].background
+					function occupantButton:onClick()
+						metagui.contextMenu({
+							{"Let Out", function() world.sendEntityMessage( player.loungingIn(), "letout", id ) end}
+						})
+					end
 				end
-
-				sbq.occupantList[id].background:setFile("portrait.png")
 
 				if species == nil then
 					sbq.setPortrait(sbq.occupantList[id].portrait, world.entityPortrait( id, "bust" ))
@@ -86,7 +90,7 @@ function sbq.readOccupantData()
 				end
 			end
 		end
-		sbq.occupantList[last].background:setFile("portraitTop.png")
+		sbq.occupantList[last].background:setImage("portraitTop.png")
 	else
 
 	end
@@ -113,7 +117,7 @@ function sbq.updateBars()
 		for i, occupant in pairs(sbq.occupant) do
 			if not ((i == "0") or (i == 0)) then
 				local id = occupant.id
-				if sbq.occupantList[id] ~= nil then
+				if id ~= nil and world.entityExists(id) and sbq.occupantList[id] ~= nil then
 					local health = world.entityHealth( id )
 					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], topBar )
 					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, bottomBar )
