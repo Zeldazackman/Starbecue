@@ -154,7 +154,7 @@
 			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"hug" : { },
 			"fatten" : { "mass": 1 },
-			"digesting" : { },
+			"digesting" : { "digest" : true },
 
 			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
 			"balls" : { "sided" : true },

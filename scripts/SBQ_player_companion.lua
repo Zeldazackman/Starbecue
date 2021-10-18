@@ -14,6 +14,11 @@ function init()
 	message.setHandler( "sbqPlayerSaveSettings", function(_,_, settings )
 		player.setProperty( "sbqSettings", settings )
 	end)
+
+	message.setHandler( "sbqOpenMetagui", function(_,_, name)
+		player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = name })
+	end)
+
 	message.setHandler( "sbqOpenInterface", function(_,_, name, args, appendSettings, sourceEntity)
 		local pane = root.assetJson("/interface/scripted/sbq/"..name.."/"..name..".config")
 		if args then
@@ -27,6 +32,7 @@ function init()
 		end
 		player.interact("ScriptPane", pane, sourceEntity or entity.id())
 	end)
+
 	message.setHandler( "sbqLoungingIn", function()
 		return player.loungingIn()
 	end)

@@ -6,7 +6,6 @@ require( "/lib/stardust/json.lua" )
 sbq = {}
 
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
-sbq.occupantsTab = mainTabField:newTab( sbq.extraTabs.occupantsTab )
 sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
 sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 
@@ -143,9 +142,6 @@ function update()
 	if sbq.sbqCurrentData.species ~= sbq.lastSpecies then
 		init()
 	end
-
-	local dt = script.updateDt()
-	sbq.checkRefresh(dt)
 end
 
 --------------------------------------------------------------------------------------------------
@@ -185,95 +181,7 @@ function sbq.changePreySetting(settingname, settingvalue)
 	status.setStatusProperty("sbqPreyEnabled", sbq.sbqPreyEnabled)
 end
 
-sbq.occupants = {
-	total = 0
-}
-
-sbq.refreshtime = 0
-function sbq.checkRefresh(dt)
-	if sbq.refreshtime >= 0.1 and sbq.rpc == nil and sbq.sbqCurrentData.type == "driver" then
-		sbq.rpc = world.sendEntityMessage( sbq.loungingIn, "settingsMenuRefresh")
-	elseif sbq.rpc ~= nil and sbq.rpc:finished() then
-		if sbq.rpc:succeeded() then
-			local result = sbq.rpc:result()
-			if result ~= nil then
-				sbq.occupants = result.occupants
-				sbq.occupant = result.occupant
-				sbq.powerMultiplier = result.powerMultiplier
-				sbq.refreshtime = 0
-				sbq.refreshList = result.refreshList or sbq.refreshList
-				sbq.locked = result.locked
-
-				sbq.setIconDirectives()
-				sbq.refreshListData()
-				sbq.readOccupantData()
-
-				sbq.refreshed = true
-			end
-		else
-			sb.logError( "Couldn't refresh settings." )
-			sb.logError( sbq.rpc:error() )
-		end
-		sbq.rpc = nil
-	else
-		sbq.refreshtime = sbq.refreshtime + dt
-	end
-end
-
 function sbq.setIconDirectives()
-end
-
-function sbq.refreshListData()
-	if not sbq.refreshList then return end
-	occupantScrollArea:clearChildren()
-	sbq.occupantList = {}
-	sbq.listItems = {}
-	sbq.refreshList = nil
-end
-
-sbq.occupantList = {}
-sbq.listItems = {}
-
-function sbq.readOccupantData()
-	if sbq.occupants.total > 0 then
-		sbq.occupantsTab:setVisible(true)
-		local enable = false
-		for i, occupant in pairs(sbq.occupant) do
-			if not ((i == "0") or (i == 0)) and (sbq.occupant[i] ~= nil) and (sbq.occupant[i].id ~= nil) and (world.entityExists( sbq.occupant[i].id )) then
-				if not sbq.locked then
-					enable = true
-				end
-				local id = sbq.occupant[i].id
-				local species = sbq.occupant[i].species
-
-				if sbq.occupantList[id] == nil then
-					sbq.occupantList[id] = occupantScrollArea:addChild({
-						type = "listItem",
-						selectionGroup = "occupantSelect",
-						children = {
-							{ type = "label", text = "occupant"..i}
-						}
-					})
-					sbq.listItems[sbq.occupantList[id]] = id
-				end
-
-				if id == sbq.selectedId then
-					--widget.setListSelected(sbq.occupantList, listItem)
-				end
-				if species == nil then
-					--setPortrait(sbq.occupantList.."."..listItem, world.entityPortrait( id, "bust" ))
-				else
-					local skin = (sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default"
-					local directives = sbq.occupant[i].smolPreyData.settings.directives or ""
-					--widget.setImage(sbq.occupantList.."."..listItem..".portraitIcon", "/vehicles/sbq/"..species.."/skins/"..skin.."/icon.png"..directives)
-				end
-				--widget.setText(sbq.occupantList.."."..listItem..".name", world.entityName( id ))
-			end
-		end
-
-	else
-		sbq.occupantsTab:setVisible(false)
-	end
 end
 
 function sbq.changeColorSetting(textbox, color, inc)

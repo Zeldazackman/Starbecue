@@ -205,6 +205,8 @@ function init()
 		p.spawner = p.driver
 		p.forceSeat( p.driver, 0 )
 		world.sendEntityMessage( p.driver, "sbqGiveController")
+		world.sendEntityMessage( p.driver, "sbqOpenMetagui", "starbecue:predHud")
+
 	else
 		p.seats.objectControls = p.clearOccupant(0)
 		p.seats.objectControls.seatname = "objectControls"

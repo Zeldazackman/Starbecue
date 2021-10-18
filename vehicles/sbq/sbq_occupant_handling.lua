@@ -37,6 +37,7 @@ function p.eat( occupantId, location )
 			p.occupant[seatindex].id = occupantId
 			p.occupant[seatindex].location = location
 			p.forceSeat( occupantId, seatindex)
+			p.refreshList = true
 			p.updateOccupants(0)
 			return true -- not lounging
 		else
@@ -49,6 +50,7 @@ function p.eat( occupantId, location )
 	p.occupant[seatindex].species = species
 	p.occupant[seatindex].location = location
 	p.forceSeat( occupantId, seatindex )
+	p.refreshList = true
 	p.updateOccupants(0)
 	return true
 end
