@@ -35,7 +35,7 @@
 		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a predator."},
 		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a predator."},
 		"specialAttack" : {"shortdescription" : "Special Attack Controller", "description" : "Triggers the special attack of a predator."},
-		"grab" : {"shortdescription" : "Grabbing Controller", "description" : "Triggers the grab action of a predator."},
+		"grab" : {"shortdescription" : "Grab Controller", "description" : "Triggers the grab action of a predator."},
 		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a predator."}
 	},
 
