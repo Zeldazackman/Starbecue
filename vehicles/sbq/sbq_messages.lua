@@ -8,11 +8,11 @@ message.setHandler( "letout", function(_,_, id )
 	p.letout(id)
 end )
 
-message.setHandler( "transform", function(_,_, data, eid, multiplier )
+message.setHandler( "transform", function(_,_, eid, multiplier, data )
 	if p.lounging[eid] == nil or p.lounging[eid].progressBarActive  then return end
 
 	if data then
-		if data.species ~= p.lounging[eid].species then
+		if data.species ~= p.lounging[eid].species and data.species ~= nil then
 			data = sb.jsonMerge(data, p.getSmolPreyData(data.settings, data.species, data.state))
 		else return end
 	else
@@ -23,7 +23,7 @@ message.setHandler( "transform", function(_,_, data, eid, multiplier )
 	p.lounging[eid].progressBar = 0
 	p.lounging[eid].progressBarData = data
 	if data == nil then
-		p.lounging[eid].progressBarColor = p.sbqData.replaceColors[1][p.settings.replaceColors[1] + 1] -- pred body color
+		p.lounging[eid].progressBarColor = (p.settings.replaceColorTable[1] or (p.sbqData.replaceColors[1][(p.settings.replaceColors[1] or p.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
 	elseif data.barColor ~= nil then
 		p.lounging[eid].progressBarColor = data.barColor
 	else

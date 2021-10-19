@@ -6,10 +6,8 @@
 	"defaultDuration" : 5,
 
 	"scripts" : [
-	"sbqDigest.lua"
+		"sbqDigest.lua"
 	],
-
-	"animationConfig" : "sbqDigest.animation",
 
 	"label" : "Being Digested",
 	"icon" : "/stats/sbq/sbqDigest/sbqDigest.png"
