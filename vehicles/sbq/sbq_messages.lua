@@ -35,7 +35,7 @@ message.setHandler( "transform", function(_,_, eid, multiplier, data )
 end )
 
 message.setHandler( "settingsMenuRefresh", function(_,_)
-	p.settingsMenuOpen = 0.5
+	p.predHudOpen = 2
 	local refreshList = p.refreshList
 	p.refreshList = nil
 	return {

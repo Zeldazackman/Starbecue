@@ -1,9 +1,9 @@
 {
 	"customizeTab" : { "type" : "tab", "id" : "customizeTab", "title" : "Customize", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "visible" : false, "color" : "ff00ff", "contents" : [
-		[[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
+		[[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Customize Colors", "inline" : true },
 			{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-		]}],[{ "type" : "panel", "size" : [128, 128], "style" : "convex", "children" : [
+		]}],[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
 			{ "type" : "label", "text" : "Customize Skins", "inline" : true },
 			{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 		]}]]

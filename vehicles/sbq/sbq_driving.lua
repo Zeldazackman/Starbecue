@@ -128,6 +128,12 @@ function p.updateDriving(dt)
 			world.sendEntityMessage( p.driver, "sbqAddLocalLight", light )
 		end
 
+		p.predHudOpen = math.max( 0, p.predHudOpen - dt )
+		if p.predHudOpen <= 0 and p.driver then
+			p.predHudOpen = 2
+			world.sendEntityMessage( p.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
+		end
+
 		local aim = vehicle.aimPosition(p.driverSeat)
 		local cursor = "/cursors/cursors.png:pointer"
 		world.sendEntityMessage( p.driver, "sbqDrawCursor", aim, cursor)
