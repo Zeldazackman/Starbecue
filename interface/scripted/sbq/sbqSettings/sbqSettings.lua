@@ -38,7 +38,7 @@ function init()
 
 	if sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
 		sbq.customizeTab:setVisible(true)
-		if sbq.predatorConfig.replaceColors then
+		if sbq.predatorConfig.replaceColors ~= nil then
 			colorsScrollArea:clearChildren()
 			sbq.customizeColorsLayout = {}
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do

@@ -144,9 +144,16 @@
 			"digesting" : { }
 		},
 		"defaultSettings" : {
-			"replaceColors" : [1,1,1,1],
-			"fullbright" : [false,false,false,true]
+			"replaceColors" : [1,1,1,1,1],
+			"fullbright" : [false,false,false,true,false]
 		},
+		"replaceColorNames" : [
+			"Body 1",
+			"Body 2",
+			"Horns",
+			"Eyes",
+			"Burp"
+		],
 		"replaceColors" : [ // I don't think having actual replacement colors here should be a thing since its someone's OC
 			[
 				["0e0e0e", "292929", "3f3f3f", "575757"], // Dark Grey body 1
@@ -161,8 +168,12 @@
 				["969696", "b4b4b4", "d4d4d4", "efefef"]
 			],
 			[
-				["4a2400", "cc711a", "ff962e", "19ce2c"], // eyes and burp
-				["4a2400", "cc711a", "ff962e", "19ce2c"]
+				["4a2400", "cc711a", "ff962e" ], // eyes
+				["4a2400", "cc711a", "ff962e" ]
+			],
+			[
+				["19ce2c"], // burp
+				["19ce2c"]
 			]
 		]
 	},

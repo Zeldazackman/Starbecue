@@ -200,7 +200,7 @@ function sbq.setPortrait( canvasName, data, offset )
 end
 
 local bellyEffectIconsTooltips = {
-	sbqRemoveBellyEffects = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "none", prev = "sbqSoftDigest", next = "sbqHeal" },
+	sbqRemoveBellyEffects = { icon = "/stats/sbq/sbqRemoveBellyEffects/sbqRemoveBellyEffects.png", toolTip = "None", prev = "sbqSoftDigest", next = "sbqHeal" },
 	sbqHeal = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "Heal", prev = "sbqRemoveBellyEffects", next = "sbqDigest" },
 	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest" },
 	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects" }
@@ -222,8 +222,10 @@ end
 function sbq.updateBellyEffectIcon()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 
-	if sbq.sbqSettings.bellyEffect ~= nil then
-		bellyEffectIcon:setFile(bellyEffectIconsTooltips[sbq.sbqSettings.bellyEffect].icon)
+	if sbq.sbqSettings.global.bellyEffect ~= nil then
+		local effect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect]
+		bellyEffectIcon:setImage(effect.icon)
+		bellyEffectIcon.toolTip = effect.toolTip
 	end
 end
 
@@ -235,6 +237,18 @@ end
 
 function prevBellyEffect:onClick()
 	sbq.adjustBellyEffect("prev")
+end
+
+function bellyEffectIcon:onClick()
+	local displayDigest = not sbq.sbqSettings.global.displayDigest
+	sbq.sbqSettings.global.displayDigest = displayDigest
+	sbq.settings.displayDigest = displayDigest
+
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+
+	if player.loungingIn() ~= nil then
+		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
+	end
 end
 
 function nextBellyEffect:onClick()
