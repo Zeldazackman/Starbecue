@@ -14,10 +14,11 @@ function update()
 	local dt = script.updateDt()
 	sbq.checkRefresh(dt)
 	sbq.updateBars()
+	sbq.updateBellyEffectIcon()
 end
 
 function sbq.checkRefresh(dt)
-	if sbq.refreshtime >= 0.1 and sbq.rpc == nil and sbq.sbqCurrentData.type == "driver" then
+	if sbq.refreshtime >= 1 and sbq.rpc == nil and sbq.sbqCurrentData.type == "driver" and player.loungingIn() ~= nil then
 		sbq.rpc = world.sendEntityMessage( player.loungingIn(), "settingsMenuRefresh")
 	elseif sbq.rpc ~= nil and sbq.rpc:finished() then
 		if sbq.rpc:succeeded() then
@@ -58,22 +59,21 @@ sbq.occupantList = {}
 
 function sbq.readOccupantData()
 	if sbq.occupants.total > 0 then
-		local last
 		local y = 224
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
 			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (id ~= nil) and (world.entityExists( id )) then
-				y = y - 31
+				y = y - 33
 				local species = occupant.species
-				last = id
 				if sbq.occupantList[id] == nil then
-					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {4,y}, size = {92,31}, children = {}})}
-					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "iconButton", noAutoCrop = true, image = "portrait.png" })
+					sbq.occupantList[id] = { menuItem = occupantsArea:addChild({ type = "menuItem", mode = "manual", position = {0,y}, size = {96,33}, children = {}})}
+					sbq.occupantList[id].layout = sbq.occupantList[id].menuItem:addChild({ type = "layout", mode = "manual", position = {0,0}, size = {96,33}, children = {}})
+					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "image", noAutoCrop = true, position = {0,0}, file = "portrait.png"  })
 					sbq.occupantList[id].portrait = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} })
 					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) })
 					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} })
 					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}})
-					local occupantButton = sbq.occupantList[id].background
+					local occupantButton = sbq.occupantList[id].menuItem
 					function occupantButton:onClick()
 						metagui.contextMenu({
 							{"Let Out", function() world.sendEntityMessage( player.loungingIn(), "letout", id ) end}
@@ -90,7 +90,6 @@ function sbq.readOccupantData()
 				end
 			end
 		end
-		sbq.occupantList[last].background:setImage("portraitTop.png")
 	else
 
 	end
@@ -166,9 +165,39 @@ function sbq.setPortrait( canvasName, data )
 	end
 end
 
+local bellyEffectIconsTooltips = {
+	sbqRemoveBellyEffects = { icon = "/empty_image.png", toolTip = "none", prev = "sbqSoftDigest", next = "sbqHeal" },
+	sbqHeal = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "Heal", prev = "sbqRemoveBellyEffects", next = "sbqDigest" },
+	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest" },
+	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects" }
+}
+function sbq.adjustBellyEffect(direction)
+	sbq.sbqSettings = (player.getProperty("sbqSettings") or {})
+	local newBellyEffect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect][direction]
+	sbq.sbqSettings.global.bellyEffect = newBellyEffect
+	sbq.settings.bellyEffect = newBellyEffect
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+	if player.loungingIn() ~= nil then
+		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
+	end
+end
+
+function sbq.updateBellyEffectIcon()
+	if sbq.settings ~= nil and sbq.settings.bellyEffect ~= nil then
+		bellyEffectIcon:setFile(bellyEffectIconsTooltips[sbq.settings.bellyEffect].icon)
+	end
+end
 
 ----------------------------------------------------------------------------------------------------------------
 
 function settings:onClick()
 	player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:settings" })
+end
+
+function prevBellyEffect:onClick()
+	sbq.adjustBellyEffect("prev")
+end
+
+function nextBellyEffect:onClick()
+	sbq.adjustBellyEffect("next")
 end

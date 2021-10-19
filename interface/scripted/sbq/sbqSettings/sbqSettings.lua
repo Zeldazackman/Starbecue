@@ -19,7 +19,7 @@ function init()
 
 	sbq.config = root.assetJson( "/sbqGeneral.config" )
 
-	sbq.globalSettings = sbq.sbqSettings.global or {}
+	sbq.globalSettings = sb.jsonMerge( sbq.config.defaultSettings, sbq.sbqSettings.global or {})
 
 	if sbq.speciesHelpTab ~= nil then
 		sbq.speciesHelpTab:delete()
