@@ -10,7 +10,7 @@ function init()
 	self.cdamage = 0
 	self.powerMultiplier = effect.duration()
 
-	removeOtherBellyEffects("sbqDisplaySoftDigest")
+	removeOtherBellyEffects("sbqSoftDigestDisplay")
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true

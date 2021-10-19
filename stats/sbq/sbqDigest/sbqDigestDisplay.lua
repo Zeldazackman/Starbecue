@@ -13,7 +13,7 @@ function init()
 	self.rpcAttempts = 0
 	self.targetTime = 0
 
-	removeOtherBellyEffects("sbqDisplayDigest")
+	removeOtherBellyEffects("sbqDigestDisplay")
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true
