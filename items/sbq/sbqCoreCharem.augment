@@ -21,10 +21,7 @@
 
 	"vehicle": {
 		"type": "sbqCharem",
-		"position": [0, 4],	// in blocks
-		"settings": {
-			"bellyEffect" : "sbqSoftDigest"
-		}
+		"position": [0, 4]	// in blocks
 	},
 
 	"scripts" : [ "/items/sbq/sbqCore.lua" ]

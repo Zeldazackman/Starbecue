@@ -173,9 +173,9 @@
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},
 			"escapeDifficulty": {"min": -1, "max": 1},
-			"bellyEffect": ["sbqRemoveBellyEffects", "sbqHeal", "sbqDigest", "sbqSoftDigest"],
+			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
-			"displayDigest": [false, true]
+			"displayDigest": "bool"
 		},
 
 		"replaceColorNames" : [

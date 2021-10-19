@@ -316,12 +316,8 @@ function p.eatHandItem(entity, hand)
 						sb.logInfo("can't apply: "..k.." too high ("..v.." larger than maximum "..allowed[k]..")")
 						return nil
 					end
-					if not allowed[k].min and not allowed[k].max then
-						local found
-						for _,a in allowed[k] do
-							if a == k then found = true end
-						end
-						if not found then
+					if not allowed[k].min and not allowed[k].max and allowed[k] ~= "bool" then
+						if not allowed[k][v] then
 							sb.logInfo("can't apply: "..k.." not valid (got \""..v.."\", allowed "..sb.printJson(allowed[k])..")")
 							return nil
 						end

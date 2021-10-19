@@ -1,22 +1,22 @@
 require "/scripts/augments/item.lua"
 
--- local globalConfig = root.assetJson("/sbqGeneral.config")
+-- local globalConfig =
 
 function apply(input)
 	local modifier = config.getParameter("sbqModifier")
 	if modifier then
 		local output = Item.new(input) ---@diagnostic disable-line:undefined-global
-		local dataPath = "scriptStorage.sbq"
+		local dataPath = "scriptStorage.vehicle"
 		local sbqData = output:instanceValue(dataPath)
 		if not sbqData then
-			dataPath = "sbq"
+			dataPath = "vehicle"
 			sbqData = output:instanceValue(dataPath)
 		end
-		local species = sbqData.type:gsub("^sbq","")
+		local species = sbqData.type
 		local speciesConfig = root.assetJson("/vehicles/sbq/"..species.."/"..species..".vehicle")
 
 		local allowed = speciesConfig.sbqData.allowedModifiers
-		local default = speciesConfig.sbqData.defaultSettings
+		local default = sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultSettings, speciesConfig.sbqData.defaultSettings or {})
 		local current = output:instanceValue("scriptStorage") or {}
 		local currSettings = current.settings or {}
 		if allowed then
@@ -34,18 +34,15 @@ function apply(input)
 					sb.logInfo("can't apply: "..k.." too high ("..v.." larger than maximum "..allowed[k]..")")
 					return nil
 				end
-				if not allowed[k].min and not allowed[k].max then
-					local found
-					for _,a in allowed[k] do
-						if a == k then found = true end
-					end
-					if not found then
+				if not allowed[k].min and not allowed[k].max and allowed[k] ~= "bool" then
+					if not allowed[k][v] then
 						sb.logInfo("can't apply: "..k.." not valid (got \""..v.."\", allowed "..sb.printJson(allowed[k])..")")
 						return nil
 					end
 				end
 				if (currSettings[k] or default[k]) ~= v then
-					current.settings[k] = v
+					currSettings[k] = v
+					current.settings = currSettings
 					changed = true
 				end
 			end

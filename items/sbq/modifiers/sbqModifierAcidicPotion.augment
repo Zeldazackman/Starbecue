@@ -1,0 +1,15 @@
+{
+	"itemName" : "sbqModifierAcidicPotion",
+	"price" : 10,
+	"rarity" : "Uncommon",
+	"category" : "craftingMaterial",
+	"inventoryIcon" : "sbqModifierAcidicPotion.png",
+	"description" : "An acidic potion, make's a pred's belly digest its occupants.",
+	"shortdescription" : "Acidic Belly Potion",
+	"itemTags" : [ "reagent", "vsopill" ],
+
+	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],
+	"sbqModifier": {
+		"bellyEffect": "sbqDigest"
+	}
+}
