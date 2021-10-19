@@ -1,6 +1,6 @@
 {
 	"input" : [
-		{ "item" : "money", "count" : 50000 }
+		{ "item" : "money", "count" : 9000 }
 	],
 	"output" : {
 		"item" : "sbqPotionVaporeon",

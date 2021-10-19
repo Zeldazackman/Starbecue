@@ -1,9 +1,9 @@
 {
 	"input" : [
-		{ "item" : "money", "count" : 9000 }
+		{ "item" : "money", "count" : 100 }
 	],
 	"output" : {
-		"item" : "sbqPotionXeronious",
+		"item" : "sbqModifierStickyHoney",
 		"count" : 1
 	},
 	"groups" : [ "auriShop" ]
