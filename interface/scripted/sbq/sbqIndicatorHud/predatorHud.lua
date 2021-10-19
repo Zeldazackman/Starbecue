@@ -201,9 +201,9 @@ end
 
 local bellyEffectIconsTooltips = {
 	sbqRemoveBellyEffects = { icon = "/stats/sbq/sbqRemoveBellyEffects/sbqRemoveBellyEffects.png", toolTip = "None", prev = "sbqSoftDigest", next = "sbqHeal" },
-	sbqHeal = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "Heal", prev = "sbqRemoveBellyEffects", next = "sbqDigest" },
-	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest" },
-	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects" }
+	sbqHeal = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "Heal", prev = "sbqRemoveBellyEffects", next = "sbqDigest", display = true },
+	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest", display = true },
+	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects", display = true }
 }
 function sbq.adjustBellyEffect(direction)
 	local newBellyEffect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect or "sbqRemoveBellyEffects" ][direction]
@@ -223,9 +223,16 @@ function sbq.updateBellyEffectIcon()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 
 	if sbq.sbqSettings.global.bellyEffect ~= nil then
+
 		local effect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect]
+
+		local appendTooltip = ""
+		if sbq.sbqSettings.global.displayDigest and effect.display then
+			appendTooltip = "Display "
+		end
+
 		bellyEffectIcon:setImage(effect.icon)
-		bellyEffectIcon.toolTip = effect.toolTip
+		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
 	end
 end
 
