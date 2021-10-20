@@ -43,11 +43,11 @@ function init()
 			sbq.customizeColorsLayout = {}
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
 				sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
-				sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = sbq.predatorSettings.fullbright[i] or sbq.predatorConfig.defaultSettings.fullbright[i], toolTip = "Fullbright" })
+				sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = (sbq.predatorSettings.fullbright or {})[i] or (sbq.predatorConfig.defaultSettings.fullbright or {})[i], toolTip = "Fullbright" })
 				sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
 				sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
 				sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-				sbq.customizeColorsLayout[i].label = sbq.customizeColorsLayout[i].layout:addChild({ type = "label", text = sbq.predatorConfig.replaceColorNames[i], size = {48, 10}})
+				sbq.customizeColorsLayout[i].label = sbq.customizeColorsLayout[i].layout:addChild({ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or "Color "..i, size = {48, 10}})
 				sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ] ) ) )
 				local prevFunc = sbq.customizeColorsLayout[i].prev
 				local textboxFunc = sbq.customizeColorsLayout[i].textBox
