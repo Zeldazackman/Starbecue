@@ -1,0 +1,48 @@
+{
+	"type" : "sbqHubZevi",
+	"baseType" : "base",
+
+	"keepAlive" : true,
+
+	"npcname" : "Zevi",
+	"identity" : {
+		"imagePath" : "sbqZevi",
+		"gender" : "male",
+		"hairGroup" : "hair",
+		"hairType" : "1"
+	},
+
+	"damageTeamType" : "assistant",
+	"damageTeam" : 1,
+
+	"persistent" : true,
+
+	"dropPools" : [],
+
+	"scriptConfig" : {
+		"behaviorConfig" : "simple",
+		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
+
+		"chatSounds" : {
+			"default" : {
+				"male" : [
+					"/sfx/humanoid/human_chatter_male2.ogg"
+				],
+				"female" : [
+					"/sfx/humanoid/human_chatter_female2.ogg"
+				]
+			}
+		},
+		"dialog" : {}
+	},
+
+	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+		}
+	}
+}

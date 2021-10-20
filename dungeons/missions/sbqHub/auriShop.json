@@ -1629,8 +1629,39 @@
          "width":95,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":55,
+         "name":"monsters & npcs",
+         "objects":[
+                {
+                 "height":8,
+                 "id":125,
+                 "name":"Zevi",
+                 "properties":
+                    {
+                     "npc":"novakid",
+                     "parameters":"{}",
+                     "typeName":"sbqHubZevi"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":160,
+                 "y":216
+                }],
+         "offsetx":-144,
+         "offsety":24,
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":95,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":125,
+ "nextobjectid":126,
  "orientation":"orthogonal",
  "properties":
     {
