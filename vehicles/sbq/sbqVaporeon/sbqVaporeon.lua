@@ -120,9 +120,8 @@ end
 function absorb(args)
 	args.id = p.findFirstOccupantIdForLocation("hug")
 	if not args.id then return false end
-
 	animator.playSound( "slurp" )
-	return p.moveOccupantLocation(args, "belly")
+	return true, function() p.moveOccupantLocation(args, "belly") end
 end
 
 function state.lay.update()

@@ -277,7 +277,6 @@ function p.victimAnimUpdate(entity)
 	end
 
 	p.lounging[entity].visible = (p.getPrevVictimAnimValue(victimAnim, "visible") == 1)
-
 	local e = p.getPrevVictimAnimValue(victimAnim, "e")
 	if e ~= 0 then
 		world.sendEntityMessage(entity, "applyStatusEffect", e, (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
