@@ -12,7 +12,6 @@ local spawnedVehicle = nil
 function init()
 	message.setHandler( "sbqRefreshSettings", function(_, _, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
 		settings = newSettings
-		radialSelectionData.selection = settings.selected
 	end)
 end
 
@@ -20,12 +19,6 @@ function loadSettings()
 	rpc = world.sendEntityMessage( entity.id(), "sbqLoadSettings" )
 	rpcCallback = function(result)
 		settings = result
-		if settings ~= nil and settings.selected ~= nil then
-			radialSelectionData.selection = settings.selected
-			if settings[settings.selected] ~= nil and settings[settings.selected].autoDeploy and not reload then
-				spawnPredator(settings.selected)
-			end
-		end
 	end
 end
 
@@ -80,13 +73,10 @@ function update(args)
 	pressed = args.moves["special1"]
 end
 
-function spawnPredator(type)
+function spawnPredator(pred)
 	if (not spawnedVehicle or not world.entityExists(spawnedVehicle)) and spawnCooldown <= 0 then
 		spawnCooldown = 1
-		settings.selected = type
-		world.sendEntityMessage( entity.id(), "sbqPlayerSaveSettings", settings )
-		local position = mcontroller.position()
-		spawnedVehicle = world.spawnVehicle( type, { position[1], position[2] }, { driver = entity.id(), settings = sb.jsonMerge(settings[type] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = settings[pred], direction = mcontroller.facingDirection()  } )
 	end
 end
 
@@ -97,20 +87,20 @@ function openRadialMenu()
 		icon = "/interface/title/modsover.png"
 	}}
 	if settings and settings.types then
-		for type, data in pairs(settings.types) do
+		for pred, data in pairs(settings.types) do
 			if data.enable then
-				local skin = (settings[type].skinNames or {}).head or "default"
-				local directives = settings[type].directives or ""
+				local skin = (settings[pred].skinNames or {}).head or "default"
+				local directives = settings[pred].directives or ""
 				if #options <= 10 then
 					if data.index ~= nil and data.index+1 <= #options then
 						table.insert(options, data.index+1, {
-							name = type,
-							icon = "/vehicles/sbq/"..type.."/skins/"..skin.."/icon.png"..directives
+							name = pred,
+							icon = "/vehicles/sbq/"..pred.."/skins/"..skin.."/icon.png"..directives
 						})
 					else
 						table.insert(options, {
-							name = type,
-							icon = "/vehicles/sbq/"..type.."/skins/"..skin.."/icon.png"..directives
+							name = pred,
+							icon = "/vehicles/sbq/"..pred.."/skins/"..skin.."/icon.png"..directives
 						})
 					end
 				end

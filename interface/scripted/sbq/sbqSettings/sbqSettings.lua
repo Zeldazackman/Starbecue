@@ -19,7 +19,7 @@ function init()
 
 	sbq.config = root.assetJson( "/sbqGeneral.config" )
 
-	sbq.globalSettings = sb.jsonMerge( sbq.config.defaultSettings, sbq.sbqSettings.global or {})
+	sbq.globalSettings = sbq.sbqSettings.global or {}
 
 	if sbq.speciesHelpTab ~= nil then
 		sbq.speciesHelpTab:delete()
@@ -110,13 +110,13 @@ function init()
 		sbq.customizeTab:setVisible(false)
 	end
 
-	sbq.predator = sbq.sbqCurrentData.species or "global"
+	sbq.predator = sbq.sbqCurrentData.species or "noPred"
 
-	BENone:selectValue(sbq.globalSettings.bellyEffect)
-	EMEasy:selectValue(sbq.globalSettings.escapeModifier)
+	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
+	EMEasy:selectValue(sbq.globalSettings.escapeModifier or "normal")
 
-	displayDigest:setChecked(sbq.globalSettings.displayDigest)
-	bellySounds:setChecked(sbq.globalSettings.bellySounds)
+	displayDigest:setChecked(sbq.globalSettings.displayDigest or false)
+	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
 
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
@@ -150,9 +150,11 @@ function sbq.saveSettings()
 	if sbq.loungingIn ~= nil and sbq.sbqCurrentData.type == "driver" then
 		world.sendEntityMessage( sbq.loungingIn, "settingsMenuSet", sbq.predatorSettings )
 	end
+
 	sbq.sbqSettings[sbq.predator] = sbq.predatorSettings
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
+	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
 end
 
 function sbq.changeGlobalSetting(settingname, settingvalue)
