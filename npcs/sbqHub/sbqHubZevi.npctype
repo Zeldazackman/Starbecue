@@ -20,20 +20,9 @@
 	"dropPools" : [],
 
 	"scriptConfig" : {
-		"behaviorConfig" : "simple",
+		"behavior" : "simple"
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
 
-		"chatSounds" : {
-			"default" : {
-				"male" : [
-					"/sfx/humanoid/human_chatter_male2.ogg"
-				],
-				"female" : [
-					"/sfx/humanoid/human_chatter_female2.ogg"
-				]
-			}
-		},
-		"dialog" : {}
 	},
 
 	"statusControllerSettings" : {
@@ -41,8 +30,6 @@
 			"protection" : {
 				"baseValue" : 100.0
 			}
-		},
-		"statusProperties" : {
 		}
 	}
 }
