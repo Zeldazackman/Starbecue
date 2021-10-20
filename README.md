@@ -38,6 +38,27 @@ To let people out that you previously ate, simply press Tech Action 2 (G).
 
 In the bottom right you will have a HUD to show what occupants you've eaten, as well as your current belly effect, this can be used to quickly change the effect, as well as access the settings quickly, and peform actions on the prey by clicking on them, such as letting them out, turbo digesting them, or predator specific actions, like transforming them
 
+### Prey Info
+
+Whether you are being eaten by a object predator, or a player transformed into a predator, as prey you will have a HUD in the bottom right, this indicates which directions you can struggle to cause the predator to do something.
+
+For player controlled predators, most struggles are disabled so that player is in full control of their state, but if they are in a state where an escape is available, you may be able to struggle out still, but it is possible for them to disable being able to escape entirely in their settings.
+
+#### Red
+indicates a direction in which you could escape, such as out the mouth or butt, your prey settings do not impact whether the arrow appears or not, but they do effect whether you can actally escape, a red arrow may indicate an anal vore escape, but if it isn't enabled in your settings, struggling that direction will not do anything.
+
+#### Blue
+Indicates a state change, such as making the predator stand up or sit down.
+
+#### Green
+Indicates a state change, but only for state changes that would bring you closer to a state you can escape from.
+
+#### Cyan
+Indicates a direction that would move you to another location within the predator's body.
+
+#### Yellow
+Indicates a direction that would cause you to get eaten, only appears if you're just being held or hugged.
+
 ### Settings
 
 The settings menu can be accessed from the quickbar, or from the predator HUD.
