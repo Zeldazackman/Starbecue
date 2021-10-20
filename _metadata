@@ -3,7 +3,9 @@
 	"tags" : "",
 	"author" : "Zygan, Wasabi_Raptor/LokiVulpix",
 	"description" : "Here at the Starbecue, everything's edible, even your friends!",
+	"link" : "https://github.com/Zygahedron/Starbecue",
 	"name" : "Starbecue",
 	"friendlyName" : "Starbecue",
-	"includes" : ["StarboundSimpleVoreModVSO", "ssvm"]
+	"includes" : ["StarboundSimpleVoreModVSO", "ssvm"],
+	"requires" : ["StardustLib"]
 }
