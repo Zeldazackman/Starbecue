@@ -36,7 +36,7 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	if sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil then
+	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and sbq.sbqCurrentData.type == "driver" then
 		sbq.customizeTab:setVisible(true)
 		if sbq.predatorConfig.replaceColors ~= nil then
 			colorsScrollArea:clearChildren()
