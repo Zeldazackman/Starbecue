@@ -14,7 +14,7 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ### Playable Predators
 - Vaporeon
-- Veronious
+- Xeronious
 
 ### Object Predators
 - Charem
