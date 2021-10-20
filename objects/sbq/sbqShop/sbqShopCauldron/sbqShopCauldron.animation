@@ -27,7 +27,7 @@
 				},
 				"partStates": {
 					"cauldronState" : {
-						"idle": { "properties": { "image": "sbqShopCauldron.png<directives>" } }
+						"idle": { "properties": { "image": "sbqShopCauldron.png" } }
 					}
 				}
 			},
