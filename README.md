@@ -10,6 +10,8 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ## Features
 
+![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)
+
 ### Playable Predators
 - Vaporeon
 - Veronious
