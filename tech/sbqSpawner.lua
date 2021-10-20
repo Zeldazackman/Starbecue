@@ -76,7 +76,7 @@ end
 function spawnPredator(pred)
 	if (not spawnedVehicle or not world.entityExists(spawnedVehicle)) and spawnCooldown <= 0 then
 		spawnCooldown = 1
-		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = settings[pred], direction = mcontroller.facingDirection()  } )
+		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
 	end
 end
 
