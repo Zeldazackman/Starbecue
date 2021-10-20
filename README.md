@@ -2,7 +2,7 @@
 
 To install simply visit the [releases page](https://github.com/Zygahedron/ZyganSSVMAddons/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
 
-This mod Requires [Stardust Core](https://steamcommunity.com/sharedfiles/filedetails/?id=764887546)
+This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/filedetails/?id=2512589532) or [Stardust Core](https://steamcommunity.com/sharedfiles/filedetails/?id=764887546)
 
 Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable.
 
