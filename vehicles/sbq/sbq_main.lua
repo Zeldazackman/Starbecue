@@ -205,8 +205,6 @@ function init()
 		p.spawner = p.driver
 		p.forceSeat( p.driver, 0 )
 		world.sendEntityMessage( p.driver, "sbqGiveController")
-		world.sendEntityMessage( p.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
-
 	else
 		p.seats.objectControls = p.clearOccupant(0)
 		p.seats.objectControls.seatname = "objectControls"
@@ -343,7 +341,7 @@ function p.eatHandItem(entity, hand)
 	end
 end
 
-p.predHudOpen = 5
+p.predHudOpen = 0
 -- returns sourcePosition, sourceId, and interactPosition
 function onInteraction(args)
 	if p.transitionLock then return end

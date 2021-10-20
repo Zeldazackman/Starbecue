@@ -121,7 +121,7 @@ function p.updateControls(dt)
 end
 
 function p.updateDriving(dt)
-	if p.driver then
+	if p.driver and p.driving then
 		local light = p.sbqData.lights.driver
 		if light then
 			light.position = world.entityPosition( p.driver )
@@ -129,7 +129,7 @@ function p.updateDriving(dt)
 		end
 
 		p.predHudOpen = math.max( 0, p.predHudOpen - dt )
-		if p.predHudOpen <= 0 and p.driver then
+		if p.predHudOpen <= 0 then
 			p.predHudOpen = 2
 			world.sendEntityMessage( p.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
 		end

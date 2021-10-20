@@ -206,9 +206,12 @@ local bellyEffectIconsTooltips = {
 	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects", display = true }
 }
 function sbq.adjustBellyEffect(direction)
-	local newBellyEffect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect or "sbqRemoveBellyEffects" ][direction]
-
-	sbq.sbqSettings.global.bellyEffect = newBellyEffect
+	local newBellyEffect = bellyEffectIconsTooltips[(sbq.sbqSettings.global or {}).bellyEffect or "sbqRemoveBellyEffects" ][direction]
+	if sbq.sbqSettings.global ~= nil then
+		sbq.sbqSettings.global.bellyEffect = newBellyEffect
+	else
+		sbq.sbqSettings.global = {bellyEffect = newBellyEffect}
+	end
 
 	sbq.settings.bellyEffect = newBellyEffect
 
@@ -222,7 +225,7 @@ end
 function sbq.updateBellyEffectIcon()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 
-	if sbq.sbqSettings.global.bellyEffect ~= nil then
+	if (sbq.sbqSettings.global or {}).bellyEffect ~= nil then
 
 		local effect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect]
 
