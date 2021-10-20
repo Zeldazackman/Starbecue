@@ -1,4 +1,4 @@
-function everything_primary()
+function sbq.everything_primary()
 	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
 		for stat, data in pairs(statlist) do
 			status.addEphemeralEffect(stat, data.power, data.source)

@@ -1,4 +1,6 @@
 local oldinit = init
+sbq = {}
+
 function init()
 	oldinit()
 

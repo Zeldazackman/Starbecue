@@ -123,7 +123,7 @@ end
 function p.updateDriving(dt)
 	if p.driver and p.driving then
 		local light = p.sbqData.lights.driver
-		if light then
+		if light ~= nil then
 			light.position = world.entityPosition( p.driver )
 			world.sendEntityMessage( p.driver, "sbqAddLocalLight", light )
 		end

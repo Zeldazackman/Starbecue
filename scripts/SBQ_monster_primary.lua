@@ -1,6 +1,7 @@
 local oldinit = init
-require("/scripts/everything_primary.lua")
+sbq = {}
+require("/scripts/SBQ_everything_primary.lua")
 function init()
 	oldinit()
-	everything_primary()
+	sbq.everything_primary()
 end

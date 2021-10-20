@@ -1,5 +1,6 @@
 local initStage = 0
 local oldinit = init
+sbq = {}
 function init()
 	oldinit()
 
@@ -79,8 +80,8 @@ function init()
 	message.setHandler("sbqGetSeatEquips", function(_,_, type, current)
 		player.setProperty( "sbqSeatType", type)
 		player.setProperty( "sbqCurrentData", current)
-		checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
-		checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
+		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
+		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
 		return {
 			head = player.equippedItem("head"),
@@ -137,7 +138,7 @@ end
 
 local essentialItems = {"beamaxe", "wiretool", "painttool", "inspectiontool"}
 
-function checkLockItem(itemDescriptor, type)
+function sbq.checkLockItem(itemDescriptor, type)
 	if not itemDescriptor then return end
 	allowedItems = root.assetJson("/sbqGeneral.config:sbqAllowedItems")
 	bannedTags = root.assetJson("/sbqGeneral.config:sbqBannedTags")
@@ -149,21 +150,21 @@ function checkLockItem(itemDescriptor, type)
 		local essentialItem = player.essentialItem(item)
 		if essentialItem then
 			if (essentialItem.name == itemDescriptor.name) then
-				return lockEssentialItem(itemDescriptor, item, type)
+				return sbq.lockEssentialItem(itemDescriptor, item, type)
 			end
 		end
 	end
 
 	for i, tag in ipairs(bannedTags[type]) do
 		if root.itemHasTag(itemDescriptor.name, tag) then
-			return lockItem(itemDescriptor, type)
+			return sbq.lockItem(itemDescriptor, type)
 		end
 	end
 
-	if bannedTypes[type][root.itemType(itemDescriptor.name)] then return lockItem(itemDescriptor, type) end
+	if bannedTypes[type][root.itemType(itemDescriptor.name)] then return sbq.lockItem(itemDescriptor, type) end
 end
 
-function lockItem(itemDescriptor, type)
+function sbq.lockItem(itemDescriptor, type)
 	if itemDescriptor.parameters ~= nil and itemDescriptor.parameters.itemHasOverrideLockScript then
 		return world.sendEntityMessage(entity.id(), itemDescriptor.name.."Lock", true)
 	end
@@ -173,7 +174,7 @@ function lockItem(itemDescriptor, type)
 
 	local lockItemDescriptor = player.essentialItem("painttool")
 	if lockItemDescriptor.name ~= "sbqLockedItem" then
-		lockEssentialItem(lockItemDescriptor, "painttool", type)
+		sbq.lockEssentialItem(lockItemDescriptor, "painttool", type)
 		lockItemDescriptor = player.essentialItem("painttool")
 	end
 
@@ -185,7 +186,7 @@ function lockItem(itemDescriptor, type)
 	end
 end
 
-function lockEssentialItem(itemDescriptor, slot, type)
+function sbq.lockEssentialItem(itemDescriptor, slot, type)
 	local lockItemDescriptor = root.assetJson("/sbqGeneral.config:lockItemDescriptor")
 	lockItemDescriptor.parameters.scriptStorage.lockedEssentialItems[slot] = itemDescriptor
 	lockItemDescriptor.parameters.scriptStorage.lockType = type

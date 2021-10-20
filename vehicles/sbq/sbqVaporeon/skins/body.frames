@@ -59,10 +59,10 @@
 		"0.lay.absorb.4" : "1.lay.1",
 		"0.hug.absorb.4" : "1.back.1",
 
-		"1.sleep.absorb.1" : "1.lay.absorb.1",
-		"1.sleep.absorb.2" : "1.lay.absorb.2",
-		"1.sleep.absorb.3" : "1.lay.absorb.3",
-		"1.sleep.absorb.4" : "1.lay.absorb.4",
+		"0.sleep.absorb.1" : "0.lay.absorb.1",
+		"0.sleep.absorb.2" : "0.lay.absorb.2",
+		"0.sleep.absorb.3" : "0.lay.absorb.3",
+		"0.sleep.absorb.4" : "0.lay.absorb.4",
 
 		// belly 1
 
@@ -78,12 +78,12 @@
 		"1.back.rollover.4" : "1.lay.rollover.2",
 		"1.back.rollover.5" : "1.lay.rollover.1",
 
-		"2.lay.absorb.4" : "2.lay.1",
+		"1.lay.absorb.4" : "1.lay.1",
 
-		"2.sleep.absorb.1" : "2.lay.absorb.1",
-		"2.sleep.absorb.2" : "2.lay.absorb.2",
-		"2.sleep.absorb.3" : "2.lay.absorb.3",
-		"2.sleep.absorb.4" : "2.lay.absorb.4",
+		"1.sleep.absorb.1" : "1.lay.absorb.1",
+		"1.sleep.absorb.2" : "1.lay.absorb.2",
+		"1.sleep.absorb.3" : "1.lay.absorb.3",
+		"1.sleep.absorb.4" : "1.lay.absorb.4",
 
 		"1.stand.s_back.5" : "1.stand.1",
 		"1.stand.s_front.5" : "1.stand.1",
