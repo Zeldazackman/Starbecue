@@ -31,10 +31,49 @@
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
 
 		"dialog" : {
+			"greeting" : {
+				"default" : {
+					"default" : [
+						"Mrow."
+					]
+				}
+			},
+			"flee" : {
+				"helpme" : {
+					"default" : {
+						"default" : [
+							"Oh no!"
+						]
+					}
+				},
+				"helpthem" : {
+					"default" : {
+						"default" : [
+							"Oh no!"
+						]
+					}
+				},
+				"encourage" : {
+					"default" : {
+						"default" : [
+							"Encouragement?"
+						]
+					}
+				},
+				"safe" : {
+					"default" : {
+						"default" : [
+							"I'm safe."
+						]
+					}
+				}
+			},
+
 			"converse" : {
 				"default" : {
-					"novakid" : [
-						"Mrow."
+					"default" : [
+						"Mrow.",
+						"I'm a goocat."
 					]
 				}
 			}

@@ -198,7 +198,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -214,7 +214,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -278,7 +278,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -374,7 +374,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -390,7 +390,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -406,7 +406,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -422,7 +422,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -774,7 +774,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -790,7 +790,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -806,7 +806,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -822,7 +822,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{ \"interactive\" : false }"
                     },
                  "rotation":0,
                  "type":"",
@@ -1649,8 +1649,8 @@
                  "type":"",
                  "visible":true,
                  "width":8,
-                 "x":160,
-                 "y":216
+                 "x":208,
+                 "y":208
                 }],
          "offsetx":-48,
          "offsety":16,
