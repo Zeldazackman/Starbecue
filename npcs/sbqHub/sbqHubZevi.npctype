@@ -9,7 +9,9 @@
 		"imagePath" : "sbqZevi",
 		"gender" : "male",
 		"hairGroup" : "hair",
-		"hairType" : "1"
+		"hairType" : "1",
+		"facialHairGroup" : "brand",
+		"facialHairType" : "0"
 	},
 
 	"damageTeamType" : "assistant",
@@ -19,6 +21,11 @@
 
 	"dropPools" : [],
 
+	"scripts" : [
+		"/npcs/bmain.lua",
+		"/npcs/sbqHub/sbqHubZevi.lua",
+		"/scripts/SBQ_npc_bmain.lua"
+	],
 	"scriptConfig" : {
 		"behavior" : "simple",
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
