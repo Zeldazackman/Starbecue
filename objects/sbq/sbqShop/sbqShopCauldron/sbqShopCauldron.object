@@ -19,7 +19,7 @@
 
 	"objectType" : "loungeable",
 	"sitFlipDirection" : false,
-	"sitOrientation" : "lay",
+	"sitOrientation" : "sit",
 	"sitAngle" : 0,
 	"sitPositions" : [
 		[-10, 44],
