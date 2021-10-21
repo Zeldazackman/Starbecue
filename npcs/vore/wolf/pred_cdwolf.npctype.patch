@@ -1,9 +1,23 @@
 [
-	{
-		"op": "add",
-		"path": "/scriptConfig/sbqPreyEnabled",
-		"value": {
-			"enabled" : false
+	[
+		{
+			"op": "test",
+			"path": "/scripts/0",
+			"value": "/npcs/bmain.lua"
+		},
+		{
+			"op": "add",
+			"path": "/scripts/-",
+			"value": "/scripts/SBQ_npc_bmain.lua"
 		}
-	}
+	],
+	[
+		{
+			"op": "add",
+			"path": "/scriptConfig/sbqPreyEnabled",
+			"value": {
+				"enabled" : false
+			}
+		}
+	]
 ]
