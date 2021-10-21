@@ -1,6 +1,6 @@
 {
 	"type" : "sbqHubZevi",
-	"baseType" : "base",
+	"baseType" : "villager",
 
 	"keepAlive" : true,
 
@@ -24,13 +24,21 @@
 	"scripts" : [
 		"/npcs/bmain.lua",
 		"/npcs/sbqHub/sbqHubZevi.lua",
-		"/scripts/SBQ_npc_bmain.lua"
+		"/scripts/SBQ_npc_bmain.lua",
+		"/scripts/speciesAnimOverride_npc_bmain.lua"
 	],
 	"scriptConfig" : {
-		"behavior" : "simple",
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
 
-		"dialog" : {}
+		"dialog" : {
+			"converse" : {
+				"default" : {
+					"novakid" : [
+						"Mrow."
+					]
+				}
+			}
+		}
 	},
 
 	"statusControllerSettings" : {
@@ -39,5 +47,15 @@
 				"baseValue" : 100.0
 			}
 		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+					}
+				]
+			]
+		]
 	}
 }
