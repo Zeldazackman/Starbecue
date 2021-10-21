@@ -20,9 +20,10 @@
 	"dropPools" : [],
 
 	"scriptConfig" : {
-		"behavior" : "simple"
+		"behavior" : "simple",
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
 
+		"dialog" : {}
 	},
 
 	"statusControllerSettings" : {
