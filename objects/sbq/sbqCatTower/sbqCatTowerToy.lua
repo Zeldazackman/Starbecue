@@ -12,3 +12,11 @@ function onInteraction(args)
         animator.setAnimationState("toy", "left", true)
     end
 end
+
+function onNpcPlay(npcId)
+    local args = {
+        source = entity.distanceToEntity(npcId),
+        sourceId = npcId
+    }
+    onInteraction(args)
+end

@@ -39,6 +39,19 @@
   ],
 
   "objectType" : "object",
-  "scripts": [ "sbqCatTowerToy.lua" ],
-  "animation": "sbqCatTowerToy.animation"
+  "scripts": [ "sbqCatTowerToy.lua", "/scripts/npcToyObject.lua" ],
+  "animation": "sbqCatTowerToy.animation",
+  "npcToy": {
+    "influence" : [
+      "wallbutton"
+    ],
+    "defaultReactions" : {
+      "wallbutton" : [
+        [1.0, "smile"],
+        [1.0, "laugh"]
+      ]
+    },
+    "maxNpcs" : 1,
+    "randomStandXRange" : [-3, 3]
+  }
 }
