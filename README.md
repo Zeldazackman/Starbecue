@@ -93,15 +93,11 @@ Vote on what should be the next feature worked on!
 
 ### Zygan (Zygahedron)
 
-Created and animated much of the original Vaporeon sprite.
-
-Does most of the lua scripting, the reason all of this works at all.
+Artist, Lua scripting and debugging.
 
 ### LokiVulpix / Wasabi_Raptor
 
-Edited and animated some of the Vaporeon sprite, and created the Xeronious sprites.
-
-Helps out with debugging and coding a little here and there.
+Artist, Lua scripting and debugging.
 
 > I take commissions! contact me if I am open!
 >

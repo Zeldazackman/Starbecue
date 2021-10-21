@@ -7,11 +7,11 @@
 	Wasabi_Raptor / LokiVulpix / Loki_the_Vulpix
 
 # Commissioners
-	Xeronious
+	xeronious
 	Charem
 
 # Playtesters / Bug Hunters
-	Xeronious
+	xeronious
 	Rex Anivius
 
 # Patrons
