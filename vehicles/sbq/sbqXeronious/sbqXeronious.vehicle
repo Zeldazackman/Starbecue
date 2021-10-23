@@ -844,8 +844,11 @@
 				"waterMovementDisabled" : true,
 				"animations": {
 					"fly": {
-						"head": "idle",
+						"body": "idle",
 						"arms": "fly",
+						"legs": "fly",
+						"head": "idle",
+						"tail": "idle",
 						"offset" : {
 							"timing": "arms",
 							"loop": true,
