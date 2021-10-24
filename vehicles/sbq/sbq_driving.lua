@@ -125,7 +125,7 @@ function p.updateDriving(dt)
 		local light = p.sbqData.lights.driver
 		if light ~= nil then
 			light.position = world.entityPosition( p.driver )
-			world.sendEntityMessage( p.driver, "sbqAddLocalLight", light )
+			world.sendEntityMessage( p.driver, "playerext:queueLight", light )
 		end
 
 		p.predHudOpen = math.max( 0, p.predHudOpen - dt )

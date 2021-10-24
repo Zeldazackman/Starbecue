@@ -478,7 +478,7 @@ function p.doBellyEffects(dt)
 			local health = world.entityHealth(eid)
 			local light = p.sbqData.lights.prey
 			light.position = world.entityPosition( eid )
-			world.sendEntityMessage( eid, "sbqAddLocalLight", light )
+			world.sendEntityMessage( eid, "playerext:queueLight", light )
 
 			if p.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
 				local owner = p.occupant[i].nestedPreyData.owner

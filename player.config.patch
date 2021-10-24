@@ -14,7 +14,9 @@
 			"op": "add",
 			"path": "/deploymentConfig/scripts/-",
 			"value": "/scripts/SBQ_player_deployment.lua"
-		},
+		}
+	],
+	[
 		{
 			"op": "add",
 			"path": "/companionsConfig/scripts/-",

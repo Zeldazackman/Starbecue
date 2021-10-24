@@ -6,6 +6,23 @@ function init()
 
 	player.setUniverseFlag("foodhall_auriShop")
 
+	if not pcall(root.assetJson,("/metagui/registry.json")) then
+		player.confirm({
+			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
+			icon = "/interface/errorpopup/erroricon.png",
+			title = "Starbecue Mod Requirement Warning",
+			message = "Stardust Core or Stardust Lite missing.\n \nMake sure to read install information."
+		})
+	end
+	if (not pcall(root.assetJson,("/stats/monster_compat_list.config"))) and not player.getProperty("sbqMonsterCoreLoaderWarned") then
+		player.setProperty("sbqMonsterCoreLoaderWarned", true)
+		player.confirm({
+			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
+			icon = "/interface/errorpopup/erroricon.png",
+			title = "Starbecue Mod Requirement Warning",
+			message = "Monster Core Loader missing.\n \nThis is not required, but without it you may find some mod incompatibilities.\n \nMake sure to read install information."
+		})
+	end
 
 	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
 		local settings = player.getProperty( "sbqSettings" ) or {}
