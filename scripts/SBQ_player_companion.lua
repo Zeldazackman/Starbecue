@@ -23,6 +23,15 @@ function init()
 			message = "Monster Core Loader missing.\n \nThis is not required, but without it you may find some mod incompatibilities.\n \nMake sure to read install information."
 		})
 	end
+	if pcall(root.assetJson,("/vehicles/spov/vaporeon/vaporeon.vehicle")) then
+		player.confirm({
+			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
+			icon = "/interface/errorpopup/erroricon.png",
+			title = "Starbecue Mod Conflict Warning",
+			message = "Zygan SSVM Addons detected.\n \nThat mod is an older version of Starbecue before it was renamed, please remove it."
+		})
+	end
+
 
 	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
 		local settings = player.getProperty( "sbqSettings" ) or {}
