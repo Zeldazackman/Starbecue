@@ -9,6 +9,15 @@ sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsT
 sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
 sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 
+function getPatronsString()
+	local patronsString = ""
+	for _, patron in ipairs(root.assetJson("/patrons.json")) do
+		patronsString = patronsString..patron.."\n"
+	end
+	return patronsString
+end
+patronsLabel:setText(getPatronsString())
+
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 

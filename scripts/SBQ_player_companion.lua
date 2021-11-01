@@ -23,6 +23,7 @@ function init()
 			message = "Monster Core Loader missing.\n \nThis is not required, but without it you may find some mod incompatibilities.\n \nMake sure to read install information."
 		})
 	end
+	sb.logInfo("The following error from lack of '/vehicles/spov/vaporeon/vaporeon.vehicle' is not truly an error, merely the result of checking if an older version of the mod is still installed. Even under a pcall, root.assetJson still logs the error")
 	if pcall(root.assetJson,("/vehicles/spov/vaporeon/vaporeon.vehicle")) then
 		player.confirm({
 			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
