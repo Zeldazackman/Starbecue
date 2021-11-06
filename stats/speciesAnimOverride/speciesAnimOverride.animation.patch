@@ -1,0 +1,221 @@
+[
+	{
+		"op" : "add",
+		"path" : "/animatedParts/stateTypes/bellyState",
+		"value" : {
+			"default": "none",
+			"states" : {
+				"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+				"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+				"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+				"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+
+				"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+				"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+				"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0 },
+				"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0 },
+
+				"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 }
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/animatedParts/parts/belly",
+		"value" : {
+			"properties": {
+				"centered": true,
+				"zLevel": 0,
+				"transformationGroups": ["flip", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+			},
+			"partStates": {
+				"bellyState": {
+					"none": { "properties": {} },
+
+					"idle": { "properties": { "image": "<partImage>:<bellyOccupants>.idle.<bodyPersonality><customizeDirectives><bellyMask><directives>" } },
+
+					"duck": { "properties": { "image": "<partImage>:<bellyOccupants>.duck.<frame><customizeDirectives><bellyMask><directives>" } },
+					"sit": { "properties": { "image": "<partImage>:<bellyOccupants>.sit.<frame><customizeDirectives><bellyMask><directives>" } },
+					"lay": { "properties": { "image": "<partImage>:<bellyOccupants>.lay.<frame><customizeDirectives><bellyMask><directives>" } },
+
+					"walk": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.walk.<frame><customizeDirectives><bellyMask><directives>" } },
+					"run": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.run.<frame><customizeDirectives><bellyMask><directives>" } },
+
+					"jump": { "properties": { "image": "<partImage>:<bellyOccupants>.jump.<frame><customizeDirectives><bellyMask><directives>" } },
+					"fall": { "properties": { "image": "<partImage>:<bellyOccupants>.fall.<frame><customizeDirectives><bellyMask><directives>" } },
+
+					"swim": { "properties": { "image": "<partImage>:<bellyOccupants>.swim.<frame><customizeDirectives><bellyMask><directives>" } },
+					"swimIdle": { "properties": { "image": "<partImage>:<bellyOccupants>.swimIdle.<frame><customizeDirectives><bellyMask><directives>" } },
+
+					"s_back": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_back.<frame><customizeDirectives><bellyMask><directives>" } },
+					"s_front": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_front.<frame><customizeDirectives><bellyMask><directives>" } },
+					"s_up": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_up.<frame><customizeDirectives><bellyMask><directives>" } },
+					"s_down": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_down.<frame><customizeDirectives><bellyMask><directives>" } }
+				}
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/animatedParts/parts/belly_cosmetic",
+		"value" : {
+			"properties": {
+				"centered": true,
+				"zLevel": 0,
+				"transformationGroups": ["flip", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+			},
+			"partStates": {
+				"bellyState": {
+					"none": { "properties": {} },
+
+					"idle": { "properties": { "image": "<partImage>:<bellyOccupants>.idle.<bodyPersonality><cosmeticDirectives><directives>" } },
+
+					"duck": { "properties": { "image": "<partImage>:<bellyOccupants>.duck.<frame><cosmeticDirectives><directives>" } },
+					"sit": { "properties": { "image": "<partImage>:<bellyOccupants>.sit.<frame><cosmeticDirectives><directives>" } },
+					"lay": { "properties": { "image": "<partImage>:<bellyOccupants>.lay.<frame><cosmeticDirectives><directives>" } },
+
+					"walk": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.walk.<frame><cosmeticDirectives><directives>" } },
+					"run": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.run.<frame><cosmeticDirectives><directives>" } },
+
+					"jump": { "properties": { "image": "<partImage>:<bellyOccupants>.jump.<frame><cosmeticDirectives><directives>" } },
+					"fall": { "properties": { "image": "<partImage>:<bellyOccupants>.fall.<frame><cosmeticDirectives><directives>" } },
+
+					"swim": { "properties": { "image": "<partImage>:<bellyOccupants>.swim.<frame><cosmeticDirectives><directives>" } },
+					"swimIdle": { "properties": { "image": "<partImage>:<bellyOccupants>.swimIdle.<frame><cosmeticDirectives><directives>" } },
+
+					"s_back": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_back.<frame><cosmeticDirectives><directives>" } },
+					"s_front": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_front.<frame><cosmeticDirectives><directives>" } },
+					"s_up": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_up.<frame><cosmeticDirectives><directives>" } },
+					"s_down": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.s_down.<frame><cosmeticDirectives><directives>" } }
+				}
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/transformationGroups/bellybob",
+		"value" : {
+			"interpolated": false
+		}
+	},
+
+	{
+		"op" : "add",
+		"path" : "/animatedParts/stateTypes/cockState",
+		"value" : {
+			"default": "none",
+			"states" : {
+				"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 },
+
+				"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+				"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+				"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+				"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+
+				"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+				"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+				"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0 },
+				"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0 },
+
+				"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+				"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 }
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/animatedParts/parts/cock",
+		"value" : {
+			"properties": {
+				"centered": true,
+				"zLevel": 0.2,
+				"transformationGroups": ["flip", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+			},
+			"partStates": {
+				"cockState": {
+					"none": { "properties": {} },
+
+					"idle": { "properties": { "image": "<partImage>:<cockOccupants>.idle.<bodyPersonality><customizeDirectives><cockMask><directives>" } },
+
+					"duck": { "properties": { "image": "<partImage>:<cockOccupants>.duck.<frame><customizeDirectives><cockMask><directives>" } },
+					"sit": { "properties": { "image": "<partImage>:<cockOccupants>.sit.<frame><customizeDirectives><cockMask><directives>" } },
+					"lay": { "properties": { "image": "<partImage>:<cockOccupants>.lay.<frame><customizeDirectives><cockMask><directives>" } },
+
+					"walk": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.walk.<frame><customizeDirectives><cockMask><directives>" } },
+					"run": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.run.<frame><customizeDirectives><cockMask><directives>" } },
+
+					"jump": { "properties": { "image": "<partImage>:<cockOccupants>.jump.<frame><customizeDirectives><cockMask><directives>" } },
+					"fall": { "properties": { "image": "<partImage>:<cockOccupants>.fall.<frame><customizeDirectives><cockMask><directives>" } },
+
+					"swim": { "properties": { "image": "<partImage>:<cockOccupants>.swim.<frame><customizeDirectives><cockMask><directives>" } },
+					"swimIdle": { "properties": { "image": "<partImage>:<cockOccupants>.swimIdle.<frame><customizeDirectives><cockMask><directives>" } },
+
+					"s_back": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_back.<frame><customizeDirectives><cockMask><directives>" } },
+					"s_front": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_front.<frame><customizeDirectives><cockMask><directives>" } },
+					"s_up": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_up.<frame><customizeDirectives><cockMask><directives>" } },
+					"s_down": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_down.<frame><customizeDirectives><cockMask><directives>" } }
+				}
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/animatedParts/parts/cock_cosmetic",
+		"value" : {
+			"properties": {
+				"centered": true,
+				"zLevel": 0.3,
+				"transformationGroups": ["flip", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+			},
+			"partStates": {
+				"cockState": {
+					"none": { "properties": {} },
+
+					"idle": { "properties": { "image": "<partImage>:<cockOccupants>.idle.<bodyPersonality><cosmeticDirectives><directives>" } },
+
+					"duck": { "properties": { "image": "<partImage>:<cockOccupants>.duck.<frame><cosmeticDirectives><directives>" } },
+					"sit": { "properties": { "image": "<partImage>:<cockOccupants>.sit.<frame><cosmeticDirectives><directives>" } },
+					"lay": { "properties": { "image": "<partImage>:<cockOccupants>.lay.<frame><cosmeticDirectives><directives>" } },
+
+					"walk": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.walk.<frame><cosmeticDirectives><directives>" } },
+					"run": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.run.<frame><cosmeticDirectives><directives>" } },
+
+					"jump": { "properties": { "image": "<partImage>:<cockOccupants>.jump.<frame><cosmeticDirectives><directives>" } },
+					"fall": { "properties": { "image": "<partImage>:<cockOccupants>.fall.<frame><cosmeticDirectives><directives>" } },
+
+					"swim": { "properties": { "image": "<partImage>:<cockOccupants>.swim.<frame><cosmeticDirectives><directives>" } },
+					"swimIdle": { "properties": { "image": "<partImage>:<cockOccupants>.swimIdle.<frame><cosmeticDirectives><directives>" } },
+
+					"s_back": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_back.<frame><cosmeticDirectives><directives>" } },
+					"s_front": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_front.<frame><cosmeticDirectives><directives>" } },
+					"s_up": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_up.<frame><cosmeticDirectives><directives>" } },
+					"s_down": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.s_down.<frame><cosmeticDirectives><directives>" } }
+				}
+			}
+		}
+	},
+	{
+		"op" : "add",
+		"path" : "/transformationGroups/cockbob",
+		"value" : {
+			"interpolated": false
+		}
+	}
+
+
+]

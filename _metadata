@@ -7,6 +7,7 @@
 	"name" : "Starbecue",
 	"friendlyName" : "Starbecue",
 	"includes" : [
+		"starboundSpeciesAnimOverrides",
 		"StarboundSimpleVoreModVSO", "ssvm", // to make sure we overwrite anything from SSVM that we need to
 		"StardustLib", "QuickbarMini", // we use them for UIs
 		"FrackinUniverse" // have to include FU to make sure it loads after so it doesn't kill our goddam fireplace as its terrestrial worlds patch doesn't give a shit about other mods adding shit to garden planets
