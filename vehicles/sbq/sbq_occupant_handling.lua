@@ -225,7 +225,7 @@ function p.doVore(args, location, statuses, sound )
 		return true, function()
 			p.justAte = nil
 			p.transitionLock = false
-			vehicle.setInteractive( true )
+			p.checkDrivingInteract()
 			if sound then animator.playSound( sound ) end
 		end
 	else
@@ -242,7 +242,7 @@ function p.doEscape(args, statuses, afterstatus )
 	p.transitionLock = true
 	return true, function()
 		p.transitionLock = false
-		vehicle.setInteractive( true )
+		p.checkDrivingInteract()
 		p.uneat( victim )
 		--world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
 	end

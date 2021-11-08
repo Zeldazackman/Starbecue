@@ -10,7 +10,6 @@ p = {
 	},
 	occupant = {},
 	occupantSlots = 7, -- 0 indexed
-	occupantOffset = 1,
 	justAte = false,
 	justLetout = false,
 	nextIdle = 0,
@@ -230,8 +229,6 @@ function init()
 	if p.spawner then
 		p.spawnerUUID = world.entityUniqueId(p.spawner)
 	end
-
-	p.onForcedReset()	--Do a forced reset once.
 
 	local startState = config.getParameter( "startState" ) or p.settings.startState or p.sbqData.startState or "stand"
 	p.setState( startState )
@@ -495,18 +492,6 @@ function p.checkSpawnerExists()
 	end
 end
 
-function p.onForcedReset()
-	animator.setAnimationRate( 1.0 );
-	for i = 0, p.occupantSlots do
-		vehicle.setLoungeEnabled( "occupant"..i, false )
-	end
-
-	vehicle.setInteractive( true )
-
-	p.emoteCooldown = 0
-
-	onForcedReset()
-end
 
 function p.onDeath(eaten)
 	if p.spawner then

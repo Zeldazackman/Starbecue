@@ -19,16 +19,13 @@ Sprites created by:
 	-Wasabi_Raptor#1533		https://www.furaffinity.net/user/lokithevulpix/
 
 Scripts created by:
-	Zygan#0404 				<-did like 99% of the scripts
-	Wasabi_Raptor#1533 		<-did debugs and copied scripts around for things
+	Zygan#0404
+	Wasabi_Raptor#1533
 
 TODO:
 	-roaming behavior
 ]]--
 -------------------------------------------------------------------------------
-
-function onForcedReset( )	--helper function. If a victim warps, vanishes, dies, force escapes, this is called to reset me. (something went wrong)
-end
 
 function onBegin()	--This sets up the VSO ONCE.
 end

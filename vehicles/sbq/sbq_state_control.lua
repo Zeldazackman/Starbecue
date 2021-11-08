@@ -49,6 +49,8 @@ function p.checkDrivingInteract()
 	end
 end
 
+
+
 p.transitionLock = false
 p.movementLock = false
 
