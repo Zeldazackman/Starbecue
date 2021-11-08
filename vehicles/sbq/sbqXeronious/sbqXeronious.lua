@@ -39,6 +39,9 @@ end
 function p.update(dt)
 	p.whenFalling()
 	p.setGrabTarget()
+	if not p.heldControl(p.driverSeat, "primaryFire") and not p.heldControl(p.driverSeat, "altFire") then
+		p.succTime = math.max(0, p.succTime - p.dt)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -82,13 +85,21 @@ function checkEggSitup()
 	end
 end
 
+p.succTime = 0
+p.succing = false
 function succ(args)
-	if p.transitionLock then return end
-	p.facePoint(p.seats[p.driverSeat].controls.aim[1])
-	p.movement.aimingLock = 0.1
+	if p.transitionLock or p.succTime > 5 then return end
 
 	local globalSuccPosition = p.localToGlobal(p.stateconfig[p.state].actions.succ.position or {0,0})
 	local aim = p.seats[p.driverSeat].controls.aim
+
+	local magnitude = world.magnitude(globalSuccPosition, aim)
+	local range = 30
+	if magnitude > range then return end
+
+	p.succTime = p.succTime + p.dt
+	p.facePoint(p.seats[p.driverSeat].controls.aim[1])
+	p.movement.aimingLock = 0.1
 
 	local entities = world.entityLineQuery(globalSuccPosition, aim, {
 		withoutEntityId = entity.id()
@@ -99,7 +110,8 @@ function succ(args)
 		source = entity.id(),
 		speed = 15,
 		force = 500,
-		direction = p.direction
+		direction = p.direction,
+		range = range
 	}
 
 	for i, id in ipairs(entities) do
