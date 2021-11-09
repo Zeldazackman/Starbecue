@@ -101,7 +101,6 @@ function p.rotateArm(enabled, arm, LR)
 			victimAnim.last.y = math.sin(p.armRotation[arm.."Angle"]) * handOffset[2]
 		end
 
-
 		p.setPartTag( arm, "armVisible", "?multiply=FFFFFF00" )
 		p.setPartTag( arm.."_rotation", "armVisible", "" )
 	else
@@ -645,10 +644,6 @@ function p.partsAreStruggling(parts)
 end
 
 function p.setPartTag(part, tag, value)
-	if p.partTags[part] == nil then
-		p.partTags[part] = {}
-	end
-
 	p.partTags[part][tag] = value
 
 	if part == "global" then

@@ -117,9 +117,37 @@ function p.clearOccupant(i)
 	}
 end
 
+require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 
 function init()
+	p.sbqData = config.getParameter("sbqData")
+	p.directoryPath = config.getParameter("directoryPath")
+	p.cfgAnimationFile = config.getParameter("animation")
+	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
+	p.stateconfig = config.getParameter("states")
+	p.loungePositions = config.getParameter("loungePositions")
+	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
+	p.config = root.assetJson( "/sbqGeneral.config")
+	p.transformGroups = root.assetJson( p.cfgAnimationFile ).transformationGroups
+
+	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
+
+	p.spawner = config.getParameter("spawner")
+
+	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
+
+	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts) do
+		p.partTags[part] = {}
+	end
+
+	p.resetOccupantCount()
+
+	for i = 0, p.occupantSlots do
+		p.occupant[i] = p.clearOccupant(i)
+		p.seats["occupant"..i] = p.occupant[i]
+	end
+
 end
 
 function update(dt)
@@ -128,6 +156,10 @@ function update(dt)
 	p.dt = dt
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
+
+	p.sendPartTags()
+
+	p.updateControls(dt)
 
 	p.updateOccupants(dt)
 	p.handleStruggles(dt)
@@ -254,4 +286,13 @@ function p.checkTimers(dt)
 			end
 		end
 	end
+end
+
+function p.followOwner()
+	mcontroller.setPosition()
+end
+
+-------------------------------------------------------------------------------------------------------
+
+function state.stand.escape()
 end

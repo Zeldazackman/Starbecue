@@ -10,7 +10,7 @@
 	"materialKind" : "organic",
 
 	"directoryPath" : "/vehicles/sbq/sbqCharem/",
-	"animation" : "sbqCharem.animation",
+	"animation" : "/vehicles/sbq/sbqCharem/sbqCharem.animation",
 
 	"loungePositions" : {
 		"occupant0" : {

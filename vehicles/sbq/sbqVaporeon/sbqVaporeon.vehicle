@@ -10,7 +10,7 @@
 	"materialKind" : "organic",
 
 	"directoryPath" : "/vehicles/sbq/sbqVaporeon/",
-	"animation" : "sbqVaporeon.animation",
+	"animation" : "/vehicles/sbq/sbqVaporeon/sbqVaporeon.animation",
 
 	"loungePositions" : {
 		"occupant0" : {

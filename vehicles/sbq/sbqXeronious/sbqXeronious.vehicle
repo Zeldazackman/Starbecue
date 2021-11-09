@@ -10,7 +10,7 @@
 	"materialKind" : "organic",
 
 	"directoryPath" : "/vehicles/sbq/sbqXeronious/",
-	"animation" : "sbqXeronious.animation",
+	"animation" : "/vehicles/sbq/sbqXeronious/sbqXeronious.animation",
 
 	"loungePositions" : {
 		"occupant0" : {

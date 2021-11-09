@@ -15,7 +15,8 @@ p = {
 	nextIdle = 0,
 	swapCooldown = 0,
 	isPathfinding = false,
-	hunger = 100
+	hunger = 100,
+	emoteCooldown = 0
 }
 
 p.settings = {}
@@ -119,6 +120,7 @@ end
 
 require("/vehicles/sbq/sbq_animation.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
+require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_driving.lua")
 require("/vehicles/sbq/sbq_pathfinding.lua")
 require("/vehicles/sbq/sbq_replaceable_functions.lua")
@@ -131,9 +133,9 @@ function init()
 	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
 	p.stateconfig = config.getParameter("states")
 	p.loungePositions = config.getParameter("loungePositions")
-	p.animStateData = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).animatedParts.stateTypes
+	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/sbqGeneral.config")
-	p.transformGroups = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).transformationGroups
+	p.transformGroups = root.assetJson( p.cfgAnimationFile ).transformationGroups
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
@@ -150,10 +152,14 @@ function init()
 		p.resetTransformationGroup(transformGroup)
 	end
 
+	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
+
+	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts ) do
+		p.partTags[part] = {}
+	end
+
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
-
-	p.partTags.global = root.assetJson( p.directoryPath .. p.cfgAnimationFile ).globalTagDefaults
 
 	--[[
 	so, the thing is, we want this to move like an actor, even if it is a vehicle, so we have to have a little funny business,

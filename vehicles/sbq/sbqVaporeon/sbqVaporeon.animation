@@ -658,6 +658,45 @@
 				}
 			},
 
+			"frontarms_rotation": {
+				"properties": {
+					"centered": true,
+					"zLevel": 4,
+					"transformationGroups": ["flip", "frontarmsrotation", "armsbob", "bodybob"],
+					"armVisible" : "?multiply=FFFFFF00"
+				},
+				"partStates":{
+				}
+			},
+			"frontarms": {
+				"properties": {
+					"centered": true,
+					"zLevel": 4,
+					"transformationGroups": ["flip", "armsbob", "bodybob"]
+				},
+				"partStates": {
+				}
+			},
+			"backarms_rotation": {
+				"properties": {
+					"centered": true,
+					"zLevel": -4,
+					"transformationGroups": ["flip", "backarmsrotation", "armsbob", "bodybob"],
+					"armVisible" : "?multiply=FFFFFF00"
+				},
+				"partStates":{
+				}
+			},
+			"backarms": {
+				"properties": {
+					"centered": true,
+					"zLevel": -4,
+					"transformationGroups": ["flip", "armsbob", "bodybob"]
+				},
+				"partStates": {
+				}
+			},
+
 
 			"occupant0backarm": {
 				"properties": { "centered": true, "zLevel": -0.41, "transformationGroups": ["flip", "occupant0Position"] },
@@ -924,6 +963,15 @@
 		},
 		"occupant7Position": {
 			"interpolated": true
+		},
+		"frontarmsrotation": {
+			"interpolated": true
+		},
+		"backarmsrotation": {
+			"interpolated": true
+		},
+		"armsbob": {
+			"interpolated": false
 		},
 		"headbob": {
 			"interpolated": false

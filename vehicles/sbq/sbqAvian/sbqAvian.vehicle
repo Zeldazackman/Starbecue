@@ -10,7 +10,7 @@
 	"materialKind" : "organic",
 
 	"directoryPath" : "/vehicles/sbq/sbqAvian/",
-	"animation" : "sbqAvian.animation",
+	"animation" : "/vehicles/sbq/sbqAvian/sbqAvian.animation",
 
 	"loungePositions" : {
 		"occupant0" : {

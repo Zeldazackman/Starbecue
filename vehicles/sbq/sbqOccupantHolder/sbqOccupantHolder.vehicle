@@ -1,0 +1,122 @@
+{
+	"name" : "sbqOccupantHolder",
+	"script" : "sbqOH_main.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/sbq/sbqOccupantHolder/",
+	"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
+
+	"loungePositions" : {
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupant1Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupant2Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		}
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"sbqData" : {
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 }
+		},
+
+		"lights" : {
+			"prey" : {
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
+			}
+		},
+
+		"locations" :{
+			"belly" : { "max": 1, "digest" : true }
+		},
+		"victimAnimations": "/vehicles/sbq/sbqOccupantHolder/victim_animations.config"
+	},
+
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = occupant0 can press that direction to transition
+				"escapeOral" : {
+					"script" : "escape"
+				},
+				"escapeAnal" : {
+					"script" : "escape"
+				}
+			},
+			"struggle": {
+				"belly" : {
+					"parts" : ["belly"],
+					"directions" : {
+						"up": { "transition": "escapeOral", "indicate" : "red" },
+						"down": { "transition": "escapeAnal", "indicate" : "red" },
+						"front": {},
+						"back": {}
+					},
+					"chances": {
+						"easyEscape": { "min": 3, "max": 5 },
+						"normal": { "min": 5, "max": 7 },
+						"antiEscape": { "min": 10, "max": 14 }
+					}
+				}
+			}
+		}
+	}
+}
