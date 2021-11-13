@@ -118,3 +118,45 @@ function p.updateControls(dt)
 		end
 	end
 end
+
+p.monsterstrugglecooldown = {}
+
+function p.getSeatDirections(seatname)
+	local occupantId = p.seats[seatname].id
+	if not occupantId or not world.entityExists(occupantId) then return end
+
+	if world.entityType( occupantId ) ~= "player" then
+		if not p.monsterstrugglecooldown[seatname] or p.monsterstrugglecooldown[seatname] <= 0 then
+			local randomDirections = { "back", "front", "up", "down", "jump", nil}
+			p.monsterstrugglecooldown[seatname] = (math.random(10, 300)/100)
+			return randomDirections[math.random(1,6)]
+		else
+			p.monsterstrugglecooldown[seatname] = p.monsterstrugglecooldown[seatname] - p.dt
+			return
+		end
+	else
+		local direction = p.relativeDirectionName(p.seats[seatname].controls.dx, p.seats[seatname].controls.dy)
+		if direction then return direction end
+		if p.seats[seatname].controls.jump > 0 then
+			return "jump"
+		end
+	end
+end
+
+function p.relativeDirectionName(dx, dy)
+	local dx = dx * p.direction
+	if dx ~= 0 then
+		if dx >= 1 then
+			return "front"
+		else
+			return "back"
+		end
+	end
+	if dy ~= 0 then
+		if dy >= 1 then
+			return "up"
+		else
+			return "down"
+		end
+	end
+end

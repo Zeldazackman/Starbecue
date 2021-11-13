@@ -6,7 +6,13 @@ function init()
 	oldinit()
 end
 
+local inited
 function update(dt)
+	if not inited then
+		world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = entity.id() } )
+
+		inited = true
+	end
 	oldupdate(dt)
 end
 

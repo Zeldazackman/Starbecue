@@ -787,12 +787,6 @@ function p.getIndexFromEid(eid)
 	end
 end
 
-function p.getEidFromSeatname(seatname)
-	if p.seats[seatname] ~= nil then
-		return p.seats[seatname].id
-	end
-end
-
 function p.getIndexFromSeatname(seatname)
 	if p.seats[seatname] ~= nil then
 		return p.seats[seatname].index

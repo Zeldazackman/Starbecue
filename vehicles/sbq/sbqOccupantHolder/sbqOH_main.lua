@@ -1,4 +1,6 @@
-state = {}
+state = {
+	stand = {}
+}
 
 p = {
 	occupants = {
@@ -30,6 +32,10 @@ p.movement = {
 	airtime = 0,
 	groundMovement = "run",
 	aimingLock = 0
+}
+
+p.movementParams = {
+	mass = 0
 }
 
 p.seats = {} -- meant to be a redirect pointers to the occupant data
@@ -119,6 +125,7 @@ end
 
 require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
+require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 
 function init()
 	p.sbqData = config.getParameter("sbqData")
@@ -130,6 +137,8 @@ function init()
 	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/sbqGeneral.config")
 	p.transformGroups = root.assetJson( p.cfgAnimationFile ).transformationGroups
+
+
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
@@ -148,8 +157,14 @@ function init()
 		p.seats["occupant"..i] = p.occupant[i]
 	end
 
+	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
+
+	for _, script in ipairs(p.config.scripts) do
+		require(script)
+	end
 end
 
+p.totalTimeAlive = 0
 function update(dt)
 	p.checkSpawnerExists()
 	p.totalTimeAlive = p.totalTimeAlive + dt
@@ -157,7 +172,7 @@ function update(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
 
-	p.sendPartTags()
+	p.sendAnimData()
 
 	p.updateControls(dt)
 
@@ -172,6 +187,8 @@ end
 
 function p.checkSpawnerExists()
 	if p.spawner and world.entityExists(p.spawner) then
+		mcontroller.setPosition(world.entityPosition(p.spawner))
+
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "sbqPreyWarpRequest", {},
 		function(data)
@@ -288,9 +305,7 @@ function p.checkTimers(dt)
 	end
 end
 
-function p.followOwner()
-	mcontroller.setPosition()
-end
+
 
 -------------------------------------------------------------------------------------------------------
 
