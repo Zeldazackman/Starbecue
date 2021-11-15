@@ -605,3 +605,7 @@ function p.struggleChance(struggledata, struggler, movedir)
 	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
 	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
 end
+
+function p.inedible(occupantId)
+	return p.config.inedibleCreatures[world.entityType(occupantId)]
+end

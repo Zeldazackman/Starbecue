@@ -1,4 +1,10 @@
 [
+	{ "op" : "add", "path" : "/sounds/swallow", "value" : ["/sfx/objects/gulp.ogg"] },
+	{ "op" : "add", "path" : "/sounds/digest", "value" : ["/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg"] },
+	{ "op" : "add", "path" : "/sounds/lay", "value" : ["/sfx/objects/eggLay.ogg"] },
+	{ "op" : "add", "path" : "/sounds/struggle", "value" : ["/sfx/vore/struggle/burbslosh.ogg","/sfx/vore/struggle/blurbsquish2.ogg","/sfx/vore/struggle/blorbsquish.ogg","/sfx/vore/swallow/swallow (11).ogg"] },
+	{ "op" : "add", "path" : "/sounds/slurp", "value" : [ "/sfx/vore/common/slurp.ogg" ] },
+
 	{
 		"op" : "add",
 		"path" : "/animatedParts/stateTypes/bellyState",

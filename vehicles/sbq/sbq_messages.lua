@@ -96,3 +96,19 @@ end )
 message.setHandler( "addPrey", function (_,_, seatindex, data)
 	p.occupant[seatindex] = data
 end)
+
+message.setHandler( "requestEat", function (_,_, prey, voreType, location)
+	p.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
+		if enabled then
+			p.eat(prey, location)
+		end
+	end)
+end)
+
+message.setHandler( "requestUneat", function (_,_, prey, voreType)
+	p.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
+		if enabled then
+			p.uneat(prey)
+		end
+	end)
+end)

@@ -757,10 +757,6 @@ function p.isMonster( id )
 	return world.entityType(id) == "monster"
 end
 
-function p.inedible(occupantId)
-	return p.config.inedibleCreatures[world.entityType(occupantId)]
-end
-
 -------------------------------------------------------------------------------
 
 function p.getOccupantFromEid(eid)

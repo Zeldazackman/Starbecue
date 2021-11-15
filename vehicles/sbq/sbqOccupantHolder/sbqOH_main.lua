@@ -17,7 +17,9 @@ p = {
 	nextIdle = 0,
 	swapCooldown = 0,
 	isPathfinding = false,
-	hunger = 100
+	hunger = 100,
+	state = "stand",
+	direction = 1
 }
 
 p.settings = {}
@@ -156,6 +158,8 @@ function init()
 		p.occupant[i] = p.clearOccupant(i)
 		p.seats["occupant"..i] = p.occupant[i]
 	end
+	p.seats["occupantS"] = p.clearOccupant("S")
+	p.driverSeat = "occupantS"
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
@@ -305,9 +309,74 @@ function p.checkTimers(dt)
 	end
 end
 
+-------------------------------------------------------------------------------------------------------
 
+function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
+	if p.spawner ~= occupantId then return false end
+	local total = p.occupants.total
+	total = total + 1
+
+	if total > emptyslots or (total > locationslots and locationslots ~= -1) then return false end
+	if p.stateconfig[p.state].edible then
+		world.sendEntityMessage(source, "smolPreyData", seatindex,
+			p.getSmolPreyData(
+				p.settings,
+				world.entityName( entity.id() ),
+				p.state,
+				p.partTags,
+				p.seats[p.driverSeat].smolPreyData
+			),
+			entity.id()
+		)
+
+		local nextSlot = 1
+		for i = 1, p.occupantSlots do
+			if p.occupant[i].id ~= nil then
+				local location = p.occupant[i].location
+				local massMultiplier = 0
+
+				if location == "nested" then
+					location = p.occupant[i].nestedPreyData.ownerLocation
+				end
+				massMultiplier = p.sbqData.locations[location].mass or 0
+
+				if p.settings[location] ~= nil and p.settings[location].hyper then
+					massMultiplier = p.sbqData.locations[location].hyperMass or massMultiplier
+				end
+
+				if p.occupant[i].location == "nested" then
+					massMultiplier = massMultiplier * p.occupant[i].nestedPreyData.massMultiplier
+				end
+
+				local occupantData = sb.jsonMerge(p.occupant[i], {
+					location = "nested",
+					visible = false,
+					nestedPreyData = {
+						owner = p.driver,
+						location = p.occupant[i].location,
+						massMultiplier = massMultiplier,
+						digest = p.sbqData.locations[location].digest,
+						nestedPreyData = p.occupant[i].nestedPreyData
+					}
+				})
+				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
+				nextSlot = nextSlot+1
+			end
+		end
+		return true
+	end
+end
+
+-- to have any extra effects applied to those in digest locations
+function p.extraBellyEffects(i, eid, health, status)
+end
+
+-- to have effects applied to other locations, for example, womb if the predator does unbirth
+function p.otherLocationEffects(i, eid, health, status)
+end
 
 -------------------------------------------------------------------------------------------------------
 
-function state.stand.escape()
+function state.stand.escape(args)
+	p.uneat(args.id)
 end
