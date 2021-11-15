@@ -10,20 +10,19 @@ function p.updateAnims(dt)
 	end
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
-	p.armRotationUpdate()
 
 	for statename, state in pairs(p.animStateData) do
 		if state.animationState.time >= state.animationState.cycle then
-			p.endAnim(state)
+			p.endAnim(state, statename)
 		end
 	end
 end
 
-function p.endAnim(state)
-	for _, func in pairs(state.animationState.queue) do
+function p.endAnim(state, statename)
+	for _, func in pairs(p.animFunctionQueue[statename]) do
 		func()
 	end
-	state.animationState.queue = {}
+	p.animFunctionQueue[statename] = {}
 
 	if (state.tag ~= nil) and state.tag.reset then
 		if state.tag.part == "global" then
@@ -442,7 +441,7 @@ function p.queueAnimEndFunction(state, func, newPriority)
 	if newPriority then
 		p.animStateData[state].animationState.priority = newPriority
 	end
-	table.insert(p.animStateData[state].animationState.queue, func)
+	table.insert(p.animFunctionQueue[state], func)
 end
 
 function p.doAnim( state, anim, force)
@@ -460,8 +459,7 @@ function p.doAnim( state, anim, force)
 			priority = newPriority,
 			cycle = p.animStateData[state].states[anim].cycle,
 			frames = p.animStateData[state].states[anim].frames,
-			time = 0,
-			queue = {}
+			time = 0
 		}
 		animator.setAnimationState(state, anim, force)
 	end

@@ -13,9 +13,22 @@ message.setHandler("sbqUpdateAnimPartTag", function (_,_, part, animTags)
 	end
 end)
 
-message.setHandler("sbqDoAnims", function (_,_, animsName)
-	doAnims(self.speciesData.animations[animsName])
+message.setHandler("sbqDoAnimsName", function (_,_, animsName, force)
+	doAnims(self.speciesData.animations[animsName], force)
 end)
+
+message.setHandler("sbqDoAnims", function (_,_, anims, force)
+	doAnims(anims, force)
+end)
+
+message.setHandler("sbqDoAnimName", function (_,_, state, animName, force)
+	doAnim(state, self.speciesData.animations[animName], force)
+end)
+
+message.setHandler("sbqDoAnim", function (_,_, state, anim, force)
+	doAnim(state, anim, force)
+end)
+
 
 -- this function need to be replaced/modified because of stuff that would be in the chest area for say, breast vore
 function setCosmetic.chest(cosmetic)

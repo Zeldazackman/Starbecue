@@ -3,15 +3,16 @@ function init()
 	self.offsets = {enabled = false, parts = {}}
 	self.rotating = {enabled = false, parts = {}}
 	self.animStateData = root.assetJson("/objects/sbq/sbqShop/sbqShopAuri/sbqShopAuri.animation").animatedParts.stateTypes
-	for _, state in pairs(self.animStateData) do
+	self.animFunctionQueue = {}
+	for statename, state in pairs(self.animStateData) do
 		state.animationState = {
 			anim = state.default,
 			priority = state.states[state.default].priority,
 			cycle = state.states[state.default].cycle,
 			frames = state.states[state.default].frames,
-			time = 0,
-			queue = {},
+			time = 0
 		}
+		self.animFunctionQueue[statename] = {}
 		state.tag = nil
 	end
 end
@@ -155,16 +156,16 @@ function updateAnims(dt)
 
 	for statename, state in pairs(self.animStateData) do
 		if state.animationState.time >= state.animationState.cycle then
-			endAnim(state)
+			endAnim(state, statename)
 		end
 	end
 end
 
-function endAnim(state)
-	for _, func in pairs(state.animationState.queue) do
+function endAnim(state, statename)
+	for _, func in pairs(self.animFunctionQueue[statename]) do
 		func()
 	end
-	state.animationState.queue = {}
+	self.animFunctionQueue[statename] = {}
 
 	if (state.tag ~= nil) and state.tag.reset then
 		if state.tag.part == "global" then
@@ -207,8 +208,7 @@ function doAnim( state, anim, force )
 			priority = newPriority,
 			cycle = self.animStateData[state].states[anim].cycle,
 			frames = self.animStateData[state].states[anim].frames,
-			time = 0,
-			queue = {}
+			time = 0
 		}
 		animator.setAnimationState(state, anim, force)
 	end
@@ -218,7 +218,7 @@ function queueAnimEndFunction(state, func, newPriority)
 	if newPriority then
 		self.animStateData[state].animationState.priority = newPriority
 	end
-	table.insert(self.animStateData[state].animationState.queue, func)
+	table.insert(self.animFunctionQueue[state], func)
 end
 
 function setAnimTag(anim)

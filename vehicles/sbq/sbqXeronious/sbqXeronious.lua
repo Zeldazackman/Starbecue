@@ -35,6 +35,7 @@ end
 
 function p.update(dt)
 	p.whenFalling()
+	p.armRotationUpdate()
 	p.setGrabTarget()
 	if not p.heldControl(p.driverSeat, "primaryFire") and not p.heldControl(p.driverSeat, "altFire") then
 		p.succTime = math.max(0, p.succTime - p.dt)

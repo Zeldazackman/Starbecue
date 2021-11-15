@@ -127,6 +127,8 @@ end
 
 require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
+require("/vehicles/sbq/sbq_state_control.lua")
+
 require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 
 function init()
@@ -151,6 +153,20 @@ function init()
 	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts) do
 		p.partTags[part] = {}
 	end
+
+	p.animFunctionQueue = {}
+	for statename, state in pairs(p.animStateData) do
+		state.animationState = {
+			anim = state.default,
+			priority = state.states[state.default].priority,
+			cycle = state.states[state.default].cycle,
+			frames = state.states[state.default].frames,
+			time = 0
+		}
+		p.animFunctionQueue[statename] = {}
+		state.tag = nil
+	end
+
 
 	p.resetOccupantCount()
 
@@ -308,6 +324,23 @@ function p.checkTimers(dt)
 		end
 	end
 end
+
+function p.occupantArray( maybearray )
+	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
+		if maybearray.location then
+			if maybearray.failOnFull then
+				if (maybearray.failOnFull ~= true) and (p.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
+				elseif p.locationFull(maybearray.location) then return maybearray.failTransition end
+			else
+				if p.locationEmpty(maybearray.location) then return maybearray.failTransition end
+			end
+		end
+		return maybearray
+	else -- pick one depending on number of occupants
+		return maybearray[(p.occupants[maybearray[1].location or "total"] or 0) + 1]
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------
 

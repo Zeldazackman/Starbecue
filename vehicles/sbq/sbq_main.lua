@@ -183,7 +183,8 @@ function init()
 		p.seats["occupant"..i] = p.occupant[i]
 	end
 
-	for _, state in pairs(p.animStateData) do
+	p.animFunctionQueue = {}
+	for statename, state in pairs(p.animStateData) do
 		state.animationState = {
 			anim = state.default,
 			priority = state.states[state.default].priority,
@@ -193,6 +194,7 @@ function init()
 			queue = {},
 		}
 		state.tag = nil
+		p.animFunctionQueue[statename] = {}
 	end
 
 	p.driver = config.getParameter( "driver" )

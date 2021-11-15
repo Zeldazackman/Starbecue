@@ -22,7 +22,7 @@ end
 
 function handleInteract(args)
 	local distance = entity.distanceToEntity(args.sourceId)
-	if entity.entityInSight(args.sourceId) and ( math.abs(distance[1]) <= 3 ) and ( math.abs(distance[2]) <= 3 ) then
+	if entity.entityInSight(args.sourceId) and ( math.abs(distance[1]) <= 5 ) and ( math.abs(distance[2]) <= 5 ) then
 		requestEat(args.sourceId, "oralVore", "belly")
 	end
 end
