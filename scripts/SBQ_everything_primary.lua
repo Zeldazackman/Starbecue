@@ -25,15 +25,15 @@ function sbq.everything_primary()
 		status.addEphemeralEffect("sbqSucc", 1, data.source)
 	end)
 
-	message.setHandler("sbqIsPreyEnabled", function(_,_, type)
+	message.setHandler("sbqIsPreyEnabled", function(_,_, voreType)
 		if (status.statusProperty("sbqPreyEnabled") or {}).enabled == false then return false end
 
-		if (status.statusProperty("sbqPreyEnabled") or {})[type] == nil then
+		if (status.statusProperty("sbqPreyEnabled") or {})[voreType] == nil then
 			local entityType = world.entityType(entity.id())
 			local curEnabled = status.statusProperty("sbqPreyEnabled") or {}
 			local defaults = root.assetJson("/sbqGeneral.config:defaultPreyEnabled")
 			status.setStatusProperty("sbqPreyEnabled", sb.jsonMerge( defaults[entityType], curEnabled))
 		end
-		return (status.statusProperty("sbqPreyEnabled") or {})[type]
+		return (status.statusProperty("sbqPreyEnabled") or {})[voreType]
 	end)
 end
