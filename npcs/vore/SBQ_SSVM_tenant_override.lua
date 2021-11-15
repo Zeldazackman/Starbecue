@@ -36,7 +36,6 @@ end
 
 local oldFeed = feed
 function feed() -- function copied from SSVM mostly because it gets its target within it, can't put some check surrounding it
-	sb.logInfo("feed")
 	--check area for prey
 	local people = world.entityQuery( mcontroller.position(), 7, {
 		withoutEntityId = entity.id(),
@@ -121,8 +120,6 @@ end
 
 local oldReqFeed = reqFeed
 function reqFeed(input) -- since reqFeed() has an input source from the start, we can just wrap our check around it
-	sb.logInfo("reqFeed")
-
 	addRPC(world.sendEntityMessage(input.sourceId, "sbqIsPreyEnabled", sbqPredType), function(enabled)
 		if enabled then
 			oldReqFeed(input)

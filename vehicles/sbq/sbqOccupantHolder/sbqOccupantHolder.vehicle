@@ -92,6 +92,7 @@
 
 	"states": {
 		"stand": {
+			"edible" : true,
 			"transitions": {
 				// directional = occupant0 can press that direction to transition
 				"escapeOral" : {

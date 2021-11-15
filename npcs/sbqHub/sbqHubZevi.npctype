@@ -30,19 +30,75 @@
 	],
 	"scriptConfig" : {
 		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
-		"sbqPreyEnabled" : {
-			"enabled" : true
-		},
-		"sbqData" : {
-			"locations" :{
-				"belly" : { "max": 1, "digest" : true },
-				"cock" : { "max": 1 }
-			}
-		},
 		"speciesAnimOverrideData" : {
 			"species" : "sbqZevi",
 			"directives" : "?replace;418093=418093fb?replace;57a3b9=57a3b9fb?replace;70b9cf=70b9cffb"
 		},
+
+		"sbqPreyEnabled" : {
+			"enabled" : true
+		},
+
+		"sbqData" : {
+			"locations" :{
+				"belly" : { "max": 1, "digest" : true },
+				"cock" : { "max": 1 }
+			},
+			"defaultSettings" : {},
+			"allowedModifiers" : {
+				"fatten": {"min": 0, "max": 2},
+				"escapeDifficulty": {"min": -1, "max": 1},
+				"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+				"bellyMultiplier": {"min": 0, "max": 100},
+				"displayDigest": "bool"
+			}
+		},
+		"states": {
+			"stand": {
+				"edible" : true,
+				"transitions": {
+					// directional = occupant0 can press that direction to transition
+					"escapeOral" : {
+						"script" : "escape"
+					},
+					"escapeAnal" : {
+						"script" : "escape"
+					}
+				},
+				"struggle": {
+					"belly" : {
+						"parts" : ["belly"],
+						"directions" : {
+							"up": { "transition": "escapeOral", "indicate" : "red" },
+							"down": { "transition": "escapeAnal", "indicate" : "red" },
+							"front": {},
+							"back": {}
+						},
+						"chances": {
+							"easyEscape": { "min": 3, "max": 5 },
+							"normal": { "min": 5, "max": 7 },
+							"antiEscape": { "min": 10, "max": 14 }
+						}
+					},
+					"cock" : {
+						"parts" : ["cock"],
+						"directions" : {
+							"up": { "transition": "escapeOral", "indicate" : "red" },
+							"down": {},
+							"front": {},
+							"back": {}
+						},
+						"chances": {
+							"easyEscape": { "min": 3, "max": 5 },
+							"normal": { "min": 5, "max": 7 },
+							"antiEscape": { "min": 10, "max": 14 }
+						}
+					}
+
+				}
+			}
+		},
+
 
 		"dialog" : {
 			"greeting" : {

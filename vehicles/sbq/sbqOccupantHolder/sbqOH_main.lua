@@ -142,8 +142,6 @@ function init()
 	p.config = root.assetJson( "/sbqGeneral.config")
 	p.transformGroups = root.assetJson( p.cfgAnimationFile ).transformationGroups
 
-
-
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
 	p.spawner = config.getParameter("spawner")
@@ -167,6 +165,9 @@ function init()
 		state.tag = nil
 	end
 
+	if p.spawner then
+		p.spawnerUUID = world.entityUniqueId(p.spawner)
+	end
 
 	p.resetOccupantCount()
 
@@ -192,7 +193,9 @@ function update(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
 
-	p.sendAnimData()
+	p.updateVisibility()
+
+	p.getAnimData()
 
 	p.updateControls(dt)
 

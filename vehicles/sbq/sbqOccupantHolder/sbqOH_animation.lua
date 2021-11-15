@@ -3,7 +3,10 @@ function p.setPartTag(part, tag, value)
 	p.partTags[part][tag] = value
 end
 
-function p.sendAnimData()
+function p.getAnimData()
+	p.loopedMessage("getAnimData", p.spawner, "sbqGetAnimData", {p.partTags}, function(animData)
+		p.animStateData = animData
+	end)
 end
 
 function p.doAnims( anims, force )
@@ -39,4 +42,12 @@ end
 
 function p.animationIs(state, anim)
 	return p.animStateData[state].animationState.anim == anim
+end
+
+function p.updateVisibility()
+	for i = 0, 7 do
+		if not p.occupant[i].visible and p.occupant[i].id ~= nil then
+			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "sbqInvisible")
+		end
+	end
 end

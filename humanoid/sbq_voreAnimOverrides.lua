@@ -29,6 +29,13 @@ message.setHandler("sbqDoAnim", function (_,_, state, anim, force)
 	doAnim(state, anim, force)
 end)
 
+message.setHandler("sbqGetAnimData", function (_,_, partTags)
+	for tag, value in pairs(partTags.global) do
+		animator.setGlobalTag(tag, value)
+	end
+	return self.animStateData
+end)
+
 
 -- this function need to be replaced/modified because of stuff that would be in the chest area for say, breast vore
 function setCosmetic.chest(cosmetic)
@@ -63,6 +70,12 @@ function setCosmetic.chest(cosmetic)
 		animator.setPartTag("backarms_rotation_cosmetic", "partImage", backSleeve )
 		animator.setPartTag("frontarms_rotation_cosmetic", "partImage", frontSleeve )
 
+		if frontMask ~= nil and frontMask ~= "" then
+			animator.setGlobalTag( "frontarmsMask", "?addmask="..frontMask )
+		end
+		if backMask ~= nil and backMask ~= "" then
+			animator.setGlobalTag( "backarmsMask", "?addmask="..backMask )
+		end
 	else
 		animator.setPartTag("chest_cosmetic", "partImage", "" )
 		animator.setPartTag("breasts_cosmetic", "partImage", "" )
@@ -71,6 +84,9 @@ function setCosmetic.chest(cosmetic)
 		animator.setPartTag("frontarms_cosmetic", "partImage", "" )
 		animator.setPartTag("backarms_rotation_cosmetic", "partImage", "" )
 		animator.setPartTag("frontarms_rotation_cosmetic", "partImage", "" )
+
+		animator.setGlobalTag( "frontarmsMask", "" )
+		animator.setGlobalTag( "backarmsMask", "" )
 	end
 end
 
@@ -95,10 +111,10 @@ function setCosmetic.legs(cosmetic)
 		animator.setPartTag("cock_cosmetic", "cosmeticDirectives", cosmeticDirectives )
 		animator.setPartTag("cock_cosmetic", "partImage", fixFilepath(item.config[self.gender.."CockFrames"], item) )
 
-		if mask ~= nil then
+		if mask ~= nil and mask ~= "" then
 			animator.setGlobalTag( "bodyMask", "?addmask="..mask )
 		end
-		if tailMask ~= nil then
+		if tailMask ~= nil and mask ~= "" then
 			animator.setGlobalTag( "tailMask", "?addmask="..tailMask )
 		end
 	else
