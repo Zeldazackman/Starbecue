@@ -49,7 +49,7 @@ function p.clearOccupant(i)
 		index = i,
 		id = nil,
 		statList = p.sbqData.occupantStatusEffects or {},
-		visible = true,
+		visible = false,
 		emote = "idle",
 		dance = "idle",
 		location = nil,

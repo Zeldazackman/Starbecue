@@ -6,6 +6,6 @@
 	"uniqueBy" : "path",
 	"scripts" : [ "sbqPredatorSelectorSettings.lua" ],
 	"children" : [
-		{ "type" : "scrollArea", "id" : "predatorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+		{ "type" : "scrollArea", "id" : "predatorScrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 	]
 }
