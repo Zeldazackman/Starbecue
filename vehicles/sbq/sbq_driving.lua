@@ -200,26 +200,8 @@ function p.doClickActions(state, dt)
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
 	if not (state.actions ~= nil and state.defaultActions ~= nil) then return end
-	if p.grabbing ~= nil then
-		if p.pressControl(p.driverSeat, "primaryFire") then
-			p.uneat(p.grabbing)
-			local transition
-			local victim = p.grabbing
-			p.grabbing = nil
-			local angle = p.armRotation.frontarmsAngle * 180/math.pi
 
-			if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
-				transition = "eat"
-			elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
-				transition = "analEat"
-			end
-			p.doTransition(transition, {id = victim})
-
-		elseif p.pressControl(p.driverSeat, "altFire") then
-			p.uneat(p.grabbing)
-		end
-		return
-	end
+	if p.grabbing ~= nil then p.handleGrab() return end
 
 	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
 		if not p.movement.assignClickActionRadial then
@@ -334,10 +316,10 @@ function p.assignClickActionMenu(state)
 			name = "unassigned",
 			icon = "/items/active/sbqController/unassigned.png"
 		})
-	for action, _ in pairs(state.actions) do
+	for action, data in pairs(state.actions) do
 		table.insert(options, {
 			name = action,
-			icon = "/items/active/sbqController/"..action..".png"
+			icon = data.icon or "/items/active/sbqController/"..action..".png"
 		})
 	end
 

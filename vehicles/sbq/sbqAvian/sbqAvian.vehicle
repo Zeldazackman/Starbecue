@@ -239,14 +239,16 @@
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
-				"back": { "transition": "down", "chance": 20 },
-				"petAnimation": true
+				"back": { "transition": "down", "chance": 20 }
+			},
+			"defaultActions" : ["grab", "vore"],
+			"actions" : {
+				"vore" : {},
+				"oralVore" : {},
+				"cockVore" : {},
+				"grab" : {}
 			},
 			"control": {
-				"defaultClickActions" : [],
-				"actions" : {
-
-				},
 				"animations": {
 					"walk": {
 						"arms": "walk",
@@ -324,13 +326,14 @@
 			},
 
 			"interact": {
-				"petAnimation": true
+			},
+			"defaultActions" : ["vore", "vore"],
+			"actions" : {
+				"vore" : {},
+				"oralVore" : {},
+				"cockVore" : {}
 			},
 			"control": {
-				"defaultClickActions" : [],
-				"actions" : {
-
-				},
 				"animations": {
 					"walk": {
 						"arms": "smol.walk",
@@ -343,7 +346,6 @@
 								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob"]}
 							]
 						}
-
 					},
 					"run": {
 						"arms": "smol.run",

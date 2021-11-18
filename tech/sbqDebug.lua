@@ -1,19 +1,16 @@
 local pressed = true
 local rpcSettings = "send"
-local settings = {
-	bellyEffect = "",
-	clickmode = "attack",
-}
+local settings
+local pred = "sbqAvian"
 
 function update(args)
 	if rpcSettings == "send" then
-		rpcSettings = world.sendEntityMessage( entity.id(), "sbqLoadSettings", "avian" )
+		rpcSettings = world.sendEntityMessage( entity.id(), "sbqLoadSettings")
 	elseif rpcSettings ~= nil and rpcSettings:finished() then
 		if rpcSettings:succeeded() then
 			local result = rpcSettings:result()
 			if result ~= nil then
-				if result.autoDeploy then args.moves["special1"] = true end
-				settings = sb.jsonMerge( settings, result ) -- any missing settings fill in from defaults
+				settings = result
 			end
 		else
 			sb.logError( "Couldn't load SBQ debug settings." )
@@ -22,8 +19,7 @@ function update(args)
 		rpcSettings = nil
 	end
 	if args.moves["special1"] and not pressed then
-		local position = mcontroller.position()
-		world.spawnVehicle( "sbqAvian", { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = settings, direction = mcontroller.facingDirection()  } )
+		world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
 	end
 	pressed = args.moves["special1"]
 end

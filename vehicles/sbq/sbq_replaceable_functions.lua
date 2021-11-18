@@ -18,6 +18,27 @@ end
 function p.pathfinding(dt)
 end
 
+-- for handling the grab action when clicked, some things may want to handle it differently
+function p.handleGrab()
+	if p.pressControl(p.driverSeat, "primaryFire") then
+		p.uneat(p.grabbing)
+		local transition
+		local victim = p.grabbing
+		p.grabbing = nil
+		local angle = p.armRotation.frontarmsAngle * 180/math.pi
+
+		if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
+			transition = "eat"
+		elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
+			transition = "analEat"
+		end
+		p.doTransition(transition, {id = victim})
+
+	elseif p.pressControl(p.driverSeat, "altFire") then
+		p.uneat(p.grabbing)
+	end
+end
+
 -- for letting out prey, some predators might wand more specific logic regarding this
 function p.letout(id)
 	local id = id
