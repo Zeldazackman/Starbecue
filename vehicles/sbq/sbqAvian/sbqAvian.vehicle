@@ -113,7 +113,11 @@
 			"replaceColors" : [1,1,1]
 
 		},
-
+		"replaceColorNames" : [
+			"Main Body",
+			"Belly",
+			"Beak"
+		],
 		"replaceColors" : [
 			[
 				["ffca8a", "e0975c", "a85636", "6f2919"], // the first entry in these lists will be the color to replace

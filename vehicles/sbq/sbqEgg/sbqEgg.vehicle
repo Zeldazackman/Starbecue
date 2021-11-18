@@ -102,9 +102,14 @@
 				"pointLight" : true
 			}
 		},
+
 		"defaultSettings" : {
 			"replaceColors" : [1,1]
 		},
+		"replaceColorNames" : [
+			"Egg Spots",
+			"Eggshell"
+		],
 		"replaceColors" : [ // every color must be defined, even if you don't plan on having a replace option for it if you want it to follow the fullbright rules
 			[
 				["678857", "779e64", "9ccd83"], // egg spots
