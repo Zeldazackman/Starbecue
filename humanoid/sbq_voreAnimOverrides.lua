@@ -1,3 +1,5 @@
+---@diagnostic disable:undefined-global
+
 local oldInitAfterInit = initAfterInit
 local oldDoUpdate = doUpdate
 

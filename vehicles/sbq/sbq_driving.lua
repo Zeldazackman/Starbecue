@@ -319,7 +319,7 @@ function p.assignClickActionMenu(state)
 	for action, data in pairs(state.actions) do
 		table.insert(options, {
 			name = action,
-			icon = data.icon or "/items/active/sbqController/"..action..".png"
+			icon = data.icon or ("/items/active/sbqController/"..action..".png")
 		})
 	end
 

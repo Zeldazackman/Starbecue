@@ -1,3 +1,5 @@
+---@diagnostic disable:undefined-global
+
 local oldUpdate = update
 local oldInit = init
 

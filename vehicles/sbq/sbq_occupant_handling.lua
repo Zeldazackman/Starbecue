@@ -195,7 +195,6 @@ function p.findFirstOccupantIdForLocation(location)
 			return p.occupant[i].id, i
 		end
 	end
-	return
 end
 
 

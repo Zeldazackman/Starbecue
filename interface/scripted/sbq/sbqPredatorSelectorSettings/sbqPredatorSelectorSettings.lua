@@ -1,3 +1,5 @@
+---@diagnostic disable:undefined-global
+
 sbq = {
 	sbqSettings = player.getProperty("sbqSettings") or {}
 }
