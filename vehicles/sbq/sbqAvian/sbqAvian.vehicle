@@ -287,7 +287,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
+								{"y": [4], "groups": ["headbob", "bodybob", "armsbob"]}
 							]
 						}
 					},
@@ -299,7 +299,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [4, 4, 4, 4], "groups": ["headbob", "bodybob"]}
+								{"y": [4], "groups": ["headbob", "bodybob", "armsbob"]}
 							]
 						}
 
@@ -373,7 +373,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
+								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
 							]
 						}
 					},
@@ -385,7 +385,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [2, 2, 2, 2], "groups": ["headbob", "bodybob"]}
+								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
 							]
 						}
 					}
