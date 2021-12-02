@@ -31,7 +31,6 @@
 	Avar
 	Canary
 	Silverwind93
-	amber310
 	stevie
 	Maxel Noone
 	Lakota Amitola

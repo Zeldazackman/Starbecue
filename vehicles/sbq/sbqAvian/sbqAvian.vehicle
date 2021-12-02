@@ -213,6 +213,7 @@
 				"arms": "idle",
 				"legs": "idle",
 				"head": "idle",
+				"cock": "idle",
 				"offset" : {
 					"parts" : [
 						{}
@@ -317,6 +318,7 @@
 				"arms": "smol.idle",
 				"legs": "smol.idle",
 				"head": "smol.idle",
+				"cock": "smol.idle",
 				"offset" : {
 					"parts" : [
 						{}
