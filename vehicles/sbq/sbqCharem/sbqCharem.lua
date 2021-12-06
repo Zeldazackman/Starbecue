@@ -14,19 +14,19 @@ function onEnd()
 end
 
 function state.back.eat( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function state.back.anal( args )
-	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function state.back.analescape( args )
-	return p.doEscape(args, {"vsoindicateguts"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {}, {} )
 end
 
 function state.back.escape( args )
-	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function state.back.bed( args )
@@ -52,17 +52,17 @@ end
 ---------------------------------------------------------------------------
 
 function state.hug.eat( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function state.hug.anal( args )
-	return p.doVore(args, "belly", {"vsoindicateguts"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function state.hug.analescape( args )
-	return p.doEscape(args, {"vsoindicateguts"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {}, {} )
 end
 
 function state.hug.escape( args )
-	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end

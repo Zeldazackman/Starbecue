@@ -154,19 +154,19 @@ end
 
 function grabOralEat(args)
 	p.grabbing = args.id
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function oralEat(args)
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function tailEat(args)
-	return p.doVore(args, "tail", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "tail", {}, "swallow")
 end
 
 function analEat(args)
-	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function sitAnalEat(args)
@@ -203,15 +203,15 @@ function sitCheckAnal()
 end
 
 function escapeOral(args)
-	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function escapeAnal(args)
-	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {}, {} )
 end
 
 function escapeTail(args)
-	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function checkVore()

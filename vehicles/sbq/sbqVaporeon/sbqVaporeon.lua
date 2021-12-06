@@ -56,11 +56,11 @@ function p.changeSize()
 end
 
 function escapeAnal(args)
-	return p.doEscape(args, {"vsoindicateout"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {}, {} )
 end
 
 function eatAnal(args)
-	return p.doVore(args, "belly", {"vsoindicateout"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 -------------------------------------------------------------------------------
@@ -72,12 +72,12 @@ end
 
 function state.stand.eat( args )
 	if not mcontroller.onGround() or p.movement.falling then return false end
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.letout( args )
 	if not mcontroller.onGround() or p.movement.falling then return false end
-	return p.doEscape(args, {"vsoindicatemaw"}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function state.stand.vore()

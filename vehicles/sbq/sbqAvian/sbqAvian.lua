@@ -42,11 +42,11 @@ function cockVore(args)
 end
 
 function cockEscape(args)
-	return p.doEscape(args, {}, {"droolsoaked", 5} )
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function oralVore(args)
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+	return p.doVore(args, "belly", {}, "swallow")
 end
 
 function checkVore()

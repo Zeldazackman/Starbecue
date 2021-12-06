@@ -220,7 +220,7 @@ function p.doVore(args, location, statuses, sound )
 		vehicle.setInteractive( false )
 		p.showEmote("emotehappy")
 		p.transitionLock = true
-		--vsoVictimAnimSetStatus( "occupant"..i, statuses );
+		world.sendEntityMessage( args.id, "sbqApplyStatusEffects", statuses )
 		return true, function()
 			p.justAte = nil
 			p.transitionLock = false
@@ -232,24 +232,18 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
-function p.doEscape(args, statuses, afterstatus )
+function p.doEscape(args, statuses, afterstatuses )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
 
 	vehicle.setInteractive( false )
-	--vsoVictimAnimSetStatus( "occupant"..i, statuses );
+	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
 	p.transitionLock = true
 	return true, function()
 		p.transitionLock = false
 		p.checkDrivingInteract()
 		p.uneat( victim )
-		--world.sendEntityMessage( victim, "applyStatusEffect", afterstatus.status, afterstatus.duration, entity.id() )
-	end
-end
-
-function p.applyStatusEffects(eid, statuses)
-	for i = 1, #statuses do
-		world.sendEntityMessage(eid, "applyStatusEffect", statuses[i][1], statuses[i][2], entity.id())
+		world.sendEntityMessage( victim, "sbqApplyStatusEffects", afterstatuses )
 	end
 end
 
