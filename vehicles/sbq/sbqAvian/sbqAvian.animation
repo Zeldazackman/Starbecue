@@ -38,6 +38,50 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+
+					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
+
+					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
+				}
+			},
+
+			"balls_RState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+
+					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
+
+					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
+				}
+			},
+			"balls_LState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -227,6 +271,9 @@
 						"idle": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.idle.<frame><directives><bellymask>" } },
 						"run": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.run.<frame><directives><bellymask>" } },
 
+						"jump": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.jump.<frame><directives><bellymask>" } },
+						"fall": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.fall.<frame><directives><bellymask>" } },
+
 						"eat": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.stand.eat.<frame><directives><bellymask>" } },
 						"escape": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.stand.escape.<frame><directives><bellymask>" } },
 
@@ -243,6 +290,61 @@
 					}
 				}
 			},
+			"balls_L": {
+				"properties": {
+					"centered": true,
+					"zLevel": -0.91,
+					"transformationGroups": ["flip", "bodybob"]
+				},
+				"partStates": {
+					"balls_LState": {
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.idle.<frame><directives><bellymask>" } },
+						"run": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.run.<frame><directives><bellymask>" } },
+
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.escape.<frame><directives><bellymask>" } },
+
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_balls_L.png:<shaftoccupants>.stand.s_down.<frame><directives><bellymask>" } },
+
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/balls_L.png:<shaftoccupants>.idle.<frame><directives><bellymask>" } },
+						"smol.run": { "properties": { "image": "skins/<skin>/normal/balls_L.png:<shaftoccupants>.run.<frame><directives><bellymask>" } },
+
+						"none": { "properties": {} }
+
+					}
+				}
+			},
+			"balls_R": {
+				"properties": {
+					"centered": true,
+					"zLevel": -0.92,
+					"transformationGroups": ["flip", "bodybob"]
+				},
+				"partStates": {
+					"balls_RState": {
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.idle.<frame><directives><bellymask>" } },
+						"run": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.run.<frame><directives><bellymask>" } },
+
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.escape.<frame><directives><bellymask>" } },
+
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_balls_R.png:<shaftoccupants>.stand.s_down.<frame><directives><bellymask>" } },
+
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/balls_R.png:<shaftoccupants>.idle.<frame><directives><bellymask>" } },
+						"smol.run": { "properties": { "image": "skins/<skin>/normal/balls_R.png:<shaftoccupants>.run.<frame><directives><bellymask>" } },
+
+						"none": { "properties": {} }
+
+					}
+				}
+			},
+
 
 			"frontarms": {
 				"properties": {

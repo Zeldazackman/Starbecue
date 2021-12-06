@@ -271,6 +271,7 @@
 						"arms": "run",
 						"legs": "run",
 						"body": "run",
+						"cock": "run",
 						"offset": {
 							"timing": "legs",
 							"loop": true,
@@ -284,6 +285,7 @@
 						"legs": "jump",
 						"arms": "jump",
 						"body": "idle",
+						"cock": "jump",
 						"offset": {
 							"timing": "legs",
 							"loop": true,
@@ -296,6 +298,7 @@
 						"legs": "fall",
 						"arms": "fall",
 						"body": "idle",
+						"cock": "fall",
 						"offset": {
 							"timing": "legs",
 							"loop": true,
