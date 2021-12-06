@@ -18,6 +18,8 @@ end
 
 function p.update(dt)
 	p.changeSize()
+	p.armRotationUpdate()
+	p.setGrabTarget()
 end
 
 function p.changeSize()
@@ -31,15 +33,48 @@ function p.changeSize()
 	end
 end
 
+function grab()
+	p.grab("hug")
+end
+
+function cockVore(args)
+	return p.doVore(args, "shaft", {}, "swallow")
+end
+
+function cockEscape(args)
+	return p.doEscape(args, {}, {"droolsoaked", 5} )
+end
+
+function oralVore(args)
+	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
+end
+
+function checkVore()
+	if checkOralVore() then return true end
+	if checkCockVore() then return true end
+end
+
+function checkOralVore()
+	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "eat")
+end
+
+function checkCockVore()
+	return p.checkEatPosition(p.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
+end
+
+
 -------------------------------------------------------------------------------
 function state.stand.begin()
 	p.setMovementParams( "default" )
 	p.resolvePosition(5)
 end
 
-function state.stand.eat( args )
-	return p.doVore(args, "belly", {"vsoindicatemaw"}, "swallow")
-end
+state.stand.eat = oralVore
+state.stand.cockVore = cockVore
+state.stand.cockEscape = cockEscape
+
+state.stand.checkCockVore = checkCockVore
+state.stand.checkOralVore = checkOralVore
 
 -------------------------------------------------------------------------------
 

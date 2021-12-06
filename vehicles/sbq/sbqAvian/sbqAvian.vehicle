@@ -183,16 +183,11 @@
 				"eat": { // 3 occupants
 					"location" : "belly",
 					"failOnFull" : true,
+					"lock" : true,
 					"animation": {
 						"body": "eat",
 						"arms": "rotation",
-						"head": "eat",
-						"rotate": {
-							"parts": [
-								{ "groups": ["frontarmsrotation"], "center": [1,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]},
-								{ "groups": ["backarmsrotation"], "center": [1.75,1.25], "rotation": [1,45, 70, 70, 45, 1, -45, -90]}
-							]
-						}
+						"head": "eat"
 					},
 					"victimAnimation": "playereat",
 					"script": "eat"
@@ -200,11 +195,33 @@
 
 				"escapeOral": { // 1 occupants
 					"location" : "belly",
+					"lock" : true,
 					"animation": {
 						"body": "escape",
 						"head": "escape"
 					},
 					"victimAnimation": "escape"
+				},
+
+				"cockVore": { // 1 occupant
+					"location" : "shaft",
+					"failOnFull" : true,
+					"lock" : true,
+					"script": "cockVore",
+					"timing": "cock",
+					"animation": {
+						"cock": "eat"
+					}
+				},
+
+				"cockEscape": { // 1 occupant
+					"location" : "shaft",
+					"lock" : true,
+					"script": "cockEscape",
+					"timing": "cock",
+					"animation": {
+						"cock": "escape"
+					}
 				}
 
 			},
@@ -246,12 +263,33 @@
 				"side": { "transition": "down", "chance": 20 }, // not an array, number of occupants doesn't matter
 				"back": { "transition": "down", "chance": 20 }
 			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [0, 8],
+				"backarms" : [9, 8]
+			},
+			"handOffsets" : {
+				"frontarms" : [29, 8],
+				"backarms" : [38, 8]
+			},
 			"defaultActions" : ["grab", "vore"],
 			"actions" : {
-				"vore" : {},
-				"oralVore" : {},
-				"cockVore" : {},
-				"grab" : {}
+				"vore" : {
+					"cooldown": 1,
+					"script": "checkVore"
+				},
+				"oralVore" : {
+					"cooldown": 1,
+					"script": "checkOralVore"
+				},
+				"cockVore" : {
+					"cooldown": 1,
+					"script": "checkCockVore"
+				},
+				"grab" : {
+					"cooldown": 0.5,
+					"script": "grab"
+				}
 			},
 			"control": {
 				"animations": {
