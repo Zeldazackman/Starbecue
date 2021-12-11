@@ -161,8 +161,6 @@ function init()
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
 
-	sb.logInfo(sb.printJson(p.settings, 1))
-
 	--[[
 	so, the thing is, we want this to move like an actor, even if it is a vehicle, so we have to have a little funny business,
 	both mcontrollers use the same arguments for the most part, just the actor mcontroller has more values, as well as some

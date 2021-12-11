@@ -22,4 +22,8 @@ function init()
 	if config.getParameter("sbqPreyEnabled") ~= nil then
 		status.setStatusProperty("sbqPreyEnabled", config.getParameter("sbqPreyEnabled"))
 	end
+	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
+	if sbqPreyEnabled.digestImmunity then
+		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+	end
 end

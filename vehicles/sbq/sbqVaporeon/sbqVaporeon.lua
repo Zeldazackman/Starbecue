@@ -27,7 +27,6 @@ function rollForShiny()
 		if p.settings.shinyRoll == 1 then
 			p.settings.replaceColors = {8,8,9,3,9,1,1}
 			p.setColorReplaceDirectives()
-			sb.logInfo(sb.printJson(p.settings, 1))
 			world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqVaporeon")
 			sb.logInfo("woah a shiny pokemon!")
 		else

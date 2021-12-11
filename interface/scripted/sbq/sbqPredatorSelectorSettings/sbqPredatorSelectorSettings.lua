@@ -37,7 +37,6 @@ end
 
 function sbq.togglePred(name, checkBox)
 	sbq.sbqSettings.types[name].enable = checkBox.checked
-	sb.logInfo(tostring(checkBox.checked))
 
 	player.setProperty("sbqSettings", sbq.sbqSettings)
 	world.sendEntityMessage(player.id(), "sbqRefreshSettings", sbq.sbqSettings)

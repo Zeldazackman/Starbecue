@@ -148,6 +148,11 @@ function init()
 		player.setProperty( "sbqCurrentData", nil)
 	end)
 
+	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
+	if sbqPreyEnabled.digestImmunity then
+		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+	end
+
 	initStage = 1 -- init has run
 end
 

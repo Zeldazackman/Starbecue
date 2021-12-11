@@ -1,5 +1,6 @@
+
 function init()
-	effect.setParentDirectives("multiply=00000000")
+	effect.addStatModifierGroup({{stat = "digestionImmunity", amount = 1}})
 	script.setUpdateDelta(0)
 end
 

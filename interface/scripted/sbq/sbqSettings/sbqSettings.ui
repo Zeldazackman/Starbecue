@@ -58,7 +58,8 @@
 						]}
 					]],
 					{"type" : "panel", "style" : "convex", "children" : [
-						[{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }]
+						[{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }],
+						[{ "type" : "checkBox", "id" : "digestImmunity" }, { "type" : "label", "text" : "Digestion Immunity" }]
 					]},
 					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
 				]}

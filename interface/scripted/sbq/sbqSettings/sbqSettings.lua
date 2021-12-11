@@ -134,6 +134,7 @@ function init()
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
 	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
+	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
 
 	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
 	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
@@ -145,8 +146,6 @@ function init()
 	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
 
 	held:setChecked(sbq.sbqPreyEnabled.held)
-
-
 end
 local init = init
 
@@ -192,6 +191,7 @@ function sbq.setEscapeModifier()
 end
 
 function sbq.changePreySetting(settingname, settingvalue)
+	sbq.sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	sbq.sbqPreyEnabled[settingname] = settingvalue
 	status.setStatusProperty("sbqPreyEnabled", sbq.sbqPreyEnabled)
 end
@@ -315,6 +315,15 @@ end
 
 function preyEnabled:onClick()
 	sbq.changePreySetting("enabled", preyEnabled.checked)
+end
+
+function digestImmunity:onClick()
+	sbq.changePreySetting("digestImmunity", digestImmunity.checked)
+	if digestImmunity.checked then
+		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+	else
+		status.clearPersistentEffects("digestImmunity")
+	end
 end
 
 function oralVore:onClick()
