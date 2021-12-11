@@ -42,6 +42,12 @@ function init()
 	message.setHandler( "sbqPlayerSaveSettings", function(_,_, settings )
 		player.setProperty( "sbqSettings", settings )
 	end)
+	message.setHandler( "sbqSaveSettings", function(_,_, settings, menuName )
+		local sbqSettings = player.getProperty( "sbqSettings" ) or {}
+		sbqSettings[menuName] = settings
+		player.setProperty( "sbqSettings", sbqSettings )
+		world.sendEntityMessage(player.id(), "sbqRefreshSettings", sbqSettings )
+	end)
 
 	message.setHandler( "sbqOpenMetagui", function(_,_, name, sourceEntity)
 		player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = name }, sourceEntity )

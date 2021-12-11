@@ -20,7 +20,7 @@ function reload()
 		s.spawnPosition = localToGlobal(position)
 
 		if storage.settings == nil and storage.vehicle.settings ~= nil then
-			storage.settings = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultSettings"), storage.vehicle.settings)
+			storage.settings = sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultSettings, storage.vehicle.settings)
 		end
 		object.setInteractive(false)
 	end

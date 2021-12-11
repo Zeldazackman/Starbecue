@@ -57,7 +57,11 @@ function init()
 				sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
 				sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
 				sbq.customizeColorsLayout[i].label = sbq.customizeColorsLayout[i].layout:addChild({ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or ("Color "..i), size = {48, 10}})
-				sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1 ) + 1 ] ) ) )
+				if type((sbq.predatorSettings.replaceColorTable or {})[i]) == "string" then
+					sbq.customizeColorsLayout[i].textBox:setText((sbq.predatorSettings.replaceColorTable or {})[i])
+				else
+					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1 ) + 1 ] ) ) )
+				end
 				local prevFunc = sbq.customizeColorsLayout[i].prev
 				local textboxFunc = sbq.customizeColorsLayout[i].textBox
 				local nextFunc = sbq.customizeColorsLayout[i].next
@@ -198,7 +202,7 @@ end
 function sbq.changeColorSetting(textbox, color, inc)
 	if sbq.predatorConfig.replaceColors == nil then return end
 
-	sbq.predatorSettings.replaceColors[color] = ((sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color]) + inc)
+	sbq.predatorSettings.replaceColors[color] = ((sbq.predatorSettings.replaceColors[color] or ((sbq.predatorConfig.defaultSettings.replaceColorTable or {})[color]) or 1 ) + inc)
 
 	if sbq.predatorSettings.replaceColors[color] < 1 then
 		sbq.predatorSettings.replaceColors[color] = (#sbq.predatorConfig.replaceColors[color] -1)
@@ -206,7 +210,7 @@ function sbq.changeColorSetting(textbox, color, inc)
 		sbq.predatorSettings.replaceColors[color] = 1
 	end
 
-	local colorTable = sbq.predatorConfig.replaceColors[color][ (sbq.predatorSettings.replaceColors[color] or sbq.predatorConfig.defaultSettings.replaceColors[color] or 1 ) + 1 ]
+	local colorTable = sbq.predatorConfig.replaceColors[color][ (sbq.predatorSettings.replaceColors[color] or ((sbq.predatorConfig.defaultSettings.replaceColorTable or {})[color]) or 1 ) + 1 ]
 
 	textbox:setText(sb.printJson(colorTable))
 
@@ -221,13 +225,15 @@ function sbq.setColorReplaceDirectives()
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(sbq.predatorConfig.replaceColors) do
 			local basePalette = colorGroup[1]
-			local replacePalette = colorGroup[(sbq.predatorSettings.replaceColors[i] or sbq.predatorConfig.defaultSettings.replaceColors[i] or 1) + 1]
+			local replacePalette = colorGroup[(sbq.predatorSettings.replaceColors[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
 			local fullbright = sbq.predatorSettings.fullbright[i]
 
 			if sbq.predatorSettings.replaceColorTable ~= nil and sbq.predatorSettings.replaceColorTable[i] ~= nil then
 				replacePalette = sbq.predatorSettings.replaceColorTable[i]
-			else
-				replacePalette = colorGroup[sbq.predatorConfig.defaultSettings.replaceColors[i] + 1]
+				if type(replacePalette) == "string" then
+					sbq.predatorSettings.directives = replacePalette
+					return
+				end
 			end
 
 			for j, color in ipairs(replacePalette) do

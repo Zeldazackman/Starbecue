@@ -7,12 +7,6 @@ state = {
 	hug = {}
 }
 
-function onBegin()	--This sets up the VSO ONCE.
-end
-
-function onEnd()
-end
-
 function state.back.eat( args )
 	return p.doVore(args, "belly", {}, "swallow")
 end

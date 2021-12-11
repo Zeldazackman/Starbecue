@@ -22,7 +22,7 @@ function update(dt, fireMode, shiftHeld)
 		else
 			local position = mcontroller.position()
 			local settings = player.getProperty("sbqSettings") or {}
-			local sbqSettings = sb.jsonMerge(sb.jsonMerge(root.assetJson( "/sbqGeneral.config"), root.assetJson( "/vehicles/sbq/"..self.vehicle.."/"..self.vehicle..".vehicle" ).sbqData.defaultSettings or {}), settings[self.vehicle] or {})
+			local sbqSettings = settings[self.vehicle] or {}
 			settings[self.vehicle] = sbqSettings
 
 			animator.playSound("activate")

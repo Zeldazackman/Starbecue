@@ -9,11 +9,8 @@ state = {
 }
 -------------------------------------------------------------------------------
 
-function onBegin()	--This sets up the VSO ONCE.
-
-end
-
-function onEnd()
+function p.init()
+	getColors()
 end
 
 function p.update(dt)
@@ -30,6 +27,49 @@ function p.changeSize()
 		end
 		p.warpInEffect() --Play warp in effect
 		p.setState( changeSize )
+	end
+end
+
+function getColors()
+	if p.settings.firstLoadDone == nil then
+		if world.entitySpecies(p.spawner) == "avian" then
+			-- get the directives for color here if you are an avian
+			local portrait = world.entityPortrait(p.spawner, "full")
+			for _, part in ipairs(portrait) do
+				local imageString = part.image
+				-- check for doing an emote animation
+				local found1, found2 = imageString:find("/emote.png:")
+				if found1 ~= nil then
+					local found3, found4 = imageString:find(".1", found2, found2+10 )
+					if found3 ~= nil then
+						local directives = imageString:sub(found4+1)
+						p.settings.directives = directives
+						p.settings.replaceColorTable[1] = directives
+					end
+				end
+				--get personality values
+				found1, found2 = imageString:find("body.png:idle.")
+				if found1 ~= nil then
+					p.setPartTag( "global", "bodyPersonality", imageString:sub(found2+1, found2+1) )
+				end
+				found1, found2 = imageString:find("backarm.png:idle.")
+				if found1 ~= nil then
+					p.setPartTag( "global", "backarmPersonality", imageString:sub(found2+1, found2+1) )
+				end
+				found1, found2 = imageString:find("frontarm.png:idle.")
+				if found1 ~= nil then
+					p.setPartTag( "global", "frontarmPersonality", imageString:sub(found2+1, found2+1) )
+				end
+			end
+		else
+			-- get random directives for anyone thats not an avian
+			for i = 1, #p.sbqData.replaceColors do
+				p.settings.replaceColors[i] = math.random( #p.sbqData.replaceColors[i] - 1 )
+			end
+		end
+		p.settings.firstLoadDone = true
+		p.setColorReplaceDirectives()
+		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqAvian")
 	end
 end
 

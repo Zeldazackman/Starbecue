@@ -6,6 +6,12 @@
 ]]
 ---------------------------------------------------------------------------------------------------------------------------------
 
+function p.init()
+end
+
+function p.uninit()
+end
+
 -- to have something in the main loop rather than a state loop
 function p.update(dt)
 end

@@ -16,10 +16,31 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function onBegin()	--This sets up the VSO ONCE.
+function p.init()
+	rollForShiny()
 end
 
-function onEnd()
+function rollForShiny()
+	if p.settings.shinyRoll == nil then
+		sb.logInfo("rolling for shiny...")
+		p.settings.shinyRoll = math.random(1, 4096)
+		if p.settings.shinyRoll == 1 then
+			p.settings.replaceColors = {8,8,9,3,9,1,1}
+			p.setColorReplaceDirectives()
+			sb.logInfo(sb.printJson(p.settings, 1))
+			world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqVaporeon")
+			sb.logInfo("woah a shiny pokemon!")
+		else
+			sb.logInfo("meh... not a shiny...")
+		end
+	else
+		sb.logInfo("already rolled for shiny")
+		if p.settings.shinyRoll == 1 then
+			sb.logInfo("oh cool you're a shiny")
+		else
+			sb.logInfo("just a normal pokemon")
+		end
+	end
 end
 
 -------------------------------------------------------------------------------

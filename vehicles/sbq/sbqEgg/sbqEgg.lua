@@ -9,7 +9,7 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function onBegin()
+function p.init()
 	p.occupant[0].location = "egg"
 	p.occupants.total = 1
 	p.occupants.egg = 1
@@ -25,9 +25,6 @@ function onBegin()
 	end
 
 	p.setPartTag( "global", "cracks", p.settings.cracks )
-end
-
-function onEnd()
 end
 
 -- don't want warp effects on this ever

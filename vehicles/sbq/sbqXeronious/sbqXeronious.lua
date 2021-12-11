@@ -27,12 +27,6 @@ TODO:
 ]]--
 -------------------------------------------------------------------------------
 
-function onBegin()	--This sets up the VSO ONCE.
-end
-
-function onEnd()
-end
-
 function p.update(dt)
 	p.whenFalling()
 	p.armRotationUpdate()
