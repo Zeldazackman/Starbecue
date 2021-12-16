@@ -115,7 +115,7 @@ function sbq.readOccupantData()
 					end
 				end
 
-				if species == nil then
+				if species == nil or species == "sbqOccupantHolder" then
 					sbq.setPortrait(sbq.occupantList[id].portrait, world.entityPortrait( id, "bust" ), {8,2})
 				else
 					local skin = (occupant.smolPreyData.settings.skinNames or {}).head or "default"

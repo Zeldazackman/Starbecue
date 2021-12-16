@@ -620,3 +620,11 @@ end
 function p.inedible(occupantId)
 	return p.config.inedibleCreatures[world.entityType(occupantId)]
 end
+
+function p.removeOccupantsFromLocation(location)
+	for i = 0, #p.occupant do
+		if p.occupant[i].location == location then
+			p.uneat(p.occupant[i].id)
+		end
+	end
+end
