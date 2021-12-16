@@ -173,30 +173,28 @@
 			"transitions": {
 				// directional = driver can press that direction to transition
 				// non directional = not accessible via controls, except from script
-				"eat": { // 3 occupants
+				"oralVore": { // 1 occupant
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock" : true,
 					"animation": {
 						"body": "eat",
-						"arms": "rotation",
 						"head": "eat"
-					},
-					"victimAnimation": "playereat",
-					"script": "eat"
+					}
 				},
-
-				"escapeOral": { // 1 occupants
+				"oralEscape": { // 1 occupant
+					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
 					"animation": {
 						"body": "escape",
 						"head": "escape"
-					},
-					"victimAnimation": "escape"
+					}
 				},
 
 				"cockVore": { // 1 occupant
+					"voreType" : "cockVore",
 					"location" : "shaft",
 					"failOnFull" : true,
 					"lock" : true,
@@ -208,6 +206,7 @@
 					}
 				},
 				"cockEscape": { // 1 occupant
+					"voreType" : "cockVore",
 					"location" : "shaft",
 					"lock" : true,
 					"script": "cockEscape",
