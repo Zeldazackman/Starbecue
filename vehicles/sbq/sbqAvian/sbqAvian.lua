@@ -124,6 +124,26 @@ function checkCockVore()
 	return p.checkEatPosition(p.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
 end
 
+function shaftToBalls(args)
+	local side = "L"
+	if math.random() > 0.5 then
+		side = "R"
+	end
+	return p.moveOccupantLocation(args, "balls"..side)
+end
+
+function ballsToShaft(args)
+	p.moveOccupantLocation(args, "shaft")
+end
+
+function switchBalls(args)
+	local dx = p.lounging[args.id].controls.dx
+	if dx == 1 then
+		return p.moveOccupantLocation(args, "ballsR")
+	elseif dx == -1 then
+		return p.moveOccupantLocation(args, "ballsL")
+	end
+end
 
 -------------------------------------------------------------------------------
 function state.stand.begin()
@@ -137,6 +157,10 @@ state.stand.cockEscape = cockEscape
 
 state.stand.checkCockVore = checkCockVore
 state.stand.checkOralVore = checkOralVore
+
+state.stand.shaftToBalls = shaftToBalls
+state.stand.ballsToShaft = ballsToShaft
+state.stand.switchBalls = switchBalls
 
 -------------------------------------------------------------------------------
 

@@ -158,7 +158,7 @@ function p.updateVisibilityAndSmolprey(i)
 		return
 	end
 	if p.occupant[i].visible then
-		if p.occupant[i].species ~= nil then
+		if (p.occupant[i].species ~= nil) and (p.occupant[i].species ~= "sbqOccupantHolder") then
 			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "sbqInvisible")
 			if p.occupant[i].smolPreyData.recieved then
 				if p.occupant[i].smolPreyData.update then

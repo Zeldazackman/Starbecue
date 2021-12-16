@@ -46,10 +46,10 @@
 					"eat": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
 					"escape": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3 },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_back": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
 
 					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
@@ -67,10 +67,10 @@
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_back": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
 
 					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
@@ -87,10 +87,10 @@
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_back": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_front": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_up": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
+					"s_down": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1 },
 
 					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
 					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
@@ -312,18 +312,13 @@
 				"partStates": {
 					"frontBallsState": {
 						"idle": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:idle.<frame><directives><bellymask>" } },
-						"run": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:run.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.escape.<frame><directives><bellymask>" } },
-
-						"s_back": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:stand.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/foreground/giant_balls.png:s_down.<frame><directives><bellymask>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/foreground/balls.png:idle.<frame><directives><bellymask>" } },
-						"smol.run": { "properties": { "image": "skins/<skin>/normal/foreground/balls.png:run.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 
@@ -339,18 +334,13 @@
 				"partStates": {
 					"backBallsState": {
 						"idle": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:idle.<frame><directives><bellymask>" } },
-						"run": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:run.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.escape.<frame><directives><bellymask>" } },
-
-						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:stand.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_balls.png:s_down.<frame><directives><bellymask>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/balls.png:idle.<frame><directives><bellymask>" } },
-						"smol.run": { "properties": { "image": "skins/<skin>/normal/balls.png:run.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 

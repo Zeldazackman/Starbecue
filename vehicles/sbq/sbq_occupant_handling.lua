@@ -520,10 +520,23 @@ function p.handleStruggles(dt)
 		end
 
 		if movedir then
+			local struggling
 			struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
 			if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
 				movedir = nil
-			elseif p.partsAreStruggling(struggledata.parts) then
+			else
+				if struggledata.parts ~= nil then
+					struggling = p.partsAreStruggling(struggledata.parts)
+				end
+				if (not struggling) and (struggledata.sided ~= nil) then
+					local parts = struggledata.sided.rightParts
+					if p.direction == -1 then
+						parts = struggledata.sided.leftParts
+					end
+					struggling = p.partsAreStruggling(parts)
+				end
+			end
+			if struggling then
 				movedir = nil
 			elseif config.getParameter("name") ~= "sbqEgg" then
 				if p.occupant[struggler].species ~= nil and p.config.speciesStrugglesDisabled[p.occupant[struggler].species] then
@@ -553,8 +566,20 @@ function p.handleStruggles(dt)
 		p.occupant[struggler].bellySettleDownTimer = 5
 
 		local animation = {offset = struggledata.directions[movedir].offset}
-		for _, part in ipairs(struggledata.parts) do
-			animation[part] = "s_"..movedir
+		local prefix = struggledata.prefix or ""
+		if struggledata.parts ~= nil then
+			for _, part in ipairs(struggledata.parts) do
+				animation[part] = prefix.."s_"..movedir
+			end
+		end
+		if struggledata.sided ~= nil then
+			local parts = struggledata.sided.rightParts
+			if p.direction == -1 then
+				parts = struggledata.sided.leftParts
+			end
+			for _, part in ipairs(parts) do
+				animation[part] = prefix.."s_"..movedir
+			end
 		end
 
 		p.doAnims(animation)

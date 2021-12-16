@@ -144,7 +144,7 @@ function init()
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
-	p.spawner = config.getParameter("spawner")
+	p.spawner = config.getParameter("spawner") or config.getParameter("driver")
 
 	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
 
@@ -346,6 +346,16 @@ end
 
 
 -------------------------------------------------------------------------------------------------------
+
+function p.getSmolPreyData(settings, species, state, tags, layer)
+	return {
+		species = species,
+		recieved = true,
+		layer = layer,
+		settings = settings,
+		state = state
+	}
+end
 
 function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if p.spawner ~= occupantId then return false end

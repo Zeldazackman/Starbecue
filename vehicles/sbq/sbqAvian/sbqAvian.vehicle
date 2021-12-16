@@ -160,7 +160,12 @@
 
 			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
 			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"breasts" : { "sided" : true, "mass": 0.1, "hyperMass": 1 }
+			"ballsL" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"ballsR" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+
+			"breasts" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"breastsL" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"breastsR" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 }
 		},
 
 		"victimAnimations": "/vehicles/sbq/sbqAvian/victim_animations.config"
@@ -215,6 +220,16 @@
 					"animation": {
 						"cock": "escape"
 					}
+				},
+
+				"ballsToShaft": { // 1 occupant
+					"script": "ballsToShaft"
+				},
+				"shaftToBalls": { // 1 occupant
+					"script": "shaftToBalls"
+				},
+				"switchBalls": { // 1 occupant
+					"script": "switchBalls"
 				}
 
 			},
@@ -224,11 +239,9 @@
 				"legs": "idle",
 				"head": "idle",
 				"cock": "idle",
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				}
+				"frontBalls": "idle",
+				"backBalls": "idle",
+				"offset" : {}
 			},
 			"idleAnimations": [
 			//	{ "head": "blink" },
@@ -237,11 +250,70 @@
 
 			"struggle": {
 				"belly" : {
-					"part" : "body",
-					"up": { "transition": "escape" },
-					"front": { "transition": "down" },
-					"back": { "transition": "down" },
-					"down": { "transition": "down" },
+					"parts" : ["body"],
+					"directions":{
+						"up": { "transition": "escape" },
+						"front": { "transition": "down" },
+						"back": { "transition": "down" },
+						"down": { "transition": "down" }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					}
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"shaft" : {
+					"parts" : ["cock"],
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true }
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					}
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsL" : {
+					"sided" :{
+						"rightParts" : ["backBalls"],
+						"leftParts" : ["frontBalls"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
+					"chances": {
+						"easyEscape": { "min": 2, "max": 5 },
+						"normal": { "min": 5, "max": 10 },
+						"antiEscape": { "min": 10, "max": 20 }
+					}
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsR" : {
+					"sided" :{
+						"rightParts" : ["frontBalls"],
+						"leftParts" : ["backBalls"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
 						"normal": { "min": 5, "max": 10 },
@@ -250,6 +322,8 @@
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
 				}
+
+
 			},
 			"interact": {
 				"front": { "transition": "eat", "chance": 100, "location": "belly", "failOnFull": true },
@@ -353,11 +427,9 @@
 				"legs": "smol.idle",
 				"head": "smol.idle",
 				"cock": "smol.idle",
-				"offset" : {
-					"parts" : [
-						{}
-					]
-				}
+				"frontBalls": "smol.idle",
+				"backBalls": "smol.idle",
+				"offset" : {}
 			},
 			"idleAnimations": [
 			//	{ "head": "blink" },
@@ -368,12 +440,8 @@
 
 			"interact": {
 			},
-			"defaultActions" : ["vore", "vore"],
-			"actions" : {
-				"vore" : {},
-				"oralVore" : {},
-				"cockVore" : {}
-			},
+			"defaultActions" : ["unassigned", "unassigned"],
+			"actions" : {},
 			"control": {
 				"animations": {
 					"walk": {
