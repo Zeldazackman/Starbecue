@@ -30,19 +30,29 @@ function init()
 
 	sbq.globalSettings = sbq.sbqSettings.global or {}
 
-	if sbq.speciesHelpTab ~= nil then
-		sbq.speciesHelpTab:delete()
-	end
-	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
-	end
-
 	if sbq.sbqCurrentData.species ~= nil then
 		sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
+	end
+
+	if sbq.speciesSettingsTab ~= nil then
+		sbq.speciesSettingsTab:delete()
+	end
+	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
+		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script ~= nil then
+			require(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script)
+		end
+	end
+
+	if sbq.speciesHelpTab ~= nil then
+		sbq.speciesHelpTab:delete()
+	end
+	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
 	end
 
 	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and sbq.sbqCurrentData.type == "driver" then

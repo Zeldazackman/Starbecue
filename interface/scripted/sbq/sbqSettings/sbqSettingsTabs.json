@@ -34,6 +34,25 @@
 			]}
 		]}
 	]},
+	"speciesSettingsTabs" : {
+		"sbqAvian" : {
+			"script" : "/interface/scripted/sbq/sbqSettings/sbqHumanoidSettings.lua",
+			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Avian Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Body Parts", "inline" : true },
+					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }]
+				]},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : "Penis Cum TF" }],
+					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }]
+				]}
+			]}
+		}
+	},
 	"speciesHelpTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "Vappy Help", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
