@@ -1,8 +1,21 @@
 function sbq.everything_primary()
 	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
-		for stat, data in pairs(statlist) do
-			status.addEphemeralEffect(stat, data.power, data.source)
+		for statusEffect, data in pairs(statlist) do
+			status.addEphemeralEffect(statusEffect, data.power, data.source)
 		end
+	end)
+	message.setHandler("sbqRemoveStatusEffects", function(_,_, statlist)
+		for _, statusEffect in ipairs(statlist) do
+			status.removeEphemeralEffect(statusEffect)
+		end
+	end)
+	message.setHandler("sbqRemoveStatusEffect", function(_,_, statusEffect)
+		status.removeEphemeralEffect(statusEffect)
+	end)
+
+	message.setHandler("sbqApplyScaleStatus", function(_,_, scale)
+		status.setStatusProperty("sbqScaling", scale)
+		status.addEphemeralEffect("sbqScaling")
 	end)
 
 	message.setHandler("sbqForceSit", function(_,_, data)

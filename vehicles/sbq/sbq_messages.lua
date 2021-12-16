@@ -56,7 +56,6 @@ message.setHandler( "digest", function(_,_, eid)
 	if eid ~= nil and p.lounging[eid] ~= nil then
 		local location = p.lounging[eid].location
 		local success, timing = p.doTransition("digest"..location)
-		p.lounging[eid].location = "digesting"
 		for i = 0, p.occupantSlots do
 			if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == eid then
 				p.occupant[i].location = location

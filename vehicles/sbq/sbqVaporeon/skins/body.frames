@@ -105,6 +105,15 @@
 		"1.back.s_up.5" : "1.back.1",
 		"1.back.s_down.5" : "1.back.1",
 
+		"0.stand.escape.1" : "1.stand.eat.8",
+		"0.stand.escape.2" : "1.stand.eat.7",
+		"0.stand.escape.3" : "1.stand.eat.6",
+		"0.stand.escape.4" : "1.stand.eat.4",
+		"0.stand.escape.5" : "1.stand.eat.3",
+		"0.stand.escape.6" : "1.stand.eat.2",
+		"0.stand.escape.7" : "1.stand.eat.2",
+		"0.stand.escape.8" : "1.stand.eat.1",
+
 		"1.stand.escape.1" : "1.stand.eat.8",
 		"1.stand.escape.2" : "1.stand.eat.7",
 		"1.stand.escape.3" : "1.stand.eat.6",

@@ -154,19 +154,13 @@
 			]
 		],
 		"locations" :{
-			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
 			"hug" : { },
 			"fatten" : { "mass": 1 },
-			"digesting" : { "digest" : true },
 
 			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"balls" : { "sided" : true },
-			"ballsL" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"ballsR" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
-
-			"breasts" : { "sided" : true },
-			"breastsL" : { "mass": 0.1, "hyperMass": 1 },
-			"breastsR" : { "mass": 0.1, "hyperMass": 1 }
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"breasts" : { "sided" : true, "mass": 0.1, "hyperMass": 1 }
 		},
 
 		"victimAnimations": "/vehicles/sbq/sbqAvian/victim_animations.config"
@@ -213,7 +207,6 @@
 						"cock": "eat"
 					}
 				},
-
 				"cockEscape": { // 1 occupant
 					"location" : "shaft",
 					"lock" : true,

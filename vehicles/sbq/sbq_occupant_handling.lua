@@ -63,6 +63,7 @@ function p.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "altItemLock", false)
 	p.unForceSeat( occupantId )
 	if not p.lounging[occupantId] then return end
+
 	local seatindex = p.lounging[occupantId].index
 	local occupantData = p.lounging[occupantId]
 	if world.entityType(occupantId) == "player" then
@@ -75,7 +76,7 @@ function p.uneat( occupantId )
 			owner = occupantId
 		})
 	else
-		world.sendEntityMessage( occupantId, "applyStatusEffect", "sbqRemoveInvisible")
+		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", p.config.predStatusEffects)
 	end
 
 	p.refreshList = true

@@ -73,6 +73,28 @@ function getColors()
 	end
 end
 
+function p.letout(id)
+	local id = id
+	if id == nil then
+		id = p.occupant[p.occupants.total].id
+	end
+	if not id then return end
+	local location = p.lounging[id].location
+
+	if location == "belly" then
+		--if p.heldControl(p.driverSeat, "down") or p.lounging[id].species == "sbqEgg" then
+		--	return p.doTransition("analEscale", {id = id})
+		--else
+			return p.doTransition("oralEscape", {id = id})
+		--end
+	elseif location == "hug" then
+		p.grabbing = nil
+		return p.uneat(id)
+	elseif location == "shaft" then
+		return p.doTransition("cockEscape", {id = id})
+	end
+end
+
 function grab()
 	p.grab("hug")
 end

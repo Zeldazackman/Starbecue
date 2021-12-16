@@ -156,8 +156,7 @@
 			"shaft" : { "mass": 0.1 },
 			"knot" : { "mass": 0.1 },
 			"balls" : { "sided" : true, "mass": 0.1 },
-			"fatten" : { "mass": 1 },
-			"digesting" : { }
+			"fatten" : { "mass": 1 }
 		},
 		"defaultSettings" : {
 			"replaceColors" : [6,6,9,3,9,1,1],
@@ -332,6 +331,11 @@
 					},
 					"victimAnimation": "escape",
 					"script": "letout"
+				},
+				"digestbelly":{
+					"animation": {
+						"body": "escape"
+					}
 				}
 			},
 			"idle": {

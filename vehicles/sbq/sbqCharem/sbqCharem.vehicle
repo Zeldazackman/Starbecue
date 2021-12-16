@@ -98,8 +98,7 @@
 		"locations" :{
 			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
 			"hug" : { "max": 1, "maxNested": 2 },
-			"fatten" : { "mass": 1 },
-			"digesting" : { }
+			"fatten" : { "mass": 1 }
 		},
 		"defaultSettings": {
 			"bellyEffect" : "sbqSoftDigest"
@@ -160,6 +159,12 @@
 					},
 					"script": "escape",
 					"victimAnimation": "back.escape"
+				},
+				"digestbelly":{
+					"animation": {
+						"body": "escape",
+						"tail": "back.wag2"
+					}
 				},
 
 				"bed": {
@@ -290,6 +295,12 @@
 					},
 					"script": "escape",
 					"victimAnimation": "back.escape"
+				},
+				"digestbelly":{
+					"animation": {
+						"body": "escape",
+						"tail": "back.wag2"
+					}
 				},
 
 				"up": [

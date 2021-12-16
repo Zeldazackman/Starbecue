@@ -140,8 +140,7 @@
 			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },
 			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["bodybob"] },
 			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] },
-			"fatten" : { "mass": 1 },
-			"digesting" : { }
+			"fatten" : { "mass": 1 }
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 3},
@@ -308,13 +307,13 @@
 				},
 				"digestbelly" : {
 					"animation": {
-						"body": "shrink",
+						"body": "digest",
 						"head": "burp"
 					}
 				},
 				"digesttail" : {
 					"animation": {
-						"tail": "shrink",
+						"tail": "digest",
 						"head": "burp"
 					}
 				},
@@ -545,7 +544,7 @@
 				},
 				"digesttail" : {
 					"animation": {
-						"tail": "shrink",
+						"tail": "digest",
 						"head": "burp"
 					}
 				},
@@ -709,14 +708,14 @@
 				},
 				"digestbelly" : {
 					"animation": {
-						"body": "shrink",
+						"body": "digest",
 						"arms": "fly",
 						"head": "burp"
 					}
 				},
 				"digesttail" : {
 					"animation": {
-						"tail": "shrink",
+						"tail": "digest",
 						"arms": "fly",
 						"head": "burp"
 					}
@@ -947,13 +946,13 @@
 				},
 				"digestbelly" : {
 					"animation": {
-						"body": "shrink",
+						"body": "digest",
 						"head": "burp"
 					}
 				},
 				"digesttail" : {
 					"animation": {
-						"tail": "shrink",
+						"tail": "digest",
 						"head": "burp"
 					}
 				},
@@ -1215,13 +1214,13 @@
 				},
 				"digestbelly" : {
 					"animation": {
-						"body": "shrink",
+						"body": "digest",
 						"head": "burp"
 					}
 				},
 				"digesttail" : {
 					"animation": {
-						"tail": "shrink",
+						"tail": "digest",
 						"head": "burp"
 					}
 				},

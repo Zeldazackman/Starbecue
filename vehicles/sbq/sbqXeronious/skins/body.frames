@@ -70,6 +70,24 @@
 		"0.belly.shrink.7" : "1.belly.expand.2",
 		"0.belly.shrink.8" : "1.belly.expand.1",
 
+		"0.belly.digest.1" : "1.belly.expand.8",
+		"0.belly.digest.2" : "1.belly.expand.7",
+		"0.belly.digest.3" : "1.belly.expand.6",
+		"0.belly.digest.4" : "1.belly.expand.4",
+		"0.belly.digest.5" : "1.belly.expand.3",
+		"0.belly.digest.6" : "1.belly.expand.2",
+		"0.belly.digest.7" : "1.belly.expand.2",
+		"0.belly.digest.8" : "1.belly.expand.1",
+
+		"1.belly.digest.1" : "1.belly.expand.8",
+		"1.belly.digest.2" : "1.belly.expand.7",
+		"1.belly.digest.3" : "1.belly.expand.6",
+		"1.belly.digest.4" : "1.belly.expand.4",
+		"1.belly.digest.5" : "1.belly.expand.3",
+		"1.belly.digest.6" : "1.belly.expand.2",
+		"1.belly.digest.7" : "1.belly.expand.2",
+		"1.belly.digest.8" : "1.belly.expand.1",
+
 		"2.belly.s_back.5" : "2.belly.1",
 		"2.belly.s_front.5" : "2.belly.1",
 		"2.belly.s_up.5" : "2.belly.1",
@@ -93,6 +111,15 @@
 		"1.belly.shrink.7" : "2.belly.expand.2",
 		"1.belly.shrink.8" : "2.belly.expand.1",
 
+		"2.belly.digest.1" : "2.belly.expand.8",
+		"2.belly.digest.2" : "2.belly.expand.7",
+		"2.belly.digest.3" : "2.belly.expand.6",
+		"2.belly.digest.4" : "2.belly.expand.4",
+		"2.belly.digest.5" : "2.belly.expand.3",
+		"2.belly.digest.6" : "2.belly.expand.2",
+		"2.belly.digest.7" : "2.belly.expand.2",
+		"2.belly.digest.8" : "2.belly.expand.1",
+
 		"3.belly.s_back.5" : "3.belly.1",
 		"3.belly.s_front.5" : "3.belly.1",
 		"3.belly.s_up.5" : "3.belly.1",
@@ -114,7 +141,16 @@
 		"2.belly.shrink.5" : "3.belly.expand.3",
 		"2.belly.shrink.6" : "3.belly.expand.2",
 		"2.belly.shrink.7" : "3.belly.expand.2",
-		"2.belly.shrink.8" : "3.belly.expand.1"
+		"2.belly.shrink.8" : "3.belly.expand.1",
+
+		"3.belly.digest.1" : "3.belly.expand.8",
+		"3.belly.digest.2" : "3.belly.expand.7",
+		"3.belly.digest.3" : "3.belly.expand.6",
+		"3.belly.digest.4" : "3.belly.expand.4",
+		"3.belly.digest.5" : "3.belly.expand.3",
+		"3.belly.digest.6" : "3.belly.expand.2",
+		"3.belly.digest.7" : "3.belly.expand.2",
+		"3.belly.digest.8" : "3.belly.expand.1"
 
 
 	}

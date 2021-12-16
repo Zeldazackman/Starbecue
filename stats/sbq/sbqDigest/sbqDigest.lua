@@ -37,6 +37,7 @@ function update(dt)
 				status.setResource("health", 1)
 			end
 		elseif self.rpc == nil then
+			self.cdt = 0
 			status.setResource("health", 1)
 			self.rpc = world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
 		elseif self.rpc ~= nil and self.rpc:finished() and not self.digested then

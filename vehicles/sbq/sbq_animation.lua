@@ -167,7 +167,7 @@ function p.updateVisibilityAndSmolprey(i)
 				animator.setAnimationState( p.occupant[i].seatname.."State", "smol", true )
 			end
 		else
-			world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "sbqRemoveInvisible")
+			world.sendEntityMessage(p.occupant[i].id, "sbqRemoveStatusEffect", "sbqInvisible")
 		end
 	else
 		world.sendEntityMessage(p.occupant[i].id, "applyStatusEffect", "sbqInvisible")
@@ -197,11 +197,11 @@ function p.smolPreyAnimPath(occupant)
 	occupant.smolPreyData.update = false
 end
 
-function p.victimAnimUpdate(entity)
-	if entity == nil or not p.lounging[entity] then return end
-	local victimAnim = p.lounging[entity].victimAnim
+function p.victimAnimUpdate(eid)
+	if eid == nil or not p.lounging[eid] then return end
+	local victimAnim = p.lounging[eid].victimAnim
 	if not victimAnim.enabled then
-		local location = p.lounging[entity].location
+		local location = p.lounging[eid].location
 		if victimAnim.location ~= location or victimAnim.state ~= p.state then
 			if victimAnim.progress == nil or victimAnim.progress == 1 then
 				victimAnim.progress = 0
@@ -209,10 +209,12 @@ function p.victimAnimUpdate(entity)
 			victimAnim.location = location
 			victimAnim.state = p.state
 		end
-		local seatname = p.lounging[entity].seatname
+		local seatname = p.lounging[eid].seatname
 		local transformGroup = seatname.."Position"
 		p.resetTransformationGroup(transformGroup)
-		p.scaleTransformationGroup(transformGroup, {victimAnim.last.xs, victimAnim.last.ys})
+		local scale = {victimAnim.last.xs, victimAnim.last.ys}
+		p.scaleTransformationGroup(transformGroup, scale)
+		p.applyScaleStatusEffect(eid, scale)
 		p.rotateTransformationGroup(transformGroup, (victimAnim.last.r * math.pi/180))
 
 		if p.stateconfig[p.state].locationCenters ~= nil and p.stateconfig[p.state].locationCenters[location] ~= nil
@@ -241,7 +243,7 @@ function p.victimAnimUpdate(entity)
 		victimAnim.inside = p.victimAnimations[victimAnim.anim].endInside
 	end
 
-	local seatname = p.lounging[entity].seatname
+	local seatname = p.lounging[eid].seatname
 	local speed = p.animStateData[statename].animationState.frames / p.animStateData[statename].animationState.cycle
 	local frame = math.floor(time * speed)
 	local nextFrame = frame + 1
@@ -274,10 +276,10 @@ function p.victimAnimUpdate(entity)
 		end
 	end
 
-	p.lounging[entity].visible = (p.getPrevVictimAnimValue(victimAnim, "visible") == 1)
+	p.lounging[eid].visible = (p.getPrevVictimAnimValue(victimAnim, "visible") == 1)
 	local e = p.getPrevVictimAnimValue(victimAnim, "e")
 	if e ~= 0 then
-		world.sendEntityMessage(entity, "applyStatusEffect", e, (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
+		world.sendEntityMessage(eid, "applyStatusEffect", e, (victimAnim.frame - victimAnim.prevFrame) * (p.animStateData[statename].animationState.cycle / p.animStateData[statename].animationState.frames) + 0.01, entity.id())
 	end
 	local sitpos = p.getPrevVictimAnimValue(victimAnim, "sitpos")
 	if sitpos ~= 0 then
@@ -305,8 +307,18 @@ function p.victimAnimUpdate(entity)
 	p.resetTransformationGroup(transformGroup)
 	--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
 	p.scaleTransformationGroup(transformGroup, scale)
+	p.applyScaleStatusEffect(eid, scale)
 	p.rotateTransformationGroup(transformGroup, (rotation * math.pi/180))
 	p.translateTransformationGroup(transformGroup, translation)
+end
+
+function p.applyScaleStatusEffect(eid, scale)
+	local scale = {math.abs(scale[1]), math.abs(scale[2])}
+	if (scale[1] ~= 1) or (scale[2] ~= 1) then
+		world.sendEntityMessage(eid, "sbqApplyScaleStatus", scale)
+	else
+		world.sendEntityMessage(eid, "sbqRemoveStatusEffect", "sbqScaling")
+	end
 end
 
 function p.getVictimAnimInterpolatedValue(victimAnim, valName, progress)

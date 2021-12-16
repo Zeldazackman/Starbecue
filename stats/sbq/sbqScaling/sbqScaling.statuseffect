@@ -1,0 +1,11 @@
+{
+	"name" : "sbqScaling",
+	"effectConfig" : {},
+	"defaultDuration" : 1,
+
+	"scripts" : [
+		"sbqScaling.lua",
+		"/stats/speciesAnimOverride/storeDirectives.lua"
+	]
+
+}
