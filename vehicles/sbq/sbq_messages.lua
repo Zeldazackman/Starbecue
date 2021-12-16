@@ -2,6 +2,7 @@ message.setHandler( "settingsMenuSet", function(_,_, val )
 	p.settings = sb.jsonMerge(p.settings, val)
 	p.setColorReplaceDirectives()
 	p.setSkinPartTags()
+	p.settingsMenuUpdated()
 end )
 
 message.setHandler( "letout", function(_,_, id )

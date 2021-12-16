@@ -11,6 +11,7 @@ state = {
 
 function p.init()
 	getColors()
+	checkPartsEnabled()
 end
 
 function p.update(dt)
@@ -28,6 +29,10 @@ function p.changeSize()
 		p.warpInEffect() --Play warp in effect
 		p.setState( changeSize )
 	end
+end
+
+function p.settingsMenuUpdated()
+	checkPartsEnabled()
 end
 
 function getColors()
@@ -70,6 +75,35 @@ function getColors()
 		p.settings.firstLoadDone = true
 		p.setColorReplaceDirectives()
 		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqAvian")
+	end
+end
+
+function checkPartsEnabled()
+	local defaultSbqData = config.getParameter("sbqData")
+	if p.settings.penis then
+		p.setPartTag("global", "cockVisible", "")
+		p.sbqData.locations.shaft.max = defaultSbqData.locations.shaft.max
+	else
+		p.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
+		p.sbqData.locations.shaft.max = 0
+	end
+	if p.settings.balls then
+		p.setPartTag("global", "ballsVisible", "")
+		p.sbqData.locations.ballsL.max = defaultSbqData.locations.balls.max
+		p.sbqData.locations.ballsR.max = defaultSbqData.locations.balls.max
+	else
+		p.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
+		p.sbqData.locations.ballsL.max = 0
+		p.sbqData.locations.ballsR.max = 0
+	end
+	if p.settings.breasts then
+		p.setPartTag("global", "breastsVisible", "")
+		p.sbqData.locations.breastsL.max = defaultSbqData.locations.breasts.max
+		p.sbqData.locations.breastsR.max = defaultSbqData.locations.breasts.max
+	else
+		p.setPartTag("global", "breastsVisible", "?crop;0;0;0;0")
+		p.sbqData.locations.breastsL.max = 0
+		p.sbqData.locations.breastsR.max = 0
 	end
 end
 

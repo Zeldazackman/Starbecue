@@ -116,10 +116,6 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 				end
 				massMultiplier = p.sbqData.locations[location].mass or 0
 
-				if p.settings[location] ~= nil and p.settings[location].hyper then
-					massMultiplier = p.sbqData.locations[location].hyperMass or massMultiplier
-				end
-
 				if p.occupant[i].location == "nested" then
 					massMultiplier = massMultiplier * p.occupant[i].nestedPreyData.massMultiplier
 				end
@@ -338,10 +334,6 @@ function p.updateOccupants(dt)
 					p.occupants[location] = p.occupants[location] + 1
 
 					massMultiplier = p.sbqData.locations[location].mass or 0
-
-					if p.settings[location] ~= nil and p.settings[location].hyper then
-						massMultiplier = p.sbqData.locations[location].hyperMass or massMultiplier
-					end
 
 					p.occupants.mass = p.occupants.mass + mass * massMultiplier
 

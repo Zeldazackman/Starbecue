@@ -71,6 +71,10 @@ function p.getWarpInOutDirectives()
 	end
 end
 
+-- called whenever the settings manu is updated
+function p.settingsMenuUpdated()
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]
