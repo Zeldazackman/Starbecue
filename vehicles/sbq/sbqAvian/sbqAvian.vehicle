@@ -244,6 +244,7 @@
 				"head": "idle",
 				"cock": "idle",
 				"belly": "idle",
+				"breasts": "idle",
 				"frontBalls": "idle",
 				"backBalls": "idle",
 				"offset" : {}
@@ -432,6 +433,8 @@
 				"legs": "smol.idle",
 				"head": "smol.idle",
 				"cock": "smol.idle",
+				"belly": "smol.idle",
+				"breasts": "smol.idle",
 				"frontBalls": "smol.idle",
 				"backBalls": "smol.idle",
 				"offset" : {}
