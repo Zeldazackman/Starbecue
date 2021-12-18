@@ -274,12 +274,7 @@ end
 function p.resetOccupantCount()
 	p.occupants.total = 0
 	for location, data in pairs(p.sbqData.locations) do
-		if data.sided then
-			p.occupants[location.."R"] = 0
-			p.occupants[location.."L"] = 0
-		else
-			p.occupants[location] = 0
-		end
+		p.occupants[location] = 0
 	end
 	p.occupants.fatten = p.settings.fatten or 0
 	p.occupants.mass = 0
@@ -414,11 +409,11 @@ function p.updateOccupants(dt)
 		end
 		if data.sided then
 			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-				p.setPartTag( "global", location.."2occupants", tostring(p.occupants[location.."R"]) )
-				p.setPartTag( "global", location.."1occupants", tostring(p.occupants[location.."L"]) )
+				p.setPartTag( "global", location.."FrontOccupants", tostring(p.occupants[location.."R"]) )
+				p.setPartTag( "global", location.."BackOccupants", tostring(p.occupants[location.."L"]) )
 			else
-				p.setPartTag( "global", location.."1occupants", tostring(p.occupants[location.."R"]) )
-				p.setPartTag( "global", location.."2occupants", tostring(p.occupants[location.."L"]) )
+				p.setPartTag( "global", location.."BackOccupants", tostring(p.occupants[location.."R"]) )
+				p.setPartTag( "global", location.."FrontOccupants", tostring(p.occupants[location.."L"]) )
 			end
 		else
 			p.setPartTag( "global", location.."occupants", tostring(p.occupants[location]) )

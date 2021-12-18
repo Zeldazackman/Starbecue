@@ -58,10 +58,10 @@
 				"edible" : true,
 				"transitions": {
 					// directional = occupant0 can press that direction to transition
-					"escapeOral" : {
+					"oralEscape" : {
 						"script" : "escape"
 					},
-					"escapeAnal" : {
+					"analEscape" : {
 						"script" : "escape"
 					}
 				},
@@ -69,8 +69,8 @@
 					"belly" : {
 						"parts" : ["belly"],
 						"directions" : {
-							"up": { "transition": "escapeOral", "indicate" : "red" },
-							"down": { "transition": "escapeAnal", "indicate" : "red" },
+							"up": { "transition": "oralEscape", "indicate" : "red" },
+							"down": { "transition": "analEscape", "indicate" : "red" },
 							"front": {},
 							"back": {}
 						},
@@ -83,7 +83,7 @@
 					"cock" : {
 						"parts" : ["cock"],
 						"directions" : {
-							"up": { "transition": "escapeOral", "indicate" : "red" },
+							"up": { "transition": "oralEscape", "indicate" : "red" },
 							"down": {},
 							"front": {},
 							"back": {}

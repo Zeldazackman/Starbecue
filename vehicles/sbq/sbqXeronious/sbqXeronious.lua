@@ -55,12 +55,12 @@ function p.letout(id)
 
 	if location == "belly" then
 		if p.heldControl(p.driverSeat, "down") or p.lounging[id].species == "sbqEgg" then
-			return p.doTransition("escapeAnal", {id = id})
+			return p.doTransition("analEscape", {id = id})
 		else
-			return p.doTransition("escapeOral", {id = id})
+			return p.doTransition("oralEscape", {id = id})
 		end
 	elseif location == "tail" then
-		return p.doTransition("escapeTail", {id = id})
+		return p.doTransition("tailEscape", {id = id})
 	elseif location == "hug" then
 		p.grabbing = nil
 		return p.uneat(id)
@@ -155,11 +155,11 @@ function oralEat(args)
 	return p.doVore(args, "belly", {}, "swallow")
 end
 
-function tailEat(args)
+function tailVore(args)
 	return p.doVore(args, "tail", {}, "swallow")
 end
 
-function analEat(args)
+function analVore(args)
 	return p.doVore(args, "belly", {}, "swallow")
 end
 
@@ -173,15 +173,15 @@ function sitAnalEat(args)
 end
 
 function checkOral()
-	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "oralVore")
 end
 
 function checkTail()
-	return p.checkEatPosition(p.localToGlobal({-5, -2}), 2, "tail", "tailEat")
+	return p.checkEatPosition(p.localToGlobal({-5, -2}), 2, "tail", "tailVore")
 end
 
 function checkAnal()
-	return p.checkEatPosition(p.localToGlobal({-1, -3}), 2, "belly", "analEat")
+	return p.checkEatPosition(p.localToGlobal({-1, -3}), 2, "belly", "analVore")
 end
 
 function sitCheckAnal()
@@ -191,20 +191,20 @@ function sitCheckAnal()
 		includedTypes = {"creature"}
 	})
 	if entityaimed[1] == victim then
-		p.doTransition("analEat")
+		p.doTransition("analVore")
 		return true
 	end
 end
 
-function escapeOral(args)
+function oralEscape(args)
 	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
-function escapeAnal(args)
+function analEscape(args)
 	return p.doEscape(args, {}, {} )
 end
 
-function escapeTail(args)
+function tailEscape(args)
 	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
@@ -300,16 +300,16 @@ state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
 state.stand.eat = grabOralEat
 state.stand.succEat = oralEat
-state.stand.tailEat = tailEat
-state.stand.analEat = analEat
+state.stand.tailVore = tailVore
+state.stand.analVore = analVore
 
-state.stand.oralVore = checkOral
-state.stand.tailVore = checkTail
-state.stand.analVore = checkAnal
+state.stand.checkOralVore = checkOral
+state.stand.checkTailVore = checkTail
+state.stand.checkAnalVore = checkAnal
 
-state.stand.escapeOral = escapeOral
-state.stand.escapeAnal = escapeAnal
-state.stand.escapeTail = escapeTail
+state.stand.oralEscape = oralEscape
+state.stand.analEscape = analEscape
+state.stand.tailEscape = tailEscape
 
 state.stand.succ = succ
 state.stand.grab = grab
@@ -320,7 +320,7 @@ function state.sit.update()
 	checkEggSitup()
 
 	if p.pressControl(p.driverSeat, "jump") then
-		p.doTransition("analEat")
+		p.doTransition("analVore")
 	end
 
 	if p.occupants.hug > 0 then
@@ -350,16 +350,16 @@ state.sit.bellyToTail = bellyToTail
 state.sit.tailToBelly = tailToBelly
 state.sit.eat = grabOralEat
 state.sit.succEat = oralEat
-state.sit.tailEat = tailEat
-state.sit.analEat = sitAnalEat
+state.sit.tailVore = tailVore
+state.sit.analVore = sitAnalEat
 
 state.sit.vore = sitCheckVore
 state.sit.oralVore = checkOral
 state.sit.tailVore = checkTail
 state.sit.analVore = sitCheckAnal
 
-state.sit.escapeOral = escapeOral
-state.sit.escapeTail = escapeTail
+state.sit.oralEscape = oralEscape
+state.sit.tailEscape = tailEscape
 state.sit.unpin = unpin
 
 state.sit.succ = succ
@@ -377,7 +377,7 @@ end
 
 function state.hug.update()
 	if p.pressControl(p.driverSeat, "jump") then
-		p.doTransition("analEat")
+		p.doTransition("analVore")
 	end
 
 	if p.occupants.hug < 1 then
@@ -393,16 +393,16 @@ state.hug.bellyToTail = bellyToTail
 state.hug.tailToBelly = tailToBelly
 state.hug.eat = grabOralEat
 state.hug.succEat = oralEat
-state.hug.tailEat = tailEat
-state.hug.analEat = sitAnalEat
+state.hug.tailVore = tailVore
+state.hug.analVore = sitAnalEat
 
 state.hug.vore = sitCheckVore
 state.hug.oralVore = checkOral
 state.hug.tailVore = checkTail
 state.hug.analVore = sitCheckAnal
 
-state.hug.escapeOral = escapeOral
-state.hug.escapeTail = escapeTail
+state.hug.oralEscape = oralEscape
+state.hug.tailEscape = tailEscape
 state.hug.unpin = unpin
 
 state.hug.succ = succ
@@ -432,11 +432,11 @@ state.crouch.bellyToTail = bellyToTail
 state.crouch.tailToBelly = tailToBelly
 
 state.crouch.succEat = oralEat
-state.crouch.tailEat = tailEat
+state.crouch.tailVore = tailVore
 state.crouch.tailVore = checkTail
 state.crouch.vore = checkTail
 
-state.crouch.escapeTail = escapeTail
+state.crouch.tailEscape = tailEscape
 
 -------------------------------------------------------------------------------
 
@@ -467,15 +467,15 @@ state.fly.bellyToTail = bellyToTail
 state.fly.tailToBelly = tailToBelly
 state.fly.eat = oralEat
 state.fly.succEat = oralEat
-state.fly.tailEat = tailEat
-state.fly.analEat = analEat
+state.fly.tailVore = tailVore
+state.fly.analVore = analVore
 
 state.fly.tailVore = checkTail
 state.fly.analVore = checkAnal
 
-state.fly.escapeOral = escapeOral
-state.fly.escapeAnal = escapeAnal
-state.fly.escapeTail = escapeTail
+state.fly.oralEscape = oralEscape
+state.fly.analEscape = analEscape
+state.fly.tailEscape = tailEscape
 
 state.fly.succ = succ
 

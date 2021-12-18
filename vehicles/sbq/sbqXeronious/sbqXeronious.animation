@@ -83,7 +83,7 @@
 					"sitdown": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 					"standup": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 3 },
 
-					"analEat": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"analVore": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
@@ -352,7 +352,7 @@
 						"sit": { "properties": { "image": "skins/<skin>/foreground/legs.png:sit.<frame><directives>" } },
 						"fly": { "properties": { "image": "skins/<skin>/foreground/legs.png:fly.<frame><directives>" } },
 
-						"analEat": { "properties": { "image": "skins/<skin>/foreground/legs.png:analEat.<frame><directives>" } },
+						"analVore": { "properties": { "image": "skins/<skin>/foreground/legs.png:analVore.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "skins/<skin>/foreground/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "skins/<skin>/foreground/legs.png:standup.<frame><directives>" } },
@@ -386,7 +386,7 @@
 						"sit": { "properties": { "image": "skins/<skin>/legs.png:sit.<frame><directives>" } },
 						"fly": { "properties": { "image": "skins/<skin>/legs.png:fly.<frame><directives>" } },
 
-						"analEat": { "properties": { "image": "skins/<skin>/legs.png:analEat.<frame><directives>" } },
+						"analVore": { "properties": { "image": "skins/<skin>/legs.png:analVore.<frame><directives>" } },
 
 						"sitdown": { "properties": { "image": "skins/<skin>/legs.png:sitdown.<frame><directives>" } },
 						"standup": { "properties": { "image": "skins/<skin>/legs.png:standup.<frame><directives>" } },

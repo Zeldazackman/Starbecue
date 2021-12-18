@@ -838,14 +838,14 @@
 				"unhug": {
 					"script": "unbed"
 				},
-				"escapeAnal": {
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
 						"body":"back.anal.escape"
 					},
 					"victimAnimation": "back.anal.escape",
-					"script": "escapeAnal"
+					"script": "analEscape"
 				},
 				"eatAnal": {
 					"voreType" : "analVore",
@@ -875,7 +875,7 @@
 					"directions": {
 						"up": { "transition": "side", "indicate": "blue" },
 						"front": { "transition": "side", "indicate": "blue" },
-						"back": { "transition": "escapeAnal", "indicate": "red" },
+						"back": { "transition": "analEscape", "indicate": "red" },
 						"down": { "transition": "side", "indicate": "blue" }
 					},
 					"chances": {
@@ -947,14 +947,14 @@
 					"chance": 10,
 					"script": "absorb"
 				},
-				"escapeAnal": {
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
 						"body":"back.anal.escape"
 					},
 					"victimAnimation": "back.anal.escape",
-					"script": "escapeAnal"
+					"script": "analEscape"
 				},
 				"eatAnal": {
 					"voreType" : "analVore",
@@ -984,7 +984,7 @@
 					"directions": {
 						"up": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_up", "victimAnimLocation" : "hug" },
 						"front": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug" },
-						"back": { "transition": "escapeAnal", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
+						"back": { "transition": "analEscape", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
 						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
 					"chances": {

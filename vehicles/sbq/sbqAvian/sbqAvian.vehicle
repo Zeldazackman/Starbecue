@@ -183,18 +183,22 @@
 					"location" : "belly",
 					"failOnFull" : true,
 					"lock" : true,
+					"script": "oralVore",
+					"victimAnimation": "oralVore",
+					"timing": "belly",
 					"animation": {
-						"body": "eat",
-						"head": "eat"
+						"belly": "eat"
 					}
 				},
 				"oralEscape": { // 1 occupant
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
+					"script": "oralEscape",
+					"victimAnimation": "oralEscape",
+					"timing": "belly",
 					"animation": {
-						"body": "escape",
-						"head": "escape"
+						"belly": "escape"
 					}
 				},
 
@@ -239,6 +243,7 @@
 				"legs": "idle",
 				"head": "idle",
 				"cock": "idle",
+				"belly": "idle",
 				"frontBalls": "idle",
 				"backBalls": "idle",
 				"offset" : {}
@@ -250,12 +255,12 @@
 
 			"struggle": {
 				"belly" : {
-					"parts" : ["body"],
+					"parts" : ["belly"],
 					"directions":{
-						"up": { "transition": "escape" },
+						"up": { "transition": "oralEscape" },
 						"front": { "transition": "down" },
 						"back": { "transition": "down" },
-						"down": { "transition": "down" }
+						"down": { "transition": "analEscape" }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },

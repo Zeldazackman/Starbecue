@@ -351,7 +351,7 @@
 								"normal": { "min": 15, "max": 25 },
 								"antiEscape": { "min": 25, "max": 45 }
 							}},
-						"back": { "transition": "escapeAnal", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
+						"back": { "transition": "analEscape", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
 						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
 					"chances": {

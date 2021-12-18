@@ -75,7 +75,7 @@ function p.changeSize()
 	end
 end
 
-function escapeAnal(args)
+function analEscape(args)
 	return p.doEscape(args, {}, {} )
 end
 
@@ -193,7 +193,7 @@ function state.back.unbed(args)
 	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
 end
 
-state.back.escapeAnal = escapeAnal
+state.back.analEscape = analEscape
 state.back.eatAnal = eatAnal
 
 -------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ function state.hug.update()
 end
 
 state.hug.absorb = absorb
-state.hug.escapeAnal = escapeAnal
+state.hug.analEscape = analEscape
 state.hug.eatAnal = eatAnal
 
 -------------------------------------------------------------------------------

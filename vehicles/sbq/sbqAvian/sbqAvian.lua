@@ -150,13 +150,17 @@ function oralVore(args)
 	return p.doVore(args, "belly", {}, "swallow")
 end
 
+function oralEscape(args)
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+end
+
 function checkVore()
 	if checkOralVore() then return true end
 	if checkCockVore() then return true end
 end
 
 function checkOralVore()
-	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "eat")
+	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "oralVore")
 end
 
 function checkCockVore()
@@ -190,8 +194,9 @@ function state.stand.begin()
 	p.resolvePosition(5)
 end
 
-state.stand.eat = oralVore
+state.stand.oralVore = oralVore
 state.stand.cockVore = cockVore
+state.stand.oralEscape = oralEscape
 state.stand.cockEscape = cockEscape
 
 state.stand.checkCockVore = checkCockVore
@@ -200,6 +205,8 @@ state.stand.checkOralVore = checkOralVore
 state.stand.shaftToBalls = shaftToBalls
 state.stand.ballsToShaft = ballsToShaft
 state.stand.switchBalls = switchBalls
+
+state.stand.grab = grab
 
 -------------------------------------------------------------------------------
 

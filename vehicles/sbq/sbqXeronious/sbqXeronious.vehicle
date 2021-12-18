@@ -225,7 +225,7 @@
 					},
 					"state": "crouch"
 				},
-				"eat": {
+				"oralVore": {
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
@@ -234,7 +234,7 @@
 						"body": "eat",
 						"head": "eat"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "eat",
 					"script": "eat"
 				},
 				"succEat": {
@@ -246,20 +246,20 @@
 						"body": "eat",
 						"head": "eat"
 					},
-					"victimAnimation": "playersucc",
+					"victimAnimation": "succ",
 					"script": "succEat"
 				},
-				"escapeOral": {
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
-					"script": "escapeOral",
+					"script": "oralEscape",
 					"animation": {
 						"body": "escape",
 						"head": "escape"
 					}
 				},
-				"tailEat": {
+				"tailVore": {
 					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
@@ -268,22 +268,22 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertailEat",
-					"script": "tailEat",
+					"victimAnimation": "tailVore",
+					"script": "tailVore",
 					"timing": "tail"
 				},
-				"escapeTail": {
+				"tailEscape": {
 					"voreType" : "tailVore",
 					"lock" : true,
-					"victimAnimation": "escapeTail",
+					"victimAnimation": "tailEscape",
 					"timing": "tail",
-					"script": "escapeTail",
+					"script": "tailEscape",
 					"animation": {
 						"tail": "escape",
 						"head": "AVlook"
 					}
 				},
-				"analEat": {
+				"analVore": {
 					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
@@ -292,14 +292,14 @@
 						"body": "expand",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playeranalEat",
-					"script": "analEat"
+					"victimAnimation": "analVore",
+					"script": "analVore"
 				},
-				"escapeAnal": {
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock":true,
-					"victimAnimation": "escapeAnal",
-					"script": "escapeAnal",
+					"victimAnimation": "analEscape",
+					"script": "analEscape",
 					"animation": {
 						"body": "shrink",
 						"head": "AVlook"
@@ -348,10 +348,10 @@
 				"belly" : {
 					"parts" : ["body"],
 					"directions" : {
-						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"up": { "transition": "oralEscape", "indicate" : "red", "drivingEnabled": true  },
 						"front": { "transition": "down", "indicate" : "blue" },
 						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
-						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+						"down": { "transition": "analEscape", "indicate" : "red", "drivingEnabled": true }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
@@ -366,7 +366,7 @@
 					"directions" : {
 						"up": { "transition": "up", "indicate" : "blue"  },
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
-						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"back": { "transition": "tailEscape", "indicate" : "red", "drivingEnabled": true  },
 						"down": { "transition": "down", "indicate" : "blue" }
 					},
 					"chances": {
@@ -403,7 +403,7 @@
 				},
 				"tail": {
 					"pos": [-5, -2], "aim": [-5, -2],
-					"transition": "tailEat", "chance": 100,
+					"transition": "tailVore", "chance": 100,
 					"location": "tail", "failOnFull": true
 				}
 			},
@@ -419,15 +419,15 @@
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "oralVore"
+					"script": "checkOralVore"
 				},
 				"tailVore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "checkTailVore"
 				},
 				"analVore":{
 					"cooldown": 1,
-					"script": "analVore"
+					"script": "checkAnalVore"
 				},
 				/*
 				"physicalAttack": {
@@ -518,7 +518,7 @@
 					},
 					"state": "stand"
 				},
-				"tailEat": {
+				"tailVore": {
 					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
@@ -527,16 +527,16 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertailEat",
-					"script": "tailEat",
+					"victimAnimation": "tailVore",
+					"script": "tailVore",
 					"timing": "tail"
 				},
-				"escapeTail": {
+				"tailEscape": {
 					"voreType" : "tailVore",
 					"lock" : true,
-					"victimAnimation": "escapeTail",
+					"victimAnimation": "tailEscape",
 					"timing": "tail",
-					"script": "escapeTail",
+					"script": "tailEscape",
 					"animation": {
 						"tail": "escape",
 						"head": "AVlook"
@@ -605,7 +605,7 @@
 					"directions" : {
 						"up": { },
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
-						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"back": { "transition": "tailEscape", "indicate" : "red", "drivingEnabled": true },
 						"down": { }
 					},
 					"chances": {
@@ -629,7 +629,7 @@
 				},
 				"tailVore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "checkTailVore"
 				},
 				"succ": {
 					"hold" : true,
@@ -667,20 +667,20 @@
 						"arms": "fly",
 						"head": "eat"
 					},
-					"victimAnimation": "playersucc",
+					"victimAnimation": "succ",
 					"script": "eat"
 				},
-				"escapeOral": {
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"victimAnimation": "escape",
-					"script" : "escapeOral",
+					"script" : "oralEscape",
 					"animation": {
 						"body": "escape",
 						"arms": "fly",
 						"head": "escape"
 					}
 				},
-				"tailEat": {
+				"tailVore": {
 					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
@@ -690,15 +690,15 @@
 						"arms": "fly",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertailEat",
-					"script": "tailEat",
+					"victimAnimation": "tailVore",
+					"script": "tailVore",
 					"timing": "tail"
 				},
-				"escapeTail": {
+				"tailEscape": {
 					"voreType" : "tailVore",
 					"lock" : true,
-					"victimAnimation": "escapeTail",
-					"script" : "escapeTail",
+					"victimAnimation": "tailEscape",
+					"script" : "tailEscape",
 					"timing": "tail",
 					"animation": {
 						"tail": "eat",
@@ -720,7 +720,7 @@
 						"head": "burp"
 					}
 				},
-				"analEat": {
+				"analVore": {
 					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
@@ -728,17 +728,17 @@
 					"animation": {
 						"body": "expand",
 						"arms": "fly",
-						"legs": "analEat",
+						"legs": "analVore",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playeranalEat",
-					"script": "analEat"
+					"victimAnimation": "analVore",
+					"script": "analVore"
 				},
-				"escapeAnal": {
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock":true,
-					"victimAnimation": "escapeAnal",
-					"script" : "escapeAnal",
+					"victimAnimation": "analEscape",
+					"script" : "analEscape",
 					"animation": {
 						"body": "shrink",
 						"arms": "fly",
@@ -777,10 +777,10 @@
 				"belly" : {
 					"parts" : ["body"],
 					"directions" : {
-						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
-						"front": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"up": { "transition": "oralEscape", "indicate" : "red", "drivingEnabled": true  },
+						"front": { "transition": "oralEscape", "indicate" : "red", "drivingEnabled": true  },
 						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
-						"down": { "transition": "escapeAnal", "indicate" : "red", "drivingEnabled": true }
+						"down": { "transition": "analEscape", "indicate" : "red", "drivingEnabled": true }
 					},
 					"chances": {
 						"easyEscape": { "min": 2, "max": 5 },
@@ -795,7 +795,7 @@
 					"directions" : {
 						"up": { },
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true  },
-						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"back": { "transition": "tailEscape", "indicate" : "red", "drivingEnabled": true },
 						"down": { }
 					},
 					"chances": {
@@ -819,16 +819,17 @@
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "oralVore"
+					"script": "checkOralVore"
 				},
 				"tailVore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "checkTailVore"
 				},
 				"analVore":{
 					"cooldown": 1,
-					"script": "analVore"
+					"script": "checkAnalVore"
 				},
+
 				"succ": {
 					"position" : [3, 1.5],
 					"hold" : true,
@@ -887,7 +888,7 @@
 					"timing": "legs",
 					"chance": 5
 				},
-				"eat": {
+				"oralVore": {
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
@@ -896,20 +897,20 @@
 						"body": "eat",
 						"head": "eat"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "eat",
 					"script": "eat"
 				},
-				"escapeOral": {
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
-					"script": "escapeOral",
+					"script": "oralEscape",
 					"animation": {
 						"body": "escape",
 						"head": "escape"
 					}
 				},
-				"tailEat": {
+				"tailVore": {
 					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
@@ -918,22 +919,22 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertailEat",
-					"script": "tailEat",
+					"victimAnimation": "tailVore",
+					"script": "tailVore",
 					"timing": "tail"
 				},
-				"escapeTail": {
+				"tailEscape": {
 					"voreType" : "tailVore",
 					"lock" : true,
-					"victimAnimation": "escapeTail",
+					"victimAnimation": "tailEscape",
 					"timing": "tail",
-					"script": "escapeTail",
+					"script": "tailEscape",
 					"animation": {
 						"tail": "escape",
 						"head": "AVlook"
 					}
 				},
-				"analEat": {
+				"analVore": {
 					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
@@ -942,7 +943,7 @@
 						"body": "expand",
 						"head": "AVlook"
 					},
-					"script": "analEat"
+					"script": "analVore"
 				},
 				"digestbelly" : {
 					"animation": {
@@ -1004,7 +1005,7 @@
 				"belly" : {
 					"parts" : ["body"],
 					"directions" : {
-						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true  },
+						"up": { "transition": "oralEscape", "indicate" : "red", "drivingEnabled": true  },
 						"front": { "transition": "up", "indicate" : "blue"  },
 						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
 						"down": { }
@@ -1022,7 +1023,7 @@
 					"directions" : {
 						"up": { "transition": "up", "indicate" : "blue" },
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
-						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true  },
+						"back": { "transition": "tailEscape", "indicate" : "red", "drivingEnabled": true  },
 						"down": { }
 					},
 					"chances": {
@@ -1037,7 +1038,7 @@
 					"sound" : false,
 					"parts" : ["legs"],
 					"directions" : {
-						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"up": { "transition": "analVore", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
 						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
 						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
 					},
@@ -1081,7 +1082,7 @@
 				},
 				"tail": {
 					"pos": [-6, -4], "aim": [-6, -4],
-					"transition": "tailEat", "chance": 100,
+					"transition": "tailVore", "chance": 100,
 					"location": "tail", "failOnFull": true
 				}
 			},
@@ -1097,15 +1098,15 @@
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "oralVore"
+					"script": "checkOralVore"
 				},
 				"tailVore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "checkTailVore"
 				},
 				"analVore":{
 					"cooldown": 1,
-					"script": "analVore"
+					"script": "checkAnalVore"
 				},
 				/*
 				"physicalAttack": {
@@ -1155,7 +1156,7 @@
 					"timing": "legs",
 					"state": "stand"
 				},
-				"eat": {
+				"oralVore": {
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"lock" : true,
@@ -1164,20 +1165,20 @@
 						"body": "eat",
 						"head": "eat"
 					},
-					"victimAnimation": "playereat",
+					"victimAnimation": "eat",
 					"script": "eat"
 				},
-				"escapeOral": {
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"lock":true,
-					"script": "escapeOral",
+					"script": "oralEscape",
 					"animation": {
 						"body": "escape",
 						"head": "escape"
 					}
 				},
-				"tailEat": {
+				"tailVore": {
 					"voreType" : "tailVore",
 					"location" : "tail",
 					"lock" : true,
@@ -1186,22 +1187,22 @@
 						"tail": "eat",
 						"head": "AVlook"
 					},
-					"victimAnimation": "playertailEat",
-					"script": "tailEat",
+					"victimAnimation": "tailVore",
+					"script": "tailVore",
 					"timing": "tail"
 				},
-				"escapeTail": {
+				"tailEscape": {
 					"voreType" : "tailVore",
 					"lock" : true,
-					"victimAnimation": "escapeTail",
+					"victimAnimation": "tailEscape",
 					"timing": "tail",
-					"script": "escapeTail",
+					"script": "tailEscape",
 					"animation": {
 						"tail": "escape",
 						"head": "AVlook"
 					}
 				},
-				"analEat": {
+				"analVore": {
 					"voreType" : "analVore",
 					"location" : "belly",
 					"failOnFull" : true,
@@ -1210,7 +1211,7 @@
 						"body": "expand",
 						"head": "AVlook"
 					},
-					"script": "analEat"
+					"script": "analVore"
 				},
 				"digestbelly" : {
 					"animation": {
@@ -1285,7 +1286,7 @@
 				"belly" : {
 					"parts" : ["body"],
 					"directions" : {
-						"up": { "transition": "escapeOral", "indicate" : "red", "drivingEnabled": true },
+						"up": { "transition": "oralEscape", "indicate" : "red", "drivingEnabled": true },
 						"front": { "transition": "up", "indicate" : "green" },
 						"back": { "transition": "bellyToTail", "indicate" : "cyan", "drivingEnabled": true },
 						"down": { }
@@ -1303,7 +1304,7 @@
 					"directions" : {
 						"up": { "transition": "up", "indicate" : "blue" },
 						"front": { "transition": "tailToBelly", "indicate" : "cyan", "drivingEnabled": true },
-						"back": { "transition": "escapeTail", "indicate" : "red", "drivingEnabled": true },
+						"back": { "transition": "tailEscape", "indicate" : "red", "drivingEnabled": true },
 						"down": { }
 					},
 					"chances": {
@@ -1318,7 +1319,7 @@
 					"sound" : false,
 					"parts" : ["legs"],
 					"directions" : {
-						"up": { "transition": "analEat", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
+						"up": { "transition": "analVore", "indicate" : "yellow", "victimAnimation" : "pinned.s_up", "drivingEnabled": true },
 						"front": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_front" },
 						"back": { "transition": "up", "indicate" : "red", "victimAnimation" : "pinned.s_back" }
 					},
@@ -1356,7 +1357,7 @@
 				},
 				"tail": {
 					"pos": [-6, -4], "aim": [-6, -4],
-					"transition": "tailEat", "chance": 100,
+					"transition": "tailVore", "chance": 100,
 					"location": "tail", "failOnFull": true
 				}
 			},
@@ -1372,15 +1373,15 @@
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "oralVore"
+					"script": "checkOralVore"
 				},
 				"tailVore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "checkTailVore"
 				},
 				"analVore":{
 					"cooldown": 1,
-					"transition": "analVore"
+					"script": "checkAnalVore"
 				},
 				/*
 				"physicalAttack": {

@@ -34,9 +34,9 @@ function p.handleGrab()
 		local angle = p.armRotation.frontarmsAngle * 180/math.pi
 
 		if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
-			transition = "eat"
+			transition = "oralVore"
 		elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
-			transition = "analEat"
+			transition = "analVore"
 		end
 		p.doTransition(transition, {id = victim})
 
