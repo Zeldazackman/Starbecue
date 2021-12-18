@@ -7,7 +7,7 @@
 	"scripts" : [ "sbqSettings.lua" ],
 	"children" : [
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
-			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Predator", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
 					[[//first collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
@@ -25,13 +25,14 @@
 							[{ "type" : "checkBox", "id" : "EMHard", "value" : "antiEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Hard" }],
 							[{ "type" : "checkBox", "id" : "EMImpossible", "value" : "noEscape", "radioGroup" : "escapeModifier"}, { "type" : "label", "text" : "Impossible" }]
 						]}
-					]]
-				]},
-				{"type" : "panel", "style" : "convex", "children" : [
-					[[
-						[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
-						[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
-					]]
+					]],
+					{"type" : "panel", "style" : "convex", "children" : [
+						[[
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
+						]]
+					]},
+					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -54,7 +55,7 @@
 					],[// third collumn
 						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held" } ]
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned" } ]
 						]}
 					]],
 					{"type" : "panel", "style" : "convex", "children" : [

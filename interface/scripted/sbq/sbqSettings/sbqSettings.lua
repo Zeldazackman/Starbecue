@@ -7,7 +7,6 @@ sbq = {}
 
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
 sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
-sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 
 function getPatronsString()
 	local patronsString = ""
@@ -16,7 +15,7 @@ function getPatronsString()
 	end
 	return patronsString
 end
-patronsLabel:setText(getPatronsString())
+sbq.patronsString = getPatronsString()
 
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -54,6 +53,12 @@ function init()
 	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
 		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
 	end
+
+	if sbq.helpTab ~= nil then
+		sbq.helpTab:delete()
+	end
+	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
+	patronsLabel:setText(sbq.patronsString)
 
 	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and sbq.sbqCurrentData.type == "driver" then
 		sbq.customizeTab:setVisible(true)

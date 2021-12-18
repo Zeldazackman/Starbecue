@@ -5,19 +5,20 @@ sbq = {
 }
 
 for name, data in pairs(sbq.sbqSettings.types) do
-	local name = name
-	local predPanel = predatorScrollArea:addChild({ type = "panel", id = name.."Panel", style = "convex", mode = "horizontal", children = {
-		{ type = "image", file = "/vehicles/sbq/"..name.."/skins/"..((sbq.sbqSettings[name].skinNames or {}).head or "default").."/icon.png"..(sbq.sbqSettings[name].directives or "")},
-		{ type = "panel", id = name.."Layout", style = "concave", mode = "vertical", children = {
-			{ type = "label", inline = true, text = name:gsub("^sbq", "")},
-			{ type = "layout", id = name.."Layout2", mode = "horizontal", children = {
-				{ type = "checkBox", id = name.."checkBox", checked = data.enable ~= false, toolTip = "Enable or disable pred appearing on selection wheel"},
-				{ type = "iconButton", id = name.."prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Priority of appearance on selection wheel (clockwise from bottom)"},
-				{ type = "label", id = name.."label", text = tostring(data.index)},
-				{ type = "iconButton", id = name.."next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Priority of appearance on selection wheel (clockwise from bottom)"}
+	local predPanel = predatorScrollArea:addChild({type = "layout", mode = "vertical", children = {{ type = "panel", id = name.."Panel", style = "convex", mode = "horizontal", children = {
+		{
+			{ type = "image", file = "/vehicles/sbq/"..name.."/skins/"..((sbq.sbqSettings[name].skinNames or {}).head or "default").."/icon.png"..(sbq.sbqSettings[name].directives or "")},
+			{ type = "panel", id = name.."Layout", style = "concave", mode = "vertical", children = {
+				{ type = "label", text = name:gsub("^sbq", "")},
+				{ type = "layout", id = name.."Layout2", mode = "horizontal", children = {
+					{ type = "checkBox", id = name.."checkBox", checked = data.enable ~= false, toolTip = "Enable or disable pred appearing on selection wheel"},
+					{ type = "iconButton", id = name.."prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Priority of appearance on selection wheel (clockwise from bottom)"},
+					{ type = "label", id = name.."label", text = tostring(data.index), inline = true},
+					{ type = "iconButton", id = name.."next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Priority of appearance on selection wheel (clockwise from bottom)"}
+				}}
 			}}
-		}}
-	}})
+		}
+	}}}})
 
 	local checkBox = _ENV[name.."checkBox"]
 	local prev = _ENV[name.."prev"]
