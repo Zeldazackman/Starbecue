@@ -78,6 +78,7 @@ function p.uneat( occupantId )
 	else
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", p.config.predStatusEffects)
 	end
+	world.sendEntityMessage( occupantId, "sbqLight", nil )
 
 	p.refreshList = true
 	p.lounging[occupantId] = nil
@@ -459,7 +460,7 @@ function p.doBellyEffects(dt)
 			local health = world.entityHealth(eid)
 			local light = p.sbqData.lights.prey
 			light.position = world.entityPosition( eid )
-			world.sendEntityMessage( eid, "playerext:queueLight", light )
+			world.sendEntityMessage( eid, "sbqLight", light )
 
 			if p.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
 				local owner = p.occupant[i].nestedPreyData.owner
