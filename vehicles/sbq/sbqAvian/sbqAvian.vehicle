@@ -115,7 +115,8 @@
 		"replaceColorNames" : [
 			"Main Body",
 			"Belly",
-			"Beak"
+			"Beak",
+			"Penis"
 		],
 		"replaceColors" : [
 			[
@@ -151,6 +152,10 @@
 				["eacf60", "c1a24e", "977841"],
 				["efad56", "c5813e", "9b6638"],
 				["eae660", "c1b54e", "978841"] // last "canon" color option
+			],
+			[
+				["b10058", "C93B82"], // penis
+				["b10058", "C93B82"]
 			]
 		],
 		"locations" :{

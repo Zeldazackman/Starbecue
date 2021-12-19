@@ -25,6 +25,8 @@
       "animationPosition" : [-12, 0],
       "direction" : "right",
 
+      "collision" : "platform",
+
       "spaceScan" : 0.3
     }
   ],
