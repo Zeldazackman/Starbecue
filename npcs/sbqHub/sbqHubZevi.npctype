@@ -34,11 +34,9 @@
 			"species" : "sbqZevi",
 			"directives" : "?replace;418093=418093fb?replace;57a3b9=57a3b9fb?replace;70b9cf=70b9cffb"
 		},
-
 		"sbqPreyEnabled" : {
 			"enabled" : true
 		},
-
 		"sbqData" : {
 			"locations" :{
 				"belly" : { "max": 1, "digest" : true },
@@ -94,8 +92,53 @@
 							"antiEscape": { "min": 10, "max": 14 }
 						}
 					}
-
 				}
+			}
+		},
+		"defaultPortrait" : "/humanoid/sbqZevi/portraits/ZNeutral.png",
+		"dialogueTree" : {
+			"greeting" : {
+				"neutral" : {
+					"dialogue" : [
+						"Hi.",
+						"Hey there.",
+						"Mrow."
+					]
+				},
+				"fearful" : {
+					"dialogue" : [
+						"AH!",
+						"I-I didn't see you there!",
+						"O-oh its you!"
+					]
+				},
+				"horny" : {
+					"dialogue" : [
+						"UwU",
+						"Hehe, hey there~",
+						"Mrow~"
+					]
+				},
+				"friendly" : {
+					"dialogue" : [
+						"Hi!",
+						"Hey <entityname>!",
+						"Nya!"
+					]
+				},
+				"hungry" : {
+					"dialogue" : [
+						"Mmmm... feeling a bit hungry.",
+						"Hey <entityname>, I'm looking for some food, have any?",
+						"Oh huh, I probably need to find something to eat."
+					]
+				}
+			},
+
+			"oralVore" : {
+				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ] },
+				"no" : { "dialogue" : [ "Don't really feel like that right now." ] },
+				"full" : { "dialogue" : [ "I'm a bit too full..." ] }
 			}
 		},
 
