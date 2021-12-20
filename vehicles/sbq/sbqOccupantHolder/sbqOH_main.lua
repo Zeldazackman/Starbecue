@@ -180,6 +180,11 @@ function init()
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
+	if p.sbqData.scripts ~= nil then
+		for _, script in ipairs(p.sbqData.scripts) do
+			require(script)
+		end
+	end
 	for _, script in ipairs(p.config.scripts) do
 		require(script)
 	end

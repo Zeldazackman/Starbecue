@@ -1,21 +1,54 @@
 ---@diagnostic disable: undefined-global
 
-sbq = {}
+local inited
+
+sbq = {
+	data = {
+		mood = "neutral",
+		defaultPortrait = "/empty_image.png",
+		icons = {
+			oralVore = "/items/active/sbqController/oralVore.png",
+			tailVore = "/items/active/sbqController/tailVore.png",
+			absorbVore = "/items/active/sbqController/absorbVore.png",
+
+			analVore = "/items/active/sbqController/analVore.png",
+			cockVore = "/items/active/sbqController/cockVore.png",
+			breastVore = "/items/active/sbqController/breastVore.png",
+			unbirth = "/items/active/sbqController/unbirth.png"
+		}
+	}
+}
 
 function init()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
 	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData" ), function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
 		sbq.updateDialogueBox({"greeting", "mood"})
+		inited = true
 	end)
-
 end
 
 function update()
 	local dt = script.updateDt()
 	sbq.checkRPCsFinished(dt)
+	if not inited then return end
+	sbq.refreshData()
+	sbq.getOccupancy()
+end
+
+function sbq.getOccupancy()
+	sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (dialogueBoxData)
+		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
+		sbq.checkVoreButtonsEnabled()
+	end)
+end
+function sbq.refreshData()
+	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", {}, function (dialogueBoxData)
+		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
+	end)
 end
 
 function sbq.checkRPCsFinished(dt)
@@ -65,9 +98,7 @@ end
 
 function sbq.getDialogueBranch(dialogueTreeLocation)
 	local dialogueTree = sbq.data.dialogueTree
-	sb.logInfo(sb.printJson(dialogueTree,1))
 	for _, branch in ipairs(dialogueTreeLocation) do
-		sb.logInfo(branch)
 		if branch == "mood" then
 			if dialogueTree[sbq.data.mood] ~= nil then
 				dialogueTree = dialogueTree[sbq.data.mood]
@@ -78,7 +109,6 @@ function sbq.getDialogueBranch(dialogueTreeLocation)
 			dialogueTree = dialogueTree[branch]
 		end
 	end
-	sb.logInfo(sb.printJson(dialogueTree,1))
 	return dialogueTree
 end
 
@@ -106,4 +136,35 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 
 	dialogueLabel:setText(dialogue)
 	dialoguePortrait:setFile(portrait)
+end
+
+function sbq.checkVoreTypeActive(voreType)
+	local voreTypeData = sbq.data.settings.voreTypes[voreType]
+	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
+	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] then
+		if voreTypeData.feelingIt then
+			if (sbq.data.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
+				return "full"
+			else
+				return true
+			end
+		else
+			return "notFeelingIt"
+		end
+	else
+		return "hidden"
+	end
+end
+
+function sbq.checkVoreButtonsEnabled()
+	for voreType, data in pairs(sbq.data.settings.voreTypes) do
+		local button = _ENV[voreType]
+		local active = sbq.checkVoreTypeActive(voreType)
+		button:setVisible(active ~= "hidden")
+		local image = sbq.data.icons[voreType]
+		if active ~= true then
+			image = image.."?brightness=-25?saturation=-100"
+		end
+		button:setImage(image)
+	end
 end

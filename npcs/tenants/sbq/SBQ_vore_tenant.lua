@@ -6,11 +6,13 @@ local inited
 
 function init()
 	oldinit()
-	if not storage.sbqSettings then
-		storage.sbqSettings = (config.getParameter("sbqData") or {}).defaultSettings
-	end
+	sbq.sbqData = config.getParameter("sbqData") or {}
+	storage.sbqSettings = sb.jsonMerge(storage.sbqSettings or {}, (sbq.sbqData.defaultSettings or {}))
 	message.setHandler("sbqGetDialogueBoxData", function ()
-		return { settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
+		return { sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
+	end)
+	message.setHandler("sbqRefreshDialogueBoxData", function ()
+		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
 	end)
 end
 

@@ -112,3 +112,7 @@ message.setHandler( "requestUneat", function (_,_, prey, voreType)
 		end
 	end)
 end)
+
+message.setHandler( "getOccupancyData", function ()
+	return {occupant = p.occupant, occupants = p.occupants}
+end)
