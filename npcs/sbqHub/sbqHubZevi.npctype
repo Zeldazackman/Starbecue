@@ -40,7 +40,7 @@
 		"sbqData" : {
 			"locations" :{
 				"belly" : { "max": 1, "digest" : true },
-				"cock" : { "max": 1 }
+				"shaft" : { "max": 1 }
 			},
 			"defaultSettings" : {
 				"voreTypes" : {
@@ -142,11 +142,22 @@
 
 			"oralVore" : {
 				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ] },
-				"no" : { "dialogue" : [ "Don't really feel like that right now." ] },
+				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
 				"full" : { "dialogue" : [ "I'm a bit too full..." ] }
-			}
+			},
+			"cockVore" : {
+				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ] },
+				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
+				"full" : { "dialogue" : [ "I'm plugged up down there already~" ] }
+			},
+			"belly" : {
+				"sbqRemoveBellyEffects" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ] },
+				"sbqHeal" : { "dialogue" : [ "Hope my belly is feels nice~" ] },
+				"sbqSoftDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ] },
+				"sbqDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ] }
+			},
+			"shaft" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ] }
 		},
-
 
 		"dialog" : {
 			"greeting" : {

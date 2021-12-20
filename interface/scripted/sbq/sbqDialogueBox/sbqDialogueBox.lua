@@ -24,9 +24,9 @@ function init()
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
-	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData" ), function (dialogueBoxData)
+	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData", player.id() ), function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
-		sbq.updateDialogueBox({"greeting", "mood"})
+		sbq.updateDialogueBox( dialogueBoxData.dialogueTreeStart or {"greeting", "mood"})
 		inited = true
 	end)
 end
@@ -40,8 +40,9 @@ function update()
 end
 
 function sbq.getOccupancy()
-	sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (dialogueBoxData)
-		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
+	sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (occupancyData)
+		sbq.occupant = occupancyData.occupant
+		sbq.occupants = occupancyData.occupants
 		sbq.checkVoreButtonsEnabled()
 	end)
 end
@@ -133,8 +134,11 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		portrait = portrait[randomRolls[i]]
 		i = i + 1
 	end
+	local playerName = world.entityName(player.id())
+	dialogue = sb.replaceTags( dialogue, { entityname = playerName })
 
 	dialogueLabel:setText(dialogue)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSay", dialogue)
 	dialoguePortrait:setFile(portrait)
 end
 
@@ -143,10 +147,10 @@ function sbq.checkVoreTypeActive(voreType)
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
 	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] then
 		if voreTypeData.feelingIt then
-			if (sbq.data.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
+			if (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
 				return "full"
 			else
-				return true
+				return "yes"
 			end
 		else
 			return "notFeelingIt"
@@ -162,9 +166,27 @@ function sbq.checkVoreButtonsEnabled()
 		local active = sbq.checkVoreTypeActive(voreType)
 		button:setVisible(active ~= "hidden")
 		local image = sbq.data.icons[voreType]
-		if active ~= true then
+		if active ~= "yes" then
 			image = image.."?brightness=-25?saturation=-100"
 		end
 		button:setImage(image)
 	end
+end
+
+function sbq.voreButton(voreType)
+	local active = sbq.checkVoreTypeActive(voreType)
+	local voreTypeData = sbq.data.settings.voreTypes[voreType]
+
+	sbq.updateDialogueBox({ voreType, active })
+	if active == "yes" then
+		world.sendEntityMessage( sbq.data.occupantHolder, "requestEat", player.id(), voreType, voreTypeData.location )
+	end
+end
+
+function oralVore:onClick()
+	sbq.voreButton("oralVore")
+end
+
+function cockVore:onClick()
+	sbq.voreButton("cockVore")
 end

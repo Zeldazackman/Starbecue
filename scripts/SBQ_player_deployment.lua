@@ -8,7 +8,7 @@ function init()
 	end)
 
 	local light = player.getProperty( "sbqLight" )
-	if light ~= nil then
+	if light ~= nil and playerext ~= nil then
 		playerext.queueLight(light)
 	end
 end

@@ -3,16 +3,27 @@ local oldupdate = update
 local olduninit = uninit
 local occupantHolder
 local inited
+local dialogueBoxOpen = 0
 
 function init()
 	oldinit()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.sbqData = config.getParameter("sbqData") or {}
-	storage.sbqSettings = sb.jsonMerge(storage.sbqSettings or {}, (sbq.sbqData.defaultSettings or {}))
-	message.setHandler("sbqGetDialogueBoxData", function ()
-		return { sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
+	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(storage.sbqSettings or {}, (sbq.sbqData.defaultSettings or {})))
+	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
+		local location = sbq.getOccupantArg(id, "location")
+		local dialogueTreeStart
+		if location ~= nil then
+			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
+		end
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function ()
+		dialogueBoxOpen = 0.5
 		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
+	end)
+	message.setHandler("sbqSay", function (_,_, string, tags)
+		npc.say(string, tags)
 	end)
 end
 
@@ -24,10 +35,19 @@ function update(dt)
 	end
 
 	sbq.checkRPCsFinished(dt)
+	sbq.getOccupancy()
+	dialogueBoxOpen = math.max(0, dialogueBoxOpen - dt)
 end
 
 function uninit()
 	olduninit()
+end
+
+function sbq.getOccupancy()
+	sbq.loopedMessage("getOccupancy", occupantHolder, "getOccupancyData", {}, function (occupancyData)
+		sbq.occupant = occupancyData.occupant
+		sbq.occupants = occupancyData.occupants
+	end)
 end
 
 function sbq.checkRPCsFinished(dt)
@@ -69,8 +89,18 @@ function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
 	end
 end
 
-function handleInteract(args)
-	world.sendEntityMessage( args.sourceId, "sbqOpenMetagui", "starbecue:dialogueBox", entity.id() )
+function interact(args)
+	if dialogueBoxOpen == 0 then
+		world.sendEntityMessage( args.sourceId, "sbqOpenMetagui", "starbecue:dialogueBox", entity.id() )
+	end
+end
+
+function sbq.getOccupantArg(id, arg)
+	for i, occupant in pairs(sbq.occupant) do
+		if occupant.id == id then
+			return occupant[arg]
+		end
+	end
 end
 
 function sbq.oralVore(args)
