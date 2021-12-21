@@ -112,7 +112,7 @@ function p.updateControls(dt)
 					p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 				end)
 			end
-			p.loopedMessage(seatname.."Equips", eid, "sbqGetSeatEquips", {type, data}, function(seatdata)
+			p.loopedMessage(seatname.."Equips", eid, "sbqGetSeatEquips", {data}, function(seatdata)
 				p.occupant[i].controls = sb.jsonMerge(p.occupant[i].controls, seatdata)
 			end)
 		end

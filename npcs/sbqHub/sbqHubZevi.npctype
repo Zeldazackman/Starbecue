@@ -118,6 +118,7 @@
 
 				},
 				"fearful" : {
+					"portrait" : "/humanoid/sbqZevi/portraits/ZShocked.png",
 					"dialogue" : [
 						"AH!",
 						"I-I didn't see you there!",
@@ -125,6 +126,7 @@
 					]
 				},
 				"horny" : {
+					"portrait" : "/humanoid/sbqZevi/portraits/ZUwU.png",
 					"dialogue" : [
 						"UwU",
 						"Hehe, hey there~",
@@ -132,6 +134,7 @@
 					]
 				},
 				"friendly" : {
+					"portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png",
 					"dialogue" : [
 						"Hi!",
 						"Hey <entityname>!",
@@ -152,32 +155,32 @@
 			},
 
 			"oralVore" : {
-				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ],
-					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ] }
+				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png",
+					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png"}
 				},
-				"unprompted" : { "dialogue" : [ "mmmm~ you look like a tasty meal~" ],
-					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ] }
+				"unprompted" : { "dialogue" : [ "mmmm~ you look like a tasty meal~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 				},
-				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
-				"full" : { "dialogue" : [ "I'm a bit too full..." ] }
+				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
+				"full" : { "dialogue" : [ "I'm a bit too full..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
 			},
 			"cockVore" : {
-				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ],
-					"tease" : { "dialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
+				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "dialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png" }
 				},
-				"unprompted" : { "dialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ],
-					"tease" : { "dialogue" : [ "ahh~ you're gonna get covered in cum heh~" ]}
+				"unprompted" : { "dialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "dialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png"}
 				},
-				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
-				"full" : { "dialogue" : [ "I'm plugged up down there already~" ] }
+				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
+				"full" : { "dialogue" : [ "I'm plugged up down there already~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
 			},
 			"belly" : {
-				"sbqRemoveBellyEffects" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ] },
-				"sbqHeal" : { "dialogue" : [ "Hope my belly is feels nice~" ] },
-				"sbqSoftDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ] },
-				"sbqDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ] }
+				"sbqRemoveBellyEffects" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqHeal" : { "dialogue" : [ "Hope my belly is feels nice~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqSoftDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 			},
-			"shaft" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ] }
+			"shaft" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
 		},
 
 		"dialog" : {

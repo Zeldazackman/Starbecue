@@ -223,7 +223,7 @@ end
 function sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] then
+	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] and ( (player.getProperty( "sbqCurrentData") or {}).type ~= "prey" ) then
 		if voreTypeData.feelingIt then
 			if (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
 				return "full"
@@ -275,11 +275,11 @@ function sbq.dismissAfterTimer(time)
 end
 
 function dialogueCont:onClick()
+	local contextMenu = {}
 	if sbq.prevDialogueBranch.continue ~= nil then
 		table.insert(sbq.dialogueTreeLocation, "continue")
 		sbq.updateDialogueBox(sbq.dialogueTreeLocation)
 	elseif sbq.prevDialogueBranch.options ~= nil then
-		local contextMenu = {}
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
 			if option[2].dialogue ~= nil then
@@ -292,6 +292,11 @@ function dialogueCont:onClick()
 			end
 			table.insert(contextMenu, action)
 		end
+	end
+	if sbq.prevDialogueBranch.buttonFunc ~= nil and sbq[sbq.prevDialogueBranch.buttonFunc] ~= nil then
+		sbq[sbq.prevDialogueBranch.buttonFunc]()
+	end
+	if #contextMenu > 0 then
 		metagui.contextMenu(contextMenu)
 	end
 end

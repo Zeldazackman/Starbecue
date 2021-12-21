@@ -83,35 +83,32 @@ function sbq.readOccupantData()
 			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (id ~= nil) and (world.entityExists( id )) then
 				y = y - 32
 				local species = occupant.species
-				if sbq.occupantList[id] == nil then
-					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,32}, children = {}})}
-					sbq.occupantList[id].background = sbq.occupantList[id].layout:addChild({ type = "image", noAutoCrop = true, position = {0,0}, file = "portrait.png"  })
-					sbq.occupantList[id].portrait = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} })
-					sbq.occupantList[id].name = sbq.occupantList[id].layout:addChild({ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) })
-					sbq.occupantList[id].healthbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} })
-					sbq.occupantList[id].progressbar = sbq.occupantList[id].layout:addChild({ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}})
-					local occupantButton = sbq.occupantList[id].portrait
-					function occupantButton:onMouseButtonEvent(btn, down)
-						if btn == 0 then -- left button
-							if down then
-								self.state = "press"
-								self:captureMouse(btn)
-							elseif self.state == "press" then
-								self.state = "hover"
-								self:releaseMouse()
-								local actionList = {}
-								for _, action in ipairs(sbq.hudActions.global) do
-									table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
-								end
-								if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
-									for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
-										table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
-									end
-								end
+				if type(sbq.occupantList[id]) ~= "table" then
+					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,32}, children = {
+						{ type = "image", noAutoCrop = true, position = {0,0}, file = "portrait.png"  },
+						{ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} },
+						{ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) },
+						{ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} },
+						{ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}},
+						{ type = "iconButton", id = id.."ActionButton", noAutoCrop = true, position = {0,0}, image = "portrait.png?setcolor=FFFFFF?multiply=00000001"  }
+					}})}
+					sbq.occupantList[id].portrait = _ENV[id.."PortraitCanvas"]
+					sbq.occupantList[id].healthbar = _ENV[id.."HealthBar"]
+					sbq.occupantList[id].progressbar = _ENV[id.."ProgressBar"]
+					sbq.occupantList[id].actionButton = _ENV[id.."ActionButton"]
 
-								metagui.contextMenu(actionList)
+					local occupantButton = sbq.occupantList[id].actionButton
+					function occupantButton:onClick()
+						local actionList = {}
+						for _, action in ipairs(sbq.hudActions.global) do
+							table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
+						end
+						if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
+							for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
+								table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
 							end
 						end
+						metagui.contextMenu(actionList)
 					end
 				end
 
@@ -124,8 +121,6 @@ function sbq.readOccupantData()
 				end
 			end
 		end
-	else
-
 	end
 end
 

@@ -6,9 +6,10 @@ function update(dt)
 	if player.isLounging() then
 		storage.timeUntilUnlock = 0.5
 	end
-	if player.getProperty( "sbqSeatType") ~= storage.lockType then
+	local seatType = (player.getProperty( "sbqCurrentData") or {}).type
+	if seatType ~= storage.lockType then
 		if storage.lockType == "driver" then
-			storage.lockType = player.getProperty( "sbqSeatType")
+			storage.lockType = seatType
 		else
 			storage.timeUntilUnlock = 0
 		end

@@ -110,8 +110,8 @@ function init()
 		return player.getProperty("sbqRadialSelection") or {}
 	end)
 
-	message.setHandler("sbqGetSeatEquips", function(_,_, type, current)
-		player.setProperty( "sbqSeatType", type)
+	message.setHandler("sbqGetSeatEquips", function(_,_, current)
+		local type = current.type or "prey"
 		player.setProperty( "sbqCurrentData", current)
 		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)

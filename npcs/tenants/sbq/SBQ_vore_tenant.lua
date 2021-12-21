@@ -25,6 +25,9 @@ function init()
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		npc.say(string, tags)
 	end)
+	message.setHandler( "sbqNewOccupantHolder", function (_,_, newOccupantHolder)
+		occupantHolder = newOccupantHolder
+	end)
 end
 
 function update(dt)

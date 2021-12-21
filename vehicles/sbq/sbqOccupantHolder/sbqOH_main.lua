@@ -152,6 +152,12 @@ function init()
 		p.partTags[part] = {}
 	end
 
+	if config.getParameter("uneaten") then
+		p.timer("uneaten", 0.1, function ()
+			world.sendEntityMessage(p.spawner, "sbqNewOccupantHolder", entity.id())
+		end)
+	end
+
 	p.animFunctionQueue = {}
 	for statename, state in pairs(p.animStateData) do
 		state.animationState = {

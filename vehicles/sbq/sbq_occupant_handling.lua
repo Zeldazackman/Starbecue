@@ -77,6 +77,7 @@ function p.uneat( occupantId )
 		})
 	else
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", p.config.predStatusEffects)
+		world.sendEntityMessage( occupantId, "sbqPredatorDespawned" ) -- to clear the current data for players
 	end
 	world.sendEntityMessage( occupantId, "sbqLight", nil )
 
