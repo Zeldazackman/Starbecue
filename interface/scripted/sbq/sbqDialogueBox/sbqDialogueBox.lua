@@ -34,6 +34,7 @@ end
 function update()
 	local dt = script.updateDt()
 	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
 	if not inited then return end
 	sbq.refreshData()
 	sbq.getOccupancy()
@@ -91,6 +92,70 @@ function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
 	end
 end
 
+sbq.timerList = {}
+
+function sbq.randomTimer(name, min, max, callback)
+	if name == nil or sbq.timerList[name] == nil then
+		local timer = {
+			targetTime = (math.random(min * 100, max * 100))/100,
+			currTime = 0,
+			callback = callback
+		}
+		if name ~= nil then
+			sbq.timerList[name] = timer
+		else
+			table.insert(sbq.timerList, timer)
+		end
+		return true
+	end
+end
+
+function sbq.timer(name, time, callback)
+	if name == nil or sbq.timerList[name] == nil then
+		local timer = {
+			targetTime = time,
+			currTime = 0,
+			callback = callback
+		}
+		if name ~= nil then
+			sbq.timerList[name] = timer
+		else
+			table.insert(sbq.timerList, timer)
+		end
+		return true
+	end
+end
+
+function sbq.forceTimer(name, time, callback)
+		local timer = {
+			targetTime = time,
+			currTime = 0,
+			callback = callback
+		}
+		if name ~= nil then
+			sbq.timerList[name] = timer
+		else
+			table.insert(sbq.timerList, timer)
+		end
+		return true
+end
+
+function sbq.checkTimers(dt)
+	for name, timer in pairs(sbq.timerList) do
+		timer.currTime = timer.currTime + dt
+		if timer.currTime >= timer.targetTime then
+			if timer.callback ~= nil then
+				timer.callback()
+			end
+			if type(name) == "number" then
+				table.remove(sbq.timerList, name)
+			else
+				sbq.timerList[name] = nil
+			end
+		end
+	end
+end
+
 function sbq.getDialogueData()
 	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData" ), function (dialogueBoxData)
 		sbq = sb.jsonMerge(sbq, dialogueBoxData)
@@ -117,6 +182,9 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation)
 	if not dialogueTree then return false end
 
+	sbq.prevDialogueBranch = dialogueTree
+	sbq.dialogueTreeLocation = dialogueTreeLocation
+
 	local dialogue = dialogueTree.dialogue
 	local portrait = dialogueTree.portrait or sbq.data.defaultPortrait
 	local randomRolls = {}
@@ -140,6 +208,16 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	dialogueLabel:setText(dialogue)
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSay", dialogue)
 	dialoguePortrait:setFile(portrait)
+
+	if dialogueTree.callFunctions ~= nil then
+		for funcName, args in pairs(dialogueTree.callFunctions) do
+			sbq[funcName](table.unpack(args))
+		end
+	end
+
+	sbq.dismissAfterTimer(dialogueTree.dismissTime)
+
+	return dialogueTree, randomRolls
 end
 
 function sbq.checkVoreTypeActive(voreType)
@@ -177,9 +255,40 @@ function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 
-	sbq.updateDialogueBox({ voreType, active })
+	local dialogueTree = sbq.updateDialogueBox({ voreType, active })
 	if active == "yes" then
-		world.sendEntityMessage( sbq.data.occupantHolder, "requestEat", player.id(), voreType, voreTypeData.location )
+		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
+			sbq.updateDialogueBox({ voreType, "yes", "tease"})
+			world.sendEntityMessage( sbq.data.occupantHolder, "requestEat", player.id(), voreType, voreTypeData.location )
+		end)
+	end
+end
+
+function sbq.dismissAfterTimer(time)
+	if time == -1 then
+		sbq.timerList.dismissAfterTime = nil
+	else
+		sbq.forceTimer("dismissAfterTime", time or 10, function ()
+			pane.dismiss()
+		end)
+	end
+end
+
+function dialogueCont:onClick()
+	if sbq.prevDialogueBranch.continue ~= nil then
+		sbq.updateDialogueBox(table.insert(sbq.dialogueTreeLocation, "continue"))
+	elseif sbq.prevDialogueBranch.options ~= nil then
+		local contextMenu = {}
+		for i, option in ipairs(sbq.prevDialogueBranch.options) do
+			local action = {option[1]}
+			if option[2].dialogue ~= nil then
+				action[2] = function () sbq.updateDialogueBox( table.insert( table.insert( table.insert( sbq.dialogueTreeLocation, "options" ), i ), 2 ) ) end
+			elseif option[2].jump ~= nil then
+				action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
+			end
+			contextMenu = table.insert(contextMenu, action)
+		end
+		metagui.contextMenu(contextMenu)
 	end
 end
 

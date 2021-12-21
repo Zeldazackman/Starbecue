@@ -108,7 +108,14 @@
 						"Hi.",
 						"Hey there.",
 						"Mrow."
+					],
+					"options" : [
+						["Hi", { "dialogue" : ["So whats up?"] }],
+						["What are you?", { "jump" : ["example"] }]
+						//["What is this place?", {}],
+						//["What do you do like?", {}]
 					]
+
 				},
 				"fearful" : {
 					"dialogue" : [
@@ -140,13 +147,27 @@
 				}
 			},
 
+			"example" : {
+				"dialogue" : ["example branch text to jump to"]
+			},
+
 			"oralVore" : {
-				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ] },
+				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ],
+					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ] }
+				},
+				"unprompted" : { "dialogue" : [ "mmmm~ you look like a tasty meal~" ],
+					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ] }
+				},
 				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
 				"full" : { "dialogue" : [ "I'm a bit too full..." ] }
 			},
 			"cockVore" : {
-				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ] },
+				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ],
+					"tease" : { "dialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
+				},
+				"unprompted" : { "dialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ],
+					"tease" : { "dialogue" : [ "ahh~ you're gonna get covered in cum heh~" ]}
+				},
 				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ] },
 				"full" : { "dialogue" : [ "I'm plugged up down there already~" ] }
 			},
