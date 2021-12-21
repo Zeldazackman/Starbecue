@@ -311,6 +311,7 @@ function dialogueCont:onClick()
 	end
 end
 
+
 function oralVore:onClick()
 	sbq.voreButton("oralVore")
 end
@@ -320,7 +321,11 @@ function tailVore:onClick()
 end
 
 function absorbVore:onClick()
-	sbq.voreButton("tailVore")
+	sbq.voreButton("absorbVore")
+end
+
+function navelVore:onClick()
+	sbq.voreButton("navelVore")
 end
 
 
@@ -330,4 +335,12 @@ end
 
 function cockVore:onClick()
 	sbq.voreButton("cockVore")
+end
+
+function breastVore:onClick()
+	sbq.voreButton("breastVore")
+end
+
+function unbirth:onClick()
+	sbq.voreButton("unbirth")
 end
