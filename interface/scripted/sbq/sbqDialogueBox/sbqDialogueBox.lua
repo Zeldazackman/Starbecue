@@ -276,17 +276,21 @@ end
 
 function dialogueCont:onClick()
 	if sbq.prevDialogueBranch.continue ~= nil then
-		sbq.updateDialogueBox(table.insert(sbq.dialogueTreeLocation, "continue"))
+		table.insert(sbq.dialogueTreeLocation, "continue")
+		sbq.updateDialogueBox(sbq.dialogueTreeLocation)
 	elseif sbq.prevDialogueBranch.options ~= nil then
 		local contextMenu = {}
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
 			if option[2].dialogue ~= nil then
-				action[2] = function () sbq.updateDialogueBox( table.insert( table.insert( table.insert( sbq.dialogueTreeLocation, "options" ), i ), 2 ) ) end
+				table.insert( sbq.dialogueTreeLocation, "options" )
+				table.insert( sbq.dialogueTreeLocation, i )
+				table.insert( sbq.dialogueTreeLocation, 2 )
+				action[2] = function () sbq.updateDialogueBox( sbq.dialogueTreeLocation ) end
 			elseif option[2].jump ~= nil then
 				action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
 			end
-			contextMenu = table.insert(contextMenu, action)
+			table.insert(contextMenu, action)
 		end
 		metagui.contextMenu(contextMenu)
 	end
