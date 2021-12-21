@@ -19,12 +19,13 @@
 					{ "type" : "button", "id" : "dialogueCont", "expandMode" : [1, 0], "caption" : "..." },
 					{ "type" : "iconButton", "visible" : false, "id" : "oralVore", "toolTip" : "Eat me!", "image" : "/items/active/sbqController/oralVore.png" },
 					{ "type" : "iconButton", "visible" : false, "id" : "tailVore", "tooltip" : "Have your tail eat me!", "image" : "/items/active/sbqController/tailVore.png" },
-					//{ "type" : "iconButton", "visible" : false, "id" : "absorbVore", "toolTip" : "Absorb me!", "image" : "/items/active/sbqController/absorbVore.png" },
+					{ "type" : "iconButton", "visible" : false, "id" : "absorbVore", "toolTip" : "Absorb me!", "image" : "/items/active/sbqController/absorbVore.png" },
+					{ "type" : "iconButton", "visible" : false, "id" : "navelVore", "toolTip" : "Put me in your navel!", "image" : "/items/active/sbqController/navelVore.png" },
 
 					{ "type" : "iconButton", "visible" : false, "id" : "analVore", "toolTip" : "Shove me up your butt!", "image" : "/items/active/sbqController/analVore.png" },
 					{ "type" : "iconButton", "visible" : false, "id" : "cockVore", "toolTip" : "Stick me in your dick!", "image" : "/items/active/sbqController/cockVore.png" },
-					{ "type" : "iconButton", "visible" : false, "id" : "breastVore", "toolTip" : "Put me in your boobs!", "image" : "/items/active/sbqController/breastVore.png" }
-					//{ "type" : "iconButton", "visible" : false, "id" : "unbirth", "toolTip" : "Shove me up your pussy!", "image" : "/items/active/sbqController/unbirth.png" }
+					{ "type" : "iconButton", "visible" : false, "id" : "breastVore", "toolTip" : "Put me in your boobs!", "image" : "/items/active/sbqController/breastVore.png" },
+					{ "type" : "iconButton", "visible" : false, "id" : "unbirth", "toolTip" : "Shove me up your pussy!", "image" : "/items/active/sbqController/unbirth.png" }
 				]
 			]}
 		]}

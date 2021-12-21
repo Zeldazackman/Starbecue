@@ -10,6 +10,7 @@ sbq = {
 			oralVore = "/items/active/sbqController/oralVore.png",
 			tailVore = "/items/active/sbqController/tailVore.png",
 			absorbVore = "/items/active/sbqController/absorbVore.png",
+			navelVore = "/items/active/sbqController/navelVore.png",
 
 			analVore = "/items/active/sbqController/analVore.png",
 			cockVore = "/items/active/sbqController/cockVore.png",
@@ -26,6 +27,11 @@ function init()
 
 	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData", player.id() ), function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
+		if sbq.data.dialogueBoxScripts ~= nil then
+			for _, script in ipairs(sbq.data.dialogueBoxScripts) do
+				require(script)
+			end
+		end
 		sbq.updateDialogueBox( dialogueBoxData.dialogueTreeStart or {"greeting", "mood"})
 		inited = true
 	end)
@@ -48,7 +54,7 @@ function sbq.getOccupancy()
 	end)
 end
 function sbq.refreshData()
-	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", {}, function (dialogueBoxData)
+	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", { player.id(), (player.getProperty("sbqCurrentData") or {}).type }, function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
 	end)
 end
@@ -279,18 +285,22 @@ function dialogueCont:onClick()
 	if sbq.prevDialogueBranch.continue ~= nil then
 		table.insert(sbq.dialogueTreeLocation, "continue")
 		sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+	elseif sbq.prevDialogueBranch.jump ~= nil then
+		sbq.updateDialogueBox(sbq.prevDialogueBranch.jump)
 	elseif sbq.prevDialogueBranch.options ~= nil then
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
-			if option[2].dialogue ~= nil then
-				table.insert( sbq.dialogueTreeLocation, "options" )
-				table.insert( sbq.dialogueTreeLocation, i )
-				table.insert( sbq.dialogueTreeLocation, 2 )
-				action[2] = function () sbq.updateDialogueBox( sbq.dialogueTreeLocation ) end
-			elseif option[2].jump ~= nil then
-				action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
+			if (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
+				if option[2].dialogue ~= nil then
+					table.insert( sbq.dialogueTreeLocation, "options" )
+					table.insert( sbq.dialogueTreeLocation, i )
+					table.insert( sbq.dialogueTreeLocation, 2 )
+					action[2] = function () sbq.updateDialogueBox( sbq.dialogueTreeLocation ) end
+				elseif option[2].jump ~= nil then
+					action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
+				end
+				table.insert(contextMenu, action)
 			end
-			table.insert(contextMenu, action)
 		end
 	end
 	if sbq.prevDialogueBranch.buttonFunc ~= nil and sbq[sbq.prevDialogueBranch.buttonFunc] ~= nil then
@@ -303,6 +313,19 @@ end
 
 function oralVore:onClick()
 	sbq.voreButton("oralVore")
+end
+
+function tailVore:onClick()
+	sbq.voreButton("tailVore")
+end
+
+function absorbVore:onClick()
+	sbq.voreButton("tailVore")
+end
+
+
+function analVore:onClick()
+	sbq.voreButton("analVore")
 end
 
 function cockVore:onClick()

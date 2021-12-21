@@ -33,6 +33,8 @@
 		"unbirth" : {"shortdescription" : "Unbirth Controller", "description" : "Triggers the unbirth action of a predator."},
 		"cockVore" : {"shortdescription" : "Cock Vore Controller", "description" : "Triggers the cock vore action of a predator."},
 		"breastVore" : {"shortdescription" : "Breast Vore Controller", "description" : "Triggers the breast vore action of a predator."},
+		"navelVore" : {"shortdescription" : "Navel Vore Controller", "description" : "Triggers the navel vore action of a predator."},
+
 		"physicalAttack" : {"shortdescription" : "Physical Attack Controller", "description" : "Triggers the physical attack of a predator."},
 		"specialAttack" : {"shortdescription" : "Special Attack Controller", "description" : "Triggers the special attack of a predator."},
 		"grab" : {"shortdescription" : "Grab Controller", "description" : "Triggers the grab action of a predator."},

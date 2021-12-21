@@ -1,6 +1,6 @@
 {
 	"type" : "sbqHubZevi",
-	"baseType" : "villager",
+	"baseType" : "sbqVoreVillager",
 
 	"keepAlive" : true,
 
@@ -13,9 +13,6 @@
 		"facialHairGroup" : "brand",
 		"facialHairType" : "0"
 	},
-
-	"damageTeamType" : "assistant",
-	"damageTeam" : 1,
 
 	"persistent" : true,
 
@@ -109,13 +106,7 @@
 						"Hey there.",
 						"Mrow."
 					],
-					"options" : [
-						["Hi", { "dialogue" : ["So whats up?"] }],
-						["What are you?", { "jump" : ["example"] }]
-						//["What is this place?", {}],
-						//["What do you do like?", {}]
-					]
-
+					"jump" : ["converse"]
 				},
 				"fearful" : {
 					"portrait" : "/humanoid/sbqZevi/portraits/ZShocked.png",
@@ -123,6 +114,10 @@
 						"AH!",
 						"I-I didn't see you there!",
 						"O-oh its you!"
+					],
+					"options" : [
+						["Hehe, did I scare you~?", {}],
+						["Sorry, didn't mean to scare you", { "dialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
 					]
 				},
 				"horny" : {
@@ -131,7 +126,8 @@
 						"UwU",
 						"Hehe, hey there~",
 						"Mrow~"
-					]
+					],
+					"jump" : ["converse"]
 				},
 				"friendly" : {
 					"portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png",
@@ -139,19 +135,26 @@
 						"Hi!",
 						"Hey <entityname>!",
 						"Nya!"
-					]
+					],
+					"jump" : ["converse"]
 				},
 				"hungry" : {
 					"dialogue" : [
 						"Mmmm... feeling a bit hungry.",
 						"Hey <entityname>, I'm looking for some food, have any?",
 						"Oh huh, I probably need to find something to eat."
-					]
+					],
+					"jump" : ["converse"]
 				}
 			},
 
-			"example" : {
-				"dialogue" : ["example branch text to jump to"]
+			"converse" : {
+				"dialogue" : ["So what did you want to talk about?"],
+				"options" : [
+					["Can we talk about you?", {}],
+					["What do you know about Auri?", {}],
+					["What is this place?", {}]
+				]
 			},
 
 			"oralVore" : {
@@ -212,7 +215,7 @@
 				"encourage" : {
 					"default" : {
 						"default" : [
-							"Encouragement?"
+							"Yeah, get em!"
 						]
 					}
 				},

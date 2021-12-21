@@ -42,7 +42,8 @@
 							{ "type" : "label", "text" : "Questionable", "inline" : true },
 							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
 							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
-							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ]
+							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ],
+							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : "Navel Vore" } ]
 						]}
 					],[// second collumn
 						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
@@ -55,7 +56,7 @@
 					],[// third collumn
 						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned" } ]
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned/Hugged" } ]
 						]}
 					]],
 					{"type" : "panel", "style" : "convex", "children" : [

@@ -1,0 +1,54 @@
+{
+  "name": "sbqdialogueboxconverse",
+  "description": "",
+  "scripts": [
+    "/scripts/actions/math.lua",
+    "/scripts/actions/npc.lua",
+    "/scripts/actions/dialog.lua",
+    "/scripts/actions/movement.lua",
+    "/scripts/actions/time.lua",
+    "/scripts/actions/entity.lua"
+  ],
+  "parameters": {
+    "greetingChance": 0,
+    "clueChance": 0.1
+  },
+  "root": {
+    "title": "selector",
+    "type": "composite",
+    "name": "selector",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Converse",
+        "type": "composite",
+        "name": "sequence",
+        "parameters": {},
+        "children": [
+          {
+            "title": null,
+            "type": "action",
+            "name": "wasInteracted",
+            "parameters": {}
+          },
+          {
+            "title": null,
+            "type": "action",
+            "name": "faceEntity",
+            "parameters": {
+              "entity": {"key": "interactionSource"}
+            }
+          },
+          {
+            "title": null,
+            "type": "action",
+            "name": "timer",
+            "parameters": {
+              "time": {"value": 1}
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -4,12 +4,14 @@ local olduninit = uninit
 local occupantHolder
 local inited
 local dialogueBoxOpen = 0
+local talkingWithPrey
 
 function init()
 	oldinit()
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.sbqData = config.getParameter("sbqData") or {}
 	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(storage.sbqSettings or {}, (sbq.sbqData.defaultSettings or {})))
+
 	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
 		local location = sbq.getOccupantArg(id, "location")
 		local dialogueTreeStart
@@ -18,7 +20,13 @@ function init()
 		end
 		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
 	end)
-	message.setHandler("sbqRefreshDialogueBoxData", function ()
+	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
+		talkingWithPrey = (isPrey == "prey")
+		if not talkingWithPrey and id ~= nil then
+			local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
+			---@diagnostic disable-next-line: undefined-global
+			setInteracted(args)
+		end
 		dialogueBoxOpen = 0.5
 		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
 	end)
@@ -39,6 +47,7 @@ function update(dt)
 
 	sbq.checkRPCsFinished(dt)
 	sbq.getOccupancy()
+	world.sendEntityMessage(occupantHolder, "faceDirection", mcontroller.facingDirection())
 	dialogueBoxOpen = math.max(0, dialogueBoxOpen - dt)
 end
 
@@ -92,7 +101,7 @@ function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
 	end
 end
 
-function interact(args)
+function handleInteract(args)
 	if dialogueBoxOpen == 0 then
 		world.sendEntityMessage( args.sourceId, "sbqOpenMetagui", "starbecue:dialogueBox", entity.id() )
 	end
