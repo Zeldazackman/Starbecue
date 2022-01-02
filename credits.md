@@ -21,19 +21,14 @@
 	Dragonuna
 	BRZYN-Z18
 	Joseph
-	Ivan Ivanovich
 	Nick
 	Robotic Boyo
-	fabiqueen
 	Michael Calabresee
 	xyoshi
 	The_Gamer_Eagle
 	Avar
 	Canary
-	Silverwind93
 	stevie
-	Maxel Noone
 	Lakota Amitola
-	Comley
 	Ethan Hennen
 	pelle

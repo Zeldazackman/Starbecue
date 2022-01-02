@@ -15,6 +15,10 @@ While not required it is recommended you install the Monster Config Core Loader 
 ### Playable Predators
 - Vaporeon
 - Xeronious
+- Avian
+
+### NPC Vore Tenants
+- Zevi (Pred/Prey)
 
 ### Object Predators
 - Charem
@@ -111,10 +115,6 @@ To replace the one used by SSVM
 - will be further improved by allowing player prey to warp with you when warping to another world
 - may have a setting to warp prey into a special "belly" world for that predator player
 
-### Vore Tenants
-A system to replace the one used by SSVM
-- will make it be compatible with our prey enabling system
-
 ### Predators
 
 From Scratch
@@ -132,7 +132,6 @@ From Scratch
 
 Vanilla Races
 - Humans
-- Avian
 - Apex
 - Floran
 - Hylotl
