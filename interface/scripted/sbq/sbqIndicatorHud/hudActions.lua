@@ -22,7 +22,7 @@ function sbq.xeroEggify(id)
 		settings = {
 			cracks = 0,
 			bellyEffect = "sbqHeal",
-			escapeModifier = sbq.sbqSettings.global.escapeModifier,
+			escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
 			skinNames = {
 				head = "xeronious",
 				body = "xeronious"

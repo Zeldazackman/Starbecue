@@ -21,6 +21,16 @@
 				{ "type" : "iconButton", "id" : "bellyEffectIcon", "image" : "/stats/sbq/sbqRemoveBellyEffects/sbqRemoveBellyEffects.png", "noAutoCrop" : true, "position" : [15,9], "size" : [16,16], "toolTip" : "None" },
 				{ "type" : "iconButton", "id" : "nextBellyEffect", "position" : [35, 13], "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 
+				{ "type" : "panel", "style" : "concave", "size" : [48,24], "position" : [45,5], "children" : [
+					{ "type" : "label", "text" : "  Escape" },
+					[
+						{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
+						{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+						{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
+						{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+					]
+				]},
+
 				{ "type" : "iconButton", "id" : "settings", "position" : [85, 4], "image" : "settings.png", "hoverImage" : "settingshover.png", "pressImage" : "settingspress.png" }
 			]}
 		]}

@@ -9,6 +9,55 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
-		"behavior" : "sbqvorevillager"
+		"behavior" : "sbqvorevillager",
+
+		"sbqData" : {
+			"locations" :{
+				"belly" : { "max": 1, "digest" : true },
+				"tail" : { "max": 1, "digest" : true },
+
+				"shaft" : { "max": 1 },
+				"balls" : { "max": 1, "sided" : true },
+				"ballsL" : { "max": 1 },
+				"ballsR" : { "max": 1 },
+
+				"breasts" : { "max": 1, "sided" : true },
+				"breastsL" : { "max": 1 },
+				"breastsR" : { "max": 1 }
+
+			},
+			"defaultSettings" : {
+				"preyTypes" :{
+					"held" : { "enabled" : true, "feelingIt" : true },
+					"oralVore" : { "enabled" : true, "feelingIt" : true },
+					"tailVore" : { "enabled" : true, "feelingIt" : true },
+					"absorbVore" : { "enabled" : true, "feelingIt" : true },
+					"navelVore" : { "enabled" : true, "feelingIt" : false },
+
+					"analVore" : { "enabled" : true, "feelingIt" : false },
+					"unbirth" : { "enabled" : true, "feelingIt" : false },
+					"cockVore" : { "enabled" : true, "feelingIt" : false },
+					"breastVore" : { "enabled" : true, "feelingIt" : false }
+				},
+				"voreTypes" : {
+					"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" },
+					"tailVore" : { "enabled" : true, "feelingIt" : true, "location" : "tail" },
+					"absorbVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" },
+					"navelVore" : { "enabled" : true, "feelingIt" : false, "location" : "belly" },
+
+					"analVore" : { "enabled" : true, "feelingIt" : false, "location" : "belly" },
+					"unbirth" : { "enabled" : true, "feelingIt" : false, "location" : "womb" },
+					"cockVore" : { "enabled" : true, "feelingIt" : false, "location" : "shaft" },
+					"breastVore" : { "enabled" : true, "feelingIt" : false, "location" : "breasts" }
+				}
+			},
+			"allowedModifiers" : {
+				"fatten": {"min": 0, "max": 2},
+				"escapeDifficulty": {"min": -1, "max": 1},
+				"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+				"bellyMultiplier": {"min": 0, "max": 100},
+				"displayDigest": "bool"
+			}
+		}
 	}
 }

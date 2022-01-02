@@ -358,11 +358,7 @@
 						"back": { "transition": "down", "indicate": "blue" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					},
+					"chances": { "min": 5, "max": 10 },
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
 				}
@@ -553,11 +549,7 @@
 						"back": { "transition": "up" , "indicate": "green"},
 						"down": { "transition": "down", "indicate": "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					},
+					"chances": { "min": 5, "max": 10 },
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
 
@@ -673,11 +665,7 @@
 						"back": { "transition": "side", "indicate": "green" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					},
+					"chances": { "min": 10, "max": 20 },
 					"animation": { "head": "look" },
 					"animationWhenMoving": { "head": "idle" }
 
@@ -690,11 +678,7 @@
 						"front": { "transition": "up", "indicate": "red", "victimAnimation": "pinned.s_front" },
 						"back": { "transition": "side", "indicate": "blue", "victimAnimation": "pinned.s_back" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					},
+					"chances": { "min": 10, "max": 20 },
 					"animation": { "head": "pinlook" },
 					"animationWhenMoving": { "head": "pinlook" }
 				}
@@ -772,11 +756,7 @@
 						"back": { "transition": "up", "indicate": "green" },
 						"down": { "transition": "up", "indicate": "green" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
+					"chances": { "min": 10, "max": 20 }
 				},
 				"hug" : {
 					"sound" : false,
@@ -786,12 +766,7 @@
 						"front": { "transition": "up", "indicate": "green", "victimAnimation": "pinned.s_front" },
 						"back": { "transition": "absorb", "indicate": "yellow", "victimAnimation": "pinned.s_back" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
-
+					"chances": { "min": 10, "max": 20 }
 				}
 			},
 			"locationCenters" : {
@@ -878,11 +853,7 @@
 						"back": { "transition": "analEscape", "indicate": "red" },
 						"down": { "transition": "side", "indicate": "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
+					"chances": { "min": 10, "max": 20 }
 				},
 				"hug" : {
 					"sound" : false,
@@ -894,11 +865,7 @@
 						"back": { "transition": "unhug", "indicate": "green" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 0, "max": 0 },
-						"normal": { "min": 0, "max": 0 },
-						"antiEscape": { "min": 0, "max": 0 }
-					}
+					"chances": { "min": 0, "max": 0 }
 				}
 			},
 			"locationCenters" : {
@@ -987,11 +954,7 @@
 						"back": { "transition": "analEscape", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
 						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
+					"chances": { "min": 10, "max": 20 }
 				},
 				"hug" : {
 					"sound" : false,
@@ -1002,12 +965,7 @@
 						"back": { "transition": "up", "indicate": "green", "victimAnimation": "hug.s_back" },
 						"down": { "transition": "absorb", "indicate": "yellow", "victimAnimation": "hug.s_down" }
 					},
-					"chances": {
-						"easyEscape": { "min": 1, "max": 2 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 15, "max": 25 }
-					}
-
+					"chances": { "min": 5, "max": 10 }
 				}
 			},
 			"locationCenters" : {

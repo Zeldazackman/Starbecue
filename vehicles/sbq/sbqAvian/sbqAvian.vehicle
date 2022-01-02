@@ -268,11 +268,7 @@
 						"back": { "transition": "down" },
 						"down": { "transition": "analEscape" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					}
+					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
 				},
@@ -285,11 +281,7 @@
 						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					}
+					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
 				},
@@ -305,11 +297,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					}
+					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
 				},
@@ -325,11 +313,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 5 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 10, "max": 20 }
-					}
+					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },
 					//"animationWhenMoving": { "head": "idle" }
 				}

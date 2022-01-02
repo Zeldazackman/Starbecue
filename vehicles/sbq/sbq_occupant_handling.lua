@@ -604,13 +604,10 @@ function p.struggleChance(struggledata, struggler, movedir)
 	if struggledata.directions[movedir].chances ~= nil then
 		chances = struggledata.directions[movedir].chances
 	end
-	if chances ~= nil and chances[p.settings.escapeModifier] ~= nil then
-		chances = chances[p.settings.escapeModifier]
-	end
 	if chances ~= nil and chances.max == 0 then return true end
 	return (p.settings.escapeModifier ~= "noEscape")
 	and chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(chances.min, chances.max) <= p.occupant[struggler].struggleCount)
+	and (math.random((chances.min + (p.settings.escapeDifficulty or 0)), (chances.min + (p.settings.escapeDifficulty or 0))) <= p.occupant[struggler].struggleCount)
 	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
 end
 

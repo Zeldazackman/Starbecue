@@ -64,33 +64,34 @@ function init()
 		sbq.customizeTab:setVisible(true)
 		if sbq.predatorConfig.replaceColors ~= nil then
 			colorsScrollArea:clearChildren()
-			sbq.customizeColorsLayout = {}
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
-				sbq.customizeColorsLayout[i] = { layout = colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
-				sbq.customizeColorsLayout[i].fullbright = sbq.customizeColorsLayout[i].layout:addChild({ type = "checkBox", id = "color"..i.."Fullbright", checked = (sbq.predatorSettings.fullbright or {})[i] or (sbq.predatorConfig.defaultSettings.fullbright or {})[i], toolTip = "Fullbright" })
-				sbq.customizeColorsLayout[i].prev = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
-				sbq.customizeColorsLayout[i].textBox = sbq.customizeColorsLayout[i].layout:addChild({ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." })
-				sbq.customizeColorsLayout[i].next = sbq.customizeColorsLayout[i].layout:addChild({ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-				sbq.customizeColorsLayout[i].label = sbq.customizeColorsLayout[i].layout:addChild({ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or ("Color "..i), size = {48, 10}})
-				if type((sbq.predatorSettings.replaceColorTable or {})[i]) == "string" then
-					sbq.customizeColorsLayout[i].textBox:setText((sbq.predatorSettings.replaceColorTable or {})[i])
-				else
-					sbq.customizeColorsLayout[i].textBox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1 ) + 1 ] ) ) )
-				end
-				local prevFunc = sbq.customizeColorsLayout[i].prev
-				local textboxFunc = sbq.customizeColorsLayout[i].textBox
-				local nextFunc = sbq.customizeColorsLayout[i].next
-				local fullbrightFunc = sbq.customizeColorsLayout[i].fullbright
+				colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{ type = "checkBox", id = "color"..i.."Fullbright", checked = (sbq.predatorSettings.fullbright or {})[i] or (sbq.predatorConfig.defaultSettings.fullbright or {})[i], toolTip = "Fullbright" },
+					{ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
+					{ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." },
+					{ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
+					{ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or ("Color "..i), size = {48, 10}}
+				}})
+				local fullbright = _ENV["color"..i.."Fullbright"]
+				local prev = _ENV["color"..i.."Prev"]
+				local textbox = _ENV["color"..i.."TextEntry"]
+				local next = _ENV["color"..i.."Next"]
 
-				function fullbrightFunc:onClick()
-					sbq.predatorSettings.fullbright[i] = fullbrightFunc.checked
+				if type((sbq.predatorSettings.replaceColorTable or {})[i]) == "string" then
+					textbox:setText((sbq.predatorSettings.replaceColorTable or {})[i])
+				else
+					textbox:setText(sb.printJson( ( (sbq.predatorSettings.replaceColorTable or {})[i]) or ( sbq.predatorConfig.replaceColors[i][ (sbq.predatorSettings.replaceColors[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1 ) + 1 ] ) ) )
+				end
+
+				function fullbright:onClick()
+					sbq.predatorSettings.fullbright[i] = fullbright.checked
 					sbq.saveSettings()
 				end
-				function prevFunc:onClick()
-					sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, -1)
+				function prev:onClick()
+					sbq.changeColorSetting(textbox, i, -1)
 				end
-				function textboxFunc:onTextChanged()
-					local decoded = json.decode(textboxFunc.text)
+				function textbox:onTextChanged()
+					local decoded = json.decode(textbox.text)
 					if type(decoded) == "table" then
 						sbq.predatorSettings.replaceColorTable[i] = decoded
 					else
@@ -99,38 +100,39 @@ function init()
 					sbq.setColorReplaceDirectives()
 					sbq.saveSettings()
 				end
-				function nextFunc:onClick()
-					sbq.changeColorSetting(sbq.customizeColorsLayout[i].textBox, i, 1)
+				function next:onClick()
+					sbq.changeColorSetting(textbox, i, 1)
 				end
 			end
 		end
 		if sbq.predatorConfig.replaceSkin then
 			skinsScrollArea:clearChildren()
-			sbq.customizeSkinsLayout = {}
 			for part, _ in pairs(sbq.predatorConfig.replaceSkin) do
-				sbq.customizeSkinsLayout[part] = { layout = skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {} }) }
-				sbq.customizeSkinsLayout[part].prev = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"})
-				sbq.customizeSkinsLayout[part].textBox = sbq.customizeSkinsLayout[part].layout:addChild({ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists" })
-				sbq.customizeSkinsLayout[part].next = sbq.customizeSkinsLayout[part].layout:addChild({ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"})
-				sbq.customizeSkinsLayout[part].label = sbq.customizeSkinsLayout[part].layout:addChild({ type = "label", text = sbq.predatorConfig.replaceSkin[part].name, size = {48, 10}})
-				sbq.customizeSkinsLayout[part].textBox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
-				local prevFunc = sbq.customizeSkinsLayout[part].prev
-				local textboxFunc = sbq.customizeSkinsLayout[part].textBox
-				local nextFunc = sbq.customizeSkinsLayout[part].next
+				skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
+					{ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists" },
+					{ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
+					{ type = "label", text = sbq.predatorConfig.replaceSkin[part].name, size = {48, 10}}
+				}})
+				local prev = _ENV[part.."Prev"]
+				local textbox = _ENV[part.."TextEntry"]
+				local next = _ENV[part.."Next"]
 
-				function prevFunc:onClick()
-					sbq.changeSkinSetting(textboxFunc, part, -1)
+				textbox:setText((sbq.predatorSettings.skinNames or {})[part] or "default")
+
+				function prev:onClick()
+					sbq.changeSkinSetting(textbox, part, -1)
 				end
-				function textboxFunc:onTextChanged()
-					if textboxFunc.text ~= nil and textboxFunc.text ~= "" then
+				function textbox:onTextChanged()
+					if textbox.text ~= nil and textbox.text ~= "" then
 						for i, partname in ipairs(sbq.predatorConfig.replaceSkin[part].parts) do
-							sbq.predatorSettings.skinNames[partname] = textboxFunc.text
+							sbq.predatorSettings.skinNames[partname] = textbox.text
 						end
 						sbq.saveSettings()
 					end
 				end
-				function nextFunc:onClick()
-					sbq.changeSkinSetting(textboxFunc, part, 1)
+				function next:onClick()
+					sbq.changeSkinSetting(textbox, part, 1)
 				end
 			end
 		end
@@ -141,9 +143,11 @@ function init()
 	sbq.predator = sbq.sbqCurrentData.species or "noPred"
 
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
-	EMEasy:selectValue(sbq.globalSettings.escapeModifier or "normal")
 
-	displayDigest:setChecked(sbq.globalSettings.displayDigest or false)
+	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+	impossibleEscape:setChecked(sbq.globalSettings.impossibleEscape)
+
+	displayDigest:setChecked(sbq.globalSettings.displayDigest)
 	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
 
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
@@ -201,8 +205,11 @@ function sbq.setBellyEffect()
 	sbq.changeGlobalSetting("bellyEffect", BENone:getGroupValue())
 end
 
-function sbq.setEscapeModifier()
-	sbq.changeGlobalSetting("escapeModifier", EMEasy:getGroupValue())
+function sbq.changeEscapeModifier(inc)
+	sbq.globalSettings.escapeDifficulty = (sbq.globalSettings.escapeDifficulty or 0) + inc
+	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+
+	sbq.saveSettings()
 end
 
 function sbq.changePreySetting(settingname, settingvalue)
@@ -300,20 +307,16 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function EMEasy:onClick()
-	sbq.setEscapeModifier()
+function decEscape:onClick()
+	sbq.changeEscapeModifier(-1)
 end
 
-function EMNormal:onClick()
-	sbq.setEscapeModifier()
+function incEscape:onClick()
+	sbq.changeEscapeModifier(1)
 end
 
-function EMHard:onClick()
-	sbq.setEscapeModifier()
-end
-
-function EMImpossible:onClick()
-	sbq.setEscapeModifier()
+function impossibleEscape:onClick()
+	sbq.changeGlobalSetting("impossibleEscape", impossibleEscape.checked)
 end
 
 --------------------------------------------------------------------------------------------------

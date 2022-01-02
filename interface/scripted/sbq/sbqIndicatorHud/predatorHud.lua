@@ -200,6 +200,7 @@ local bellyEffectIconsTooltips = {
 	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest", display = true },
 	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects", display = true }
 }
+
 function sbq.adjustBellyEffect(direction)
 	local newBellyEffect = bellyEffectIconsTooltips[(sbq.sbqSettings.global or {}).bellyEffect or "sbqRemoveBellyEffects" ][direction]
 	if sbq.sbqSettings.global ~= nil then
@@ -231,8 +232,23 @@ function sbq.updateBellyEffectIcon()
 
 		bellyEffectIcon:setImage(effect.icon)
 		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
+
+		escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
+		impossibleEscape:setChecked(sbq.sbqSettings.global.impossibleEscape)
 	end
 end
+
+function sbq.changeEscapeModifier(inc)
+	sbq.sbqSettings.global.escapeDifficulty = (sbq.sbqSettings.global.escapeDifficulty or 0) + inc
+	escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
+
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+
+	if player.loungingIn() ~= nil then
+		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
+	end
+end
+
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -258,4 +274,22 @@ end
 
 function nextBellyEffect:onClick()
 	sbq.adjustBellyEffect("next")
+end
+
+function decEscape:onClick()
+	sbq.changeEscapeModifier(-1)
+end
+
+function incEscape:onClick()
+	sbq.changeEscapeModifier(1)
+end
+
+function impossibleEscape:onClick()
+	sbq.sbqSettings.global.impossibleEscape = impossibleEscape.checked
+
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+
+	if player.loungingIn() ~= nil then
+		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
+	end
 end

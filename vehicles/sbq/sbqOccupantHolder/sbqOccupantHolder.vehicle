@@ -111,11 +111,7 @@
 						"front": {},
 						"back": {}
 					},
-					"chances": {
-						"easyEscape": { "min": 3, "max": 5 },
-						"normal": { "min": 5, "max": 7 },
-						"antiEscape": { "min": 10, "max": 14 }
-					}
+					"chances": { "min": 5, "max": 7 }
 				}
 			}
 		}

@@ -204,20 +204,11 @@
 					"parts" : ["body"],
 					"directions" : {
 						"up": { },
-						"front": { "transition": "escape", "indicate" : "red",
-							"chances": {
-								"easyEscape": { "min": 7, "max": 15 },
-								"normal": { "min": 15, "max": 25 },
-								"antiEscape": { "min": 25, "max": 45 }
-							}},
+						"front": { "transition": "escape", "indicate" : "red", "chances": { "min": 15, "max": 25 } },
 						"back": { "transition": "analescape", "indicate" : "red" },
 						"down": { }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
+					"chances": { "min": 10, "max": 20 }
 				},
 				"hug" : {
 					"sound" : false,
@@ -228,12 +219,7 @@
 						"back": { "transition": "up", "indicate" : "red" },
 						"down": { "transition": "down", "indicate" : "blue" }
 					},
-					"chances": {
-						"easyEscape": { "min": 0, "max": 0 },
-						"normal": { "min": 0, "max": 0 },
-						"antiEscape": { "min": 0, "max": 0 }
-					}
-
+					"chances": { "min": 0, "max": 0 }
 				}
 			},
 			"interact": {
@@ -345,20 +331,11 @@
 					"parts" : ["body", "legs"],
 					"directions" : {
 						"up": { "transition": "up", "indicate": "blue", "victimAnimation": "hug.s_up", "victimAnimLocation" : "hug" },
-						"front": { "transition": "escape", "indicate": "red", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug",
-							"chances": {
-								"easyEscape": { "min": 7, "max": 15 },
-								"normal": { "min": 15, "max": 25 },
-								"antiEscape": { "min": 25, "max": 45 }
-							}},
+						"front": { "transition": "escape", "indicate": "red", "victimAnimation": "hug.s_front", "victimAnimLocation" : "hug", "chances": { "min": 15, "max": 25 } },
 						"back": { "transition": "analEscape", "indicate": "red", "victimAnimation": "hug.s_back", "victimAnimLocation" : "hug" },
 						"down": { "victimAnimation": "hug.s_down", "victimAnimLocation" : "hug" }
 					},
-					"chances": {
-						"easyEscape": { "min": 2, "max": 10 },
-						"normal": { "min": 10, "max": 20 },
-						"antiEscape": { "min": 20, "max": 40 }
-					}
+					"chances": { "min": 10, "max": 20 }
 				},
 				"hug" : {
 					"sound" : false,
@@ -369,11 +346,7 @@
 						"back": { "victimAnimation": "hug.s_back" },
 						"down": { "victimAnimation": "hug.s_down" }
 					},
-					"chances": {
-						"easyEscape": { "min": 1, "max": 2 },
-						"normal": { "min": 5, "max": 10 },
-						"antiEscape": { "min": 15, "max": 25 }
-					}
+					"chances": { "min": 5, "max": 10 }
 
 				}
 			},
