@@ -582,8 +582,8 @@
 						"walk": { "properties": { "image": "skins/<skin>/giant/foreground/giant_legs.png:walk.<frame><partVisible><directives><statusDirectives>" } },
 						"run": { "properties": { "image": "skins/<skin>/giant/foreground/giant_legs.png:run.<frame><partVisible><directives><statusDirectives>" } },
 
-						"jump": { "properties": { "image": "skins/<skin>/giant/foreground/giant_legs.png:jump.<frame><partVisible><directives><statusDirectives>" } },
-						"fall": { "properties": { "image": "skins/<skin>/giant/foreground/giant_legs.png:fall.<frame><partVisible><directives><statusDirectives>" } },
+						"jump": { "properties": { "zLevel": -0.99, "image": "skins/<skin>/giant/foreground/giant_legs.png:jump.<frame><partVisible><directives><statusDirectives>" } },
+						"fall": { "properties": { "zLevel": -0.99, "image": "skins/<skin>/giant/foreground/giant_legs.png:fall.<frame><partVisible><directives><statusDirectives>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/foreground/legs.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 

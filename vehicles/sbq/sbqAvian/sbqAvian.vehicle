@@ -386,27 +386,14 @@
 						"arms": "jump",
 						"body": "idle",
 						"cock": "jump",
-						"offset": {
-							"timing": "legs",
-							"loop": true,
-							"parts" : [
-								{"y": [4], "groups": ["headbob", "bodybob", "armsbob"]}
-							]
-						}
+						"offset": {}
 					},
 					"fall": {
 						"legs": "fall",
 						"arms": "fall",
 						"body": "idle",
 						"cock": "fall",
-						"offset": {
-							"timing": "legs",
-							"loop": true,
-							"parts" : [
-								{"y": [4], "groups": ["headbob", "bodybob", "armsbob"]}
-							]
-						}
-
+						"offset": {}
 					}
 				}
 			}
