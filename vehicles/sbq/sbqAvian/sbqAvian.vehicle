@@ -159,6 +159,23 @@
 				["b10058", "C93B82"]
 			]
 		],
+		"replaceSkin" : {
+			"hair" : {
+				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
+				"parts" : ["hair", "hair_foreground"],
+				"name" : "Plummage"
+			},
+			"fluff" : {
+				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+				"parts" : ["fluff", "fluff_foreground"],
+				"name" : "Fluff"
+			},
+			"beak" : {
+				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+				"parts" : ["beak", "beak_foreground"],
+				"name" : "Beak"
+			}
+		},
 		"locations" :{
 			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
 			"hug" : { "transformGroups" : ["armsbob"] },
@@ -173,6 +190,7 @@
 			"breastsL" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
 			"breastsR" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 }
 		},
+
 
 		"victimAnimations": "/vehicles/sbq/sbqAvian/victim_animations.config"
 	},
