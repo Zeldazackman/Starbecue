@@ -32,3 +32,5 @@
 	Lakota Amitola
 	Ethan Hennen
 	pelle
+	amber310
+	Gooey Goomy
