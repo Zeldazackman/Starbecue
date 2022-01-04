@@ -26,6 +26,7 @@
 				"breastsR" : { "max": 1 }
 
 			},
+			/*
 			"defaultSettings" : {
 				"preyTypes" :{
 					"held" : { "enabled" : true, "feelingIt" : true },
@@ -50,7 +51,7 @@
 					"cockVore" : { "enabled" : true, "feelingIt" : false, "location" : "shaft" },
 					"breastVore" : { "enabled" : true, "feelingIt" : false, "location" : "breasts" }
 				}
-			},
+			},*/
 			"allowedModifiers" : {
 				"fatten": {"min": 0, "max": 2},
 				"escapeDifficulty": {"min": -1, "max": 1},

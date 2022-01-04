@@ -1,7 +1,7 @@
 ---@diagnostic disable:undefined-global
 
-local oldInitAfterInit = initAfterInit
-local oldDoUpdate = doUpdate
+--local oldInitAfterInit = initAfterInit
+--local oldDoUpdate = doUpdate
 
 message.setHandler("sbqUpdateAnimTags", function (_,_, animTags)
 	for tag, value in pairs(animTags) do
@@ -32,8 +32,16 @@ message.setHandler("sbqDoAnim", function (_,_, state, anim, force)
 end)
 
 message.setHandler("sbqGetAnimData", function (_,_, partTags)
-	for tag, value in pairs(partTags.global) do
-		animator.setGlobalTag(tag, value)
+	for part, tags in pairs(partTags) do
+		if part == "global" then
+			for tag, value in pairs(tags) do
+				animator.setGlobalTag(tag, value)
+			end
+		else
+			for tag, value in pairs(tags) do
+				animator.setPartTag(part, tag, value)
+			end
+		end
 	end
 	return self.animStateData
 end)

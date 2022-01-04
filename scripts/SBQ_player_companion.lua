@@ -170,6 +170,10 @@ function update(dt)
 			driver = player.id(), layer = current.layer, startState = current.state,
 			settings = player.getProperty( "sbqSettings", {} )[current.species] or {},
 		})
+	elseif current.type == "prey" then
+		player.setProperty("sbqCurrentData", {})
+		status.removeEphemeralEffect("sbqInvisible")
+		status.removeEphemeralEffect("sbqScaling")
 	end
 	initStage = 2 -- post-init finished
 end

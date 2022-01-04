@@ -62,6 +62,9 @@
 					},
 					"analEscape" : {
 						"script" : "escape"
+					},
+					"cockEscape" : {
+						"script" : "escape"
 					}
 				},
 				"struggle": {
@@ -78,7 +81,7 @@
 					"cock" : {
 						"parts" : ["cock"],
 						"directions" : {
-							"up": { "transition": "oralEscape", "indicate" : "red" },
+							"up": { "transition": "cockEscape", "indicate" : "red" },
 							"down": {},
 							"front": {},
 							"back": {}
