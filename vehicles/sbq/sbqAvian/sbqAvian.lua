@@ -147,6 +147,7 @@ function cockEscape(args)
 end
 
 function oralVore(args)
+	p.grabbing = args.id
 	return p.doVore(args, "belly", {}, "swallow")
 end
 

@@ -462,14 +462,12 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 4,
-					"transformationGroups": ["flip", "frontarmsrotation", "armsbob"],
+					"transformationGroups": ["flip", "armsbob"],
 					"armVisible" : ""
 				},
 				"partStates": {
 					"armsState": {
 						"idle": { "properties": { "image": "skins/<skin>/giant/foreground/giant_arms.png:idle.<frame><partVisible><directives><statusDirectives><armVisible>" } },
-
-						"rotation": { "properties": { "image": "skins/<skin>/giant/foreground/giant_arms.png:rotation.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"walk": { "properties": { "image": "skins/<skin>/giant/foreground/giant_arms.png:walk.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 						"run": { "properties": { "image": "skins/<skin>/giant/foreground/giant_arms.png:run.<frame><partVisible><directives><statusDirectives><armVisible>" } },
@@ -483,8 +481,6 @@
 						"s_down": { "properties": { "image": "skins/<skin>/giant/foreground/giant_arms.png:hug.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/foreground/arms.png:idle.<frame><partVisible><directives><statusDirectives><armVisible>" } },
-
-						"smol.rotation": { "properties": { "image": "skins/<skin>/normal/foreground/arms.png:rotation.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"smol.walk": { "properties": { "image": "skins/<skin>/normal/foreground/arms.png:walk.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 						"smol.run": { "properties": { "image": "skins/<skin>/normal/foreground/arms.png:run.<frame><partVisible><directives><statusDirectives><armVisible>" } },
@@ -515,7 +511,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -3,
-					"transformationGroups": ["flip", "backarmsrotation", "armsbob"],
+					"transformationGroups": ["flip", "armsbob"],
 					"armVisible" : ""
 				},
 				"partStates": {
@@ -534,8 +530,6 @@
 						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_arms.png:hug.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/arms.png:idle.<frame><partVisible><directives><statusDirectives><armVisible>" } },
-
-						"smol.rotation": { "properties": { "image": "skins/<skin>/normal/arms.png:rotation.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"smol.walk": { "properties": { "image": "skins/<skin>/normal/arms.png:walk.<frame><partVisible><directives><statusDirectives><armVisible>" } },
 						"smol.run": { "properties": { "image": "skins/<skin>/normal/arms.png:run.<frame><partVisible><directives><statusDirectives><armVisible>" } },

@@ -80,6 +80,7 @@
 					[1, 2], [-1, 2],
 					[-2, 1], [-2, -5]
 				],
+				"fullThreshold" : 3.2, // mass of two normal players
 				"pulseEffect": "doublejump",
 				"pulseSparkles": 6,
 				"ignorePlatformCollision" : false
@@ -329,12 +330,18 @@
 			},
 			"rotationArmState" : "rotation",
 			"rotationCenters" : {
-				"frontarms" : [0, 8],
-				"backarms" : [9, 8]
+				"frontarms" : [-4, -10],
+				"backarms" : [-0.1, -10]
 			},
 			"handOffsets" : {
-				"frontarms" : [29, 8],
-				"backarms" : [38, 8]
+				"frontarms" : [17, -8],
+				"backarms" : [23, -8]
+			},
+			"locationCenters" : {
+				"belly" : [0, -3],
+				"shaft" : [0.5, -3.5],
+				"ballsR": [0, -4],
+				"ballsL": [0, -4]
 			},
 			"defaultActions" : ["grab", "vore"],
 			"actions" : {
@@ -423,10 +430,15 @@
 			],
 			"struggle": {
 			},
-
 			"interact": {
 			},
 			"defaultActions" : ["unassigned", "unassigned"],
+			"locationCenters" : {
+				"belly" : [0, -1.5],
+				"shaft" : [0.25, -1.75],
+				"ballsR": [0, -2],
+				"ballsL": [0, -2]
+			},
 			"actions" : {},
 			"control": {
 				"animations": {
