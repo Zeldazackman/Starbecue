@@ -43,7 +43,7 @@ message.setHandler("sbqGetAnimData", function (_,_, partTags)
 			end
 		end
 	end
-	return self.animStateData
+	return {self.animStateData, mcontroller.facingDirection()}
 end)
 
 

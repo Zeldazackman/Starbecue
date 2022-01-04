@@ -5,7 +5,9 @@ end
 
 function p.getAnimData()
 	p.loopedMessage("getAnimData", p.spawner, "sbqGetAnimData", {p.partTags}, function(animData)
-		p.animStateData = animData
+		p.animStateData = animData[1]
+		animator.setFlipped(animData[2]==-1)
+		p.direction = animData[2]
 	end)
 end
 
