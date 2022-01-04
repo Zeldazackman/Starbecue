@@ -117,7 +117,7 @@
 			"Main Body",
 			"Belly",
 			"Beak",
-			"Penis"
+			"Flesh"
 		],
 		"replaceColors" : [
 			[
@@ -155,7 +155,7 @@
 				["eae660", "c1b54e", "978841"] // last "canon" color option
 			],
 			[
-				["b10058", "C93B82"], // penis
+				["b10058", "C93B82"], // penis / mouth
 				["b10058", "C93B82"]
 			]
 		],
