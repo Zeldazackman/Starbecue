@@ -621,7 +621,7 @@
 			"head": {
 				"properties": {
 					"centered": true,
-					"zLevel": -0.2,
+					"zLevel": -1.2,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -657,7 +657,7 @@
 			"hair": {
 				"properties": {
 					"centered": true,
-					"zLevel": -0.3,
+					"zLevel": -1.3,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -693,7 +693,7 @@
 			"fluff": {
 				"properties": {
 					"centered": true,
-					"zLevel": -0.1,
+					"zLevel": -1.1,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
@@ -730,16 +730,16 @@
 			"beak": {
 				"properties": {
 					"centered": true,
-					"zLevel": 0,
+					"zLevel": -1,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:idle.<frame><partVisible><directives><statusDirectives>?addmask=/vehicles/sbq/sbqAvian/skins/default/giant/foreground/giant_beak.png:idle.<frame>" } },
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/beak/head.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:eat.<frame><partVisible><directives><statusDirectives>?addmask=/vehicles/sbq/sbqAvian/skins/default/giant/foreground/giant_beak.png:eat.<frame>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:escape.<frame><partVisible><directives><statusDirectives>?addmask=/vehicles/sbq/sbqAvian/skins/default/giant/foreground/giant_beak.png:escape.<frame>" } },
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:eat.<frame><partVisible><directives><statusDirectives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_beak.png:escape.<frame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

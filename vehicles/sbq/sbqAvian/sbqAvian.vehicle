@@ -192,6 +192,7 @@
 					"victimAnimation": "oralVore",
 					"timing": "belly",
 					"animation": {
+						"head" : "eat",
 						"belly": "eat"
 					}
 				},
@@ -203,6 +204,7 @@
 					"victimAnimation": "oralEscape",
 					"timing": "belly",
 					"animation": {
+						"head" : "escape",
 						"belly": "escape"
 					}
 				},
