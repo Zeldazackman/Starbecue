@@ -265,7 +265,7 @@ function sbq.voreButton(voreType)
 	if active == "yes" then
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
 			sbq.updateDialogueBox({ voreType, "yes", "tease"})
-			world.sendEntityMessage( sbq.data.occupantHolder, "requestEat", player.id(), voreType, voreTypeData.location )
+			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
 	end
 end

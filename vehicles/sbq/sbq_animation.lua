@@ -11,6 +11,8 @@ function p.updateAnims(dt)
 	p.offsetAnimUpdate()
 	p.rotationAnimUpdate()
 
+	p.emoteCooldown =  math.max( 0, p.emoteCooldown - dt )
+
 	for statename, state in pairs(p.animStateData) do
 		if state.animationState.time >= state.animationState.cycle then
 			p.endAnim(state, statename)
@@ -721,5 +723,13 @@ function p.applyTransformations()
 		for _, transformation in ipairs(p.transformGroupData[transformGroup].translate) do
 			animator.translateTransformationGroup(transformGroup, transformation )
 		end
+	end
+end
+
+function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
+	if p.emoteCooldown < 0 then
+		animator.setParticleEmitterBurstCount( emotename, 1 );
+		animator.burstParticleEmitter( emotename )
+		p.emoteCooldown = 0.2; -- seconds
 	end
 end

@@ -34,14 +34,14 @@
 			"enabled" : true
 		},
 		"sbqData" : {
+			"victimAnimations": "/humanoid/sbqZevi/victim_animations.config",
 			"locations" :{
 				"belly" : { "max": 1, "digest" : true },
 				"shaft" : { "max": 1 }
 			},
 			"defaultSettings" : {
 				"voreTypes" : {
-					"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" },
-					"cockVore" : { "enabled" : true, "feelingIt" : false, "location" : "shaft" }
+					"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" }
 				}
 			},
 			"allowedModifiers" : {
@@ -57,15 +57,54 @@
 				"edible" : true,
 				"transitions": {
 					// directional = occupant0 can press that direction to transition
+					"oralVore" : {
+						"script" : "eat",
+						"voreType" : "oralVore",
+						"location" : "belly",
+						"failOnFull" : true,
+						"victimAnimation" : "oralEat",
+						"timing" : "belly",
+						"animation" : {
+							"belly" : "eat"
+						}
+					},
 					"oralEscape" : {
-						"script" : "escape"
+						"script" : "escape",
+						"voreType" : "oralVore",
+						"location" : "belly",
+						"victimAnimation" : "oralEscape",
+						"timing" : "belly",
+						"animation" : {
+							"belly" : "escape"
+						}
+					},
+					"analEat" : {
+						"script" : "eat",
+						"voreType" : "analVore",
+						"location" : "belly",
+						"failOnFull" : true,
+						"victimAnimation" : "analEat",
+						"timing" : "belly",
+						"animation" : {
+							"belly" : "eat"
+						}
 					},
 					"analEscape" : {
-						"script" : "escape"
+						"script" : "analEscape",
+						"voreType" : "analVore",
+						"location" : "belly",
+						"victimAnimation" : "analEscape",
+						"timing" : "belly",
+						"animation" : {
+							"belly" : "escape"
+						}
 					},
 					"cockEscape" : {
 						"script" : "escape"
 					}
+				},
+				"locationCenters" : {
+					"belly" : [0, -2]
 				},
 				"struggle": {
 					"belly" : {

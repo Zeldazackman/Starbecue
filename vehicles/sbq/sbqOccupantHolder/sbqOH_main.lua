@@ -16,6 +16,7 @@ p = {
 	justLetout = false,
 	nextIdle = 0,
 	swapCooldown = 0,
+	emoteCooldown = 0,
 	isPathfinding = false,
 	hunger = 100,
 	state = "stand",
@@ -128,6 +129,7 @@ end
 require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
+require("/vehicles/sbq/sbq_animation.lua")
 
 require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 
@@ -150,6 +152,10 @@ function init()
 
 	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts) do
 		p.partTags[part] = {}
+	end
+
+	for transformGroup, _ in pairs(p.transformGroups) do
+		p.resetTransformationGroup(transformGroup)
 	end
 
 	if config.getParameter("uneaten") then
@@ -204,9 +210,8 @@ function update(dt)
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
 
-	p.updateVisibility()
-
 	p.getAnimData()
+	p.updateAnims(dt)
 
 	p.updateControls(dt)
 
@@ -214,6 +219,8 @@ function update(dt)
 	p.handleStruggles(dt)
 	p.doBellyEffects(dt)
 	p.applyStatusLists()
+
+	p.applyTransformations()
 end
 
 function uninit()
@@ -430,6 +437,14 @@ end
 
 -------------------------------------------------------------------------------------------------------
 
+function state.stand.eat(args)
+	return p.doVore(args, "belly", {}, "swallow")
+end
+
 function state.stand.escape(args)
-	p.uneat(args.id)
+	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+end
+
+function state.stand.analEscape(args)
+	return p.doEscape(args, {}, {} )
 end

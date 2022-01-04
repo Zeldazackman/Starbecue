@@ -116,3 +116,7 @@ end)
 message.setHandler( "getOccupancyData", function ()
 	return {occupant = p.occupant, occupants = p.occupants}
 end)
+
+message.setHandler( "requestTransition", function (_,_, transition, args)
+	p.doTransition( transition, args )
+end)

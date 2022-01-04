@@ -268,7 +268,6 @@ function update(dt)
 	p.doBellyEffects(dt)
 	p.applyStatusLists()
 
-	p.emoteCooldown =  math.max( 0, p.emoteCooldown - dt )
 	p.update(dt)
 	p.updateState(dt)
 	p.applyTransformations()
@@ -603,14 +602,6 @@ function p.checkTimers(dt)
 				p.timerList[name] = nil
 			end
 		end
-	end
-end
-
-function p.showEmote( emotename ) --helper function to express a emotion particle "emotesleepy","emoteconfused","emotesad","emotehappy","love"
-	if p.emoteCooldown < 0 then
-		animator.setParticleEmitterBurstCount( emotename, 1 );
-		animator.burstParticleEmitter( emotename )
-		p.emoteCooldown = 0.2; -- seconds
 	end
 end
 
