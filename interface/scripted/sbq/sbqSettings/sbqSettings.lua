@@ -42,6 +42,7 @@ function init()
 	end
 	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
 		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
+		sbq.speciesSettingsTab:setTitle("Config", "/vehicles/sbq/"..sbq.sbqCurrentData.species.."/skins/"..((sbq.predatorSettings.skinNames or {}).head or "default").."/icon.png"..(sbq.predatorSettings.directives or ""))
 		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script ~= nil then
 			require(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script)
 		end
