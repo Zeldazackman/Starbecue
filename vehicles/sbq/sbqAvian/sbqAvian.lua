@@ -84,7 +84,8 @@ function getColors()
 		end
 
 		local waist = "default"
-		if world.entityGender(p.spawner) == "female" then
+		local gender = world.entityGender(p.spawner)
+		if (gender == "female") or ( (gender == nil) and (math.random() > 0.5) ) then
 			p.settings.breasts = true
 			waist = "thin_waist"
 		end
