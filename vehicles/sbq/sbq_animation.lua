@@ -660,9 +660,6 @@ function p.partsAreStruggling(parts)
 end
 
 function p.setPartTag(part, tag, value)
-	sb.logInfo(tostring(part))
-	sb.logInfo(tostring(tag))
-	sb.logInfo(tostring(value))
 	p.partTags[part][tag] = value
 
 	if part == "global" then

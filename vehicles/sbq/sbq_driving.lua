@@ -201,8 +201,6 @@ function p.doClickActions(state, dt)
 	end
 	if not (state.actions ~= nil and state.defaultActions ~= nil) then return end
 
-	if p.grabbing ~= nil then p.handleGrab() return end
-
 	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
 		if not p.movement.assignClickActionRadial then
 			p.movement.assignClickActionRadial = true
@@ -215,7 +213,13 @@ function p.doClickActions(state, dt)
 					if data.selection == "cancel" or data.selection == "despawn" then return end
 					if data.button == 0 and data.pressed and not p.click then
 						p.click = true
-						if p.seats[p.driverSeat].controls.primaryHandItem == "sbqController" then
+						if p.grabbing ~= nil then
+							p.uneat(p.grabbing)
+							local victim = p.grabbing
+							p.grabbing = nil
+							p.doTransition(data.selection, { id = victim })
+							return
+						elseif p.seats[p.driverSeat].controls.primaryHandItem == "sbqController" then
 							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection})
 						elseif p.seats[p.driverSeat].controls.primaryHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
@@ -225,7 +229,13 @@ function p.doClickActions(state, dt)
 						end
 					elseif data.button == 2 and data.pressed and not p.click then
 						p.click = true
-						if p.seats[p.driverSeat].controls.altHandItem == "sbqController" then
+						if p.grabbing ~= nil then
+							p.uneat(p.grabbing)
+							local victim = p.grabbing
+							p.grabbing = nil
+							p.doTransition(data.selection, { id = victim })
+							return
+						elseif p.seats[p.driverSeat].controls.altHandItem == "sbqController" then
 							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection})
 						elseif p.seats[p.driverSeat].controls.altHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
@@ -244,10 +254,20 @@ function p.doClickActions(state, dt)
 		if p.lastRadialSelection == "despawn" then
 			p.onDeath()
 		elseif p.lastRadialSelection ~= "cancel" and p.lastRadialSelection ~= nil then
-			p.action(state, p.lastRadialSelection, "force")
+			if p.grabbing ~= nil then
+				p.uneat(p.grabbing)
+				local victim = p.grabbing
+				p.grabbing = nil
+				p.doTransition(p.lastRadialSelection, { id = victim })
+				return
+			else
+				p.action(state, p.lastRadialSelection, "force")
+			end
 		end
 		p.movement.assignClickActionRadial = nil
 	end
+
+	if p.grabbing ~= nil then p.handleGrab() return end
 
 	if (p.seats[p.driverSeat].controls.primaryHandItem ~= nil) and (not p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.itemHasOverrideLockScript) then
 		p.action(state, state.defaultActions[1], "primaryFire")

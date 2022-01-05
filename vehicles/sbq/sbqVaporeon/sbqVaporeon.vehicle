@@ -307,7 +307,7 @@
 					"chance": 5 // percent, ignored when driver has control
 				},
 				// non directional = not accessible via controls, except from script
-				"eat": { // 2 occupants
+				"oralVore": { // 2 occupants
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",

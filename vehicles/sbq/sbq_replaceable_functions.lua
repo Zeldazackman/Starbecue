@@ -26,23 +26,45 @@ end
 
 -- for handling the grab action when clicked, some things may want to handle it differently
 function p.handleGrab()
+	local primary = (((p.seats[p.driverSeat].controls.primaryHandItemDescriptor or {}).parameters or {}).scriptStorage or {}).clickAction
+	local alt = (((p.seats[p.driverSeat].controls.altHandItemDescriptor or {}).parameters or {}).scriptStorage or {}).clickAction
+	local victim = p.grabbing
+
 	if p.pressControl(p.driverSeat, "primaryFire") then
 		p.uneat(p.grabbing)
-		local transition
-		local victim = p.grabbing
 		p.grabbing = nil
-		local angle = p.armRotation.frontarmsAngle * 180/math.pi
-
-		if (angle >= 45 and angle <= 135) or (angle <= -225 and angle >= -315) then
-			transition = "oralVore"
-		elseif (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
-			transition = "analVore"
+		if primary == "grab" then
+			p.grabAngleTransitions(victim)
+		else
+			p.doTransition(primary, { id = victim })
 		end
-		p.doTransition(transition, {id = victim})
-
 	elseif p.pressControl(p.driverSeat, "altFire") then
 		p.uneat(p.grabbing)
+		p.grabbing = nil
+		if alt == "grab" then
+			p.grabAngleTransitions(victim)
+		else
+			p.doTransition(alt, { id = victim })
+		end
 	end
+end
+
+function p.grabAngleTransitions(victim)
+	local angle = p.armRotation.frontarmsAngle * 180/math.pi
+	sb.logInfo(angle)
+	local transition
+	if (angle >= 45 and angle <= 135) then
+		transition = "oralVore"
+	elseif (angle >= 0 and angle <= 45) then
+		transition = "breastVore"
+	elseif (angle <= 0 and angle >= -30) then
+		transition = "cockVore"
+	elseif (angle <= -30 and angle >= -60) then
+		transition = "unbirth"
+	elseif (angle <= -60 and angle >= -135) then
+		transition = "analVore"
+	end
+	p.doTransition(transition, { id = victim })
 end
 
 -- for letting out prey, some predators might wand more specific logic regarding this
