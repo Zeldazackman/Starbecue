@@ -335,7 +335,7 @@
 			"backBreasts": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
+					"zLevel": -1.1,
 					"transformationGroups": ["flip", "armsbob"]
 				},
 				"partStates": {

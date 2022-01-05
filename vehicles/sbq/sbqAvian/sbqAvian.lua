@@ -82,6 +82,17 @@ function getColors()
 				end
 			end
 		end
+
+		local waist = "default"
+		if world.entityGender(p.spawner) == "female" then
+			p.settings.breasts = true
+			waist = "thin_waist"
+		end
+
+		for i, partname in ipairs(p.sbqData.replaceSkin.body.parts) do
+			p.settings.skinNames[partname] = waist
+		end
+
 		p.settings.firstLoadDone = true
 		p.setColorReplaceDirectives()
 		p.setSkinPartTags()
