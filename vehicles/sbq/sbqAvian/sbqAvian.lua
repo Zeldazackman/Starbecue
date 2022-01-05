@@ -36,7 +36,7 @@ function p.settingsMenuUpdated()
 end
 
 function getColors()
-	if p.settings.firstLoadDone == nil then
+	if not p.settings.firstLoadDone then
 		if world.entitySpecies(p.spawner) == "avian" then
 			-- get the directives for color here if you are an avian
 			local portrait = world.entityPortrait(p.spawner, "full")
@@ -65,16 +65,46 @@ function getColors()
 				if found1 ~= nil then
 					p.setPartTag( "global", "frontarmPersonality", imageString:sub(found2+1, found2+1) )
 				end
+
+				getPlayerInitialCustomize( imageString, "fluff/", "fluff" )
+				getPlayerInitialCustomize( imageString, "beaks/", "beak" )
+				getPlayerInitialCustomize( imageString, "hair/", "hair" )
 			end
 		else
 			-- get random directives for anyone thats not an avian
 			for i = 1, #p.sbqData.replaceColors do
 				p.settings.replaceColors[i] = math.random( #p.sbqData.replaceColors[i] - 1 )
 			end
+			for skin, data in pairs(p.sbqData.replaceSkin) do
+				local result = data.skins[math.random(#data.skins)]
+				for i, partname in ipairs(data.parts) do
+					p.settings.skinNames[partname] = result
+				end
+			end
 		end
 		p.settings.firstLoadDone = true
 		p.setColorReplaceDirectives()
+		p.setSkinPartTags()
 		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqAvian")
+	end
+end
+
+function getPlayerInitialCustomize( imageString, name, skin )
+	found1, found2 = imageString:find(name)
+	if found1 ~= nil then
+		local result = imageString:sub(found2+1, found2+2)
+
+		if result:sub(-1) == "." then
+			result = result:sub(1,1)
+		end
+
+		if result == "1" then
+			result = "default"
+		end
+
+		for i, partname in ipairs(p.sbqData.replaceSkin[skin].parts) do
+			p.settings.skinNames[partname] = result
+		end
 	end
 end
 

@@ -1,0 +1,25 @@
+{
+	"itemName" : "sbqPotionAvian",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A bottle of thick red liquid...",
+	"shortdescription" : "Avian Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+
+	"vehicle" : "sbqAvian",
+	"transformationDescription" : "a giant Avian",
+
+	"inventoryIcon" : "sbqPotionAvian.png",
+	"largeImage" : "sbqPotionAvianLarge.png",
+
+	"animation" : "sbqPotionAvian.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

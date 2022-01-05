@@ -639,7 +639,7 @@ end
 
 function p.setSkinPartTags()
 	for animPart, skin in pairs(p.settings.skinNames or {}) do
-		if skin ~= nil and skin ~= "" and not (skin:find("//") ~= nil or skin:sub(1,1) == "/" or skin:sub(-1,-1) == "/" ) then
+		if skin ~= nil and skin ~= "" and not ((skin:find("//") ~= nil) or (skin:find("%.") ~= nil) or (skin:sub(1,1) == "/") or (skin:sub(-1,-1) == "/") ) then
 			p.setPartTag( animPart, "skin", skin )
 			p.setPartTag( "global", animPart.."skin", skin )
 		end
