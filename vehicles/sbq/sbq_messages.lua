@@ -71,7 +71,7 @@ message.setHandler( "uneat", function(_,_, eid)
 	p.uneat( eid )
 end )
 
-message.setHandler( "smolPreyData", function(_,_, seatindex, data, type)
+message.setHandler( "sbqSmolPreyData", function(_,_, seatindex, data, type)
 	world.sendEntityMessage( type, "despawn", true ) -- no warpout
 	p.occupant[seatindex].smolPreyData = data
 end )

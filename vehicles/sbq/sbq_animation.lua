@@ -193,8 +193,8 @@ function p.smolPreyAnimPath(occupant)
 	if tail then p.setPartTag(seatname.."tail", "smolpath", tail) else p.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
 	if backlegs then p.setPartTag(seatname.."backlegs", "smolpath", backlegs) else p.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
 	if frontlegs then p.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else p.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
-	if backarms then p.setPartTag(seatname.."backarms", "smolpath", backarms) else p.setPartTag(seatname.."backarms", "smolpath", "/empty_image.png") end
-	if frontarms then p.setPartTag(seatname.."frontarms", "smolpath", frontarms) else p.setPartTag(seatname.."frontarms", "smolpath", "/empty_image.png") end
+	if backarms then p.setPartTag(seatname.."backarm", "smolpath", backarms) else p.setPartTag(seatname.."backarm", "smolpath", "/empty_image.png") end
+	if frontarms then p.setPartTag(seatname.."frontarm", "smolpath", frontarms) else p.setPartTag(seatname.."frontarm", "smolpath", "/empty_image.png") end
 
 	occupant.smolPreyData.update = false
 end
@@ -660,6 +660,9 @@ function p.partsAreStruggling(parts)
 end
 
 function p.setPartTag(part, tag, value)
+	sb.logInfo(tostring(part))
+	sb.logInfo(tostring(tag))
+	sb.logInfo(tostring(value))
 	p.partTags[part][tag] = value
 
 	if part == "global" then

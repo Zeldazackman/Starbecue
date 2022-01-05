@@ -731,13 +731,20 @@ function p.transformPrey(i)
 		end
 	else
 		local species = world.entityName( entity.id() )
+		local tags = {}
+		local animationFile = root.assetJson("/vehicles/sbq/"..species.."/"..species..".vehicle").animation
+		tags.global = root.assetJson( animationFile ).globalTagDefaults
+		for part, _ in pairs(root.assetJson( animationFile ).animatedParts.parts ) do
+			tags[part] = {}
+		end
+
 		if world.entityType(p.occupant[i].id) == "player" then
 			p.addRPC(world.sendEntityMessage(p.occupant[i].id, "sbqLoadSettings", species), function(settings)
-				p.occupant[i].smolPreyData = p.getSmolPreyData(settings, species, "smol")
+				p.occupant[i].smolPreyData = p.getSmolPreyData(settings, species, "smol", tags)
 				p.occupant[i].species = species
 			end)
 		else
-			p.occupant[i].smolPreyData = p.getSmolPreyData(p.settings, species, "smol")
+			p.occupant[i].smolPreyData = p.getSmolPreyData(p.settings, species, "smol", tags)
 			p.occupant[i].species = species
 		end
 	end

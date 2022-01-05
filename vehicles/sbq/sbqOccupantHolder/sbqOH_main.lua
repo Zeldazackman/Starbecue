@@ -382,7 +382,7 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 
 	if total > emptyslots or (total > locationslots and locationslots ~= -1) then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage(source, "smolPreyData", seatindex,
+		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			p.getSmolPreyData(
 				p.settings,
 				world.entityName( entity.id() ),

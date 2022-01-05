@@ -18,7 +18,7 @@ function init()
 	} )
 	if edibles[1] == nil then
 		world.spawnProjectile( "sbqWarpInEffect", mcontroller.position(), entity.id(), {0,0}, true)
-		eggSpawned = world.spawnVehicle( "sbqEgg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), settings = { replaceColors = replaceColors } } )
+		eggSpawned = world.spawnVehicle( "sbqEgg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), settings = { replaceColors = replaceColors, escapeDifficulty = -2 } } )
 	end
 end
 
@@ -26,7 +26,7 @@ end
 function update(dt)
 	if eggSpawned == nil and smolPreyData ~= nil then
 		world.spawnProjectile( "sbqWarpOutEffect", mcontroller.position(), entity.id(), {0,0}, true)
-		eggSpawned = world.spawnVehicle( "sbqEgg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), layer = smolPreyData, settings = { replaceColors = replaceColors } } )
+		eggSpawned = world.spawnVehicle( "sbqEgg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), layer = smolPreyData, settings = { replaceColors = replaceColors, escapeDifficulty = -2 } } )
 	end
 end
 

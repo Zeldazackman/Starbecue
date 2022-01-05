@@ -29,9 +29,8 @@ function p.eat( occupantId, location )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.sbqData.locations[location].maxNested or p.sbqData.locations[location].max }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.sbqData.locations[location].maxNested or p.sbqData.locations[location].max or 0 }
 	} )
-
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			p.occupant[seatindex].id = occupantId
@@ -94,9 +93,9 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if not p.includeDriver then
 		total = total + 1
 	end
-	if total > emptyslots or (total > locationslots and locationslots ~= -1) then return false end
+	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
 	if p.stateconfig[p.state].edible then
-		world.sendEntityMessage(source, "smolPreyData", seatindex,
+		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			p.getSmolPreyData(
 				p.settings,
 				world.entityName( entity.id() ),
