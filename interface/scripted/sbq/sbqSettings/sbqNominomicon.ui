@@ -2,9 +2,9 @@
 	"style" : "window", // window (has titlebar), panel (just a frame) etc.
 	"size" : [256, 200], // *internal* size (not including chrome)
 	"title" : "Preditor",
-	"icon" : "/items/active/sbqPredanomicon/sbqPredanomicon.png",
+	"icon" : "/items/active/sbqNominomicon/sbqNominomicon.png",
 	"uniqueBy" : "path",
-	"scripts" : [ "sbqPredanomicon.lua" ],
+	"scripts" : [ "sbqNominomicon.lua" ],
 	"children" : [
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [

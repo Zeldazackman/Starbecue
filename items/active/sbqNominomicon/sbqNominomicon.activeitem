@@ -1,6 +1,6 @@
 {
-	"itemName" : "sbqPredanomicon",
-	"shortdescription" : "Predanomicon",
+	"itemName" : "sbqNominomicon",
+	"shortdescription" : "Nominomicon",
 	"description" : "A magic tome with power over predators, and contains information on them.\nClick on an object pred to edit them or learn about them.",
 	"price" : 1,
 	"maxStack" : 1,
@@ -8,11 +8,11 @@
 	"category" : "tool",
 	"twoHanded" : true,
 	"itemTags" : [ "vore" ],
-	"inventoryIcon" : "sbqPredanomicon.png",
+	"inventoryIcon" : "sbqNominomicon.png",
 
 	"retainScriptStorageInItem": true,
 	"scripts" : [
-		"sbqPredanomicon.lua",
+		"sbqNominomicon.lua",
 		"/items/active/sbqController/sbqControllerData.lua",
 		"/items/active/activeitemOverrides.lua"
 	]

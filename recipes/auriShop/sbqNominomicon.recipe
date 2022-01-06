@@ -3,7 +3,7 @@
 		{ "item" : "money", "count" : 1000 }
 	],
 	"output" : {
-		"item" : "sbqPredanomicon",
+		"item" : "sbqNominomicon",
 		"count" : 1
 	},
 	"groups" : [ "auriShop" ]

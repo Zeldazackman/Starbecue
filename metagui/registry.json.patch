@@ -4,6 +4,6 @@
 		"predHud" : "/interface/scripted/sbq/sbqIndicatorHud/sbqPredatorHud.ui",
 		"predatorSelectorSettings" : "/interface/scripted/sbq/sbqPredatorSelectorSettings/sbqPredatorSelectorSettings.ui",
 		"dialogueBox" : "/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBox.ui",
-		"predanomicon" : "/interface/scripted/sbq/sbqSettings/sbqPredanomicon.ui"
+		"nominomicon" : "/interface/scripted/sbq/sbqSettings/sbqNominomicon.ui"
 	}}
 ]
