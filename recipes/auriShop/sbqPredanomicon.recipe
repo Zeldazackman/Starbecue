@@ -1,0 +1,10 @@
+{
+	"input" : [
+		{ "item" : "money", "count" : 1000 }
+	],
+	"output" : {
+		"item" : "sbqPredanomicon",
+		"count" : 1
+	},
+	"groups" : [ "auriShop" ]
+}

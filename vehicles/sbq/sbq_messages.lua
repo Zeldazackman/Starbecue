@@ -120,3 +120,16 @@ end)
 message.setHandler( "requestTransition", function (_,_, transition, args)
 	p.doTransition( transition, args )
 end)
+
+message.setHandler( "objectPredCheck", function (_,_)
+	if not p.driver then
+		return true
+	end
+end)
+
+message.setHandler( "getObjectSettingsMenuData", function (_,_)
+	return {
+		settings = p.settings,
+		spawner = p.spawner
+	}
+end)

@@ -294,6 +294,7 @@ function p.eatFeedableHandItems(entity)
 end
 
 function p.eatHandItem(entity, hand)
+	if p.settings.lockSettings and world.entityUniqueId(entity) ~= p.settings.ownerId then return false end
 	local item = world.entityHandItemDescriptor(entity, hand)
 	if item ~= nil then
 		local config = root.itemConfig(item).config

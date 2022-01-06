@@ -6,26 +6,35 @@ require( "/lib/stardust/json.lua" )
 sbq = {}
 
 sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
-sbq.customizeTab = mainTabField:newTab( sbq.extraTabs.customizeTab )
+sbq.config = root.assetJson( "/sbqGeneral.config" )
 
-function getPatronsString()
+function sbq.getPatronsString()
 	local patronsString = ""
 	for _, patron in ipairs(root.assetJson("/patrons.json")) do
 		patronsString = patronsString..patron.."\n"
 	end
 	return patronsString
 end
-sbq.patronsString = getPatronsString()
+sbq.patronsString = sbq.getPatronsString()
 
-function init()
+function sbq.getInitialData()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
 	sbq.lastSpecies = sbq.sbqCurrentData.species
 
-	sbq.loungingIn = player.loungingIn()
+	sbq.predatorEntity = player.loungingIn()
+end
 
-	sbq.config = root.assetJson( "/sbqGeneral.config" )
+function sbq.getHelpTab()
+	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
+	end
+end
+
+function init()
+
+	sbq.getInitialData()
 
 	sbq.globalSettings = sbq.sbqSettings.global or {}
 
@@ -42,18 +51,19 @@ function init()
 	end
 	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
 		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
-		sbq.speciesSettingsTab:setTitle("Config", "/vehicles/sbq/"..sbq.sbqCurrentData.species.."/skins/"..((sbq.predatorSettings.skinNames or {}).head or "default").."/icon.png"..(sbq.predatorSettings.directives or ""))
-		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script ~= nil then
-			require(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].script)
+		sbq.setIconDirectives()
+		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts ~= nil then
+			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts) do
+				require(script)
+			end
 		end
 	end
 
 	if sbq.speciesHelpTab ~= nil then
 		sbq.speciesHelpTab:delete()
 	end
-	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
-	end
+
+	sbq.getHelpTab()
 
 	if sbq.helpTab ~= nil then
 		sbq.helpTab:delete()
@@ -61,8 +71,9 @@ function init()
 	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 	patronsLabel:setText(sbq.patronsString)
 
-	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and sbq.sbqCurrentData.type == "driver" then
-		sbq.customizeTab:setVisible(true)
+	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
+		mainTabField.tabs.customizeTab:setVisible(true)
+		sb.logInfo("woo")
 		if sbq.predatorConfig.replaceColors ~= nil then
 			colorsScrollArea:clearChildren()
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
@@ -138,7 +149,7 @@ function init()
 			end
 		end
 	else
-		sbq.customizeTab:setVisible(false)
+		mainTabField.tabs.customizeTab:setVisible(false)
 	end
 
 	sbq.predator = sbq.sbqCurrentData.species or "noPred"
@@ -150,22 +161,6 @@ function init()
 
 	displayDigest:setChecked(sbq.globalSettings.displayDigest)
 	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
-
-	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
-
-	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
-	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
-
-	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
-	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
-	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)
-
-	analVore:setChecked(sbq.sbqPreyEnabled.analVore)
-	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)
-	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)
-	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
-
-	held:setChecked(sbq.sbqPreyEnabled.held)
 end
 local init = init
 
@@ -179,8 +174,8 @@ end
 --------------------------------------------------------------------------------------------------
 
 function sbq.saveSettings()
-	if sbq.loungingIn ~= nil and sbq.sbqCurrentData.type == "driver" then
-		world.sendEntityMessage( sbq.loungingIn, "settingsMenuSet", sbq.predatorSettings )
+	if sbq.predatorEntity ~= nil and sbq.sbqCurrentData.type == "driver" then
+		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sbq.predatorSettings )
 	end
 
 	sbq.sbqSettings[sbq.predator] = sbq.predatorSettings
@@ -220,6 +215,9 @@ function sbq.changePreySetting(settingname, settingvalue)
 end
 
 function sbq.setIconDirectives()
+	if sbq.speciesSettingsTab ~= nil then
+		sbq.speciesSettingsTab:setTitle("Config", "/vehicles/sbq/"..sbq.sbqCurrentData.species.."/skins/"..((sbq.predatorSettings.skinNames or {}).head or "default").."/icon.png"..(sbq.predatorSettings.directives or ""))
+	end
 end
 
 function sbq.changeColorSetting(textbox, color, inc)
@@ -240,6 +238,7 @@ function sbq.changeColorSetting(textbox, color, inc)
 	sbq.predatorSettings.replaceColorTable[color] = colorTable
 
 	sbq.setColorReplaceDirectives()
+	sbq.setIconDirectives()
 	sbq.saveSettings()
 end
 
@@ -332,49 +331,66 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function preyEnabled:onClick()
-	sbq.changePreySetting("enabled", preyEnabled.checked)
-end
+if mainTabField.tabs.globalPreySettings ~= nil then
+	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
-function digestImmunity:onClick()
-	sbq.changePreySetting("digestImmunity", digestImmunity.checked)
-	if digestImmunity.checked then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	else
-		status.clearPersistentEffects("digestImmunity")
+	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
+	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
+
+	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
+	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
+	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)
+
+	analVore:setChecked(sbq.sbqPreyEnabled.analVore)
+	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)
+	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)
+	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
+
+	held:setChecked(sbq.sbqPreyEnabled.held)
+
+	function preyEnabled:onClick()
+		sbq.changePreySetting("enabled", preyEnabled.checked)
+	end
+
+	function digestImmunity:onClick()
+		sbq.changePreySetting("digestImmunity", digestImmunity.checked)
+		if digestImmunity.checked then
+			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+		else
+			status.clearPersistentEffects("digestImmunity")
+		end
+	end
+
+	function oralVore:onClick()
+		sbq.changePreySetting("oralVore", oralVore.checked)
+	end
+
+	function tailVore:onClick()
+		sbq.changePreySetting("tailVore", tailVore.checked)
+	end
+
+	function absorbVore:onClick()
+		sbq.changePreySetting("absorbVore", absorbVore.checked)
+	end
+
+	function analVore:onClick()
+		sbq.changePreySetting("analVore", analVore.checked)
+	end
+
+	function cockVore:onClick()
+		sbq.changePreySetting("cockVore", cockVore.checked)
+	end
+
+	function breastVore:onClick()
+		sbq.changePreySetting("breastVore", breastVore.checked)
+	end
+
+	function unbirth:onClick()
+		sbq.changePreySetting("unbirth", unbirth.checked)
+	end
+
+	function held:onClick()
+		sbq.changePreySetting("held", held.checked)
 	end
 end
-
-function oralVore:onClick()
-	sbq.changePreySetting("oralVore", oralVore.checked)
-end
-
-function tailVore:onClick()
-	sbq.changePreySetting("tailVore", tailVore.checked)
-end
-
-function absorbVore:onClick()
-	sbq.changePreySetting("absorbVore", absorbVore.checked)
-end
-
-function analVore:onClick()
-	sbq.changePreySetting("analVore", analVore.checked)
-end
-
-function cockVore:onClick()
-	sbq.changePreySetting("cockVore", cockVore.checked)
-end
-
-function breastVore:onClick()
-	sbq.changePreySetting("breastVore", breastVore.checked)
-end
-
-function unbirth:onClick()
-	sbq.changePreySetting("unbirth", unbirth.checked)
-end
-
-function held:onClick()
-	sbq.changePreySetting("held", held.checked)
-end
-
 --------------------------------------------------------------------------------------------------

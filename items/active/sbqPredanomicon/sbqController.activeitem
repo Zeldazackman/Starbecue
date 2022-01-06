@@ -1,0 +1,19 @@
+{
+	"itemName" : "sbqPredanomicon",
+	"shortdescription" : "Predanomicon",
+	"description" : "A magic tome with power over predators, and contains information on them.",
+	"price" : 1,
+	"maxStack" : 1,
+	"rarity" : "common",
+	"category" : "tool",
+	"twoHanded" : true,
+	"itemTags" : [ "vore" ],
+	"inventoryIcon" : "sbqPredanomicon.png",
+
+	"retainScriptStorageInItem": true,
+	"scripts" : [
+		"sbqPredanomicon.lua",
+		"/items/active/sbqController/sbqControllerData.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

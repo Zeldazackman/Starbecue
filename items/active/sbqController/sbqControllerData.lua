@@ -1,13 +1,13 @@
 
 local oldinit = init
 function init()
-	oldinit()
+	if oldinit ~= nil then oldinit() end
 	storage.seatdata = {}
 end
 
 local oldupdate = update
 function update(dt, fireMode, shiftHeld, controls)
-	oldupdate(dt, fireMode, shiftHeld, controls)
+	if oldupdate ~= nil then oldupdate(dt, fireMode, shiftHeld, controls) end
 	storage.seatdata.mass = mcontroller.mass()
 	storage.seatdata.powerMultiplier = status.stat("powerMultiplier")
 	storage.seatdata.head = player.equippedItem("head")

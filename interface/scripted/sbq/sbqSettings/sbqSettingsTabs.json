@@ -1,13 +1,4 @@
 {
-	"customizeTab" : { "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "visible" : false, "color" : "ff00ff", "contents" : [
-		[[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-			{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-			{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-		]}],[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-			{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-			{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-		]}]]
-	]},
 	"helpTab" : { "type" : "tab", "id" : "helpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 		{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 			{ "type" : "tab", "id" : "predHelpTab", "title" : "Forms", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -36,7 +27,7 @@
 	]},
 	"speciesSettingsTabs" : {
 		"sbqAvian" : {
-			"script" : "/interface/scripted/sbq/sbqSettings/sbqHumanoidSettings.lua",
+			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqHumanoidSettings.lua"],
 			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
@@ -117,5 +108,8 @@
 				]}
 			]}
 		]}
+	},
+	"speciesInfoTabs" : {
+
 	}
 }

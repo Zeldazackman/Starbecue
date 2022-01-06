@@ -1,10 +1,10 @@
 { //  -*- grammar-ext: json -*-
 	"style" : "window", // window (has titlebar), panel (just a frame) etc.
 	"size" : [256, 200], // *internal* size (not including chrome)
-	"title" : "Starbecue Settings",
-	"icon" : "/items/active/sbqController/oralVore.png",
+	"title" : "Preditor",
+	"icon" : "/items/active/sbqPredanomicon/sbqPredanomicon.png",
 	"uniqueBy" : "path",
-	"scripts" : [ "sbqSettings.lua" ],
+	"scripts" : [ "sbqPredanomicon.lua" ],
 	"children" : [
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -27,45 +27,17 @@
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
 							[
-								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
+								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible", "visible" : false },
 								{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
 								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							]
 						]}
 					]],
-					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
-				]}
-			]},
-			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "vertical", "children" : [
-					[[//first collumn
-						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Questionable", "inline" : true },
-							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
-							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
-							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ],
-							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : "Navel Vore" } ]
-						]}
-					],[// second collumn
-						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Sexual", "inline" : true },
-							[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : "Anal Vore" } ],
-							[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : "Cock Vore" } ],
-							[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : "Breast Vore" } ],
-							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
-						]}
-					],[// third collumn
-						{ "type" : "panel", "size" : [85, 85], "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned/Hugged" } ]
-						]}
-					]],
 					{"type" : "panel", "style" : "convex", "children" : [
-						[{ "type" : "checkBox", "id" : "preyEnabled" }, { "type" : "label", "text" : "Prey Enabled" }],
-						[{ "type" : "checkBox", "id" : "digestImmunity" }, { "type" : "label", "text" : "Digestion Immunity" }]
+						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
 					]},
-					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
+					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "visible" : false, "color" : "ff00ff", "contents" : [
@@ -77,8 +49,7 @@
 					{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 				]}]]
 			]}],
-
-			"bottomBar" : []
+			"bottomBar" : [ { "type" : "label", "id": "owner", "text" : "" } ]
 		}
 	]
 }
