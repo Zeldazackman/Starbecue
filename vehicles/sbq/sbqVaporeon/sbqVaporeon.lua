@@ -83,6 +83,10 @@ function eatAnal(args)
 	return p.doVore(args, "belly", {}, "swallow")
 end
 
+function checkAnalVore()
+	return p.checkEatPosition(p.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
+end
+
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
@@ -130,6 +134,13 @@ function state.sit.pin( args )
 		p.doTransition("lay")
 	end
 	return true
+end
+
+function state.sit.grabPin()
+	local target = p.checkValidAim(p.driverSeat, 3)
+	if target ~= nil and p.globalToLocal( world.entityPosition( target ) )[1] < 3 then
+		return state.sit.pin({ id = target })
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -195,6 +206,15 @@ end
 
 state.back.analEscape = analEscape
 state.back.eatAnal = eatAnal
+state.back.analVore = checkAnalVore
+state.back.vore = checkAnalVore
+
+function state.back.grab()
+	if p.findFirstOccupantIdForLocation("hug") == nil then
+		p.checkEatPosition(p.localToGlobal({1, -2}), 3, "hug", "bed" )
+	end
+	p.doTransition("down")
+end
 
 -------------------------------------------------------------------------------
 
@@ -207,6 +227,14 @@ end
 state.hug.absorb = absorb
 state.hug.analEscape = analEscape
 state.hug.eatAnal = eatAnal
+
+state.hug.analVore = checkAnalVore
+state.hug.vore = checkAnalVore
+
+function state.hug.grab()
+	p.doTransition("up")
+	p.doTransition("unhug")
+end
 
 -------------------------------------------------------------------------------
 

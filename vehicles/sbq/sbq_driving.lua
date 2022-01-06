@@ -199,7 +199,7 @@ function p.doClickActions(state, dt)
 	for name, cooldown in pairs(p.clickActionCooldowns) do
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
-	if not (state.actions ~= nil and state.defaultActions ~= nil) then return end
+	if not (state.actions ~= nil) then return end
 
 	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
 		if not p.movement.assignClickActionRadial then
@@ -270,33 +270,33 @@ function p.doClickActions(state, dt)
 	if p.grabbing ~= nil then p.handleGrab() return end
 
 	if (p.seats[p.driverSeat].controls.primaryHandItem ~= nil) and (not p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.itemHasOverrideLockScript) then
-		p.action(state, state.defaultActions[1], "primaryFire")
-		p.action(state, state.defaultActions[2], "altFire")
+		p.action(state, (state.defaultActions or {})[1], "primaryFire")
+		p.action(state, (state.defaultActions or {})[2], "altFire")
 	else
 		if (p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") then
 			local action = p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
-				action = state.defaultActions[1]
+				action = (state.defaultActions or {})[1]
 			end
 			p.action(state, action, "primaryFire")
 		elseif (p.seats[p.driverSeat].controls.primaryHandItem == nil) then
-			p.action(state, state.defaultActions[1], "primaryFire")
+			p.action(state, (state.defaultActions or {})[1], "primaryFire")
 		end
 
 		if (p.seats[p.driverSeat].controls.altHandItem == "sbqController") then
 			local action = p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
-				action = state.defaultActions[2]
+				action = (state.defaultActions or {})[2]
 			end
 			p.action(state, action, "altFire")
 		elseif (p.seats[p.driverSeat].controls.altHandItem == nil) then
-			p.action(state, state.defaultActions[2], "altFire")
+			p.action(state, (state.defaultActions or {})[2], "altFire")
 		end
 	end
 end
 
 function p.action(stateData, name, control)
-	if stateData.actions[name] == nil then return end
+	if name == nil or stateData.actions[name] == nil then return end
 	if not p.clickActionCooldowns[name] then
 		p.clickActionCooldowns[name] = 0
 	end
@@ -306,21 +306,19 @@ function p.action(stateData, name, control)
 	if control == "force" or (p.pressControl(p.driverSeat, control))
 	or (p.heldControl(p.driverSeat, control) and stateData.actions[name].hold)
 	then
-		local continue = true
+		p.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
 		if stateData.actions[name].script ~= nil then
 			if state[p.state][stateData.actions[name].script] ~= nil then
-				continue = state[p.state][stateData.actions[name].script]()
+				if not state[p.state][stateData.actions[name].script]() then return end
 			else
 				sb.logError("no script named: ["..stateData.actions[name].script.."] in state: ["..p.state.."]")
 			end
 		end
-		if continue then
-			p.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
-		end
-		if continue and stateData.actions[name].animation ~= nil then
+		p.doTransition(stateData.actions[name].transition)
+		if stateData.actions[name].animation ~= nil then
 			p.doAnims(stateData.actions[name].animation)
 		end
-		if continue and stateData.actions[name].projectile ~= nil then
+		if stateData.actions[name].projectile ~= nil then
 			p.projectile(stateData.actions[name].projectile)
 		end
 	end

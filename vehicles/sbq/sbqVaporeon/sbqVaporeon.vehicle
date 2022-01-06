@@ -558,6 +558,11 @@
 			"locationCenters" : {
 				"belly" : [0, -3.5]
 			},
+			"actions": {
+				"grab":{
+					"script": "grabPin"
+				}
+			},
 			"interact": {
 				"stand": {
 					"aim": [0, 1],
@@ -686,6 +691,16 @@
 			"locationCenters" : {
 				"belly" : [1.5, -3.5]
 			},
+			"actions": {
+				"vore":{
+					"cooldown": 1,
+					"transition": "absorb"
+				},
+				"absorbVore":{
+					"cooldown": 1,
+					"transition": "absorb"
+				}
+			},
 			"interact": {
 				"sit": {
 					"aim": [0, 1],
@@ -771,6 +786,17 @@
 			},
 			"locationCenters" : {
 				"belly" : [1.5, -3.5]
+			},
+			//"defaultActions": ["grab", "vore"],
+			"actions": {
+				"vore":{
+					"cooldown": 1,
+					"transition": "absorb"
+				},
+				"absorbVore":{
+					"cooldown": 1,
+					"transition": "absorb"
+				}
 			},
 			"interact": {
 				"wake": {
@@ -871,6 +897,21 @@
 			"locationCenters" : {
 				"belly" : [1.5, -3.5]
 			},
+			"defaultActions": ["grab", "vore"],
+			"actions": {
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				"grab":{
+					"cooldown": 1,
+					"script": "grab"
+				}
+			},
 			"interact": {
 				"bed": {
 					"pos": [1, -2], "aim": [1, -2],
@@ -879,7 +920,8 @@
 				},
 				"anal": {
 					"pos": [-5, -3], "aim": [-3, -3],
-					"transition": "eatAnal", "chance": 100
+					"transition": "eatAnal", "chance": 100,
+					"drivingEnabled": true
 				},
 				"rollover": {
 					"aim": [4, -3],
@@ -971,6 +1013,25 @@
 			"locationCenters" : {
 				"belly" : [1.5, -3.5]
 			},
+			"defaultActions" : ["grab", "vore"],
+			"actions": {
+				"vore":{
+					"cooldown": 1,
+					"script": "vore"
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "analVore"
+				},
+				"absorbVore":{
+					"cooldown": 1,
+					"transition": "absorb"
+				},
+				"grab":{
+					"cooldown": 1,
+					"script": "grab"
+				}
+			},
 			"interact": {
 				"unhug": {
 					"pos": [1, -2], "aim": [1, -2],
@@ -978,7 +1039,8 @@
 				},
 				"anal": {
 					"pos": [-5, -3], "aim": [-3, -3],
-					"transition": "eatAnal", "chance": 100
+					"transition": "eatAnal", "chance": 100,
+					"drivingEnabled" : true
 				},
 				"rollover": {
 					"aim": [4, -3],
