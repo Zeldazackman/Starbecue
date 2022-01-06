@@ -21,6 +21,8 @@ function init()
 
 		oldInit()
 
+		lockSettings:setChecked(data.settings.lockSettings)
+
 		if (data.settings.lockSettings and data.settings.ownerId ~= player.uniqueId()) and not player.isAdmin() then
 			mainTabField.tabs.globalPredSettings:setVisible(false)
 			mainTabField.tabs.customizeTab:setVisible(false)
@@ -28,9 +30,13 @@ function init()
 				sbq.speciesSettingsTab:setVisible(false)
 			end
 		end
-		if data.settings.ownerName ~= nil then
-			owner:setText("Owner: "..data.settings.ownerName)
+		if data.settings.ownerName ~= nil and data.settings.ownerName ~= "" then
+			ownerLabel:setText("Owner: "..data.settings.ownerName)
+			ownerBar:setVisible(true)
+		else
+			ownerBar:setVisible(false)
 		end
+		--mainTabField.tabs.customizeTab:select()
 	end)
 end
 
@@ -74,23 +80,22 @@ function sbq.addRPC(rpc, callback, failCallback)
 	end
 end
 
-local oldChangePredatorSettings = sbq.changePredatorSetting
-local oldChangeGlobalSettings = sbq.changeGlobalSetting
-
-sbq.changeGlobalSetting = sbq.changePredatorSetting
+sbq.changePredatorSetting = sbq.changeGlobalSetting
 
 --------------------------------------------------------------------------------------
 
 function lockSettings:onClick()
-	sbq.changePredatorSetting("lockSettings", lockSettings.checked)
+	sbq.changeGlobalSetting("lockSettings", lockSettings.checked)
 	if lockSettings.checked then
-		sbq.changePredatorSetting("ownerId", player.uniqueId())
+		sbq.changeGlobalSetting("ownerId", player.uniqueId())
 		local ownerName = world.entityName(player.id())
-		sbq.changePredatorSetting("ownerName", ownerName)
-		owner:setText("Owner: "..ownerName)
+		sbq.changeGlobalSetting("ownerName", ownerName)
+		ownerLabel:setText("Owner: "..ownerName)
+		ownerBar:setVisible(true)
 	else
-		sbq.changePredatorSetting("ownerId", nil)
-		sbq.changePredatorSetting("ownerName", nil)
-		owner:setText("")
+		sbq.changeGlobalSetting("ownerId", "")
+		sbq.changeGlobalSetting("ownerName", "")
+		ownerLabel:setText("")
+		ownerBar:setVisible(false)
 	end
 end

@@ -22,6 +22,13 @@ function sbq.getInitialData()
 
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
 	sbq.lastSpecies = sbq.sbqCurrentData.species
+	sbq.lastType = sbq.sbqCurrentData.type
+
+	if sbq.sbqCurrentData.type == "prey" then
+		mainTabField.tabs.globalPredSettings:setVisible(false)
+	else
+		mainTabField.tabs.globalPredSettings:setVisible(true)
+	end
 
 	sbq.predatorEntity = player.loungingIn()
 end
@@ -46,34 +53,7 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	if sbq.speciesSettingsTab ~= nil then
-		sbq.speciesSettingsTab:delete()
-	end
-	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
-		sbq.setIconDirectives()
-		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts ~= nil then
-			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts) do
-				require(script)
-			end
-		end
-	end
-
-	if sbq.speciesHelpTab ~= nil then
-		sbq.speciesHelpTab:delete()
-	end
-
-	sbq.getHelpTab()
-
-	if sbq.helpTab ~= nil then
-		sbq.helpTab:delete()
-	end
-	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
-	patronsLabel:setText(sbq.patronsString)
-
 	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
-		mainTabField.tabs.customizeTab:setVisible(true)
-		sb.logInfo("woo")
 		if sbq.predatorConfig.replaceColors ~= nil then
 			colorsScrollArea:clearChildren()
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
@@ -149,8 +129,38 @@ function init()
 			end
 		end
 	else
-		mainTabField.tabs.customizeTab:setVisible(false)
+		colorsScrollArea:clearChildren()
+		skinsScrollArea:clearChildren()
 	end
+
+	if sbq.speciesSettingsTab ~= nil then
+		sbq.speciesSettingsTab:setVisible(false)
+		sbq.speciesSettingsTab = nil
+	end
+	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
+		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
+		sbq.setIconDirectives()
+		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts ~= nil then
+			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts) do
+				require(script)
+			end
+		end
+	end
+
+	if sbq.speciesHelpTab ~= nil then
+		sbq.speciesHelpTab:setVisible(false)
+		sbq.speciesHelpTab = nil
+	end
+
+	sbq.getHelpTab()
+
+	if sbq.helpTab ~= nil then
+		sbq.helpTab:setVisible(false)
+		sbq.helpTab = nil
+	end
+
+	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
+	patronsLabel:setText(sbq.patronsString)
 
 	sbq.predator = sbq.sbqCurrentData.species or "noPred"
 
@@ -166,7 +176,7 @@ local init = init
 
 function update()
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
-	if sbq.sbqCurrentData.species ~= sbq.lastSpecies then
+	if sbq.sbqCurrentData.species ~= sbq.lastSpecies or sbq.sbqCurrentData.type ~= sbq.lastType then
 		init()
 	end
 end

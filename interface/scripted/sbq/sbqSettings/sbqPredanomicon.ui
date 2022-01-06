@@ -18,21 +18,19 @@
 							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
 						]}
 					],[// second collumn
-						{"type" : "panel", "style" : "convex", "children" : [
-							[[
-								[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
-								[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
-							]]
-						]},
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Escape Modifier", "inline" : true },
+						[{"type" : "panel", "style" : "convex", "mode": "v", "children" : [
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
+						]}],
+						[{ "type" : "panel", "style" : "convex", "mode": "v", "children" : [
 							[
 								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible", "visible" : false },
 								{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
-								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+								{ "type" : "label", "text" : "Escape Modifier" }
 							]
-						]}
+						]}]
 					]],
 					{"type" : "panel", "style" : "convex", "children" : [
 						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
@@ -40,7 +38,7 @@
 					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
 				]}
 			]},
-			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "visible" : false, "color" : "ff00ff", "contents" : [
+			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
 				[[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Customize Colors", "inline" : true },
 					{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
@@ -49,7 +47,7 @@
 					{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 				]}]]
 			]}],
-			"bottomBar" : [ { "type" : "label", "id": "owner", "text" : "" } ]
+			"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [{ "type" : "label", "id": "ownerLabel", "text" : "" }]} ]
 		}
 	]
 }
