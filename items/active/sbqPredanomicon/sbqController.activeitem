@@ -1,7 +1,7 @@
 {
 	"itemName" : "sbqPredanomicon",
 	"shortdescription" : "Predanomicon",
-	"description" : "A magic tome with power over predators, and contains information on them.",
+	"description" : "A magic tome with power over predators, and contains information on them.\nClick on an object pred to edit them or learn about them.",
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",

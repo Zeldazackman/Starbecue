@@ -142,7 +142,7 @@
 					}
 				}
 			},
-
+			"head" : {},
 
 			"occupant0backarm": {
 				"properties": { "centered": true, "zLevel": -0.41, "transformationGroups": ["flip", "occupant0Position"] },

@@ -51,7 +51,6 @@ end
 
 function p.grabAngleTransitions(victim)
 	local angle = p.armRotation.frontarmsAngle * 180/math.pi
-	sb.logInfo(angle)
 	local transition
 	if (angle >= 45 and angle <= 135) then
 		transition = "oralVore"

@@ -101,11 +101,11 @@ function sbq.readOccupantData()
 					function occupantButton:onClick()
 						local actionList = {}
 						for _, action in ipairs(sbq.hudActions.global) do
-							table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
+							table.insert(actionList, {action[1], function() sbq[action[2]](id, i) end})
 						end
 						if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
 							for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
-								table.insert(actionList, {action[1], function() sbq[action[2]](id) end})
+								table.insert(actionList, {action[1], function() sbq[action[2]](id, i) end})
 							end
 						end
 						metagui.contextMenu(actionList)

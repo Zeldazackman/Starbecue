@@ -1,17 +1,18 @@
 
-function sbq.letout(id)
+function sbq.letout(id, i)
 	world.sendEntityMessage( player.loungingIn(), "letout", id )
 end
 
-function sbq.turboDigest(id)
+function sbq.turboDigest(id, i)
 	world.sendEntityMessage( id, "sbqTurboDigest" )
 end
 
-function sbq.transform(id)
+function sbq.transform(id, i)
 	world.sendEntityMessage( player.loungingIn(), "transform", id, 3 )
 end
 
-function sbq.xeroEggify(id)
+function sbq.xeroEggify(id, i)
+	if sbq.occupant[i].location ~= "belly" then return end
 	world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
 		barColor = {"aa720a", "e4a126", "ffb62e", "ffca69"},
 		forceSettings = true,
