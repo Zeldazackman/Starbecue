@@ -369,7 +369,7 @@
 			"interact": {
 				"eat": {
 					"pos": [3, -2], "aim": [3, 0],
-					"transition": "eat", "chance": 100,
+					"transition": "oralVore", "chance": 100,
 					"location":"belly", "failOnFull":true
 				},
 				"sit": {

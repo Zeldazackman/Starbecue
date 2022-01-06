@@ -255,6 +255,7 @@ state.stand.grab = grab
 
 function state.smol.begin()
 	p.setMovementParams( "smol" )
+	p.letGrabGo("hug")
 	p.resolvePosition(3)
 end
 
