@@ -121,7 +121,17 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqSlime" : { "type" : "tab", "id" : "slimeHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "slimeHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a large Slime...^reset;\n \nYou can fit one prey within your ^yellow;body^reset;.\n \nYou can use your ^yellow;Absorb Vore^reset; action to ^yellow;absorb^reset; people.\n \nIf someone is inside your ^yellow;body^reset; they can then ^orange;struggle^reset; back out, or you can let them back out by pressing ^green;[G]^reset;" }
+					]}]}
+				]}
+			]}
 		]}
+
 
 	},
 	"speciesInfoTabs" : {
@@ -200,6 +210,16 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqSlime" : { "type" : "tab", "id" : "slimeHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "slimeHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you've met a large Slime...^reset;\n \nThey can fit one prey within their ^yellow;body^reset;.\n \nYou merely need to ^green;interact^reset; with it to get it to ^yellow;absorb^reset; you.\n \nIf you're inside its ^yellow;body^reset; can then ^orange;struggle^reset; back out." }
+					]}]}
+				]}
+			]}
 		]}
+
 	}
 }

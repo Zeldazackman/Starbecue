@@ -223,7 +223,7 @@
 					"directions" : {
 						"front": { "victimAnimation" : "s_front" },
 						"back": { "victimAnimation" : "s_back" },
-						"up": { "transition" : "escape", "indicate" : "red", "victimAnimation" : "s_up" },
+						"up": { "transition" : "escape", "indicate" : "red", "victimAnimation" : "s_up", "drivingEnabled" : true },
 						"down": { "victimAnimation" : "s_down" }
 					},
 					"chances": { "min": 5, "max": 10 }

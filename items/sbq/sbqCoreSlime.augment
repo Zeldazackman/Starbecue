@@ -21,7 +21,7 @@
 
 	"vehicle": {
 		"type": "sbqSlime",
-		"position": [0, 4]	// in blocks
+		"position": [0, 3]	// in blocks
 	},
 
 	"scripts" : [ "/items/sbq/sbqCore.lua" ]

@@ -21,7 +21,7 @@
 
 	"vehicle": {
 		"type": "sbqAvian",
-		"position": [0, 4]	// in blocks
+		"position": [0, 5]	// in blocks
 	},
 
 	"scripts" : [ "/items/sbq/sbqCore.lua" ]
