@@ -297,7 +297,7 @@ function p.victimAnimUpdate(eid)
 	end
 
 	local currTime = time * speed
-	local progress = (currTime - victimAnim.prevFrame)/(math.abs(victimAnim.frame - victimAnim.prevFrame)) * (victimAnim.interpMode or 1)
+	local progress = (currTime - victimAnim.prevFrame)/(victimAnim.frame - victimAnim.prevFrame) * (victimAnim.interpMode or 1)
 	if (victimAnim.frame - victimAnim.prevFrame) == 0 then
 		progress = 0
 	end
@@ -305,6 +305,11 @@ function p.victimAnimUpdate(eid)
 	local scale = { p.getVictimAnimInterpolatedValue(victimAnim, "xs", progress), p.getVictimAnimInterpolatedValue(victimAnim, "ys", progress)}
 	local rotation = p.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
 	local translation = { p.getVictimAnimInterpolatedValue(victimAnim, "x", progress), p.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
+
+	sb.setLogMap("-currTime", currTime)
+	sb.setLogMap("-progress", progress)
+	sb.setLogMap("-frame", victimAnim.frame)
+	sb.setLogMap("-Prevframe", victimAnim.prevFrame)
 
 	p.resetTransformationGroup(transformGroup)
 	--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so
@@ -355,11 +360,14 @@ local victimAnimArgs = {
 function p.doVictimAnim( occupantId, anim, statename )
 	if not p.lounging[occupantId] then return end
 	local last = p.lounging[occupantId].victimAnim.last or {}
+
+	local victimAnim = p.victimAnimations[anim]
+
 	p.lounging[occupantId].victimAnim = {
 		enabled = true,
 		statename = statename,
 		anim = anim,
-		frame = 1,
+		frame = (victimAnim.frames or {})[2] or 1,
 		index = 2,
 		prevFrame = 0,
 		prevIndex = 1,

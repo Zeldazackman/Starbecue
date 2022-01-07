@@ -31,3 +31,18 @@ function sbq.xeroEggify(id, i)
 		}
 	})
 end
+
+function sbq.cumTF(id, i)
+	if not ((sbq.occupant[i].location == "balls") or (sbq.occupant[i].location == "shaft") or (sbq.occupant[i].location == "ballsR") or (sbq.occupant[i].location == "ballsL")) then return end
+	world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
+		barColor = {"A1A1A1", "DCDCDC", "EFEFEF", "FFFFFF"},
+		forceSettings = true,
+		state = "stand",
+		species = "sbqSlime",
+		settings = {
+			bellyEffect = "sbqRemoveBellyEffects",
+			replaceColors = {2},
+			skinNames = {}
+		}
+	})
+end

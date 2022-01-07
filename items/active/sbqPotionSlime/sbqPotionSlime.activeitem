@@ -1,0 +1,25 @@
+{
+	"itemName" : "sbqPotionSlime",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Rare",
+	"description" : "A bottle of thick blue liquid...",
+	"shortdescription" : "Slime Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+
+	"vehicle" : "sbqSlime",
+	"transformationDescription" : "a large Slime",
+
+	"inventoryIcon" : "sbqPotionSlime.png",
+	"largeImage" : "sbqPotionSlimeLarge.png",
+
+	"animation" : "sbqPotionSlime.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

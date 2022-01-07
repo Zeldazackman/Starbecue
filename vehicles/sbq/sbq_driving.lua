@@ -147,7 +147,7 @@ function p.airMovement( dx, dy, state, dt )
 		mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
 	end
 
-	if (mcontroller.yVelocity() < p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) and p.movement.airtime >= 0.1 then
+	if (mcontroller.yVelocity() < p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) and p.movement.airtime >= 0.25 then
 		p.doAnims( state.control.animations.fall )
 		p.movement.falling = true
 	elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then
@@ -199,7 +199,6 @@ function p.doClickActions(state, dt)
 	for name, cooldown in pairs(p.clickActionCooldowns) do
 		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
-	if not (state.actions ~= nil) then return end
 
 	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
 		if not p.movement.assignClickActionRadial then
@@ -296,7 +295,7 @@ function p.doClickActions(state, dt)
 end
 
 function p.action(stateData, name, control)
-	if name == nil or stateData.actions[name] == nil then return end
+	if name == nil or (stateData.actions or {})[name] == nil then return end
 	if not p.clickActionCooldowns[name] then
 		p.clickActionCooldowns[name] = 0
 	end
@@ -334,7 +333,7 @@ function p.assignClickActionMenu(state)
 			name = "unassigned",
 			icon = "/items/active/sbqController/unassigned.png"
 		})
-	for action, data in pairs(state.actions) do
+	for action, data in pairs((state.actions or {})) do
 		table.insert(options, {
 			name = action,
 			icon = data.icon or ("/items/active/sbqController/"..action..".png")
