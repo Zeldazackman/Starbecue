@@ -482,7 +482,7 @@ function p.doBellyEffects(dt)
 
 				p.extraBellyEffects(i, eid, health, bellyEffect)
 			else
-				p.otherLocationEffects(i, eid, health, bellyEffect)
+				p.otherLocationEffects(i, eid, health, bellyEffect, p.occupant[i].location )
 			end
 		end
 	end

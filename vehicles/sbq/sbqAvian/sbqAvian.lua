@@ -19,6 +19,29 @@ function p.update(dt)
 	p.armRotationUpdate()
 	p.setGrabTarget()
 end
+local cumBlob = {
+	barColor = {"A1A1A1", "DCDCDC", "EFEFEF", "FFFFFF"},
+	forceSettings = true,
+	state = "stand",
+	species = "sbqSlime",
+	settings = {
+		bellyEffect = "sbqRemoveBellyEffects",
+		replaceColors = {2},
+		skinNames = {}
+	}
+}
+function p.passiveCumTF()
+	for i = 0, #p.occupant do
+	end
+end
+
+function p.otherLocationEffects(i, eid, health, bellyEffect, location )
+	if (p.settings.penisCumTF and location == "shaft" and (p.occupant[i].progressBar <= 0))
+	or (p.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" ) and (p.occupant[i].progressBar <= 0))
+	then
+		transformMessageHandler( eid , 3, cumBlob )
+	end
+end
 
 function p.changeSize()
 	if p.tapControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then

@@ -105,7 +105,7 @@ function p.extraBellyEffects(i, eid, health, status)
 end
 
 -- to have effects applied to other locations, for example, womb if the predator does unbirth
-function p.otherLocationEffects(i, eid, health, status)
+function p.otherLocationEffects(i, eid, health, status, location)
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------

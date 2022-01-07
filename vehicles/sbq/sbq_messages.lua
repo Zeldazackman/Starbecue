@@ -10,6 +10,10 @@ message.setHandler( "letout", function(_,_, id )
 end )
 
 message.setHandler( "transform", function(_,_, eid, multiplier, data )
+	transformMessageHandler(eid, multiplier, data)
+end )
+
+function transformMessageHandler(eid, multiplier, data)
 	if p.lounging[eid] == nil or p.lounging[eid].progressBarActive  then return end
 
 	if data then
@@ -33,7 +37,7 @@ message.setHandler( "transform", function(_,_, eid, multiplier, data )
 	end
 	p.lounging[eid].progressBarMultiplier = multiplier or 1
 	p.lounging[eid].progressBarFinishFuncName = "transformPrey"
-end )
+end
 
 message.setHandler( "settingsMenuRefresh", function(_,_)
 	p.predHudOpen = 2
