@@ -29,6 +29,14 @@ function state.stand.absorbVore( args )
 	return p.doVore(args, "body", {}, "slurp")
 end
 
+function state.stand.absorbEscape( args )
+	local effect = "slimeslow"
+	if p.settings.replaceColors[1] == 2 then
+		effect = "glueslow"
+	end
+	return p.doEscape(args, {[effect] = { power = 5 + (p.lounging[args.id].progressBar), source = entity.id()}}, {})
+end
+
 function state.stand.checkAbsorbVore()
 	return p.checkEatPosition(p.localToGlobal({0,0}), 3, "body", "absorbVore")
 end

@@ -181,7 +181,6 @@
 					"script" : "absorbEscape",
 					"location" : "body",
 					"voreType" : "absorbVore",
-					"failOnFull" : true,
 					"victimAnimation" : "absorbEscape",
 					"animation" : {
 						"body" : "escape"

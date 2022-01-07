@@ -208,7 +208,7 @@ function cockVore(args)
 end
 
 function cockEscape(args)
-	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return p.doEscape(args, {glueslow = { power = 5 + (p.lounging[args.id].progressBar), source = entity.id()}}, {} )
 end
 
 function oralVore(args)
