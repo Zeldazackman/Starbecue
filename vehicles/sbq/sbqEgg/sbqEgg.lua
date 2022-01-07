@@ -20,8 +20,8 @@ function p.init()
 		p.settings.cracks = 0
 	end
 
-	if p.settings.escapeModifier == "noEscape" then
-		p.settings.escapeModifier = "antiEscape"
+	if p.settings.impossibleEscape then
+		p.settings.impossibleEscape = false
 	end
 
 	p.setPartTag( "global", "cracks", p.settings.cracks )
