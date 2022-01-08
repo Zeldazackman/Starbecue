@@ -50,10 +50,12 @@ end
 
 function decAmount:onClick()
 	buyAmount = math.max(1, buyAmount - 1)
+	buyAmountLabel:setText(tostring(buyAmount))
 end
 
 function incAmount:onClick()
 	buyAmount = buyAmount + 1
+	buyAmountLabel:setText(tostring(buyAmount))
 end
 
 function buy:onClick()

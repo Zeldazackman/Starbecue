@@ -53,7 +53,7 @@
 				]},
 				{ "type" : "panel", "id" : "itemBuyPanel", "expandMode" : [1,0], "style" : "convex", "children" : [ { "mode" : "horizontal" },
 					{ "type" : "iconButton", "id" : "decAmount", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-					{ "type" : "label", "id" : "buyAmount", "text" : "1", "inline": true },
+					{ "type" : "label", "id" : "buyAmountLabel", "text" : "1", "inline": true },
 					{ "type" : "iconButton", "id" : "incAmount", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 					{ "type" : "button", "id" : "buy", "caption" : "Buy", "expandMode" : [1, 0]}
 				]}
