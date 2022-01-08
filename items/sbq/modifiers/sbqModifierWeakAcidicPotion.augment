@@ -5,7 +5,7 @@
 	"category" : "craftingMaterial",
 	"inventoryIcon" : "sbqModifierWeakAcidicPotion.png",
 	"description" : "A weak acidic potion, make's a pred's belly digest its occupants... but never enough to kill them.",
-	"shortdescription" : "Weak Acidic Belly Potion",
+	"shortdescription" : "Weak Acidic Potion",
 	"itemTags" : [ "reagent", "vsopill" ],
 
 	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],

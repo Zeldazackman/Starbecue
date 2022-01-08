@@ -5,7 +5,7 @@
 	"category" : "craftingMaterial",
 	"inventoryIcon" : "sbqModifierInertPotion.png",
 	"description" : "An inert potion, make's a pred's belly entirely inert.",
-	"shortdescription" : "Inert Belly Potion",
+	"shortdescription" : "Inert Potion",
 	"itemTags" : [ "reagent", "vsopill" ],
 
 	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],

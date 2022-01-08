@@ -5,7 +5,7 @@
 	"category" : "craftingMaterial",
 	"inventoryIcon" : "sbqModifierHealingPotion.png",
 	"description" : "A special healing potion, make's a pred's belly heal its occupants rather than digest them.",
-	"shortdescription" : "Healing Belly Potion",
+	"shortdescription" : "Healing Potion",
 	"itemTags" : [ "reagent", "vsopill" ],
 
 	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],

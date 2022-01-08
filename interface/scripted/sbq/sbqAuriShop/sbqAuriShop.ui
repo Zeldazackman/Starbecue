@@ -34,20 +34,22 @@
 					]}]}
 				]}
 			]},
-			{ "type" : "layout", "mode" : "vertical", "size" : [ 100, 176 ], "children" : [
+			{ "type" : "layout", "mode" : "vertical", "size" : [ 116, 176 ], "children" : [
 				{ "type" : "panel", "id" : "itemInfoPanel", "expandMode" : [1,1], "style" : "flat", "children" : [ { "mode" : "vertical" },
-					[{ "type" : "panel", "id" : "itemTitlePanel", "style" : "convex", "size" : [ 100, 24 ], "children" : [ { "mode" : "horizontal" },
+					[{ "type" : "panel", "id" : "itemTitlePanel", "style" : "convex", "size" : [ 116, 24 ], "children" : [ { "mode" : "horizontal" },
 						{ "type" : "itemSlot", "id" : "itemInfoPanelSlot", "autoInteract" : false },
 						[
 							{ "type" : "label", "id" : "itemNameLabel", "text" : "" },
 							{ "type" : "label", "id" : "itemCategoryLabel", "text" : "" }
 						]
 					]}],
-					{ "type" : "layout", "id" : "itemContentsLayout", "expandMode" : [1,1], "children" : [
-
+					{ "type" : "layout", "id" : "itemContentsLayout", "mode" : "vertical", "expandMode" : [1,1], "children" : [
+						{ "type" : "layout", "expandMode" : [1,1]},
+						{ "type" : "image", "id" : "itemImage", "file" : "/empty_image.png"},
+						{ "type" : "layout", "expandMode" : [1,1]}
 					]},
 					[{ "type" : "panel", "id" : "itemBottomPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
-						{ "type" : "label", "id" : "itemIdLabel", "text" : " " }
+						{ "type" : "label", "id" : "itemDescriptionLabel", "text" : " " }
 
 					]}]
 				]},

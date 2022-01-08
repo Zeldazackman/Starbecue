@@ -17,7 +17,7 @@ for tab, recipes in pairs(shopRecipes) do
 				bottom = { { mode = "horizontal" }, { type = "layout", expandMode = {1,1} }, { type = "image", file = "/interface/merchant/pixels.png", align = 1 }, { type = "label", text = (tostring( material.count )), inline = true, align = 1}}
 			end
 		end
-		local listItem = tabScrollArea:addChild({ type = "listItem", selectionGroup = "buyItem", children = {{ type = "panel", style = "convex", children = {{ mode = "horizontal"},
+		local listItem = tabScrollArea:addChild({ type = "menuItem", selectionGroup = "buyItem", children = {{ type = "panel", style = "convex", children = {{ mode = "horizontal"},
 			{ type = "itemSlot", autoInteract = false, item = { name = recipe.result, count = recipe.count, parameters = recipe.parameters }},
 			{
 				{ type = "label", text = resultItemConfig.config.shortdescription},
@@ -27,12 +27,45 @@ for tab, recipes in pairs(shopRecipes) do
 				}
 			}
 		}}}})
-		function listItem:onSelected()
+
+		local image = resultItemConfig.config.inventoryIcon or "/empty_image.png"
+		local scale = 2
+		local wasObject
+
+		if ((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image ~= nil then
+			image = ((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image
+			wasObject = true
+		elseif resultItemConfig.config.largeImage ~= nil then
+			image = resultItemConfig.config.largeImage
+			scale = 1.5
+		end
+		if not (image:sub(1,1) == "/") then
+			image = resultItemConfig.directory..image
+		end
+		if wasObject then
+			local size = root.imageSize(image)
+			if size[1] > 90 or size[2] > 90 then
+				local x = 90/(size[1])
+				local y = 90/(size[2])
+				if x > y then
+					scale = y
+				else
+					scale = x
+				end
+			else
+				scale = 1
+			end
+		end
+
+		function listItem:onClick()
+			buyRecipe = recipe
 			itemInfoPanelSlot:setItem({ name = recipe.result, parameters = recipe.parameters })
 			itemNameLabel:setText(resultItemConfig.config.shortdescription)
 			itemCategoryLabel:setText("^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category))
-			itemIdLabel:setText(recipe.result)
-			buyRecipe = recipe
+			itemDescriptionLabel:setText(resultItemConfig.config.description)
+
+			itemImage:setFile(image)
+			itemImage:setScale({scale, scale})
 		end
 	end
 end
