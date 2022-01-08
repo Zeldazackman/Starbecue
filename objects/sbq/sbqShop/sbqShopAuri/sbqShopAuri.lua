@@ -1,3 +1,6 @@
+
+local occupantHolder = nil
+
 function init()
 	self.timerList = {}
 	self.offsets = {enabled = false, parts = {}}
@@ -15,6 +18,19 @@ function init()
 		self.animFunctionQueue[statename] = {}
 		state.tag = nil
 	end
+
+	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
+		local dialogueTreeStart
+		return { dialogueTreeStart = dialogueTreeStart, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
+	end)
+	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
+		talkingWithPrey = (isPrey == "prey")
+		dialogueBoxOpen = 0.5
+		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
+	end)
+	message.setHandler("sbqSay", function (_,_, string, tags)
+		object.say(string, tags)
+	end)
 end
 
 function update(dt)
@@ -22,7 +38,6 @@ function update(dt)
 	eyeTracking()
 	updateAnims(dt)
 	doIdleAnims()
-
 end
 
 function die()

@@ -18,9 +18,9 @@
 			]},
 			{ "type" : "tab", "id" : "creditsHelpTab", "title" : "Credits", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-					{ "type" : "label", "text" : "^cyan;Credits^reset;\n \n^#7ddfff;Zygan/Zygahedron^reset;\nArtist, Lua Scripter.\n \n^#7dad27;Wasabi_Raptor/LokiVulpix^reset;\nArtist, Lua Scripter.\nI Take Commissions! Check if I'm open!\nTwitter: @Wasabi_Raptor (SFW)\nTwitter: @LokiVulpix (NSFW)\nFA: Loki_the_Vulpix\n \n^cyan;Bug-Hunters^reset;\nRex Anivius\nxeronious\n \n^cyan;Patrons^reset;" },
+					{ "type" : "label", "text" : "^cyan;Credits^reset;\n \n^#7ddfff;Zygan/Zygahedron^reset;\nArtist, Lua Scripter.\n \n^#7dad27;Wasabi_Raptor/LokiVulpix^reset;\nArtist, Lua Scripter.\nI Take Commissions! Check if I'm open!\nTwitter: @Wasabi_Raptor (SFW)\nTwitter: @LokiVulpix (NSFW)\nFA: Loki_the_Vulpix\n \n^cyan;Bug-Hunters^reset;\nRex Anivius\nxeronious\n \n^cyan;Commissioners^reset;\nxeronious\nCharem\nLakota Amitola\n \n^cyan;Patrons^reset;" },
 					{ "type" : "label", "id" : "patronsLabel", "text" : "" },
-					{ "type" : "label", "text" : " \nThank you to everyone who has supported the project! I wouldn't have had the time to do this without you!" }
+					{ "type" : "label", "text" : " \nThank you to everyone who has supported the project! I wouldn't have had the time or funds to do this without you!" }
 				]}]}
 			]}
 		]}
@@ -83,7 +83,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "xeroniousHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've been turned into a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nYou'll be able to run around, grab people and carry them, hug them, eat them, shove them up your butt, inhale to succ people in, and many other fun things!\n \nPrey will be able to stuggle back and forth between your ^yellow;belly^reset; and ^yellow;tail^reset;.\n \nYou can trap your prey in eggs by clicking on them in the occupant menu and choosing the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nYou'll be able to run around, grab people and carry them, hug them, eat them, shove them up your butt, inhale to succ people in, and many other fun things!\n \nPrey will be able to stuggle back and forth between your ^yellow;belly^reset; and ^yellow;tail^reset;.\n \nYou can trap your prey in eggs by clicking on them in the occupant menu and choosing the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;\n \nThis predator was comissioned by xeronious and belongs to him." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -112,7 +112,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "avianHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've turned into a giant Avian...^reset;\n \nYou can fit one prey within your ^yellow;belly^reset;, one in your ^yellow;cock^reset;, and one in each of your^yellow;balls^reset;... that is if you have the parts of course, these must be enabled in your config.\n \nIn all states your prey can ^orange;struggle^reset; to move between your ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside." }
+						{ "type" : "label", "text" : "^cyan;So you've turned into a giant Avian...^reset;\n \nYou can fit one prey within your ^yellow;belly^reset;, one in your ^yellow;cock^reset;, and one in each of your^yellow;balls^reset;... that is if you have the parts of course, these must be enabled in your config.\n \nIn all states your prey can ^orange;struggle^reset; to move between your ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside.\n \nThis predator was decided on via a vote on patreon." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -168,7 +168,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "xeroniousHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nIn all states you can ^orange;struggle^reset; to move between his ^yellow;belly^reset; and his ^yellow;tail^reset;, if there is space in the destination." }
+						{ "type" : "label", "text" : "^cyan;So you've met a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nIn all states you can ^orange;struggle^reset; to move between his ^yellow;belly^reset; and his ^yellow;tail^reset;, if there is space in the destination.\n \nThis predator was comissioned by xeronious and belongs to him." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -187,7 +187,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "charemHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a lazy hadox...^reset;\n \nCharem can fit one prey within his ^yellow;belly^reset;." }
+						{ "type" : "label", "text" : "^cyan;So you've met a lazy hadox...^reset;\n \nCharem can fit one prey within his ^yellow;belly^reset;.\n \nThis predator was comissioned by Charem and belongs to him." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "backHelpTab", "title" : "Back", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -199,9 +199,9 @@
 		]},
 		"sbqAvian" : { "type" : "tab", "id" : "avianHelpTab", "title" : "", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "xeroniousHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "tab", "id" : "avianHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a giant Avian...^reset;\n \nThey can fit one prey within their ^yellow;belly^reset;, one in their ^yellow;cock^reset;, and one in each of their^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nIn all states you can ^orange;struggle^reset; to move between the ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside." }
+						{ "type" : "label", "text" : "^cyan;So you've met a giant Avian...^reset;\n \nThey can fit one prey within their ^yellow;belly^reset;, one in their ^yellow;cock^reset;, and one in each of their^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nIn all states you can ^orange;struggle^reset; to move between the ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside.\n \nThis predator was decided on via a vote on patreon." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [

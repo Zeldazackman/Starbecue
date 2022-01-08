@@ -5,7 +5,7 @@
 	"anchor" : ["centerBottom", [0,-64]],
 	"scripts" : [ "sbqDialogueBox.lua" ],
 	"children" : [
-		{ "type" : "layout", "id" : "mainLayout", "mode" : "horizontal", "expandMode" : [1, 1], "children" : [
+		{ "type" : "layout", "id" : "dialogueLayout", "mode" : "horizontal", "expandMode" : [1, 1], "children" : [
 			{ "type" : "layout", "id" : "portraitLayout", "mode" : "vertical", "expandMode" : [0, 1], "children" : [
 				{ "type" : "image", "id": "dialoguePortrait", "file" : "/empty_image.png" },
 				{ "type" : "label", "id" : "nameLabel", "text": "", "inline" : true }

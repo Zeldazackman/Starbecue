@@ -47,11 +47,13 @@ function update()
 end
 
 function sbq.getOccupancy()
-	sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (occupancyData)
-		sbq.occupant = occupancyData.occupant
-		sbq.occupants = occupancyData.occupants
-		sbq.checkVoreButtonsEnabled()
-	end)
+	if sbq.data.occupantHolder ~= nil then
+		sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (occupancyData)
+			sbq.occupant = occupancyData.occupant
+			sbq.occupants = occupancyData.occupants
+			sbq.checkVoreButtonsEnabled()
+		end)
+	end
 end
 function sbq.refreshData()
 	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", { player.id(), (player.getProperty("sbqCurrentData") or {}).type }, function (dialogueBoxData)
@@ -193,6 +195,8 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 
 	local dialogue = dialogueTree.dialogue
 	local portrait = dialogueTree.portrait or sbq.data.defaultPortrait
+	local name = dialogueTree.name or sbq.data.defaultName
+
 	local randomRolls = {}
 	-- we want to make sure the rolls for the portraits and the dialogue line up
 	while type(dialogue) == "table" do
@@ -201,19 +205,34 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		dialogue = dialogue[roll]
 	end
 	local i = 1
-	while type(dialogue) == "table" do
+	while type(portrait) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#portrait))
 		end
 		portrait = portrait[randomRolls[i]]
 		i = i + 1
 	end
+	while type(name) == "table" do
+		if randomRolls[i] == nil then
+			table.insert(randomRolls, math.random(#name))
+		end
+		name = name[randomRolls[i]]
+		i = i + 1
+	end
+
 	local playerName = world.entityName(player.id())
 	dialogue = sb.replaceTags( dialogue, { entityname = playerName })
 
-	dialogueLabel:setText(dialogue)
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSay", dialogue)
-	dialoguePortrait:setFile(portrait)
+	if type(dialogue) == "string" then
+		dialogueLabel:setText(dialogue)
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSay", dialogue)
+	end
+	if type(portrait) == "string" then
+		dialoguePortrait:setFile(portrait)
+	end
+	if type(name) == "string" then
+		nameLabel:setText(name)
+	end
 
 	if dialogueTree.callFunctions ~= nil then
 		for funcName, args in pairs(dialogueTree.callFunctions) do

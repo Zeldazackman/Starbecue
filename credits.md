@@ -9,6 +9,7 @@
 # Commissioners
 	xeronious
 	Charem
+	Lakota Amitola
 
 # Playtesters / Bug Hunters
 	xeronious
@@ -35,3 +36,4 @@
 	amber310
 	Gooey Goomy
 	Ivan Ivanovich
+	Estrane Proctor

@@ -10,20 +10,8 @@
 	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
 	"shortdescription": "Vore Shop Auri",
 
-	"interactAction" : "OpenCraftingInterface",
-	"interactData" : {
-		"config" : "/interface/windowconfig/craftingmerchant.config",
-		"filter" : ["auriShop"],
-		"paneLayoutOverride" : {
-			"windowtitle" : {
-				"title" : "Auri's Vore Shop",
-				"subtitle" : "For some of your large vorny needs.",
-				"icon" : {
-					"file" : "/items/active/sbqController/oralVore.png"
-				}
-			}
-		}
-	},
+	"interactAction" : "ScriptPane",
+	"interactData" : { "gui" : { }, "scripts" : ["/metagui.lua"], "ui" : "starbecue:auriShop" },
 
 	"orientations": [
 		{
@@ -58,5 +46,14 @@
 	"isContainer" : false,
 	"scripts": [
 		"sbqShopAuri.lua"
-	]
+	],
+
+	"defaultName" : "Auri",
+	"dialogueTree" : {
+		"greeting" : {
+			"neutral" : {
+				"dialogue" : [ "Hello, welcome to my shop." ]
+			}
+		}
+	}
 }

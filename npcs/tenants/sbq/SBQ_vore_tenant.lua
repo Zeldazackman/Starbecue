@@ -18,7 +18,7 @@ function init()
 		if location ~= nil then
 			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), occupantHolder = occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		talkingWithPrey = (isPrey == "prey")
