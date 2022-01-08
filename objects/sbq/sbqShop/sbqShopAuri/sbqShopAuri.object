@@ -48,6 +48,7 @@
 		"sbqShopAuri.lua"
 	],
 
+	"defaultPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
 	"defaultName" : "Auri",
 	"dialogueTree" : {
 		"greeting" : {
