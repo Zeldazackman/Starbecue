@@ -386,7 +386,7 @@
 			"interact": {
 				"mouth": {
 					"pos": [4, -3], "aim": [2, 2],
-					"transition": "eat", "chance": 100,
+					"transition": "oralVore", "chance": 100,
 					"location": "belly", "failOnFull": true
 				},
 				"sit": {
@@ -1032,7 +1032,7 @@
 			"interact": {
 				"mouth": {
 					"pos": [3, -3], "aim": [2, 0],
-					"transition": "eat", "chance": 100,
+					"transition": "oralVore", "chance": 100,
 					"location": "belly", "failOnFull": true
 				},
 				"hug": {
@@ -1296,7 +1296,7 @@
 			"interact": {
 				"mouth": {
 					"aim": [2, 0], "pos": [3, -3],
-					"transition": "eat", "chance": 100,
+					"transition": "oralVore", "chance": 100,
 					"location": "belly", "failOnFull": true
 				},
 				"unhug": {
