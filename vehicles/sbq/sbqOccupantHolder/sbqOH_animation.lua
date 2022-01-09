@@ -54,3 +54,7 @@ function p.doAnimData(state, anim, force)
 		}
 	end
 end
+
+function p.animationIs(state, anim)
+	return p.animStateData[state].animationState.anim == anim
+end
