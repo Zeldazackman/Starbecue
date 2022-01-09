@@ -187,6 +187,8 @@ function sbq.getDialogueBranch(dialogueTreeLocation)
 end
 
 local prevRandomRolls = {}
+local finished = false
+local dialoguePos = 1
 
 function sbq.updateDialogueBox(dialogueTreeLocation)
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation)
@@ -195,9 +197,10 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	sbq.prevDialogueBranch = dialogueTree
 	sbq.dialogueTreeLocation = dialogueTreeLocation
 
-	local dialogue = dialogueTree.dialogue
-	local portrait = dialogueTree.portrait or sbq.data.defaultPortrait
-	local name = dialogueTree.name or sbq.data.defaultName
+	local randomDialogue = dialogueTree.randomDialogue
+	local randomPortrait = dialogueTree.randomPortrait
+	local randomName = dialogueTree.randomName
+	local randomButtonText = dialogueTree.randomButtonText
 
 	local randomRolls = {}
 
@@ -206,49 +209,92 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	end
 	-- we want to make sure the rolls for the portraits and the dialogue line up
 	local i = 1
-	while type(dialogue) == "table" do
+	while type(randomDialogue) == "table" do
 		if randomRolls[i] == nil then
-			table.insert(randomRolls, math.random(#dialogue))
+			table.insert(randomRolls, math.random(#randomDialogue))
 		end
-		dialogue = dialogue[randomRolls[i]]
+		randomDialogue = randomDialogue[randomRolls[i]]
 		i = i + 1
 	end
 	i = 1
-	while type(portrait) == "table" do
+	while type(randomPortrait) == "table" do
 		if randomRolls[i] == nil then
-			table.insert(randomRolls, math.random(#portrait))
+			table.insert(randomRolls, math.random(#randomPortrait))
 		end
-		portrait = portrait[randomRolls[i]]
+		randomPortrait = randomPortrait[randomRolls[i]]
 		i = i + 1
 	end
 	i = 1
-	while type(name) == "table" do
+	while type(randomName) == "table" do
 		if randomRolls[i] == nil then
-			table.insert(randomRolls, math.random(#name))
+			table.insert(randomRolls, math.random(#randomName))
 		end
-		name = name[randomRolls[i]]
+		randomName = randomName[randomRolls[i]]
 		i = i + 1
 	end
-
+	i = 1
+	while type(randomButtonText) == "table" do
+		if randomRolls[i] == nil then
+			table.insert(randomRolls, math.random(#randomButtonText))
+		end
+		randomButtonText = randomButtonText[randomRolls[i]]
+		i = i + 1
+	end
 	prevRandomRolls = randomRolls
 
 	local playerName = world.entityName(player.id())
-	dialogue = sb.replaceTags( dialogue, { entityname = playerName })
 
-	if type(dialogue) == "string" then
-		dialogueLabel:setText(dialogue)
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSay", dialogue)
-	end
-	if type(portrait) == "string" then
-		dialoguePortrait:setFile(portrait)
-	end
-	if type(name) == "string" then
-		nameLabel:setText(name)
+	if type(randomPortrait) == "string" then
+		dialoguePortrait:setFile(randomPortrait)
+	elseif dialogueTree.portrait ~= nil then
+		if dialogueTree.portrait[dialoguePos] ~= nil then
+			dialoguePortrait:setFile(dialogueTree.portrait[dialoguePos])
+		end
+	else
+		dialoguePortrait:setFile(sbq.data.defaultPortrait)
 	end
 
-	if dialogueTree.callFunctions ~= nil then
-		for funcName, args in pairs(dialogueTree.callFunctions) do
-			sbq[funcName](table.unpack(args))
+	if type(randomName) == "string" then
+		nameLabel:setText(randomName)
+	elseif dialogueTree.name ~= nil then
+		if dialogueTree.name[dialoguePos] ~= nil then
+			nameLabel:setText(dialogueTree.name[dialoguePos])
+		end
+	else
+		nameLabel:setText(sbq.data.defaultName or world.entityName(pane.sourceEntity()))
+	end
+
+	if type(randomButtonText) == "string" then
+		dialogueCont:setText(randomButtonText)
+	elseif dialogueTree.buttonText ~= nil then
+		if dialogueTree.buttonText[dialoguePos] ~= nil then
+			dialogueCont:setText(dialogueTree.buttonText[dialoguePos])
+		end
+	else
+		dialogueCont:setText("...")
+	end
+
+	if type(randomDialogue) == "string" then
+		dialogueLabel:setText(sb.replaceTags(randomDialogue, { entityname = playerName }))
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSay", randomDialogue)
+		finished = true
+	elseif dialogueTree.dialogue ~= nil then
+		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], { entityname = playerName } ))
+		if dialoguePos >= #dialogueTree.dialogue then
+			finished = true
+			dialoguePos = 1
+		else
+			dialoguePos = dialoguePos + 1
+		end
+	else
+		dialogueLabel:setText("")
+	end
+
+	if finished then
+		if dialogueTree.callFunctions ~= nil then
+			for funcName, args in pairs(dialogueTree.callFunctions) do
+				sbq[funcName](table.unpack(args))
+			end
 		end
 	end
 
@@ -315,12 +361,17 @@ end
 
 function dialogueCont:onClick()
 	local contextMenu = {}
+	if not finished then
+		return sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+	else
+		finished = false
+	end
 
 	if sbq.prevDialogueBranch.continue ~= nil then
 		table.insert(sbq.dialogueTreeLocation, "continue")
 		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
 			sb.logInfo(tostring(sbq.prevDialogueBranch.continue.nearEntitiesNamed))
-			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 5, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
+			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
 			if entities ~= nil then
 				for _, entity in ipairs(entities) do
 					world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
@@ -338,9 +389,9 @@ function dialogueCont:onClick()
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
 			if option[2].nearEntitiesNamed ~= nil and (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
-				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 5, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
+				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
 				if entities ~= nil then
-					if option[2].dialogue ~= nil then
+					if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
 						action[2] = function ()
 							table.insert( sbq.dialogueTreeLocation, "options" )
 							table.insert( sbq.dialogueTreeLocation, i )
@@ -356,7 +407,7 @@ function dialogueCont:onClick()
 					table.insert(contextMenu, action)
 				end
 			elseif (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
-				if option[2].dialogue ~= nil then
+				if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
 					action[2] = function ()
 						table.insert( sbq.dialogueTreeLocation, "options" )
 						table.insert( sbq.dialogueTreeLocation, i )
@@ -367,7 +418,6 @@ function dialogueCont:onClick()
 					action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
 				end
 				table.insert(contextMenu, action)
-
 			end
 		end
 	end

@@ -68,8 +68,7 @@
 			]},
 			{ "type" : "layout", "id" : "dialogueLayout", "mode" : "vertical", "expandMode" : [1, 1], "children" : [
 				{ "type" : "panel", "id" : "dialogueBox", "expandMode" : [1, 1], "style" : "convex", "children" : [
-					{ "type" : "label", "id" : "dialogueLabel", "text": ""}
-
+					{ "type" : "scrollArea", "children" : [{ "type" : "label", "id" : "dialogueLabel", "text": ""}]}
 				]},
 				[
 					{ "type" : "button", "id" : "dialogueCont", "expandMode" : [1, 0], "caption" : "..." },

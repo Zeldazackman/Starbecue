@@ -133,28 +133,29 @@
 		"dialogueTree" : {
 			"greeting" : {
 				"neutral" : {
-					"dialogue" : [
+					"randomDialogue" : [
 						"Hi.",
 						"Hey there.",
 						"Mrow."
 					],
+					"buttonText" : "Hi.",
 					"jump" : ["converse"]
 				},
 				"fearful" : {
 					"portrait" : "/humanoid/sbqZevi/portraits/ZShocked.png",
-					"dialogue" : [
+					"randomDialogue" : [
 						"AH!",
 						"I-I didn't see you there!",
 						"O-oh its you!"
 					],
 					"options" : [
 						["Hehe, did I scare you~?", {}],
-						["Sorry, didn't mean to scare you", { "dialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
+						["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
 					]
 				},
 				"horny" : {
 					"portrait" : "/humanoid/sbqZevi/portraits/ZUwU.png",
-					"dialogue" : [
+					"randomDialogue" : [
 						"UwU",
 						"Hehe, hey there~",
 						"Mrow~"
@@ -163,7 +164,7 @@
 				},
 				"friendly" : {
 					"portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png",
-					"dialogue" : [
+					"randomDialogue" : [
 						"Hi!",
 						"Hey <entityname>!",
 						"Nya!"
@@ -171,7 +172,7 @@
 					"jump" : ["converse"]
 				},
 				"hungry" : {
-					"dialogue" : [
+					"randomDialogue" : [
 						"Mmmm... feeling a bit hungry.",
 						"Hey <entityname>, I'm looking for some food, have any?",
 						"Oh huh, I probably need to find something to eat."
@@ -181,43 +182,65 @@
 			},
 
 			"converse" : {
-				"dialogue" : ["So what did you want to talk about?"],
+				"randomDialogue" : ["So what did you want to talk about?"],
 				"options" : [
-					["Can we talk about you?", {}],
-					["What do you know about Auri?", {}],
-					["What is this place?", {}]
-
-
+					["Can we talk about you?", {
+						"randomDialogue" : [ "What about me?" ],
+						"options" : [
+							[ "Who are you?", { "randomDialogue" : [ "Zevi, A Magic Goocat, like Levi but with a Z." ], "buttonText" : "Okay.", "jump" : [ "converse", "options", 1, 2 ] }],
+							[ "Tell me more about the vore NPC stuff", {
+								"dismissTime" : -1,
+								"buttonText" : ["Okay."],
+								"dialogue" : [
+									"So, currently unfinished, I'm the only NPC with it and no tenants can be summoned yet. When its done vore NPCs will have dialogue trees like this to talk about stuff.",
+									"Talking could impact what types of vore they're in the mood to do. This could mean a pred seeking out prey, player or NPC, when they're hungry, or a prey seeking out a pred, etc.",
+									"NPCs in this system can do multiple kinds of vore rather than just one, and kinds will be able to be enabled and disabled from a settings menu.",
+									"And of course you'll only ever be able to be prey for what you have enabled, and dialogue options for stuff you don't just won't even show up.",
+									"In addition to talking to change mood an NPC's settings panel could be used to just lock them to always in the mood, this applies to both pred, and prey.",
+									"When its finished, rather than placing vore badges in the room, there will be a settings panel that goes under the colony deed. To be clear, this will not work for SSVM NPCs.",
+									"this will communicate with the deed and the NPC and will be used for selecting their vore prefs, OC NPCs might have certain ones locked and unchangable out of repect to the owner's prefs.",
+									"Thats about it for now, mainly the general concept aside from what you're seeing at work here."
+								],
+								"jump" : [ "converse", "options", 1, 2 ]
+							}],
+							[ "Thats all I wanted to know about you.", { "jump" : [ "converse" ] }]
+						]
+					}],
+					[ "Whats this whole dialogue box thingy?", { "randomDialogue" : [ "This is for the vore NPC system, its not finished yet, so I'm a bit of a demo" ], "jump" : [ "converse" ] }],
+					[ "What is this place?", { "randomDialogue" : [ "A shop for vore stuff, you downloaded a vore mod after all."], "jump" : [ "converse" ]}]
 				]
 			},
 
+			//vore buttons
 			"oralVore" : {
-				"yes" : { "dialogue" : [ "Hehe, sure I'll eat you~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png",
-					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png"}
+				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png"}
 				},
-				"unprompted" : { "dialogue" : [ "mmmm~ you look like a tasty meal~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "dialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
+				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 				},
-				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "dialogue" : [ "I'm a bit too full..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
 			},
 			"cockVore" : {
-				"yes" : { "dialogue" : [ "Hah, you're horny, sure~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "dialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png" }
+				"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png" }
 				},
-				"unprompted" : { "dialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "dialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png"}
+				"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png"}
 				},
-				"notFeelingIt" : { "dialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "dialogue" : [ "I'm plugged up down there already~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
 			},
+
+			//talking while prey
 			"belly" : {
-				"sbqRemoveBellyEffects" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqHeal" : { "dialogue" : [ "Hope my belly is feels nice~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqSoftDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqDigest" : { "dialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
+				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
+				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 			},
-			"shaft" : { "dialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
+			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
 		},
 
 		"dialog" : {
@@ -242,7 +265,7 @@
 				"helpthem" : {
 					"default" : {
 						"default" : [
-							"Oh no!"
+							"Oh no help them!"
 						]
 					}
 				},
