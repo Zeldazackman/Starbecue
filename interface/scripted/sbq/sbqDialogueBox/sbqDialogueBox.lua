@@ -186,6 +186,8 @@ function sbq.getDialogueBranch(dialogueTreeLocation)
 	return dialogueTree
 end
 
+local prevRandomRolls = {}
+
 function sbq.updateDialogueBox(dialogueTreeLocation)
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation)
 	if not dialogueTree then return false end
@@ -198,13 +200,20 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	local name = dialogueTree.name or sbq.data.defaultName
 
 	local randomRolls = {}
-	-- we want to make sure the rolls for the portraits and the dialogue line up
-	while type(dialogue) == "table" do
-		local roll = math.random(#dialogue)
-		table.insert(randomRolls, roll)
-		dialogue = dialogue[roll]
+
+	if dialogueTree.useLastRandom then
+		randomRolls = prevRandomRolls
 	end
+	-- we want to make sure the rolls for the portraits and the dialogue line up
 	local i = 1
+	while type(dialogue) == "table" do
+		if randomRolls[i] == nil then
+			table.insert(randomRolls, math.random(#dialogue))
+		end
+		dialogue = dialogue[randomRolls[i]]
+		i = i + 1
+	end
+	i = 1
 	while type(portrait) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#portrait))
@@ -212,6 +221,7 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		portrait = portrait[randomRolls[i]]
 		i = i + 1
 	end
+	i = 1
 	while type(name) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#name))
@@ -219,6 +229,8 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		name = name[randomRolls[i]]
 		i = i + 1
 	end
+
+	prevRandomRolls = randomRolls
 
 	local playerName = world.entityName(player.id())
 	dialogue = sb.replaceTags( dialogue, { entityname = playerName })
@@ -246,7 +258,9 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 end
 
 function sbq.checkVoreTypeActive(voreType)
-	local voreTypeData = sbq.data.settings.voreTypes[voreType]
+	local voreTypeData = ((sbq.data.settings or {}).voreTypes or {})[voreType]
+	if voreTypeData == nil then return "hidden" end
+
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
 	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] and ( (player.getProperty( "sbqCurrentData") or {}).type ~= "prey" ) then
 		if voreTypeData.feelingIt then
@@ -264,7 +278,7 @@ function sbq.checkVoreTypeActive(voreType)
 end
 
 function sbq.checkVoreButtonsEnabled()
-	for voreType, data in pairs(sbq.data.settings.voreTypes) do
+	for voreType, data in pairs((sbq.data.settings or {}).voreTypes or {}) do
 		local button = _ENV[voreType]
 		local active = sbq.checkVoreTypeActive(voreType)
 		button:setVisible(active ~= "hidden")
@@ -301,24 +315,59 @@ end
 
 function dialogueCont:onClick()
 	local contextMenu = {}
+
 	if sbq.prevDialogueBranch.continue ~= nil then
 		table.insert(sbq.dialogueTreeLocation, "continue")
-		sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
+			sb.logInfo(tostring(sbq.prevDialogueBranch.continue.nearEntitiesNamed))
+			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 5, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
+			if entities ~= nil then
+				for _, entity in ipairs(entities) do
+					world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
+				end
+				sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+			else
+				sbq.updateDialogueBox(sbq.prevDialogueBranch.failJump)
+			end
+		else
+			sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+		end
 	elseif sbq.prevDialogueBranch.jump ~= nil then
 		sbq.updateDialogueBox(sbq.prevDialogueBranch.jump)
 	elseif sbq.prevDialogueBranch.options ~= nil then
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
-			if (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
+			if option[2].nearEntitiesNamed ~= nil and (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
+				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 5, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
+				if entities ~= nil then
+					if option[2].dialogue ~= nil then
+						action[2] = function ()
+							table.insert( sbq.dialogueTreeLocation, "options" )
+							table.insert( sbq.dialogueTreeLocation, i )
+							table.insert( sbq.dialogueTreeLocation, 2 )
+							for _, entity in ipairs(entities) do
+								world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
+							end
+							sbq.updateDialogueBox( sbq.dialogueTreeLocation )
+						end
+					elseif option[2].jump ~= nil then
+						action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
+					end
+					table.insert(contextMenu, action)
+				end
+			elseif (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
 				if option[2].dialogue ~= nil then
-					table.insert( sbq.dialogueTreeLocation, "options" )
-					table.insert( sbq.dialogueTreeLocation, i )
-					table.insert( sbq.dialogueTreeLocation, 2 )
-					action[2] = function () sbq.updateDialogueBox( sbq.dialogueTreeLocation ) end
+					action[2] = function ()
+						table.insert( sbq.dialogueTreeLocation, "options" )
+						table.insert( sbq.dialogueTreeLocation, i )
+						table.insert( sbq.dialogueTreeLocation, 2 )
+						sbq.updateDialogueBox( sbq.dialogueTreeLocation )
+					end
 				elseif option[2].jump ~= nil then
 					action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
 				end
 				table.insert(contextMenu, action)
+
 			end
 		end
 	end
@@ -328,6 +377,21 @@ function dialogueCont:onClick()
 	if #contextMenu > 0 then
 		metagui.contextMenu(contextMenu)
 	end
+end
+
+function checkEntitiesMatch(entities, find)
+	local found = {}
+	local continue
+	for _, name in ipairs(find) do
+		for _, entity in ipairs(entities) do
+			if name == world.entityName(entity) then
+				table.insert(found, entity)
+				continue = true
+			end
+		end
+		if not continue then return end
+	end
+	return found
 end
 
 

@@ -36,6 +36,12 @@ function init()
 	message.setHandler( "sbqNewOccupantHolder", function (_,_, newOccupantHolder)
 		occupantHolder = newOccupantHolder
 	end)
+	message.setHandler("sbqSetInteracted", function (_,_, id)
+		local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
+		---@diagnostic disable-next-line: undefined-global
+		setInteracted(args)
+	end)
+
 end
 
 function update(dt)

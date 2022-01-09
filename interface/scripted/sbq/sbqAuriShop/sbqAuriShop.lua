@@ -63,9 +63,14 @@ for tab, recipes in pairs(shopRecipes) do
 			itemNameLabel:setText(resultItemConfig.config.shortdescription)
 			itemCategoryLabel:setText("^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category))
 			itemDescriptionLabel:setText(resultItemConfig.config.description)
-
 			itemImage:setFile(image)
 			itemImage:setScale({scale, scale})
+
+			if sbq.data.dialogueTree.itemSelection[recipe.result] ~= nil then
+				sbq.updateDialogueBox({ "itemSelection",recipe.result })
+			else
+				sbq.updateDialogueBox({ "greeting", "neutral", "continue" })
+			end
 		end
 	end
 end
