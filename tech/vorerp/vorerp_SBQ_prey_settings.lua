@@ -11,7 +11,7 @@ function update(args)
 end
 
 local voreTypes = { "oralVore", "unbirth" }
-
+-- a function from SSVM getting overwritten to have better parity and use Starbecue's settings
 function attemptActivate()
 	local people = world.entityQuery( tech.aimPosition(), 7, {
 		withoutEntityId = entity.id(),

@@ -1,0 +1,3 @@
+[
+	{ "op": "replace", "path": "/description", "value": "The functionality of this object has been replaced by Starbecue's prey settings." }
+]

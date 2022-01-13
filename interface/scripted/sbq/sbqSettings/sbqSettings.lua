@@ -162,6 +162,10 @@ function init()
 	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 	patronsLabel:setText(sbq.patronsString)
 
+	if root.itemConfig("vorechipkit") ~= nil then
+		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
+	end
+
 	sbq.predator = sbq.sbqCurrentData.species or "noPred"
 
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
