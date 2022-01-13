@@ -183,7 +183,7 @@
 		},
 		"locations" :{
 			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
-			"hug" : { "max": 1, "transformGroups" : ["armsbob"] },
+			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 			"fatten" : { "mass": 1 },
 
 			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
