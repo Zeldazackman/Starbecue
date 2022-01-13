@@ -244,9 +244,9 @@ end
 
 function switchBalls(args)
 	local dx = p.lounging[args.id].controls.dx
-	if dx == 1 then
+	if dx == -1 then
 		return p.moveOccupantLocation(args, "ballsR")
-	elseif dx == -1 then
+	elseif dx == 1 then
 		return p.moveOccupantLocation(args, "ballsL")
 	end
 end

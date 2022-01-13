@@ -156,6 +156,8 @@ function init()
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
 	p.spawner = config.getParameter("spawner") or config.getParameter("driver")
+	p.driver = p.spawner
+	p.includeDriver = true
 
 	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
 
@@ -165,12 +167,6 @@ function init()
 
 	for transformGroup, _ in pairs(p.transformGroups) do
 		p.resetTransformationGroup(transformGroup)
-	end
-
-	if config.getParameter("uneaten") then
-		p.timer("uneaten", 0.1, function ()
-			world.sendEntityMessage(p.spawner, "sbqNewOccupantHolder", entity.id())
-		end)
 	end
 
 	p.animFunctionQueue = {}
@@ -238,6 +234,7 @@ end
 function p.checkSpawnerExists()
 	if p.spawner and world.entityExists(p.spawner) then
 		mcontroller.setPosition(world.entityPosition(p.spawner))
+		p.loopedMessage("occupantHolderExists", p.spawner, "sbqOccupantHolderExists", {entity.id(), {occupant = p.occupant, occupants = p.occupants}})
 
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "sbqPreyWarpRequest", {},
@@ -257,10 +254,13 @@ end
 
 function p.onDeath(eaten)
 	if p.spawner then
-		world.sendEntityMessage(p.spawner, "sbqOccupantHolderDespawn", p.settings)
+		world.sendEntityMessage(p.spawner, "sbqOccupantHolderDespawned", p.settings)
 	end
-	for i = 0, #p.occupant do
-		p.uneat(p.occupant[i].id)
+
+	if not eaten then
+		for i = 0, #p.occupant do
+			p.uneat(p.occupant[i].id)
+		end
 	end
 
 	vehicle.destroy()
@@ -384,12 +384,20 @@ function p.getSmolPreyData(settings, species, state, tags, layer)
 	}
 end
 
+function p.entityLounging( entity )
+	if entity == p.spawner then return true end
+
+	for i = 0, p.occupantSlots do
+		if entity == p.occupant[i].id then return true end
+	end
+	return false
+end
+
 function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
-	if p.spawner ~= occupantId then return false end
+	if p.driver ~= occupantId then return false end
 	local total = p.occupants.total
 	total = total + 1
-
-	if total > emptyslots or (total > locationslots and locationslots ~= -1) then return false end
+	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
 	if p.stateconfig[p.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			p.getSmolPreyData(
@@ -403,7 +411,7 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 		)
 
 		local nextSlot = 1
-		for i = 1, p.occupantSlots do
+		for i = 0, p.occupantSlots do
 			if p.occupant[i].id ~= nil then
 				local location = p.occupant[i].location
 				local massMultiplier = 0

@@ -23,6 +23,9 @@ function transformMessageHandler(eid, multiplier, data)
 	else
 		if p.lounging[eid].species == world.entityName( entity.id() ) then return end
 	end
+	if p.lounging[eid].species == "sbqOccupantHolder" then
+		data.layer = true
+	end
 
 	p.lounging[eid].progressBarActive = true
 	p.lounging[eid].progressBar = 0

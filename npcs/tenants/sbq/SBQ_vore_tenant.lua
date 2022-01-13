@@ -5,6 +5,7 @@ local occupantHolder
 local inited
 local dialogueBoxOpen = 0
 local talkingWithPrey
+local timeUntilNewHolder = 0
 
 function init()
 	oldinit()
@@ -36,6 +37,14 @@ function init()
 	message.setHandler( "sbqNewOccupantHolder", function (_,_, newOccupantHolder)
 		occupantHolder = newOccupantHolder
 	end)
+	message.setHandler( "sbqOccupantHolderExists", function (_,_, occupantHolderId, occupancyData )
+		occupantHolder = occupantHolderId
+		timeUntilNewHolder = 5
+
+		sbq.occupant = occupancyData.occupant
+		sbq.occupants = occupancyData.occupants
+
+	end)
 	message.setHandler("sbqSetInteracted", function (_,_, id)
 		local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
 		---@diagnostic disable-next-line: undefined-global
@@ -47,25 +56,21 @@ end
 function update(dt)
 	oldupdate(dt)
 
-	if not occupantHolder then
+	if (not occupantHolder) or (timeUntilNewHolder <= 0) then
 		occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = entity.id(), sbqData = config.getParameter("sbqData"), states = config.getParameter("states") } )
 	end
 
+	if npc.loungingIn() == nil then
+		timeUntilNewHolder = math.max(0, timeUntilNewHolder - dt)
+	end
+
 	sbq.checkRPCsFinished(dt)
-	sbq.getOccupancy()
 	world.sendEntityMessage(occupantHolder, "faceDirection", mcontroller.facingDirection())
 	dialogueBoxOpen = math.max(0, dialogueBoxOpen - dt)
 end
 
 function uninit()
 	olduninit()
-end
-
-function sbq.getOccupancy()
-	sbq.loopedMessage("getOccupancy", occupantHolder, "getOccupancyData", {}, function (occupancyData)
-		sbq.occupant = occupancyData.occupant
-		sbq.occupants = occupancyData.occupants
-	end)
 end
 
 function sbq.checkRPCsFinished(dt)
