@@ -142,7 +142,16 @@ function init()
 	p.loungePositions = config.getParameter("loungePositions")
 	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/sbqGeneral.config")
-	p.transformGroups = root.assetJson( p.cfgAnimationFile ).transformationGroups
+	p.transformGroups = {
+		occupant0Position = {},
+		occupant1Position = {},
+		occupant2Position = {},
+		occupant3Position = {},
+		occupant4Position = {},
+		occupant5Position = {},
+		occupant6Position = {},
+		occupant7Position = {},
+	}
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 

@@ -42,7 +42,7 @@ function p.doAnimData(state, anim, force)
 	local force = force
 	local priorityHigher = ((newPriority >= oldPriority) or (newPriority == -1))
 	if (not isSame and priorityHigher) or p.hasAnimEnded(state) or force then
-		if isSame and (p.animStateData[state].states[animator.animationState(state)].mode == "end") then
+		if isSame and (p.animStateData[state].states[p.animStateData[state].animationState.anim].mode == "end") then
 			force = true
 		end
 		p.animStateData[state].animationState = {
