@@ -324,11 +324,10 @@ function p.updateOccupants(dt)
 							p.occupant[i].location = location
 						end
 					end
-				elseif (p.sbqData.locations[location] == nil) or ((p.sbqData.locations[location].max or 0) == 0) then
-					p.removeOccupantsFromLocation(location)
-				end
-
-				if location ~= nil and p.sbqData.locations[location] ~= nil then
+				elseif (location == nil) or (p.sbqData.locations[location] == nil) or ((p.sbqData.locations[location].max or 0) == 0) then
+					p.occupant[i] = p.clearOccupant(i)
+					p.refreshList = true
+				else
 					p.occupants[location] = p.occupants[location] + 1
 
 					massMultiplier = p.sbqData.locations[location].mass or 0
