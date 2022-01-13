@@ -52,8 +52,8 @@
 	},
 	"speciesHelpTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "vaporeonHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "vaporeonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "vaporeonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've been turned into a Vaporeon...^reset;\n \nVaporeon have the space for two prey to fit within their ^yellow;belly^reset;.\n \nYou may also be able to tap ^green;[F]^reset; to change from ^cyan;big^reset; to ^cyan;smol^reset; and back. You'll be able to run around, bap people, eat people, spray water, and many other fun things!\n \nYou can transofrm your prey into other vaporeon by clicking on them in the occupant menu and choosing the ^yellow;Transform^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
 					]}]}
@@ -86,8 +86,8 @@
 			]}
 		]},
 		"sbqXeronious" : { "type" : "tab", "id" : "xeroniousHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "xeroniousHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "xeroniousHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "xeroniousGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've been turned into a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nYou'll be able to run around, grab people and carry them, hug them, eat them, shove them up your butt, inhale to succ people in, and many other fun things!\n \nPrey will be able to stuggle back and forth between your ^yellow;belly^reset; and ^yellow;tail^reset;.\n \nYou can trap your prey in eggs by clicking on them in the occupant menu and choosing the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;\n \nThis predator was comissioned by xeronious and belongs to him." }
 					]}]}
@@ -115,8 +115,8 @@
 			]}
 		]},
 		"sbqAvian" : { "type" : "tab", "id" : "avianHelpTab", "title" : "", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "avianHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "avianHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "avianGeneralHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've turned into a giant Avian...^reset;\n \nYou can fit one prey within your ^yellow;belly^reset;, one in your ^yellow;cock^reset;, and one in each of your^yellow;balls^reset;... that is if you have the parts of course, these must be enabled in your config.\n \nIn all states your prey can ^orange;struggle^reset; to move between your ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside.\n \nThis predator was decided on via a vote on patreon." }
 					]}]}
@@ -129,8 +129,8 @@
 			]}
 		]},
 		"sbqSlime" : { "type" : "tab", "id" : "slimeHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "slimeHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "slimeHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "slimeGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've been turned into a large Slime...^reset;\n \nYou can fit one prey within your ^yellow;body^reset;.\n \nYou can use your ^yellow;Absorb Vore^reset; action to ^yellow;absorb^reset; people.\n \nIf someone is inside your ^yellow;body^reset; they can then ^orange;struggle^reset; back out, or you can let them back out by pressing ^green;[G]^reset;" }
 					]}]}
@@ -142,8 +142,8 @@
 	},
 	"speciesInfoTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "vaporeonHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "vaporeonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "vaporeonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've met a giant Vaporeon...^reset;\n \nVaporeon have the space for two prey to fit within their ^yellow;belly^reset;." }
 					]}]}
@@ -171,8 +171,8 @@
 			]}
 		]},
 		"sbqXeronious" : { "type" : "tab", "id" : "xeroniousHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "xeroniousHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "xeroniousHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "xeroniousGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqXeroniousCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've met a Kaiju...^reset;\n \nXeronious can fit three prey within his ^yellow;belly^reset;, and one in his ^yellow;tail^reset;.\n \nIn all states you can ^orange;struggle^reset; to move between his ^yellow;belly^reset; and his ^yellow;tail^reset;, if there is space in the destination.\n \nThis predator was comissioned by xeronious and belongs to him." }
 					]}]}
@@ -190,8 +190,8 @@
 			]}
 		]},
 		"sbqCharem" : { "type" : "tab", "id" : "charemHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "charemHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "charemHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "charemGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've met a lazy hadox...^reset;\n \nCharem can fit one prey within his ^yellow;belly^reset;.\n \nThis predator was comissioned by Charem and belongs to him." }
 					]}]}
@@ -204,8 +204,8 @@
 			]}
 		]},
 		"sbqAvian" : { "type" : "tab", "id" : "avianHelpTab", "title" : "", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "avianHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "avianHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "avianGeneralHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've met a giant Avian...^reset;\n \nThey can fit one prey within their ^yellow;belly^reset;, one in their ^yellow;cock^reset;, and one in each of their^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nIn all states you can ^orange;struggle^reset; to move between the ^yellow;balls^reset; and up and down from the ^yellow;cock^reset;, if there is space in the destination.\n \nParts such as ^yellow;breasts^reset;, ^yellow;cock^reset;, and ^yellow;balls^reset; can all be enabled or disabled regardless of gender, if a part is disabled with someone inside they will be ^red;released^reset;, however it is possible to trap someone in the ^yellow;balls^reset; by disabling the ^yellow;cock^reset; once they are inside.\n \nThis predator was decided on via a vote on patreon." }
 					]}]}
@@ -218,8 +218,8 @@
 			]}
 		]},
 		"sbqSlime" : { "type" : "tab", "id" : "slimeHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "slimeHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "slimeHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "slimeGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqSlimeCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;So you've met a large Slime...^reset;\n \nThey can fit one prey within their ^yellow;body^reset;.\n \nYou merely need to ^green;interact^reset; with it to get it to ^yellow;absorb^reset; you.\n \nIf you're inside its ^yellow;body^reset; can then ^orange;struggle^reset; back out." }
 					]}]}

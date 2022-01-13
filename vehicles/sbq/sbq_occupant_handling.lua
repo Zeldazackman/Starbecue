@@ -200,7 +200,7 @@ function p.locationFull(location)
 	if p.occupants.total == p.occupants.maximum then
 		return true
 	else
-		return p.occupants[location] == p.sbqData.locations[location].max
+		return p.occupants[location] >= p.sbqData.locations[location].max
 	end
 end
 
@@ -325,8 +325,8 @@ function p.updateOccupants(dt)
 						end
 					end
 				elseif (location == nil) or (p.sbqData.locations[location] == nil) or ((p.sbqData.locations[location].max or 0) == 0) then
-					p.occupant[i] = p.clearOccupant(i)
-					p.refreshList = true
+					p.uneat(p.occupant[i].id)
+					return
 				else
 					p.occupants[location] = p.occupants[location] + 1
 

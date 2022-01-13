@@ -37,7 +37,7 @@ function init()
 			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
 			icon = "/interface/errorpopup/erroricon.png",
 			title = "SSVM Overrides Warning",
-			message = "Starbound Simple Vore Mod Detected.\n \nStarbecue is not an addon and is independent, but overrides and bugfixes some functions of SSVM to have better parity, check the Help tab in Starbecue's settings for more information."
+			message = "Starbound Simple Vore Mod Detected.\n \nStarbecue overrides and bugfixes some functions of SSVM to have better parity, check the Help tab in Starbecue's settings for more information."
 		})
 	end
 

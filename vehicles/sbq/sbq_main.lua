@@ -419,12 +419,12 @@ function p.interactChance(data, args)
 	if not (data.drivingEnabled or (not p.driver)) then return end
 	if data.chance then
 		if math.random() <= (data.chance/100) then
-			p.doTransition( p.occupantArray(data).transition, {id=args.sourceId} )
+			p.doTransition( (p.occupantArray(data) or {}).transition, {id=args.sourceId} )
 		elseif data.animation then
 			p.doAnims(data.animation)
 		end
 	else
-		p.doTransition( p.occupantArray(data).transition, {id=args.sourceId} )
+		p.doTransition( (p.occupantArray(data) or {}).transition, {id=args.sourceId} )
 	end
 end
 
