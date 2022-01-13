@@ -656,41 +656,49 @@ function p.smolPreyAnimationPaths(settings, species, state, tags)
 		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }
 	end
 
-	local head
-	local body
-	local tail
-	local backlegs
-	local frontlegs
-	local backarms
-	local frontarms
+	local returnValues  = {}
 
 	if edibleAnims.head ~= nil then
-		head = p.fixSmolPreyPathTags(directory, animatedParts, "head", "head", edibleAnims.head, settings, tags)
+		returnValues.head = p.fixSmolPreyPathTags(directory, animatedParts, "head", "head", edibleAnims.head, settings, tags)
+	end
+	if edibleAnims.head1 ~= nil then
+		returnValues.head1 = p.fixSmolPreyPathTags(directory, animatedParts, "head1", "head1", edibleAnims.head1, settings, tags)
+	end
+	if edibleAnims.head2 ~= nil then
+		returnValues.head2 = p.fixSmolPreyPathTags(directory, animatedParts, "head2", "head2", edibleAnims.head2, settings, tags)
+	end
+	if edibleAnims.head3 ~= nil then
+		returnValues.head3 = p.fixSmolPreyPathTags(directory, animatedParts, "head3", "head3", edibleAnims.head3, settings, tags)
 	end
 	if edibleAnims.body ~= nil then
-		body = p.fixSmolPreyPathTags(directory, animatedParts, "body", "body", edibleAnims.body, settings, tags)
+		returnValues.body = p.fixSmolPreyPathTags(directory, animatedParts, "body", "body", edibleAnims.body, settings, tags)
+	end
+	if edibleAnims.belly ~= nil then
+		returnValues.belly = p.fixSmolPreyPathTags(directory, animatedParts, "belly", "belly", edibleAnims.belly, settings, tags)
 	end
 	if edibleAnims.tail ~= nil then
-		tail = p.fixSmolPreyPathTags(directory, animatedParts, "tail", "tail", edibleAnims.tail, settings, tags)
+		returnValues.tail = p.fixSmolPreyPathTags(directory, animatedParts, "tail", "tail", edibleAnims.tail, settings, tags)
+	end
+	if edibleAnims.cock ~= nil then
+		returnValues.cock = p.fixSmolPreyPathTags(directory, animatedParts, "cock", "cock", edibleAnims.cock, settings, tags)
 	end
 	if edibleAnims.legs ~= nil then
-		backlegs = p.fixSmolPreyPathTags(directory, animatedParts, "backlegs", "legs", edibleAnims.legs, settings, tags)
-		frontlegs = p.fixSmolPreyPathTags(directory, animatedParts, "frontlegs", "legs", edibleAnims.legs, settings, tags)
+		returnValues.backlegs = p.fixSmolPreyPathTags(directory, animatedParts, "backlegs", "legs", edibleAnims.legs, settings, tags)
+		returnValues.frontlegs = p.fixSmolPreyPathTags(directory, animatedParts, "frontlegs", "legs", edibleAnims.legs, settings, tags)
 	end
 	if edibleAnims.arms ~= nil then
-		backarms = p.fixSmolPreyPathTags(directory, animatedParts, "backarms", "arms", edibleAnims.arms, settings, tags)
-		frontarms = p.fixSmolPreyPathTags(directory, animatedParts, "frontarms", "arms", edibleAnims.arms, settings, tags)
+		returnValues.backarms = p.fixSmolPreyPathTags(directory, animatedParts, "backarms", "arms", edibleAnims.arms, settings, tags)
+		returnValues.frontarms = p.fixSmolPreyPathTags(directory, animatedParts, "frontarms", "arms", edibleAnims.arms, settings, tags)
 	end
-
-	return {
-		head = head,
-		body = body,
-		tail = tail,
-		backlegs = backlegs,
-		frontlegs = frontlegs,
-		backarms = backarms,
-		frontarms = frontarms
-	}
+	if edibleAnims.balls ~= nil then
+		returnValues.backBalls = p.fixSmolPreyPathTags(directory, animatedParts, "backBalls", "backBalls", edibleAnims.balls, settings, tags)
+		returnValues.frontBalls = p.fixSmolPreyPathTags(directory, animatedParts, "frontBalls", "frontBalls", edibleAnims.balls, settings, tags)
+	end
+	if edibleAnims.breasts ~= nil then
+		returnValues.backBreasts = p.fixSmolPreyPathTags(directory, animatedParts, "backBreasts", "backBreasts", edibleAnims.breasts, settings, tags)
+		returnValues.frontBreasts = p.fixSmolPreyPathTags(directory, animatedParts, "frontBreasts", "frontBreasts", edibleAnims.breasts, settings, tags)
+	end
+	return returnValues
 end
 
 function p.fixSmolPreyPathTags(directory, animatedParts, partname, statename, animname, settings, tags)

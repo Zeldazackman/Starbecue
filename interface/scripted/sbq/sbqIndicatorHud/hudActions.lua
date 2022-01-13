@@ -37,12 +37,13 @@ function sbq.cumTF(id, i)
 	world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
 		barColor = {"A1A1A1", "DCDCDC", "EFEFEF", "FFFFFF"},
 		forceSettings = true,
-		state = "stand",
+		state = "smol",
 		species = "sbqSlime",
 		settings = {
 			bellyEffect = "sbqRemoveBellyEffects",
 			replaceColors = {2},
-			skinNames = {}
+			skinNames = {},
+			directives = "?replace;A1A1A1=A1A1A18c;DCDCDC=DCDCDC8c;EFEFEF=EFEFEF8c;FFFFFF=FFFFFF8c"
 		}
 	})
 end

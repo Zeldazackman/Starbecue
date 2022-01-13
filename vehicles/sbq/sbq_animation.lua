@@ -180,23 +180,35 @@ end
 function p.smolPreyAnimPath(occupant)
 	local seatname = occupant.seatname
 
-	local head = occupant.smolPreyData.images.head
-	local body = occupant.smolPreyData.images.body
-	local tail = occupant.smolPreyData.images.tail
-	local backlegs = occupant.smolPreyData.images.backlegs
-	local frontlegs = occupant.smolPreyData.images.frontlegs
-	local backarms = occupant.smolPreyData.images.backarms
-	local frontarms = occupant.smolPreyData.images.frontarms
+	p.setSmolOccupantPart(seatname, "head", occupant.smolPreyData.images.head)
+	p.setSmolOccupantPart(seatname, "head1", occupant.smolPreyData.images.head1)
+	p.setSmolOccupantPart(seatname, "head2", occupant.smolPreyData.images.head2)
+	p.setSmolOccupantPart(seatname, "head3", occupant.smolPreyData.images.head3)
 
-	if head then p.setPartTag(seatname, "smolpath", head) else p.setPartTag(seatname, "smolpath", "/empty_image.png") end
-	if body then p.setPartTag(seatname.."body", "smolpath", body) else p.setPartTag(seatname.."body", "smolpath", "/empty_image.png") end
-	if tail then p.setPartTag(seatname.."tail", "smolpath", tail) else p.setPartTag(seatname.."tail", "smolpath", "/empty_image.png") end
-	if backlegs then p.setPartTag(seatname.."backlegs", "smolpath", backlegs) else p.setPartTag(seatname.."backlegs", "smolpath", "/empty_image.png") end
-	if frontlegs then p.setPartTag(seatname.."frontlegs", "smolpath", frontlegs) else p.setPartTag(seatname.."frontlegs", "smolpath", "/empty_image.png") end
-	if backarms then p.setPartTag(seatname.."backarm", "smolpath", backarms) else p.setPartTag(seatname.."backarm", "smolpath", "/empty_image.png") end
-	if frontarms then p.setPartTag(seatname.."frontarm", "smolpath", frontarms) else p.setPartTag(seatname.."frontarm", "smolpath", "/empty_image.png") end
+	p.setSmolOccupantPart(seatname, "body", occupant.smolPreyData.images.body)
+	p.setSmolOccupantPart(seatname, "belly", occupant.smolPreyData.images.belly)
+
+	p.setSmolOccupantPart(seatname, "tail", occupant.smolPreyData.images.tail)
+
+	p.setSmolOccupantPart(seatname, "cock", occupant.smolPreyData.images.cock)
+
+	p.setSmolOccupantPart(seatname, "backlegs", occupant.smolPreyData.images.backlegs)
+	p.setSmolOccupantPart(seatname, "frontlegs", occupant.smolPreyData.images.frontlegs)
+
+	p.setSmolOccupantPart(seatname, "backarm", occupant.smolPreyData.images.backarms)
+	p.setSmolOccupantPart(seatname, "frontarm", occupant.smolPreyData.images.frontarms)
+
+	p.setSmolOccupantPart(seatname, "backBalls", occupant.smolPreyData.images.backBalls)
+	p.setSmolOccupantPart(seatname, "frontBalls", occupant.smolPreyData.images.frontBalls)
+
+	p.setSmolOccupantPart(seatname, "backBreasts", occupant.smolPreyData.images.backBreasts)
+	p.setSmolOccupantPart(seatname, "frontBreasts", occupant.smolPreyData.images.frontBreasts)
 
 	occupant.smolPreyData.update = false
+end
+
+function p.setSmolOccupantPart(seatname, part, path)
+	if path then p.setPartTag(seatname..part, "smolpath", path) else p.setPartTag(seatname..part, "smolpath", "/empty_image.png") end
 end
 
 function p.victimAnimUpdate(eid)

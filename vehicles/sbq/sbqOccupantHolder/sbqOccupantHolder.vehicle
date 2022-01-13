@@ -10,7 +10,7 @@
 	"materialKind" : "organic",
 
 	"directoryPath" : "/vehicles/sbq/sbqOccupantHolder/",
-	"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
+	"animation" : "/vehicles/sbq/sbqOccupantHolder/sbqOccupantHolder.animation",
 
 	"loungePositions" : {
 		"occupant0" : {
@@ -72,6 +72,7 @@
 	},
 
 	"sbqData" : {
+		"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
 		"occupantStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},

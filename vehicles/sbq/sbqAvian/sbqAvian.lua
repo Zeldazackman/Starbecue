@@ -22,18 +22,15 @@ end
 local cumBlob = {
 	barColor = {"A1A1A1", "DCDCDC", "EFEFEF", "FFFFFF"},
 	forceSettings = true,
-	state = "stand",
+	state = "smol",
 	species = "sbqSlime",
 	settings = {
 		bellyEffect = "sbqRemoveBellyEffects",
 		replaceColors = {2},
-		skinNames = {}
+		skinNames = {},
+		directives = "?replace;A1A1A1=A1A1A18c;DCDCDC=DCDCDC8c;EFEFEF=EFEFEF8c;FFFFFF=FFFFFF8c"
 	}
 }
-function p.passiveCumTF()
-	for i = 0, #p.occupant do
-	end
-end
 
 function p.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (p.settings.penisCumTF and location == "shaft" and (p.occupant[i].progressBar <= 0))

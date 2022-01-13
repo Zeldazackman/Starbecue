@@ -136,7 +136,7 @@ require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 function init()
 	p.sbqData = config.getParameter("sbqData")
 	p.directoryPath = config.getParameter("directoryPath")
-	p.cfgAnimationFile = config.getParameter("animation")
+	p.cfgAnimationFile = p.sbqData.animation
 	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
 	p.stateconfig = config.getParameter("states")
 	p.loungePositions = config.getParameter("loungePositions")

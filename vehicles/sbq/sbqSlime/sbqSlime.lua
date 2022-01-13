@@ -4,7 +4,7 @@
 require("/vehicles/sbq/sbq_main.lua")
 
 state = {
-	stand = {}
+	smol = {}
 }
 
 function p.update(dt)
@@ -25,11 +25,11 @@ end
 
 -------------------------------------------------------------------------------
 
-function state.stand.absorbVore( args )
-	return p.doVore(args, "body", {}, "slurp")
+function state.smol.absorbVore( args )
+	return p.doVore(args, "belly", {}, "slurp")
 end
 
-function state.stand.absorbEscape( args )
+function state.smol.absorbEscape( args )
 	local effect = "slimeslow"
 	if p.settings.replaceColors[1] == 2 then
 		effect = "glueslow"
@@ -37,8 +37,8 @@ function state.stand.absorbEscape( args )
 	return p.doEscape(args, {[effect] = { power = 5 + (p.lounging[args.id].progressBar), source = entity.id()}}, {})
 end
 
-function state.stand.checkAbsorbVore()
-	return p.checkEatPosition(p.localToGlobal({0,0}), 3, "body", "absorbVore")
+function state.smol.checkAbsorbVore()
+	return p.checkEatPosition(p.localToGlobal({0,0}), 3, "belly", "absorbVore")
 end
 
 -------------------------------------------------------------------------------

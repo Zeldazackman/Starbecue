@@ -72,6 +72,7 @@
 	},
 
 	"sbqData" : {
+		"startState" : "smol",
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
@@ -154,13 +155,13 @@
 
 
 		"locations" :{
-			"body" : { "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
+			"belly" : { "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},
 		"victimAnimations": "/vehicles/sbq/sbqSlime/victim_animations.config"
 	},
 
 	"states": {
-		"stand": {
+		"smol": {
 			"edible": true,
 			"edibleAnims": {
 				"body": "fall"
@@ -169,7 +170,7 @@
 				// directional = occupant0 can press that direction to transition
 				"absorbVore" : {
 					"script" : "absorbVore",
-					"location" : "body",
+					"location" : "belly",
 					"voreType" : "absorbVore",
 					"failOnFull" : true,
 					"victimAnimation" : "absorbVore",
@@ -179,7 +180,7 @@
 				},
 				"escape" : {
 					"script" : "absorbEscape",
-					"location" : "body",
+					"location" : "belly",
 					"voreType" : "absorbVore",
 					"victimAnimation" : "absorbEscape",
 					"animation" : {
@@ -218,7 +219,7 @@
 				}
 			},
 			"struggle": {
-				"body" : {
+				"belly" : {
 					"parts" : ["body"],
 					"directions" : {
 						"front": { "victimAnimation" : "s_front" },
@@ -233,7 +234,7 @@
 				"body" : {
 					"pos": [0, 0],
 					"transition": "absorbVore", "chance": 100,
-					"location":"body", "failOnFull":true
+					"location":"belly", "failOnFull":true
 				}
 			}
 		}

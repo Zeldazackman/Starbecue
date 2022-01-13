@@ -162,17 +162,17 @@
 		"replaceSkin" : {
 			"hair" : {
 				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
-				"parts" : ["hair", "hair_foreground"],
+				"parts" : ["hair", "hair_foreground", "head1"],
 				"name" : "Plummage"
 			},
 			"fluff" : {
 				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-				"parts" : ["fluff", "fluff_foreground"],
+				"parts" : ["fluff", "fluff_foreground", "head2"],
 				"name" : "Fluff"
 			},
 			"beak" : {
 				"skins" : ["default", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-				"parts" : ["beak", "beak_foreground"],
+				"parts" : ["beak", "beak_foreground", "head3"],
 				"name" : "Beak"
 			},
 			"body" : {
@@ -275,7 +275,8 @@
 				"head": "idle",
 				"cock": "idle",
 				"belly": "idle",
-				"breasts": "idle",
+				"frontBreasts": "idle",
+				"backBreasts": "idle",
 				"frontBalls": "idle",
 				"backBalls": "idle",
 				"offset" : {}
@@ -439,6 +440,20 @@
 			}
 		},
 		"smol": {
+			"edible": true,
+			"edibleAnims": {
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"head1": "smol.idle",
+				"head2": "smol.idle",
+				"head3": "smol.idle",
+				"cock": "smol.idle",
+				"belly": "smol.idle",
+				"breasts": "smol.idle",
+				"balls": "smol.idle"
+			},
 			"transitions": {
 				// directional = driver can press that direction to transition
 				// non directional = not accessible via controls, except from script
@@ -450,7 +465,8 @@
 				"head": "smol.idle",
 				"cock": "smol.idle",
 				"belly": "smol.idle",
-				"breasts": "smol.idle",
+				"frontBreasts": "smol.idle",
+				"backBreasts": "smol.idle",
 				"frontBalls": "smol.idle",
 				"backBalls": "smol.idle",
 				"offset" : {}
