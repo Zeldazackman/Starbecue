@@ -706,7 +706,7 @@ function p.fixSmolPreyPathTags(directory, animatedParts, partname, statename, an
 	if not path or path == "" then return end
 	local partTags = sb.jsonMerge( tags.global, sb.jsonMerge( tags[partname], {
 		directives = settings.directives,
-		skin = settings.skinNames[partname]
+		skin = (settings.skinNames or {})[partname] or "default"
 	}))
 	return directory..sb.replaceTags(path, partTags)
 end

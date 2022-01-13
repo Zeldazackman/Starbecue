@@ -660,6 +660,12 @@
 		"bodybob": {
 			"interpolated": false
 		},
+		"bellybob": {
+			"interpolated": false
+		},
+		"chestbob": {
+			"interpolated": false
+		},
 		"legsbob": {
 			"interpolated": false
 		},
