@@ -19,6 +19,13 @@
 	[
 		{
 			"op": "add",
+			"path": "/scriptConfig",
+			"value": {}
+		}
+	],
+	[
+		{
+			"op": "add",
 			"path": "/scriptConfig/sbqPreyEnabled",
 			"value": {
 				"enabled" : false
