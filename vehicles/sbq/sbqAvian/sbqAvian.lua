@@ -33,6 +33,31 @@ local cumBlob = {
 	}
 }
 
+function p.setItemActionColorReplaceDirectives()
+	local colorReplaceString = p.sbqData.itemActionDirectives or ""
+
+	if p.sbqData.replaceColors ~= nil then
+		local i = 1
+		local basePalette = { "4cc1c9", "39979e", "23646a", "154247" }
+		local replacePalette = p.sbqData.replaceColors[i][((p.settings.replaceColors or {})[i] or (p.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
+		local fullbright = (p.settings.fullbright or {})[i]
+
+		if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] ~= nil then
+			replacePalette = p.settings.replaceColorTable[i]
+		end
+
+		for j, color in ipairs(basePalette) do
+			color = replacePalette[j]
+			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
+				color = color.."fb"
+			end
+			colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
+		end
+	end
+
+	p.itemActionDirectives = colorReplaceString
+end
+
 function p.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (p.settings.penisCumTF and location == "shaft" and (p.occupant[i].progressBar <= 0))
 	or (p.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" ) and (p.occupant[i].progressBar <= 0))

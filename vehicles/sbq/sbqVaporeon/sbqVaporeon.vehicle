@@ -176,7 +176,7 @@
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},
-
+		"itemActionDirectives" : "?replace;f915cf=558ff2;fc97ea=6db5f8;fff7fd=d9f0ff",
 		"replaceColorNames" : [
 			"Main Body",
 			"Dorsal Fins",

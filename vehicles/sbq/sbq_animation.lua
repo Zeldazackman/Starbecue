@@ -655,6 +655,7 @@ function p.setColorReplaceDirectives()
 		p.settings.directives = colorReplaceString
 		p.setPartTag( "global", "directives", colorReplaceString )
 	end
+	p.setItemActionColorReplaceDirectives()
 end
 
 function p.setSkinPartTags()

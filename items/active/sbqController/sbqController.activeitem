@@ -1,7 +1,7 @@
 {
 	"itemName" : "sbqController",
 	"shortdescription" : "Vore Controller",
-	"description" : "Triggers the default actions of a predator. \nUse when not in a vehicle to cycle its action.",
+	"description" : "Triggers the default actions of a predator.",
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",

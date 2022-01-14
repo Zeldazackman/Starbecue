@@ -15,7 +15,7 @@ local voreTypes = { "oralVore", "unbirth" }
 function attemptActivate()
 	local people = world.entityQuery( tech.aimPosition(), 7, {
 		withoutEntityId = entity.id(),
-		includedTypes = { "player" },
+		includedTypes = { status.statusProperty("sbqSSVMTargeting") or "player" },
 		boundMode = "CollisionArea"
 	})
 	if #people == 1 then

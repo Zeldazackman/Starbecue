@@ -44,10 +44,12 @@ function p.updateDriving(dt)
 
 		if p.stateconfig[p.state].defaultActions ~= nil and p.driver ~= nil then
 			p.loopedMessage("primaryItemData", p.driver, "primaryItemData", {{
-				defaultClickAction = p.stateconfig[p.state].defaultActions[1]
+				defaultClickAction = p.stateconfig[p.state].defaultActions[1],
+				directives = p.itemActionDirectives
 			}})
 			p.loopedMessage("altItemData", p.driver, "altItemData", {{
-				defaultClickAction = p.stateconfig[p.state].defaultActions[2]
+				defaultClickAction = p.stateconfig[p.state].defaultActions[2],
+				directives = p.itemActionDirectives
 			}})
 		end
 
@@ -219,11 +221,11 @@ function p.doClickActions(state, dt)
 							p.doTransition(data.selection, { id = victim })
 							return
 						elseif p.seats[p.driverSeat].controls.primaryHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection})
+							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives})
 						elseif p.seats[p.driverSeat].controls.primaryHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives } }
 							})
 						end
 					elseif data.button == 2 and data.pressed and not p.click then
@@ -235,11 +237,11 @@ function p.doClickActions(state, dt)
 							p.doTransition(data.selection, { id = victim })
 							return
 						elseif p.seats[p.driverSeat].controls.altHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection})
+							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives})
 						elseif p.seats[p.driverSeat].controls.altHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives } }
 							})
 						end
 					elseif not data.pressed then
@@ -331,12 +333,12 @@ function p.assignClickActionMenu(state)
 		})
 	table.insert(options, {
 			name = "unassigned",
-			icon = "/items/active/sbqController/unassigned.png"
+			icon = "/items/active/sbqController/unassigned.png"..(p.itemActionDirectives or "")
 		})
 	for action, data in pairs((state.actions or {})) do
 		table.insert(options, {
 			name = action,
-			icon = data.icon or ("/items/active/sbqController/"..action..".png")
+			icon = ((data.icon) or ("/items/active/sbqController/"..action..".png"))..(p.itemActionDirectives or "")
 		})
 	end
 

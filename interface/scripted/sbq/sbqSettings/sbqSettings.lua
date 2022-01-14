@@ -164,6 +164,15 @@ function init()
 
 	if root.itemConfig("vorechipkit") ~= nil then
 		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
+		SSVMTargetCreatures:setChecked(status.statusProperty("sbqSSVMTargeting") == "creature")
+
+		function SSVMTargetCreatures:onClick()
+			if SSVMTargetCreatures.checked then
+				status.setStatusProperty("sbqSSVMTargeting", "creature")
+			else
+				status.setStatusProperty("sbqSSVMTargeting", nil)
+			end
+		end
 	end
 
 	sbq.predator = sbq.sbqCurrentData.species or "noPred"
