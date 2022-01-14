@@ -630,7 +630,7 @@
 					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
-					"failOnFull" : true,
+					"failOnFull" : 1,
 					"animation": {
 						"body": "absorb",
 						"head": "pinlook"
@@ -740,7 +740,7 @@
 					"voreType" : "absorbVore",
 					"lock" : true,
 					"location" :"belly",
-					"failOnFull" : true,
+					"failOnFull" : 1,
 					"animation": {
 						"body": "absorb"
 					},
