@@ -8,13 +8,15 @@ function init()
 	setIconAndDescription()
 
 	message.setHandler( hand.."ItemData", function(_,_, data)
+		storage.directives = data.directives or ""
 		if data.assignClickAction ~= nil then
 			storage.clickAction = data.assignClickAction
-			storage.directives = data.directives or ""
 			storage.icon = data.icon
 			setIconAndDescription()
 		elseif ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
-			activeItem.setInventoryIcon((storage.icon or ("/items/active/sbqController/"..data.defaultClickAction..".png"))..(storage.directives or ""))
+			activeItem.setInventoryIcon((data.defaultIcon or ("/items/active/sbqController/"..data.defaultClickAction..".png"))..(storage.directives or ""))
+		else
+			setIconAndDescription()
 		end
 	end)
 end

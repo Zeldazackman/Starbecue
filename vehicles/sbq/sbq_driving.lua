@@ -45,11 +45,13 @@ function p.updateDriving(dt)
 		if p.stateconfig[p.state].defaultActions ~= nil and p.driver ~= nil then
 			p.loopedMessage("primaryItemData", p.driver, "primaryItemData", {{
 				defaultClickAction = p.stateconfig[p.state].defaultActions[1],
-				directives = p.itemActionDirectives
+				directives = p.itemActionDirectives,
+				defaultIcon = (state.actions[p.stateconfig[p.state].defaultActions[1]] or {}).icon
 			}})
 			p.loopedMessage("altItemData", p.driver, "altItemData", {{
 				defaultClickAction = p.stateconfig[p.state].defaultActions[2],
-				directives = p.itemActionDirectives
+				directives = p.itemActionDirectives,
+				defaultIcon = (state.actions[p.stateconfig[p.state].defaultActions[2]] or {}).icon
 			}})
 		end
 
