@@ -609,7 +609,7 @@
 			"actions" : {
 				"vore":{
 					"cooldown": 1,
-					"script": "tailVore"
+					"script": "vore"
 				},
 				"tailVore":{
 					"cooldown": 1,

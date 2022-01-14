@@ -251,6 +251,7 @@ function tailEscape(args)
 end
 
 function checkVore()
+	if checkAnal() then return true end
 	if checkTail() then return true end
 	if checkOral() then return true end
 end
@@ -331,13 +332,6 @@ function state.stand.sitpin(args)
 	end
 end
 
-function state.stand.vore()
-	if checkOral() then return true end
-	if checkTail() then return true end
-	if checkAnal() then return true end
-end
-
-
 state.stand.bellyToTail = bellyToTail
 state.stand.tailToBelly = tailToBelly
 state.stand.eat = grabOralEat
@@ -348,6 +342,7 @@ state.stand.analVore = analVore
 state.stand.checkOralVore = checkOral
 state.stand.checkTailVore = checkTail
 state.stand.checkAnalVore = checkAnal
+state.stand.vore = checkVore
 
 state.stand.oralEscape = oralEscape
 state.stand.analEscape = analEscape
@@ -396,9 +391,9 @@ state.sit.tailVore = tailVore
 state.sit.analVore = sitAnalEat
 
 state.sit.vore = sitCheckVore
-state.sit.oralVore = checkOral
-state.sit.tailVore = checkTail
-state.sit.analVore = sitCheckAnal
+state.sit.checkOralVore = checkOral
+state.sit.checkTailVore = checkTail
+state.sit.checkAnalVore = sitCheckAnal
 
 state.sit.oralEscape = oralEscape
 state.sit.tailEscape = tailEscape
@@ -439,9 +434,9 @@ state.hug.tailVore = tailVore
 state.hug.analVore = sitAnalEat
 
 state.hug.vore = sitCheckVore
-state.hug.oralVore = checkOral
-state.hug.tailVore = checkTail
-state.hug.analVore = sitCheckAnal
+state.hug.checkOralVore = checkOral
+state.hug.checkTailVore = checkTail
+state.hug.checkAnalVore = sitCheckAnal
 
 state.hug.oralEscape = oralEscape
 state.hug.tailEscape = tailEscape
@@ -475,7 +470,7 @@ state.crouch.tailToBelly = tailToBelly
 
 state.crouch.succEat = oralEat
 state.crouch.tailVore = tailVore
-state.crouch.tailVore = checkTail
+state.crouch.checkTailVore = checkTail
 state.crouch.vore = checkTail
 
 state.crouch.tailEscape = tailEscape
@@ -512,8 +507,8 @@ state.fly.succEat = oralEat
 state.fly.tailVore = tailVore
 state.fly.analVore = analVore
 
-state.fly.tailVore = checkTail
-state.fly.analVore = checkAnal
+state.fly.checkTailVore = checkTail
+state.fly.checkAnalVore = checkAnal
 
 state.fly.oralEscape = oralEscape
 state.fly.analEscape = analEscape

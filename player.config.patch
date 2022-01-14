@@ -14,14 +14,14 @@
 			"op": "add",
 			"path": "/deploymentConfig/scripts/-",
 			"value": "/scripts/SBQ_player_deployment.lua"
-		}
-	],
-	[
+		},
 		{
 			"op": "add",
 			"path": "/companionsConfig/scripts/-",
 			"value": "/scripts/speciesAnimOverride_player_companion.lua"
-		},
+		}
+	],
+	[
 		{ "op": "add", "path": "/defaultBlueprints/tier1/-", "value": { "item": "sbqController" } }
 	],
 	[
