@@ -31,6 +31,7 @@ function getColors()
 	if not p.settings.firstLoadDone then
 
 		p.settings.replaceColors[1] = math.random( #p.sbqData.replaceColors[1] - 2 )
+		p.settings.firstLoadDone = true
 
 		p.setColorReplaceDirectives()
 		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqSlime")
