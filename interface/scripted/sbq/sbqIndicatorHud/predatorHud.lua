@@ -15,6 +15,14 @@ end
 local canvas = widget.bindCanvas(frame.backingWidget .. ".canvas")
 canvas:clear()
 
+function init()
+	local sbqData = player.getProperty("sbqSettings")
+	if sbqData.global == nil then
+		sbqData.global = {}
+		player.setProperty("sbqSettings", sbqData)
+	end
+end
+
 function sbq.listSlots()
 	occupantSlots:clearChildren()
 	local y = 216

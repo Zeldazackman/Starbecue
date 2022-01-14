@@ -35,7 +35,6 @@ function getColors()
 		p.setColorReplaceDirectives()
 		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqSlime")
 	end
-	sb.logInfo(p.settings.directives)
 end
 
 -------------------------------------------------------------------------------
