@@ -33,7 +33,7 @@ function getColors()
 		p.settings.replaceColors[1] = math.random( #p.sbqData.replaceColors[1] - 2 )
 
 		p.setColorReplaceDirectives()
-		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqVaporeon")
+		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqSlime")
 	end
 	sb.logInfo(p.settings.directives)
 end
