@@ -138,7 +138,7 @@
 						"Hey there.",
 						"Mrow."
 					],
-					"buttonText" : "Hi.",
+					"randomButtonText" : "Hi.",
 					"jump" : ["converse"]
 				},
 				"fearful" : {
@@ -183,14 +183,25 @@
 
 			"converse" : {
 				"randomDialogue" : ["So what did you want to talk about?"],
+				"randomButtonText" : "[options]",
 				"options" : [
 					["Can we talk about you?", {
+						"randomButtonText" : ["[options]"],
 						"randomDialogue" : [ "What about me?" ],
 						"options" : [
-							[ "Who are you?", { "randomDialogue" : [ "Zevi, A Magic Goocat, like Levi but with a Z." ], "buttonText" : "Okay.", "jump" : [ "converse", "options", 1, 2 ] }],
+							[ "Who are you?", { "randomDialogue" : [ "Zevi, A Magic Goocat, like Levi but with a Z." ], "randomButtonText" : "Okay.", "jump" : [ "converse", "options", 1, 2 ] }],
 							[ "Tell me more about the vore NPC stuff", {
 								"dismissTime" : -1,
-								"buttonText" : ["Okay."],
+								"buttonText" : [
+									"Okay.",
+									"Got it.",
+									"Cool.",
+									"Thats nice.",
+									"Oh.",
+									"Makes sense.",
+									"Mhm.",
+									"Finally."
+								],
 								"dialogue" : [
 									"So, currently unfinished, I'm the only NPC with it and no tenants can be summoned yet. When its done vore NPCs will have dialogue trees like this to talk about stuff.",
 									"Talking could impact what types of vore they're in the mood to do. This could mean a pred seeking out prey, player or NPC, when they're hungry, or a prey seeking out a pred, etc.",
@@ -206,8 +217,8 @@
 							[ "Thats all I wanted to know about you.", { "jump" : [ "converse" ] }]
 						]
 					}],
-					[ "Whats this whole dialogue box thingy?", { "randomDialogue" : [ "This is for the vore NPC system, its not finished yet, so I'm a bit of a demo" ], "jump" : [ "converse" ] }],
-					[ "What is this place?", { "randomDialogue" : [ "A shop for vore stuff, you downloaded a vore mod after all."], "jump" : [ "converse" ]}]
+					[ "Whats this whole dialogue box thingy?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "This is for the vore NPC system, its not finished yet, so I'm a bit of a demo" ], "jump" : [ "converse" ] }],
+					[ "What is this place?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "A shop for vore stuff, you downloaded a vore mod after all."], "jump" : [ "converse" ]}]
 				]
 			},
 
