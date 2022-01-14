@@ -128,7 +128,6 @@ require("/vehicles/sbq/sbq_occupant_handling.lua")
 
 function init()
 	p.sbqData = config.getParameter("sbqData")
-	p.directoryPath = config.getParameter("directoryPath")
 	p.cfgAnimationFile = config.getParameter("animation")
 	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
 	p.stateconfig = config.getParameter("states")
@@ -483,7 +482,7 @@ function p.setMovementParams(name)
 end
 
 function p.checkSpawnerExists()
-	if p.spawner and world.entityExists(p.spawner) then
+	if p.spawner ~= nil and world.entityExists(p.spawner) then
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "sbqPreyWarpRequest", {},
 		function(data)
@@ -502,7 +501,7 @@ end
 
 
 function p.onDeath(eaten)
-	if p.spawner then
+	if p.spawner ~= nil then
 		world.sendEntityMessage(p.spawner, "sbqPredatorDespawned", p.settings)
 	end
 

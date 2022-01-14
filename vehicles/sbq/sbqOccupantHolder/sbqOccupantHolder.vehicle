@@ -86,7 +86,6 @@
 		},
 
 		"locations" :{
-			"belly" : { "max": 1, "digest" : true }
 		},
 		"victimAnimations": "/vehicles/sbq/sbqOccupantHolder/victim_animations.config"
 	},
@@ -95,25 +94,8 @@
 		"stand": {
 			"edible" : true,
 			"transitions": {
-				// directional = occupant0 can press that direction to transition
-				"oralEscape" : {
-					"script" : "escape"
-				},
-				"analEscape" : {
-					"script" : "escape"
-				}
 			},
 			"struggle": {
-				"belly" : {
-					"parts" : ["belly"],
-					"directions" : {
-						"up": { "transition": "oralEscape", "indicate" : "red" },
-						"down": { "transition": "analEscape", "indicate" : "red" },
-						"front": {},
-						"back": {}
-					},
-					"chances": { "min": 5, "max": 7 }
-				}
 			}
 		}
 	}

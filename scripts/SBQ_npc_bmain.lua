@@ -4,7 +4,8 @@ sbq = {}
 function init()
 	oldinit()
 
-	message.setHandler("sbqGetSeatEquips", function(_,_, type)
+	message.setHandler("sbqGetSeatEquips", function(_,_, current)
+		status.setStatusProperty( "sbqCurrentData", current)
 		return {
 			head = npc.getItemSlot("head"),
 			chest = npc.getItemSlot("chest"),

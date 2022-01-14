@@ -133,12 +133,19 @@ require("/vehicles/sbq/sbq_animation.lua")
 
 require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 
+local inited
+
 function init()
-	p.sbqData = config.getParameter("sbqData")
-	p.directoryPath = config.getParameter("directoryPath")
+	p.spawner = config.getParameter("spawner") or config.getParameter("driver")
+	p.driver = p.spawner
+	p.includeDriver = true
+end
+
+function initAfterInit(data)
+	p.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
 	p.cfgAnimationFile = p.sbqData.animation
 	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
-	p.stateconfig = config.getParameter("states")
+	p.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
 	p.loungePositions = config.getParameter("loungePositions")
 	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
 	p.config = root.assetJson( "/sbqGeneral.config")
@@ -154,10 +161,6 @@ function init()
 	}
 
 	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
-
-	p.spawner = config.getParameter("spawner") or config.getParameter("driver")
-	p.driver = p.spawner
-	p.includeDriver = true
 
 	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
 
@@ -208,12 +211,25 @@ function init()
 end
 
 p.totalTimeAlive = 0
+local sentDataMessage
 function update(dt)
+	if not sentDataMessage then
+		sentDataMessage = true
+		p.addRPC(world.sendEntityMessage(p.spawner, "giveSbqData"), function (data)
+			initAfterInit(data)
+			inited = true
+		end, function ()
+			sentDataMessage = false
+		end)
+	end
+
 	p.checkSpawnerExists()
 	p.totalTimeAlive = p.totalTimeAlive + dt
 	p.dt = dt
 	p.checkRPCsFinished(dt)
 	p.checkTimers(dt)
+
+	if not inited then return end
 
 	p.getAnimData()
 	p.updateAnims(dt)
@@ -234,7 +250,18 @@ end
 function p.checkSpawnerExists()
 	if p.spawner and world.entityExists(p.spawner) then
 		mcontroller.setPosition(world.entityPosition(p.spawner))
-		p.loopedMessage("occupantHolderExists", p.spawner, "sbqOccupantHolderExists", {entity.id(), {occupant = p.occupant, occupants = p.occupants}})
+
+		p.loopedMessage( "occupantHolderExists", p.spawner, "sbqOccupantHolderExists", {
+			entity.id(),
+			{occupant = p.occupant, occupants = p.occupants},
+			{
+				species = world.entityName(entity.id()),
+				type = "driver"
+			}
+		},
+		function (seatdata)
+			p.spawnerEquips = seatdata
+		end)
 
 	elseif (p.spawnerUUID ~= nil) then
 		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "sbqPreyWarpRequest", {},
@@ -253,8 +280,8 @@ function p.checkSpawnerExists()
 end
 
 function p.onDeath(eaten)
-	if p.spawner then
-		world.sendEntityMessage(p.spawner, "sbqOccupantHolderDespawned", p.settings)
+	if p.spawner ~= nil then
+		world.sendEntityMessage(p.spawner, "sbqPredatorDespawned", p.settings)
 	end
 
 	if not eaten then

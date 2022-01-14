@@ -1,11 +1,12 @@
 local oldinit = init
 local oldupdate = update
 local olduninit = uninit
-local occupantHolder
-local inited
-local dialogueBoxOpen = 0
-local talkingWithPrey
-local timeUntilNewHolder = 0
+
+sbq = {
+	currentData = {},
+	timeUntilNewHolder = 0,
+	dialogueBoxOpen = 0
+}
 
 function init()
 	oldinit()
@@ -19,54 +20,76 @@ function init()
 		if location ~= nil then
 			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
-		talkingWithPrey = (isPrey == "prey")
-		if not talkingWithPrey and id ~= nil then
+		sbq.talkingWithPrey = (isPrey == "prey")
+		if not sbq.talkingWithPrey and id ~= nil then
 			local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
 			---@diagnostic disable-next-line: undefined-global
 			setInteracted(args)
 		end
-		dialogueBoxOpen = 0.5
-		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
+		sbq.dialogueBoxOpen = 0.5
+		return { settings = storage.sbqSettings, occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		npc.say(string, tags)
 	end)
-	message.setHandler( "sbqNewOccupantHolder", function (_,_, newOccupantHolder)
-		occupantHolder = newOccupantHolder
-	end)
-	message.setHandler( "sbqOccupantHolderExists", function (_,_, occupantHolderId, occupancyData )
-		occupantHolder = occupantHolderId
-		timeUntilNewHolder = 5
+	message.setHandler( "sbqOccupantHolderExists", function (_,_, occupantHolderId, occupancyData, current )
+
+		sbq.occupantHolder = occupantHolderId
+		sbq.timeUntilNewHolder = 5
 
 		sbq.occupant = occupancyData.occupant
 		sbq.occupants = occupancyData.occupants
 
+		status.setStatusProperty( "sbqCurrentData", current)
+
+		return {
+			head = npc.getItemSlot("head"),
+			chest = npc.getItemSlot("chest"),
+			legs = npc.getItemSlot("legs"),
+			back = npc.getItemSlot("back"),
+			headCosmetic = npc.getItemSlot("headCosmetic"),
+			chestCosmetic = npc.getItemSlot("chestCosmetic"),
+			legsCosmetic = npc.getItemSlot("legsCosmetic"),
+			backCosmetic = npc.getItemSlot("backCosmetic"),
+		}
+	end)
+	message.setHandler( "sbqPredatorDespawned", function (_,_)
+		sbq.occupantHolder = nil
+		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 	message.setHandler("sbqSetInteracted", function (_,_, id)
 		local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
 		---@diagnostic disable-next-line: undefined-global
 		setInteracted(args)
 	end)
-
+	message.setHandler("giveSbqData", function (_,_)
+		return { sbqData = config.getParameter("sbqData"), states = config.getParameter("states") }
+	end)
 end
 
 function update(dt)
-	oldupdate(dt)
-
-	if (not occupantHolder) or (timeUntilNewHolder <= 0) then
-		occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = entity.id(), sbqData = config.getParameter("sbqData"), states = config.getParameter("states") } )
-	end
-
-	if npc.loungingIn() == nil then
-		timeUntilNewHolder = math.max(0, timeUntilNewHolder - dt)
-	end
-
+	sbq.currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.checkRPCsFinished(dt)
-	world.sendEntityMessage(occupantHolder, "faceDirection", mcontroller.facingDirection())
-	dialogueBoxOpen = math.max(0, dialogueBoxOpen - dt)
+
+	if (not sbq.occupantHolder) and (sbq.timeUntilNewHolder <= 0) then
+		sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = entity.id(), settings = storage.settings } )
+	end
+
+	if sbq.currentData.type == nil then
+		sbq.timeUntilNewHolder = math.max(0, sbq.timeUntilNewHolder - dt)
+	end
+
+	if sbq.occupantHolder ~= nil then
+		world.sendEntityMessage(sbq.occupantHolder, "faceDirection", mcontroller.facingDirection())
+
+	end
+
+	sbq.dialogueBoxOpen = math.max(0, sbq.dialogueBoxOpen - dt)
+
+	oldupdate(dt)
 end
 
 function uninit()
@@ -113,12 +136,13 @@ function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
 end
 
 function handleInteract(args)
-	if dialogueBoxOpen == 0 then
+	if sbq.dialogueBoxOpen == 0 then
 		world.sendEntityMessage( args.sourceId, "sbqOpenMetagui", "starbecue:dialogueBox", entity.id() )
 	end
 end
 
 function sbq.getOccupantArg(id, arg)
+	if sbq.occupant == nil then return end
 	for i, occupant in pairs(sbq.occupant) do
 		if occupant.id == id then
 			return occupant[arg]
@@ -134,9 +158,9 @@ function sbq.oralVore(args)
 end
 
 function sbq.requestEat(prey, voreType, location)
-	world.sendEntityMessage(occupantHolder, "requestEat", prey, voreType, location )
+	world.sendEntityMessage(sbq.occupantHolder, "requestEat", prey, voreType, location )
 end
 
 function sbq.requestUneat(prey, voreType)
-	world.sendEntityMessage(occupantHolder, "requestUneat", prey, voreType )
+	world.sendEntityMessage(sbq.occupantHolder, "requestUneat", prey, voreType )
 end

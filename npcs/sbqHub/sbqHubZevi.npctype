@@ -109,10 +109,10 @@
 					"belly" : {
 						"parts" : ["belly"],
 						"directions" : {
-							"up": { "transition": "oralEscape", "indicate" : "red" },
-							"down": { "transition": "analEscape", "indicate" : "red" },
-							"front": {},
-							"back": {}
+							"front": { "transition": "oralEscape", "indicate" : "red" },
+							"back": { "transition": "analEscape", "indicate" : "red" },
+							"up": {},
+							"down": {}
 						},
 						"chances": { "min": 5, "max": 7 }
 					},
