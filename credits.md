@@ -10,6 +10,7 @@
 	xeronious
 	Charem
 	Lakota Amitola
+	BRZYN-Z18
 
 # Playtesters / Bug Hunters
 	xeronious
