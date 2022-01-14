@@ -5,10 +5,18 @@ function build(directory, config, parameters, level, seed)
 		if not config.descriptions[parameters.scriptStorage.clickAction] then
 			parameters.scriptStorage.clickAction = "unassigned"
 		end
+		local shortdescription = (config.descriptions[parameters.scriptStorage.clickAction] or {}).shortdescription
+		local description = (config.descriptions[parameters.scriptStorage.clickAction] or {}).description
+		if not shortdescription then
+			shortdescription = parameters.scriptStorage.clickAction.." Controller"
+		end
+		if not description then
+			description = "Triggers the "..parameters.scriptStorage.clickAction.." action of a predator."
+		end
 
-		config.shortdescription = config.descriptions[parameters.scriptStorage.clickAction].shortdescription
-		config.description = config.descriptions[parameters.scriptStorage.clickAction].description..config.appendedDescription
-		config.inventoryIcon = "/items/active/sbqController/"..(parameters.scriptStorage.clickAction or "unassigned")..".png"
+		config.shortdescription = shortdescription
+		config.description = description..config.appendedDescription
+		config.inventoryIcon = (parameters.scriptStorage.icon or ("/items/active/sbqController/"..(parameters.scriptStorage.clickAction or "unassigned")..".png"))..(parameters.scriptStorage.directives or "")
 	end
 
 	return config, parameters

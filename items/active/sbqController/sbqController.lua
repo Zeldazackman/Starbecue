@@ -30,15 +30,6 @@ function update(dt, fireMode, shiftHeld, controls)
 	end
 end
 
-function getNextAction()
-	local actions = config.getParameter("actions")
-	for i, action in ipairs(actions) do
-		if storage.clickAction == action then
-			storage.clickAction = actions[i+1] or "unassigned"
-			return
-		end
-	end
-end
 
 function setIconAndDescription()
 	activeItem.setInventoryIcon((storage.icon or ("/items/active/sbqController/"..storage.clickAction..".png"))..(storage.directives or ""))

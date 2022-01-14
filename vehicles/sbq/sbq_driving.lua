@@ -221,11 +221,11 @@ function p.doClickActions(state, dt)
 							p.doTransition(data.selection, { id = victim })
 							return
 						elseif p.seats[p.driverSeat].controls.primaryHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives})
+							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon })
 						elseif p.seats[p.driverSeat].controls.primaryHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
 							})
 						end
 					elseif data.button == 2 and data.pressed and not p.click then
@@ -237,11 +237,11 @@ function p.doClickActions(state, dt)
 							p.doTransition(data.selection, { id = victim })
 							return
 						elseif p.seats[p.driverSeat].controls.altHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives})
+							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon})
 						elseif p.seats[p.driverSeat].controls.altHandItem == nil then
 							world.sendEntityMessage(p.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
 							})
 						end
 					elseif not data.pressed then
