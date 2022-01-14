@@ -767,50 +767,6 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.getOccupantFromEid(eid)
-	if p.lounging[eid] ~= nil then
-		return p.lounging[eid].index
-	end
-end
-
-function p.getSeatnameFromEid(eid)
-	if p.lounging[eid] ~= nil then
-		return p.lounging[eid].seatname
-	end
-end
-
-function p.getLocationFromEid(eid)
-	if p.lounging[eid] ~= nil then
-		return p.lounging[eid].location
-	end
-end
-
-function p.getIndexFromEid(eid)
-	if p.lounging[eid] ~= nil then
-		return p.lounging[eid].index
-	end
-end
-
-function p.getIndexFromSeatname(seatname)
-	if p.seats[seatname] ~= nil then
-		return p.seats[seatname].index
-	end
-end
-
-function p.getLocationFromSeatname(seatname)
-	if p.seats[seatname] ~= nil then
-		return p.seats[seatname].location
-	end
-end
-
-function p.getEidFromIndex(index)
-	if p.occupant[index] ~= nil then
-		return p.occupant[index].id
-	end
-end
-
--------------------------------------------------------------------------------
-
 function p.notMoving()
 	return (math.abs(mcontroller.xVelocity()) < 0.1) and mcontroller.onGround()
 end

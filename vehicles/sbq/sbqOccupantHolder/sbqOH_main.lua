@@ -50,7 +50,7 @@ function p.clearOccupant(i)
 		index = i,
 		id = nil,
 		statList = p.sbqData.occupantStatusEffects or {},
-		visible = false,
+		visible = true,
 		emote = "idle",
 		dance = "idle",
 		location = nil,
@@ -165,6 +165,9 @@ function initAfterInit(data)
 	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
 
 	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts) do
+		p.partTags[part] = {}
+	end
+	for part, _ in pairs(root.assetJson( "/vehicles/sbq/sbqOccupantHolder/sbqOccupantHolder.animation" ).animatedParts.parts) do
 		p.partTags[part] = {}
 	end
 
@@ -380,6 +383,19 @@ function p.checkTimers(dt)
 			end
 		end
 	end
+end
+
+function p.localToGlobal( position )
+	local lpos = { position[1], position[2] }
+	if p.direction == -1 then lpos[1] = -lpos[1] end
+	local mpos = mcontroller.position()
+	local gpos = { mpos[1] + lpos[1], mpos[2] + lpos[2] }
+	return world.xwrap( gpos )
+end
+function p.globalToLocal( position )
+	local pos = world.distance( position, mcontroller.position() )
+	if p.direction == -1 then pos[1] = -pos[1] end
+	return pos
 end
 
 function p.occupantArray( maybearray )

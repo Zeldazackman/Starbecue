@@ -1,6 +1,7 @@
 
 function p.setPartTag(part, tag, value)
 	p.partTags[part][tag] = value
+	animator.setPartTag(part, tag, value)
 end
 
 function p.getAnimData()
