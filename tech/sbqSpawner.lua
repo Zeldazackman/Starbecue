@@ -4,13 +4,12 @@ local rpcCallback
 local radialMenuOpen = false
 local settings
 local inited = false
-local reload = false
 local radialSelectionData = {}
-local spawnCooldown = 0
+local spawnCooldown = 1
 local spawnedVehicle = nil
 
 function init()
-	message.setHandler( "sbqRefreshSettings", function(_, _, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
+	message.setHandler( "sbqRefreshSettings", function(_,_, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
 		settings = newSettings
 	end)
 end
@@ -90,7 +89,7 @@ function openRadialMenu()
 		for pred, data in pairs(settings.types) do
 			if data.enable then
 				local skin = (settings[pred].skinNames or {}).head or "default"
-				local directives = settings[pred].directives or ""
+				local directives = setColorReplaceDirectives(root.assetJson("/vehicles/sbq/"..pred.."/"..pred..".vehicle").sbqData, settings[pred] or {})
 				if #options <= 10 then
 					if data.index ~= nil and data.index+1 <= #options then
 						table.insert(options, data.index+1, {
@@ -115,4 +114,30 @@ function openSettingsMenu()
 end
 function closeMenu()
 	world.sendEntityMessage( entity.id(), "sbqOpenInterface", "sbqClose" )
+end
+
+function setColorReplaceDirectives(predatorConfig, predatorSettings)
+	if predatorConfig.replaceColors ~= nil then
+		local colorReplaceString = ""
+		for i, colorGroup in ipairs(predatorConfig.replaceColors) do
+			local basePalette = colorGroup[1]
+			local replacePalette = colorGroup[((predatorSettings.replaceColors or {})[i] or (predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
+			local fullbright = (predatorSettings.fullbright or {})[i]
+
+			if predatorSettings.replaceColorTable ~= nil and predatorSettings.replaceColorTable[i] ~= nil then
+				replacePalette = predatorSettings.replaceColorTable[i]
+				if type(replacePalette) == "string" then
+					return replacePalette
+				end
+			end
+
+			for j, color in ipairs(replacePalette) do
+				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
+					color = color.."fb"
+				end
+				colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
+			end
+		end
+		return colorReplaceString
+	end
 end

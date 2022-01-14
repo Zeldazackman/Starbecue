@@ -7,6 +7,10 @@ state = {
 	smol = {}
 }
 
+function p.init()
+	getColors()
+end
+
 function p.update(dt)
 	--[[
 	if p.movement.airtime > 0.25 then
@@ -21,6 +25,17 @@ function p.update(dt)
 		p.movement.touchedGround = true
 	end
 	]]
+end
+
+function getColors()
+	if not p.settings.firstLoadDone then
+
+		p.settings.replaceColors[1] = math.random( #p.sbqData.replaceColors[1] - 2 )
+
+		p.setColorReplaceDirectives()
+		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqVaporeon")
+	end
+	sb.logInfo(p.settings.directives)
 end
 
 -------------------------------------------------------------------------------

@@ -18,22 +18,23 @@
 # Patrons
 ## Thank you all for your support!
 	xeronious
-	Senjor Habash
-	Dragonuna
 	BRZYN-Z18
+	Dragonuna
 	Joseph
 	Nick
+	Senjor Habash
 	Robotic Boyo
-	Michael Calabresee
+	Lunadefends
 	xyoshi
-	The_Gamer_Eagle
+	amber310
 	Avar
 	Canary
-	stevie
+	The_Gamer_Eagle
+	GoldFeather93
 	Lakota Amitola
-	Ethan Hennen
+	stevie
 	pelle
-	amber310
+	Ethan Hennen
+	Sanoka
 	Gooey Goomy
-	Ivan Ivanovich
 	Estrane Proctor

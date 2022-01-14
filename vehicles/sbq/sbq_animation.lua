@@ -633,8 +633,8 @@ function p.setColorReplaceDirectives()
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(p.sbqData.replaceColors) do
 			local basePalette = colorGroup[1]
-			local replacePalette = colorGroup[(p.settings.replaceColors[i] or (p.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-			local fullbright = p.settings.fullbright[i]
+			local replacePalette = colorGroup[((p.settings.replaceColors or {})[i] or (p.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
+			local fullbright = (p.settings.fullbright or {})[i]
 
 			if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] ~= nil then
 				replacePalette = p.settings.replaceColorTable[i]

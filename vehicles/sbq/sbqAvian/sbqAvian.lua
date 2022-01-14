@@ -25,10 +25,11 @@ local cumBlob = {
 	state = "smol",
 	species = "sbqSlime",
 	settings = {
+		firstLoadDone = true,
 		bellyEffect = "sbqRemoveBellyEffects",
-		replaceColors = {2},
+		replaceColors = {8},
 		skinNames = {},
-		directives = "?replace;A1A1A1=A1A1A18c;DCDCDC=DCDCDC8c;EFEFEF=EFEFEF8c;FFFFFF=FFFFFF8c"
+		directives = "?replace;A1A1A1=A1A1A1Bc;DCDCDC=DCDCDCBc;EFEFEF=EFEFEFBc;FFFFFF=FFFFFFBc"
 	}
 }
 

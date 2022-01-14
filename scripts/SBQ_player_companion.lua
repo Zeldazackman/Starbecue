@@ -47,9 +47,7 @@ function init()
 		if menuName then return sb.jsonMerge(settings[menuName] or {}, settings.global or {}) end
 		return settings
 	end)
-	message.setHandler( "sbqPlayerSaveSettings", function(_,_, settings )
-		player.setProperty( "sbqSettings", settings )
-	end)
+
 	message.setHandler( "sbqSaveSettings", function(_,_, settings, menuName )
 		local sbqSettings = player.getProperty( "sbqSettings" ) or {}
 		sbqSettings[menuName] = settings

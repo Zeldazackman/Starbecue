@@ -261,8 +261,8 @@ function sbq.setColorReplaceDirectives()
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(sbq.predatorConfig.replaceColors) do
 			local basePalette = colorGroup[1]
-			local replacePalette = colorGroup[(sbq.predatorSettings.replaceColors[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
-			local fullbright = sbq.predatorSettings.fullbright[i]
+			local replacePalette = colorGroup[((sbq.predatorSettings.replaceColors or {})[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
+			local fullbright = (sbq.predatorSettings.fullbright or {})[i]
 
 			if sbq.predatorSettings.replaceColorTable ~= nil and sbq.predatorSettings.replaceColorTable[i] ~= nil then
 				replacePalette = sbq.predatorSettings.replaceColorTable[i]
