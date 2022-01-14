@@ -220,7 +220,8 @@
 					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 				},
 				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
 			},
 			"cockVore" : {
 				"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
@@ -230,7 +231,8 @@
 					"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZSmug.png"}
 				},
 				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "portrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
+				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "portrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "portrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
 			},
 
 			//talking while prey

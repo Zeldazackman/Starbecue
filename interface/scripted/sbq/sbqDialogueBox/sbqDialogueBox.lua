@@ -307,10 +307,14 @@ function sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = ((sbq.data.settings or {}).voreTypes or {})[voreType]
 	if voreTypeData == nil then return "hidden" end
 
+	local currentData = player.getProperty( "sbqCurrentData") or {}
+
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] and ( (player.getProperty( "sbqCurrentData") or {}).type ~= "prey" ) then
+	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if voreTypeData.feelingIt then
-			if (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
+			if currentData.type == "driver" and ((not currentData.edible) or ( (sbq.occupants[voreTypeData.location] + 1 + currentData.totalOccupants) > sbq.data.sbqData.locations[voreTypeData.location].max)) then
+				return "tooBig"
+			elseif (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
 				return "full"
 			else
 				return "yes"

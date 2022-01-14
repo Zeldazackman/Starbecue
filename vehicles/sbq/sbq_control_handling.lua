@@ -92,7 +92,9 @@ function p.updateControls(dt)
 				data = {
 					species = world.entityName(entity.id()),
 					layer = p.occupant[i].smolPreyData,
-					state = p.state
+					state = p.state,
+					edible = p.stateconfig[p.state].edible,
+					totalOccupants = p.occupants.total
 				}
 			else
 				type = "prey"
