@@ -69,7 +69,7 @@ function p.armRotationUpdate()
 end
 
 function p.rotateArm(enabled, arm, LR)
-	if enabled then
+	if enabled and (p.stateconfig[p.state].rotationCenters or {})[arm] ~= nil then
 		animator.setAnimationState(arm.."_rotationState", p.stateconfig[p.state].rotationArmState or "rotation", true )
 
 
