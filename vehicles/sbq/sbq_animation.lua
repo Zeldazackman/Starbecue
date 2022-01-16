@@ -669,13 +669,8 @@ end
 
 function p.partsAreStruggling(parts)
 	for _, part in ipairs(parts) do
-		if not p.hasAnimEnded( part.."State" )
-		and (
-			p.animationIs( part.."State", "s_up" ) or
-			p.animationIs( part.."State", "s_front" ) or
-			p.animationIs( part.."State", "s_back" ) or
-			p.animationIs( part.."State", "s_down" )
-		)
+		if (not p.hasAnimEnded( part.."State" ))
+		and (not p.animationIs( part.."State", p.stateconfig[p.state].idle[part] ))
 		then return true end
 	end
 end
