@@ -225,10 +225,8 @@ function sbq.setBellyEffect()
 end
 
 function sbq.changeEscapeModifier(inc)
-	sbq.globalSettings.escapeDifficulty = (sbq.globalSettings.escapeDifficulty or 0) + inc
+	sbq.changeGlobalSetting("escapeDifficulty", (sbq.globalSettings.escapeDifficulty or 0) + inc)
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-
-	sbq.saveSettings()
 end
 
 function sbq.changePreySetting(settingname, settingvalue)

@@ -49,7 +49,7 @@ function p.clearOccupant(i)
 		species = nil,
 		smolPreyData = {},
 		nestedPreyData = {},
-		struggleCount = 0,
+		struggleTime = 0,
 		bellySettleDownTimer = 0,
 		occupantTime = 0,
 		progressBar = 0,
