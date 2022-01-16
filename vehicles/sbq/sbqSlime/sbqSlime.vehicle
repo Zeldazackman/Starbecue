@@ -142,6 +142,12 @@
 			"replaceColors" : [5],
 			"directives" : "?replace;A1A1A1=2D5396Bc;DCDCDC=4188FABc;EFEFEF=4C9FFFBc;FFFFFF=7DBCFFBc"
 		},
+		"allowedModifiers": {
+			"escapeDifficulty": {"min": -100, "max": 100},
+			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyMultiplier": {"min": 0, "max": 100},
+			"displayDigest": "bool"
+		},
 		"replaceColorNames" : [
 			"Goo"
 		],

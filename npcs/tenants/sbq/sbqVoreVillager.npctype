@@ -53,8 +53,8 @@
 				}
 			},*/
 			"allowedModifiers" : {
-				"fatten": {"min": 0, "max": 2},
-				"escapeDifficulty": {"min": -1, "max": 1},
+				"fatten": {"min": 0, "max": 1},
+				"escapeDifficulty": {"min": -100, "max": 100},
 				"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
 				"bellyMultiplier": {"min": 0, "max": 100},
 				"displayDigest": "bool"
