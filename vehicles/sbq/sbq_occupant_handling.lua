@@ -504,36 +504,38 @@ function p.handleStruggles(dt)
 			movedir = nil
 		end
 		if p.occupant[struggler].bellySettleDownTimer <= 0 then
-			p.occupant[struggler].struggleCount = math.max( 0, p.occupant[struggler].struggleCount - 1)
-			p.occupant[struggler].bellySettleDownTimer = 4
-		end
-
-		if movedir then
-			local struggling
-			struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
-			if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
-				movedir = nil
-			else
-				if struggledata.parts ~= nil then
-					struggling = p.partsAreStruggling(struggledata.parts)
-				end
-				if (not struggling) and (struggledata.sided ~= nil) then
-					local parts = struggledata.sided.rightParts
-					if p.direction == -1 then
-						parts = struggledata.sided.leftParts
-					end
-					struggling = p.partsAreStruggling(parts)
-				end
-			end
-			if struggling then
-				movedir = nil
-			elseif config.getParameter("name") ~= "sbqEgg" then
-				if p.occupant[struggler].species ~= nil and p.config.speciesStrugglesDisabled[p.occupant[struggler].species] then
+			if movedir then
+				local struggling
+				struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
+				if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
 					movedir = nil
+				else
+					if struggledata.parts ~= nil then
+						struggling = p.partsAreStruggling(struggledata.parts)
+					end
+					if (not struggling) and (struggledata.sided ~= nil) then
+						local parts = struggledata.sided.rightParts
+						if p.direction == -1 then
+							parts = struggledata.sided.leftParts
+						end
+						struggling = p.partsAreStruggling(parts)
+					end
 				end
+				if struggling then
+					movedir = nil
+				elseif config.getParameter("name") ~= "sbqEgg" then
+					if p.occupant[struggler].species ~= nil and p.config.speciesStrugglesDisabled[p.occupant[struggler].species] then
+						movedir = nil
+					end
+				end
+			else
+				p.occupant[struggler].struggleTime = math.max( 0, p.occupant[struggler].struggleTime - dt)
 			end
+		else
+			movedir = nil
 		end
 	end
+
 	if movedir == nil then return end -- invalid struggle
 
 	local strugglerId = p.occupant[struggler].id
@@ -548,30 +550,35 @@ function p.handleStruggles(dt)
 	end
 
 	if p.struggleChance(struggledata, struggler, movedir) then
-		p.occupant[struggler].struggleCount = 0
+		p.occupant[struggler].struggleTime = 0
 		p.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId} )
 	else
-		p.occupant[struggler].struggleCount = p.occupant[struggler].struggleCount + 1
-		p.occupant[struggler].bellySettleDownTimer = 5
 
 		local animation = {offset = struggledata.directions[movedir].offset}
 		local prefix = struggledata.prefix or ""
-		if struggledata.parts ~= nil then
-			for _, part in ipairs(struggledata.parts) do
-				animation[part] = prefix.."s_"..movedir
-			end
-		end
+		local parts = struggledata.parts
 		if struggledata.sided ~= nil then
-			local parts = struggledata.sided.rightParts
+			parts = struggledata.sided.rightParts
 			if p.direction == -1 then
 				parts = struggledata.sided.leftParts
 			end
+		end
+		if parts ~= nil then
 			for _, part in ipairs(parts) do
 				animation[part] = prefix.."s_"..movedir
 			end
+			p.doAnims(animation)
+			local time = dt
+			for _, part in ipairs(parts) do
+				local newtime = p.animStateData[part.."State"].animationState.cycle
+				if newtime > time then
+					time = newtime
+				end
+			end
+			p.occupant[struggler].bellySettleDownTimer = time
+			p.occupant[struggler].struggleTime = p.occupant[struggler].struggleTime + time
 		end
 
-		p.doAnims(animation)
 
 		if not p.movement.animating then
 			p.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
@@ -607,7 +614,7 @@ function p.struggleChance(struggledata, struggler, movedir)
 	if chances ~= nil and chances.max == 0 then return true end
 	return (not p.settings.impossibleEscape)
 	and chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random((chances.min + (p.settings.escapeDifficulty or 0)), (chances.min + (p.settings.escapeDifficulty or 0))) <= p.occupant[struggler].struggleCount)
+	and (math.random((chances.min + (p.settings.escapeDifficulty or 0)), (chances.max + (p.settings.escapeDifficulty or 0))) <= p.occupant[struggler].struggleTime)
 	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
 end
 
