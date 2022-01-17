@@ -24,9 +24,13 @@
 		}
 	],
 	[
+		{ "op": "add", "path": "/statusControllerSettings", "value": {} },
+		{ "op": "add", "path": "/statusControllerSettings/statusProperties", "value": {} }
+	],
+	[
 		{
 			"op": "add",
-			"path": "/scriptConfig/sbqPreyEnabled",
+			"path": "/statusControllerSettings/statusProperties/sbqPreyEnabled",
 			"value": {
 			}
 		}

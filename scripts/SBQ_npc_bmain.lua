@@ -15,6 +15,8 @@ function init()
 			chestCosmetic = npc.getItemSlot("chestCosmetic"),
 			legsCosmetic = npc.getItemSlot("legsCosmetic"),
 			backCosmetic = npc.getItemSlot("backCosmetic"),
+			statusDirectives = status.statusProperty("speciesAnimOverrideDirectives"),
+			effectDirectives = status.statusProperty("effectDirectives")
 		}
 	end)
 
@@ -32,9 +34,6 @@ function init()
 		npc.setDamageTeam(status.statusProperty("sbqOriginalDamageTeam"))
 	end)
 
-	if config.getParameter("sbqPreyEnabled") ~= nil then
-		status.setStatusProperty("sbqPreyEnabled", config.getParameter("sbqPreyEnabled"))
-	end
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})

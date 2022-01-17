@@ -19,9 +19,6 @@ function init()
 		monster.setDamageTeam(status.statusProperty("sbqOriginalDamageTeam"))
 	end)
 
-	if config.getParameter("sbqPreyEnabled") ~= nil then
-		status.setStatusProperty("sbqPreyEnabled", config.getParameter("sbqPreyEnabled"))
-	end
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})

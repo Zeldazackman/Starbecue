@@ -131,6 +131,8 @@ function init()
 			chestCosmetic = player.equippedItem("chestCosmetic"),
 			legsCosmetic = player.equippedItem("legsCosmetic"),
 			backCosmetic = player.equippedItem("backCosmetic"),
+			statusDirectives = status.statusProperty("speciesAnimOverrideDirectives"),
+			effectDirectives = status.statusProperty("effectDirectives")
 		}
 	end)
 
