@@ -2,7 +2,7 @@ state = {
 	stand = {}
 }
 
-p = {
+sbq = {
 	occupants = {
 		maximum = 8,
 		total = 8,
@@ -23,11 +23,11 @@ p = {
 	direction = 1
 }
 
-p.settings = {}
+sbq.settings = {}
 
-p.partTags = {}
+sbq.partTags = {}
 
-p.movement = {
+sbq.movement = {
 	jumps = 0,
 	jumped = false,
 	sinceLastJump = 0,
@@ -37,19 +37,19 @@ p.movement = {
 	aimingLock = 0
 }
 
-p.movementParams = {
+sbq.movementParams = {
 	mass = 0
 }
 
-p.seats = {} -- meant to be a redirect pointers to the occupant data
-p.lounging = {}
+sbq.seats = {} -- meant to be a redirect pointers to the occupant data
+sbq.lounging = {}
 
-function p.clearOccupant(i)
+function sbq.clearOccupant(i)
 	return {
 		seatname = "occupant"..i,
 		index = i,
 		id = nil,
-		statList = p.sbqData.occupantStatusEffects or {},
+		statList = sbq.sbqData.occupantStatusEffects or {},
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -130,26 +130,28 @@ require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
 require("/vehicles/sbq/sbq_animation.lua")
+require("/scripts/SBQ_RPC_handling.lua")
+
 
 require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 
 local inited
 
 function init()
-	p.spawner = config.getParameter("spawner") or config.getParameter("driver")
-	p.driver = p.spawner
-	p.includeDriver = true
+	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
+	sbq.driver = sbq.spawner
+	sbq.includeDriver = true
 end
 
 function initAfterInit(data)
-	p.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
-	p.cfgAnimationFile = p.sbqData.animation
-	p.victimAnimations = root.assetJson(p.sbqData.victimAnimations)
-	p.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
-	p.loungePositions = config.getParameter("loungePositions")
-	p.animStateData = root.assetJson( p.cfgAnimationFile ).animatedParts.stateTypes
-	p.config = root.assetJson( "/sbqGeneral.config")
-	p.transformGroups = {
+	sbq.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
+	sbq.cfgAnimationFile = sbq.sbqData.animation
+	sbq.victimAnimations = root.assetJson(sbq.sbqData.victimAnimations)
+	sbq.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
+	sbq.loungePositions = config.getParameter("loungePositions")
+	sbq.animStateData = root.assetJson( sbq.cfgAnimationFile ).animatedParts.stateTypes
+	sbq.config = root.assetJson( "/sbqGeneral.config")
+	sbq.transformGroups = {
 		occupant0Position = {},
 		occupant1Position = {},
 		occupant2Position = {},
@@ -160,23 +162,23 @@ function initAfterInit(data)
 		occupant7Position = {},
 	}
 
-	p.settings = sb.jsonMerge(sb.jsonMerge(p.config.defaultSettings, p.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
+	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
-	p.partTags.global = root.assetJson( p.cfgAnimationFile ).globalTagDefaults
+	sbq.partTags.global = root.assetJson( sbq.cfgAnimationFile ).globalTagDefaults
 
-	for part, _ in pairs(root.assetJson( p.cfgAnimationFile ).animatedParts.parts) do
-		p.partTags[part] = {}
+	for part, _ in pairs(root.assetJson( sbq.cfgAnimationFile ).animatedParts.parts) do
+		sbq.partTags[part] = {}
 	end
 	for part, _ in pairs(root.assetJson( "/vehicles/sbq/sbqOccupantHolder/sbqOccupantHolder.animation" ).animatedParts.parts) do
-		p.partTags[part] = {}
+		sbq.partTags[part] = {}
 	end
 
-	for transformGroup, _ in pairs(p.transformGroups) do
-		p.resetTransformationGroup(transformGroup)
+	for transformGroup, _ in pairs(sbq.transformGroups) do
+		sbq.resetTransformationGroup(transformGroup)
 	end
 
-	p.animFunctionQueue = {}
-	for statename, state in pairs(p.animStateData) do
+	sbq.animFunctionQueue = {}
+	for statename, state in pairs(sbq.animStateData) do
 		state.animationState = {
 			anim = state.default,
 			priority = state.states[state.default].priority,
@@ -184,41 +186,41 @@ function initAfterInit(data)
 			frames = state.states[state.default].frames,
 			time = 0
 		}
-		p.animFunctionQueue[statename] = {}
+		sbq.animFunctionQueue[statename] = {}
 		state.tag = nil
 	end
 
-	if p.spawner then
-		p.spawnerUUID = world.entityUniqueId(p.spawner)
+	if sbq.spawner then
+		sbq.spawnerUUID = world.entityUniqueId(sbq.spawner)
 	end
 
-	p.resetOccupantCount()
+	sbq.resetOccupantCount()
 
-	for i = 0, p.occupantSlots do
-		p.occupant[i] = p.clearOccupant(i)
-		p.seats["occupant"..i] = p.occupant[i]
+	for i = 0, sbq.occupantSlots do
+		sbq.occupant[i] = sbq.clearOccupant(i)
+		sbq.seats["occupant"..i] = sbq.occupant[i]
 	end
-	p.seats["occupantS"] = p.clearOccupant("S")
-	p.driverSeat = "occupantS"
+	sbq.seats["occupantS"] = sbq.clearOccupant("S")
+	sbq.driverSeat = "occupantS"
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
-	if p.sbqData.scripts ~= nil then
-		for _, script in ipairs(p.sbqData.scripts) do
+	if sbq.sbqData.scripts ~= nil then
+		for _, script in ipairs(sbq.sbqData.scripts) do
 			require(script)
 		end
 	end
-	for _, script in ipairs(p.config.scripts) do
+	for _, script in ipairs(sbq.config.scripts) do
 		require(script)
 	end
 end
 
-p.totalTimeAlive = 0
+sbq.totalTimeAlive = 0
 local sentDataMessage
 function update(dt)
 	if not sentDataMessage then
 		sentDataMessage = true
-		p.addRPC(world.sendEntityMessage(p.spawner, "giveSbqData"), function (data)
+		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "giveSbqData"), function (data)
 			initAfterInit(data)
 			inited = true
 		end, function ()
@@ -226,198 +228,109 @@ function update(dt)
 		end)
 	end
 
-	p.checkSpawnerExists()
-	p.totalTimeAlive = p.totalTimeAlive + dt
-	p.dt = dt
-	p.checkRPCsFinished(dt)
-	p.checkTimers(dt)
+	sbq.checkSpawnerExists()
+	sbq.totalTimeAlive = sbq.totalTimeAlive + dt
+	sbq.dt = dt
+	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
 
 	if not inited then return end
 
-	p.getAnimData()
-	p.updateAnims(dt)
+	sbq.getAnimData()
+	sbq.updateAnims(dt)
 
-	p.updateControls(dt)
+	sbq.updateControls(dt)
 
-	p.updateOccupants(dt)
-	p.handleStruggles(dt)
-	p.doBellyEffects(dt)
-	p.applyStatusLists()
+	sbq.updateOccupants(dt)
+	sbq.handleStruggles(dt)
+	sbq.doBellyEffects(dt)
+	sbq.applyStatusLists()
 
-	p.applyTransformations()
+	sbq.applyTransformations()
 end
 
 function uninit()
 end
 
-function p.checkSpawnerExists()
-	if p.spawner and world.entityExists(p.spawner) then
-		mcontroller.setPosition(world.entityPosition(p.spawner))
+function sbq.checkSpawnerExists()
+	if sbq.spawner and world.entityExists(sbq.spawner) then
+		mcontroller.setPosition(world.entityPosition(sbq.spawner))
 
-		p.loopedMessage( "occupantHolderExists", p.spawner, "sbqOccupantHolderExists", {
+		sbq.loopedMessage( "occupantHolderExists", sbq.spawner, "sbqOccupantHolderExists", {
 			entity.id(),
-			{occupant = p.occupant, occupants = p.occupants},
+			{occupant = sbq.occupant, occupants = sbq.occupants},
 			{
 				species = world.entityName(entity.id()),
 				type = "driver"
 			}
 		},
 		function (seatdata)
-			p.spawnerEquips = seatdata
+			sbq.spawnerEquips = seatdata
 		end)
 
-	elseif (p.spawnerUUID ~= nil) then
-		p.loopedMessage("preyWarpDespawn", p.spawnerUUID, "sbqPreyWarpRequest", {},
+	elseif (sbq.spawnerUUID ~= nil) then
+		sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {},
 		function(data)
 			-- put function handling the data return for the preywarp request here to make the player prey warp to the pred's location and set themselves as prey again
 
-			p.spawnerUUID = nil
+			sbq.spawnerUUID = nil
 		end,
 		function()
 			-- this function is for when the request fails, leave it unchanged
-			p.spawnerUUID = nil
+			sbq.spawnerUUID = nil
 		end)
 	else
-		p.onDeath()
+		sbq.onDeath()
 	end
 end
 
-function p.onDeath(eaten)
-	if p.spawner ~= nil then
-		world.sendEntityMessage(p.spawner, "sbqPredatorDespawned", p.settings)
+function sbq.onDeath(eaten)
+	if sbq.spawner ~= nil then
+		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", sbq.settings)
 	end
 
 	if not eaten then
-		for i = 0, #p.occupant do
-			p.uneat(p.occupant[i].id)
+		for i = 0, #sbq.occupant do
+			sbq.uneat(sbq.occupant[i].id)
 		end
 	end
 
 	vehicle.destroy()
 end
 
-p.rpcList = {}
-function p.addRPC(rpc, callback, failCallback)
-	if callback ~= nil or failCallback ~= nil  then
-		table.insert(p.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
-	end
-end
-
-p.loopedMessages = {}
-function p.loopedMessage(name, eid, message, args, callback, failCallback)
-	if p.loopedMessages[name] == nil then
-		p.loopedMessages[name] = {
-			rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
-			callback = callback,
-			failCallback = failCallback
-		}
-	elseif p.loopedMessages[name].rpc:finished() then
-		if p.loopedMessages[name].rpc:succeeded() and p.loopedMessages[name].callback ~= nil then
-			p.loopedMessages[name].callback(p.loopedMessages[name].rpc:result())
-		elseif p.loopedMessages[name].failCallback ~= nil then
-			p.loopedMessages[name].failCallback()
-		end
-		p.loopedMessages[name] = nil
-	end
-end
-
-function p.checkRPCsFinished(dt)
-	for i, list in pairs(p.rpcList) do
-		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
-		if list.rpc:finished() then
-			if list.rpc:succeeded() and list.callback ~= nil then
-				list.callback(list.rpc:result(), list.dt)
-			elseif list.failCallback ~= nil then
-				list.failCallback(list.dt)
-			end
-			table.remove(p.rpcList, i)
-		end
-	end
-end
-
-p.timerList = {}
-
-function p.randomTimer(name, min, max, callback)
-	if name == nil or p.timerList[name] == nil then
-		local timer = {
-			targetTime = (math.random(min * 100, max * 100))/100,
-			currTime = 0,
-			callback = callback
-		}
-		if name ~= nil then
-			p.timerList[name] = timer
-		else
-			table.insert(p.timerList, timer)
-		end
-		return true
-	end
-end
-
-function p.timer(name, time, callback)
-	if name == nil or p.timerList[name] == nil then
-		local timer = {
-			targetTime = time,
-			currTime = 0,
-			callback = callback
-		}
-		if name ~= nil then
-			p.timerList[name] = timer
-		else
-			table.insert(p.timerList, timer)
-		end
-		return true
-	end
-end
-
-function p.checkTimers(dt)
-	for name, timer in pairs(p.timerList) do
-		timer.currTime = timer.currTime + dt
-		if timer.currTime >= timer.targetTime then
-			if timer.callback ~= nil then
-				timer.callback()
-			end
-			if type(name) == "number" then
-				table.remove(p.timerList, name)
-			else
-				p.timerList[name] = nil
-			end
-		end
-	end
-end
-
-function p.localToGlobal( position )
+function sbq.localToGlobal( position )
 	local lpos = { position[1], position[2] }
-	if p.direction == -1 then lpos[1] = -lpos[1] end
+	if sbq.direction == -1 then lpos[1] = -lpos[1] end
 	local mpos = mcontroller.position()
 	local gpos = { mpos[1] + lpos[1], mpos[2] + lpos[2] }
 	return world.xwrap( gpos )
 end
-function p.globalToLocal( position )
+function sbq.globalToLocal( position )
 	local pos = world.distance( position, mcontroller.position() )
-	if p.direction == -1 then pos[1] = -pos[1] end
+	if sbq.direction == -1 then pos[1] = -pos[1] end
 	return pos
 end
 
-function p.occupantArray( maybearray )
+function sbq.occupantArray( maybearray )
 	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
 		if maybearray.location then
 			if maybearray.failOnFull then
-				if (maybearray.failOnFull ~= true) and (p.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif p.locationFull(maybearray.location) then return maybearray.failTransition end
+				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
+				elseif sbq.locationFull(maybearray.location) then return maybearray.failTransition end
 			else
-				if p.locationEmpty(maybearray.location) then return maybearray.failTransition end
+				if sbq.locationEmpty(maybearray.location) then return maybearray.failTransition end
 			end
 		end
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[(p.occupants[maybearray[1].location or "total"] or 0) + 1]
+		return maybearray[(sbq.occupants[maybearray[1].location or "total"] or 0) + 1]
 	end
 end
 
 
 -------------------------------------------------------------------------------------------------------
 
-function p.getSmolPreyData(settings, species, state, tags, layer)
+function sbq.getSmolPreyData(settings, species, state, tags, layer)
 	return {
 		species = species,
 		recieved = true,
@@ -427,56 +340,56 @@ function p.getSmolPreyData(settings, species, state, tags, layer)
 	}
 end
 
-function p.entityLounging( entity )
-	if entity == p.spawner then return true end
+function sbq.entityLounging( entity )
+	if entity == sbq.spawner then return true end
 
-	for i = 0, p.occupantSlots do
-		if entity == p.occupant[i].id then return true end
+	for i = 0, sbq.occupantSlots do
+		if entity == sbq.occupant[i].id then return true end
 	end
 	return false
 end
 
-function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
-	if p.driver ~= occupantId then return false end
-	local total = p.occupants.total
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+	if sbq.driver ~= occupantId then return false end
+	local total = sbq.occupants.total
 	total = total + 1
 	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
-	if p.stateconfig[p.state].edible then
+	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
-			p.getSmolPreyData(
-				p.settings,
+			sbq.getSmolPreyData(
+				sbq.settings,
 				world.entityName( entity.id() ),
-				p.state,
-				p.partTags,
-				p.seats[p.driverSeat].smolPreyData
+				sbq.state,
+				sbq.partTags,
+				sbq.seats[sbq.driverSeat].smolPreyData
 			),
 			entity.id()
 		)
 
 		local nextSlot = 1
-		for i = 0, p.occupantSlots do
-			if p.occupant[i].id ~= nil then
-				local location = p.occupant[i].location
+		for i = 0, sbq.occupantSlots do
+			if sbq.occupant[i].id ~= nil then
+				local location = sbq.occupant[i].location
 				local massMultiplier = 0
 
 				if location == "nested" then
-					location = p.occupant[i].nestedPreyData.ownerLocation
+					location = sbq.occupant[i].nestedPreyData.ownerLocation
 				end
-				massMultiplier = p.sbqData.locations[location].mass or 0
+				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
-				if p.occupant[i].location == "nested" then
-					massMultiplier = massMultiplier * p.occupant[i].nestedPreyData.massMultiplier
+				if sbq.occupant[i].location == "nested" then
+					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
 				end
 
-				local occupantData = sb.jsonMerge(p.occupant[i], {
+				local occupantData = sb.jsonMerge(sbq.occupant[i], {
 					location = "nested",
 					visible = false,
 					nestedPreyData = {
-						owner = p.driver,
-						location = p.occupant[i].location,
+						owner = sbq.driver,
+						location = sbq.occupant[i].location,
 						massMultiplier = massMultiplier,
-						digest = p.sbqData.locations[location].digest,
-						nestedPreyData = p.occupant[i].nestedPreyData
+						digest = sbq.sbqData.locations[location].digest,
+						nestedPreyData = sbq.occupant[i].nestedPreyData
 					}
 				})
 				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
@@ -488,23 +401,23 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 end
 
 -- to have any extra effects applied to those in digest locations
-function p.extraBellyEffects(i, eid, health, status)
+function sbq.extraBellyEffects(i, eid, health, status)
 end
 
 -- to have effects applied to other locations, for example, womb if the predator does unbirth
-function p.otherLocationEffects(i, eid, health, status)
+function sbq.otherLocationEffects(i, eid, health, status)
 end
 
 -------------------------------------------------------------------------------------------------------
 
 function state.stand.eat(args)
-	return p.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.escape(args)
-	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function state.stand.analEscape(args)
-	return p.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {} )
 end

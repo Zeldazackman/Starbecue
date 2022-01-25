@@ -1,4 +1,4 @@
-function p.forceSeat( occupantId, seatindex )
+function sbq.forceSeat( occupantId, seatindex )
 	if occupantId then
 		vehicle.setLoungeEnabled("occupant"..seatindex, true)
 		world.sendEntityMessage(occupantId, "sbqMakeNonHostile")
@@ -6,21 +6,21 @@ function p.forceSeat( occupantId, seatindex )
 	end
 end
 
-function p.unForceSeat(occupantId)
+function sbq.unForceSeat(occupantId)
 	if occupantId then
 		world.sendEntityMessage( occupantId, "applyStatusEffect", "sbqRemoveForceSit", 1, entity.id())
 	end
 end
 
-function p.eat( occupantId, location )
-	local seatindex = p.occupants.total
-	local emptyslots = p.occupantSlots - p.occupants.total
-	if not p.includeDriver then
+function sbq.eat( occupantId, location )
+	local seatindex = sbq.occupants.total
+	local emptyslots = sbq.occupantSlots - sbq.occupants.total
+	if not sbq.includeDriver then
 		seatindex = seatindex + 1
 		emptyslots = emptyslots - 1
 	end
 
-	if occupantId == nil or p.entityLounging(occupantId) or p.inedible(occupantId) or p.locationFull(location) then return false end -- don't eat self
+	if occupantId == nil or sbq.entityLounging(occupantId) or sbq.inedible(occupantId) or sbq.locationFull(location) then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
@@ -29,15 +29,15 @@ function p.eat( occupantId, location )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, p.sbqData.locations[location].maxNested or p.sbqData.locations[location].max or 0 }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or sbq.sbqData.locations[location].max or 0 }
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
-			p.occupant[seatindex].id = occupantId
-			p.occupant[seatindex].location = location
-			p.forceSeat( occupantId, seatindex)
-			p.refreshList = true
-			p.updateOccupants(0)
+			sbq.occupant[seatindex].id = occupantId
+			sbq.occupant[seatindex].location = location
+			sbq.forceSeat( occupantId, seatindex)
+			sbq.refreshList = true
+			sbq.updateOccupants(0)
 			return true -- not lounging
 		else
 			return false -- lounging in something inedible
@@ -45,91 +45,91 @@ function p.eat( occupantId, location )
 	end
 	-- lounging in edible smol thing
 	local species = world.entityName( edibles[1] )
-	p.occupant[seatindex].id = occupantId
-	p.occupant[seatindex].species = species
-	p.occupant[seatindex].location = location
-	p.forceSeat( occupantId, seatindex )
-	p.refreshList = true
-	p.updateOccupants(0)
+	sbq.occupant[seatindex].id = occupantId
+	sbq.occupant[seatindex].species = species
+	sbq.occupant[seatindex].location = location
+	sbq.forceSeat( occupantId, seatindex )
+	sbq.refreshList = true
+	sbq.updateOccupants(0)
 	return true
 end
 
-function p.uneat( occupantId )
+function sbq.uneat( occupantId )
 	if occupantId == nil or not world.entityExists(occupantId) then return end
 	world.sendEntityMessage( occupantId, "sbqClearDrawables")
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "sbqRemoveBellyEffects")
 	world.sendEntityMessage( occupantId, "primaryItemLock", false)
 	world.sendEntityMessage( occupantId, "altItemLock", false)
-	p.unForceSeat( occupantId )
-	if not p.lounging[occupantId] then return end
+	sbq.unForceSeat( occupantId )
+	if not sbq.lounging[occupantId] then return end
 
-	local seatindex = p.lounging[occupantId].index
-	local occupantData = p.lounging[occupantId]
+	local seatindex = sbq.lounging[occupantId].index
+	local occupantData = sbq.lounging[occupantId]
 	if world.entityType(occupantId) == "player" then
 		world.sendEntityMessage(occupantId, "sbqOpenInterface", "sbqClose")
 	end
 
 	if occupantData.species ~= nil then
-		table.insert(p.preyRecepients, {
-			vehicle = world.spawnVehicle( occupantData.species, p.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } ),
+		table.insert(sbq.preyRecepients, {
+			vehicle = world.spawnVehicle( occupantData.species, sbq.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } ),
 			owner = occupantId
 		})
 	else
-		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", p.config.predStatusEffects)
+		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", sbq.config.predStatusEffects)
 		world.sendEntityMessage( occupantId, "sbqPredatorDespawned" ) -- to clear the current data for players
 	end
 	world.sendEntityMessage( occupantId, "sbqLight", nil )
 
-	p.refreshList = true
-	p.lounging[occupantId] = nil
-	p.occupant[seatindex] = p.clearOccupant(seatindex)
-	p.updateOccupants(0)
+	sbq.refreshList = true
+	sbq.lounging[occupantId] = nil
+	sbq.occupant[seatindex] = sbq.clearOccupant(seatindex)
+	sbq.updateOccupants(0)
 	return true
 end
 
-function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
-	if p.driver ~= occupantId then return false end
-	local total = p.occupants.total
-	if not p.includeDriver then
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+	if sbq.driver ~= occupantId then return false end
+	local total = sbq.occupants.total
+	if not sbq.includeDriver then
 		total = total + 1
 	end
 	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
-	if p.stateconfig[p.state].edible then
+	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
-			p.getSmolPreyData(
-				p.settings,
+			sbq.getSmolPreyData(
+				sbq.settings,
 				world.entityName( entity.id() ),
-				p.state,
-				p.partTags,
-				p.seats[p.driverSeat].smolPreyData
+				sbq.state,
+				sbq.partTags,
+				sbq.seats[sbq.driverSeat].smolPreyData
 			),
 			entity.id()
 		)
 
 		local nextSlot = 1
-		for i = 1, p.occupantSlots do
-			if p.occupant[i].id ~= nil then
-				local location = p.occupant[i].location
+		for i = 1, sbq.occupantSlots do
+			if sbq.occupant[i].id ~= nil then
+				local location = sbq.occupant[i].location
 				local massMultiplier = 0
 
 				if location == "nested" then
-					location = p.occupant[i].nestedPreyData.ownerLocation
+					location = sbq.occupant[i].nestedPreyData.ownerLocation
 				end
-				massMultiplier = p.sbqData.locations[location].mass or 0
+				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
-				if p.occupant[i].location == "nested" then
-					massMultiplier = massMultiplier * p.occupant[i].nestedPreyData.massMultiplier
+				if sbq.occupant[i].location == "nested" then
+					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
 				end
 
-				local occupantData = sb.jsonMerge(p.occupant[i], {
+				local occupantData = sb.jsonMerge(sbq.occupant[i], {
 					location = "nested",
 					visible = false,
 					nestedPreyData = {
-						owner = p.driver,
-						location = p.occupant[i].location,
+						owner = sbq.driver,
+						location = sbq.occupant[i].location,
 						massMultiplier = massMultiplier,
-						digest = p.sbqData.locations[location].digest,
-						nestedPreyData = p.occupant[i].nestedPreyData
+						digest = sbq.sbqData.locations[location].digest,
+						nestedPreyData = sbq.occupant[i].nestedPreyData
 					}
 				})
 				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
@@ -140,89 +140,89 @@ function p.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	end
 end
 
-p.preyRecepients = {}
+sbq.preyRecepients = {}
 
-function p.sendPreyTo()
-	for j, recepient in ipairs(p.preyRecepients) do
+function sbq.sendPreyTo()
+	for j, recepient in ipairs(sbq.preyRecepients) do
 		local nextSlot = 1
 		if world.entityExists(recepient.vehicle) then
-			for i = 0, p.occupantSlots do
-				if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == recepient.owner then
+			for i = 0, sbq.occupantSlots do
+				if sbq.occupant[i].id ~= nil and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
 
-					local occupantData = sb.jsonMerge(p.occupant[i], {
-						location = p.occupant[i].nestedPreyData.location,
+					local occupantData = sb.jsonMerge(sbq.occupant[i], {
+						location = sbq.occupant[i].nestedPreyData.location,
 						visible = false,
-						nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
+						nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
 					})
 					world.sendEntityMessage( recepient.vehicle, "addPrey", nextSlot, occupantData)
 
-					p.occupant[i] = p.clearOccupant(i)
+					sbq.occupant[i] = sbq.clearOccupant(i)
 					nextSlot = nextSlot+1
 				end
 			end
-			table.remove(p.preyRecepients, j)
+			table.remove(sbq.preyRecepients, j)
 		end
 	end
 end
 
-function p.firstNotLounging(entityaimed)
+function sbq.firstNotLounging(entityaimed)
 	for _, eid in ipairs(entityaimed) do
-		if not p.entityLounging(eid) then
+		if not sbq.entityLounging(eid) then
 			return eid
 		end
 	end
 end
 
-function p.moveOccupantLocation(args, location)
-	if p.occupants[location] >= p.sbqData.locations[location].max then return false end
-	local maxNested = p.sbqData.locations[location].maxNested or ( p.sbqData.locations[location].max - 1 )
+function sbq.moveOccupantLocation(args, location)
+	if sbq.occupants[location] >= sbq.sbqData.locations[location].max then return false end
+	local maxNested = sbq.sbqData.locations[location].maxNested or ( sbq.sbqData.locations[location].max - 1 )
 	local nestCount = 0
-	for i = 0, p.occupantSlots do
-		if p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == args.id then
+	for i = 0, sbq.occupantSlots do
+		if sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == args.id then
 			nestCount = nestCount + 1
 		end
 	end
 	if nestCount > maxNested and (not maxNested == -1) then return false end
-	p.lounging[args.id].location = location
+	sbq.lounging[args.id].location = location
 	return true
 end
 
-function p.findFirstOccupantIdForLocation(location)
-	for i = 0, p.occupantSlots do
-		if p.occupant[i].location == location then
-			return p.occupant[i].id, i
+function sbq.findFirstOccupantIdForLocation(location)
+	for i = 0, sbq.occupantSlots do
+		if sbq.occupant[i].location == location then
+			return sbq.occupant[i].id, i
 		end
 	end
 end
 
 
-function p.locationFull(location)
-	if p.occupants.total == p.occupants.maximum then
+function sbq.locationFull(location)
+	if sbq.occupants.total == sbq.occupants.maximum then
 		return true
 	else
-		return p.occupants[location] >= p.sbqData.locations[location].max
+		return sbq.occupants[location] >= sbq.sbqData.locations[location].max
 	end
 end
 
-function p.locationEmpty(location)
-	if p.occupants.total == 0 then
+function sbq.locationEmpty(location)
+	if sbq.occupants.total == 0 then
 		return true
 	else
-		return p.occupants[location] == 0
+		return sbq.occupants[location] == 0
 	end
 end
 
-function p.doVore(args, location, statuses, sound )
-	if p.eat( args.id, location ) then
-		p.justAte = args.id
+function sbq.doVore(args, location, statuses, sound )
+	if sbq.eat( args.id, location ) then
+		sbq.justAte = args.id
 		vehicle.setInteractive( false )
-		p.showEmote("emotehappy")
-		p.transitionLock = true
+		sbq.showEmote("emotehappy")
+		sbq.transitionLock = true
 		world.sendEntityMessage( args.id, "sbqApplyStatusEffects", statuses )
 		return true, function()
-			p.justAte = nil
-			p.transitionLock = false
-			p.checkDrivingInteract()
+			sbq.justAte = nil
+			sbq.transitionLock = false
+			sbq.checkDrivingInteract()
 			if sound then animator.playSound( sound ) end
 		end
 	else
@@ -230,306 +230,306 @@ function p.doVore(args, location, statuses, sound )
 	end
 end
 
-function p.doEscape(args, statuses, afterstatuses )
+function sbq.doEscape(args, statuses, afterstatuses )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
 
 	vehicle.setInteractive( false )
 	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
-	p.transitionLock = true
+	sbq.transitionLock = true
 	return true, function()
-		p.transitionLock = false
-		p.checkDrivingInteract()
-		p.uneat( victim )
+		sbq.transitionLock = false
+		sbq.checkDrivingInteract()
+		sbq.uneat( victim )
 		world.sendEntityMessage( victim, "sbqApplyStatusEffects", afterstatuses )
 	end
 end
 
-function p.applyStatusLists()
-	for i = 0, p.occupantSlots do
-		if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-			if not p.weirdFixFrame then
-				vehicle.setLoungeEnabled(p.occupant[i].seatname, true)
+function sbq.applyStatusLists()
+	for i = 0, sbq.occupantSlots do
+		if sbq.occupant[i].id ~= nil and world.entityExists(sbq.occupant[i].id) then
+			if not sbq.weirdFixFrame then
+				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
 			end
-			p.loopedMessage( p.occupant[i].seatname.."NonHostile", p.occupant[i].id, "sbqMakeNonHostile")
-			p.loopedMessage( p.occupant[i].seatname.."StatusEffects", p.occupant[i].id, "sbqApplyStatusEffects", {p.occupant[i].statList} )
-			p.loopedMessage( p.occupant[i].seatname.."ForceSeat", p.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
+			sbq.loopedMessage( sbq.occupant[i].seatname.."NonHostile", sbq.occupant[i].id, "sbqMakeNonHostile")
+			sbq.loopedMessage( sbq.occupant[i].seatname.."StatusEffects", sbq.occupant[i].id, "sbqApplyStatusEffects", {sbq.occupant[i].statList} )
+			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
 		else
-			vehicle.setLoungeEnabled(p.occupant[i].seatname, false)
+			vehicle.setLoungeEnabled(sbq.occupant[i].seatname, false)
 		end
 	end
-	p.weirdFixFrame = nil
+	sbq.weirdFixFrame = nil
 end
 
-function p.addStatusToList(index, status, power, source)
-	p.occupant[index].statList[status] = {
+function sbq.addStatusToList(index, status, power, source)
+	sbq.occupant[index].statList[status] = {
 		power = power or 1,
 		source = source or entity.id()
 	}
 end
 
-function p.removeStatusFromList(index, status)
-	p.occupant[index].statList[status] = nil
+function sbq.removeStatusFromList(index, status)
+	sbq.occupant[index].statList[status] = nil
 end
 
-function p.resetOccupantCount()
-	p.occupants.total = 0
-	for location, data in pairs(p.sbqData.locations) do
-		p.occupants[location] = 0
+function sbq.resetOccupantCount()
+	sbq.occupants.total = 0
+	for location, data in pairs(sbq.sbqData.locations) do
+		sbq.occupants[location] = 0
 	end
-	p.occupants.fatten = p.settings.fatten or 0
-	p.occupants.mass = 0
+	sbq.occupants.fatten = sbq.settings.fatten or 0
+	sbq.occupants.mass = 0
 end
 
-function p.updateOccupants(dt)
-	p.sendPreyTo()
-	p.resetOccupantCount()
+function sbq.updateOccupants(dt)
+	sbq.sendPreyTo()
+	sbq.resetOccupantCount()
 
 	local lastFilled = true
 
-	for i = 0, p.occupantSlots do
-		if not (i == 0 and not p.includeDriver) then
-			if p.occupant[i].id ~= nil and world.entityExists(p.occupant[i].id) then
-				p.occupants.total = p.occupants.total + 1
-				if not lastFilled and p.swapCooldown <= 0 then
-					p.swapOccupants( i-1, i )
+	for i = 0, sbq.occupantSlots do
+		if not (i == 0 and not sbq.includeDriver) then
+			if sbq.occupant[i].id ~= nil and world.entityExists(sbq.occupant[i].id) then
+				sbq.occupants.total = sbq.occupants.total + 1
+				if not lastFilled and sbq.swapCooldown <= 0 then
+					sbq.swapOccupants( i-1, i )
 					i = i - 1
 				end
 
-				p.occupant[i].index = i
+				sbq.occupant[i].index = i
 				local seatname = "occupant"..i
-				p.occupant[i].seatname = seatname
-				p.lounging[p.occupant[i].id] = p.occupant[i]
-				p.seats[p.occupant[i].seatname] = p.occupant[i]
-				p.occupant[i].occupantTime = p.occupant[i].occupantTime + dt
+				sbq.occupant[i].seatname = seatname
+				sbq.lounging[sbq.occupant[i].id] = sbq.occupant[i]
+				sbq.seats[sbq.occupant[i].seatname] = sbq.occupant[i]
+				sbq.occupant[i].occupantTime = sbq.occupant[i].occupantTime + dt
 
 				local massMultiplier = 0
-				local mass = p.occupant[i].controls.mass
-				local location = p.occupant[i].location
+				local mass = sbq.occupant[i].controls.mass
+				local location = sbq.occupant[i].location
 
 				if location == "nested" then
-					local owner = p.occupant[i].nestedPreyData.owner
-					mass = mass * p.occupant[i].nestedPreyData.massMultiplier
-					if world.entityExists(owner) and p.lounging[owner] ~= nil then
-						location = p.lounging[owner].location
-						p.occupant[i].nestedPreyData.ownerLocation = location
+					local owner = sbq.occupant[i].nestedPreyData.owner
+					mass = mass * sbq.occupant[i].nestedPreyData.massMultiplier
+					if world.entityExists(owner) and sbq.lounging[owner] ~= nil then
+						location = sbq.lounging[owner].location
+						sbq.occupant[i].nestedPreyData.ownerLocation = location
 
-						p.resetTransformationGroup(seatname.."Position")
-						p.translateTransformationGroup(seatname.."Position", p.globalToLocal(world.entityPosition(owner)))
+						sbq.resetTransformationGroup(seatname.."Position")
+						sbq.translateTransformationGroup(seatname.."Position", sbq.globalToLocal(world.entityPosition(owner)))
 					else
-						if p.occupant[i].nestedPreyData.nestedPreyData ~= nil then
-							p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
+						if sbq.occupant[i].nestedPreyData.nestedPreyData ~= nil then
+							sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
 						else
-							location = p.occupant[i].nestedPreyData.ownerLocation
-							p.occupant[i].location = location
+							location = sbq.occupant[i].nestedPreyData.ownerLocation
+							sbq.occupant[i].location = location
 						end
 					end
-				elseif (location == nil) or (p.sbqData.locations[location] == nil) or ((p.sbqData.locations[location].max or 0) == 0) then
-					p.uneat(p.occupant[i].id)
+				elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or ((sbq.sbqData.locations[location].max or 0) == 0) then
+					sbq.uneat(sbq.occupant[i].id)
 					return
 				else
-					p.occupants[location] = p.occupants[location] + 1
+					sbq.occupants[location] = sbq.occupants[location] + 1
 
-					massMultiplier = p.sbqData.locations[location].mass or 0
+					massMultiplier = sbq.sbqData.locations[location].mass or 0
 
-					p.occupants.mass = p.occupants.mass + mass * massMultiplier
+					sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
 
-					if p.sbqData.locations[location].transformGroups ~= nil then
-						p.copyTransformationFromGroupsToGroup(p.sbqData.locations[location].transformGroups, seatname.."Position")
+					if sbq.sbqData.locations[location].transformGroups ~= nil then
+						sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname.."Position")
 					end
 				end
 
-				if p.occupant[i].progressBarActive == true then
-					p.occupant[i].progressBar = p.occupant[i].progressBar + (((math.log(p.occupant[i].controls.powerMultiplier)+1) * dt) * p.occupant[i].progressBarMultiplier)
-					if p.occupant[i].progressBarMultiplier > 0 then
-						p.occupant[i].progressBar = math.min(100, p.occupant[i].progressBar)
-						if p.occupant[i].progressBar >= 100 and p.occupant[i].progressBarFinishFuncName ~= nil then
-							p[p.occupant[i].progressBarFinishFuncName](i)
-							p.occupant[i].progressBarActive = false
+				if sbq.occupant[i].progressBarActive == true then
+					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + (((math.log(sbq.occupant[i].controls.powerMultiplier)+1) * dt) * sbq.occupant[i].progressBarMultiplier)
+					if sbq.occupant[i].progressBarMultiplier > 0 then
+						sbq.occupant[i].progressBar = math.min(100, sbq.occupant[i].progressBar)
+						if sbq.occupant[i].progressBar >= 100 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
+							sbq[sbq.occupant[i].progressBarFinishFuncName](i)
+							sbq.occupant[i].progressBarActive = false
 						end
 					else
-						p.occupant[i].progressBar = math.max(0, p.occupant[i].progressBar)
-						if p.occupant[i].progressBar <= 0 and p.occupant[i].progressBarFinishFuncName ~= nil then
-							p[p.occupant[i].progressBarFinishFuncName](i)
-							p.occupant[i].progressBarActive = false
+						sbq.occupant[i].progressBar = math.max(0, sbq.occupant[i].progressBar)
+						if sbq.occupant[i].progressBar <= 0 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
+							sbq[sbq.occupant[i].progressBarFinishFuncName](i)
+							sbq.occupant[i].progressBarActive = false
 						end
 					end
 				end
 
-				p.occupant[i].indicatorCooldown = p.occupant[i].indicatorCooldown - dt
+				sbq.occupant[i].indicatorCooldown = sbq.occupant[i].indicatorCooldown - dt
 
-				if world.entityType(p.occupant[i].id) == "player" and p.occupant[i].indicatorCooldown <= 0 then
+				if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
 					-- p.occupant[i].indicatorCooldown = 0.5
-					local struggledata = (p.stateconfig[p.state].struggle or {})[p.occupant[i].location] or {}
+					local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[sbq.occupant[i].location] or {}
 					local directions = {}
-					if not p.transitionLock then
+					if not sbq.transitionLock then
 						for dir, data in pairs(struggledata.directions or {}) do
-							if data and (not p.driving or data.drivingEnabled) then
-								if dir == "front" then dir = ({"left","","right"})[p.direction+2] end
-								if dir == "back" then dir = ({"right","","left"})[p.direction+2] end
+							if data and (not sbq.driving or data.drivingEnabled) then
+								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
+								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
 								directions[dir] = data.indicate or "default"
 							end
 						end
 					end
-					p.loopedMessage(p.occupant[i].id.."-indicator", p.occupant[i].id, -- update quickly but minimize spam
+					sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
 						"sbqOpenInterface", {"sbqIndicatorHud",
 						{
 							owner = entity.id(),
 							directions = directions,
 							progress = {
-								active = p.occupant[i].progressBarActive,
-								color = p.occupant[i].progressBarColor,
-								percent = p.occupant[i].progressBar,
-								dx = (math.log(p.occupant[i].controls.powerMultiplier)+1) * p.occupant[i].progressBarMultiplier,
+								active = sbq.occupant[i].progressBarActive,
+								color = sbq.occupant[i].progressBarColor,
+								percent = sbq.occupant[i].progressBar,
+								dx = (math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
 							},
-							time = p.occupant[i].occupantTime
+							time = sbq.occupant[i].occupantTime
 						}
 					})
 				end
 
 				lastFilled = true
-			elseif p.occupant[i].id ~= nil and not world.entityExists(p.occupant[i].id) then
-				p.occupant[i] = p.clearOccupant(i)
-				p.refreshList = true
+			elseif sbq.occupant[i].id ~= nil and not world.entityExists(sbq.occupant[i].id) then
+				sbq.occupant[i] = sbq.clearOccupant(i)
+				sbq.refreshList = true
 				lastFilled = false
 			else
 				lastFilled = false
-				p.occupant[i] = p.clearOccupant(i)
+				sbq.occupant[i] = sbq.clearOccupant(i)
 			end
 		end
 	end
-	p.swapCooldown = math.max(0, p.swapCooldown - 1)
+	sbq.swapCooldown = math.max(0, sbq.swapCooldown - 1)
 
-	mcontroller.applyParameters({mass = p.movementParams.mass + p.occupants.mass})
-	p.setPartTag( "global", "totaloccupants", tostring(p.occupants.total) )
-	for location, data in pairs(p.sbqData.locations) do
+	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})
+	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
+	for location, data in pairs(sbq.sbqData.locations) do
 		if data.combine ~= nil then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff
 			for _, combine in ipairs(data.combine) do
-				p.occupants[location] = p.occupants[location] + p.occupants[combine]
-				p.occupants[combine] = p.occupants[location]
+				sbq.occupants[location] = sbq.occupants[location] + sbq.occupants[combine]
+				sbq.occupants[combine] = sbq.occupants[location]
 			end
 		end
 		if data.sided then
-			if p.direction >= 1 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-				p.setPartTag( "global", location.."FrontOccupants", tostring(p.occupants[location.."R"]) )
-				p.setPartTag( "global", location.."BackOccupants", tostring(p.occupants[location.."L"]) )
+			if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
+				sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) )
+				sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."L"]) )
 			else
-				p.setPartTag( "global", location.."BackOccupants", tostring(p.occupants[location.."R"]) )
-				p.setPartTag( "global", location.."FrontOccupants", tostring(p.occupants[location.."L"]) )
+				sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."R"]) )
+				sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."L"]) )
 			end
 		else
-			p.setPartTag( "global", location.."occupants", tostring(p.occupants[location]) )
+			sbq.setPartTag( "global", location.."Occupants", tostring(sbq.occupants[location]) )
 		end
 	end
 end
 
-function p.swapOccupants(a, b)
-	local A = p.occupant[a]
-	local B = p.occupant[b]
-	p.occupant[a] = B
-	p.occupant[b] = A
+function sbq.swapOccupants(a, b)
+	local A = sbq.occupant[a]
+	local B = sbq.occupant[b]
+	sbq.occupant[a] = B
+	sbq.occupant[b] = A
 
-	p.swapCooldown = 10 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
+	sbq.swapCooldown = 10 -- p.unForceSeat and p.forceSeat are asynchronous, without some cooldown it'll try to swap multiple times and bad things will happen
 end
 
-function p.entityLounging( entity )
-	for i = 0, p.occupantSlots do
-		if entity == p.occupant[i].id then return true end
+function sbq.entityLounging( entity )
+	for i = 0, sbq.occupantSlots do
+		if entity == sbq.occupant[i].id then return true end
 	end
 	return false
 end
 
-function p.doBellyEffects(dt)
-	if p.occupants.total <= 0 then return end
+function sbq.doBellyEffects(dt)
+	if sbq.occupants.total <= 0 then return end
 
-	local bellyEffect = p.settings.bellyEffect or "sbqRemoveBellyEffects"
+	local bellyEffect = sbq.settings.bellyEffect or "sbqRemoveBellyEffects"
 	local hungereffect = 0
 	if (bellyEffect == "sbqDigest") or (bellyEffect == "sbqSoftDigest") then
 		hungereffect = 1
 	end
-	if p.settings.displayDigest then
-		if p.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
-			bellyEffect = p.config.bellyDisplayStatusEffects[bellyEffect]
+	if sbq.settings.displayDigest then
+		if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
+			bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
 		end
 	end
 
-	local powerMultiplier = math.log(p.seats[p.driverSeat].controls.powerMultiplier) + 1
+	local powerMultiplier = math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1
 
-	for i = 0, p.occupantSlots do
-		local eid = p.occupant[i].id
-		if eid and world.entityExists(eid) and (not (i == 0 and not p.includeDriver)) then
+	for i = 0, sbq.occupantSlots do
+		local eid = sbq.occupant[i].id
+		if eid and world.entityExists(eid) and (not (i == 0 and not sbq.includeDriver)) then
 			local health = world.entityHealth(eid)
-			local light = p.sbqData.lights.prey
+			local light = sbq.sbqData.lights.prey
 			light.position = world.entityPosition( eid )
 			world.sendEntityMessage( eid, "sbqLight", light )
 
-			if p.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
-				local owner = p.occupant[i].nestedPreyData.owner
-				local settings = p.lounging[owner].smolPreyData.settings or {}
+			if sbq.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
+				local owner = sbq.occupant[i].nestedPreyData.owner
+				local settings = sbq.lounging[owner].smolPreyData.settings or {}
 				local status = settings.bellyEffect or "sbqRemoveBellyEffects"
-				local powerMultiplier = math.log(p.lounging[owner].controls.powerMultiplier) + 1
-				if p.occupant[i].nestedPreyData.digest then
+				local powerMultiplier = math.log(sbq.lounging[owner].controls.powerMultiplier) + 1
+				if sbq.occupant[i].nestedPreyData.digest then
 					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
 				end
-			elseif p.sbqData.locations[p.occupant[i].location].digest then
-				if (p.settings.bellySounds == true) then p.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
+			elseif sbq.sbqData.locations[sbq.occupant[i].location].digest then
+				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				local hunger_change = (hungereffect * powerMultiplier * dt)/100
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id() ) end
-				if (p.settings.bellyEffect == "sbqSoftDigest") and health[1] <= 1 then hunger_change = 0 end
-				if p.driver then
-					world.sendEntityMessage( p.driver, "sbqAddHungerHealth", hunger_change)
+				if (sbq.settings.bellyEffect == "sbqSoftDigest") and health[1] <= 1 then hunger_change = 0 end
+				if sbq.driver then
+					world.sendEntityMessage( sbq.driver, "sbqAddHungerHealth", hunger_change)
 				end
-				p.hunger = math.min(100, p.hunger + hunger_change)
+				sbq.hunger = math.min(100, sbq.hunger + hunger_change)
 
-				p.extraBellyEffects(i, eid, health, bellyEffect)
+				sbq.extraBellyEffects(i, eid, health, bellyEffect)
 			else
-				p.otherLocationEffects(i, eid, health, bellyEffect, p.occupant[i].location )
+				sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location )
 			end
 		end
 	end
 end
 
-function p.handleStruggles(dt)
-	if p.transitionLock then return end
+function sbq.handleStruggles(dt)
+	if sbq.transitionLock then return end
 	local struggler = -1
 	local struggledata
 	local movedir = nil
 
-	while (movedir == nil) and struggler < p.occupantSlots do
+	while (movedir == nil) and struggler < sbq.occupantSlots do
 		struggler = struggler + 1
-		movedir = p.getSeatDirections( p.occupant[struggler].seatname )
-		p.occupant[struggler].bellySettleDownTimer = math.max( 0, p.occupant[struggler].bellySettleDownTimer - dt)
+		movedir = sbq.getSeatDirections( sbq.occupant[struggler].seatname )
+		sbq.occupant[struggler].bellySettleDownTimer = math.max( 0, sbq.occupant[struggler].bellySettleDownTimer - dt)
 
-		if (p.occupant[struggler].seatname == p.driverSeat) and not p.includeDriver then
+		if (sbq.occupant[struggler].seatname == sbq.driverSeat) and not sbq.includeDriver then
 			movedir = nil
 		end
-		if p.occupant[struggler].bellySettleDownTimer <= 0 then
+		if sbq.occupant[struggler].bellySettleDownTimer <= 0 then
 			if movedir then
 				local struggling
-				struggledata = p.stateconfig[p.state].struggle[p.occupant[struggler].location]
+				struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location]
 				if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
 					movedir = nil
 				else
 					if struggledata.parts ~= nil then
-						struggling = p.partsAreStruggling(struggledata.parts)
+						struggling = sbq.partsAreStruggling(struggledata.parts)
 					end
 					if (not struggling) and (struggledata.sided ~= nil) then
 						local parts = struggledata.sided.rightParts
-						if p.direction == -1 then
+						if sbq.direction == -1 then
 							parts = struggledata.sided.leftParts
 						end
-						struggling = p.partsAreStruggling(parts)
+						struggling = sbq.partsAreStruggling(parts)
 					end
 				end
 				if struggling then
 					movedir = nil
 				elseif config.getParameter("name") ~= "sbqEgg" then
-					if p.occupant[struggler].species ~= nil and p.config.speciesStrugglesDisabled[p.occupant[struggler].species] then
+					if sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species] then
 						movedir = nil
 					end
 				end
 			else
-				p.occupant[struggler].struggleTime = math.max( 0, p.occupant[struggler].struggleTime - dt)
+				sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt)
 			end
 		else
 			movedir = nil
@@ -538,20 +538,20 @@ function p.handleStruggles(dt)
 
 	if movedir == nil then return end -- invalid struggle
 
-	local strugglerId = p.occupant[struggler].id
+	local strugglerId = sbq.occupant[struggler].id
 
 	if struggledata.script ~= nil then
-		local statescript = state[p.state][struggledata.script]
+		local statescript = state[sbq.state][struggledata.script]
 		if statescript ~= nil then
 			statescript({id = strugglerId, direction = movedir})
 		else
-			sb.logError("no script named: ["..struggledata.script.."] in state: ["..p.state.."]")
+			sb.logError("no script named: ["..struggledata.script.."] in state: ["..sbq.state.."]")
 		end
 	end
 
-	if p.struggleChance(struggledata, struggler, movedir) then
-		p.occupant[struggler].struggleTime = 0
-		p.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId} )
+	if sbq.struggleChance(struggledata, struggler, movedir) then
+		sbq.occupant[struggler].struggleTime = 0
+		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId} )
 	else
 
 		local animation = {offset = struggledata.directions[movedir].offset}
@@ -559,7 +559,7 @@ function p.handleStruggles(dt)
 		local parts = struggledata.parts
 		if struggledata.sided ~= nil then
 			parts = struggledata.sided.rightParts
-			if p.direction == -1 then
+			if sbq.direction == -1 then
 				parts = struggledata.sided.leftParts
 			end
 		end
@@ -567,31 +567,31 @@ function p.handleStruggles(dt)
 			for _, part in ipairs(parts) do
 				animation[part] = prefix.."s_"..movedir
 			end
-			p.doAnims(animation)
+			sbq.doAnims(animation)
 			local time = dt
 			for _, part in ipairs(parts) do
-				local newtime = p.animStateData[part.."State"].animationState.cycle
+				local newtime = sbq.animStateData[part.."State"].animationState.cycle
 				if newtime > time then
 					time = newtime
 				end
 			end
-			p.occupant[struggler].bellySettleDownTimer = time
-			p.occupant[struggler].struggleTime = p.occupant[struggler].struggleTime + time
+			sbq.occupant[struggler].bellySettleDownTimer = time
+			sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 		end
 
 
-		if not p.movement.animating then
-			p.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
+		if not sbq.movement.animating then
+			sbq.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
 		else
-			p.doAnims( struggledata.directions[movedir].animationWhenMoving or struggledata.animationWhenMoving )
+			sbq.doAnims( struggledata.directions[movedir].animationWhenMoving or struggledata.animationWhenMoving )
 		end
 
 		if struggledata.directions[movedir].victimAnimation then
 			local id = strugglerId
 			if struggledata.directions[movedir].victimAnimLocation ~= nil then
-				id = p.findFirstOccupantIdForLocation(struggledata.directions[movedir].victimAnimLocation)
+				id = sbq.findFirstOccupantIdForLocation(struggledata.directions[movedir].victimAnimLocation)
 			end
-			p.doVictimAnim( id, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
+			sbq.doVictimAnim( id, struggledata.directions[movedir].victimAnimation, (struggledata.parts[1] or "body").."State" )
 		end
 
 		local sound = struggledata.sound
@@ -606,26 +606,26 @@ function p.handleStruggles(dt)
 	end
 end
 
-function p.struggleChance(struggledata, struggler, movedir)
+function sbq.struggleChance(struggledata, struggler, movedir)
 	local chances = struggledata.chances
 	if struggledata.directions[movedir].chances ~= nil then
 		chances = struggledata.directions[movedir].chances
 	end
 	if chances ~= nil and chances.max == 0 then return true end
-	return (not p.settings.impossibleEscape)
+	return (not sbq.settings.impossibleEscape)
 	and chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(math.floor(chances.min * 2^((p.settings.escapeDifficulty or 0)/5)), math.ceil(chances.max * 2^((p.settings.escapeDifficulty or 0)/5))) <= (p.occupant[struggler].struggleTime or 0))
-	and ((not p.driving) or struggledata.directions[movedir].drivingEnabled)
+	and (math.random(math.floor(chances.min * 2^((sbq.settings.escapeDifficulty or 0)/5)), math.ceil(chances.max * 2^((sbq.settings.escapeDifficulty or 0)/5))) <= (sbq.occupant[struggler].struggleTime or 0))
+	and ((not sbq.driving) or struggledata.directions[movedir].drivingEnabled)
 end
 
-function p.inedible(occupantId)
-	return p.config.inedibleCreatures[world.entityType(occupantId)]
+function sbq.inedible(occupantId)
+	return sbq.config.inedibleCreatures[world.entityType(occupantId)]
 end
 
-function p.removeOccupantsFromLocation(location)
-	for i = 0, #p.occupant do
-		if p.occupant[i].location == location then
-			p.uneat(p.occupant[i].id)
+function sbq.removeOccupantsFromLocation(location)
+	for i = 0, #sbq.occupant do
+		if sbq.occupant[i].location == location then
+			sbq.uneat(sbq.occupant[i].id)
 		end
 	end
 end

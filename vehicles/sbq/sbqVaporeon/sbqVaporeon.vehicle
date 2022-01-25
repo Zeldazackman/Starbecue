@@ -151,11 +151,8 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"belly" : { "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true },
 			"hug" : { "max": 1, "maxNested": 2 },
-			"shaft" : { "mass": 0.1 },
-			"knot" : { "mass": 0.1 },
-			"balls" : { "sided" : true, "mass": 0.1 },
 			"fatten" : { "mass": 1 }
 		},
 		"defaultSettings" : {

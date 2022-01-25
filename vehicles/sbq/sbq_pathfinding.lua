@@ -1,14 +1,14 @@
 require("/scripts/pathing.lua")
 
-function p.updatePathfinding(dt)
-	local driver = p.driver
-	if p.driving and (driver ~= nil) and (world.entityType(driver) == "player") then return end
+function sbq.updatePathfinding(dt)
+	local driver = sbq.driver
+	if sbq.driving and (driver ~= nil) and (world.entityType(driver) == "player") then return end
 	--[[
 	if a monster or an NPC or whatever ever ends up in a driver seat, possibly from setting them as a smol species,
 	then we do want it to use whateve pathfinding it has so it doesn't just sit there doing nothing
 	]]
-	if p.pathMover == nil then
-		p.pathMover = PathMover:new({ ---@diagnostic disable-line: undefined-global
+	if sbq.pathMover == nil then
+		sbq.pathMover = PathMover:new({ ---@diagnostic disable-line: undefined-global
 			-- pathOptions = { -- all defaults here will be filled in automatically
 			-- 	returnBest = false,
 			-- 	mustEndOnGround = mcontroller.baseParameters().gravityEnabled,
@@ -28,38 +28,38 @@ function p.updatePathfinding(dt)
 			-- 	liquidJumpCost = 15
 			-- },
 			-- run = false,
-			movementParameters = p.movementParams
+			movementParameters = sbq.movementParams
 		})
 	end
-	if state[p.state].pathfinding ~= nil then
-		state[p.state].pathfinding(dt)
+	if state[sbq.state].pathfinding ~= nil then
+		state[sbq.state].pathfinding(dt)
 	else
-		p.pathfinding(dt)
+		sbq.pathfinding(dt)
 	end
-	if p.isPathfinding then
-		p.pathingState = p.pathMover:move(p.pathingTarget, dt)
-		sb.setLogMap("pathingState", tostring(p.pathingState))
-		if p.pathingState == "pathfinding" then
-			p.activeControls = {} -- don't keep moving while deciding what to do
+	if sbq.isPathfinding then
+		sbq.pathingState = sbq.pathMover:move(sbq.pathingTarget, dt)
+		sb.setLogMap("pathingState", tostring(sbq.pathingState))
+		if sbq.pathingState == "pathfinding" then
+			sbq.activeControls = {} -- don't keep moving while deciding what to do
 		end
-		if p.pathingState == true then -- arrived at target
-			p.stopPathing()
+		if sbq.pathingState == true then -- arrived at target
+			sbq.stopPathing()
 		end
 	end
 end
 
-p.pathMover = nil
-p.pathingTarget = nil
+sbq.pathMover = nil
+sbq.pathingTarget = nil
 
-function p.pathTo(target, options)
+function sbq.pathTo(target, options)
 	options = sb.jsonMerge({
 		maximumCorrection = math.abs(mcontroller.localBoundBox()[3] - mcontroller.localBoundBox()[1]),
 		flying = false,
 	}, options)
 	if not target then return false end
-	p.isPathfinding = true
+	sbq.isPathfinding = true
 	target = world.resolvePolyCollision(
-		p.movementParams.collisionPoly, target,
+		sbq.movementParams.collisionPoly, target,
 		options.maximumCorrection
 	)
 	if not target then return false end
@@ -70,43 +70,43 @@ function p.pathTo(target, options)
 		) or target
 	end
 	if not target then return false end
-	p.pathingTarget = target or mcontroller.position()
+	sbq.pathingTarget = target or mcontroller.position()
 end
 
-function p.stopPathing()
-	p.isPathfinding = false
-	p.activeControls = {}
-	p.pathMover.downHoldTimer2 = nil
+function sbq.stopPathing()
+	sbq.isPathfinding = false
+	sbq.activeControls = {}
+	sbq.pathMover.downHoldTimer2 = nil
 end
 
 -- extend mcontroller to add actor methods
 mcontroller_extensions = {}
 
-p.activeControls = {}
-function p.doControls()
+sbq.activeControls = {}
+function sbq.doControls()
 	-- moveDirection, run, and down are handled in sbq_driving in relevant locations
-	if p.activeControls.fly then
-		mcontroller.setVelocty(p.activeControls.fly) -- this might be wrong?? no clue
+	if sbq.activeControls.fly then
+		mcontroller.setVelocty(sbq.activeControls.fly) -- this might be wrong?? no clue
 	end
-	if p.activeControls.targetVelocity then
-		mcontroller.approachVelocity(p.activeControls.targetVelocity, p.activeControls.maxControlForce)
+	if sbq.activeControls.targetVelocity then
+		mcontroller.approachVelocity(sbq.activeControls.targetVelocity, sbq.activeControls.maxControlForce)
 	end
-	if p.activeControls.targetXVelocity then
-		mcontroller.approachXVelocity(p.activeControls.targetXVelocity, p.activeControls.maxControlForce)
+	if sbq.activeControls.targetXVelocity then
+		mcontroller.approachXVelocity(sbq.activeControls.targetXVelocity, sbq.activeControls.maxControlForce)
 	end
-	if p.activeControls.targetYVelocity then
-		mcontroller.approachYVelocity(p.activeControls.targetYVelocity, p.activeControls.maxControlForce)
+	if sbq.activeControls.targetYVelocity then
+		mcontroller.approachYVelocity(sbq.activeControls.targetYVelocity, sbq.activeControls.maxControlForce)
 	end
 end
 
 function mcontroller_extensions.clearControls() -- not used by pathing.lua? good to have anyway
-	p.activeControls = {}
+	sbq.activeControls = {}
 end
 
 function mcontroller_extensions.controlMove(direction, run)
 	-- Controls movement in a direction.
 	-- Each control replaces the previous one.
-	p.activeControls = {
+	sbq.activeControls = {
 		moveDirection = direction,
 		run = run
 	}
@@ -114,7 +114,7 @@ end
 
 function mcontroller_extensions.baseParameters()
 	-- Returns the base movement parameters.
-	return p.movementParams
+	return sbq.movementParams
 end
 
 function mcontroller_extensions.boundBox()
@@ -124,7 +124,7 @@ end
 
 function mcontroller_extensions.facingDirection()
 	-- Returns the facing direction. -1 for left, 1 for right.
-	return p.direction
+	return sbq.direction
 end
 
 function mcontroller_extensions.movingDirection()
@@ -136,15 +136,15 @@ end
 function mcontroller_extensions.controlParameters(parameters)
 	-- Changes movement parameters. Parameters are merged into the base parameters.
 	-- Each control is merged into the previous one.
-	p.activeControls.parameters = sb.jsonMerge(p.activeControls.parameters, parameters)
-	p.setMovementParams(p.movementParamsName)
+	sbq.activeControls.parameters = sb.jsonMerge(sbq.activeControls.parameters, parameters)
+	sbq.setMovementParams(sbq.movementParamsName)
 end
 
 function mcontroller_extensions.controlDown()
 	-- Controls dropping through platforms.
-	p.activeControls.drop = true -- no override
-	if p.pathMover.downHoldTimer2 == nil then
-		p.pathMover.downHoldTimer2 = 0.1 -- hack because downHoldTimer gets reset too soon
+	sbq.activeControls.drop = true -- no override
+	if sbq.pathMover.downHoldTimer2 == nil then
+		sbq.pathMover.downHoldTimer2 = 0.1 -- hack because downHoldTimer gets reset too soon
 	end
 end
 
@@ -153,7 +153,7 @@ function mcontroller_extensions.controlApproachVelocity(targetVelocity, maxContr
 	-- If the current velocity is higher than the provided targetVelocity,
 	-- the targetVelocity will still be approached, effectively slowing down the entity.
 	-- Each control overrides the previous one.
-	p.activeControls = {
+	sbq.activeControls = {
 		targetVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}
@@ -162,7 +162,7 @@ end
 function mcontroller_extensions.controlApproachXVelocity(targetVelocity, maxControlForce)
 	-- Approaches an X velocity. Same as using approachVelocityAlongAngle with angle 0.
 	-- Each control overrides the previous one.
-	p.activeControls = {
+	sbq.activeControls = {
 		targetXVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}
@@ -171,7 +171,7 @@ end
 function mcontroller_extensions.controlApproachYVelocity(targetVelocity, maxControlForce)
 	-- Approaches a Y velocity. Same as using approachVelocityAlongAngle with angle (Pi / 2).
 	-- Each control overrides the previous one.
-	p.activeControls = {
+	sbq.activeControls = {
 		targetYVelocity = targetVelocity,
 		maxControlForce = maxControlForce
 	}
@@ -179,13 +179,13 @@ end
 
 function mcontroller_extensions.liquidMovement()
 	-- Returns whether the controller is currently in liquid movement mode.
-	return p.underWater()
+	return sbq.underWater()
 end
 
 function mcontroller_extensions.controlFly(velocity)
 	-- Controls flying in the specified velocity.
 	-- Each control overrides the previous one.
-	p.activeControls = {
+	sbq.activeControls = {
 		fly = velocity
 	}
 end

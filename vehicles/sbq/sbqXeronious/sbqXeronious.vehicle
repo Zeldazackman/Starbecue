@@ -136,10 +136,12 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
-			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },
+			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"], "hammerspace" : true },
+
 			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["bodybob"] },
 			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] },
+
 			"fatten" : { "mass": 1 }
 		},
 		"allowedModifiers": {

@@ -16,25 +16,25 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function p.init()
+function sbq.init()
 	rollForShiny()
 end
 
 function rollForShiny()
-	if p.settings.shinyRoll == nil then
+	if sbq.settings.shinyRoll == nil then
 		sb.logInfo("rolling for shiny...")
-		p.settings.shinyRoll = math.random(1, 4096)
-		if p.settings.shinyRoll == 1 then
-			p.settings.replaceColors = {8,8,9,3,9,1,1}
-			p.setColorReplaceDirectives()
-			world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqVaporeon")
+		sbq.settings.shinyRoll = math.random(1, 4096)
+		if sbq.settings.shinyRoll == 1 then
+			sbq.settings.replaceColors = {8,8,9,3,9,1,1}
+			sbq.setColorReplaceDirectives()
+			world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqVaporeon")
 			sb.logInfo("woah a shiny pokemon!")
 		else
 			sb.logInfo("meh... not a shiny...")
 		end
 	else
 		sb.logInfo("already rolled for shiny")
-		if p.settings.shinyRoll == 1 then
+		if sbq.settings.shinyRoll == 1 then
 			sb.logInfo("oh cool you're a shiny")
 		else
 			sb.logInfo("just a normal pokemon")
@@ -44,68 +44,68 @@ end
 
 -------------------------------------------------------------------------------
 
-function p.update(dt)
-	p.whenFalling()
-	p.changeSize()
+function sbq.update(dt)
+	sbq.whenFalling()
+	sbq.changeSize()
 end
 
-function p.whenFalling()
-	if p.state == "stand" or p.state == "smol" or p.state == "chonk_ball" then return end
-	if not mcontroller.onGround() and p.totalTimeAlive > 1 then
-		p.setState( "stand" )
-		p.doAnims( p.stateconfig[p.state].control.animations.fall )
-		p.movement.falling = true
-		p.uneat(p.findFirstOccupantIdForLocation("hug"))
+function sbq.whenFalling()
+	if sbq.state == "stand" or sbq.state == "smol" or sbq.state == "chonk_ball" then return end
+	if not mcontroller.onGround() and sbq.totalTimeAlive > 1 then
+		sbq.setState( "stand" )
+		sbq.doAnims( sbq.stateconfig[sbq.state].control.animations.fall )
+		sbq.movement.falling = true
+		sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
 	end
 end
 
-function p.changeSize()
-	if p.tapControl( p.driverSeat, "special1" ) and p.totalTimeAlive > 0.5 and not p.transitionLock then
-		p.uneat(p.findFirstOccupantIdForLocation("hug"))
+function sbq.changeSize()
+	if sbq.tapControl( sbq.driverSeat, "special1" ) and sbq.totalTimeAlive > 0.5 and not sbq.transitionLock then
+		sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
 
 		local changeSize = "smol"
-		if p.occupants.belly >= 2 then
+		if sbq.occupants.belly >= 2 then
 			changeSize = "chonk_ball"
 		end
-		if p.state == changeSize then
+		if sbq.state == changeSize then
 			changeSize = "stand"
 		end
-		p.warpInEffect(); --Play warp in effect
-		p.setState( changeSize )
+		sbq.warpInEffect(); --Play warp in effect
+		sbq.setState( changeSize )
 	end
 end
 
 function analEscape(args)
-	return p.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {} )
 end
 
 function eatAnal(args)
-	return p.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function checkAnalVore()
-	return p.checkEatPosition(p.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
+	return sbq.checkEatPosition(sbq.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
 end
 
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
-	p.setMovementParams( "default" )
-	p.resolvePosition(5)
+	sbq.setMovementParams( "default" )
+	sbq.resolvePosition(5)
 end
 
 function state.stand.eat( args )
-	if not mcontroller.onGround() or p.movement.falling then return false end
-	return p.doVore(args, "belly", {}, "swallow")
+	if not mcontroller.onGround() or sbq.movement.falling then return false end
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.letout( args )
-	if not mcontroller.onGround() or p.movement.falling then return false end
-	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	if not mcontroller.onGround() or sbq.movement.falling then return false end
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function state.stand.vore()
-	return p.checkEatPosition(p.localToGlobal( p.stateconfig.stand.actions.oralVore.position ), 2, "belly", "oralVore")
+	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig.stand.actions.oralVore.position ), 2, "belly", "oralVore")
 end
 
 -------------------------------------------------------------------------------
@@ -113,32 +113,32 @@ end
 function state.sit.pin( args )
 	local pinnable = { args.id }
 	-- if not interact target or target isn't in front
-	if args.id == nil or p.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
+	if args.id == nil or sbq.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
 		local pinbounds = {
-			p.localToGlobal({2.75, -4}),
-			p.localToGlobal({3.5, -3.5})
+			sbq.localToGlobal({2.75, -4}),
+			sbq.localToGlobal({3.5, -3.5})
 		}
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
-		if #pinnable == 0 and p.driving then
+		if #pinnable == 0 and sbq.driving then
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
 	if #pinnable >= 1 then
-		p.addRPC(world.sendEntityMessage(pinnable[1], "sbqIsPreyEnabled", "held"), function(enabled)
+		sbq.addRPC(world.sendEntityMessage(pinnable[1], "sbqIsPreyEnabled", "held"), function(enabled)
 			if enabled then
-				p.eat( pinnable[1], "hug" )
+				sbq.eat( pinnable[1], "hug" )
 			end
-			p.doTransition("lay")
+			sbq.doTransition("lay")
 		end)
 	else
-		p.doTransition("lay")
+		sbq.doTransition("lay")
 	end
 	return true
 end
 
 function state.sit.grabPin()
-	local target = p.checkValidAim(p.driverSeat, 3)
-	if target ~= nil and p.globalToLocal( world.entityPosition( target ) )[1] < 3 then
+	local target = sbq.checkValidAim(sbq.driverSeat, 3)
+	if target ~= nil and sbq.globalToLocal( world.entityPosition( target ) )[1] < 3 then
 		return state.sit.pin({ id = target })
 	end
 end
@@ -146,19 +146,19 @@ end
 -------------------------------------------------------------------------------
 
 function absorb(args)
-	args.id = p.findFirstOccupantIdForLocation("hug")
+	args.id = sbq.findFirstOccupantIdForLocation("hug")
 	if not args.id then return false end
 	animator.playSound( "slurp" )
-	return true, function() p.moveOccupantLocation(args, "belly") end
+	return true, function() sbq.moveOccupantLocation(args, "belly") end
 end
 
 function state.lay.update()
-	if p.driving then
-		if p.pressControl( p.driverSeat, "jump" ) then
-			p.doTransition( "absorb" )
+	if sbq.driving then
+		if sbq.pressControl( sbq.driverSeat, "jump" ) then
+			sbq.doTransition( "absorb" )
 		end
-		if p.pressControl( p.driverSeat, "primaryFire" ) or p.pressControl( p.driverSeat, "altFire" )then
-			p.doTransition( "lick" )
+		if sbq.pressControl( sbq.driverSeat, "primaryFire" ) or sbq.pressControl( sbq.driverSeat, "altFire" )then
+			sbq.doTransition( "lick" )
 		end
 	end
 end
@@ -166,17 +166,17 @@ end
 state.lay.absorb = absorb
 
 function state.lay.unpin(args)
-	args.id = p.findFirstOccupantIdForLocation("hug")
+	args.id = sbq.findFirstOccupantIdForLocation("hug")
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape(args, {}, {})
+	returnval[1], returnval[2], returnval[3] = sbq.doEscape(args, {}, {})
 	return true, returnval[2], returnval[3]
 end
 
 -------------------------------------------------------------------------------
 
 function state.sleep.update()
-	if p.driving and p.pressControl( p.driverSeat, "jump" ) then
-		p.doTransition( "absorb" )
+	if sbq.driving and sbq.pressControl( sbq.driverSeat, "jump" ) then
+		sbq.doTransition( "absorb" )
 	end
 end
 
@@ -186,22 +186,22 @@ state.sleep.absorb = absorb
 
 function state.back.update()
 	-- simulate npc interaction when nearby
-	if p.occupants.total == 0 and not p.isObject then
-		if p.randomChance(1) then -- every frame, we don't want it too often
+	if sbq.occupants.total == 0 and not sbq.isObject then
+		if sbq.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
-				p.doTransition( "bed", {id=npcs[1]} )
+				sbq.doTransition( "bed", {id=npcs[1]} )
 			end
 		end
 	end
 end
 
 function state.back.bed( args )
-	return p.eat( args.id, "hug" )
+	return sbq.eat( args.id, "hug" )
 end
 
 function state.back.unbed(args)
-	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
+	return sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
 end
 
 state.back.analEscape = analEscape
@@ -210,17 +210,17 @@ state.back.analVore = checkAnalVore
 state.back.vore = checkAnalVore
 
 function state.back.grab()
-	if p.findFirstOccupantIdForLocation("hug") == nil then
-		p.checkEatPosition(p.localToGlobal({1, -2}), 3, "hug", "bed" )
+	if sbq.findFirstOccupantIdForLocation("hug") == nil then
+		sbq.checkEatPosition(sbq.localToGlobal({1, -2}), 3, "hug", "bed" )
 	end
-	p.doTransition("down")
+	sbq.doTransition("down")
 end
 
 -------------------------------------------------------------------------------
 
 function state.hug.update()
-	if p.pressControl( p.driverSeat, "jump" ) then
-		p.doTransition( "absorb" )
+	if sbq.pressControl( sbq.driverSeat, "jump" ) then
+		sbq.doTransition( "absorb" )
 	end
 end
 
@@ -232,35 +232,35 @@ state.hug.analVore = checkAnalVore
 state.hug.vore = checkAnalVore
 
 function state.hug.grab()
-	p.doTransition("up")
-	p.doTransition("unhug")
+	sbq.doTransition("up")
+	sbq.doTransition("unhug")
 end
 
 -------------------------------------------------------------------------------
 
 function state.smol.begin()
-	p.setMovementParams( "smol" )
-	p.resolvePosition(3)
+	sbq.setMovementParams( "smol" )
+	sbq.resolvePosition(3)
 end
 
 -------------------------------------------------------------------------------
 
 function state.chonk_ball.update(dt)
 	roll_chonk_ball(dt)
-	p.movement.aimingLock = 0.1
-	if p.occupants.belly < 2 and not p.transitionLock then
-		p.warpInEffect();
+	sbq.movement.aimingLock = 0.1
+	if sbq.occupants.belly < 2 and not sbq.transitionLock then
+		sbq.warpInEffect();
 
-		p.setState( "smol" )
+		sbq.setState( "smol" )
 	end
 end
 
 function state.chonk_ball.begin()
-	p.setPartTag( "global","rotationFlip", p.direction * -1)
-	p.setMovementParams( "chonk_ball" )
-	p.resolvePosition(3)
-	self.ballFrames = p.stateconfig.chonk_ball.control.ballFrames
-	self.ballRadius = p.stateconfig.chonk_ball.control.ballRadius
+	sbq.setPartTag( "global","rotationFlip", sbq.direction * -1)
+	sbq.setMovementParams( "chonk_ball" )
+	sbq.resolvePosition(3)
+	self.ballFrames = sbq.stateconfig.chonk_ball.control.ballFrames
+	self.ballRadius = sbq.stateconfig.chonk_ball.control.ballRadius
 	self.angularVelocity = 0
 	self.angle = 0
 end
@@ -273,9 +273,9 @@ function state.chonk_ball.nudge(args)
 		elseif args.direction == "back" then
 			dx = -1
 		end
-		dx = dx * p.direction
-		if math.abs(mcontroller.xVelocity()) <= p.movementParams.walkSpeed * 1.5 then
-			mcontroller.force({p.movementParams.groundForce * 1.5 * dx, 0})
+		dx = dx * sbq.direction
+		if math.abs(mcontroller.xVelocity()) <= sbq.movementParams.walkSpeed * 1.5 then
+			mcontroller.force({sbq.movementParams.groundForce * 1.5 * dx, 0})
 		end
 	end
 end
@@ -295,7 +295,7 @@ function updateRotationFrame(dt)
 	-- Rotation frames for the ball are given as one *half* rotation so two
 	-- full cycles of each of the ball frames completes a total rotation.
 	local rotationFrame = math.floor(self.angle / math.pi * self.ballFrames) % self.ballFrames
-	p.setPartTag( "global","rotationFrame", rotationFrame)
+	sbq.setPartTag( "global","rotationFrame", rotationFrame)
 end
 
 function updateAngularVelocity(dt)

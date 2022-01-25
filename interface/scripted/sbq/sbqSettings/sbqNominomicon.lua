@@ -59,27 +59,6 @@ function sbq.saveSettings()
 	world.sendEntityMessage( sbq.predatorSpawner, "sbqSaveSettings", sbq.predatorSettings )
 end
 
-function sbq.checkRPCsFinished(dt)
-	for i, list in pairs(sbq.rpcList) do
-		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
-		if list.rpc:finished() then
-			if list.rpc:succeeded() and list.callback ~= nil then
-				list.callback(list.rpc:result(), list.dt)
-			elseif list.failCallback ~= nil then
-				list.failCallback(list.dt)
-			end
-			table.remove(sbq.rpcList, i)
-		end
-	end
-end
-
-sbq.rpcList = {}
-function sbq.addRPC(rpc, callback, failCallback)
-	if callback ~= nil or failCallback ~= nil  then
-		table.insert(sbq.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
-	end
-end
-
 sbq.changePredatorSetting = sbq.changeGlobalSetting
 
 --------------------------------------------------------------------------------------

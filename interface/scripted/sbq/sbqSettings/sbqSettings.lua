@@ -3,10 +3,13 @@
 
 require( "/lib/stardust/json.lua" )
 
-sbq = {}
+sbq = {
+	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
+	config = root.assetJson( "/sbqGeneral.config" )
 
-sbq.extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
-sbq.config = root.assetJson( "/sbqGeneral.config" )
+}
+
+require("/scripts/SBQ_RPC_handling.lua")
 
 function sbq.getPatronsString()
 	local patronsString = ""

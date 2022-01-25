@@ -1,10 +1,10 @@
 {
 	"globalTagDefaults" : {
-		"totaloccupants" : "0",
-		"bellyoccupants" : "0",
-		"shaftoccupants": "0",
-		"ballsLoccupants": "0",
-		"ballsRoccupants": "0",
+		"totalOccupants" : "0",
+		"bellyOccupants" : "0",
+		"shaftOccupants": "0",
+		"ballsLOccupants": "0",
+		"ballsROccupants": "0",
 		"partVisible": "",
 		"cockVisible": "",
 		"ballsVisible": "",
@@ -245,10 +245,6 @@
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
 			},
-			"head1State": {"default": "none", "states": { "none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }}},
-			"head2State": {"default": "none", "states": { "none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }}},
-			"head3State": {"default": "none", "states": { "none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }}},
-
 			"occupant0State": {
 				"default": "empty",
 				"states": {
@@ -339,17 +335,17 @@
 				},
 				"partStates": {
 					"bellyState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.idle.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.idle.<frame><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.eat.<frame><partVisible><directives><statusDirectives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.escape.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.eat.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.escape.<frame><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.s_back.<frame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.s_front.<frame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.s_up.<frame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyoccupants>.s_down.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_back.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_front.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_up.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_down.<frame><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"smol.idle": { "properties": { "image": "skins/<skin>/normal/belly.png:<bellyoccupants>.idle.<frame><partVisible><directives><statusDirectives><bellymask>" } },
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/belly.png:<bellyOccupants>.idle.<frame><partVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
@@ -413,22 +409,22 @@
 				},
 				"partStates": {
 					"cockState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.idle.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"run": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.run.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.idle.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"run": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.run.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
 
-						"jump": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.jump.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"fall": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.fall.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"jump": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.jump.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"fall": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.fall.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.eat.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.escape.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.eat.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.escape.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.s_back.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.s_front.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.s_up.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftoccupants>.s_down.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.s_back.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.s_front.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.s_up.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_cock.png:<shaftOccupants>.s_down.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
 
-						"smol.idle": { "properties": { "image": "skins/<skin>/normal/cock.png:<shaftoccupants>.idle.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
-						"smol.run": { "properties": { "image": "skins/<skin>/normal/cock.png:<shaftoccupants>.run.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/cock.png:<shaftOccupants>.idle.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
+						"smol.run": { "properties": { "image": "skins/<skin>/normal/cock.png:<shaftOccupants>.run.<frame><partVisible><cockVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 
@@ -694,10 +690,11 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.2,
-					"transformationGroups": ["flip", "headbob"]
+					"transformationGroups": ["flip", "headbob"],
+					"partVisible" : "?crop;0;0;0;0"
 				},
 				"partStates": {
-					"head1State": {
+					"headState": {
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/hair/head.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 						"none": { "properties": {} }
 					}
@@ -743,10 +740,11 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.1,
-					"transformationGroups": ["flip", "headbob"]
+					"transformationGroups": ["flip", "headbob"],
+					"partVisible" : "?crop;0;0;0;0"
 				},
 				"partStates": {
-					"head2State": {
+					"headState": {
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/fluff/head.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 						"none": { "properties": {} }
 					}
@@ -793,10 +791,11 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1,
-					"transformationGroups": ["flip", "headbob"]
+					"transformationGroups": ["flip", "headbob"],
+					"partVisible" : "?crop;0;0;0;0"
 				},
 				"partStates": {
-					"head3State": {
+					"headState": {
 						"smol.idle": { "properties": { "image": "skins/<skin>/normal/beak.png:idle.<frame><partVisible><directives><statusDirectives>" } },
 						"none": { "properties": {} }
 					}

@@ -20,6 +20,8 @@ sbq = {
 	}
 }
 
+require("/scripts/SBQ_RPC_handling.lua")
+
 function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.name = world.entityName(pane.sourceEntity())
@@ -59,109 +61,6 @@ function sbq.refreshData()
 	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", { player.id(), (player.getProperty("sbqCurrentData") or {}).type }, function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
 	end)
-end
-
-function sbq.checkRPCsFinished(dt)
-	for i, list in pairs(sbq.rpcList) do
-		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
-		if list.rpc:finished() then
-			if list.rpc:succeeded() and list.callback ~= nil then
-				list.callback(list.rpc:result(), list.dt)
-			elseif list.failCallback ~= nil then
-				list.failCallback(list.dt)
-			end
-			table.remove(sbq.rpcList, i)
-		end
-	end
-end
-
-sbq.rpcList = {}
-function sbq.addRPC(rpc, callback, failCallback)
-	if callback ~= nil or failCallback ~= nil  then
-		table.insert(sbq.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
-	end
-end
-
-sbq.loopedMessages = {}
-function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
-	if sbq.loopedMessages[name] == nil then
-		sbq.loopedMessages[name] = {
-			rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
-			callback = callback,
-			failCallback = failCallback
-		}
-	elseif sbq.loopedMessages[name].rpc:finished() then
-		if sbq.loopedMessages[name].rpc:succeeded() and sbq.loopedMessages[name].callback ~= nil then
-			sbq.loopedMessages[name].callback(sbq.loopedMessages[name].rpc:result())
-		elseif sbq.loopedMessages[name].failCallback ~= nil then
-			sbq.loopedMessages[name].failCallback()
-		end
-		sbq.loopedMessages[name] = nil
-	end
-end
-
-sbq.timerList = {}
-
-function sbq.randomTimer(name, min, max, callback)
-	if name == nil or sbq.timerList[name] == nil then
-		local timer = {
-			targetTime = (math.random(min * 100, max * 100))/100,
-			currTime = 0,
-			callback = callback
-		}
-		if name ~= nil then
-			sbq.timerList[name] = timer
-		else
-			table.insert(sbq.timerList, timer)
-		end
-		return true
-	end
-end
-
-function sbq.timer(name, time, callback)
-	if name == nil or sbq.timerList[name] == nil then
-		local timer = {
-			targetTime = time,
-			currTime = 0,
-			callback = callback
-		}
-		if name ~= nil then
-			sbq.timerList[name] = timer
-		else
-			table.insert(sbq.timerList, timer)
-		end
-		return true
-	end
-end
-
-function sbq.forceTimer(name, time, callback)
-		local timer = {
-			targetTime = time,
-			currTime = 0,
-			callback = callback
-		}
-		if name ~= nil then
-			sbq.timerList[name] = timer
-		else
-			table.insert(sbq.timerList, timer)
-		end
-		return true
-end
-
-function sbq.checkTimers(dt)
-	for name, timer in pairs(sbq.timerList) do
-		timer.currTime = timer.currTime + dt
-		if timer.currTime >= timer.targetTime then
-			if timer.callback ~= nil then
-				timer.callback()
-			end
-			if type(name) == "number" then
-				table.remove(sbq.timerList, name)
-			else
-				sbq.timerList[name] = nil
-			end
-		end
-	end
 end
 
 function sbq.getDialogueData()

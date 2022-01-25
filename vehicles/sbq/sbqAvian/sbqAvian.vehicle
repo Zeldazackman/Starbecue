@@ -82,7 +82,11 @@
 				],
 				"fullThreshold" : 3.2, // mass of two normal players
 				"pulseEffect": "doublejump",
+				"jumpCount" : 3,
 				"pulseSparkles": 6,
+				"airJumpProfile" : {
+					"jumpSpeed" : 28.0
+				},
 				"ignorePlatformCollision" : false
 			},
 			"smol":{
@@ -94,6 +98,10 @@
 				],
 				"pulseEffect": "smoldoublejump",
 				"pulseSparkles": 3,
+				"jumpCount" : 3,
+				"airJumpProfile" : {
+					"jumpSpeed" : 23.0
+				},
 				"ignorePlatformCollision" : false
 			}
 		},
@@ -189,18 +197,18 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"] },
+			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"ballsL" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"ballsR" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
+			"shaft" : { "max": 1, "mass": 0.1 },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
+			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 
-			"breasts" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"breastsL" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 },
-			"breastsR" : { "sided" : true, "max": 1, "mass": 0.1, "hyperMass": 1 }
+			"breasts" : { "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breastsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breastsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
 		},
 
 

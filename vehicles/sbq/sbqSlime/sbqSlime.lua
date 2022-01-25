@@ -7,11 +7,11 @@ state = {
 	smol = {}
 }
 
-function p.init()
+function sbq.init()
 	getColors()
 end
 
-function p.update(dt)
+function sbq.update(dt)
 	--[[
 	if p.movement.airtime > 0.25 then
 		local velocity = mcontroller.velocity()
@@ -28,32 +28,32 @@ function p.update(dt)
 end
 
 function getColors()
-	if not p.settings.firstLoadDone then
+	if not sbq.settings.firstLoadDone then
 
-		p.settings.replaceColors[1] = math.random( #p.sbqData.replaceColors[1] - 2 )
-		p.settings.firstLoadDone = true
+		sbq.settings.replaceColors[1] = math.random( #sbq.sbqData.replaceColors[1] - 2 )
+		sbq.settings.firstLoadDone = true
 
-		p.setColorReplaceDirectives()
-		world.sendEntityMessage(p.spawner, "sbqSaveSettings", p.settings, "sbqSlime")
+		sbq.setColorReplaceDirectives()
+		world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqSlime")
 	end
 end
 
 -------------------------------------------------------------------------------
 
 function state.smol.absorbVore( args )
-	return p.doVore(args, "belly", {}, "slurp")
+	return sbq.doVore(args, "belly", {}, "slurp")
 end
 
 function state.smol.absorbEscape( args )
 	local effect = "slimeslow"
-	if p.settings.replaceColors[1] == 2 then
+	if sbq.settings.replaceColors[1] == 2 then
 		effect = "glueslow"
 	end
-	return p.doEscape(args, {[effect] = { power = 5 + (p.lounging[args.id].progressBar), source = entity.id()}}, {})
+	return sbq.doEscape(args, {[effect] = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {})
 end
 
 function state.smol.checkAbsorbVore()
-	return p.checkEatPosition(p.localToGlobal({0,0}), 3, "belly", "absorbVore")
+	return sbq.checkEatPosition(sbq.localToGlobal({0,0}), 3, "belly", "absorbVore")
 end
 
 -------------------------------------------------------------------------------

@@ -27,35 +27,35 @@ TODO:
 ]]--
 -------------------------------------------------------------------------------
 
-function p.update(dt)
-	p.whenFalling()
-	p.armRotationUpdate()
-	p.setGrabTarget()
-	if not p.heldControl(p.driverSeat, "primaryFire") and not p.heldControl(p.driverSeat, "altFire") then
-		p.succTime = math.max(0, p.succTime - p.dt)
+function sbq.update(dt)
+	sbq.whenFalling()
+	sbq.armRotationUpdate()
+	sbq.setGrabTarget()
+	if not sbq.heldControl(sbq.driverSeat, "primaryFire") and not sbq.heldControl(sbq.driverSeat, "altFire") then
+		sbq.succTime = math.max(0, sbq.succTime - sbq.dt)
 	end
 end
 
 -------------------------------------------------------------------------------
 
-function p.whenFalling()
-	if not (p.state == "stand" or p.state == "fly" or p.state == "crouch") and not mcontroller.onGround() then
-		p.setState( "stand" )
-		p.grabbing = p.findFirstOccupantIdForLocation("hug")
+function sbq.whenFalling()
+	if not (sbq.state == "stand" or sbq.state == "fly" or sbq.state == "crouch") and not mcontroller.onGround() then
+		sbq.setState( "stand" )
+		sbq.grabbing = sbq.findFirstOccupantIdForLocation("hug")
 	end
 end
 
-function p.setItemActionColorReplaceDirectives()
-	local colorReplaceString = p.sbqData.itemActionDirectives or ""
+function sbq.setItemActionColorReplaceDirectives()
+	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
 
-	if p.sbqData.replaceColors ~= nil then
+	if sbq.sbqData.replaceColors ~= nil then
 		local i = 1
 		local basePalette = { "154247", "23646a", "39979e", "4cc1c9" }
-		local replacePalette = p.sbqData.replaceColors[i][((p.settings.replaceColors or {})[i] or (p.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-		local fullbright = (p.settings.fullbright or {})[i]
+		local replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
+		local fullbright = (sbq.settings.fullbright or {})[i]
 
-		if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] ~= nil then
-			replacePalette = p.settings.replaceColorTable[i]
+		if sbq.settings.replaceColorTable ~= nil and sbq.settings.replaceColorTable[i] ~= nil then
+			replacePalette = sbq.settings.replaceColorTable[i]
 		end
 
 		for j, color in ipairs(basePalette) do
@@ -68,11 +68,11 @@ function p.setItemActionColorReplaceDirectives()
 
 		i = 4
 		basePalette = { "63263d", "7a334d", "9d4165" }
-		replacePalette = p.sbqData.replaceColors[i][((p.settings.replaceColors or {})[i] or (p.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-		fullbright = (p.settings.fullbright or {})[i]
+		replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
+		fullbright = (sbq.settings.fullbright or {})[i]
 
-		if p.settings.replaceColorTable ~= nil and p.settings.replaceColorTable[i] ~= nil then
-			replacePalette = p.settings.replaceColorTable[i]
+		if sbq.settings.replaceColorTable ~= nil and sbq.settings.replaceColorTable[i] ~= nil then
+			replacePalette = sbq.settings.replaceColorTable[i]
 		end
 
 		for j, color in ipairs(basePalette) do
@@ -84,56 +84,56 @@ function p.setItemActionColorReplaceDirectives()
 		end
 	end
 
-	p.itemActionDirectives = colorReplaceString
+	sbq.itemActionDirectives = colorReplaceString
 end
 
-function p.letout(id)
+function sbq.letout(id)
 	local id = id
 	if id == nil then
-		id = p.occupant[p.occupants.total].id
+		id = sbq.occupant[sbq.occupants.total].id
 	end
 	if not id then return end
-	local location = p.lounging[id].location
+	local location = sbq.lounging[id].location
 
 	if location == "belly" then
-		if p.heldControl(p.driverSeat, "down") or p.lounging[id].species == "sbqEgg" then
-			return p.doTransition("analEscape", {id = id})
+		if sbq.heldControl(sbq.driverSeat, "down") or sbq.lounging[id].species == "sbqEgg" then
+			return sbq.doTransition("analEscape", {id = id})
 		else
-			return p.doTransition("oralEscape", {id = id})
+			return sbq.doTransition("oralEscape", {id = id})
 		end
 	elseif location == "tail" then
-		return p.doTransition("tailEscape", {id = id})
+		return sbq.doTransition("tailEscape", {id = id})
 	elseif location == "hug" then
-		p.grabbing = nil
-		return p.uneat(id)
+		sbq.grabbing = nil
+		return sbq.uneat(id)
 	end
 end
 
 function checkEggSitup()
-	if not p.driving then
-		for i = 0, p.occupantSlots do
-			if p.occupant[i].species == "sbqEgg" then
-				return p.doTransition("up")
+	if not sbq.driving then
+		for i = 0, sbq.occupantSlots do
+			if sbq.occupant[i].species == "sbqEgg" then
+				return sbq.doTransition("up")
 			end
 		end
 	end
 end
 
-p.succTime = 0
-p.succing = false
+sbq.succTime = 0
+sbq.succing = false
 function succ(args)
-	if p.transitionLock or p.succTime > 5 then return end
+	if sbq.transitionLock or sbq.succTime > 5 then return end
 
-	local globalSuccPosition = p.localToGlobal(p.stateconfig[p.state].actions.succ.position or {0,0})
-	local aim = p.seats[p.driverSeat].controls.aim
+	local globalSuccPosition = sbq.localToGlobal(sbq.stateconfig[sbq.state].actions.succ.position or {0,0})
+	local aim = sbq.seats[sbq.driverSeat].controls.aim
 
 	local magnitude = world.magnitude(globalSuccPosition, aim)
 	local range = 30
 	if magnitude > range then return end
 
-	p.succTime = p.succTime + p.dt
-	p.facePoint(p.seats[p.driverSeat].controls.aim[1])
-	p.movement.aimingLock = 0.1
+	sbq.succTime = sbq.succTime + sbq.dt
+	sbq.facePoint(sbq.seats[sbq.driverSeat].controls.aim[1])
+	sbq.movement.aimingLock = 0.1
 
 	local entities = world.entityLineQuery(globalSuccPosition, aim, {
 		withoutEntityId = entity.id()
@@ -144,17 +144,17 @@ function succ(args)
 		source = entity.id(),
 		speed = 15,
 		force = 500,
-		direction = p.direction,
+		direction = sbq.direction,
 		range = range
 	}
 
 	for i, id in ipairs(entities) do
 		if id and entity.entityInSight(id) then
-			p.loopedMessage("succ"..i, id, "sbqSucc", {data})
+			sbq.loopedMessage("succ"..i, id, "sbqSucc", {data})
 		end
 	end
 
-	p.randomTimer("succ", 0, 0.3, function ()
+	sbq.randomTimer("succ", 0, 0.3, function ()
 		local effectPosition = { aim[1]+math.random(-3,3)*math.random(), aim[2]+math.random(-3,3)*math.random() }
 
 		local aimLine = world.lineCollision(globalSuccPosition, effectPosition, { "Null", "block", "slippery" })
@@ -164,90 +164,90 @@ function succ(args)
 		world.spawnProjectile( "sbqSuccEffect", effectPosition, entity.id(), world.distance( globalSuccPosition, effectPosition ), false, {data = data} )
 	end)
 
-	p.checkEatPosition( globalSuccPosition, 3, "belly", "succEat", true)
+	sbq.checkEatPosition( globalSuccPosition, 3, "belly", "succEat", true)
 	return true
 end
 
 function grab()
-	p.grab("hug")
+	sbq.grab("hug")
 end
 
 function hugGrab()
-	return p.checkEatPosition(mcontroller.position(), 5, "hug", "hug")
+	return sbq.checkEatPosition(mcontroller.position(), 5, "hug", "hug")
 end
 
 function hugUnGrab()
-	return p.uneat(p.findFirstOccupantIdForLocation("hug"))
+	return sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
 end
 
 function bellyToTail(args)
-	return p.moveOccupantLocation(args, "tail")
+	return sbq.moveOccupantLocation(args, "tail")
 end
 
 function tailToBelly(args)
-	return p.moveOccupantLocation(args, "belly")
+	return sbq.moveOccupantLocation(args, "belly")
 end
 
 function grabOralEat(args)
-	p.grabbing = args.id
-	return p.doVore(args, "belly", {}, "swallow")
+	sbq.grabbing = args.id
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function oralEat(args)
-	return p.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function tailVore(args)
-	return p.doVore(args, "tail", {}, "swallow")
+	return sbq.doVore(args, "tail", {}, "swallow")
 end
 
 function analVore(args)
-	return p.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function sitAnalEat(args)
-	local args = { id = p.findFirstOccupantIdForLocation("pinned")}
+	local args = { id = sbq.findFirstOccupantIdForLocation("pinned")}
 	if not args.id then return false end
-	if p.moveOccupantLocation(args, "belly") then
-		p.lounging[args.id].visible = false
+	if sbq.moveOccupantLocation(args, "belly") then
+		sbq.lounging[args.id].visible = false
 		return true
 	end
 end
 
 function checkOral()
-	return p.checkEatPosition(p.localToGlobal( {0, 0} ), 5, "belly", "oralVore")
+	return sbq.checkEatPosition(sbq.localToGlobal( {0, 0} ), 5, "belly", "oralVore")
 end
 
 function checkTail()
-	return p.checkEatPosition(p.localToGlobal({-5, -2}), 2, "tail", "tailVore")
+	return sbq.checkEatPosition(sbq.localToGlobal({-5, -2}), 2, "tail", "tailVore")
 end
 
 function checkAnal()
-	return p.checkEatPosition(p.localToGlobal({-1, -3}), 2, "belly", "analVore")
+	return sbq.checkEatPosition(sbq.localToGlobal({-1, -3}), 2, "belly", "analVore")
 end
 
 function sitCheckAnal()
-	local victim = p.findFirstOccupantIdForLocation("pinned")
-	local entityaimed = world.entityQuery(p.seats[p.driverSeat].controls.aim, 2, {
-		withoutEntityId = p.driver,
+	local victim = sbq.findFirstOccupantIdForLocation("pinned")
+	local entityaimed = world.entityQuery(sbq.seats[sbq.driverSeat].controls.aim, 2, {
+		withoutEntityId = sbq.driver,
 		includedTypes = {"creature"}
 	})
 	if entityaimed[1] == victim then
-		p.doTransition("analVore")
+		sbq.doTransition("analVore")
 		return true
 	end
 end
 
 function oralEscape(args)
-	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function analEscape(args)
-	return p.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {} )
 end
 
 function tailEscape(args)
-	return p.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
 function checkVore()
@@ -264,30 +264,30 @@ end
 
 
 function unpin(args)
-	args.id = p.findFirstOccupantIdForLocation("pinned")
+	args.id = sbq.findFirstOccupantIdForLocation("pinned")
 	local returnval = {}
-	returnval[1], returnval[2], returnval[3] = p.doEscape(args, {}, {})
+	returnval[1], returnval[2], returnval[3] = sbq.doEscape(args, {}, {})
 	return true, returnval[2], returnval[3]
 end
 
 -------------------------------------------------------------------------------
 
 function state.stand.begin()
-	p.grabbing = p.findFirstOccupantIdForLocation("hug")
-	p.movement.flying = nil
-	p.setMovementParams( "default" )
-	p.resolvePosition(5)
+	sbq.grabbing = sbq.findFirstOccupantIdForLocation("hug")
+	sbq.movement.flying = nil
+	sbq.setMovementParams( "default" )
+	sbq.resolvePosition(5)
 end
 
 function state.stand.update()
-	if not p.transitionLock then
-		if mcontroller.onGround() and p.heldControl(p.driverSeat, "shift") and p.heldControl(p.driverSeat, "down") then
-			p.letGrabGo("hug")
-			p.doTransition( "crouch" )
+	if not sbq.transitionLock then
+		if mcontroller.onGround() and sbq.heldControl(sbq.driverSeat, "shift") and sbq.heldControl(sbq.driverSeat, "down") then
+			sbq.letGrabGo("hug")
+			sbq.doTransition( "crouch" )
 			return
-		elseif not mcontroller.onGround() and p.pressControl(p.driverSeat, "jump") then
-			p.letGrabGo("hug")
-			p.setState( "fly" )
+		elseif not mcontroller.onGround() and sbq.pressControl(sbq.driverSeat, "jump") then
+			sbq.letGrabGo("hug")
+			sbq.setState( "fly" )
 			return
 		end
 	end
@@ -297,38 +297,38 @@ function state.stand.sitpin(args)
 	local pinnable = { args.id }
 	local sat
 
-	if p.grabbing ~= nil and p.occupants.hug <= p.sbqData.locations.pinned.maxNested then
-		local angle = p.armRotation.frontarmsAngle * 180/math.pi
+	if sbq.grabbing ~= nil and sbq.occupants.hug <= sbq.sbqData.locations.pinned.maxNested then
+		local angle = sbq.armRotation.frontarmsAngle * 180/math.pi
 		if (angle >= 225 and angle <= 315) or (angle <= -45 and angle >= -135) then
-			p.uneat(p.grabbing)
-			pinnable = { p.grabbing }
-			p.grabbing = nil
+			sbq.uneat(sbq.grabbing)
+			pinnable = { sbq.grabbing }
+			sbq.grabbing = nil
 			sat = true
-			p.timer("restoreClickActions", 0.5, function()
-				p.movement.clickActionsDisabled = false
+			sbq.timer("restoreClickActions", 0.5, function()
+				sbq.movement.clickActionsDisabled = false
 			end)
 		end
 	end
 	-- if not interact target or target isn't too far away
-	if not sat and (args.id == nil or math.abs(p.globalToLocal( world.entityPosition( args.id ) )[1]) > 3) then
+	if not sat and (args.id == nil or math.abs(sbq.globalToLocal( world.entityPosition( args.id ) )[1]) > 3) then
 		local pinbounds = {
-			p.localToGlobal({-3, -4}),
-			p.localToGlobal({-1, -5})
+			sbq.localToGlobal({-3, -4}),
+			sbq.localToGlobal({-1, -5})
 		}
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
-		if #pinnable == 0 and p.driving then
+		if #pinnable == 0 and sbq.driving then
 			pinnable = world.npcQuery( pinbounds[1], pinbounds[2] )
 		end
 	end
 	if #pinnable >= 1 then
-		p.addRPC(world.sendEntityMessage(pinnable[1], "sbqIsPreyEnabled", "held"), function(enabled)
+		sbq.addRPC(world.sendEntityMessage(pinnable[1], "sbqIsPreyEnabled", "held"), function(enabled)
 			if enabled then
-				p.eat( pinnable[1], "pinned" )
+				sbq.eat( pinnable[1], "pinned" )
 			end
-			p.doTransition("sit")
+			sbq.doTransition("sit")
 		end)
 	else
-		p.doTransition("sit")
+		sbq.doTransition("sit")
 	end
 end
 
@@ -356,29 +356,29 @@ state.stand.grab = grab
 function state.sit.update()
 	checkEggSitup()
 
-	if p.pressControl(p.driverSeat, "jump") then
-		p.doTransition("analVore")
+	if sbq.pressControl(sbq.driverSeat, "jump") then
+		sbq.doTransition("analVore")
 	end
 
-	if p.occupants.hug > 0 then
-		p.setState("hug")
+	if sbq.occupants.hug > 0 then
+		sbq.setState("hug")
 	end
 
 	-- simulate npc interaction when nearby
-	if p.occupants.hug == 0 and not p.isObject and not p.transitionLock then
-		if p.randomChance(1) then -- every frame, we don't want it too often
+	if sbq.occupants.hug == 0 and not sbq.isObject and not sbq.transitionLock then
+		if sbq.randomChance(1) then -- every frame, we don't want it too often
 			local npcs = world.npcQuery(mcontroller.position(), 4)
 			if npcs[1] ~= nil then
-				p.doTransition( "hug", {id=npcs[1]} )
+				sbq.doTransition( "hug", {id=npcs[1]} )
 			end
 		end
 	end
 end
 
 function state.sit.hug( args )
-	p.addRPC(world.sendEntityMessage(args.id, "sbqIsPreyEnabled", "held"), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(args.id, "sbqIsPreyEnabled", "held"), function(enabled)
 		if enabled then
-			return p.eat(args.id, "hug")
+			return sbq.eat(args.id, "hug")
 		end
 	end)
 end
@@ -405,25 +405,25 @@ state.sit.grab = hugGrab
 -------------------------------------------------------------------------------
 
 function state.hug.begin()
-	local victim = p.findFirstOccupantIdForLocation("hug")
+	local victim = sbq.findFirstOccupantIdForLocation("hug")
 	if victim then
-		p.grabbing = nil
-		p.doVictimAnim( victim, "hugcenter", "bodyState")
+		sbq.grabbing = nil
+		sbq.doVictimAnim( victim, "hugcenter", "bodyState")
 	end
 end
 
 function state.hug.update()
-	if p.pressControl(p.driverSeat, "jump") then
-		p.doTransition("analVore")
+	if sbq.pressControl(sbq.driverSeat, "jump") then
+		sbq.doTransition("analVore")
 	end
 
-	if p.occupants.hug < 1 then
-		p.setState("sit")
+	if sbq.occupants.hug < 1 then
+		sbq.setState("sit")
 	end
 end
 
 function state.hug.unhug( args )
-	p.uneat(p.findFirstOccupantIdForLocation("hug"))
+	sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
 end
 
 state.hug.bellyToTail = bellyToTail
@@ -448,21 +448,21 @@ state.hug.grab = hugUnGrab
 -------------------------------------------------------------------------------
 
 function state.crouch.update()
-	local pos1 = p.localToGlobal({3, 4})
-	local pos2 = p.localToGlobal({-3, 1})
+	local pos1 = sbq.localToGlobal({3, 4})
+	local pos2 = sbq.localToGlobal({-3, 1})
 
 	if not world.rectCollision( {pos1[1], pos1[2], pos2[1], pos2[2]}, { "Null", "block", "slippery"} )
-	and not (p.heldControl( p.driverSeat, "down") and p.heldControl( p.driverSeat, "shift"))
+	and not (sbq.heldControl( sbq.driverSeat, "down") and sbq.heldControl( sbq.driverSeat, "shift"))
 	then
-		p.doTransition( "uncrouch" )
+		sbq.doTransition( "uncrouch" )
 		return
 	end
 end
 
 function state.crouch.begin()
-	p.letGrabGo("hug")
-	p.setMovementParams( "crouch" )
-	p.resolvePosition(5)
+	sbq.letGrabGo("hug")
+	sbq.setMovementParams( "crouch" )
+	sbq.resolvePosition(5)
 end
 
 state.crouch.bellyToTail = bellyToTail
@@ -478,21 +478,21 @@ state.crouch.tailEscape = tailEscape
 -------------------------------------------------------------------------------
 
 function state.fly.update()
-	if not p.transitionLock then
-		if p.pressControl( p.driverSeat, "jump" )
-		or ((p.occupants.mass >= p.movementParams.fullThreshold) and mcontroller.onGround())
-		or p.underWater()
+	if not sbq.transitionLock then
+		if sbq.pressControl( sbq.driverSeat, "jump" )
+		or ((sbq.occupants.mass >= sbq.movementParams.fullThreshold) and mcontroller.onGround())
+		or sbq.underWater()
 		then
-			p.setState( "stand" )
+			sbq.setState( "stand" )
 			return
 		end
 	end
 end
 
 function state.fly.begin()
-	p.letGrabGo("hug")
-	p.movement.flying = true
-	p.setMovementParams( "fly" )
+	sbq.letGrabGo("hug")
+	sbq.movement.flying = true
+	sbq.setMovementParams( "fly" )
 end
 
 function state.fly.vore()

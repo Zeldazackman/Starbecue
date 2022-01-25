@@ -1,12 +1,12 @@
 message.setHandler( "settingsMenuSet", function(_,_, val )
-	p.settings = sb.jsonMerge(p.settings, val)
-	p.setColorReplaceDirectives()
-	p.setSkinPartTags()
-	p.settingsMenuUpdated()
+	sbq.settings = sb.jsonMerge(sbq.settings, val)
+	sbq.setColorReplaceDirectives()
+	sbq.setSkinPartTags()
+	sbq.settingsMenuUpdated()
 end )
 
 message.setHandler( "letout", function(_,_, id )
-	p.letout(id)
+	sbq.letout(id)
 end )
 
 message.setHandler( "transform", function(_,_, eid, multiplier, data )
@@ -14,60 +14,60 @@ message.setHandler( "transform", function(_,_, eid, multiplier, data )
 end )
 
 function transformMessageHandler(eid, multiplier, data)
-	if p.lounging[eid] == nil or p.lounging[eid].progressBarActive  then return end
+	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive  then return end
 
 	if data then
-		if data.species ~= p.lounging[eid].species and data.species ~= nil then
-			data = sb.jsonMerge(data, p.getSmolPreyData(data.settings, data.species, data.state))
+		if data.species ~= sbq.lounging[eid].species and data.species ~= nil then
+			data = sb.jsonMerge(data, sbq.getSmolPreyData(data.settings, data.species, data.state))
 		else return end
 	else
-		if p.lounging[eid].species == world.entityName( entity.id() ) then return end
+		if sbq.lounging[eid].species == world.entityName( entity.id() ) then return end
 	end
-	if p.lounging[eid].species == "sbqOccupantHolder" then
+	if sbq.lounging[eid].species == "sbqOccupantHolder" then
 		data.layer = true
 	end
 
-	p.lounging[eid].progressBarActive = true
-	p.lounging[eid].progressBar = 0
-	p.lounging[eid].progressBarData = data
+	sbq.lounging[eid].progressBarActive = true
+	sbq.lounging[eid].progressBar = 0
+	sbq.lounging[eid].progressBarData = data
 	if data == nil then
-		p.lounging[eid].progressBarColor = (p.settings.replaceColorTable[1] or (p.sbqData.replaceColors[1][(p.settings.replaceColors[1] or p.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
+		sbq.lounging[eid].progressBarColor = (sbq.settings.replaceColorTable[1] or (sbq.sbqData.replaceColors[1][(sbq.settings.replaceColors[1] or sbq.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
 	elseif data.barColor ~= nil then
-		p.lounging[eid].progressBarColor = data.barColor
+		sbq.lounging[eid].progressBarColor = data.barColor
 	else
 		-- p.lounging[eid].progressBarColor = root.assetJson("something about data:sbqData.replaceColors.0.1")
 		-- or maybe define it some other way, I dunno
 	end
-	p.lounging[eid].progressBarMultiplier = multiplier or 1
-	p.lounging[eid].progressBarFinishFuncName = "transformPrey"
+	sbq.lounging[eid].progressBarMultiplier = multiplier or 1
+	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
 end
 
 message.setHandler( "settingsMenuRefresh", function(_,_)
-	p.predHudOpen = 2
-	local refreshList = p.refreshList
-	p.refreshList = nil
+	sbq.predHudOpen = 2
+	local refreshList = sbq.refreshList
+	sbq.refreshList = nil
 	return {
-		occupants = p.occupants,
-		occupant = p.occupant,
-		powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier,
-		settings = p.settings,
+		occupants = sbq.occupants,
+		occupant = sbq.occupant,
+		powerMultiplier = sbq.seats[sbq.driverSeat].controls.powerMultiplier,
+		settings = sbq.settings,
 		refreshList = refreshList,
-		locked = p.transitionLock
+		locked = sbq.transitionLock
 	}
 end)
 
 message.setHandler( "despawn", function(_,_, eaten)
-	p.onDeath(eaten)
+	sbq.onDeath(eaten)
 end )
 
 message.setHandler( "digest", function(_,_, eid)
-	if eid ~= nil and p.lounging[eid] ~= nil then
-		local location = p.lounging[eid].location
-		local success, timing = p.doTransition("digest"..location)
-		for i = 0, p.occupantSlots do
-			if p.occupant[i].id ~= nil and p.occupant[i].location == "nested" and p.occupant[i].nestedPreyData.owner == eid then
-				p.occupant[i].location = location
-				p.occupant[i].nestedPreyData = p.occupant[i].nestedPreyData.nestedPreyData
+	if eid ~= nil and sbq.lounging[eid] ~= nil then
+		local location = sbq.lounging[eid].location
+		local success, timing = sbq.doTransition("digest"..location)
+		for i = 0, sbq.occupantSlots do
+			if sbq.occupant[i].id ~= nil and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == eid then
+				sbq.occupant[i].location = location
+				sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
 			end
 		end
 		return {success=success, timing=timing}
@@ -75,68 +75,68 @@ message.setHandler( "digest", function(_,_, eid)
 end )
 
 message.setHandler( "uneat", function(_,_, eid)
-	p.uneat( eid )
+	sbq.uneat( eid )
 end )
 
 message.setHandler( "sbqSmolPreyData", function(_,_, seatindex, data, type)
 	world.sendEntityMessage( type, "despawn", true ) -- no warpout
-	p.occupant[seatindex].smolPreyData = data
+	sbq.occupant[seatindex].smolPreyData = data
 end )
 
 message.setHandler( "indicatorClosed", function(_,_, eid)
-	if p.lounging[eid] ~= nil then
-		p.lounging[eid].indicatorCooldown = 2
+	if sbq.lounging[eid] ~= nil then
+		sbq.lounging[eid].indicatorCooldown = 2
 	end
 end )
 
 message.setHandler( "fixWeirdSeatBehavior", function(_,_, eid)
-	if p.lounging[eid] == nil then return end
-	for i = 0, p.occupantSlots do
+	if sbq.lounging[eid] == nil then return end
+	for i = 0, sbq.occupantSlots do
 		local seatname = "occupant"..i
 		if eid == vehicle.entityLoungingIn("occupant"..i) then
 			vehicle.setLoungeEnabled(seatname, false)
 		end
 	end
-	p.weirdFixFrame = true
+	sbq.weirdFixFrame = true
 end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)
-	p.occupant[seatindex] = data
+	sbq.occupant[seatindex] = data
 end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)
-	p.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
 		if enabled then
-			p.eat(prey, location)
+			sbq.eat(prey, location)
 		end
 	end)
 end)
 
 message.setHandler( "requestUneat", function (_,_, prey, voreType)
-	p.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
 		if enabled then
-			p.uneat(prey)
+			sbq.uneat(prey)
 		end
 	end)
 end)
 
 message.setHandler( "getOccupancyData", function ()
-	return {occupant = p.occupant, occupants = p.occupants}
+	return {occupant = sbq.occupant, occupants = sbq.occupants}
 end)
 
 message.setHandler( "requestTransition", function (_,_, transition, args)
-	p.doTransition( transition, args )
+	sbq.doTransition( transition, args )
 end)
 
 message.setHandler( "objectPredCheck", function (_,_)
-	if not p.driver then
+	if not sbq.driver then
 		return true
 	end
 end)
 
 message.setHandler( "getObjectSettingsMenuData", function (_,_)
 	return {
-		settings = p.settings,
-		spawner = p.spawner
+		settings = sbq.settings,
+		spawner = sbq.spawner
 	}
 end)

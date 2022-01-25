@@ -1,9 +1,9 @@
 {
 	"globalTagDefaults" : {
-		"totaloccupants" : "0",
-		"bellyoccupants" : "0",
-		"hugoccupants": "0",
-		"tailoccupants": "0",
+		"totalOccupants" : "0",
+		"bellyOccupants" : "0",
+		"hugOccupants": "0",
+		"tailOccupants": "0",
 		"state" : "stand",
 		"frame" : "1",
 		"directives" : "",
@@ -208,22 +208,22 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.<frame><directives><bellymask>" } },
 
-						"crouch": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
-						"crouchdown": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
+						"crouch": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.crouch.<frame><directives><bellymask>" } },
+						"crouchdown": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.crouchdown.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
-						"digest": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.digest.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.shrink.<frame><directives><bellymask>" } },
+						"digest": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.digest.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.belly.s_down.<frame><directives><bellymask>" } }
 					}
 				}
 			},
@@ -235,22 +235,22 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.<frame><directives><bellymask>" } },
 
-						"crouch": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.crouch.<frame><directives><bellymask>" } },
-						"crouchdown": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.crouchdown.<frame><directives><bellymask>" } },
+						"crouch": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.crouch.<frame><directives><bellymask>" } },
+						"crouchdown": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.crouchdown.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.shrink.<frame><directives><bellymask>" } },
-						"digest": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.digest.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.shrink.<frame><directives><bellymask>" } },
+						"digest": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.digest.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyoccupants>.belly.s_down.<frame><directives><bellymask>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.belly.s_down.<frame><directives><bellymask>" } }
 					}
 				}
 			},
@@ -416,19 +416,19 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.idle.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
-						"digest": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.digest.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.shrink.<frame><directives><bellymask>" } },
+						"digest": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.digest.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/foreground/tail.png:<tailOccupants>.s_down.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
@@ -442,19 +442,19 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.idle.<frame><directives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.idle.<frame><directives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.eat.<frame><directives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.escape.<frame><directives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.eat.<frame><directives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.escape.<frame><directives><bellymask>" } },
 
-						"expand": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.expand.<frame><directives><bellymask>" } },
-						"shrink": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.shrink.<frame><directives><bellymask>" } },
-						"digest": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.digest.<frame><directives><bellymask>" } },
+						"expand": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.expand.<frame><directives><bellymask>" } },
+						"shrink": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.shrink.<frame><directives><bellymask>" } },
+						"digest": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.digest.<frame><directives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.s_back.<frame><directives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.s_front.<frame><directives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.s_up.<frame><directives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/tail.png:<tailoccupants>.s_down.<frame><directives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.s_back.<frame><directives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.s_front.<frame><directives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.s_up.<frame><directives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/tail.png:<tailOccupants>.s_down.<frame><directives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}

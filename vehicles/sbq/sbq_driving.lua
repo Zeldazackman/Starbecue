@@ -1,130 +1,130 @@
 
-function p.updateDriving(dt)
-	if p.driver and p.driving then
-		local light = p.sbqData.lights.driver
+function sbq.updateDriving(dt)
+	if sbq.driver and sbq.driving then
+		local light = sbq.sbqData.lights.driver
 		if light ~= nil then
-			light.position = world.entityPosition( p.driver )
-			world.sendEntityMessage( p.driver, "sbqLight", light )
+			light.position = world.entityPosition( sbq.driver )
+			world.sendEntityMessage( sbq.driver, "sbqLight", light )
 		end
 
-		p.predHudOpen = math.max( 0, p.predHudOpen - dt )
-		if p.predHudOpen <= 0 then
-			p.predHudOpen = 2
-			world.sendEntityMessage( p.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
+		sbq.predHudOpen = math.max( 0, sbq.predHudOpen - dt )
+		if sbq.predHudOpen <= 0 then
+			sbq.predHudOpen = 2
+			world.sendEntityMessage( sbq.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
 		end
 
-		local aim = vehicle.aimPosition(p.driverSeat)
+		local aim = vehicle.aimPosition(sbq.driverSeat)
 		local cursor = "/cursors/cursors.png:pointer"
-		world.sendEntityMessage( p.driver, "sbqDrawCursor", aim, cursor)
+		world.sendEntityMessage( sbq.driver, "sbqDrawCursor", aim, cursor)
 	end
-	if p.pressControl(p.driverSeat, "special2") then
-		p.letout(p.occupant[p.occupants.total].id)
-	end
-
-	if not mcontroller.onGround() and not p.underWater() then
-		p.movement.airtime = p.movement.airtime + dt
+	if sbq.pressControl(sbq.driverSeat, "special2") then
+		sbq.letout(sbq.occupant[sbq.occupants.total].id)
 	end
 
-	local state = p.stateconfig[p.state]
-	p.doClickActions(state, dt)
+	if not mcontroller.onGround() and not sbq.underWater() then
+		sbq.movement.airtime = sbq.movement.airtime + dt
+	end
 
-	p.movement.aimingLock = math.max(0, p.movement.aimingLock - dt)
-	if (p.stateconfig[p.state].control ~= nil) and not p.movementLock then
-		local dx = p.seats[p.driverSeat].controls.dx
-		if p.activeControls.moveDirection then
-			dx = p.activeControls.moveDirection
+	local state = sbq.stateconfig[sbq.state]
+	sbq.doClickActions(state, dt)
+
+	sbq.movement.aimingLock = math.max(0, sbq.movement.aimingLock - dt)
+	if (sbq.stateconfig[sbq.state].control ~= nil) and not sbq.movementLock then
+		local dx = sbq.seats[sbq.driverSeat].controls.dx
+		if sbq.activeControls.moveDirection then
+			dx = sbq.activeControls.moveDirection
 		end
-		local dy = p.seats[p.driverSeat].controls.dy
+		local dy = sbq.seats[sbq.driverSeat].controls.dy
 		if (dx ~= 0) then
-			if (p.movement.aimingLock <= 0) then
-				p.faceDirection( dx )
+			if (sbq.movement.aimingLock <= 0) then
+				sbq.faceDirection( dx )
 			end
-			p.setPartTag( "global","direction", p.direction * dx)
+			sbq.setPartTag( "global","direction", sbq.direction * dx)
 		end
 
-		if p.stateconfig[p.state].defaultActions ~= nil and p.driver ~= nil then
-			p.loopedMessage("primaryItemData", p.driver, "primaryItemData", {{
-				defaultClickAction = p.stateconfig[p.state].defaultActions[1],
-				directives = p.itemActionDirectives,
-				defaultIcon = (state.actions[p.stateconfig[p.state].defaultActions[1]] or {}).icon
+		if sbq.stateconfig[sbq.state].defaultActions ~= nil and sbq.driver ~= nil then
+			sbq.loopedMessage("primaryItemData", sbq.driver, "primaryItemData", {{
+				defaultClickAction = sbq.stateconfig[sbq.state].defaultActions[1],
+				directives = sbq.itemActionDirectives,
+				defaultIcon = (state.actions[sbq.stateconfig[sbq.state].defaultActions[1]] or {}).icon
 			}})
-			p.loopedMessage("altItemData", p.driver, "altItemData", {{
-				defaultClickAction = p.stateconfig[p.state].defaultActions[2],
-				directives = p.itemActionDirectives,
-				defaultIcon = (state.actions[p.stateconfig[p.state].defaultActions[2]] or {}).icon
+			sbq.loopedMessage("altItemData", sbq.driver, "altItemData", {{
+				defaultClickAction = sbq.stateconfig[sbq.state].defaultActions[2],
+				directives = sbq.itemActionDirectives,
+				defaultIcon = (state.actions[sbq.stateconfig[sbq.state].defaultActions[2]] or {}).icon
 			}})
 		end
 
-		p.groundMovement(dx, dy, state, dt)
-		p.waterMovement(dx, dy, state, dt)
-		p.jumpMovement(dx, dy, state, dt)
-		p.airMovement(dx, dy, state, dt)
-		p.flyMovement(dx, dy, state, dt)
-		p.doControls() -- set by mcontroller.control*(), used by pathfinding
+		sbq.groundMovement(dx, dy, state, dt)
+		sbq.waterMovement(dx, dy, state, dt)
+		sbq.jumpMovement(dx, dy, state, dt)
+		sbq.airMovement(dx, dy, state, dt)
+		sbq.flyMovement(dx, dy, state, dt)
+		sbq.doControls() -- set by mcontroller.control*(), used by pathfinding
 	end
-	p.driverSeatStateChange()
+	sbq.driverSeatStateChange()
 end
 
-function p.groundMovement(dx, dy, state, dt)
-	p.movement.groundMovement = "run"
-	if p.heldControl(p.driverSeat, "shift") or (p.occupants.mass >= (p.movementParams.fullThreshold or 1)) or (p.activeControls.run == false) then
-		p.movement.groundMovement = "walk"
+function sbq.groundMovement(dx, dy, state, dt)
+	sbq.movement.groundMovement = "run"
+	if sbq.heldControl(sbq.driverSeat, "shift") or (sbq.occupants.mass >= (sbq.movementParams.fullThreshold or 1)) or (sbq.activeControls.run == false) then
+		sbq.movement.groundMovement = "walk"
 	end
-	if mcontroller.onGround() and not p.movement.flying then
+	if mcontroller.onGround() and not sbq.movement.flying then
 		if dx ~= 0 and not state.control.groundMovementDisabled then
-			p.movingDX = dx
-			p.doAnims( state.control.animations[p.movement.groundMovement] )
-			p.movement.animating = true
-			mcontroller.applyParameters{ groundFriction = p.movementParams.ambulatingGroundFriction }
-			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.groundForce * p.movementParams.mass)
-		elseif p.movement.animating then
-			p.doAnims( state.idle )
-			p.movement.animating = false
-			mcontroller.applyParameters{ groundFriction = p.movementParams.normalGroundFriction }
+			sbq.movingDX = dx
+			sbq.doAnims( state.control.animations[sbq.movement.groundMovement] )
+			sbq.movement.animating = true
+			mcontroller.applyParameters{ groundFriction = sbq.movementParams.ambulatingGroundFriction }
+			mcontroller.approachXVelocity( dx * sbq.movementParams[sbq.movement.groundMovement.."Speed"], sbq.movementParams.groundForce * sbq.movementParams.mass)
+		elseif sbq.movement.animating then
+			sbq.doAnims( state.idle )
+			sbq.movement.animating = false
+			mcontroller.applyParameters{ groundFriction = sbq.movementParams.normalGroundFriction }
 		end
-		p.movement.jumps = 0
-		p.movement.falling = false
-		p.movement.airtime = 0
+		sbq.movement.jumps = 0
+		sbq.movement.falling = false
+		sbq.movement.airtime = 0
 	end
 end
 
-function p.jumpMovement(dx, dy, state, dt)
-	p.movement.sinceLastJump = p.movement.sinceLastJump + dt
+function sbq.jumpMovement(dx, dy, state, dt)
+	sbq.movement.sinceLastJump = sbq.movement.sinceLastJump + dt
 
-	if not mcontroller.onGround() and (dy == -1 or p.activeControls.drop) then
+	if not mcontroller.onGround() and (dy == -1 or sbq.activeControls.drop) then
 		mcontroller.applyParameters{ ignorePlatformCollision = true }
-	elseif p.isPathfinding and p.pathMover.downHoldTimer2 and p.pathMover.downHoldTimer2 > 0 then
-		p.pathMover.downHoldTimer2 = p.pathMover.downHoldTimer2 - dt
+	elseif sbq.isPathfinding and sbq.pathMover.downHoldTimer2 and sbq.pathMover.downHoldTimer2 > 0 then
+		sbq.pathMover.downHoldTimer2 = sbq.pathMover.downHoldTimer2 - dt
 	else
 		mcontroller.applyParameters{ ignorePlatformCollision = false }
 	end
 
-	p.movement.jumpProfile = "airJumpProfile"
+	sbq.movement.jumpProfile = "airJumpProfile"
 	if mcontroller.liquidPercentage() ~= 0 then
-		p.movement.jumpProfile = "liquidJumpProfile"
+		sbq.movement.jumpProfile = "liquidJumpProfile"
 	end
 
-	if state.control.jumpMovementDisabled or p.movement.flying then return end
+	if state.control.jumpMovementDisabled or sbq.movement.flying then return end
 
-	if p.heldControl( p.driverSeat, "jump" ) or p.activeControls.drop then
-		if (p.movement.jumps < p.movementParams.jumpCount) and (p.movement.sinceLastJump >= p.movementParams[p.movement.jumpProfile].reJumpDelay)
-		and ((not p.movement.jumped) or p.movementParams[p.movement.jumpProfile].autoJump) and ((not p.underWater()) or mcontroller.onGround()) and not p.activeControls.drop
+	if sbq.heldControl( sbq.driverSeat, "jump" ) or sbq.activeControls.drop then
+		if (sbq.movement.jumps < sbq.movementParams.jumpCount) and (sbq.movement.sinceLastJump >= sbq.movementParams[sbq.movement.jumpProfile].reJumpDelay)
+		and ((not sbq.movement.jumped) or sbq.movementParams[sbq.movement.jumpProfile].autoJump) and ((not sbq.underWater()) or mcontroller.onGround()) and not sbq.activeControls.drop
 		then
 			if state.control.jumpMovementDisabled then return end
-			p.movement.sinceLastJump = 0
-			p.movement.jumps = p.movement.jumps + 1
-			p.movement.jumped = true
+			sbq.movement.sinceLastJump = 0
+			sbq.movement.jumps = sbq.movement.jumps + 1
+			sbq.movement.jumped = true
 			if (dy ~= -1) then
-				p.doAnims( state.control.animations.jump )
-				p.movement.animating = true
-				p.movement.falling = false
-				mcontroller.setYVelocity(p.movementParams[p.movement.jumpProfile].jumpSpeed)
-				if (p.movement.jumps > 1) and mcontroller.liquidPercentage() == 0 then
+				sbq.doAnims( state.control.animations.jump )
+				sbq.movement.animating = true
+				sbq.movement.falling = false
+				mcontroller.setYVelocity(sbq.movementParams[sbq.movement.jumpProfile].jumpSpeed)
+				if (sbq.movement.jumps > 1) and mcontroller.liquidPercentage() == 0 then
 					-- particles from effects/multiJump.effectsource
-					if p.movementParams.pulseEffect then
-						animator.burstParticleEmitter( p.movementParams.pulseEffect )
+					if sbq.movementParams.pulseEffect then
+						animator.burstParticleEmitter( sbq.movementParams.pulseEffect )
 						animator.playSound( "doublejump" )
-						for i = 1, p.movementParams.pulseSparkles do
+						for i = 1, sbq.movementParams.pulseSparkles do
 							animator.burstParticleEmitter( "defaultblue" )
 							animator.burstParticleEmitter( "defaultlightblue" )
 						end
@@ -132,202 +132,202 @@ function p.jumpMovement(dx, dy, state, dt)
 				end
 			end
 		end
-		if dy == -1 or p.activeControls.drop then
+		if dy == -1 or sbq.activeControls.drop then
 			mcontroller.applyParameters{ ignorePlatformCollision = true }
-		elseif p.movement.jumped and p.seats[p.driverSeat].controls.jump <= (p.movementParams[p.movement.jumpProfile].jumpHoldTime) and mcontroller.yVelocity() <= p.movementParams[p.movement.jumpProfile].jumpSpeed then
-			mcontroller.force({ 0, p.movementParams[p.movement.jumpProfile].jumpControlForce * p.movementParams.mass})
+		elseif sbq.movement.jumped and sbq.seats[sbq.driverSeat].controls.jump <= (sbq.movementParams[sbq.movement.jumpProfile].jumpHoldTime) and mcontroller.yVelocity() <= sbq.movementParams[sbq.movement.jumpProfile].jumpSpeed then
+			mcontroller.force({ 0, sbq.movementParams[sbq.movement.jumpProfile].jumpControlForce * sbq.movementParams.mass})
 		end
 	else
-		p.movement.jumped = false
+		sbq.movement.jumped = false
 	end
 end
 
-function p.airMovement( dx, dy, state, dt )
-	if p.underWater() or mcontroller.onGround() or state.control.airMovementDisabled or p.movement.flying then return end
+function sbq.airMovement( dx, dy, state, dt )
+	if sbq.underWater() or mcontroller.onGround() or state.control.airMovementDisabled or sbq.movement.flying then return end
 
-	p.movement.animating = true
+	sbq.movement.animating = true
 
 	if dx ~= 0 then
-		mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.airForce * p.movementParams.mass)
+		mcontroller.approachXVelocity( dx * sbq.movementParams[sbq.movement.groundMovement.."Speed"], sbq.movementParams.airForce * sbq.movementParams.mass)
 	end
 
-	if (mcontroller.yVelocity() < p.movementParams.fallStatusSpeedMin ) and (not p.movement.falling) and p.movement.airtime >= 0.25 then
-		p.doAnims( state.control.animations.fall )
-		p.movement.falling = true
-	elseif (mcontroller.yVelocity() > 0) and (p.movement.falling) then
-		p.doAnims( state.control.animations.jump )
-		p.movement.falling = false
+	if (mcontroller.yVelocity() < sbq.movementParams.fallStatusSpeedMin ) and (not sbq.movement.falling) and sbq.movement.airtime >= 0.25 then
+		sbq.doAnims( state.control.animations.fall )
+		sbq.movement.falling = true
+	elseif (mcontroller.yVelocity() > 0) and (sbq.movement.falling) then
+		sbq.doAnims( state.control.animations.jump )
+		sbq.movement.falling = false
 	end
 end
 
-function p.waterMovement( dx, dy, state, dt )
-	if not p.underWater() or mcontroller.onGround() or state.control.waterMovementDisabled then return end
+function sbq.waterMovement( dx, dy, state, dt )
+	if not sbq.underWater() or mcontroller.onGround() or state.control.waterMovementDisabled then return end
 
-	local swimSpeed = p.movementParams.swimSpeed or p.movementParams[p.movement.groundMovement.."Speed"]
+	local swimSpeed = sbq.movementParams.swimSpeed or sbq.movementParams[sbq.movement.groundMovement.."Speed"]
 	local dy = dy
-	if p.heldControl(p.driverSeat, "jump") and (dy ~= 1) then
+	if sbq.heldControl(sbq.driverSeat, "jump") and (dy ~= 1) then
 		dy = dy + 1
 	end
 	if (dx ~= 0) or (dy ~= 0)then
-		p.doAnims( state.control.animations.swim )
+		sbq.doAnims( state.control.animations.swim )
 		if (dx ~= 0) then
-			mcontroller.approachXVelocity( dx * p.movementParams[p.movement.groundMovement.."Speed"], p.movementParams.liquidForce * p.movementParams.mass)
+			mcontroller.approachXVelocity( dx * sbq.movementParams[sbq.movement.groundMovement.."Speed"], sbq.movementParams.liquidForce * sbq.movementParams.mass)
 		end
 		if (dy ~= 0) then
-			mcontroller.approachYVelocity( dy * p.movementParams.liquidJumpProfile.jumpSpeed or p.movementParams.airJumpProfile.jumpSpeed, (p.movementParams.liquidJumpProfile.jumpControlForce or p.movementParams.airJumpProfile.jumpControlForce) * p.movementParams.mass)
+			mcontroller.approachYVelocity( dy * sbq.movementParams.liquidJumpProfile.jumpSpeed or sbq.movementParams.airJumpProfile.jumpSpeed, (sbq.movementParams.liquidJumpProfile.jumpControlForce or sbq.movementParams.airJumpProfile.jumpControlForce) * sbq.movementParams.mass)
 		end
 	else
-		p.doAnims( state.control.animations.swimIdle )
+		sbq.doAnims( state.control.animations.swimIdle )
 	end
-	p.movement.animating = true
-	p.movement.jumps = 0
-	p.movement.falling = false
-	p.movement.airtime = 0
+	sbq.movement.animating = true
+	sbq.movement.jumps = 0
+	sbq.movement.falling = false
+	sbq.movement.airtime = 0
 end
 
-function p.flyMovement( dx, dy, state, dt )
-	if p.movementParams.flySpeed == 0 or state.control.flyMovementDisabled or mcontroller.onGround() or p.underWater() or not p.movement.flying then return end
+function sbq.flyMovement( dx, dy, state, dt )
+	if sbq.movementParams.flySpeed == 0 or state.control.flyMovementDisabled or mcontroller.onGround() or sbq.underWater() or not sbq.movement.flying then return end
 
-	p.doAnims( state.control.animations.fly )
-	mcontroller.approachXVelocity( dx * p.movementParams.flySpeed, p.movementParams.airForce * p.movementParams.mass)
-	mcontroller.approachYVelocity( dy * p.movementParams.flySpeed, p.movementParams.airForce * p.movementParams.mass)
-	p.movement.animating = true
+	sbq.doAnims( state.control.animations.fly )
+	mcontroller.approachXVelocity( dx * sbq.movementParams.flySpeed, sbq.movementParams.airForce * sbq.movementParams.mass)
+	mcontroller.approachYVelocity( dy * sbq.movementParams.flySpeed, sbq.movementParams.airForce * sbq.movementParams.mass)
+	sbq.movement.animating = true
 
 end
 
-p.clickActionCooldowns = {
+sbq.clickActionCooldowns = {
 	vore = 0
 }
 
-function p.doClickActions(state, dt)
-	for name, cooldown in pairs(p.clickActionCooldowns) do
-		p.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
+function sbq.doClickActions(state, dt)
+	for name, cooldown in pairs(sbq.clickActionCooldowns) do
+		sbq.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
 
-	if p.heldControl(p.driverSeat, "special1", 0.2) and p.totalTimeAlive > 1 then
-		if not p.movement.assignClickActionRadial then
-			p.movement.assignClickActionRadial = true
-			p.assignClickActionMenu(state)
+	if sbq.heldControl(sbq.driverSeat, "special1", 0.2) and sbq.totalTimeAlive > 1 then
+		if not sbq.movement.assignClickActionRadial then
+			sbq.movement.assignClickActionRadial = true
+			sbq.assignClickActionMenu(state)
 		else
-			p.loopedMessage("radialSelection", p.driver, "sbqGetRadialSelection", {}, function(data)
+			sbq.loopedMessage("radialSelection", sbq.driver, "sbqGetRadialSelection", {}, function(data)
 
 				if data.selection ~= nil and data.type == "actionSelect" then
-					p.lastRadialSelection = data.selection
+					sbq.lastRadialSelection = data.selection
 					if data.selection == "cancel" or data.selection == "despawn" then return end
-					if data.button == 0 and data.pressed and not p.click then
-						p.click = true
-						if p.grabbing ~= nil then
-							p.uneat(p.grabbing)
-							local victim = p.grabbing
-							p.grabbing = nil
-							p.doTransition(data.selection, { id = victim })
+					if data.button == 0 and data.pressed and not sbq.click then
+						sbq.click = true
+						if sbq.grabbing ~= nil then
+							sbq.uneat(sbq.grabbing)
+							local victim = sbq.grabbing
+							sbq.grabbing = nil
+							sbq.doTransition(data.selection, { id = victim })
 							return
-						elseif p.seats[p.driverSeat].controls.primaryHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "primaryItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon })
-						elseif p.seats[p.driverSeat].controls.primaryHandItem == nil then
-							world.sendEntityMessage(p.driver, "sbqGiveItem", {
+						elseif sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController" then
+							world.sendEntityMessage(sbq.driver, "primaryItemData", {assignClickAction = data.selection, directives = sbq.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon })
+						elseif sbq.seats[sbq.driverSeat].controls.primaryHandItem == nil then
+							world.sendEntityMessage(sbq.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = sbq.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
 							})
 						end
-					elseif data.button == 2 and data.pressed and not p.click then
-						p.click = true
-						if p.grabbing ~= nil then
-							p.uneat(p.grabbing)
-							local victim = p.grabbing
-							p.grabbing = nil
-							p.doTransition(data.selection, { id = victim })
+					elseif data.button == 2 and data.pressed and not sbq.click then
+						sbq.click = true
+						if sbq.grabbing ~= nil then
+							sbq.uneat(sbq.grabbing)
+							local victim = sbq.grabbing
+							sbq.grabbing = nil
+							sbq.doTransition(data.selection, { id = victim })
 							return
-						elseif p.seats[p.driverSeat].controls.altHandItem == "sbqController" then
-							world.sendEntityMessage(p.driver, "altItemData", {assignClickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon})
-						elseif p.seats[p.driverSeat].controls.altHandItem == nil then
-							world.sendEntityMessage(p.driver, "sbqGiveItem", {
+						elseif sbq.seats[sbq.driverSeat].controls.altHandItem == "sbqController" then
+							world.sendEntityMessage(sbq.driver, "altItemData", {assignClickAction = data.selection, directives = sbq.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon})
+						elseif sbq.seats[sbq.driverSeat].controls.altHandItem == nil then
+							world.sendEntityMessage(sbq.driver, "sbqGiveItem", {
 								name = "sbqController",
-								parameters = { scriptStorage = { clickAction = data.selection, directives = p.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
+								parameters = { scriptStorage = { clickAction = data.selection, directives = sbq.itemActionDirectives, icon = (state.actions[data.selection] or {}).icon } }
 							})
 						end
 					elseif not data.pressed then
-						p.click = false
+						sbq.click = false
 					end
 				end
 			end)
 		end
-	elseif p.movement.assignClickActionRadial then
-		world.sendEntityMessage( p.driver, "sbqOpenInterface", "sbqClose" )
-		if p.lastRadialSelection == "despawn" then
-			p.onDeath()
-		elseif p.lastRadialSelection ~= "cancel" and p.lastRadialSelection ~= nil then
-			if p.grabbing ~= nil then
-				p.uneat(p.grabbing)
-				local victim = p.grabbing
-				p.grabbing = nil
-				p.doTransition(p.lastRadialSelection, { id = victim })
+	elseif sbq.movement.assignClickActionRadial then
+		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
+		if sbq.lastRadialSelection == "despawn" then
+			sbq.onDeath()
+		elseif sbq.lastRadialSelection ~= "cancel" and sbq.lastRadialSelection ~= nil then
+			if sbq.grabbing ~= nil then
+				sbq.uneat(sbq.grabbing)
+				local victim = sbq.grabbing
+				sbq.grabbing = nil
+				sbq.doTransition(sbq.lastRadialSelection, { id = victim })
 				return
 			else
-				p.action(state, p.lastRadialSelection, "force")
+				sbq.action(state, sbq.lastRadialSelection, "force")
 			end
 		end
-		p.movement.assignClickActionRadial = nil
+		sbq.movement.assignClickActionRadial = nil
 	end
 
-	if p.grabbing ~= nil then p.handleGrab() return end
+	if sbq.grabbing ~= nil then sbq.handleGrab() return end
 
-	if (p.seats[p.driverSeat].controls.primaryHandItem ~= nil) and (not p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") and (p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.itemHasOverrideLockScript) then
-		p.action(state, (state.defaultActions or {})[1], "primaryFire")
-		p.action(state, (state.defaultActions or {})[2], "altFire")
+	if (sbq.seats[sbq.driverSeat].controls.primaryHandItem ~= nil) and (not sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController") and (sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor.parameters.itemHasOverrideLockScript) then
+		sbq.action(state, (state.defaultActions or {})[1], "primaryFire")
+		sbq.action(state, (state.defaultActions or {})[2], "altFire")
 	else
-		if (p.seats[p.driverSeat].controls.primaryHandItem == "sbqController") then
-			local action = p.seats[p.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
+		if (sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController") then
+			local action = sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
 				action = (state.defaultActions or {})[1]
 			end
-			p.action(state, action, "primaryFire")
-		elseif (p.seats[p.driverSeat].controls.primaryHandItem == nil) then
-			p.action(state, (state.defaultActions or {})[1], "primaryFire")
+			sbq.action(state, action, "primaryFire")
+		elseif (sbq.seats[sbq.driverSeat].controls.primaryHandItem == nil) then
+			sbq.action(state, (state.defaultActions or {})[1], "primaryFire")
 		end
 
-		if (p.seats[p.driverSeat].controls.altHandItem == "sbqController") then
-			local action = p.seats[p.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
+		if (sbq.seats[sbq.driverSeat].controls.altHandItem == "sbqController") then
+			local action = sbq.seats[sbq.driverSeat].controls.altHandItemDescriptor.parameters.scriptStorage.clickAction
 			if not action or action == "unassigned" then
 				action = (state.defaultActions or {})[2]
 			end
-			p.action(state, action, "altFire")
-		elseif (p.seats[p.driverSeat].controls.altHandItem == nil) then
-			p.action(state, (state.defaultActions or {})[2], "altFire")
+			sbq.action(state, action, "altFire")
+		elseif (sbq.seats[sbq.driverSeat].controls.altHandItem == nil) then
+			sbq.action(state, (state.defaultActions or {})[2], "altFire")
 		end
 	end
 end
 
-function p.action(stateData, name, control)
+function sbq.action(stateData, name, control)
 	if name == nil or (stateData.actions or {})[name] == nil then return end
-	if not p.clickActionCooldowns[name] then
-		p.clickActionCooldowns[name] = 0
+	if not sbq.clickActionCooldowns[name] then
+		sbq.clickActionCooldowns[name] = 0
 	end
 
-	if p.clickActionCooldowns[name] > 0 then return end
+	if sbq.clickActionCooldowns[name] > 0 then return end
 
-	if control == "force" or (p.pressControl(p.driverSeat, control))
-	or (p.heldControl(p.driverSeat, control) and stateData.actions[name].hold)
+	if control == "force" or (sbq.pressControl(sbq.driverSeat, control))
+	or (sbq.heldControl(sbq.driverSeat, control) and stateData.actions[name].hold)
 	then
-		p.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
+		sbq.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
 		if stateData.actions[name].script ~= nil then
-			if state[p.state][stateData.actions[name].script] ~= nil then
-				if not state[p.state][stateData.actions[name].script]() then return end
+			if state[sbq.state][stateData.actions[name].script] ~= nil then
+				if not state[sbq.state][stateData.actions[name].script]() then return end
 			else
-				sb.logError("no script named: ["..stateData.actions[name].script.."] in state: ["..p.state.."]")
+				sb.logError("no script named: ["..stateData.actions[name].script.."] in state: ["..sbq.state.."]")
 			end
 		end
-		p.doTransition(stateData.actions[name].transition)
+		sbq.doTransition(stateData.actions[name].transition)
 		if stateData.actions[name].animation ~= nil then
-			p.doAnims(stateData.actions[name].animation)
+			sbq.doAnims(stateData.actions[name].animation)
 		end
 		if stateData.actions[name].projectile ~= nil then
-			p.projectile(stateData.actions[name].projectile)
+			sbq.projectile(stateData.actions[name].projectile)
 		end
 	end
 end
 
-function p.assignClickActionMenu(state)
+function sbq.assignClickActionMenu(state)
 	local options = {}
 	table.insert(options, {
 			name = "despawn",
@@ -335,42 +335,42 @@ function p.assignClickActionMenu(state)
 		})
 	table.insert(options, {
 			name = "unassigned",
-			icon = "/items/active/sbqController/unassigned.png"..(p.itemActionDirectives or "")
+			icon = "/items/active/sbqController/unassigned.png"..(sbq.itemActionDirectives or "")
 		})
 	for action, data in pairs((state.actions or {})) do
 		table.insert(options, {
 			name = action,
-			icon = ((data.icon) or ("/items/active/sbqController/"..action..".png"))..(p.itemActionDirectives or "")
+			icon = ((data.icon) or ("/items/active/sbqController/"..action..".png"))..(sbq.itemActionDirectives or "")
 		})
 	end
 
-	world.sendEntityMessage( p.driver, "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "actionSelect" }, true )
+	world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "actionSelect" }, true )
 end
 
-function p.checkValidAim(seat, range)
-	local entityaimed = world.entityQuery(p.seats[seat].controls.aim, range or 2, {
-		withoutEntityId = p.driver,
+function sbq.checkValidAim(seat, range)
+	local entityaimed = world.entityQuery(sbq.seats[seat].controls.aim, range or 2, {
+		withoutEntityId = sbq.driver,
 		includedTypes = {"creature"}
 	})
-	local target = p.firstNotLounging(entityaimed)
+	local target = sbq.firstNotLounging(entityaimed)
 
 	if target and target ~= entity.id() and entity.entityInSight(target) then
 		return target
 	end
 end
 
-function p.checkEatPosition(position, range, location, transition, noaim, aimrange)
-	if not p.locationFull(location) then
-		local target = p.checkValidAim(p.driverSeat, aimrange)
+function sbq.checkEatPosition(position, range, location, transition, noaim, aimrange)
+	if not sbq.locationFull(location) then
+		local target = sbq.checkValidAim(sbq.driverSeat, aimrange)
 
 		local prey = world.entityQuery(position, range, {
-			withoutEntityId = p.driver,
+			withoutEntityId = sbq.driver,
 			includedTypes = {"creature"}
 		})
 
 		for _, entity in ipairs(prey) do
-			if (noaim or (entity == target)) and not p.entityLounging(entity) then
-				p.doTransition( transition, {id=entity} )
+			if (noaim or (entity == target)) and not sbq.entityLounging(entity) then
+				sbq.doTransition( transition, {id=entity} )
 				return true
 			end
 		end
@@ -379,93 +379,93 @@ function p.checkEatPosition(position, range, location, transition, noaim, aimran
 end
 
 function getDriverStat(eid, stat, callback)
-	p.addRPC( world.sendEntityMessage(eid, "sbqGetDriverStat", stat), callback)
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqGetDriverStat", stat), callback)
 end
 
-function p.driverSeatStateChange()
-	if p.movement.animating then return end
-	local transitions = p.stateconfig[p.state].transitions
+function sbq.driverSeatStateChange()
+	if sbq.movement.animating then return end
+	local transitions = sbq.stateconfig[sbq.state].transitions
 	local dx = 0
 	local dy = 0
-	if p.tapControl(p.driverSeat, "left") then
+	if sbq.tapControl(sbq.driverSeat, "left") then
 		dx = dx -1
 	end
-	if p.tapControl(p.driverSeat, "right") then
+	if sbq.tapControl(sbq.driverSeat, "right") then
 		dx = dx +1
 	end
-	if p.tapControl(p.driverSeat, "up") then
+	if sbq.tapControl(sbq.driverSeat, "up") then
 		dy = dy +1
 	end
-	if p.tapControl(p.driverSeat, "down") then
+	if sbq.tapControl(sbq.driverSeat, "down") then
 		dy = dy -1
 	end
-	local movedir = p.relativeDirectionName(dx, dy)
+	local movedir = sbq.relativeDirectionName(dx, dy)
 
-	if (movedir == nil) and p.tapControl(p.driverSeat, "jump") then
+	if (movedir == nil) and sbq.tapControl(sbq.driverSeat, "jump") then
 		movedir = "jump"
 	end
 
 	if movedir ~= nil then
 		if transitions[movedir] ~= nil then
-			p.doTransition(movedir)
+			sbq.doTransition(movedir)
 		elseif (movedir == "front" or movedir == "back") and transitions.side ~= nil then
-			p.doTransition("side")
+			sbq.doTransition("side")
 		end
 	end
 end
 
-function p.projectile( projectiledata )
-	local driver = p.driver
+function sbq.projectile( projectiledata )
+	local driver = sbq.driver
 	if projectiledata.energy and driver then
-		p.useEnergy(driver, projectiledata.cost, function(energyUsed)
+		sbq.useEnergy(driver, projectiledata.cost, function(energyUsed)
 			if energyUsed then
-				p.fireProjectile( projectiledata, driver )
+				sbq.fireProjectile( projectiledata, driver )
 			end
 		end)
 	else
-		p.fireProjectile( projectiledata, driver )
+		sbq.fireProjectile( projectiledata, driver )
 	end
 end
 
-function p.fireProjectile( projectiledata, driver )
-	local position = p.localToGlobal( projectiledata.position )
+function sbq.fireProjectile( projectiledata, driver )
+	local position = sbq.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
-		p.movement.aimingLock = 0.1
+		sbq.movement.aimingLock = 0.1
 
-		local aiming = p.seats[p.driverSeat].controls.aim
-		p.facePoint( aiming[1] )
-		position = p.localToGlobal( projectiledata.position )
-		aiming[2] = aiming[2] + 0.2 * p.direction * (aiming[1] - position[1])
+		local aiming = sbq.seats[sbq.driverSeat].controls.aim
+		sbq.facePoint( aiming[1] )
+		position = sbq.localToGlobal( projectiledata.position )
+		aiming[2] = aiming[2] + 0.2 * sbq.direction * (aiming[1] - position[1])
 		direction = world.distance( aiming, position )
 	else
-		direction = { p.direction, 0 }
+		direction = { sbq.direction, 0 }
 	end
 	local params = {}
 
 	if driver then
-		params.powerMultiplier = p.seats[p.driverSeat].controls.powerMultiplier
+		params.powerMultiplier = sbq.seats[sbq.driverSeat].controls.powerMultiplier
 		world.spawnProjectile( projectiledata.name, position, driver, direction, projectiledata.relative, params )
 	else
-		params.powerMultiplier = p.objectPowerLevel()
+		params.powerMultiplier = sbq.objectPowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.id(), direction, projectiledata.relative, params )
 	end
 end
 
-function p.grab(location, aimrange, grabrange)
-	local target = p.checkValidAim(p.driverSeat, aimrange or 2)
+function sbq.grab(location, aimrange, grabrange)
+	local target = sbq.checkValidAim(sbq.driverSeat, aimrange or 2)
 	if target then
-		p.addRPC(world.sendEntityMessage(target, "sbqIsPreyEnabled", "held"), function(enabled)
+		sbq.addRPC(world.sendEntityMessage(target, "sbqIsPreyEnabled", "held"), function(enabled)
 			if enabled then
 				local prey = world.entityQuery(mcontroller.position(), grabrange or 5, {
-					withoutEntityId = p.driver,
+					withoutEntityId = sbq.driver,
 					includedTypes = {"creature"}
 				})
 				for _, entity in ipairs(prey) do
 					if entity == target then
-						if p.eat(target, location) then
-							p.grabbing = target
-							p.movement.clickActionsDisabled = true
+						if sbq.eat(target, location) then
+							sbq.grabbing = target
+							sbq.movement.clickActionsDisabled = true
 						end
 					end
 				end
@@ -475,14 +475,14 @@ function p.grab(location, aimrange, grabrange)
 	end
 end
 
-function p.letGrabGo(location)
-	local victim = p.findFirstOccupantIdForLocation(location)
-	p.grabbing = nil
-	p.armRotation.enabledL = false
-	p.armRotation.enabledR = false
-	p.armRotation.groupsR = {}
-	p.armRotation.groupsL = {}
-	p.armRotation.occupantL = nil
-	p.armRotation.occupantR = nil
-	p.uneat(victim)
+function sbq.letGrabGo(location)
+	local victim = sbq.findFirstOccupantIdForLocation(location)
+	sbq.grabbing = nil
+	sbq.armRotation.enabledL = false
+	sbq.armRotation.enabledR = false
+	sbq.armRotation.groupsR = {}
+	sbq.armRotation.groupsL = {}
+	sbq.armRotation.occupantL = nil
+	sbq.armRotation.occupantR = nil
+	sbq.uneat(victim)
 end

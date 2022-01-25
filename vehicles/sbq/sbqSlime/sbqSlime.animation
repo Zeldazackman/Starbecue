@@ -1,7 +1,7 @@
 {
 	"globalTagDefaults": {
-		"totaloccupants": "0",
-		"bellyoccupants": "0",
+		"totalOccupants": "0",
+		"bellyOccupants": "0",
 		"state": "stand",
 		"frame": "1",
 		"directives": "",
@@ -96,20 +96,20 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.idle.<frame><directives>" } },
+						"idle": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.idle.<frame><directives>" } },
 
-						"eat": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.eat.<frame><directives>" } },
-						"escape": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.escape.<frame><directives>" } },
+						"eat": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.eat.<frame><directives>" } },
+						"escape": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.escape.<frame><directives>" } },
 
-						"walk": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.walk.<frame><directives>" } },
-						"run": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.walk.<frame><directives>" } },
+						"walk": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<frame><directives>" } },
+						"run": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<frame><directives>" } },
 
-						"fall": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.fall.<frame><directives>" } },
+						"fall": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.fall.<frame><directives>" } },
 
-						"s_up": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.s_up.<frame><directives>" } },
-						"s_down": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.s_down.<frame><directives>" } },
-						"s_front": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.s_front.<frame><directives>" } },
-						"s_back": { "properties": {"image": "skins/<skin>/body.png:<bellyoccupants>.s_back.<frame><directives>" } }
+						"s_up": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_up.<frame><directives>" } },
+						"s_down": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_down.<frame><directives>" } },
+						"s_front": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_front.<frame><directives>" } },
+						"s_back": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_back.<frame><directives>" } }
 					}
 				}
 			},

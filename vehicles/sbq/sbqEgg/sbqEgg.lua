@@ -9,54 +9,54 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function p.init()
-	p.occupant[0].location = "egg"
-	p.occupants.total = 1
-	p.occupants.egg = 1
-	p.includeDriver = true
-	p.driving = false
+function sbq.init()
+	sbq.occupant[0].location = "egg"
+	sbq.occupants.total = 1
+	sbq.occupants.egg = 1
+	sbq.includeDriver = true
+	sbq.driving = false
 
-	if not p.settings.cracks then
-		p.settings.cracks = 0
+	if not sbq.settings.cracks then
+		sbq.settings.cracks = 0
 	end
 
-	if p.settings.impossibleEscape then
-		p.settings.impossibleEscape = false
+	if sbq.settings.impossibleEscape then
+		sbq.settings.impossibleEscape = false
 	end
 
-	p.setPartTag( "global", "cracks", p.settings.cracks )
+	sbq.setPartTag( "global", "cracks", sbq.settings.cracks )
 end
 
 -- don't want warp effects on this ever
-function p.warpInEffect() end
-function p.warpOutEffect() end
+function sbq.warpInEffect() end
+function sbq.warpOutEffect() end
 
 -------------------------------------------------------------------------------
 
 function state.smol.crack( args )
-	p.settings.cracks = p.settings.cracks + 1
+	sbq.settings.cracks = sbq.settings.cracks + 1
 	animator.playSound("crack")
-	p.doAnim("bodyState", "s_"..args.direction)
+	sbq.doAnim("bodyState", "s_"..args.direction)
 
-	if p.settings.cracks > 3 then
+	if sbq.settings.cracks > 3 then
 		local shard = "?addmask=/vehicles/sbq/sbqEgg/skins/shards.png:"
-		local skinNames = p.settings.skinNames or {}
+		local skinNames = sbq.settings.skinNames or {}
 		local skin = skinNames.body or "default"
 		local flip = ""
 		local blend = "?blendmult=/vehicles/sbq/sbqEgg/skins/"..skin.."/smol/smol_body.png:0.idle.1"
-		if p.direction < 0 then
+		if sbq.direction < 0 then
 			flip = "?flipx"
 		end
 
 		for i = 1, 10 do
 			world.spawnProjectile( "sbqEggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
-				processing = blend..p.settings.directives..shard..tostring(i)..flip,
+				processing = blend..sbq.settings.directives..shard..tostring(i)..flip,
 				timeToLive = math.random(0,3) + math.random(),
 				speed = math.random(5,10) + math.random()
 			})
 		end
-		p.onDeath()
-	else p.setPartTag( "global", "cracks", p.settings.cracks )
+		sbq.onDeath()
+	else sbq.setPartTag( "global", "cracks", sbq.settings.cracks )
 	end
 end
 

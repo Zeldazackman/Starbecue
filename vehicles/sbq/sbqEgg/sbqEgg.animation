@@ -1,6 +1,6 @@
 {
 	"globalTagDefaults": {
-		"totaloccupants": "0",
+		"totalOccupants": "0",
 		"cracks": "0",
 		"state": "stand",
 		"frame": "1",

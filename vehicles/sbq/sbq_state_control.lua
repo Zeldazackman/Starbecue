@@ -1,88 +1,88 @@
 
 
-function p.updateState(dt)
-	if p.prevState == p.state then
-		if state[p.state] ~= nil and state[p.state].update ~= nil then
-			state[p.state].update(dt)
+function sbq.updateState(dt)
+	if sbq.prevState == sbq.state then
+		if state[sbq.state] ~= nil and state[sbq.state].update ~= nil then
+			state[sbq.state].update(dt)
 		else
-			p.standardState(dt)
+			sbq.standardState(dt)
 		end
 	else
-		if state[p.prevState] ~= nil and state[p.prevState].ending ~= nil then
-			state[p.prevState].ending(dt)
+		if state[sbq.prevState] ~= nil and state[sbq.prevState].ending ~= nil then
+			state[sbq.prevState].ending(dt)
 		end
 
-		p.checkDrivingInteract()
+		sbq.checkDrivingInteract()
 
-		if state[p.state] ~= nil and state[p.state].begin ~= nil then
-			state[p.state].begin(dt)
+		if state[sbq.state] ~= nil and state[sbq.state].begin ~= nil then
+			state[sbq.state].begin(dt)
 		end
-		p.prevState = p.state
+		sbq.prevState = sbq.state
 	end
 end
 
-function p.setState(state)
+function sbq.setState(state)
 	if state == nil then
-		sb.logError( "nil state from ".. p.state )
+		sb.logError( "nil state from ".. sbq.state )
 		return
 	end
-	if not p.stateconfig[state] then
-		sb.logError( "invalid state "..state.." from ".. p.state)
+	if not sbq.stateconfig[state] then
+		sb.logError( "invalid state "..state.." from ".. sbq.state)
 		return
 	end
-	p.prevState = p.state
-	p.state = state
-	p.setPartTag( "global", "state", state )
-	p.doAnims( p.stateconfig[state].idle, true )
+	sbq.prevState = sbq.state
+	sbq.state = state
+	sbq.setPartTag( "global", "state", state )
+	sbq.doAnims( sbq.stateconfig[state].idle, true )
 end
 
-function p.checkDrivingInteract()
-	if p.driving and p.stateconfig[p.state].interact ~= nil then
-		for _, interaction in pairs(p.stateconfig[p.state].interact) do
+function sbq.checkDrivingInteract()
+	if sbq.driving and sbq.stateconfig[sbq.state].interact ~= nil then
+		for _, interaction in pairs(sbq.stateconfig[sbq.state].interact) do
 			if interaction.drivingEnabled then
 				return vehicle.setInteractive(true)
 			end
 		end
 		vehicle.setInteractive(false)
 	else
-		vehicle.setInteractive(p.stateconfig[p.state].interact ~= nil)
+		vehicle.setInteractive(sbq.stateconfig[sbq.state].interact ~= nil)
 	end
 end
 
-p.transitionLock = false
-p.movementLock = false
+sbq.transitionLock = false
+sbq.movementLock = false
 
-function p.doTransition( direction, scriptargs )
-	if (not p.stateconfig[p.state].transitions[direction]) then return "no data" end
-	if p.transitionLock then return "locked" end
-	local tconfig = p.occupantArray( p.stateconfig[p.state].transitions[direction] )
+function sbq.doTransition( direction, scriptargs )
+	if (not sbq.stateconfig[sbq.state].transitions[direction]) then return "no data" end
+	if sbq.transitionLock then return "locked" end
+	local tconfig = sbq.occupantArray( sbq.stateconfig[sbq.state].transitions[direction] )
 	if tconfig == nil then return "no data" end
-	local id = p.getTransitionVictimId(scriptargs, tconfig)
+	local id = sbq.getTransitionVictimId(scriptargs, tconfig)
 
 	if tconfig.voreType ~= nil and id ~= nil then
-		p.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
+		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
 			if enabled then
-				p.doingTransition(tconfig, direction, scriptargs)
+				sbq.doingTransition(tconfig, direction, scriptargs)
 			end
 		end)
 	else
-		return p.doingTransition(tconfig, direction, scriptargs)
+		return sbq.doingTransition(tconfig, direction, scriptargs)
 	end
 end
 
-function p.doingTransition(tconfig, direction, scriptargs)
-	if p.transitionLock then return "locked" end
+function sbq.doingTransition(tconfig, direction, scriptargs)
+	if sbq.transitionLock then return "locked" end
 	local continue = true
 	local after
 	if tconfig.script then
-		local statescript = state[p.state][tconfig.script]
+		local statescript = state[sbq.state][tconfig.script]
 		local _continue, _tconfig
 		if statescript ~= nil then
 			_continue, after, _tconfig = statescript( scriptargs or {} )
 			if _continue ~= nil then continue = _continue end
 			if _tconfig ~= nil then tconfig = _tconfig end
 		else
-			sb.logError("no script named: ["..tconfig.script.."] in state: ["..p.state.."]")
+			sb.logError("no script named: ["..tconfig.script.."] in state: ["..sbq.state.."]")
 		end
 	end
 	if not continue then return "script fail" end
@@ -91,59 +91,59 @@ function p.doingTransition(tconfig, direction, scriptargs)
 		tconfig.timing = "body"
 	end
 	if tconfig.animation ~= nil then
-		p.doAnims( tconfig.animation )
+		sbq.doAnims( tconfig.animation )
 	end
 	if after ~= nil then
-		p.queueAnimEndFunction(tconfig.timing.."State", after)
+		sbq.queueAnimEndFunction(tconfig.timing.."State", after)
 	end
-	if (tconfig.state ~= nil) and (tconfig.state ~= p.state) then
-		p.movementLock = true
-		p.transitionLock = true
+	if (tconfig.state ~= nil) and (tconfig.state ~= sbq.state) then
+		sbq.movementLock = true
+		sbq.transitionLock = true
 
-		p.queueAnimEndFunction(tconfig.timing.."State", function()
-			p.setState( tconfig.state )
-			p.doAnims( p.stateconfig[p.state].idle )
-			p.transitionLock = false
-			p.movementLock = false
+		sbq.queueAnimEndFunction(tconfig.timing.."State", function()
+			sbq.setState( tconfig.state )
+			sbq.doAnims( sbq.stateconfig[sbq.state].idle )
+			sbq.transitionLock = false
+			sbq.movementLock = false
 		end)
 	end
 	if tconfig.lock then
-		p.transitionLock = true
-		p.queueAnimEndFunction(tconfig.timing.."State", function()
-			p.transitionLock = false
+		sbq.transitionLock = true
+		sbq.queueAnimEndFunction(tconfig.timing.."State", function()
+			sbq.transitionLock = false
 		end)
 	end
 	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
-		local id = p.getTransitionVictimId(scriptargs, tconfig)
-		if id ~= nil then p.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
+		local id = sbq.getTransitionVictimId(scriptargs, tconfig)
+		if id ~= nil then sbq.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
 	end
-	return "success", p.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
+	return "success", sbq.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
 end
 
-function p.getTransitionVictimId(scriptargs, tconfig)
+function sbq.getTransitionVictimId(scriptargs, tconfig)
 	local id = (scriptargs or {}).id
 	if id == nil then
-		id = p.justAte
+		id = sbq.justAte
 	end
 	if tconfig.victimAnimLocation ~= nil then
-		id = p.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
+		id = sbq.findFirstOccupantIdForLocation(tconfig.victimAnimLocation)
 	end
 	return id
 end
 
-function p.idleStateChange(dt)
-	if not p.notMoving() or p.movement.animating or p.transitionLock then return end
+function sbq.idleStateChange(dt)
+	if not sbq.notMoving() or sbq.movement.animating or sbq.transitionLock then return end
 
-	if p.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
-		local transitions = p.stateconfig[p.state].transitions
-		if not p.driver then
+	if sbq.randomTimer( "idleStateChange", 5.0, 5.0 ) then -- every 5 seconds? this is arbitrary, oh well
+		local transitions = sbq.stateconfig[sbq.state].transitions
+		if not sbq.driver then
 			local percent = math.random(100)
 			for name, t in pairs(transitions) do
-				local transition = p.occupantArray( t )
+				local transition = sbq.occupantArray( t )
 				if transition and transition.chance and transition.chance > 0 then
 					percent = percent - transition.chance
 					if percent <= 0 then
-						p.doTransition( name )
+						sbq.doTransition( name )
 						return
 					end
 				end
@@ -151,15 +151,15 @@ function p.idleStateChange(dt)
 		end
 	end
 
-	p.doAnims( p.stateconfig[p.state].idle )
+	sbq.doAnims( sbq.stateconfig[sbq.state].idle )
 
-	p.nextIdle = p.nextIdle - 1
-	if p.nextIdle <= 0 then
-		p.nextIdle = math.random(50, 300)
-		local idles = p.stateconfig[p.state].idleAnimations
+	sbq.nextIdle = sbq.nextIdle - 1
+	if sbq.nextIdle <= 0 then
+		sbq.nextIdle = math.random(50, 300)
+		local idles = sbq.stateconfig[sbq.state].idleAnimations
 		if idles ~= nil and #idles >= 1 then
 			local which = math.random(#idles)
-			p.doAnims( idles[which] )
+			sbq.doAnims( idles[which] )
 		end
 	end
 end

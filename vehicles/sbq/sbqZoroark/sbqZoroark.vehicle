@@ -1,0 +1,539 @@
+{
+	"name" : "sbqZoroark",
+	"script" : "sbqZoroark.lua",
+	"slaveControlTimeout" : 2.0,
+	"slaveControlHeartbeat" : 1.0,
+	"canBeHit" : false,
+
+	"protection" : 50,
+	"maxHealth" : 100,
+	"materialKind" : "organic",
+
+	"directoryPath" : "/vehicles/sbq/sbqZoroark/",
+	"animation" : "/vehicles/sbq/sbqZoroark/sbqZoroark.animation",
+
+	"loungePositions" : {
+		"occupant0" : {
+			"part" : "occupant0",
+			"partAnchor" : "occupant0Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant1" : {
+			"part" : "occupant1",
+			"partAnchor" : "occupant1Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant2" : {
+			"part" : "occupant2",
+			"partAnchor" : "occupant2Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant3" : {
+			"part" : "occupant3",
+			"partAnchor" : "occupant3Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant4" : {
+			"part" : "occupant4",
+			"partAnchor" : "occupant4Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant5" : {
+			"part" : "occupant5",
+			"partAnchor" : "occupant5Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant6" : {
+			"part" : "occupant6",
+			"partAnchor" : "occupant6Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		},
+		"occupant7" : {
+			"part" : "occupant7",
+			"partAnchor" : "occupant7Position",
+			"orientation" : "stand",
+			"statusEffects" : [ "sbqNormalSeatDetector" ]
+		}
+	},
+
+	"mouthPosition" : [ 0.0, 0.0 ],
+
+	"boundBox" : [-3, -4, 3, 1],
+	"metaBoundBox" : [-3, -4, 3, 1],
+
+	"physicsCollisions" : {
+	},
+
+	"sbqData" : {
+		"movementSettings" : {
+			"default":{
+				"collisionPoly" : [
+					[-1,-6], [1, -6],
+					[2,-5], [2, 1],
+					[1, 2], [-1, 2],
+					[-2, 1], [-2, -5]
+				],
+				"fullThreshold" : 3.2, // mass of two normal players
+				"pulseEffect": "doublejump",
+				"jumpCount" : 2,
+				"pulseSparkles": 6,
+				"airJumpProfile" : {
+					"jumpSpeed" : 28.0
+				},
+				"ignorePlatformCollision" : false
+			},
+			"smol":{
+				"collisionPoly" : [
+					[-0.5,-3], [0.5, -3],
+					[1,-2], [1, 0.5],
+					[0.5, 1], [-0.5, 1],
+					[-1, 0.5], [-1, -2]
+				],
+				"pulseEffect": "smoldoublejump",
+				"pulseSparkles": 3,
+				"jumpCount" : 2,
+				"airJumpProfile" : {
+					"jumpSpeed" : 23.0
+				},
+				"ignorePlatformCollision" : false
+			}
+		},
+
+		"lights" : {
+			"driver" : {
+				"color" : [100, 100, 100],
+				"position" : [0,0],
+				"pointLight" : true
+			},
+			"prey" : {
+				"color" : [40, 40, 40],
+				"position" : [0,0],
+				"pointLight" : true
+			}
+		},
+		"defaultSettings" : {
+		},
+		"allowedModifiers": {
+			"fatten": {"min": 0, "max": 1},
+			"escapeDifficulty": {"min": -100, "max": 100},
+			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyMultiplier": {"min": 0, "max": 100},
+			"displayDigest": "bool"
+		},
+		"replaceColorNames" : [
+			"Main Body",
+			"Belly",
+			"Beak",
+			"Flesh"
+		],
+		"replaceColors" : [
+			[
+				["ffca8a", "e0975c", "a85636", "6f2919"], // the first entry in these lists will be the color to replace
+				["f0608b", "cd5061", "95484c", "6a3836"]
+			],
+			[
+				["f32200", "dc1f00", "be1b00", "951500"], // colors to be replaced
+				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"]
+			],
+			[
+				["d9c189", "a38d59", "735e3a"], // first is color to replace
+				["eacf60", "c1a24e", "977841"]
+			],
+			[
+				["b10058", "C93B82"], // penis / mouth
+				["b10058", "C93B82"]
+			]
+		],
+		"replaceSkin" : {
+			"hair" : {
+				"skins" : ["default"],
+				"parts" : ["hair", "hair_foreground", "head1"],
+				"name" : "Hair"
+			},
+			"fluff" : {
+				"skins" : ["default"],
+				"parts" : ["fluff", "fluff_foreground", "head2"],
+				"name" : "Fluff"
+			},
+			"beak" : {
+				"skins" : ["default"],
+				"parts" : ["beak", "beak_foreground", "head3"],
+				"name" : "Beak"
+			},
+			"body" : {
+				"skins" : ["default", "thin_waist"],
+				"parts" : ["body", "belly"],
+				"name" : "Body"
+			}
+		},
+		"locations" :{
+			"belly" : { "max": 2, "digest" : true, "combine":["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"womb" : { "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"fatten" : { "mass": 1 },
+
+			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
+
+			"shaft" : { "max": 1, "mass": 0.1 },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsL" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsR" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+
+			"breasts" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breastsL" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breastsR" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true }
+		},
+
+
+		"victimAnimations": "/vehicles/sbq/sbqZoroark/victim_animations.config"
+	},
+
+
+
+	"states": {
+		"stand": {
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+				"oralVore": { // 1 occupant
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"failOnFull" : true,
+					"lock" : true,
+					"script": "oralVore",
+					"victimAnimation": "oralVore",
+					"timing": "belly",
+					"animation": {
+						"head" : "eat",
+						"belly": "eat"
+					}
+				},
+				"oralEscape": { // 1 occupant
+					"voreType" : "oralVore",
+					"location" : "belly",
+					"lock" : true,
+					"script": "oralEscape",
+					"victimAnimation": "oralEscape",
+					"timing": "belly",
+					"animation": {
+						"head" : "escape",
+						"belly": "escape"
+					}
+				},
+
+				"cockVore": { // 1 occupant
+					"voreType" : "cockVore",
+					"location" : "shaft",
+					"failOnFull" : true,
+					"lock" : true,
+					"script": "cockVore",
+					"victimAnimation": "cockVore",
+					"timing": "cock",
+					"animation": {
+						"cock": "eat"
+					}
+				},
+				"cockEscape": { // 1 occupant
+					"voreType" : "cockVore",
+					"location" : "shaft",
+					"lock" : true,
+					"script": "cockEscape",
+					"victimAnimation": "cockEscape",
+					"timing": "cock",
+					"animation": {
+						"cock": "escape"
+					}
+				},
+
+				"ballsToShaft": { // 1 occupant
+					"script": "ballsToShaft"
+				},
+				"shaftToBalls": { // 1 occupant
+					"script": "shaftToBalls"
+				},
+				"switchBalls": { // 1 occupant
+					"script": "switchBalls"
+				}
+
+			},
+			"idle": {
+				"body": "idle",
+				"arms": "idle",
+				"legs": "idle",
+				"head": "idle",
+				"cock": "idle",
+				"belly": "idle",
+				"frontBreasts": "idle",
+				"backBreasts": "idle",
+				"frontBalls": "idle",
+				"backBalls": "idle",
+				"offset" : {}
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+
+			"struggle": {
+				"belly" : {
+					"parts" : ["belly"],
+					"directions":{
+						"up": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "down" },
+						"back": { "transition": "down" },
+						"down": { "transition": "analEscape" }
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"shaft" : {
+					"parts" : ["cock"],
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true }
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsL" : {
+					"sided" :{
+						"rightParts" : ["backBalls"],
+						"leftParts" : ["frontBalls"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsR" : {
+					"sided" :{
+						"rightParts" : ["frontBalls"],
+						"leftParts" : ["backBalls"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				}
+
+
+			},
+			"interact": {
+				"mouth": {
+					"pos": [3, -4], "aim": [0.5, -0.5],
+					"transition": "oralVore", "chance": 100,
+					"location": "belly", "failOnFull": true
+				},
+				"cock": {
+					"pos": [3, -4], "aim": [0.5, -3.5],
+					"transition": "cockVore", "chance": 100,
+					"location": "shaft", "failOnFull": true
+				}
+
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [-4, -10],
+				"backarms" : [-0.1, -10]
+			},
+			"handOffsets" : {
+				"frontarms" : [17, -8],
+				"backarms" : [23, -8]
+			},
+			"locationCenters" : {
+				"belly" : [0, -3],
+				"shaft" : [0.5, -3.5],
+				"ballsR": [0, -4],
+				"ballsL": [0, -4]
+			},
+			"defaultActions" : ["grab", "vore"],
+			"actions" : {
+				"vore" : {
+					"cooldown": 1,
+					"script": "checkVore"
+				},
+				"oralVore" : {
+					"cooldown": 1,
+					"script": "checkOralVore"
+				},
+				"cockVore" : {
+					"cooldown": 1,
+					"script": "checkCockVore"
+				},
+				"grab" : {
+					"cooldown": 0.5,
+					"script": "grab"
+				}
+			},
+			"control": {
+				"animations": {
+					"walk": {
+						"arms": "walk",
+						"legs": "walk",
+						"body": "idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob", "armsbob"]}
+							]
+						}
+					},
+					"run": {
+						"arms": "run",
+						"legs": "run",
+						"body": "run",
+						"cock": "run",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{ "y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["bodybob"]},
+								{ "y": [0, 1, 0, -1, 0, 1, 0, -1], "x": [1], "groups": ["headbob", "armsbob"]}
+							]
+						}
+					},
+					"jump": {
+						"legs": "jump",
+						"arms": "jump",
+						"body": "idle",
+						"cock": "jump",
+						"offset": {}
+					},
+					"fall": {
+						"legs": "fall",
+						"arms": "fall",
+						"body": "idle",
+						"cock": "fall",
+						"offset": {}
+					}
+				}
+			}
+		},
+		"smol": {
+			"edible": true,
+			"edibleAnims": {
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"head1": "smol.idle",
+				"head2": "smol.idle",
+				"head3": "smol.idle",
+				"cock": "smol.idle",
+				"belly": "smol.idle",
+				"breasts": "smol.idle",
+				"balls": "smol.idle"
+			},
+			"transitions": {
+				// directional = driver can press that direction to transition
+				// non directional = not accessible via controls, except from script
+			},
+			"idle": {
+				"body": "smol.idle",
+				"arms": "smol.idle",
+				"legs": "smol.idle",
+				"head": "smol.idle",
+				"cock": "smol.idle",
+				"belly": "smol.idle",
+				"frontBreasts": "smol.idle",
+				"backBreasts": "smol.idle",
+				"frontBalls": "smol.idle",
+				"backBalls": "smol.idle",
+				"offset" : {}
+			},
+			"idleAnimations": [
+			//	{ "head": "blink" },
+			//	{ "head": "idle" }
+			],
+			"struggle": {
+			},
+			"interact": {
+			},
+			"defaultActions" : ["unassigned", "unassigned"],
+			"locationCenters" : {
+				"belly" : [0, -1.5],
+				"shaft" : [0.25, -1.75],
+				"ballsR": [0, -2],
+				"ballsL": [0, -2]
+			},
+			"actions" : {},
+			"control": {
+				"animations": {
+					"walk": {
+						"arms": "smol.walk",
+						"legs": "smol.walk",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob", "armsbob"]}
+							]
+						}
+					},
+					"run": {
+						"arms": "smol.run",
+						"legs": "smol.run",
+						"body": "smol.run",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{ "y": [0, 1, 0, -1, 0, 1, 0, -1], "groups": ["bodybob"]},
+								{ "y": [0, 1, 0, -1, 0, 1, 0, -1], "x": [1], "groups": ["headbob", "armsbob"]}
+							]
+						}
+					},
+					"jump": {
+						"legs": "smol.jump",
+						"arms": "smol.jump",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
+							]
+						}
+					},
+					"fall": {
+						"legs": "smol.fall",
+						"arms": "smol.fall",
+						"body": "smol.idle",
+						"offset": {
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -3,35 +3,18 @@
 local oldUpdate = update
 local oldInit = init
 
+sbq = {}
+
+require("/scripts/SBQ_RPC_handling.lua")
+
 function init()
 	oldInit()
 	sbqPredType = config.getParameter("sbqPredType")
 end
 
 function update(dt)
-	checkRPCsFinished(dt)
+	sbq.checkRPCsFinished(dt)
 	oldUpdate(dt)
-end
-
-rpcList = {}
-function addRPC(rpc, callback, failCallback)
-	if callback ~= nil or failCallback ~= nil  then
-		table.insert(rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
-	end
-end
-
-function checkRPCsFinished(dt)
-	for i, list in pairs(rpcList) do
-		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
-		if list.rpc:finished() then
-			if list.rpc:succeeded() and list.callback ~= nil then
-				list.callback(list.rpc:result(), list.dt)
-			elseif list.failCallback ~= nil then
-				list.failCallback(list.dt)
-			end
-			table.remove(rpcList, i)
-		end
-	end
 end
 
 -------------------------------------------------------------------------------------------------------------------------------------------
@@ -89,7 +72,7 @@ function feed() -- function copied from SSVM mostly because it gets its target w
 	end
 
 	-- [SBQ] taking off the bottom of feed() now that we have the target to get SBQ's prey enabling options
-	addRPC(world.sendEntityMessage(tempTarget, "sbqIsPreyEnabled", sbqPredType), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(tempTarget, "sbqIsPreyEnabled", sbqPredType), function(enabled)
 		if enabled then
 			doFeed(tempTarget)
 		end
