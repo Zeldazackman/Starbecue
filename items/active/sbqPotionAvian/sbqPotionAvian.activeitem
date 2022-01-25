@@ -9,6 +9,7 @@
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
 
 	"vehicle" : "sbqAvian",
 	"transformationDescription" : "a giant Avian",

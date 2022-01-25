@@ -9,6 +9,7 @@
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
 
 	"vehicle" : "sbqVaporeon",
 	"transformationDescription" : "a vaporeon",

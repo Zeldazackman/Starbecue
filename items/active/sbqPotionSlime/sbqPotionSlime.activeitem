@@ -9,6 +9,7 @@
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
 
 	"vehicle" : "sbqSlime",
 	"transformationDescription" : "a large Slime",
