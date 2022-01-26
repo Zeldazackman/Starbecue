@@ -156,6 +156,12 @@ function init()
 		player.setProperty( "sbqCurrentData", nil)
 	end)
 
+	message.setHandler("sbqEscape", function ()
+		if player.loungingIn() ~= nil then
+			world.sendEntityMessage( player.loungingIn(), "uneat", player.id() )
+		end
+	end)
+
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})

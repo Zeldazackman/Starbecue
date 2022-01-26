@@ -1,0 +1,12 @@
+[
+	{
+		"op" : "add",
+		"path" : "/destinations/-",
+		"value" : {
+				"name" : "Auri's Shop",
+				"planetName" : "",
+				"warpAction" : "instanceworld:sbqHub=auriShop",
+				"icon" : "sbqHub"
+		}
+	}
+]
