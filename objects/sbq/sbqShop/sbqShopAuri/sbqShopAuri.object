@@ -204,7 +204,7 @@
 				"jump" : [ "greeting", "neutral", "continue"]
 			},
 
-			"sbqPotionSlime" : {
+			"sbqTransformationlime" : {
 				"randomPortrait" : [
 					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
 					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"

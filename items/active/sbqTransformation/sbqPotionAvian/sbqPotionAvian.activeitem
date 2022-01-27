@@ -14,13 +14,13 @@
 	"vehicle" : "sbqAvian",
 	"transformationDescription" : "a giant Avian",
 
-	"inventoryIcon" : "sbqPotionAvian.png",
-	"largeImage" : "sbqPotionAvianLarge.png",
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
 
-	"animation" : "sbqPotionAvian.animation",
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqTransformPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

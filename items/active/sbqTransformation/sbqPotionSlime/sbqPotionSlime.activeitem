@@ -1,5 +1,5 @@
 {
-	"itemName" : "sbqPotionSlime",
+	"itemName" : "sbqTransformationlime",
 	"level" : 1,
 	"price" : 500,
 	"maxStack" : 1,
@@ -14,13 +14,13 @@
 	"vehicle" : "sbqSlime",
 	"transformationDescription" : "a large Slime",
 
-	"inventoryIcon" : "sbqPotionSlime.png",
-	"largeImage" : "sbqPotionSlimeLarge.png",
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
 
-	"animation" : "sbqPotionSlime.animation",
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqTransformPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

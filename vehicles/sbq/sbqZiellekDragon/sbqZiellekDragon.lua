@@ -9,36 +9,8 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function sbq.init()
-end
 
 -------------------------------------------------------------------------------
 
-function sbq.update(dt)
-	sbq.whenFalling()
-	sbq.changeSize()
-end
-
-function sbq.whenFalling()
-	if sbq.state == "stand" or sbq.state == "smol" or sbq.state == "chonk_ball" then return end
-	if not mcontroller.onGround() and sbq.totalTimeAlive > 1 then
-		sbq.setState( "stand" )
-		sbq.doAnims( sbq.stateconfig[sbq.state].control.animations.fall )
-		sbq.movement.falling = true
-		sbq.uneat(sbq.findFirstOccupantIdForLocation("hug"))
-	end
-end
-
-function analEscape(args)
-	return sbq.doEscape(args, {}, {} )
-end
-
-function eatAnal(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
-end
-
-function checkAnalVore()
-	return sbq.checkEatPosition(sbq.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
-end
 
 -------------------------------------------------------------------------------

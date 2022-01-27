@@ -124,7 +124,6 @@
 			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
-
 		},
 
 		"defaultSettings" : {
@@ -150,7 +149,7 @@
 			},
 			"legs" : {
 				"skins" : ["default"],
-				"parts" : ["frontlegs", "backlegs", "bapleg"],
+				"parts" : ["frontlegs", "backlegs"],
 				"name" : "Legs"
 			},
 			"tail" : {
@@ -200,15 +199,13 @@
 				}
 			},
 			"idle": {
-				"body": "idle",
-				"legs": "idle",
+				"body": "stand",
+				"legs": "stand",
 				"head": "idle",
-				"tail": "idle",
+				"tail": "stand",
 				"offset" : {}
 			},
 			"idleAnimations": [
-				{ "head": "blink" },
-				{ "tail": "flick" }
 			],
 			"struggle": {
 				"belly" : {
@@ -255,49 +252,43 @@
 				"animations": {
 					"swim": {
 						"legs": "swim",
-						"body": "idle",
-						"tail": "swim",
+						"body": "stand",
 						"head": "idle",
 						"offset": {}
 					},
 					"swimidle": {
 						"legs": "swimidle",
-						"body": "idle",
-						"tail": "swimidle",
+						"body": "stand",
 						"head": "idle",
 						"offset": {}
 					},
-
 					"walk": {
 						"legs": "walk",
-						"body": "idle",
-						"tail": "walk",
+						"body": "stand",
 						"head": "idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["headbob"] }
+								{"y": [0, 0, -1, -1, 0, 0, 1, 1], "groups": ["headbob"] }
 							]
 						}
 					},
 					"run": {
 						"legs": "run",
-						"body": "idle",
-						"tail": "run",
+						"body": "stand",
 						"head": "idle",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["bodybob"] }
+								{"y": [0, 0, -1, -1, 0, 0, 1, 1], "groups": ["bodybob", "headbob", "tailbob"] }
 							]
 						}
 					},
 					"jump": {
 						"legs": "jump",
-						"body": "jump",
-						"tail": "jump",
+						"body": "stand",
 						"head": "idle",
 						"offset" : {
 							"parts" : [
@@ -307,8 +298,7 @@
 					},
 					"fall": {
 						"legs": "fall",
-						"body": "fall",
-						"tail": "fall",
+						//"body": "fall",
 						"head": "idle",
 						"offset" : {
 							"parts" : [

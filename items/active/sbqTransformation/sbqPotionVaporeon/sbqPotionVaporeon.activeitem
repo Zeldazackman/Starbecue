@@ -14,13 +14,13 @@
 	"vehicle" : "sbqVaporeon",
 	"transformationDescription" : "a vaporeon",
 
-	"inventoryIcon" : "sbqPotionVaporeon.png",
-	"largeImage" : "sbqPotionVaporeonLarge.png",
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
 
-	"animation" : "sbqPotionVaporeon.animation",
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqTransformPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

@@ -14,13 +14,13 @@
 	"vehicle" : "sbqXeronious",
 	"transformationDescription" : "a kaiju of some sort",
 
-	"inventoryIcon" : "sbqPotionXeronious.png",
-	"largeImage" : "sbqPotionXeroniousLarge.png",
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
 
-	"animation" : "sbqPotionXeronious.animation",
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqTransformPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

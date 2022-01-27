@@ -28,7 +28,7 @@
 						{ "type" : "layout","id" : "toolScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
 					]}]}
 				]},
-				{ "type" : "tab", "id" : "transformationShopTab", "toolTip" : "Transformation", "title" : "", "icon" : "/items/active/sbqPotionSlime/sbqPotionSlime.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "tab", "id" : "transformationShopTab", "toolTip" : "Transformation", "title" : "", "icon" : "/items/active/sbqTransformation/sbqPotionSlime/sbqPotion.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
 						{ "type" : "layout","id" : "transformationScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
 					]}]}
