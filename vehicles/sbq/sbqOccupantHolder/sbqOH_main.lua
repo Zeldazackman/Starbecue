@@ -184,6 +184,9 @@ function initAfterInit(data)
 			priority = state.states[state.default].priority,
 			cycle = state.states[state.default].cycle,
 			frames = state.states[state.default].frames,
+			mode = state.states[state.default].mode,
+			speed = state.states[state.default].frames / state.states[state.default].cycle,
+			frame = 1,
 			time = 0
 		}
 		sbq.animFunctionQueue[statename] = {}

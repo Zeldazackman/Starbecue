@@ -199,6 +199,7 @@ function init()
 		state.tag = nil
 		sbq.animFunctionQueue[statename] = {}
 		sbq.setPartTag("global", statename.."Frame", 1)
+		sbq.setPartTag("global", statename.."Anim", state.default)
 	end
 
 	sbq.driver = config.getParameter( "driver" )

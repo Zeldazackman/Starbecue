@@ -32,7 +32,7 @@ function sbq.setState(state)
 	end
 	sbq.prevState = sbq.state
 	sbq.state = state
-	sbq.setPartTag( "global", "state", state )
+	sbq.setPartTag( "global", "state", sbq.stateconfig[state].baseState or state )
 	sbq.doAnims( sbq.stateconfig[state].idle, true )
 end
 

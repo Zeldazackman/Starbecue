@@ -490,7 +490,7 @@ function sbq.doAnim( state, anim, force)
 	local priorityHigher = ((newPriority >= oldPriority) or (newPriority == -1))
 	if (not isSame and priorityHigher) or sbq.hasAnimEnded(state) or force then
 		if isSame then
-			local mode = sbq.animStateData[state].states[sbq.animStateData[state].animationState.anim].mode
+			local mode = sbq.animStateData[state].animationState.mode == "end"
 			if mode == "end" then
 				force = true
 			elseif	mode == "loop" then
@@ -508,7 +508,9 @@ function sbq.doAnim( state, anim, force)
 			time = 0
 		}
 		sbq.setPartTag("global", state.."Frame", 1 )
-		animator.setAnimationState(state, anim, force)
+		sbq.setPartTag("global", state.."Anim", sbq.animStateData[state].states[anim].animFrames or anim )
+
+		animator.setAnimationState(state, sbq.animStateData[state].states[anim].baseAnim or anim, force)
 	end
 end
 

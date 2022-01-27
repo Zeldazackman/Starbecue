@@ -523,10 +523,10 @@
 				}
 			},
 			"idle": {
-				"body": "sit",
+				"body": "idle",
 				"legs": "sit",
 				"head": "idle",
-				"tail": "sit",
+				"tail": "idle",
 				"offset" : {
 					"parts" : [
 						{ "y": [4], "groups": ["headbob"] }
@@ -535,7 +535,7 @@
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "tail": "sit.flick" }
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"belly" : {
@@ -580,7 +580,7 @@
 						"body": "situp",
 						"legs": "situp",
 						"head": "idle",
-						"tail": "sit",
+						"tail": "situp",
 						"offset" : {
 							"parts" : [
 								{ "x": [10, 4], "y": [-11, 0], "groups": ["headbob"] }
@@ -644,10 +644,10 @@
 				}
 			},
 			"idle": {
-				"body": "lay",
+				"body": "idle",
 				"legs": "lay",
 				"head": "pinlook",
-				"tail": "lay",
+				"tail": "idle",
 				"offset" : {
 					"parts" : [
 						{ "x": [12], "y": [-15], "groups": ["headbob"] }
@@ -656,7 +656,7 @@
 			},
 			"idleAnimations": [
 				{ "head": "blink" },
-				{ "tail": "lay.flick" }
+				{ "tail": "flick" }
 			],
 			"struggle": {
 				"belly" : {
@@ -717,6 +717,7 @@
 			}
 		},
 		"sleep": {
+			"baseState" : "lay",
 			"transitions": {
 				"up": {
 					"timing" : "head",
@@ -748,7 +749,7 @@
 				}
 			},
 			"idle": {
-				"body": "lay",
+				"body": "idle",
 				"legs": "lay",
 				"head": "blink",
 				"tail": "asleep",
@@ -840,7 +841,7 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"back.anal.escape"
+						"body":"anal.escape"
 					},
 					"victimAnimation": "back.anal.escape",
 					"script": "analEscape"
@@ -851,20 +852,20 @@
 					"location": "belly",
 					"failOnFull": 1,
 					"animation":{
-						"body":"back.anal.eat"
+						"body":"anal.eat"
 					},
 					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
 				}
 			},
 			"idle": {
-				"body": "back",
+				"body": "idle",
 				"legs": "back",
 				"head": "back",
-				"tail": "back"
+				"tail": "idle"
 			},
 			"idleAnimations": [
-				{ "tail": "back.flick" },
+				{ "tail": "flick" },
 				{ "head": "back.blink" }
 			],
 			"struggle": {
@@ -927,6 +928,7 @@
 			}
 		},
 		"hug": {
+			"baseState" : "back",
 			"transitions": {
 				"up": {
 					"animation": {
@@ -957,7 +959,7 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"back.anal.escape"
+						"body":"anal.escape"
 					},
 					"victimAnimation": "back.anal.escape",
 					"script": "analEscape"
@@ -968,20 +970,20 @@
 					"location": "belly",
 					"failOnFull": 1,
 					"animation":{
-						"body":"back.anal.eat"
+						"body":"anal.eat"
 					},
 					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
 				}
 			},
 			"idle": {
-				"body": "back",
+				"body": "idle",
 				"legs": "hug",
 				"head": "back",
-				"tail": "back"
+				"tail": "idle"
 			},
 			"idleAnimations": [
-				{ "tail": "back.flick" },
+				{ "tail": "flick" },
 				{ "head": "back.blink" }
 			],
 			"struggle": {

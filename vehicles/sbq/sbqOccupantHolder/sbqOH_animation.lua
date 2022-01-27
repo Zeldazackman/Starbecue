@@ -43,14 +43,22 @@ function sbq.doAnimData(state, anim, force)
 	local force = force
 	local priorityHigher = ((newPriority >= oldPriority) or (newPriority == -1))
 	if (not isSame and priorityHigher) or sbq.hasAnimEnded(state) or force then
-		if isSame and (sbq.animStateData[state].states[sbq.animStateData[state].animationState.anim].mode == "end") then
-			force = true
+		if isSame then
+			local mode = sbq.animStateData[state].animationState.mode == "end"
+			if mode == "end" then
+				force = true
+			elseif mode == "loop" then
+				return
+			end
 		end
 		sbq.animStateData[state].animationState = {
 			anim = anim,
 			priority = newPriority,
 			cycle = sbq.animStateData[state].states[anim].cycle,
 			frames = sbq.animStateData[state].states[anim].frames,
+			mode = sbq.animStateData[state].states[anim].mode,
+			speed = sbq.animStateData[state].states[anim].frames / sbq.animStateData[state].states[anim].cycle,
+			frame = 1,
 			time = 0
 		}
 	end
