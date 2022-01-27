@@ -270,7 +270,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 0, -1, -1, 0, 0, 1, 1], "groups": ["headbob"] }
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["headbob"] }
 							]
 						}
 					},
@@ -282,7 +282,7 @@
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
-								{"y": [0, 0, -1, -1, 0, 0, 1, 1], "groups": ["bodybob", "headbob", "tailbob"] }
+								{"y": [0, 0, 1, 1, 0, 0, -1, -1], "groups": ["bodybob", "headbob", "tailbob"] }
 							]
 						}
 					},

@@ -96,20 +96,20 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.idle.<frame><directives>" } },
+						"idle": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.idle.<bodyStateFrame><directives>" } },
 
-						"eat": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.eat.<frame><directives>" } },
-						"escape": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.escape.<frame><directives>" } },
+						"eat": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.eat.<bodyStateFrame><directives>" } },
+						"escape": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.escape.<bodyStateFrame><directives>" } },
 
-						"walk": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<frame><directives>" } },
-						"run": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<frame><directives>" } },
+						"walk": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<bodyStateFrame><directives>" } },
+						"run": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<bodyStateFrame><directives>" } },
 
-						"fall": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.fall.<frame><directives>" } },
+						"fall": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.fall.<bodyStateFrame><directives>" } },
 
-						"s_up": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_up.<frame><directives>" } },
-						"s_down": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_down.<frame><directives>" } },
-						"s_front": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_front.<frame><directives>" } },
-						"s_back": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_back.<frame><directives>" } }
+						"s_up": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_up.<bodyStateFrame><directives>" } },
+						"s_down": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_down.<bodyStateFrame><directives>" } },
+						"s_front": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_front.<bodyStateFrame><directives>" } },
+						"s_back": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_back.<bodyStateFrame><directives>" } }
 					}
 				}
 			},

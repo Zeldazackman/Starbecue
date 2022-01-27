@@ -116,27 +116,27 @@
 					"bodyState": {
 						"idle": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.idle.<frame><directives>"
+								"image": "skins/<skin>/smol/smol_body.png:<cracks>.idle.<bodyStateFrame><directives>"
 							}
 						},
 						"s_back": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<frame><directives>"
+								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
 							}
 						},
 						"s_front": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<frame><directives>"
+								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
 							}
 						},
 						"s_up": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<frame><directives>"
+								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
 							}
 						},
 						"s_down": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<frame><directives>"
+								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
 							}
 						}
 					}

@@ -2,6 +2,11 @@
 function sbq.updateAnims(dt)
 	for statename, state in pairs(sbq.animStateData) do
 		state.animationState.time = state.animationState.time + dt
+		local ended, times, time = sbq.hasAnimEnded(statename)
+		if (not ended) or (state.animationState.mode == "loop") then
+			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
+		end
 	end
 
 	for i = 0, sbq.occupantSlots do
@@ -258,8 +263,8 @@ function sbq.victimAnimUpdate(eid)
 	end
 
 	local seatname = sbq.lounging[eid].seatname
-	local speed = sbq.animStateData[statename].animationState.frames / sbq.animStateData[statename].animationState.cycle
-	local frame = math.floor(time * speed)
+	local speed = sbq.animStateData[statename].animationState.speed
+	local frame = sbq.animStateData[statename].animationState.frame -1
 	local nextFrame = frame + 1
 	local nextFrameIndex = nextFrame + 1
 
@@ -404,8 +409,7 @@ function sbq.offsetAnimUpdate()
 	local state = sbq.offsets.timing.."State"
 	local ended, times, time = sbq.hasAnimEnded(state)
 	if ended and not sbq.offsets.loop then sbq.offsets.enabled = false end
-	local speed = sbq.animStateData[state].animationState.frames / sbq.animStateData[state].animationState.cycle
-	local frame = math.floor(time * speed) + 1
+	local frame = sbq.animStateData[state].animationState.frame
 
 	for _,r in ipairs(sbq.offsets.parts) do
 		local x = r.x[ frame ] or r.x[#r.x] or 0
@@ -422,8 +426,8 @@ function sbq.rotationAnimUpdate()
 	local state = sbq.rotating.timing.."State"
 	local ended, times, time = sbq.hasAnimEnded(state)
 	if ended and not sbq.rotating.loop then sbq.rotating.enabled = false end
-	local speed = sbq.animStateData[state].animationState.frames / sbq.animStateData[state].animationState.cycle
-	local frame = math.floor(time * speed)
+	local speed = sbq.animStateData[state].animationState.speed
+	local frame = sbq.animStateData[state].animationState.frame -1
 	local index = frame + 1
 	local nextFrame = frame + 1
 	local nextIndex = index + 1
@@ -485,16 +489,25 @@ function sbq.doAnim( state, anim, force)
 	local force = force
 	local priorityHigher = ((newPriority >= oldPriority) or (newPriority == -1))
 	if (not isSame and priorityHigher) or sbq.hasAnimEnded(state) or force then
-		if isSame and (sbq.animStateData[state].states[animator.animationState(state)].mode == "end") then
-			force = true
+		if isSame then
+			local mode = sbq.animStateData[state].states[sbq.animStateData[state].animationState.anim].mode
+			if mode == "end" then
+				force = true
+			elseif	mode == "loop" then
+				return
+			end
 		end
 		sbq.animStateData[state].animationState = {
 			anim = anim,
 			priority = newPriority,
 			cycle = sbq.animStateData[state].states[anim].cycle,
 			frames = sbq.animStateData[state].states[anim].frames,
+			mode = sbq.animStateData[state].states[anim].mode,
+			speed = sbq.animStateData[state].states[anim].frames / sbq.animStateData[state].states[anim].cycle,
+			frame = 1,
 			time = 0
 		}
+		sbq.setPartTag("global", state.."Frame", 1 )
 		animator.setAnimationState(state, anim, force)
 	end
 end
@@ -625,7 +638,7 @@ function sbq.hasAnimEnded(state)
 end
 
 function sbq.animationIs(state, anim)
-	return animator.animationState(state) == anim
+	return sbq.animStateData[state].animationState.anim == anim
 end
 
 function sbq.setColorReplaceDirectives()

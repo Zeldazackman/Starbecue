@@ -141,18 +141,18 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.<bodyStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.eat.<bodyStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.escape.<bodyStateFrame><directives>" } },
 
-						"anal": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.anal.<frame><directives>" } },
-						"analescape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.analescape.<frame><directives>" } },
+						"anal": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.anal.<bodyStateFrame><directives>" } },
+						"analescape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.analescape.<bodyStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_down.<frame><directives>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_back.<bodyStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_front.<bodyStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_up.<bodyStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_down.<bodyStateFrame><directives>" } }
 					}
 				}
 			},
@@ -164,18 +164,18 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.<bodyStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.eat.<bodyStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.escape.<bodyStateFrame><directives>" } },
 
-						"anal": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.anal.<frame><directives>" } },
-						"analescape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.analescape.<frame><directives>" } },
+						"anal": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.anal.<bodyStateFrame><directives>" } },
+						"analescape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.analescape.<bodyStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_down.<frame><directives>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_back.<bodyStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_front.<bodyStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_up.<bodyStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.s_down.<bodyStateFrame><directives>" } }
 					}
 				}
 			},
@@ -188,15 +188,15 @@
 				"partStates": {
 					"legsState": {
 						"none": { "properties": {} },
-						"back": { "properties": { "image": "skins/<skin>/foreground/legs.png:back.<frame><directives>" } },
-						"hug": { "properties": { "image": "skins/<skin>/foreground/legs.png:hug.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/foreground/legs.png:back.<legsStateFrame><directives>" } },
+						"hug": { "properties": { "image": "skins/<skin>/foreground/legs.png:hug.<legsStateFrame><directives>" } },
 
-						"grab": { "properties": { "image": "skins/<skin>/foreground/legs.png:grab.<frame><directives>" } },
+						"grab": { "properties": { "image": "skins/<skin>/foreground/legs.png:grab.<legsStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_down.<frame><directives>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_back.<legsStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_front.<legsStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_up.<legsStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/foreground/legs.png:<state>.s_down.<legsStateFrame><directives>" } }
 					}
 				}
 			},
@@ -210,15 +210,15 @@
 				"partStates": {
 					"legsState": {
 						"none": { "properties": {} },
-						"back": { "properties": { "image": "skins/<skin>/fullbright/legs.png:back.<frame><directives>" } },
-						"hug": { "properties": { "image": "skins/<skin>/fullbright/legs.png:hug.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/fullbright/legs.png:back.<legsStateFrame><directives>" } },
+						"hug": { "properties": { "image": "skins/<skin>/fullbright/legs.png:hug.<legsStateFrame><directives>" } },
 
-						"grab": { "properties": { "image": "skins/<skin>/fullbright/legs.png:grab.<frame><directives>" } },
+						"grab": { "properties": { "image": "skins/<skin>/fullbright/legs.png:grab.<legsStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_down.<frame><directives>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_back.<legsStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_front.<legsStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_up.<legsStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/fullbright/legs.png:<state>.s_down.<legsStateFrame><directives>" } }
 					}
 				}
 			},
@@ -231,15 +231,15 @@
 				"partStates": {
 					"legsState": {
 						"none": { "properties": {} },
-						"back": { "properties": { "image": "skins/<skin>/legs.png:back.<frame><directives>" } },
-						"hug": { "properties": { "image": "skins/<skin>/legs.png:hug.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/legs.png:back.<legsStateFrame><directives>" } },
+						"hug": { "properties": { "image": "skins/<skin>/legs.png:hug.<legsStateFrame><directives>" } },
 
-						"grab": { "properties": { "image": "skins/<skin>/legs.png:grab.<frame><directives>" } },
+						"grab": { "properties": { "image": "skins/<skin>/legs.png:grab.<legsStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_down.<frame><directives>" } }
+						"s_back": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_back.<legsStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_front.<legsStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_up.<legsStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/legs.png:<state>.s_down.<legsStateFrame><directives>" } }
 					}
 				}
 			},
@@ -251,9 +251,9 @@
 				},
 				"partStates": {
 					"tailState": {
-						"back": { "properties": { "image": "skins/<skin>/tail.png:back.<frame><directives>" } },
-						"back.wag": { "properties": { "image": "skins/<skin>/tail.png:back.wag.<frame><directives>" } },
-						"back.wag2": { "properties": { "image": "skins/<skin>/tail.png:back.wag.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/tail.png:back.<tailStateFrame><directives>" } },
+						"back.wag": { "properties": { "image": "skins/<skin>/tail.png:back.wag.<tailStateFrame><directives>" } },
+						"back.wag2": { "properties": { "image": "skins/<skin>/tail.png:back.wag.<tailStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -269,15 +269,15 @@
 					"headState": {
 						"none": { "properties": {} },
 
-						"back": { "properties": { "image": "skins/<skin>/foreground/head.png:back.<frame><directives>" } },
-						"back.blink": { "properties": { "image": "skins/<skin>/foreground/head.png:back.blink.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/foreground/head.png:back.<headStateFrame><directives>" } },
+						"back.blink": { "properties": { "image": "skins/<skin>/foreground/head.png:back.blink.<headStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/foreground/head.png:back.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/foreground/head.png:back.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/foreground/head.png:back.eat.<headStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/foreground/head.png:back.escape.<headStateFrame><directives>" } },
 
-						"pet": { "properties": { "image": "skins/<skin>/foreground/head.png:blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "skins/<skin>/foreground/head.png:blink.<headStateFrame><directives>" } },
 
-						"look": { "properties": { "image": "skins/<skin>/foreground/head.png:look.<frame><directives>" } }
+						"look": { "properties": { "image": "skins/<skin>/foreground/head.png:look.<headStateFrame><directives>" } }
 					}
 				}
 			},
@@ -292,15 +292,15 @@
 					"headState": {
 						"none": { "properties": {} },
 
-						"back": { "properties": { "image": "skins/<skin>/head.png:back.<frame><directives>" } },
-						"back.blink": { "properties": { "image": "skins/<skin>/head.png:back.blink.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/head.png:back.<headStateFrame><directives>" } },
+						"back.blink": { "properties": { "image": "skins/<skin>/head.png:back.blink.<headStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/head.png:back.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/head.png:back.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/head.png:back.eat.<headStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/head.png:back.escape.<headStateFrame><directives>" } },
 
-						"pet": { "properties": { "image": "skins/<skin>/head.png:blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "skins/<skin>/head.png:blink.<headStateFrame><directives>" } },
 
-						"look": { "properties": { "image": "skins/<skin>/head.png:look.<frame><directives>" } }
+						"look": { "properties": { "image": "skins/<skin>/head.png:look.<headStateFrame><directives>" } }
 					}
 				}
 			},
@@ -315,15 +315,15 @@
 					"headState": {
 						"none": { "properties": {} },
 
-						"back": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.<frame><directives>" } },
-						"back.blink": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.blink.<frame><directives>" } },
+						"back": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.<headStateFrame><directives>" } },
+						"back.blink": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.blink.<headStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.eat.<headStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/fullbright/head.png:back.escape.<headStateFrame><directives>" } },
 
-						"pet": { "properties": { "image": "skins/<skin>/fullbright/head.png:blink.<frame><directives>" } },
+						"pet": { "properties": { "image": "skins/<skin>/fullbright/head.png:blink.<headStateFrame><directives>" } },
 
-						"look": { "properties": { "image": "skins/<skin>/fullbright/head.png:look.<frame><directives>" } }
+						"look": { "properties": { "image": "skins/<skin>/fullbright/head.png:look.<headStateFrame><directives>" } }
 					}
 				}
 			},

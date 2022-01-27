@@ -55,7 +55,3 @@ function sbq.doAnimData(state, anim, force)
 		}
 	end
 end
-
-function sbq.animationIs(state, anim)
-	return sbq.animStateData[state].animationState.anim == anim
-end

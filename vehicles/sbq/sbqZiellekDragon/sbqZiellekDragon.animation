@@ -14,7 +14,7 @@
 			"bodyState": {
 				"default": "stand",
 				"states": {
-					"stand": { "frames": 1, "cycle": 0, "mode": "loop", "priority": 0 },
+					"stand": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
@@ -27,13 +27,13 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
-					"none": { "frames": 1, "cycle": 0, "mode": "loop", "priority": -1 }
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
 			"legsState": {
 				"default": "stand",
 				"states": {
-					"stand": { "frames": 1, "cycle": 0, "mode": "loop", "priority": 0 },
+					"stand": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
@@ -41,16 +41,16 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
-					"swimidle": { "frames": 1, "cycle": 0, "mode": "loop", "priority": 0 },
+					"swimidle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 					"swim": { "frames": 4, "cycle": 1, "mode": "loop", "priority": 0 },
 
-					"none": { "frames": 1, "cycle": 0, "mode": "loop", "priority": -1 }
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
 			"tailState": {
 				"default": "stand",
 				"states": {
-					"stand": { "frames": 1, "cycle": 0, "mode": "loop", "priority": 0 },
+					"stand": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
@@ -61,7 +61,7 @@
 					"swimidle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 					"swim": { "frames": 8, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"none": { "frames": 1, "cycle": 0, "mode": "loop", "priority": -1 }
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
 			"headState": {
@@ -69,7 +69,7 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"none": { "frames": 1, "cycle": 0, "mode": "loop", "priority": -1 }
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
 
@@ -139,18 +139,18 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"stand": { "properties": { "image": "skins/<skin>/body.png:stand.<frame><directives>" } },
+						"stand": { "properties": { "image": "skins/<skin>/body.png:stand.<bodyStateFrame><directives>" } },
 
-						"jump": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.jump.<bodyStateFrame><directives>" } },
+						"fall": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.fall.<bodyStateFrame><directives>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.eat.<frame><directives>" } },
-						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.escape.<frame><directives>" } },
+						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.eat.<bodyStateFrame><directives>" } },
+						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.escape.<bodyStateFrame><directives>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_back.<frame><directives>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_front.<frame><directives>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_up.<frame><directives>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_down.<frame><directives>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_back.<bodyStateFrame><directives>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_front.<bodyStateFrame><directives>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_up.<bodyStateFrame><directives>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.s_down.<bodyStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -165,16 +165,16 @@
 				},
 				"partStates": {
 					"legsState": {
-						"stand": { "properties": { "image": "skins/<skin>/foreground/legs.png:stand.<frame><directives>" } },
+						"stand": { "properties": { "image": "skins/<skin>/foreground/legs.png:stand.<legsStateFrame><directives>" } },
 
-						"walk": { "properties": { "image": "skins/<skin>/foreground/legs.png:<direction>.walk.<frame><directives>" } },
-						"run": { "properties": { "image": "skins/<skin>/foreground/legs.png:<direction>.run.<frame><directives>" } },
+						"walk": { "properties": { "image": "skins/<skin>/foreground/legs.png:<direction>.walk.<legsStateFrame><directives>" } },
+						"run": { "properties": { "image": "skins/<skin>/foreground/legs.png:<direction>.run.<legsStateFrame><directives>" } },
 
-						"jump": { "properties": { "image": "skins/<skin>/foreground/legs.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "skins/<skin>/foreground/legs.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "skins/<skin>/foreground/legs.png:jump.<legsStateFrame><directives>" } },
+						"fall": { "properties": { "image": "skins/<skin>/foreground/legs.png:fall.<legsStateFrame><directives>" } },
 
-						"swimidle": { "properties": { "image": "skins/<skin>/foreground/legs.png:swimidle.<frame><directives>" } },
-						"swim": { "properties": { "image": "skins/<skin>/foreground/legs.png:swim.<frame><directives>" } },
+						"swimidle": { "properties": { "image": "skins/<skin>/foreground/legs.png:swimidle.<legsStateFrame><directives>" } },
+						"swim": { "properties": { "image": "skins/<skin>/foreground/legs.png:swim.<legsStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -189,16 +189,16 @@
 				},
 				"partStates": {
 					"legsState": {
-						"stand": { "properties": { "image": "skins/<skin>/legs.png:stand.<frame><directives>" } },
+						"stand": { "properties": { "image": "skins/<skin>/legs.png:stand.<legsStateFrame><directives>" } },
 
-						"walk": { "properties": { "image": "skins/<skin>/legs.png:<direction>.walk.<frame><directives>" } },
-						"run": { "properties": { "image": "skins/<skin>/legs.png:<direction>.run.<frame><directives>" } },
+						"walk": { "properties": { "image": "skins/<skin>/legs.png:<direction>.walk.<legsStateFrame><directives>" } },
+						"run": { "properties": { "image": "skins/<skin>/legs.png:<direction>.run.<legsStateFrame><directives>" } },
 
-						"jump": { "properties": { "image": "skins/<skin>/legs.png:jump.<frame><directives>" } },
-						"fall": { "properties": { "image": "skins/<skin>/legs.png:fall.<frame><directives>" } },
+						"jump": { "properties": { "image": "skins/<skin>/legs.png:jump.<legsStateFrame><directives>" } },
+						"fall": { "properties": { "image": "skins/<skin>/legs.png:fall.<legsStateFrame><directives>" } },
 
-						"swimidle": { "properties": { "image": "skins/<skin>/legs.png:swimidle.<frame><directives>" } },
-						"swim": { "properties": { "image": "skins/<skin>/legs.png:swim.<frame><directives>" } },
+						"swimidle": { "properties": { "image": "skins/<skin>/legs.png:swimidle.<legsStateFrame><directives>" } },
+						"swim": { "properties": { "image": "skins/<skin>/legs.png:swim.<legsStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -213,7 +213,7 @@
 				},
 				"partStates": {
 					"tailState": {
-						"stand": { "properties": { "image": "skins/<skin>/tail.png:stand.<frame><directives>" } },
+						"stand": { "properties": { "image": "skins/<skin>/tail.png:stand.<tailStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -228,7 +228,7 @@
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "skins/<skin>/head.png:idle.<frame><directives>" } },
+						"idle": { "properties": { "image": "skins/<skin>/head.png:idle.<headStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}

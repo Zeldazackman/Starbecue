@@ -89,7 +89,7 @@ function openRadialMenu()
 		for pred, data in pairs(settings.types) do
 			if data.enable then
 				local skin = (settings[pred].skinNames or {}).head or "default"
-				local directives = setColorReplaceDirectives(root.assetJson("/vehicles/sbq/"..pred.."/"..pred..".vehicle").sbqData, settings[pred] or {})
+				local directives = setColorReplaceDirectives(root.assetJson("/vehicles/sbq/"..pred.."/"..pred..".vehicle").sbqData, settings[pred] or {}) or ""
 				if #options <= 10 then
 					if data.index ~= nil and data.index+1 <= #options then
 						table.insert(options, data.index+1, {
