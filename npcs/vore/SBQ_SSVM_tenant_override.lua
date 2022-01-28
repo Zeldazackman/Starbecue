@@ -105,7 +105,7 @@ end
 
 local oldReqFeed = reqFeed
 function reqFeed(input) -- since reqFeed() has an input source from the start, we can just wrap our check around it
-	addRPC(world.sendEntityMessage(input.sourceId, "sbqIsPreyEnabled", sbqPredType), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(input.sourceId, "sbqIsPreyEnabled", sbqPredType), function(enabled)
 		if enabled then
 			oldReqFeed(input)
 		end

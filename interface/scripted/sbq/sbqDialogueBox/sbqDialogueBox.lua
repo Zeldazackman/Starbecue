@@ -179,12 +179,20 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		dialogueCont:setText("...")
 	end
 
+	local speaker = pane.sourceEntity()
+
+	if dialogueTree.speaker ~= nil then
+		speaker = dialogueTree.speaker
+	end
+
 	if type(randomDialogue) == "string" then
 		dialogueLabel:setText(sb.replaceTags(randomDialogue, { entityname = playerName }))
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSay", randomDialogue)
+		world.sendEntityMessage(speaker, "sbqSay", randomDialogue)
 		finished = true
 	elseif dialogueTree.dialogue ~= nil then
 		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], { entityname = playerName } ))
+		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos])
+
 		if dialoguePos >= #dialogueTree.dialogue then
 			finished = true
 			dialoguePos = 1

@@ -85,9 +85,8 @@ function update(dt)
 		sbq.timeUntilNewHolder = math.max(0, sbq.timeUntilNewHolder - dt)
 	end
 
-	if sbq.occupantHolder ~= nil then
+	if sbq.occupantHolder ~= nil and world.entityExists(sbq.occupantHolder) then
 		world.sendEntityMessage(sbq.occupantHolder, "faceDirection", mcontroller.facingDirection())
-
 	end
 
 	sbq.dialogueBoxOpen = math.max(0, sbq.dialogueBoxOpen - dt)
