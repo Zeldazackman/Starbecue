@@ -146,8 +146,10 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	if type(randomPortrait) == "string" then
 		dialoguePortrait:setFile(randomPortrait)
 	elseif dialogueTree.portrait ~= nil then
-		if dialogueTree.portrait[dialoguePos] ~= nil then
-			dialoguePortrait:setFile(dialogueTree.portrait[dialoguePos])
+		if type(dialogueTree.portrait) == "table" then
+			dialoguePortrait:setFile(dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait)
+		else
+			dialoguePortrait:setFile(dialogueTree.portrait)
 		end
 	else
 		dialoguePortrait:setFile(sbq.data.defaultPortrait)
@@ -156,8 +158,10 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	if type(randomName) == "string" then
 		nameLabel:setText(randomName)
 	elseif dialogueTree.name ~= nil then
-		if dialogueTree.name[dialoguePos] ~= nil then
-			nameLabel:setText(dialogueTree.name[dialoguePos])
+		if type(dialogueTree.name) == "table" then
+			nameLable:setText(dialogueTree.name[dialoguePos] or sbq.data.defaultName or world.entityName(pane.sourceEntity()))
+		else
+			nameLable:setText(dialogueTree.name)
 		end
 	else
 		nameLabel:setText(sbq.data.defaultName or world.entityName(pane.sourceEntity()))
@@ -166,8 +170,10 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	if type(randomButtonText) == "string" then
 		dialogueCont:setText(randomButtonText)
 	elseif dialogueTree.buttonText ~= nil then
-		if dialogueTree.buttonText[dialoguePos] ~= nil then
-			dialogueCont:setText(dialogueTree.buttonText[dialoguePos])
+		if type(dialogueTree.buttonText) == "table" then
+			dialogueCont:setText(dialogueTree.buttonText[dialoguePos] or "...")
+		else
+			dialogueCont:setText(dialogueTree.buttonText)
 		end
 	else
 		dialogueCont:setText("...")
