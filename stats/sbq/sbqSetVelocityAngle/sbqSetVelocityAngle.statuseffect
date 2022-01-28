@@ -1,0 +1,10 @@
+{
+	"name" : "sbqSetVelocityAngle",
+	"effectConfig" : {},
+	"defaultDuration" : 0.25,
+
+	"scripts" : [
+		"sbqSetVelocityAngle.lua"
+	]
+
+}

@@ -50,7 +50,9 @@ sbq.armRotation = {
 	occupantR = nil,
 	occupantL = nil,
 	backarmsAngle = 0,
-	frontarmsAngle = 0
+	frontarmsAngle = 0,
+	backarmsVelocity = 0,
+	frontarmsVelocity = 0
 }
 function sbq.armRotationUpdate()
 	sbq.setGrabTarget()
@@ -88,6 +90,8 @@ function sbq.rotateArm(enabled, arm, LR)
 		if target ~= nil then
 			local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
 
+			sbq.armRotation[arm.."Velocity"] = (((angle - sbq.armRotation[arm.."Angle"]) / sbq.dt) * math.sqrt(handOffset[1]^2 + handOffset[2]^2))
+			sb.logInfo(sbq.armRotation[arm.."Velocity"] ..arm.."Velocity" )
 			sbq.armRotation[arm.."Angle"] = angle
 			sbq.armRotation["armAngle"..LR] = angle
 		end

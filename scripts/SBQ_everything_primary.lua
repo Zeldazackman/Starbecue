@@ -34,7 +34,6 @@ function sbq.everything_primary()
 
 	message.setHandler("sbqSucc", function(_,_, data)
 		status.setStatusProperty("sbqSuccData", data)
-
 		status.addEphemeralEffect("sbqSucc", 1, data.source)
 	end)
 
@@ -48,5 +47,10 @@ function sbq.everything_primary()
 			status.setStatusProperty("sbqPreyEnabled", sb.jsonMerge( defaults[entityType], curEnabled))
 		end
 		return (status.statusProperty("sbqPreyEnabled") or {})[voreType]
+	end)
+
+	message.setHandler("sbqSetVelocityAngle", function(_,_, data)
+		status.setStatusProperty("sbqSetVelocityAngle", data)
+		status.addEphemeralEffect("sbqSetVelocityAngle")
 	end)
 end

@@ -35,6 +35,8 @@ function sbq.handleGrab()
 		sbq.grabbing = nil
 		if primary == "grab" then
 			sbq.grabAngleTransitions(victim)
+			--this doesn't work and its likely not going to work
+			--world.sendEntityMessage(victim, "sbqSetVelocityAngle", {velocity = sbq.armRotation.frontarmsVelocity, angle = sbq.armRotation.frontarmsAngle} )
 		else
 			sbq.doTransition(primary, { id = victim })
 		end
@@ -50,6 +52,7 @@ function sbq.handleGrab()
 end
 
 function sbq.grabAngleTransitions(victim)
+	--if math.abs(sbq.armRotation.frontarmsVelocity) > 5 then return end
 	local angle = sbq.armRotation.frontarmsAngle * 180/math.pi
 	local transition
 	if (angle >= 45 and angle <= 135) then
