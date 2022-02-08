@@ -3,7 +3,11 @@ function sbq.updateDriving(dt)
 	if sbq.driver and sbq.driving then
 		local light = sbq.sbqData.lights.driver
 		if light ~= nil then
-			light.position = world.entityPosition( sbq.driver )
+			if light.position ~= nil then
+				light.position = sbq.localToGlobal(light.position)
+			else
+				light.position = world.entityPosition( sbq.driver )
+			end
 			world.sendEntityMessage( sbq.driver, "sbqLight", light )
 		end
 
@@ -13,9 +17,9 @@ function sbq.updateDriving(dt)
 			world.sendEntityMessage( sbq.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
 		end
 
-		local aim = vehicle.aimPosition(sbq.driverSeat)
-		local cursor = "/cursors/cursors.png:pointer"
-		world.sendEntityMessage( sbq.driver, "sbqDrawCursor", aim, cursor)
+		--local aim = vehicle.aimPosition(sbq.driverSeat)
+		--local cursor = "/cursors/cursors.png:pointer"
+		--world.sendEntityMessage( sbq.driver, "sbqDrawCursor", aim, cursor)
 	end
 	if sbq.pressControl(sbq.driverSeat, "special2") then
 		sbq.letout(sbq.occupant[sbq.occupants.total].id)

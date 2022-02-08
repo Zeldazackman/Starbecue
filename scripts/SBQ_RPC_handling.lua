@@ -21,20 +21,21 @@ end
 
 sbq.loopedMessages = {}
 function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
-	if eid == nil or not world.entityExists(eid) then return end
-	if sbq.loopedMessages[name] == nil then
-		sbq.loopedMessages[name] = {
-			rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
-			callback = callback,
-			failCallback = failCallback
-		}
-	elseif sbq.loopedMessages[name].rpc:finished() then
-		if sbq.loopedMessages[name].rpc:succeeded() and sbq.loopedMessages[name].callback ~= nil then
-			sbq.loopedMessages[name].callback(sbq.loopedMessages[name].rpc:result())
-		elseif sbq.loopedMessages[name].failCallback ~= nil then
-			sbq.loopedMessages[name].failCallback()
+	if eid ~= nil and world.entityExists(eid) then
+		if sbq.loopedMessages[name] == nil then
+			sbq.loopedMessages[name] = {
+				rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
+				callback = callback,
+				failCallback = failCallback
+			}
+		elseif sbq.loopedMessages[name].rpc:finished() then
+			if sbq.loopedMessages[name].rpc:succeeded() and sbq.loopedMessages[name].callback ~= nil then
+				sbq.loopedMessages[name].callback(sbq.loopedMessages[name].rpc:result())
+			elseif sbq.loopedMessages[name].failCallback ~= nil then
+				sbq.loopedMessages[name].failCallback()
+			end
+			sbq.loopedMessages[name] = nil
 		end
-		sbq.loopedMessages[name] = nil
 	end
 end
 

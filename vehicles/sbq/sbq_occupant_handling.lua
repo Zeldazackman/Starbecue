@@ -60,6 +60,7 @@ function sbq.uneat( occupantId )
 	world.sendEntityMessage( occupantId, "applyStatusEffect", "sbqRemoveBellyEffects")
 	world.sendEntityMessage( occupantId, "primaryItemLock", false)
 	world.sendEntityMessage( occupantId, "altItemLock", false)
+	world.sendEntityMessage( occupantId, "sbqLight", nil )
 	sbq.unForceSeat( occupantId )
 	if not sbq.lounging[occupantId] then return end
 
@@ -78,7 +79,6 @@ function sbq.uneat( occupantId )
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", sbq.config.predStatusEffects)
 		world.sendEntityMessage( occupantId, "sbqPredatorDespawned" ) -- to clear the current data for players
 	end
-	world.sendEntityMessage( occupantId, "sbqLight", nil )
 
 	sbq.refreshList = true
 	sbq.lounging[occupantId] = nil
@@ -460,7 +460,11 @@ function sbq.doBellyEffects(dt)
 		if eid and world.entityExists(eid) and (not (i == 0 and not sbq.includeDriver)) then
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey
-			light.position = world.entityPosition( eid )
+			if light.position ~= nil then
+				light.position = sbq.localToGlobal(light.position)
+			else
+				light.position = world.entityPosition( eid )
+			end
 			world.sendEntityMessage( eid, "sbqLight", light )
 
 			if sbq.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
