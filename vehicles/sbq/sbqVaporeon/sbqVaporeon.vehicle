@@ -146,7 +146,7 @@
 			},
 			"prey" : {
 				"color" : [40, 40, 40],
-				"position" : [0,0],
+
 				"pointLight" : true
 			}
 		},

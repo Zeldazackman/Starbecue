@@ -3,12 +3,13 @@ function sbq.updateDriving(dt)
 	if sbq.driver and sbq.driving then
 		local light = sbq.sbqData.lights.driver
 		if light ~= nil then
+			local lightPosition
 			if light.position ~= nil then
-				light.position = sbq.localToGlobal(light.position)
+				lightPosition = sbq.localToGlobal(light.position)
 			else
-				light.position = world.entityPosition( sbq.driver )
+				lightPosition = world.entityPosition( sbq.driver )
 			end
-			world.sendEntityMessage( sbq.driver, "sbqLight", light )
+			world.sendEntityMessage( sbq.driver, "sbqLight", sb.jsonMerge(light, {position = lightPosition}) )
 		end
 
 		sbq.predHudOpen = math.max( 0, sbq.predHudOpen - dt )

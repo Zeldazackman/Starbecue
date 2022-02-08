@@ -460,12 +460,15 @@ function sbq.doBellyEffects(dt)
 		if eid and world.entityExists(eid) and (not (i == 0 and not sbq.includeDriver)) then
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey
-			if light.position ~= nil then
-				light.position = sbq.localToGlobal(light.position)
-			else
-				light.position = world.entityPosition( eid )
+			if light ~= nil then
+				local lightPosition
+				if light.position ~= nil then
+					lightPosition = sbq.localToGlobal(light.position)
+				else
+					lightPosition = world.entityPosition( eid )
+				end
+				world.sendEntityMessage( eid, "sbqLight", sb.jsonMerge(light, {position = lightPosition}) )
 			end
-			world.sendEntityMessage( eid, "sbqLight", light )
 
 			if sbq.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
 				local owner = sbq.occupant[i].nestedPreyData.owner
