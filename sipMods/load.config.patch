@@ -1,7 +1,7 @@
 [
-  {
-    "op": "add",
-    "path": "/-",
-    "value": "Starbecue-2.1.2.json"
-  }
+	{
+		"op": "add",
+		"path": "/-",
+		"value": "starbecue.json"
+	}
 ]

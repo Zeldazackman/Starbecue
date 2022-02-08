@@ -23,7 +23,7 @@ function init()
 		if location ~= nil then
 			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
@@ -111,19 +111,4 @@ function sbq.getOccupantArg(id, arg)
 			return occupant[arg]
 		end
 	end
-end
-
-function sbq.oralVore(args)
-	local distance = entity.distanceToEntity(args.sourceId)
-	if entity.entityInSight(args.sourceId) and ( math.abs(distance[1]) <= 5 ) and ( math.abs(distance[2]) <= 5 ) then
-		sbq.requestEat(args.sourceId, "oralVore", "belly")
-	end
-end
-
-function sbq.requestEat(prey, voreType, location)
-	world.sendEntityMessage(sbq.occupantHolder, "requestEat", prey, voreType, location )
-end
-
-function sbq.requestUneat(prey, voreType)
-	world.sendEntityMessage(sbq.occupantHolder, "requestUneat", prey, voreType )
 end

@@ -56,6 +56,15 @@
 		"1.lay.s_down.5" : "1.lay.1",
 		*/
 
+		"0.stand.eat.1" : "1.stand.eat.1",
+		"0.stand.eat.2" : "1.stand.eat.2",
+		"0.stand.eat.3" : "1.stand.eat.3",
+		"0.stand.eat.4" : "1.stand.eat.4",
+		"0.stand.eat.5" : "1.stand.eat.5",
+		"0.stand.eat.6" : "1.stand.eat.6",
+		"0.stand.eat.7" : "1.stand.eat.7",
+		"0.stand.eat.8" : "1.stand.eat.8",
+
 		"0.stand.escape.1" : "1.stand.eat.8",
 		"0.stand.escape.2" : "1.stand.eat.7",
 		"0.stand.escape.3" : "1.stand.eat.6",

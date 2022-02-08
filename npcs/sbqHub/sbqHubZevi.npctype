@@ -28,7 +28,7 @@
 		"uniqueId" : "sbqHubZevi",
 		"speciesAnimOverrideData" : {
 			"species" : "sbqZevi",
-			"directives" : "?replace;418093=418093fb?replace;57a3b9=57a3b9fb?replace;70b9cf=70b9cffb"
+			"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
 		},
 		"sbqPreyEnabled" : {
 			"enabled" : true
@@ -255,6 +255,14 @@
 				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
 			},
 			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
+		},
+		"voreIcons" : {
+			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"absorbVore" : "/items/active/sbqController/absorbVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+
+			"analVore" : "/items/active/sbqController/analVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb"
 		},
 
 		"dialog" : {
