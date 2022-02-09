@@ -364,7 +364,7 @@ function sbq.updateOccupants(dt)
 					local directions = {}
 					if not sbq.transitionLock then
 						for dir, data in pairs(struggledata.directions or {}) do
-							if data and (not sbq.driving or data.drivingEnabled) then
+							if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
 								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
 								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
 								directions[dir] = data.indicate or "default"

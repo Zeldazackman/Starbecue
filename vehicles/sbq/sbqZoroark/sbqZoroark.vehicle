@@ -348,8 +348,8 @@
 					"directions":{
 						"up": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
-						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true },
-						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true }
+						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
+						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
 					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },
@@ -362,7 +362,7 @@
 					},
 					"sound" : false,
 					"directions":{
-						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
 						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
@@ -378,7 +378,7 @@
 					},
 					"sound" : false,
 					"directions":{
-						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true },
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
 						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
@@ -430,7 +430,18 @@
 				},
 				"cockVore" : {
 					"cooldown": 1,
-					"script": "checkCockVore"
+					"script": "checkCockVore",
+					"settings" : {
+						"penis" : true
+					}
+				},
+				"tailVore" : {
+					"cooldown": 1,
+					"script": "checkTailVore",
+					"settings" : {
+						"tail" : true,
+						"tailMaw" : true
+					}
 				},
 				"grab" : {
 					"cooldown": 0.5,

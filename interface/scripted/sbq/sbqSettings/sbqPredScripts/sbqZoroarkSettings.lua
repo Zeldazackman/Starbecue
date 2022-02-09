@@ -2,7 +2,7 @@
 ---@diagnostic disable:undefined-global
 
 tail:setChecked(sbq.predatorSettings.tail)
-tail:setChecked(sbq.predatorSettings.tailMaw)
+tailMaw:setChecked(sbq.predatorSettings.tailMaw)
 
 penis:setChecked(sbq.predatorSettings.penis)
 balls:setChecked(sbq.predatorSettings.balls)
@@ -16,7 +16,7 @@ function tail:onClick()
 end
 
 function tailMaw:onClick()
-	sbq.changePredatorSetting("tail", tailMaw.checked)
+	sbq.changePredatorSetting("tailMaw", tailMaw.checked)
 end
 function penis:onClick()
 	sbq.changePredatorSetting("penis", penis.checked)

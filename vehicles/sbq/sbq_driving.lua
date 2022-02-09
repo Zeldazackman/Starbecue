@@ -343,10 +343,12 @@ function sbq.assignClickActionMenu(state)
 			icon = "/items/active/sbqController/unassigned.png"..(sbq.itemActionDirectives or "")
 		})
 	for action, data in pairs((state.actions or {})) do
-		table.insert(options, {
-			name = action,
-			icon = ((data.icon) or ("/items/active/sbqController/"..action..".png"))..(sbq.itemActionDirectives or "")
-		})
+		if ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
+			table.insert(options, {
+				name = action,
+				icon = ((data.icon) or ("/items/active/sbqController/"..action..".png"))..(sbq.itemActionDirectives or "")
+			})
+		end
 	end
 
 	world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "actionSelect" }, true )

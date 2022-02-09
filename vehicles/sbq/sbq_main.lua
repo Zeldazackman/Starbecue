@@ -708,3 +708,12 @@ end
 function sbq.randomChance(percent)
 	return math.random() <= (percent/100)
 end
+
+function sbq.checkSettings(checkSettings)
+	for setting, value in pairs(checkSettings) do
+		if sbq.settings[setting] ~= value then
+			return false
+		end
+	end
+	return true
+end
