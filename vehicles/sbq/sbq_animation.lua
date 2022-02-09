@@ -695,6 +695,7 @@ function sbq.partsAreStruggling(parts)
 end
 
 function sbq.setPartTag(part, tag, value)
+	if sbq.partTags[part] == nil then return end
 	sbq.partTags[part][tag] = value
 
 	if part == "global" then

@@ -19,19 +19,6 @@ function sbq.update(dt)
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
 end
-local cumBlob = {
-	barColor = {"A1A1A1", "DCDCDC", "EFEFEF", "FFFFFF"},
-	forceSettings = true,
-	state = "smol",
-	species = "sbqSlime",
-	settings = {
-		firstLoadDone = true,
-		bellyEffect = "sbqRemoveBellyEffects",
-		replaceColors = {8},
-		skinNames = {},
-		directives = "?replace;A1A1A1=A1A1A1Bc;DCDCDC=DCDCDCBc;EFEFEF=EFEFEFBc;FFFFFF=FFFFFFBc"
-	}
-}
 
 function sbq.setItemActionColorReplaceDirectives()
 	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
@@ -62,7 +49,7 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (sbq.settings.penisCumTF and location == "shaft" and (sbq.occupant[i].progressBar <= 0))
 	or (sbq.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" ) and (sbq.occupant[i].progressBar <= 0))
 	then
-		transformMessageHandler( eid , 3, cumBlob )
+		transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
 	end
 end
 

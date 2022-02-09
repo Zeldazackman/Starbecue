@@ -17,28 +17,28 @@ state = {
 -------------------------------------------------------------------------------
 
 function sbq.init()
-	rollForShiny()
+	getColors()
 end
 
 function rollForShiny()
-	if sbq.settings.shinyRoll == nil then
+	if not sbq.settings.firstLoadDone then
 		sb.logInfo("rolling for shiny...")
 		sbq.settings.shinyRoll = math.random(1, 4096)
+		local presetName = "kantonian"
+
 		if sbq.settings.shinyRoll == 1 then
-			sbq.settings.replaceColors = {8,8,9,3,9,1,1}
-			sbq.setColorReplaceDirectives()
-			world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqVaporeon")
+			presetName = presetName.."Shiny"
 			sb.logInfo("woah a shiny pokemon!")
 		else
 			sb.logInfo("meh... not a shiny...")
 		end
-	else
-		sb.logInfo("already rolled for shiny")
-		if sbq.settings.shinyRoll == 1 then
-			sb.logInfo("oh cool you're a shiny")
-		else
-			sb.logInfo("just a normal pokemon")
-		end
+
+		sbq.settings = sb.jsonMerge(sbq.settings, sbq.sbqData.customizePresets[presetName])
+
+		sbq.settings.firstLoadDone = true
+		sbq.setColorReplaceDirectives()
+		sbq.setSkinPartTags()
+		world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqVaporeon")
 	end
 end
 

@@ -32,9 +32,9 @@ end
 
 for name, data in pairs(sbq.sbqSettings.types) do
 	local sbqData = root.assetJson("/vehicles/sbq/"..name.."/"..name..".vehicle").sbqData
-	local predPanel = predatorScrollArea:addChild({type = "layout", mode = "vertical", children = {{ type = "panel", id = name.."Panel", style = "convex", mode = "horizontal", children = {
+	predatorScrollArea:addChild({type = "layout", mode = "vertical", children = {{ type = "panel", id = name.."Panel", style = "convex", mode = "horizontal", children = {
 		{
-			{ type = "image", file = "/vehicles/sbq/"..name.."/skins/"..((sbq.sbqSettings[name].skinNames or {}).head or "default").."/icon.png"..(sbq.setColorReplaceDirectives(sbqData, sbq.sbqSettings[name] or {}))},
+			{ type = "image", file = "/vehicles/sbq/"..name.."/skins/"..((sbq.sbqSettings[name].skinNames or {}).head or "default").."/icon.png"..(sbq.setColorReplaceDirectives(sbqData, sbq.sbqSettings[name] or {}) or "")},
 			{ type = "panel", id = name.."Layout", style = "concave", mode = "vertical", children = {
 				{ type = "label", text = sbqData.displayName or name:gsub("^sbq", "")},
 				{ type = "layout", id = name.."Layout2", mode = "horizontal", children = {

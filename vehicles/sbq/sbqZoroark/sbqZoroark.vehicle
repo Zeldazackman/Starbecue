@@ -119,7 +119,10 @@
 			}
 		},
 		"defaultSettings" : {
+			"replaceColors" : [1,1,1,1,1,1],
+			"fullbright" : [false,false,false,false,true,false]
 		},
+
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 1},
 			"escapeDifficulty": {"min": -100, "max": 100},
@@ -127,45 +130,89 @@
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},
+		"customizePresets" : {
+			"unovan" : {
+				"replaceColors" : [1,1,1,1,1,1]
+			},
+			"unovanShiny" : {
+				"replaceColors" : [1,2,2,1,2,1]
+			},
+			"hisuian" : {
+				"replaceColors" : [2,3,3,2,3,1]
+			},
+			"hisuianShiny" : { // theres no good place to get the shiny colors yet
+				"replaceColors" : [2,3,3,2,3,1]
+			},
+			"Bryzen" : {
+				"tail" : true,
+				"replaceColors" : [1,4,1,1,4,1],
+				"skinNames" : {
+					"body" : "default",
+					"belly" : "default",
+					"head" : "Bryzen",
+					"hair" : "Bryzen"
+				}
+			}
+		},
 		"replaceColorNames" : [
-			"Main Body",
-			"Belly",
-			"Beak",
+			"Fur",
+			"Mane",
+			"Chest Fluff",
+			"Arm Fluff",
+			"Bead/Eyes",
 			"Flesh"
 		],
 		"replaceColors" : [
-			[
-				["ffca8a", "e0975c", "a85636", "6f2919"], // the first entry in these lists will be the color to replace
-				["f0608b", "cd5061", "95484c", "6a3836"]
+			[ // Fur
+				["35313c", "494355", "4f4a57", "605a68"], // the first entry in these lists will be the color to replace
+				["35313c", "494355", "4f4a57", "605a68"], // Unovan Default Grey
+				["757373", "838080", "a19b9b", "d7d5d5"] // Hisuian Default Light Grey
+			],
+			[ // Mane
+				["70121d", "8b2631", "9d2d3b"], // colors to be replaced
+				["70121d", "8b2631", "9d2d3b"], // Unovan Default Red Mane
+				["322559", "492b8e", "52319d"], // Unovan Shiny Purple Mane
+				["aCa5a5", "Ede3e3", "fbfbfb"], // Hisuian Default / Shiny White Mane
+				["1445d1", "2a6ded", "2e76ff"] // Bryzen Blue Mane
+			],
+			[ // Chest Fluff
+				["2f2839", "332c3c", "3a3343"], // first is color to replace
+				["2f2839", "332c3c", "3a3343"], // Unovan Default Black Fluff
+				["3e0707", "5a1818", "672121"], // Unovan Shiny Maroon Fluff
+				["7b3131", "e15959", "eb9898"] // Hisuian Default Red Fluff
+			],
+			[ // Arm Fluff
+				["25242c", "2d2a57", "3a3578", "433d83"],
+				["35313c", "494355", "4f4a57", "605a68"], // Unovan Default Grey
+				["757373", "838080", "a19b9b", "d7d5d5"] // Hisuian Default Light Grey
+			],
+			[ // Bead Eyes
+				["1b6a64", "27a19a", "6bd7d0", "ffffff", "000000"],
+				["1b6a64", "27a19a", "6bd7d0", "ffffff", "000000"], // Unovan Default Teal Bead
+				["d18a1c", "ffbd56", "ffdf91", "ffffff", "000000"], // Unovan Shiny Yellow Bead
+				["a98f07", "d4b618", "fadb3c", "f3de66", "d50045"], // Hisuian Yellow Eyes
+				["48702e", "5f9c37", "7fc453", "ffffff", "000000"] // Bryzen Green eyes
 			],
 			[
-				["f32200", "dc1f00", "be1b00", "951500"], // colors to be replaced
-				["f6fbfb", "d7e8e8", "8fa7a3", "5d6d69"]
-			],
-			[
-				["d9c189", "a38d59", "735e3a"], // first is color to replace
-				["eacf60", "c1a24e", "977841"]
-			],
-			[
-				["b10058", "C93B82"], // penis / mouth
+				["b10058", "C93B82"], // penis / pussy / mouth / beans
 				["b10058", "C93B82"]
 			]
 		],
 		"replaceSkin" : {
 			"hair" : {
-				"skins" : ["default"],
-				"parts" : ["hair", "hair_foreground", "head1"],
+				"skins" : ["default", "Bryzen"],
+				"parts" : ["hair"],
 				"name" : "Hair"
+			},
+			"head" : {
+				"skins" : ["default", "Bryzen"],
+				"parts" : ["head", "head_foreground"],
+				"name" : "Head"
 			},
 			"fluff" : {
 				"skins" : ["default"],
 				"parts" : ["fluff", "fluff_foreground", "head2"],
 				"name" : "Fluff"
-			},
-			"beak" : {
-				"skins" : ["default"],
-				"parts" : ["beak", "beak_foreground", "head3"],
-				"name" : "Beak"
 			},
 			"body" : {
 				"skins" : ["default", "thin_waist"],
@@ -177,6 +224,8 @@
 			"belly" : { "max": 2, "digest" : true, "combine":["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"womb" : { "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"fatten" : { "mass": 1 },
+
+			"tail" : { "max": 1,  "transformGroups" : ["tailbob"] },
 
 			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 

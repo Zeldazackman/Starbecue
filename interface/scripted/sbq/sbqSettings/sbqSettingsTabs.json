@@ -42,7 +42,7 @@
 
 	"speciesSettingsTabs" : {
 		"sbqAvian" : {
-			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqHumanoidSettings.lua"],
+			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqPredScripts/sbqHumanoidSettings.lua"],
 			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
@@ -57,6 +57,26 @@
 					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }]
 				]}
 			]}
+		},
+		"sbqZoroark" : {
+			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqPredScripts/sbqZoroarkSettings.lua"],
+			"tab": { "type" : "tab", "id" : "zoroarkSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqZoroark/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Body Parts", "inline" : true },
+					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Have a fluffy tail! Zoroark usually don't have those, but you can!"}, { "type" : "label", "text" : "Tail" }],
+					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your fluffy tail a Tailmaw! use the Tail Vore action to eat people"}, { "type" : "label", "text" : "Tailmaw" }],
+					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }]
+				]},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : "Penis Cum TF" }],
+					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }]
+				]}
+			]}
+
 		}
 	},
 	"speciesHelpTabs" : {

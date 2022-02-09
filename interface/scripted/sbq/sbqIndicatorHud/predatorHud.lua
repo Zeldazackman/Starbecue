@@ -6,6 +6,7 @@ sbq = {
 	sbqCurrentData = player.getProperty("sbqCurrentData") or {},
 	refreshtime = 0,
 	hudActions = root.assetJson("/interface/scripted/sbq/sbqIndicatorHud/hudActionScripts.config"),
+	config = root.assetJson("/sbqGeneral.config"),
 	occupants = {
 		total = 0
 	}
