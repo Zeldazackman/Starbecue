@@ -2,6 +2,12 @@ local smolPreyData = nil
 local eggSpawned = nil
 local replaceColors = {}
 function init()
+	local preyEnabled =  sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultPreyEnabled[world.entityType(entity.id())], status.statusProperty("sbqPreyEnabled") or {})
+
+	if (not preyEnabled.enabled) or (preyEnabled.eggImmunity) then
+		return
+	end
+
 	message.setHandler( "sbqSmolPreyData", function(_,_, seatindex, data, predator)
 		world.sendEntityMessage( predator, "despawn", true ) -- no warpout
 		smolPreyData = data

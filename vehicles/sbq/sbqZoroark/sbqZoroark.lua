@@ -24,7 +24,11 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (sbq.settings.penisCumTF and location == "shaft" and (sbq.occupant[i].progressBar <= 0))
 	or (sbq.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" ) and (sbq.occupant[i].progressBar <= 0))
 	then
-		transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
+		sbq.loopedMessage("CumTF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
+			if not immune then
+				transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
+			end
+		end)
 	end
 end
 

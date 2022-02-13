@@ -208,6 +208,8 @@ function init()
 
 	displayDigest:setChecked(sbq.globalSettings.displayDigest)
 	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
+	hammerspace:setChecked(sbq.globalSettings.hammerspace)
+
 end
 local init = init
 
@@ -222,7 +224,7 @@ end
 
 function sbq.saveSettings()
 	if sbq.predatorEntity ~= nil and sbq.sbqCurrentData.type == "driver" then
-		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sbq.predatorSettings )
+		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
 	end
 
 	sbq.sbqSettings[sbq.predator] = sbq.predatorSettings
@@ -385,6 +387,11 @@ function bellySounds:onClick()
 	sbq.changeGlobalSetting("bellySounds", bellySounds.checked)
 end
 
+function hammerspace:onClick()
+	sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
+end
+
+
 --------------------------------------------------------------------------------------------------
 
 function decPreset:onClick()
@@ -421,6 +428,8 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 
 	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
 	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
+	transformImmunity:setChecked(sbq.sbqPreyEnabled.transformImmunity)
+	eggImmunity:setChecked(sbq.sbqPreyEnabled.eggImmunity)
 
 	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
 	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
@@ -444,6 +453,14 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 		else
 			status.clearPersistentEffects("digestImmunity")
 		end
+	end
+
+	function transformImmunity:onClick()
+		sbq.changePreySetting("transformImmunity", transformImmunity.checked)
+	end
+
+	function eggImmunity:onClick()
+		sbq.changePreySetting("eggImmunity", eggImmunity.checked)
 	end
 
 	function oralVore:onClick()

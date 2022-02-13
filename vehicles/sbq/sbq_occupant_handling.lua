@@ -200,6 +200,8 @@ function sbq.locationFull(location)
 	if sbq.occupants.total == sbq.occupants.maximum then
 		return true
 	else
+		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace then return false end
+
 		return sbq.occupants[location] >= sbq.sbqData.locations[location].max
 	end
 end
@@ -332,7 +334,9 @@ function sbq.updateOccupants(dt)
 
 					massMultiplier = sbq.sbqData.locations[location].mass or 0
 
-					sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
+					if not sbq.settings.hammerspace then
+						sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
+					end
 
 					if sbq.sbqData.locations[location].transformGroups ~= nil then
 						sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname.."Position")
@@ -401,14 +405,23 @@ function sbq.updateOccupants(dt)
 	sbq.swapCooldown = math.max(0, sbq.swapCooldown - 1)
 
 	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})
+
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	for location, data in pairs(sbq.sbqData.locations) do
-		if data.combine ~= nil then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff
-			for _, combine in ipairs(data.combine) do
-				sbq.occupants[location] = sbq.occupants[location] + sbq.occupants[combine]
-				sbq.occupants[combine] = sbq.occupants[location]
+		if data.hammerspace and sbq.settings.hammerspace then
+			if sbq.occupants[location] > 1 then
+				sbq.occupants[location] = 1
+			end
+		else
+			if data.combine then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff
+				for _, combine in ipairs(data.combine) do
+					sbq.occupants[location] = sbq.occupants[location] + sbq.occupants[combine]
+					sbq.occupants[combine] = sbq.occupants[location]
+				end
 			end
 		end
+
+
 		if data.sided then
 			if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
 				sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) )

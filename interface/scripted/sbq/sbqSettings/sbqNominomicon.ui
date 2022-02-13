@@ -10,6 +10,7 @@
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
 					[[//first collumn
+						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
 							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
@@ -18,33 +19,46 @@
 							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
 						]}
 					],[// second collumn
-						[{"type" : "panel", "style" : "convex", "mode": "v", "children" : [
+						{ "expandMode" : [2, 2]},
+						[[{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "h" },
+							{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible", "visible" : false },
+							{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+							{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
+							{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+							{ "type" : "label", "text" : "Escape Modifier" }
+						]}]],
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
 							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
-							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ]
-						]}],
-						[{ "type" : "panel", "style" : "convex", "mode": "v", "children" : [
-							[
-								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible", "visible" : false },
-								{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
-								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-								{ "type" : "label", "text" : "Escape Modifier" }
-							]
-						]}]
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ],
+							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
+						]}
 					]],
-					{"type" : "panel", "style" : "convex", "children" : [
-						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
-					]},
-					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
+					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				[[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-					{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-				]}],[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-					{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+				[
+					{ "expandMode" : [2, 2]},
+					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [2, 2]},
+						{ "type" : "label", "text" : "Customize Colors", "inline" : true },
+						{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]},
+					{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [2, 2]},
+						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
+						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]}
+				],
+				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
+					{ "mode" : "h" },
+					{ "type" : "label", "text" : " Customize Preset", "inline" : true },
+					{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
+					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
 				]}]]
 			]}],
 			"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [{ "type" : "label", "id": "ownerLabel", "text" : "" }]} ]
