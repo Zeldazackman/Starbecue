@@ -29,7 +29,7 @@ function sbq.setItemActionColorReplaceDirectives()
 		local replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
 		local fullbright = (sbq.settings.fullbright or {})[i]
 
-		if sbq.settings.replaceColorTable ~= nil and sbq.settings.replaceColorTable[i] ~= nil then
+		if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
 			replacePalette = sbq.settings.replaceColorTable[i]
 		end
 

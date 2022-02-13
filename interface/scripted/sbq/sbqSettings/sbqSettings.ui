@@ -68,12 +68,25 @@
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				[[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-					{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-				]}],[{ "type" : "panel", "size" : [128, 176], "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-					{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+				[
+					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [1, 1]},
+						{ "type" : "label", "text" : "Customize Colors", "inline" : true },
+						{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]},
+					{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [1, 1]},
+						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
+						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]}
+				],
+				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
+					{ "mode" : "h", "expandMode" : [1, 0]},
+					{ "type" : "label", "text" : "Customize Preset", "inline" : true },
+					{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+					{ "type" : "textBox", "id" : "presetText", "expandMode" : [2, 2] },
+					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
 				]}]]
 			]}],
 

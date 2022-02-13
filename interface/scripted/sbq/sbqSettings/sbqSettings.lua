@@ -56,16 +56,28 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
+	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil or sbq.predatorConfig.customizePresets ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
+		mainTabField.tabs.customizeTab:setVisible(true)
+
+		if sbq.predatorConfig.customizePresets ~= nil then
+			presetsPanel:setVisible(true)
+			sbq.preset = 1
+			presetText:setText(sbq.predatorSettings.presetText or sbq.predatorConfig.presetList[sbq.preset])
+		else
+			presetsPanel:setVisible(false)
+		end
+
+
 		if sbq.predatorConfig.replaceColors ~= nil then
+			colorsPanel:setVisible(true)
 			colorsScrollArea:clearChildren()
 			for i, colors in ipairs(sbq.predatorConfig.replaceColors) do
 				colorsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{{size = {48,10}},{ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or ("Color "..i), inline = true}},
 					{ type = "checkBox", id = "color"..i.."Fullbright", checked = (sbq.predatorSettings.fullbright or {})[i] or (sbq.predatorConfig.defaultSettings.fullbright or {})[i], toolTip = "Fullbright" },
 					{ type = "iconButton", id = "color"..i.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
-					{ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting." },
-					{ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
-					{ type = "label", text = (sbq.predatorConfig.replaceColorNames or {})[i] or ("Color "..i), size = {48, 10}}
+					{ type = "textBox", id = "color"..i.."TextEntry", toolTip = "Edit the text here to define a custom palette, make sure to match the formatting.", expandMode = {2,2} },
+					{ type = "iconButton", id = "color"..i.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"}
 				}})
 				local fullbright = _ENV["color"..i.."Fullbright"]
 				local prev = _ENV["color"..i.."Prev"]
@@ -99,15 +111,19 @@ function init()
 					sbq.changeColorSetting(textbox, i, 1)
 				end
 			end
+		else
+			colorsScrollArea:clearChildren()
+			colorsPanel:setVisible(false)
 		end
 		if sbq.predatorConfig.replaceSkin then
+			skinsPanel:setVisible(true)
 			skinsScrollArea:clearChildren()
 			for part, _ in pairs(sbq.predatorConfig.replaceSkin) do
 				skinsScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{{size = {48,10}},{ type = "label", text = " "..sbq.predatorConfig.replaceSkin[part].name, inline = true}},
 					{ type = "iconButton", id = part.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
-					{ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists" },
-					{ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
-					{ type = "label", text = sbq.predatorConfig.replaceSkin[part].name, size = {48, 10}}
+					{ type = "textBox", id = part.."TextEntry", toolTip = "Edit the text here to define a specific skin, if it exists", expandMode = {2,2} },
+					{ type = "iconButton", id = part.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"}
 				}})
 				local prev = _ENV[part.."Prev"]
 				local textbox = _ENV[part.."TextEntry"]
@@ -130,8 +146,13 @@ function init()
 					sbq.changeSkinSetting(textbox, part, 1)
 				end
 			end
+		else
+			skinsScrollArea:clearChildren()
+			skinsPanel:setVisible(false)
 		end
 	else
+		mainTabField.tabs.customizeTab:setVisible(false)
+		presetsPanel:setVisible(false)
 		colorsScrollArea:clearChildren()
 		skinsScrollArea:clearChildren()
 	end
@@ -274,7 +295,7 @@ function sbq.setColorReplaceDirectives()
 			local replacePalette = colorGroup[((sbq.predatorSettings.replaceColors or {})[i] or (sbq.predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
 			local fullbright = (sbq.predatorSettings.fullbright or {})[i]
 
-			if sbq.predatorSettings.replaceColorTable ~= nil and sbq.predatorSettings.replaceColorTable[i] ~= nil then
+			if sbq.predatorSettings.replaceColorTable and sbq.predatorSettings.replaceColorTable[i] then
 				replacePalette = sbq.predatorSettings.replaceColorTable[i]
 				if type(replacePalette) == "string" then
 					sbq.predatorSettings.directives = replacePalette
@@ -309,6 +330,17 @@ function sbq.changeSkinSetting(textbox, part, inc)
 		sbq.predatorSettings.skinNames[partname] = sbq.predatorConfig.replaceSkin[part].skins[skinIndex]
 	end
 	sbq.saveSettings()
+end
+
+function sbq.changePreset(inc)
+	local presetIndex = (sbq.preset or 1) + inc
+	if presetIndex > #sbq.predatorConfig.presetList then
+		presetIndex = 1
+	elseif presetIndex < 1 then
+		presetIndex = #sbq.predatorConfig.presetList
+	end
+	sbq.preset = presetIndex
+	presetText:setText(sbq.predatorConfig.presetList[sbq.preset])
 end
 
 --------------------------------------------------------------------------------------------------
@@ -354,6 +386,35 @@ function bellySounds:onClick()
 end
 
 --------------------------------------------------------------------------------------------------
+
+function decPreset:onClick()
+	sbq.changePreset(-1)
+end
+
+function incPreset:onClick()
+	sbq.changePreset(1)
+end
+
+function applyPreset:onClick()
+	local preset = sbq.predatorConfig.customizePresets[presetText.text]
+	if preset then
+		sbq.predatorSettings = sb.jsonMerge(sbq.predatorSettings, preset)
+		if preset.replaceColors then
+			sbq.predatorSettings.replaceColorTable = {}
+		end
+		sbq.predatorSettings.presetText = presetText.text
+		sbq.setColorReplaceDirectives()
+		sbq.setIconDirectives()
+		sbq.saveSettings()
+	end
+end
+
+function presetText:onEnter()
+	applyPreset:onClick()
+end
+
+--------------------------------------------------------------------------------------------------
+
 
 if mainTabField.tabs.globalPreySettings ~= nil then
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})

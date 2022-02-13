@@ -176,12 +176,21 @@
 		"itemActionDirectives" : "?replace;f915cf=558ff2;fc97ea=6db5f8;fff7fd=d9f0ff",
 		"customizePresets" : {
 			"kantonian" : {
-				"replaceColors" : [6,6,9,3,9,1,1]
+				"replaceColors" : [6,6,9,3,9,1,1],
+				"shiny" : false
 			},
 			"kantonianShiny" : {
-				"replaceColors" : [8,8,9,3,9,1,1]
+				"replaceColors" : [8,8,9,3,9,1,1],
+				"shiny" : true
+			},
+			"cumporeon" : { // unlisted hehe
+				"replaceColors" : [9,9,9,9,9,1,1]
 			}
 		},
+		"presetList" : [ // uses this list instead of pairs on customizePresets so they're in a specific order, also so you can have some unlisted secret ones hehe
+			"kantonian",
+			"kantonianShiny"
+		],
 		"replaceColorNames" : [
 			"Main Body",
 			"Dorsal Fins",

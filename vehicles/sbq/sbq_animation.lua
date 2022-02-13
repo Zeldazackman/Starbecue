@@ -655,7 +655,7 @@ function sbq.setColorReplaceDirectives()
 			local replacePalette = colorGroup[((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
 			local fullbright = (sbq.settings.fullbright or {})[i]
 
-			if sbq.settings.replaceColorTable ~= nil and sbq.settings.replaceColorTable[i] ~= nil then
+			if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
 				replacePalette = sbq.settings.replaceColorTable[i]
 				if type(replacePalette) == "string" then
 					sbq.settings.directives = replacePalette
@@ -681,7 +681,7 @@ function sbq.setSkinPartTags()
 	for animPart, skin in pairs(sbq.settings.skinNames or {}) do
 		if skin ~= nil and skin ~= "" and not ((skin:find("//") ~= nil) or (skin:find("%.") ~= nil) or (skin:sub(1,1) == "/") or (skin:sub(-1,-1) == "/") ) then
 			sbq.setPartTag( animPart, "skin", skin )
-			sbq.setPartTag( "global", animPart.."skin", skin )
+			sbq.setPartTag( "global", animPart.."Skin", skin )
 		end
 	end
 end

@@ -55,6 +55,7 @@ function getColors()
 			presetName = "hisuian"
 		end
 		if sbq.settings.shinyRoll == 1 then
+			sbq.settings.shiny = true
 			presetName = presetName.."Shiny"
 			sb.logInfo("woah a shiny pokemon!")
 		else

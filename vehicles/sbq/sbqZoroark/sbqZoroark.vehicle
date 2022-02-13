@@ -132,28 +132,64 @@
 		},
 		"customizePresets" : {
 			"unovan" : {
-				"replaceColors" : [1,1,1,1,1,1]
+				"replaceColors" : [1,1,1,1,1,1],
+				"shiny" : false,
+				"tail" : false,
+				"skinNames" : {
+					"fluff" : "default",
+					"head" : "default",
+					"hair" : "default"
+				}
 			},
 			"unovanShiny" : {
-				"replaceColors" : [1,2,2,1,2,1]
+				"replaceColors" : [1,2,2,1,2,1],
+				"shiny" : true,
+				"tail" : false,
+				"skinNames" : {
+					"fluff" : "default",
+					"head" : "default",
+					"hair" : "default"
+				}
 			},
 			"hisuian" : {
-				"replaceColors" : [2,3,3,2,3,1]
+				"replaceColors" : [2,3,3,2,3,1],
+				"shiny" : false,
+				"tail" : false,
+				"skinNames" : {
+					"fluff" : "hisui",
+					"head" : "hisui",
+					"hair" : "hisui"
+				}
 			},
-			"hisuianShiny" : { // theres no good place to get the shiny colors yet
-				"replaceColors" : [2,3,3,2,3,1]
+			"hisuianShiny" : {
+				"replaceColors" : [1,3,4,1,3,1],
+				"shiny" : true,
+				"tail" : false,
+				"skinNames" : {
+					"fluff" : "hisui",
+					"head" : "hisui",
+					"hair" : "hisui"
+				}
 			},
 			"Bryzen" : {
-				"tail" : true,
 				"replaceColors" : [1,4,1,1,4,1],
+				"shiny" : false,
+				"tail" : true,
 				"skinNames" : {
 					"body" : "default",
-					"belly" : "default",
+					"fluff" : "default",
 					"head" : "Bryzen",
 					"hair" : "Bryzen"
 				}
 			}
 		},
+		"presetList" : [
+			"unovan",
+			"unovanShiny",
+			"hisuian",
+			"hisuianShiny",
+			"Bryzen"
+		],
 		"replaceColorNames" : [
 			"Fur",
 			"Mane",
@@ -165,7 +201,7 @@
 		"replaceColors" : [
 			[ // Fur
 				["35313c", "494355", "4f4a57", "605a68"], // the first entry in these lists will be the color to replace
-				["35313c", "494355", "4f4a57", "605a68"], // Unovan Default Grey
+				["35313c", "494355", "4f4a57", "605a68"], // Unovan Default Grey / Hisui Shiny Grey too?
 				["757373", "838080", "a19b9b", "d7d5d5"] // Hisuian Default Light Grey
 			],
 			[ // Mane
@@ -179,7 +215,8 @@
 				["2f2839", "332c3c", "3a3343"], // first is color to replace
 				["2f2839", "332c3c", "3a3343"], // Unovan Default Black Fluff
 				["3e0707", "5a1818", "672121"], // Unovan Shiny Maroon Fluff
-				["7b3131", "e15959", "eb9898"] // Hisuian Default Red Fluff
+				["b63d3d", "e15959", "eb9898"], // Hisuian Default Red Fluff
+				["57257f", "8049a8", "Ac87bb"] // Hisuian Shiny Purple Fluff
 			],
 			[ // Arm Fluff
 				["25242c", "2d2a57", "3a3578", "433d83"],
@@ -200,18 +237,18 @@
 		],
 		"replaceSkin" : {
 			"hair" : {
-				"skins" : ["default", "Bryzen"],
+				"skins" : ["default", "hisui", "Bryzen"],
 				"parts" : ["hair"],
 				"name" : "Hair"
 			},
 			"head" : {
-				"skins" : ["default", "Bryzen"],
-				"parts" : ["head", "head_foreground"],
+				"skins" : ["default", "hisui", "Bryzen"],
+				"parts" : ["head"],
 				"name" : "Head"
 			},
 			"fluff" : {
-				"skins" : ["default"],
-				"parts" : ["fluff", "fluff_foreground", "head2"],
+				"skins" : ["default", "hisui"],
+				"parts" : ["fluff"],
 				"name" : "Fluff"
 			},
 			"body" : {

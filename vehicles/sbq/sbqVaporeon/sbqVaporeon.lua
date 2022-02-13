@@ -20,13 +20,14 @@ function sbq.init()
 	getColors()
 end
 
-function rollForShiny()
+function getColors()
 	if not sbq.settings.firstLoadDone then
 		sb.logInfo("rolling for shiny...")
 		sbq.settings.shinyRoll = math.random(1, 4096)
 		local presetName = "kantonian"
 
 		if sbq.settings.shinyRoll == 1 then
+			sbq.settings.shiny = true
 			presetName = presetName.."Shiny"
 			sb.logInfo("woah a shiny pokemon!")
 		else
