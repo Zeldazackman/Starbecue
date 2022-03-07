@@ -442,9 +442,9 @@ function sbq.setOccupantTags()
 		end
 
 		if sbq.occupants[location] > sbq.occupantsPrev[location] then
-			sbq.doTransition((sbq.expandQueue[location] or {}).transition, (sbq.expandQueue[location] or {}).args)
+			sbq.doAnims(sbq.expandQueue[location])
 		elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
-			sbq.doTransition((sbq.shrinkQueue[location] or {}).transition, (sbq.shrinkQueue[location] or {}).args)
+			sbq.doAnims(sbq.shrinkQueue[location])
 		end
 	end
 end
