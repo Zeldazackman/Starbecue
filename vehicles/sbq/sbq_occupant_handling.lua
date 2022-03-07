@@ -275,6 +275,7 @@ function sbq.removeStatusFromList(index, status)
 end
 
 function sbq.resetOccupantCount()
+	sbq.occupantsPrev = sb.jsonMerge(sbq.occupants, {})
 	sbq.occupants.total = 0
 	for location, data in pairs(sbq.sbqData.locations) do
 		sbq.occupants[location] = 0
@@ -406,6 +407,13 @@ function sbq.updateOccupants(dt)
 
 	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})
 
+	sbq.setOccupantTags()
+end
+
+sbq.expandQueue = {}
+sbq.shrinkQueue = {}
+
+function sbq.setOccupantTags()
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.hammerspace and sbq.settings.hammerspace then
@@ -421,7 +429,6 @@ function sbq.updateOccupants(dt)
 			end
 		end
 
-
 		if data.sided then
 			if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
 				sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) )
@@ -432,6 +439,12 @@ function sbq.updateOccupants(dt)
 			end
 		else
 			sbq.setPartTag( "global", location.."Occupants", tostring(sbq.occupants[location]) )
+		end
+
+		if sbq.occupants[location] > sbq.occupantsPrev[location] then
+			sbq.doAnims(sbq.expandQueue[location])
+		elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+			sbq.doAnims(sbq.shrinkQueue[location])
 		end
 	end
 end
