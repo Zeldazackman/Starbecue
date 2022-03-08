@@ -318,7 +318,7 @@ function sbq.occupantArray( maybearray )
 	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
 		if maybearray.location then
 			if maybearray.failOnFull then
-				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
+				if type(maybearray.failOnFull) == "number" and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
 				elseif sbq.locationFull(maybearray.location) then return maybearray.failTransition end
 			else
 				if sbq.locationEmpty(maybearray.location) then return maybearray.failTransition end

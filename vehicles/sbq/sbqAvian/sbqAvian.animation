@@ -39,18 +39,25 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-					"run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
 
-					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
-					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 
 					"smol.idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-					"smol.run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
+
+					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
+				}
+			},
+			"neckState": {
+				"default": "none",
+				"states": {
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
 
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
@@ -330,22 +337,28 @@
 			"belly": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.1,
+					"zLevel": -1.11,
 					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bellyState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.idle.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<bodySkin>/giant/giant_belly.png:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.eat.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.escape.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
+						"smol.idle": { "properties": { "image": "skins/<bodySkin>/normal/belly.png:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_back.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_front.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_up.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_belly.png:<bellyOccupants>.s_down.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
-
-						"smol.idle": { "properties": { "image": "skins/<skin>/normal/belly.png:<bellyOccupants>.idle.<bellyStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"neck": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1.1,
+					"transformationGroups": ["flip", "armsbob"]
+				},
+				"partStates": {
+					"neckState": {
+						"eat": { "properties": { "image": "skins/<bodySkin>/giant/giant_neck.png:<neckStateAnim>.<neckStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}

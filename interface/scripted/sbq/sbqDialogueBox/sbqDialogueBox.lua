@@ -287,7 +287,6 @@ function dialogueCont:onClick()
 	if sbq.prevDialogueBranch.continue ~= nil then
 		table.insert(sbq.dialogueTreeLocation, "continue")
 		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
-			sb.logInfo(tostring(sbq.prevDialogueBranch.continue.nearEntitiesNamed))
 			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
 			if entities ~= nil then
 				for _, entity in ipairs(entities) do

@@ -202,7 +202,7 @@
 			"fatten" : { "mass": 1 },
 
 			"shaft" : { "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 
@@ -229,10 +229,10 @@
 					"lock" : true,
 					"script": "oralVore",
 					"victimAnimation": "oralVore",
-					"timing": "belly",
+					"timing": "neck",
 					"animation": {
 						"head" : "eat",
-						"belly": "eat"
+						"neck": "eat"
 					}
 				},
 				"oralEscape": { // 1 occupant
@@ -241,10 +241,10 @@
 					"lock" : true,
 					"script": "oralEscape",
 					"victimAnimation": "oralEscape",
-					"timing": "belly",
+					"timing": "neck",
 					"animation": {
 						"head" : "escape",
-						"belly": "escape"
+						"neck": "escape"
 					}
 				},
 
@@ -290,6 +290,7 @@
 				"head": "idle",
 				"cock": "idle",
 				"belly": "idle",
+				"neck": "none",
 				"frontBreasts": "idle",
 				"backBreasts": "idle",
 				"frontBalls": "idle",
@@ -300,7 +301,12 @@
 			//	{ "head": "blink" },
 			//	{ "head": "idle" }
 			],
-
+			"shrinkAnims" : {
+				"belly" : { "belly" : "shrink" }
+			},
+			"expandAnims" : {
+				"belly" : { "belly" : "expand" }
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["belly"],
@@ -483,6 +489,7 @@
 				"head": "smol.idle",
 				"cock": "smol.idle",
 				"belly": "smol.idle",
+				"neck": "none",
 				"frontBreasts": "smol.idle",
 				"backBreasts": "smol.idle",
 				"frontBalls": "smol.idle",
