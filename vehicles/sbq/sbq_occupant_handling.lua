@@ -419,8 +419,8 @@ function sbq.setOccupantTags()
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.hammerspace and sbq.settings.hammerspace then
-			if sbq.occupants[location] > 1 then
-				sbq.occupants[location] = 1
+			if sbq.occupants[location] > (sbq.settings.hammerspaceLimits[location] or 1) then
+				sbq.occupants[location] = (sbq.settings.hammerspaceLimits[location] or 1)
 			end
 		else
 			if data.combine then -- this doesn't work for sided stuff, but I don't think we'll ever need combine for sided stuff

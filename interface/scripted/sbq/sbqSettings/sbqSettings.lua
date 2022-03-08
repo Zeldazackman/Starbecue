@@ -56,6 +56,8 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
+	sbq.hammerspacePanel()
+
 	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil or sbq.predatorConfig.customizePresets ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
 
@@ -345,6 +347,44 @@ function sbq.changePreset(inc)
 	presetText:setText(sbq.predatorConfig.presetList[sbq.preset])
 end
 
+function sbq.hammerspacePanel()
+	hammerspaceScrollArea:clearChildren()
+	if sbq.globalSettings.hammerspace then
+		hammerspacePanel:setVisible(true)
+		for location, data in pairs(sbq.predatorConfig.locations) do
+			if data.hammerspace and data.max > 1 then
+				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
+					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
+					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
+					{ type = "label", text = location, inline = true}
+				}})
+				local prev = _ENV[location.."Prev"]
+				local label = _ENV[location.."Value"]
+				local next = _ENV[location.."Next"]
+
+				function prev:onClick()
+					sbq.changeHammerspaceLimit(location, -1, label)
+				end
+				function next:onClick()
+					sbq.changeHammerspaceLimit(location, 1, label)
+				end
+			end
+		end
+	else
+		hammerspacePanel:setVisible(false)
+	end
+end
+
+function sbq.changeHammerspaceLimit(location, inc, label)
+	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 1) + inc
+	if newValue < 1 then return
+	elseif newValue > sbq.predatorConfig.locations[location].max then return end
+	label:setText(newValue)
+	sbq.predatorSettings.hammerspaceLimits[location] = newValue
+	sbq.saveSettings()
+end
+
 --------------------------------------------------------------------------------------------------
 
 function BENone:onClick()
@@ -389,6 +429,7 @@ end
 
 function hammerspace:onClick()
 	sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
+	sbq.hammerspacePanel()
 end
 
 

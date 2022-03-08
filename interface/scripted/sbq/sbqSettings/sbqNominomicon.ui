@@ -35,6 +35,11 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
+					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+						{ "mode" : "v", "expandMode" : [0, 0] },
+						{ "type" : "label", "text" : "Hammerspace Visuals", "inline" : true },
+						{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "mode" : "v" } ]}
+					]},
 					{"type" : "panel", "style" : "convex", "children" : [
 						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
 					]},
