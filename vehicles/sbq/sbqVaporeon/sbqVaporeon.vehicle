@@ -326,11 +326,14 @@
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"head": "eat",
 						"offset" : {}
 					},
+					"expandAnims" : {"belly" :{
+						"body": "eat"
+					}},
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
@@ -339,17 +342,20 @@
 					"lock": true,
 					"location": "belly",
 					"animation": {
-						"body": "escape",
 						"head": "escape",
 						"offset" : {}
 					},
+					"shrinkAnims" : { "belly" : {
+						"body": "escape"
+					}},
 					"victimAnimation": "escape",
 					"script": "letout"
 				},
 				"digestbelly":{
-					"animation": {
+					"timing" : 2,
+					"shrinkAnims": { "belly" : {
 						"body": "escape"
-					}
+					}}
 				}
 			},
 			"idle": {

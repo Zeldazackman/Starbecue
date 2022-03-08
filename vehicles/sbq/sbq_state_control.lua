@@ -74,6 +74,13 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 	if sbq.transitionLock then return "locked" end
 	local continue = true
 	local after
+	if tconfig.shrinkAnims ~= nil then
+		sbq.shrinkQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.shrinkAnims)
+	end
+	if tconfig.expandAnims ~= nil then
+		sbq.expandQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.expandAnims)
+	end
+
 	if tconfig.script then
 		local statescript = state[sbq.state][tconfig.script]
 		local _continue, _tconfig
@@ -93,31 +100,63 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 	if tconfig.animation ~= nil then
 		sbq.doAnims( tconfig.animation )
 	end
-	if after ~= nil then
-		sbq.queueAnimEndFunction(tconfig.timing.."State", after)
-	end
-	if (tconfig.state ~= nil) and (tconfig.state ~= sbq.state) then
-		sbq.movementLock = true
-		sbq.transitionLock = true
 
-		sbq.queueAnimEndFunction(tconfig.timing.."State", function()
-			sbq.setState( tconfig.state )
-			sbq.doAnims( sbq.stateconfig[sbq.state].idle )
-			sbq.transitionLock = false
-			sbq.movementLock = false
-		end)
+
+	local timing
+	local timingType = type(tconfig.timing)
+	if timingType == "string" then
+		timing = sbq.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
+		if after ~= nil then
+			sbq.queueAnimEndFunction(tconfig.timing.."State", after)
+		end
+		if (tconfig.state ~= nil) and (tconfig.state ~= sbq.state) then
+			sbq.movementLock = true
+			sbq.transitionLock = true
+
+			sbq.queueAnimEndFunction(tconfig.timing.."State", function()
+				sbq.setState( tconfig.state )
+				sbq.doAnims( sbq.stateconfig[sbq.state].idle )
+				sbq.transitionLock = false
+				sbq.movementLock = false
+			end)
+		end
+		if tconfig.lock then
+			sbq.transitionLock = true
+			sbq.queueAnimEndFunction(tconfig.timing.."State", function()
+				sbq.transitionLock = false
+			end)
+		end
+		if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
+			local id = sbq.getTransitionVictimId(scriptargs, tconfig)
+			if id ~= nil then sbq.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
+		end
+	elseif timingType == "number" then
+		timing = tconfig.timing
+		if after ~= nil then
+			sbq.timer(direction.."After", timing, after)
+		end
+		if tconfig.lock then
+			sbq.transitionLock = true
+			sbq.timer(direction.."Lock", timing, function()
+				sbq.transitionLock = false
+			end)
+		end
+		if (tconfig.state ~= nil) and (tconfig.state ~= sbq.state) then
+			sbq.movementLock = true
+			sbq.transitionLock = true
+
+			sbq.timer(direction.."StateChange", timing, function()
+				sbq.setState( tconfig.state )
+				sbq.doAnims( sbq.stateconfig[sbq.state].idle )
+				sbq.transitionLock = false
+				sbq.movementLock = false
+			end)
+		end
+		if tconfig.victimAnimation ~= nil then
+			sb.logError("[SBQ]["..world.entityName(entity.id()).."] Victim Animations MUST use a timing value from an animation part")
+		end
 	end
-	if tconfig.lock then
-		sbq.transitionLock = true
-		sbq.queueAnimEndFunction(tconfig.timing.."State", function()
-			sbq.transitionLock = false
-		end)
-	end
-	if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
-		local id = sbq.getTransitionVictimId(scriptargs, tconfig)
-		if id ~= nil then sbq.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
-	end
-	return "success", sbq.animStateData[tconfig.timing.."State" or "bodyState"].animationState.cycle
+	return "success", timing
 end
 
 function sbq.getTransitionVictimId(scriptargs, tconfig)

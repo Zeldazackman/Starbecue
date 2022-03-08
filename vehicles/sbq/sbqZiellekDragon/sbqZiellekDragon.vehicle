@@ -193,9 +193,10 @@
 					"script": "letout"
 				},
 				"digestbelly":{
-					"animation": {
+					"timing" : 2,
+					"shrinkAnims": { "belly" : {
 						"body": "escape"
-					}
+					}}
 				}
 			},
 			"idle": {

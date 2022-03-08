@@ -161,10 +161,13 @@
 					"victimAnimation": "back.escape"
 				},
 				"digestbelly":{
+					"timing" : 2,
 					"animation": {
-						"body": "escape",
 						"tail": "back.wag2"
-					}
+					},
+					"shrinkAnims": { "belly" : {
+						"body": "escape"
+					}}
 				},
 
 				"bed": {
@@ -283,10 +286,13 @@
 					"victimAnimation": "back.escape"
 				},
 				"digestbelly":{
+					"timing" : 2,
 					"animation": {
-						"body": "escape",
 						"tail": "back.wag2"
-					}
+					},
+					"shrinkAnims": { "belly" : {
+						"body": "escape"
+					}}
 				},
 
 				"up": [

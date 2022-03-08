@@ -70,6 +70,7 @@ message.setHandler( "digest", function(_,_, eid)
 				sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
 			end
 		end
+		sbq.lounging[eid].location = "digesting"
 		return {success=success, timing=timing}
 	end
 end )

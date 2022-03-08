@@ -308,30 +308,29 @@
 					}
 				},
 				"digestbelly" : {
+					"timing" : 2,
 					"animation": {
-						"body": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "belly": {
+						"body": "digest"
+					}}
 				},
 				"digesttail" : {
+					"timing" : 2,
 					"animation": {
-						"tail": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "tail": {
+						"tail": "digest"
+					}}
 				},
 				"bellyToTail" : {
-					"script": "bellyToTail",
-					"animation": {
-						"tail": "expand",
-						"body": "shrink"
-					}
+					"script": "bellyToTail"
+
 				},
 				"tailToBelly" : {
-					"script": "tailToBelly",
-					"animation": {
-						"tail": "shrink",
-						"body": "expand"
-					}
+					"script": "tailToBelly"
 				}
 			},
 			"idle": {
@@ -536,28 +535,29 @@
 						"head": "AVlook"
 					}
 				},
-				"digesttail" : {
-					"animation": {
-						"tail": "digest",
-						"head": "burp"
-					}
-				},
 				"digestbelly" : {
+					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "belly": {
+						"body": "digest"
+					}}
+				},
+				"digesttail" : {
+					"timing" : 2,
+					"animation": {
+						"head": "burp"
+					},
+					"shrinkAnims":{ "tail": {
+						"tail": "digest"
+					}}
 				},
 				"bellyToTail" : {
-					"script": "bellyToTail",
-					"animation": {
-						"tail": "expand"
-					}
+					"script": "bellyToTail"
 				},
 				"tailToBelly" : {
-					"script": "tailToBelly",
-					"animation": {
-						"tail": "shrink"
-					}
+					"script": "tailToBelly"
 				}
 			},
 			"idle": {
@@ -693,18 +693,22 @@
 					}
 				},
 				"digestbelly" : {
+					"timing" : 2,
 					"animation": {
-						"body": "digest",
-						"arms": "fly",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "belly": {
+						"body": "digest"
+					}}
 				},
 				"digesttail" : {
+					"timing" : 2,
 					"animation": {
-						"tail": "digest",
-						"arms": "fly",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "tail": {
+						"tail": "digest"
+					}}
 				},
 				"analVore": {
 					"voreType" : "analVore",
@@ -924,30 +928,28 @@
 					"script": "analVore"
 				},
 				"digestbelly" : {
+					"timing" : 2,
 					"animation": {
-						"body": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "belly": {
+						"body": "digest"
+					}}
 				},
 				"digesttail" : {
+					"timing" : 2,
 					"animation": {
-						"tail": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "tail": {
+						"tail": "digest"
+					}}
 				},
 				"bellyToTail" : {
-					"script": "bellyToTail",
-					"animation": {
-						"tail": "expand",
-						"body": "shrink"
-					}
+					"script": "bellyToTail"
 				},
 				"tailToBelly" : {
-					"script": "tailToBelly",
-					"animation": {
-						"tail": "shrink",
-						"body": "expand"
-					}
+					"script": "tailToBelly"
 				},
 				"hug": {
 					"voreType" : "held",
@@ -1180,30 +1182,28 @@
 					"script": "analVore"
 				},
 				"digestbelly" : {
+					"timing" : 2,
 					"animation": {
-						"body": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "belly": {
+						"body": "digest"
+					}}
 				},
 				"digesttail" : {
+					"timing" : 2,
 					"animation": {
-						"tail": "digest",
 						"head": "burp"
-					}
+					},
+					"shrinkAnims":{ "tail": {
+						"tail": "digest"
+					}}
 				},
 				"bellyToTail" : {
-					"script": "bellyToTail",
-					"animation": {
-						"tail": "expand",
-						"body": "shrink"
-					}
+					"script": "bellyToTail"
 				},
 				"tailToBelly" : {
-					"script": "tailToBelly",
-					"animation": {
-						"tail": "shrink",
-						"body": "expand"
-					}
+					"script": "tailToBelly"
 				}
 			},
 			"idle": {

@@ -235,6 +235,7 @@ end
 function sbq.doEscape(args, statuses, afterstatuses )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
+	sbq.lounging[victim].location = "escaping"
 
 	vehicle.setInteractive( false )
 	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
@@ -327,6 +328,7 @@ function sbq.updateOccupants(dt)
 							sbq.occupant[i].location = location
 						end
 					end
+				elseif location == "digesting" or location == "escaping" then
 				elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or ((sbq.sbqData.locations[location].max or 0) == 0) then
 					sbq.uneat(sbq.occupant[i].id)
 					return
@@ -442,10 +444,12 @@ function sbq.setOccupantTags()
 		end
 
 		if sbq.occupants[location] > sbq.occupantsPrev[location] then
-			sbq.doAnims(sbq.expandQueue[location])
+			sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
 		elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
-			sbq.doAnims(sbq.shrinkQueue[location])
+			sbq.doAnims(sbq.shrinkQueue[location] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location])
 		end
+		sbq.expandQueue[location] = nil
+		sbq.shrinkQueue[location] = nil
 	end
 end
 
@@ -504,7 +508,7 @@ function sbq.doBellyEffects(dt)
 				if sbq.occupant[i].nestedPreyData.digest then
 					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
 				end
-			elseif sbq.sbqData.locations[sbq.occupant[i].location].digest then
+			elseif sbq.occupant[i].location == "digesting" or (sbq.sbqData.locations[sbq.occupant[i].location] or {}).digest then
 				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				local hunger_change = (hungereffect * powerMultiplier * dt)/100
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id() ) end
