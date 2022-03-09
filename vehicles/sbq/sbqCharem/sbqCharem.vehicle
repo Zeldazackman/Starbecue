@@ -121,11 +121,14 @@
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
 						"head": "eat",
-						"body": "eat",
 						"tail": "back.wag2"
 					},
+					"expandAnims" : { "belly" : {
+						"body": "eat"
+					}},
 					"script": "eat",
 					"victimAnimation": "back.eat"
 				},
@@ -134,9 +137,12 @@
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
-						"body": "anal",
+						"body": "idleEat",
 						"tail": "back.wag2"
 					},
+					"expandAnims" : { "belly" : {
+						"body": "anal"
+					}},
 					"script": "anal",
 					"victimAnimation": "back.anal.eat"
 				},
@@ -144,18 +150,21 @@
 					"voreType" : "analVore",
 					"location" : "belly",
 					"animation": {
-						"body": "analescape",
+						"body": "idleEat",
 						"tail": "back.wag2"
 					},
+					"shrinkAnims" : { "belly" : {
+						"body": "analescape"
+					}},
 					"script": "analescape",
 					"victimAnimation": "back.anal.escape"
 				},
 				"escape":{
 					"voreType" : "oralVore",
 					"location" : "belly",
+					"timing" : "head",
 					"animation": {
-						"head": "escape",
-						"body": "escape"
+						"head": "escape"
 					},
 					"script": "escape",
 					"victimAnimation": "back.escape"
@@ -246,11 +255,14 @@
 					"voreType" : "oralVore",
 					"location" : "belly",
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
 						"head": "eat",
-						"body": "eat",
 						"tail": "back.wag2"
 					},
+					"expandAnims" : { "belly" : {
+						"body": "eat"
+					}},
 					"script": "eat",
 					"victimAnimation": "back.eat"
 				},
@@ -259,9 +271,12 @@
 					"location" : "belly",
 					"failOnFull" : true,
 					"animation": {
-						"body": "anal",
+						"body": "idleEat",
 						"tail": "back.wag2"
 					},
+					"expandAnims" : { "belly" : {
+						"body": "anal"
+					}},
 					"script": "anal",
 					"victimAnimation": "back.anal.eat"
 				},
@@ -269,18 +284,21 @@
 					"voreType" : "analVore",
 					"location" : "belly",
 					"animation": {
-						"body": "analescape",
+						"body": "idleEat",
 						"tail": "back.wag2"
 					},
+					"shrinkAnims" : { "belly" : {
+						"body": "analescape"
+					}},
 					"script": "analescape",
 					"victimAnimation": "back.anal.escape"
 				},
 				"escape":{
 					"voreType" : "oralVore",
 					"location" : "belly",
+					"timing" : "head",
 					"animation": {
-						"head": "escape",
-						"body": "escape"
+						"head": "escape"
 					},
 					"script": "escape",
 					"victimAnimation": "back.escape"

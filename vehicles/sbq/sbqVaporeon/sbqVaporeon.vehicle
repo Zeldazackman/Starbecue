@@ -331,9 +331,6 @@
 						"head": "eat",
 						"offset" : {}
 					},
-					"expandAnims" : {"belly" :{
-						"body": "eat"
-					}},
 					"victimAnimation": "playereat",
 					"script": "eat"
 				},
@@ -345,17 +342,11 @@
 						"head": "escape",
 						"offset" : {}
 					},
-					"shrinkAnims" : { "belly" : {
-						"body": "escape"
-					}},
 					"victimAnimation": "escape",
 					"script": "letout"
 				},
 				"digestbelly":{
-					"timing" : 2,
-					"shrinkAnims": { "belly" : {
-						"body": "escape"
-					}}
+					"timing" : 2
 				}
 			},
 			"idle": {
@@ -369,6 +360,12 @@
 				{ "head": "blink" },
 				{ "tail": "flick" }
 			],
+			"shrinkAnims" : { "belly" : {
+				"body": "shrink"
+			}},
+			"expandAnims" : {"belly" :{
+				"body": "expand"
+			}},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],

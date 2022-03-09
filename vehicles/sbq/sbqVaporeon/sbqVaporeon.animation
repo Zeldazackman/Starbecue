@@ -33,12 +33,10 @@
 
 					"rollover": { "frames": 5, "cycle": 1, "mode": "end", "priority": 3, "baseAnim" : "idle" },
 
-					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
-					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 
-					"anal.eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
-					"anal.escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle"},
@@ -56,6 +54,16 @@
 					"chonk_ball": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 0 }
 				}
 			},
+			"neckState": {
+				"default": "none",
+				"states": {
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4 },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "eat" },
+
+					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
+				}
+			},
+
 			"legsState": {
 				"default": "idle",
 				"states": {
@@ -286,6 +294,20 @@
 						"idle": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.<bodyStateAnim>.<bodyStateFrame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.<bodyStateAnim>.<bodyStateFrame>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/smol/smol_body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/smol/foreground/smol_body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"neck": {
+				"properties": {
+					"centered": true,
+					"zLevel": 1.1,
+					"transformationGroups": ["flip", "bodybob"]
+				},
+				"partStates": {
+					"neckState": {
+						"eat": { "properties": { "image": "skins/<skin>/body.png:<state>.<neckStateAnim>.<neckStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}

@@ -137,7 +137,7 @@
 		},
 		"locations" :{
 			"belly" : { "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
-			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"], "hammerspace" : true },
+			"tail" : { "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },
 
 			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["bodybob"] },
 			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] },
@@ -232,8 +232,8 @@
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"head": "eat"
 					},
 					"victimAnimation": "eat",
@@ -244,8 +244,8 @@
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"head": "eat"
 					},
 					"victimAnimation": "succ",
@@ -256,8 +256,8 @@
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "oralEscape",
+					"timing" : "head",
 					"animation": {
-						"body": "escape",
 						"head": "escape"
 					}
 				},
@@ -291,7 +291,7 @@
 					"failOnFull" : true,
 					"lock":true,
 					"animation": {
-						"body": "expand",
+						"body": "dummyEat",
 						"head": "AVlook"
 					},
 					"victimAnimation": "analVore",
@@ -303,7 +303,7 @@
 					"victimAnimation": "analEscape",
 					"script": "analEscape",
 					"animation": {
-						"body": "shrink",
+						"body": "dummyEat",
 						"head": "AVlook"
 					}
 				},
@@ -311,19 +311,13 @@
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "belly": {
-						"body": "digest"
-					}}
+					}
 				},
 				"digesttail" : {
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "tail": {
-						"tail": "digest"
-					}}
+					}
 				},
 				"bellyToTail" : {
 					"script": "bellyToTail"
@@ -345,6 +339,14 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"shrinkAnims":{
+				"belly": { "body": "shrink" },
+				"tail": { "tail": "shrink" }
+			},
+			"expandAnims":{
+				"belly": { "body": "expand" },
+				"tail": { "tail": "expand" }
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],
@@ -539,19 +541,13 @@
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "belly": {
-						"body": "digest"
-					}}
+					}
 				},
 				"digesttail" : {
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "tail": {
-						"tail": "digest"
-					}}
+					}
 				},
 				"bellyToTail" : {
 					"script": "bellyToTail"
@@ -577,6 +573,12 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"shrinkAnims":{
+				"tail": { "tail": "shrink" }
+			},
+			"expandAnims":{
+				"tail": { "tail": "expand" }
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : [],
@@ -648,8 +650,8 @@
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"arms": "fly",
 						"head": "eat"
 					},
@@ -660,8 +662,8 @@
 					"voreType" : "oralVore",
 					"victimAnimation": "escape",
 					"script" : "oralEscape",
+					"timing" : "head",
 					"animation": {
-						"body": "escape",
 						"arms": "fly",
 						"head": "escape"
 					}
@@ -696,19 +698,13 @@
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "belly": {
-						"body": "digest"
-					}}
+					}
 				},
 				"digesttail" : {
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "tail": {
-						"tail": "digest"
-					}}
+					}
 				},
 				"analVore": {
 					"voreType" : "analVore",
@@ -716,7 +712,7 @@
 					"failOnFull" : true,
 					"lock":true,
 					"animation": {
-						"body": "expand",
+						"body": "dummyEat",
 						"arms": "fly",
 						"legs": "analVore",
 						"head": "AVlook"
@@ -730,7 +726,7 @@
 					"victimAnimation": "analEscape",
 					"script" : "analEscape",
 					"animation": {
-						"body": "shrink",
+						"body": "dummyEat",
 						"arms": "fly",
 						"head": "AVlook"
 					}
@@ -738,17 +734,13 @@
 				"bellyToTail" : {
 					"script": "bellyToTail",
 					"animation": {
-						"arms": "fly",
-						"tail": "expand",
-						"body": "shrink"
+						"arms": "fly"
 					}
 				},
 				"tailToBelly" : {
 					"script": "tailToBelly",
 					"animation": {
-						"arms": "fly",
-						"tail": "shrink",
-						"body": "expand"
+						"arms": "fly"
 					}
 				}
 			},
@@ -763,6 +755,14 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"shrinkAnims":{
+				"belly": { "body": "shrink" },
+				"tail": { "tail": "shrink" }
+			},
+			"expandAnims":{
+				"belly": { "body": "expand" },
+				"tail": { "tail": "expand" }
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],
@@ -875,8 +875,8 @@
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"head": "eat"
 					},
 					"victimAnimation": "eat",
@@ -887,8 +887,8 @@
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "oralEscape",
+					"timing" : "head",
 					"animation": {
-						"body": "escape",
 						"head": "escape"
 					}
 				},
@@ -922,7 +922,7 @@
 					"failOnFull" : true,
 					"lock":true,
 					"animation": {
-						"body": "expand",
+						"body": "dummyEat",
 						"head": "AVlook"
 					},
 					"script": "analVore"
@@ -931,19 +931,13 @@
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "belly": {
-						"body": "digest"
-					}}
+					}
 				},
 				"digesttail" : {
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "tail": {
-						"tail": "digest"
-					}}
+					}
 				},
 				"bellyToTail" : {
 					"script": "bellyToTail"
@@ -981,6 +975,14 @@
 				{ "head": "blink" },
 				{ "head": "idle" }
 			],
+			"shrinkAnims":{
+				"belly": { "body": "shrink" },
+				"tail": { "tail": "shrink" }
+			},
+			"expandAnims":{
+				"belly": { "body": "expand" },
+				"tail": { "tail": "expand" }
+			},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],
@@ -1129,8 +1131,8 @@
 					"location" : "belly",
 					"lock" : true,
 					"failOnFull" : true,
+					"timing" : "head",
 					"animation": {
-						"body": "eat",
 						"head": "eat"
 					},
 					"victimAnimation": "eat",
@@ -1141,8 +1143,8 @@
 					"victimAnimation": "escape",
 					"lock":true,
 					"script": "oralEscape",
+					"timing" : "head",
 					"animation": {
-						"body": "escape",
 						"head": "escape"
 					}
 				},
@@ -1176,7 +1178,7 @@
 					"failOnFull" : true,
 					"lock":true,
 					"animation": {
-						"body": "expand",
+						"body": "dummyEat",
 						"head": "AVlook"
 					},
 					"script": "analVore"
@@ -1185,19 +1187,13 @@
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "belly": {
-						"body": "digest"
-					}}
+					}
 				},
 				"digesttail" : {
 					"timing" : 2,
 					"animation": {
 						"head": "burp"
-					},
-					"shrinkAnims":{ "tail": {
-						"tail": "digest"
-					}}
+					}
 				},
 				"bellyToTail" : {
 					"script": "bellyToTail"
@@ -1231,6 +1227,14 @@
 				{ "head": "blink" },
 				{ "head": "look" }
 			],
+			"shrinkAnims":{
+				"belly": { "body": "shrink" },
+				"tail": { "tail": "shrink" }
+			},
+			"expandAnims":{
+				"belly": { "body": "expand" },
+				"tail": { "tail": "expand" }
+			},
 			"struggle": {
 				"hug" : {
 					"sound" : false,

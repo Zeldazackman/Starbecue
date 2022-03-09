@@ -18,6 +18,7 @@
 				"default": "back",
 				"states": {
 					"back": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"idleEat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 2 },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
@@ -142,6 +143,7 @@
 				"partStates": {
 					"bodyState": {
 						"back": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.<bodyStateFrame><directives>" } },
+						"idleEat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.1<directives>" } },
 
 						"eat": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.eat.<bodyStateFrame><directives>" } },
 						"escape": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.back.escape.<bodyStateFrame><directives>" } },
@@ -165,6 +167,7 @@
 				"partStates": {
 					"bodyState": {
 						"back": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.<bodyStateFrame><directives>" } },
+						"idleEat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.1<directives>" } },
 
 						"eat": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.eat.<bodyStateFrame><directives>" } },
 						"escape": { "properties": { "image": "skins/<skin>/foreground/body.png:<bellyOccupants>.back.escape.<bodyStateFrame><directives>" } },
