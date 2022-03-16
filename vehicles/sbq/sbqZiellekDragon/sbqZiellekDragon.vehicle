@@ -173,7 +173,7 @@
 					"location": "belly",
 					"failOnFull" : true,
 					"animation": {
-						"body": "eat",
+						"neck": "eat",
 						"head": "eat",
 						"offset" : {}
 					},
@@ -185,7 +185,7 @@
 					"lock": true,
 					"location": "belly",
 					"animation": {
-						"body": "escape",
+						"neck": "escape",
 						"head": "escape",
 						"offset" : {}
 					},
@@ -193,24 +193,27 @@
 					"script": "letout"
 				},
 				"digestbelly":{
-					"timing" : 2,
-					"shrinkAnims": { "belly" : {
-						"body": "escape"
-					}}
+					"timing" : 2
 				}
 			},
 			"idle": {
-				"body": "stand",
-				"legs": "stand",
+				"body": "idle",
+				"legs": "idle",
 				"head": "idle",
-				"tail": "stand",
+				"tail": "idle",
 				"offset" : {}
 			},
 			"idleAnimations": [
 			],
+			"shrinkAnims" : {
+				"belly" : { "belly": "shrink" }
+			},
+			"expandAnims" : {
+				"belly" : { "belly": "expand" }
+			},
 			"struggle": {
 				"belly" : {
-					"parts" : ["body"],
+					"parts" : ["belly"],
 					"directions": {
 						"up": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
@@ -253,19 +256,19 @@
 				"animations": {
 					"swim": {
 						"legs": "swim",
-						"body": "stand",
+						"body": "idle",
 						"head": "idle",
 						"offset": {}
 					},
 					"swimidle": {
 						"legs": "swimidle",
-						"body": "stand",
+						"body": "idle",
 						"head": "idle",
 						"offset": {}
 					},
 					"walk": {
 						"legs": "walk",
-						"body": "stand",
+						"body": "idle",
 						"head": "idle",
 						"offset" : {
 							"timing": "legs",
@@ -277,7 +280,7 @@
 					},
 					"run": {
 						"legs": "run",
-						"body": "stand",
+						"body": "idle",
 						"head": "idle",
 						"offset" : {
 							"timing": "legs",
@@ -289,7 +292,7 @@
 					},
 					"jump": {
 						"legs": "jump",
-						"body": "stand",
+						"body": "idle",
 						"head": "idle",
 						"offset" : {
 							"parts" : [
