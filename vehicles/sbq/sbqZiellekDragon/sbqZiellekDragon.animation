@@ -16,6 +16,9 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
+
 					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
@@ -146,7 +149,7 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "skins/<skin>/body.png:<bodyStateAnim>.<bodyStateFrame><directives>" } },
+						"idle": { "properties": { "image": "skins/<bodySkin>/body.png:<bodyStateAnim>.<bodyStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -170,7 +173,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 1.2,
-					"transformationGroups": ["flip", "bodybob"]
+					"transformationGroups": ["flip", "bodybob", "bellybob"]
 				},
 				"partStates": {
 					"bellyState": {
@@ -189,9 +192,9 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "skins/<skin>/foreground/legs.png:<legsStateAnim>.<legsStateFrame><directives>" } },
+						"idle": { "properties": { "image": "skins/<legsSkin>/foreground/legs.png:<legsStateAnim>.<legsStateFrame><directives>" } },
 
-						"walk": { "properties": { "image": "skins/<skin>/foreground/legs.png:<direction>.<legsStateAnim>.<legsStateFrame><directives>" } },
+						"walk": { "properties": { "image": "skins/<legsSkin>/foreground/legs.png:<direction>.<legsStateAnim>.<legsStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -206,9 +209,9 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "skins/<skin>/legs.png:<legsStateAnim>.<legsStateFrame><directives>" } },
+						"idle": { "properties": { "image": "skins/<legsSkin>/legs.png:<legsStateAnim>.<legsStateFrame><directives>" } },
 
-						"walk": { "properties": { "image": "skins/<skin>/legs.png:<direction>.<legsStateAnim>.<legsStateFrame><directives>" } },
+						"walk": { "properties": { "image": "skins/<legsSkin>/legs.png:<direction>.<legsStateAnim>.<legsStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -223,7 +226,7 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "skins/<skin>/tail.png:<tailStateAnim>.<tailStateFrame><directives>" } },
+						"idle": { "properties": { "image": "skins/<tailSkin>/tail.png:<tailStateAnim>.<tailStateFrame><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -840,6 +843,9 @@
 			"interpolated": false
 		},
 		"bodybob": {
+			"interpolated": false
+		},
+		"bellybob": {
 			"interpolated": false
 		},
 		"legsbob": {
