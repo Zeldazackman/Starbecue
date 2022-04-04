@@ -79,6 +79,9 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
 					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
@@ -236,12 +239,27 @@
 			"head": {
 				"properties": {
 					"centered": true,
+					"zLevel": -1,
+					"transformationGroups": ["flip", "headbob"]
+				},
+				"partStates": {
+					"headState": {
+						"idle": { "properties": { "image": "skins/<headSkin>/head.png:<headStateAnim>.<headStateFrame><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+
+			"head_fg": {
+				"properties": {
+					"centered": true,
 					"zLevel": 2,
 					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "skins/<skin>/head.png:<headStateAnim>.<headStateFrame><directives>" } },
+						"idle": { "properties": { "image": "skins/<headSkin>/head.png:<headStateAnim>.<headStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<headSkin>/foreground/head.png:<headStateAnim>.<headStateFrame>" } },
 
 						"none": { "properties": {} }
 					}

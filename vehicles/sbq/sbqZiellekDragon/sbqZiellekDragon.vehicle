@@ -143,7 +143,7 @@
 
 		"replaceSkin" : {
 			"head" : {
-				"skins" : ["default"],
+				"skins" : ["default", "Lakota", "Dex"],
 				"parts" : ["head"],
 				"name" : "Head"
 			},
@@ -200,7 +200,7 @@
 			[
 				["6c0c90","8217ab","8f1fb9"], // fluff
 				["201d24","2b2831","38343e"], // Lakota's Black
-				["2f372a","9a9b96","f7f7f7"], // Dex's Green-White
+				["6a6d60","9a9b96","f7f7f7"], // Dex's Green-White
 				["55bc96","5ccca4","62ddb1"], // Mint's Mint
 				["2a1068","33147b","3b188c"], // Thalins Purple
 				["b66081","c46d8f","D77b9f"] // Jaych's Pink
@@ -252,12 +252,12 @@
 					["2b2c2b","3a3c3b","474a49","515554"], // Dex's Grey
 					["141912","1b2118","22291e","2b3326"], // Dex's Dark Green
 					["831d17","96211b","9f241c"], // Dex's Red
-					["2f372a","9a9b96","f7f7f7"], // Dex's Green-White
+					["6a6d60","9a9b96","f7f7f7"], // Dex's Green-White
 					["176D55","178566","179975"], // Dex's Turquoise
 					["086e7d","17cbfe","232029"] // Dex
 				],
 				"skinNames" : {
-					"head" : "Default", // for now
+					"head" : "Dex", // for now
 					"body" : "Dex",
 					"tail" : "Dex",
 					"legs" : "Dex"
@@ -298,25 +298,27 @@
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
+					"timing": "head",
 					"animation": {
 						"neck": "eat",
 						"head": "eat",
 						"offset" : {}
 					},
-					"victimAnimation": "playereat",
-					"script": "eat"
+					"victimAnimation": "oralVore",
+					"script": "oralVore"
 				},
-				"escape": { // 2 occupants
+				"oralEscape": { // 2 occupants
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
+					"timing": "head",
 					"animation": {
 						"neck": "escape",
 						"head": "escape",
 						"offset" : {}
 					},
-					"victimAnimation": "escape",
-					"script": "letout"
+					"victimAnimation": "oralEscape",
+					"script": "oralEscape"
 				},
 				"digestbelly":{
 					"timing" : 2
@@ -342,14 +344,12 @@
 				"belly" : {
 					"parts" : ["belly"],
 					"directions": {
-						"up": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
-						"front": { "transition": "escape", "indicate": "red", "drivingEnabled": true },
+						"up": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
 						"back": { "transition": "down", "indicate": "blue" },
 						"down": { "transition": "down", "indicate": "blue" }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				}
 			},
 			"locationCenters" : {
@@ -367,16 +367,16 @@
 					"animation": { "head": "pet" }
 				}
 			},
-			"defaultActions": ["vore", "specialAttack"],
+			"defaultActions": ["vore", "oralVore"],
 			"actions": {
 				"vore":{
 					"cooldown": 1,
-					"script": "vore"
+					"script": "checkVore"
 				},
 				"oralVore":{
 					"cooldown": 1,
-					"script": "vore",
-					"position": [ 3, -2.5 ]
+					"script": "checkOralVore",
+					"position": [ 8, -2.5 ]
 				}
 			},
 			"control": {
