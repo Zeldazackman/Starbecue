@@ -210,6 +210,8 @@ function sbq.letout(id)
 		return sbq.uneat(id)
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
+	elseif location == "ballsL" or location == "ballsR" then
+		return ballsToShaft({id = id})
 	end
 end
 
@@ -244,7 +246,13 @@ function checkOralVore()
 end
 
 function checkCockVore()
-	return sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
+	if sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore") then return true
+	else
+		local shaftOccupant = sbq.findFirstOccupantIdForLocation("shaft")
+		if shaftOccupant then
+			shaftToBalls({id = shaftOccupant})
+		end
+	end
 end
 
 function shaftToBalls(args)
