@@ -49,7 +49,7 @@ function oralVore(args)
 end
 
 function checkOralVore()
-	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.oralVore.position ), 2, "belly", "oralVore")
+	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.oralVore.position ), 5, "belly", "oralVore")
 end
 
 function checkVore()
