@@ -352,17 +352,22 @@ function sbq.hammerspacePanel()
 	if sbq.globalSettings.hammerspace then
 		hammerspacePanel:setVisible(true)
 		for location, data in pairs(sbq.predatorConfig.locations) do
-			if data.hammerspace and data.max > 1 then
+			if data.hammerspace then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
 					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
 					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
 					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
 					{ type = "label", text = location, inline = true}
 				}})
+				local enable = _ENV[location.."HammerspaceEnabled"]
 				local prev = _ENV[location.."Prev"]
 				local label = _ENV[location.."Value"]
 				local next = _ENV[location.."Next"]
-
+				function enable:onClick()
+					sbq.predatorSettings.hammerspaceDisabled[location] = not enable.checked
+					sbq.saveSettings()
+				end
 				function prev:onClick()
 					sbq.changeHammerspaceLimit(location, -1, label)
 				end

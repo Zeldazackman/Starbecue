@@ -7,7 +7,9 @@
 		"directives" : "",
 		"direction" : "1",
 		"skin" : "default",
-		"bap" : ""
+		"bap" : "",
+		"cockVisible" : "",
+		"ballsVisible" : ""
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -49,6 +51,58 @@
 					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
 			},
+			"cockState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
+
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 5, "baseAnim": "idle" },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 5, "baseAnim": "idle" },
+
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
+				}
+			},
+			"ballsFrontState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
+
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
+				}
+			},
+			"ballsBackState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
+
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+
+					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
+				}
+			},
+
 			"legsState": {
 				"default": "idle",
 				"states": {
@@ -181,6 +235,21 @@
 				"partStates": {
 					"bellyState": {
 						"idle": { "properties": { "image": "skins/<skin>/belly.png:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+
+			"cock": {
+				"properties": {
+					"centered": true,
+					"zLevel": 1.3,
+					"transformationGroups": ["flip", "bodybob", "bellybob"]
+				},
+				"partStates": {
+					"cockState": {
+						"idle": { "properties": { "image": "skins/<skin>/cock.png:<shaftOccupants>.<cockStateAnim>.<cockStateFrame><cockVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}

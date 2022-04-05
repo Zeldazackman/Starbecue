@@ -202,11 +202,11 @@
 			"fatten" : { "mass": 1 },
 
 			"shaft" : { "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
 			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 
-			"breasts" : { "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breasts" : { "max": 1, "mass": 0.1 },
 			"breastsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 			"breastsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
 		},

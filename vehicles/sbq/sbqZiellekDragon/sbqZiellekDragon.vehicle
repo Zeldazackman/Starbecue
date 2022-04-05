@@ -124,7 +124,7 @@
 			"fatten" : { "mass": 1 },
 
 			"shaft" : { "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
 			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
 		},
@@ -225,10 +225,10 @@
 				["40c400","75ff33","efffe7"] // Jaych
 			],
 			[
-				["702c55", "a94783"], // Mouth, Dick
-				["645a6e", "a69cb0"], // Lakota Grey
-				["15333f", "64cbe5"], // Dex Light Blue
-				["702c55", "a94783"] // default pink
+				["702c55","8b3c6c","a94783"], // Mouth, Dick
+				["645a6e","877996","a69cb0"], // Lakota Grey
+				["3e7ea3","52b0c9","64cbe5"], // Dex Light Blue
+				["702c55","8b3c6c","a94783"] // default pink
 			]
 
 		],
@@ -246,7 +246,7 @@
 					["201d24","2b2831","38343e"], // Lakota's Black
 					["201d24","2b2831","38343e"], // Lakota's Black
 					["13260b","8af555","f5ffed"], // Lakota
-					["645a6e", "a69cb0"] // Lakota Grey
+					["645a6e","877996","a69cb0"] // Lakota Grey
 				],
 				"skinNames" : {
 					"head" : "Lakota",
@@ -264,7 +264,7 @@
 					["6a6d60","9a9b96","f7f7f7"], // Dex's Green-White
 					["176D55","178566","179975"], // Dex's Turquoise
 					["086e7d","17cbfe","232029"], // Dex
-					["15333f", "64cbe5"] // Dex Light Blue
+					["3e7ea3","52b0c9","64cbe5"] // Dex Light Blue
 				],
 				"skinNames" : {
 					"head" : "Dex",
@@ -332,6 +332,32 @@
 				},
 				"digestbelly":{
 					"timing" : 2
+				},
+
+				"cockVore": {
+					"voreType" : "cockVore",
+					"lock": true,
+					"location": "shaft",
+					"failOnFull" : true,
+					"timing": "cock",
+					"animation": {
+						"cock": "eat",
+						"offset" : {}
+					},
+					"victimAnimation": "cockVore",
+					"script": "cockVore"
+				},
+				"cockEscape": {
+					"voreType" : "cockVore",
+					"lock": true,
+					"location": "shaft",
+					"timing": "cock",
+					"animation": {
+						"cock": "escape",
+						"offset" : {}
+					},
+					"victimAnimation": "cockEscape",
+					"script": "cockEscape"
 				}
 			},
 			"idle": {
@@ -339,16 +365,28 @@
 				"legs": "idle",
 				"head": "idle",
 				"tail": "idle",
+				"cock": "idle",
+				"ballsFront": "idle",
+				"ballsBack": "idle",
 				"neck": "none",
 				"offset" : {}
 			},
 			"idleAnimations": [
 			],
 			"shrinkAnims" : {
-				"belly" : { "belly": "shrink" }
+				"belly" : { "belly": "shrink" },
+				"shaft" : { "cock": "shrink" },
+				"ballsFront" : { "ballsFront": "shrink" },
+				"ballsBack" : { "ballsBack": "shrink" },
+				"balls" : { "ballsFront": "shrink", "ballsBack": "shrink" }
 			},
 			"expandAnims" : {
-				"belly" : { "belly": "expand" }
+				"belly" : { "belly": "expand" },
+				"shaft" : { "cock": "expand" },
+				"ballsFront" : { "ballsFront": "expand" },
+				"ballsBack" : { "ballsBack": "expand" },
+				"balls" : { "ballsFront": "expand", "ballsBack": "expand" }
+
 			},
 			"struggle": {
 				"belly" : {
@@ -366,10 +404,15 @@
 				"belly" : [-0.5, -2]
 			},
 			"interact": {
-				"eat": {
+				"oralVore": {
 					"pos": [8, -1.5], "aim": [6, 0],
 					"transition": "oralVore", "chance": 100,
 					"location":"belly", "failOnFull":true
+				},
+				"cockVore": {
+					"pos": [-1, -1.5], "aim": [-1, -0.5],
+					"transition": "cockVore", "chance": 100,
+					"location":"shaft", "failOnFull":true
 				}
 			},
 			"defaultActions": ["vore", "oralVore"],
@@ -382,6 +425,11 @@
 					"cooldown": 1,
 					"script": "checkOralVore",
 					"position": [ 8, -1.5 ]
+				},
+				"cockVore":{
+					"cooldown": 1,
+					"script": "checkCockVore",
+					"position": [ -1, -1.5 ]
 				}
 			},
 			"control": {
