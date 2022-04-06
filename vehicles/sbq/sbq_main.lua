@@ -567,11 +567,14 @@ end
 function sbq.smolPreyAnimationPaths(settings, species, state, tags)
 	local directory = "/vehicles/sbq/"..species.."/"
 	local animatedParts = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).animatedParts
-	local edibleAnims = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".vehicle" ).states[state].edibleAnims
+	local vehicle = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".vehicle" )
+	local edibleAnims = vehicle.states[state].edibleAnims
 	local tags = tags
 	if tags == nil then
 		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }
 	end
+
+	settings.directives = sbq.smolpreyGetColorReplaceDirectives(vehicle.sbqData, settings)
 
 	local returnValues  = {}
 
@@ -636,6 +639,32 @@ function sbq.fixSmolPreyPathTags(directory, animatedParts, partname, statename, 
 		[statename.."StateAnim"] = framesName
 	}))
 	return directory..sb.replaceTags(path, partTags)
+end
+
+function sbq.GetColorReplaceDirectives(predatorConfig, predatorSettings)
+	if predatorConfig.replaceColors ~= nil then
+		local colorReplaceString = ""
+		for i, colorGroup in ipairs(predatorConfig.replaceColors) do
+			local basePalette = colorGroup[1]
+			local replacePalette = colorGroup[((predatorSettings.replaceColors or {})[i] or (predatorConfig.defaultSettings.replaceColors or {})[i] or 1) + 1]
+			local fullbright = (predatorSettings.fullbright or {})[i]
+
+			if predatorSettings.replaceColorTable and predatorSettings.replaceColorTable[i] then
+				replacePalette = predatorSettings.replaceColorTable[i]
+				if type(replacePalette) == "string" then
+					return replacePalette
+				end
+			end
+
+			for j, color in ipairs(replacePalette) do
+				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
+					color = color.."fb"
+				end
+				colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
+			end
+		end
+		return colorReplaceString
+	end
 end
 
 
