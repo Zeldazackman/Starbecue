@@ -30,11 +30,12 @@ function sbq.updateDriving(dt)
 		sbq.movement.airtime = sbq.movement.airtime + dt
 	end
 
-	local state = sbq.stateconfig[sbq.state]
-	sbq.doClickActions(state, dt)
-
-	sbq.movement.aimingLock = math.max(0, sbq.movement.aimingLock - dt)
 	if (sbq.stateconfig[sbq.state].control ~= nil) and not sbq.movementLock then
+		local state = sbq.stateconfig[sbq.state]
+		sbq.doClickActions(state, dt)
+
+		sbq.movement.aimingLock = math.max(0, sbq.movement.aimingLock - dt)
+
 		local dx = sbq.seats[sbq.driverSeat].controls.dx
 		if sbq.activeControls.moveDirection then
 			dx = sbq.activeControls.moveDirection
