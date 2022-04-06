@@ -619,11 +619,21 @@ function sbq.smolPreyAnimationPaths(settings, species, state, tags)
 end
 
 function sbq.fixSmolPreyPathTags(directory, animatedParts, partname, statename, animname, settings, tags)
-	local path = animatedParts.parts[partname].partStates[statename.."State"][animname].properties.image
+	local path = (
+		((((animatedParts.parts[partname].partStates[statename.."State"] or {})[animname] or {}).properties or {}).image)
+		or ((((animatedParts.parts[partname].partStates[statename.."State"] or {})[((animatedParts.stateTypes[statename.."State"] or {}).states[animname] or {}).baseAnim or ""] or {}).properties or {}).image)
+	)
+	local framesName = animname
+	if ((animatedParts.stateTypes[statename.."State"] or {}).states[animname] or {}).animFrames ~= nil then
+		framesName = ((animatedParts.stateTypes[statename.."State"] or {}).states[animname] or {}).animFrames
+	end
+
 	if not path or path == "" then return end
 	local partTags = sb.jsonMerge( tags.global, sb.jsonMerge( tags[partname], {
 		directives = settings.directives,
-		skin = (settings.skinNames or {})[partname] or "default"
+		skin = (settings.skinNames or {})[partname] or "default",
+		[statename.."StateFrame"] = "1",
+		[statename.."StateAnim"] = framesName
 	}))
 	return directory..sb.replaceTags(path, partTags)
 end

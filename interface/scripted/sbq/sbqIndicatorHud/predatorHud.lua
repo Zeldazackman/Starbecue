@@ -16,6 +16,8 @@ end
 local canvas = widget.bindCanvas(frame.backingWidget .. ".canvas")
 canvas:clear()
 
+require("/scripts/SBQ_RPC_handling.lua")
+
 function init()
 	local sbqData = player.getProperty("sbqSettings")
 	if sbqData.global == nil then
@@ -38,6 +40,8 @@ sbq.listSlots()
 function update()
 	local dt = script.updateDt()
 	sbq.checkRefresh(dt)
+	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
 	sbq.updateBars()
 	sbq.updateBellyEffectIcon()
 end
@@ -110,11 +114,15 @@ function sbq.readOccupantData()
 					function occupantButton:onClick()
 						local actionList = {}
 						for _, action in ipairs(sbq.hudActions.global) do
-							table.insert(actionList, {action[1], function() sbq[action[2]](id, i) end})
+							if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
+								table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
+							end
 						end
 						if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
 							for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
-								table.insert(actionList, {action[1], function() sbq[action[2]](id, i) end})
+								if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
+									table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
+								end
 							end
 						end
 						metagui.contextMenu(actionList)
@@ -130,6 +138,12 @@ function sbq.readOccupantData()
 				end
 			end
 		end
+	end
+end
+
+function sbq.checkOccupantLocation(occupantLocation, locations)
+	for i, location in ipairs(locations) do
+		if occupantLocation == location then return true end
 	end
 end
 

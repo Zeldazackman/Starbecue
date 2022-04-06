@@ -63,7 +63,8 @@ function sbq.setItemActionColorReplaceDirectives()
 			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
 				color = color.."fb"
 			end
-			colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
+							colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
+
 		end
 
 		i = 4
@@ -80,7 +81,8 @@ function sbq.setItemActionColorReplaceDirectives()
 			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
 				color = color.."fb"
 			end
-			colorReplaceString = colorReplaceString.."?replace;"..basePalette[j].."="..color
+							colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
+
 		end
 	end
 

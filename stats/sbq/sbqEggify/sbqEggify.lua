@@ -13,9 +13,10 @@ function init()
 		smolPreyData = data
 	end )
 
+	local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
 	replaceColors = {
-		math.random(1, #root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle").sbqData.replaceColors[1] - 1),
-		math.random(1, #root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle").sbqData.replaceColors[2] - 1)
+				math.random(1, #eggData.sbqData.replaceColors[1] - 1),
+				math.random(1, #eggData.sbqData.replaceColors[2] - 1)
 	}
 
 	local edibles = world.entityQuery( mcontroller.position(), 2, {

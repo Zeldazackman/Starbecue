@@ -130,7 +130,7 @@
 		},
 
 		"defaultSettings" : {
-			"replaceColors" : [1,1,1,1,1,1],
+			"replaceColors" : [1,1,1,1,1,1,1],
 			"fullbright" : [false,false,false,false,false,true,false],
 
 			"symmetricalBalls" : true
