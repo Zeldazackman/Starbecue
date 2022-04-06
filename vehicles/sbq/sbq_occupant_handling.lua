@@ -29,7 +29,7 @@ function sbq.eat( occupantId, location )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or sbq.sbqData.locations[location].max or 0 }
+		callScript = "p.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or sbq.sbqData.locations[location].max or 0, (sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location]) }
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
@@ -87,13 +87,13 @@ function sbq.uneat( occupantId )
 	return true
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total
 	if not sbq.includeDriver then
 		total = total + 1
 	end
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
+	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(
@@ -174,7 +174,7 @@ function sbq.firstNotLounging(entityaimed)
 end
 
 function sbq.moveOccupantLocation(args, location)
-	if sbq.occupants[location] >= sbq.sbqData.locations[location].max then return false end
+	if sbq.locationFull(location) then return false end
 	local maxNested = sbq.sbqData.locations[location].maxNested or ( sbq.sbqData.locations[location].max - 1 )
 	local nestCount = 0
 	for i = 0, sbq.occupantSlots do
@@ -182,7 +182,7 @@ function sbq.moveOccupantLocation(args, location)
 			nestCount = nestCount + 1
 		end
 	end
-	if nestCount > maxNested and (not maxNested == -1) then return false end
+	if (nestCount > maxNested and (not maxNested == -1)) and not (sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location]) then return false end
 	sbq.lounging[args.id].location = location
 	return true
 end
