@@ -256,11 +256,13 @@ function checkCockVore()
 end
 
 function shaftToBalls(args)
-	local side = "L"
 	if math.random() > 0.5 then
-		side = "R"
+		if sbq.moveOccupantLocation(args, "ballsL") then return true end
+		if sbq.moveOccupantLocation(args, "ballsR") then return true end
+	else
+		if sbq.moveOccupantLocation(args, "ballsR") then return true end
+		if sbq.moveOccupantLocation(args, "ballsL") then return true end
 	end
-	return sbq.moveOccupantLocation(args, "balls"..side)
 end
 
 function ballsToShaft(args)
