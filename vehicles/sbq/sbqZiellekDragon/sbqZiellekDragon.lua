@@ -121,7 +121,13 @@ function cockVore(args)
 end
 
 function checkCockVore()
-	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.cockVore.position ), 5, "shaft", "cockVore")
+	if sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.cockVore.position ), 5, "shaft", "cockVore") then return true
+	else
+		local shaftOccupant = sbq.findFirstOccupantIdForLocation("shaft")
+		if shaftOccupant then
+			shaftToBalls({id = shaftOccupant})
+		end
+	end
 end
 
 

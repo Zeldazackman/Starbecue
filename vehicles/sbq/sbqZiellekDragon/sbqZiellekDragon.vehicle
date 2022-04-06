@@ -358,6 +358,15 @@
 					},
 					"victimAnimation": "cockEscape",
 					"script": "cockEscape"
+				},
+				"ballsToShaft": { // 1 occupant
+					"script": "ballsToShaft"
+				},
+				"shaftToBalls": { // 1 occupant
+					"script": "shaftToBalls"
+				},
+				"switchBalls": { // 1 occupant
+					"script": "switchBalls"
 				}
 			},
 			"idle": {
@@ -386,7 +395,6 @@
 				"ballsFront" : { "ballsFront": "expand" },
 				"ballsBack" : { "ballsBack": "expand" },
 				"balls" : { "ballsFront": "expand", "ballsBack": "expand" }
-
 			},
 			"struggle": {
 				"belly" : {
@@ -398,7 +406,53 @@
 						"down": { "transition": "down", "indicate": "blue" }
 					},
 					"chances": { "min": 5, "max": 10 }
+				},
+				"shaft" : {
+					"parts" : ["cock"],
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
+						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsL" : {
+					"sided" :{
+						"rightParts" : ["ballsBack"],
+						"leftParts" : ["ballsFront"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
+				},
+				"ballsR" : {
+					"sided" :{
+						"rightParts" : ["ballsFront"],
+						"leftParts" : ["ballsBack"]
+					},
+					"sound" : false,
+					"directions":{
+						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
+						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
+						"down": {}
+					},
+					"chances": { "min": 5, "max": 10 }
+					//"animation": { "head": "look" },
+					//"animationWhenMoving": { "head": "idle" }
 				}
+
 			},
 			"locationCenters" : {
 				"belly" : [-0.5, -2]

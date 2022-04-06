@@ -255,6 +255,34 @@
 					}
 				}
 			},
+			"ballsFront": {
+				"properties": {
+					"centered": true,
+					"zLevel": 1.12,
+					"transformationGroups": ["flip", "bodybob", "bellybob"]
+				},
+				"partStates": {
+					"ballsFrontState": {
+						"idle": { "properties": { "image": "skins/<skin>/foreground/balls.png:<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame><ballsVisible><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"ballsBack": {
+				"properties": {
+					"centered": true,
+					"zLevel": 1.11,
+					"transformationGroups": ["flip", "bodybob", "bellybob"]
+				},
+				"partStates": {
+					"ballsBackState": {
+						"idle": { "properties": { "image": "skins/<skin>/balls.png:<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame><ballsVisible><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
 
 			"frontlegs": {
 				"properties": {
@@ -293,7 +321,7 @@
 			"tail": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2,
+					"zLevel": 1.1,
 					"transformationGroups": ["flip", "tailbob"]
 				},
 				"partStates": {

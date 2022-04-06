@@ -17,7 +17,7 @@ function balls:onClick()
 end
 
 function symmetricalBalls:onClick()
-	sbq.changePredatorSetting("balls", symmetricalBalls.checked)
+	sbq.changePredatorSetting("symmetricalBalls", symmetricalBalls.checked)
 end
 
 function penisCumTF:onClick()
