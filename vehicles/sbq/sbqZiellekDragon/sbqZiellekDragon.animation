@@ -56,6 +56,8 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"run": { "frames": 5, "cycle": 0.6, "mode": "loop", "priority": 0, "baseAnim": "idle" },
+
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 5, "baseAnim": "idle" },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 5, "baseAnim": "idle" },
 

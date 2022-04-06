@@ -131,7 +131,9 @@
 
 		"defaultSettings" : {
 			"replaceColors" : [1,1,1,1,1,1],
-			"fullbright" : [false,false,false,false,false,true,false]
+			"fullbright" : [false,false,false,false,false,true,false],
+
+			"symmetricalBalls" : true
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},
@@ -504,6 +506,7 @@
 						"legs": "walk",
 						"body": "idle",
 						"head": "idle",
+						"cock": "run",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
@@ -516,6 +519,7 @@
 						"legs": "run",
 						"body": "idle",
 						"head": "idle",
+						"cock": "run",
 						"offset" : {
 							"timing": "legs",
 							"loop": true,
