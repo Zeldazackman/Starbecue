@@ -139,6 +139,8 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"breath": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
@@ -992,6 +994,9 @@
 
 	},
 	"sounds": {
+		"fireStart" : [ "/sfx/gun/flamethrower_start.ogg" ],
+		"fireLoop" : [ "/sfx/gun/flamethrower_loop.ogg" ],
+		"fireEnd" : [ "/sfx/gun/flamethrower_stop.ogg" ],
 		"swallow": ["/sfx/objects/gulp.ogg"],
 		"digest": [ "/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg" ],
 		"lay": ["/sfx/objects/eggLay.ogg"],

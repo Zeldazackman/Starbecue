@@ -540,6 +540,24 @@
 			},
 			"defaultActions": ["vore", "oralVore"],
 			"actions": {
+				"specialAttack": {
+					"cooldown": 0.05,
+					"hold" : true,
+					"animation": { "head" : "breath"},
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"projectile": {
+						"name": "flamethrower",
+						"position": [ 7.25, -0.5 ],
+						"aimable": true,
+						"energy": true,
+						"cost": 2
+					}
+				},
+
 				"vore":{
 					"cooldown": 1,
 					"script": "checkVore"

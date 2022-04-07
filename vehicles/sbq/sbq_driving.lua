@@ -328,7 +328,7 @@ function sbq.action(stateData, name, control)
 			sbq.doAnims(stateData.actions[name].animation)
 		end
 		if stateData.actions[name].projectile ~= nil then
-			sbq.projectile(stateData.actions[name].projectile)
+			sbq.projectile(stateData.actions[name].projectile, sbq.pressControl(sbq.driverSeat, control), stateData.actions[name].sounds, stateData.actions[name].cooldown)
 		end
 	end
 end
@@ -422,20 +422,20 @@ function sbq.driverSeatStateChange()
 	end
 end
 
-function sbq.projectile( projectiledata )
+function sbq.projectile( projectiledata, pressed, sounds, cooldown)
 	local driver = sbq.driver
 	if projectiledata.energy and driver then
 		sbq.useEnergy(driver, projectiledata.cost, function(energyUsed)
 			if energyUsed then
-				sbq.fireProjectile( projectiledata, driver )
+				sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 			end
 		end)
 	else
-		sbq.fireProjectile( projectiledata, driver )
+		sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 	end
 end
 
-function sbq.fireProjectile( projectiledata, driver )
+function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 	local position = sbq.localToGlobal( projectiledata.position )
 	local direction
 	if projectiledata.aimable then
@@ -451,6 +451,18 @@ function sbq.fireProjectile( projectiledata, driver )
 	end
 	local params = {}
 
+	if sounds ~= nil then
+		if pressed then
+			animator.setSoundPosition(sounds.fireStart, projectiledata.position )
+			animator.playSound(sounds.fireStart)
+			animator.setSoundPosition(sounds.fireLoop, projectiledata.position )
+			animator.playSound(sounds.fireLoop, -1)
+		end
+		sbq.forceTimer( "projectileSounds", cooldown + 0.05, function ()
+			sbq.stopSounds(sounds)
+		end)
+	end
+
 	if driver then
 		params.powerMultiplier = sbq.seats[sbq.driverSeat].controls.powerMultiplier
 		world.spawnProjectile( projectiledata.name, position, driver, direction, projectiledata.relative, params )
@@ -458,6 +470,11 @@ function sbq.fireProjectile( projectiledata, driver )
 		params.powerMultiplier = sbq.objectPowerLevel()
 		world.spawnProjectile( projectiledata.name, position, entity.id(), direction, projectiledata.relative, params )
 	end
+end
+
+function sbq.stopSounds(sounds)
+	animator.stopAllSounds(sounds.fireLoop)
+	animator.playSound(sounds.fireEnd)
 end
 
 function sbq.grab(location, aimrange, grabrange)

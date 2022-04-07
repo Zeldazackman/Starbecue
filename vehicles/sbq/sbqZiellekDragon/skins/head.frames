@@ -10,6 +10,8 @@
 	"aliases" : {
 		"eat.8" : "eat.6",
 
+		"breath.1" : "eat.2",
+
 		"escape.1" : "look.1",
 		"escape.2" : "look.1",
 		"escape.3" : "look.1",

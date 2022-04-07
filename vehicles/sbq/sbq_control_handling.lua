@@ -1,6 +1,5 @@
 function sbq.pressControl(seat, control)
 	if sbq.seats[seat].controls[control.."Pressed"] then
-		sbq.seats[seat].controls[control.."Pressed"] = false
 		return true
 	end
 end
