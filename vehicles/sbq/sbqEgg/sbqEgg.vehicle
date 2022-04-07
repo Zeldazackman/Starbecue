@@ -135,7 +135,7 @@
 
 
 		"locations" :{
-			"egg" : { "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
+			"egg" : { "name" : "Egg", "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},
 		"victimAnimations": "/vehicles/sbq/sbqEgg/victim_animations.config"
 	},

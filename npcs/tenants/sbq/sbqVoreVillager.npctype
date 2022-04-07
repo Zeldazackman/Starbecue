@@ -13,17 +13,17 @@
 
 		"sbqData" : {
 			"locations" :{
-				"belly" : { "max": 1, "digest" : true },
-				"tail" : { "max": 1, "digest" : true },
+				"belly" : { "name" : "Belly", "max": 1, "digest" : true },
+				"tail" : { "name" : "Tail", "max": 1, "digest" : true },
 
-				"shaft" : { "max": 1 },
+				"shaft" : { "name" : "Shaft", "max": 1 },
 				"balls" : { "max": 1, "sided" : true },
-				"ballsL" : { "max": 1 },
-				"ballsR" : { "max": 1 },
+				"ballsL" : { "name" : "Left Ball", "max": 1 },
+				"ballsR" : { "name" : "Right Ball", "max": 1 },
 
 				"breasts" : { "max": 1, "sided" : true },
-				"breastsL" : { "max": 1 },
-				"breastsR" : { "max": 1 }
+				"breastsL" : { "name" : "Left Breast", "max": 1 },
+				"breastsR" : { "name" : "Right Breast", "max": 1 }
 
 			},
 			/*

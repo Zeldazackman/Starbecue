@@ -59,6 +59,7 @@ function init()
 	buttons = config.getParameter( "directions" )
 	progress = config.getParameter( "progress" )
 	time = config.getParameter( "time" )
+	location = config.getParameter( "location" )
 	if not owner or not world.entityExists( owner ) or player.loungingIn() ~= owner then
 		pane.dismiss() -- nothing to indicate?
 	end
@@ -140,6 +141,13 @@ function update( dt )
 		8, {127, 127, 127}
 	)
 	time = time + dt
+
+	-- location
+	indicator:drawText(
+		location,
+		{position = {3, 28}, horizontalAnchor = "left", wrapWidth = 25},
+		8, {127, 127, 127}
+	)
 end
 
 function uninit()

@@ -197,18 +197,18 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
-			"hug" : { "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
+			"belly" : { "name" : "Belly", "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "max": 1, "mass": 0.1 },
+			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1 },
 			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
-			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
-			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
 
 			"breasts" : { "max": 1, "mass": 0.1 },
-			"breastsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
-			"breastsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
+			"breastsL" : { "name" : "Left Breast", "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breastsR" : { "name" : "Right Breast", "max": 1, "mass": 0.1, "hammerspace" : true }
 		},
 
 

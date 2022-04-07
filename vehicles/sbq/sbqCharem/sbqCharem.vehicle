@@ -96,8 +96,8 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
-			"hug" : { "max": 1, "maxNested": 2 },
+			"belly" : { "name" : "Belly", "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1 },
+			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 },
 			"fatten" : { "mass": 1 }
 		},
 		"defaultSettings": {

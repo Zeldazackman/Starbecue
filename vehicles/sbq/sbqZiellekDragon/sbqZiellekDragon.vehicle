@@ -119,14 +119,14 @@
 			}
 		},
 		"locations" :{
-			"belly" : { "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
-			"womb" : { "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "max": 1, "mass": 0.1 },
+			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1 },
 			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
-			"ballsL" : { "max": 1, "mass": 0.1, "hammerspace" : true },
-			"ballsR" : { "max": 1, "mass": 0.1, "hammerspace" : true }
+			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true }
 		},
 
 		"defaultSettings" : {
@@ -413,10 +413,10 @@
 					"parts" : ["cock"],
 					"sound" : false,
 					"directions":{
-						"up": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
+						"down": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
 						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
-						"down": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
+						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
 					"chances": { "min": 5, "max": 10 }
 					//"animation": { "head": "look" },

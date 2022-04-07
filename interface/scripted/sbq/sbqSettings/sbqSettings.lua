@@ -358,7 +358,7 @@ function sbq.hammerspacePanel()
 					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
 					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
 					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
-					{ type = "label", text = location, inline = true}
+					{ type = "label", text = (data.name or location), inline = true}
 				}})
 				local enable = _ENV[location.."HammerspaceEnabled"]
 				local prev = _ENV[location.."Prev"]

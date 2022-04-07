@@ -36,8 +36,8 @@
 		"sbqData" : {
 			"victimAnimations": "/humanoid/sbqZevi/victim_animations.config",
 			"locations" :{
-				"belly" : { "max": 1, "digest" : true },
-				"shaft" : { "max": 1 }
+				"belly" : { "name" : "Belly", "max": 1, "digest" : true },
+				"shaft" : { "name" : "Shaft", "max": 1 }
 			},
 			"defaultSettings" : {
 				"voreTypes" : {

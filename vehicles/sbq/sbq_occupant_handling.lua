@@ -367,7 +367,7 @@ function sbq.updateOccupants(dt)
 
 				if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
 					-- p.occupant[i].indicatorCooldown = 0.5
-					local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[sbq.occupant[i].location] or {}
+					local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
 					local directions = {}
 					if not sbq.transitionLock then
 						for dir, data in pairs(struggledata.directions or {}) do
@@ -389,7 +389,8 @@ function sbq.updateOccupants(dt)
 								percent = sbq.occupant[i].progressBar,
 								dx = (math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
 							},
-							time = sbq.occupant[i].occupantTime
+							time = sbq.occupant[i].occupantTime,
+							location = (sbq.sbqData.locations[location] or {}).name or ""
 						}
 					})
 				end
