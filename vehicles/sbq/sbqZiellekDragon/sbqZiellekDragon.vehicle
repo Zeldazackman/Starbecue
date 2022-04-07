@@ -369,6 +369,62 @@
 				},
 				"switchBalls": { // 1 occupant
 					"script": "switchBalls"
+				},
+
+				"analVore": { // 2 occupants
+					"voreType" : "analVore",
+					"lock": true,
+					"location": "belly",
+					"failOnFull" : true,
+					"timing": "tail",
+					"animation": {
+						"tail" : "raise",
+						"offset" : {}
+					},
+					"victimAnimation": "analVore",
+					"script": "analVore"
+				},
+				"analEscape": { // 2 occupants
+					"voreType" : "analVore",
+					"lock": true,
+					"location": "belly",
+					"timing": "tail",
+					"animation": {
+						"tail" : "raise",
+						"offset" : {}
+					},
+					"victimAnimation": "analEscape",
+					"script": "analEscape"
+				},
+
+				"unbirth": { // 2 occupants
+					"voreType" : "unbirth",
+					"lock": true,
+					"movementLock": true,
+					"location": "womb",
+					"failOnFull" : true,
+					"timing": "legs",
+					"animation": {
+						"tail" : "raise",
+						"legs" : "spread",
+						"offset" : {}
+					},
+					"victimAnimation": "unbirth",
+					"script": "unbirth"
+				},
+				"unbirthEscape": { // 2 occupants
+					"voreType" : "unbirth",
+					"lock": true,
+					"movementLock": true,
+					"location": "womb",
+					"timing": "legs",
+					"animation": {
+						"tail" : "raise",
+						"legs" : "spread",
+						"offset" : {}
+					},
+					"victimAnimation": "unbirthEscape",
+					"script": "unbirthEscape"
 				}
 			},
 			"idle": {
@@ -402,13 +458,24 @@
 				"belly" : {
 					"parts" : ["belly"],
 					"directions": {
-						"up": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
-						"back": { "transition": "down", "indicate": "blue" },
-						"down": { "transition": "down", "indicate": "blue" }
+						"up": { },
+						"down": { }
 					},
 					"chances": { "min": 5, "max": 10 }
 				},
+				"womb" : {
+					"parts" : ["belly"],
+					"directions": {
+						"back": { "transition": "unbirthEscape", "indicate": "red", "drivingEnabled": true, "settings" : { "pussy" : true } },
+						"front": { },
+						"up": { },
+						"down": { }
+					},
+					"chances": { "min": 5, "max": 10 }
+				},
+
 				"shaft" : {
 					"parts" : ["cock"],
 					"sound" : false,
@@ -480,12 +547,28 @@
 				"oralVore":{
 					"cooldown": 1,
 					"script": "checkOralVore",
-					"position": [ 8, -1.5 ]
+					"position": [ 8, 0 ]
 				},
 				"cockVore":{
 					"cooldown": 1,
 					"script": "checkCockVore",
-					"position": [ -1, -1.5 ]
+					"position": [ -1, -1.5 ],
+					"settings" : {
+						"penis" : true
+					}
+				},
+				"analVore":{
+					"cooldown": 1,
+					"script": "checkAnalVore",
+					"position": [ -3, -1.5 ]
+				},
+				"unbirth":{
+					"cooldown": 1,
+					"script": "checkUnbirth",
+					"position": [ -1.5, -2 ],
+					"settings" : {
+						"pussy" : true
+					}
 				}
 			},
 			"control": {

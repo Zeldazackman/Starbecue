@@ -574,7 +574,7 @@ function sbq.smolPreyAnimationPaths(settings, species, state, tags)
 		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }
 	end
 
-	settings.directives = sbq.smolpreyGetColorReplaceDirectives(vehicle.sbqData, settings)
+	settings.directives = sbq.getColorReplaceDirectives(vehicle.sbqData, settings)
 
 	local returnValues  = {}
 
@@ -641,7 +641,7 @@ function sbq.fixSmolPreyPathTags(directory, animatedParts, partname, statename, 
 	return directory..sb.replaceTags(path, partTags)
 end
 
-function sbq.GetColorReplaceDirectives(predatorConfig, predatorSettings)
+function sbq.getColorReplaceDirectives(predatorConfig, predatorSettings)
 	if predatorConfig.replaceColors ~= nil then
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(predatorConfig.replaceColors) do

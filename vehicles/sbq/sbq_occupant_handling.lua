@@ -567,7 +567,7 @@ function sbq.doBellyEffects(dt)
 
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
 			else
-				sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location )
+				sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 			end
 		end
 	end

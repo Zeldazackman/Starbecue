@@ -110,6 +110,8 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"spread": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
 
@@ -126,6 +128,8 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
+
+					"raise": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
 					"none": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": -1 }
 				}
@@ -320,10 +324,24 @@
 				}
 			},
 
-			"tail": {
+			"tail_fg": {
 				"properties": {
 					"centered": true,
 					"zLevel": 1.1,
+					"transformationGroups": ["flip", "tailbob"]
+				},
+				"partStates": {
+					"tailState": {
+						"idle": { "properties": { "image": "skins/<tailSkin>/tail.png:<tailStateAnim>.<tailStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<tailSkin>/foreground/tail.png:<tailStateAnim>.<tailStateFrame>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"tail": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1,
 					"transformationGroups": ["flip", "tailbob"]
 				},
 				"partStates": {

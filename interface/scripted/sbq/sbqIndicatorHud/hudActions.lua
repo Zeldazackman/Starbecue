@@ -25,7 +25,7 @@ function sbq.eggify(id, i)
 			}
 
 			world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
-				barColor = eggData.sbqData.replaceColors[2][replaceColors[2]],
+				barColor = eggData.sbqData.replaceColors[2][replaceColors[2]+1],
 				forceSettings = true,
 				layer = true,
 				state = "smol",

@@ -126,6 +126,12 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 				sbq.transitionLock = false
 			end)
 		end
+		if tconfig.movementLock then
+			sbq.movementLock = true
+			sbq.queueAnimEndFunction(tconfig.timing.."State", function()
+				sbq.movementLock = false
+			end)
+		end
 		if tconfig.victimAnimation ~= nil then -- lets make this use the id to get the index
 			local id = sbq.getTransitionVictimId(scriptargs, tconfig)
 			if id ~= nil then sbq.doVictimAnim( id, tconfig.victimAnimation, tconfig.timing.."State" or "bodyState" ) end
@@ -139,6 +145,12 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 			sbq.transitionLock = true
 			sbq.timer(direction.."Lock", timing, function()
 				sbq.transitionLock = false
+			end)
+		end
+		if tconfig.movementLock then
+			sbq.movementLock = true
+			sbq.timer(direction.."MovementLock", timing, function()
+				sbq.movementLock = false
 			end)
 		end
 		if (tconfig.state ~= nil) and (tconfig.state ~= sbq.state) then
