@@ -464,7 +464,9 @@
 						"up": { },
 						"down": { }
 					},
-					"chances": { "min": 5, "max": 10 }
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"womb" : {
 					"parts" : ["belly"],
@@ -474,53 +476,52 @@
 						"up": { },
 						"down": { }
 					},
-					"chances": { "min": 5, "max": 10 }
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 
 				"shaft" : {
 					"parts" : ["cock"],
-					"sound" : false,
 					"directions":{
 						"down": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
 						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
 						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
 						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
-					"chances": { "min": 5, "max": 10 }
-					//"animation": { "head": "look" },
-					//"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"ballsL" : {
 					"sided" :{
 						"rightParts" : ["ballsBack"],
 						"leftParts" : ["ballsFront"]
 					},
-					"sound" : false,
 					"directions":{
 						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
 						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 }
-					//"animation": { "head": "look" },
-					//"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				},
 				"ballsR" : {
 					"sided" :{
 						"rightParts" : ["ballsFront"],
 						"leftParts" : ["ballsBack"]
 					},
-					"sound" : false,
 					"directions":{
 						"up": { "transition": "ballsToShaft", "indicate": "green", "drivingEnabled": true, "settings" : { "penis" : true } },
 						"front": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 }
-					//"animation": { "head": "look" },
-					//"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
 				}
 
 			},
@@ -537,6 +538,16 @@
 					"pos": [-1, -1.5], "aim": [-1, -0.5],
 					"transition": "cockVore", "chance": 100,
 					"location":"shaft", "failOnFull":true
+				},
+				"analVore": {
+					"pos": [-3.5, -1.5], "aim": [-3, 0],
+					"transition": "analVore", "chance": 100,
+					"location":"belly", "failOnFull":true
+				},
+				"unbirth": {
+					"pos": [-3.5, -1.5], "aim": [-2.5, -2],
+					"transition": "unbirth", "chance": 100,
+					"location":"womb", "failOnFull":true
 				}
 			},
 			"defaultActions": ["vore", "oralVore"],

@@ -293,4 +293,8 @@ state.stand.cockEscape = cockEscape
 state.stand.analEscape = analEscape
 state.stand.unbirthEscape = unbirthEscape
 
+state.stand.shaftToBalls = shaftToBalls
+state.stand.ballsToShaft = ballsToShaft
+state.stand.switchBalls = switchBalls
+
 -------------------------------------------------------------------------------

@@ -139,7 +139,9 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"breath": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2, "baseAnim": "idle" },
+
+					"breath": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 3, "baseAnim": "idle" },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },

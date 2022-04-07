@@ -3,7 +3,7 @@ end
 
 function update(dt)
 	local data = status.statusProperty("sbqForceSitData")
-	local sbqCurrentData = status.statusProperty("sbqCurrentData")
+	local sbqCurrentData = status.statusProperty("sbqCurrentData") or {}
 
 	if data ~= nil and world.entityExists(data.source) and (data.source ~= entity.id()) and (world.entityType(data.source) == "vehicle") then
 		mcontroller.controlParameters({ collisionPoly = sbqCurrentData.hitbox, collisionEnabled = false, frictionEnabled = false, gravityEnabled = false })

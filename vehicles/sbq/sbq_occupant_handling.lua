@@ -609,6 +609,12 @@ function sbq.handleStruggles(dt)
 					movedir = nil
 				elseif config.getParameter("name") ~= "sbqEgg" then
 					if sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species] then
+						if not sbq.driving then
+							sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime + dt)
+							if sbq.occupant[struggler].struggleTime > 1 then
+								sbq.letout(sbq.occupant[struggler].id)
+							end
+						end
 						movedir = nil
 					end
 				end
