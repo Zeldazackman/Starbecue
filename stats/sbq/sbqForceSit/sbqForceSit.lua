@@ -3,9 +3,10 @@ end
 
 function update(dt)
 	local data = status.statusProperty("sbqForceSitData")
+	local sbqCurrentData = status.statusProperty("sbqCurrentData")
 
 	if data ~= nil and world.entityExists(data.source) and (data.source ~= entity.id()) and (world.entityType(data.source) == "vehicle") then
-		mcontroller.controlParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false })
+		mcontroller.controlParameters({ collisionPoly = sbqCurrentData.hitbox, collisionEnabled = false, frictionEnabled = false, gravityEnabled = false })
 		mcontroller.controlModifiers({movementSuppressed = true, facingSuppressed = true, runningSuppressed = true, jumpingSuppressed = true})
 
 		local anchorEntity, seatindex = mcontroller.anchorState()

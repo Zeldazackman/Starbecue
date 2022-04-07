@@ -119,6 +119,7 @@ function init()
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		local type = current.type or "prey"
 		player.setProperty( "sbqCurrentData", current)
+		status.setStatusProperty( "sbqCurrentData", current)
 		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
 		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
@@ -154,6 +155,7 @@ function init()
 	message.setHandler("sbqPredatorDespawned", function ()
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
 		player.setProperty( "sbqCurrentData", nil)
+		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 
 	message.setHandler("sbqEscape", function ()

@@ -94,7 +94,8 @@ function sbq.updateControls(dt)
 					layer = sbq.occupant[i].smolPreyData,
 					state = sbq.state,
 					edible = sbq.stateconfig[sbq.state].edible,
-					totalOccupants = sbq.occupants.total
+					totalOccupants = sbq.occupants.total,
+					hitbox = sbq.movementParams.collisionPoly
 				}
 			else
 				type = "prey"
