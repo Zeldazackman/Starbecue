@@ -554,7 +554,10 @@
 						"position": [ 7.25, -0.5 ],
 						"aimable": true,
 						"energy": true,
-						"cost": 2
+						"cost": 2,
+						"params" : {
+							"power" : 5
+						}
 					}
 				},
 

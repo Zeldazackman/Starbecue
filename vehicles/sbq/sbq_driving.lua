@@ -444,12 +444,12 @@ function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 		local aiming = sbq.seats[sbq.driverSeat].controls.aim
 		sbq.facePoint( aiming[1] )
 		position = sbq.localToGlobal( projectiledata.position )
-		aiming[2] = aiming[2] + 0.2 * sbq.direction * (aiming[1] - position[1])
+		aiming[2] = aiming[2] + (projectiledata.aimAdjust or 0) * sbq.direction * (aiming[1] - position[1])
 		direction = world.distance( aiming, position )
 	else
 		direction = { sbq.direction, 0 }
 	end
-	local params = {}
+	local params = projectiledata.params or {}
 
 	if sounds ~= nil then
 		if pressed then
