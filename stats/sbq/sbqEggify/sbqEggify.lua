@@ -21,7 +21,7 @@ function init()
 
 	local edibles = world.entityQuery( mcontroller.position(), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.edible", callScriptArgs = { entity.id(), 0, entity.id(), 8, 8 }
+		callScript = "sbq.edible", callScriptArgs = { entity.id(), 0, entity.id(), 8, 8 }
 	} )
 	if edibles[1] == nil then
 		world.spawnProjectile( "sbqWarpInEffect", mcontroller.position(), entity.id(), {0,0}, true)
