@@ -50,6 +50,9 @@ end)
 -- this function need to be replaced/modified because of stuff that would be in the chest area for say, breast vore
 function setCosmetic.chest(cosmetic)
 	if cosmetic ~= nil then
+		if currentCosmeticName.chest == cosmetic.name then return end
+		currentCosmeticName.chest = cosmetic.name
+
 		local item = root.itemConfig(cosmetic)
 		local images = item.config[self.gender.."Frames"]
 
@@ -87,6 +90,7 @@ function setCosmetic.chest(cosmetic)
 			animator.setGlobalTag( "backarmsMask", "?addmask="..backMask )
 		end
 	else
+		currentCosmeticName.chest = nil
 		animator.setPartTag("chest_cosmetic", "partImage", "" )
 		animator.setPartTag("breasts_cosmetic", "partImage", "" )
 
@@ -103,6 +107,9 @@ end
 -- this function needs to be replaced to make sure the belly is handeled for normal vore, and the dick for cock vore
 function setCosmetic.legs(cosmetic)
 	if cosmetic ~= nil then
+		if currentCosmeticName.legs == cosmetic.name then return end
+		currentCosmeticName.legs = cosmetic.name
+
 		local item = root.itemConfig(cosmetic)
 		local mask = fixFilepath(item.config.mask, item)
 		local tailMask = fixFilepath(item.config.tailMask, item)
@@ -128,6 +135,8 @@ function setCosmetic.legs(cosmetic)
 			animator.setGlobalTag( "tailMask", "?addmask="..tailMask )
 		end
 	else
+		currentCosmeticName.legs = nil
+
 		animator.setPartTag("body_cosmetic", "partImage", "" )
 		animator.setPartTag("tail_cosmetic", "partImage", "" )
 
