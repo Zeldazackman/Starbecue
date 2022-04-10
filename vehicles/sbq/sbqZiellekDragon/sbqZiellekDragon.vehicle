@@ -526,7 +526,11 @@
 
 			},
 			"locationCenters" : {
-				"belly" : [-0.5, -2]
+				"belly" : [-0.5, -1.75],
+				"womb" : [-1, -2],
+				"shaft" : [-2, -1.75],
+				"ballsL" : [-3, -2],
+				"ballsR" : [-3, -2]
 			},
 			"interact": {
 				"oralVore": {
