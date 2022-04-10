@@ -46,7 +46,7 @@ end
 
 function state.smol.absorbEscape( args )
 	local effect = "slimeslow"
-	if sbq.settings.replaceColors[1] == 2 then
+	if sbq.settings.replaceColors[1] == 8 then
 		effect = "glueslow"
 	end
 	return sbq.doEscape(args, {[effect] = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {})
