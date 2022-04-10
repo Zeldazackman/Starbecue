@@ -17,6 +17,7 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Xeronious
 - Avian
 - Slime
+- Ziellek Dragon
 
 ### NPC Vore Tenants
 - Zevi (Pred/Prey)

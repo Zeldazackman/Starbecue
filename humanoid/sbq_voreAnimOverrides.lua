@@ -48,102 +48,43 @@ end)
 
 
 -- this function need to be replaced/modified because of stuff that would be in the chest area for say, breast vore
-function setCosmetic.chest(cosmetic)
-	if cosmetic ~= nil then
-		if currentCosmeticName.chest == cosmetic.name then return end
-		currentCosmeticName.chest = cosmetic.name
+local _chest_addon = setCosmetic.chest_addon
+function setCosmetic.chest_addon(cosmetic, item, images, directives)
+	local breasts = fixFilepath(images.breasts, item)
 
-		local item = root.itemConfig(cosmetic)
-		local images = item.config[self.gender.."Frames"]
+	animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives )
+	animator.setPartTag("breasts_cosmetic", "partImage", breasts )
 
-		local chest = fixFilepath(images.body, item)
-		local breasts = fixFilepath(images.breasts, item)
+	_chest_addon(cosmetic, item, images, directives)
+end
 
-		local backSleeve = fixFilepath(images.backSleeve, item)
-		local frontSleeve = fixFilepath(images.frontSleeve, item)
-
-		local frontMask = fixFilepath(images.frontMask, item)
-		local backMask = fixFilepath(images.backMask, item)
-
-		local directives = getCosmeticDirectives(item)
-
-		animator.setPartTag("chest_cosmetic", "cosmeticDirectives", directives )
-		animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives )
-
-		animator.setPartTag("backarms_cosmetic", "cosmeticDirectives", directives )
-		animator.setPartTag("frontarms_cosmetic", "cosmeticDirectives", directives )
-		animator.setPartTag("backarms_rotation_cosmetic", "cosmeticDirectives", directives )
-		animator.setPartTag("frontarms_rotation_cosmetic", "cosmeticDirectives", directives )
-
-		animator.setPartTag("chest_cosmetic", "partImage", chest )
-		animator.setPartTag("breasts_cosmetic", "partImage", breasts )
-
-		animator.setPartTag("backarms_cosmetic", "partImage", backSleeve )
-		animator.setPartTag("frontarms_cosmetic", "partImage", frontSleeve )
-		animator.setPartTag("backarms_rotation_cosmetic", "partImage", backSleeve )
-		animator.setPartTag("frontarms_rotation_cosmetic", "partImage", frontSleeve )
-
-		if frontMask ~= nil and frontMask ~= "" then
-			animator.setGlobalTag( "frontarmsMask", "?addmask="..frontMask )
-		end
-		if backMask ~= nil and backMask ~= "" then
-			animator.setGlobalTag( "backarmsMask", "?addmask="..backMask )
-		end
-	else
-		currentCosmeticName.chest = nil
-		animator.setPartTag("chest_cosmetic", "partImage", "" )
-		animator.setPartTag("breasts_cosmetic", "partImage", "" )
-
-		animator.setPartTag("backarms_cosmetic", "partImage", "" )
-		animator.setPartTag("frontarms_cosmetic", "partImage", "" )
-		animator.setPartTag("backarms_rotation_cosmetic", "partImage", "" )
-		animator.setPartTag("frontarms_rotation_cosmetic", "partImage", "" )
-
-		animator.setGlobalTag( "frontarmsMask", "" )
-		animator.setGlobalTag( "backarmsMask", "" )
-	end
+local _chest_clear = setCosmetic.chest_clear
+function setCosmetic.chest_clear(cosmetic)
+	animator.setPartTag("breasts_cosmetic", "partImage", "" )
+	_chest_clear(cosmetic)
 end
 
 -- this function needs to be replaced to make sure the belly is handeled for normal vore, and the dick for cock vore
-function setCosmetic.legs(cosmetic)
-	if cosmetic ~= nil then
-		if currentCosmeticName.legs == cosmetic.name then return end
-		currentCosmeticName.legs = cosmetic.name
+local _legs_addon = setCosmetic.legs_addon
+function setCosmetic.legs_addon(cosmetic, item, directives)
+	local belly = fixFilepath(item.config[self.gender.."BellyFrames"], item)
+	local cock = fixFilepath(item.config[self.gender.."CockFrames"], item)
 
-		local item = root.itemConfig(cosmetic)
-		local mask = fixFilepath(item.config.mask, item)
-		local tailMask = fixFilepath(item.config.tailMask, item)
+	animator.setPartTag("belly_cosmetic", "cosmeticDirectives", directives )
+	animator.setPartTag("belly_cosmetic", "partImage", belly )
 
-		local cosmeticDirectives = getCosmeticDirectives(item)
+	animator.setPartTag("cock_cosmetic", "cosmeticDirectives", directives )
+	animator.setPartTag("cock_cosmetic", "partImage", cock )
 
-		animator.setPartTag("body_cosmetic", "cosmeticDirectives", cosmeticDirectives )
-		animator.setPartTag("body_cosmetic", "partImage", fixFilepath(item.config[self.gender.."Frames"], item) )
+	_legs_addon(cosmetic, item, directives)
+end
 
-		animator.setPartTag("tail_cosmetic", "cosmeticDirectives", cosmeticDirectives )
-		animator.setPartTag("tail_cosmetic", "partImage", fixFilepath(item.config[self.gender.."TailFrames"], item) )
+local _legs_clear = setCosmetic.legs_clear
+function setCosmetic.legs_clear(cosmetic)
+	currentCosmeticName.legs = nil
 
-		animator.setPartTag("belly_cosmetic", "cosmeticDirectives", cosmeticDirectives )
-		animator.setPartTag("belly_cosmetic", "partImage", fixFilepath(item.config[self.gender.."BellyFrames"], item) )
+	animator.setPartTag("belly_cosmetic", "partImage", "" )
+	animator.setPartTag("cock_cosmetic", "partImage", "" )
 
-		animator.setPartTag("cock_cosmetic", "cosmeticDirectives", cosmeticDirectives )
-		animator.setPartTag("cock_cosmetic", "partImage", fixFilepath(item.config[self.gender.."CockFrames"], item) )
-
-		if mask ~= nil and mask ~= "" then
-			animator.setGlobalTag( "bodyMask", "?addmask="..mask )
-		end
-		if tailMask ~= nil and mask ~= "" then
-			animator.setGlobalTag( "tailMask", "?addmask="..tailMask )
-		end
-	else
-		currentCosmeticName.legs = nil
-
-		animator.setPartTag("body_cosmetic", "partImage", "" )
-		animator.setPartTag("tail_cosmetic", "partImage", "" )
-
-		animator.setPartTag("belly_cosmetic", "partImage", "" )
-		animator.setPartTag("cock_cosmetic", "partImage", "" )
-
-		animator.setGlobalTag( "bodyMask", "" )
-		animator.setGlobalTag( "tailMask", "" )
-	end
+	_legs_clear(cosmetic)
 end

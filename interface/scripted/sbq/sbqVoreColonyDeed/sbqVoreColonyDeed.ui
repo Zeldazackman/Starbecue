@@ -1,0 +1,132 @@
+{ //  -*- grammar-ext: json -*-
+	"style" : "window", // window (has titlebar), panel (just a frame) etc.
+	"size" : [256, 200], // *internal* size (not including chrome)
+	"title" : "SBQ Colony Deed",
+	"icon" : "/items/active/sbqController/oralVore.png",
+	"uniqueBy" : "path",
+	"scripts" : [ "sbqVoreColonyDeed.lua" ],
+	"children" : [
+		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
+			{ "type" : "tab", "id" : "npcPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "mode": "vertical", "children" : [
+					[[//first collumn
+						{ "expandMode" : [2, 2]},
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Current Belly Effect", "inline" : true },
+							[{ "type" : "checkBox", "id" : "BENoneEnable", "toolTip" : "Enable the pred to choose this belly effect based on their mood" }, { "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
+							[{ "type" : "checkBox", "id" : "BEHealEnable", "toolTip" : "Enable the pred to choose this belly effect based on their mood" },{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
+							[{ "type" : "checkBox", "id" : "BEDigestEnable", "toolTip" : "Enable the pred to choose this belly effect based on their mood" },{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
+							[{ "type" : "checkBox", "id" : "BESoftDigestEnable", "toolTip" : "Enable the pred to choose this belly effect based on their mood" },{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }],
+							"Spacer",
+							[{ "type" : "checkBox", "id" : "BELock", "toolTip" : "Lock the Belly Effect to its current value, regardless of the pred's mood" }, { "type" : "label", "text" : "Display DoT Effects" } ]
+						]}
+					],[// second collumn
+						{ "expandMode" : [2, 2]},
+						[[{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Escape Modifier", "inline": true },
+							[
+								{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
+								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+								{ "type" : "label", "text" : "Current Escape Modifier", "inline": true }
+							],
+							[
+								{ "type" : "iconButton", "id" : "decEscapeMin", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "escapeValueMin", "text" : "0", "inline": true },
+								{ "type" : "iconButton", "id" : "incEscapeMin", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+								{ "type" : "label", "text" : "Minimum Escape Modifier", "inline": true }
+							],
+							[
+								{ "type" : "iconButton", "id" : "decEscapeMax", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "escapeValueMax", "text" : "10", "inline": true },
+								{ "type" : "iconButton", "id" : "incEscapeMax", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+								{ "type" : "label", "text" : "Maximum Escape Modifier", "inline": true }
+							]
+						]}]],
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ],
+							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
+						]}
+					]],
+					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+						{ "mode" : "v", "expandMode" : [0, 0] },
+						{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
+						{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "mode" : "v" } ]}
+					]},
+					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
+				]}
+			]},
+			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "mode": "vertical", "children" : [
+					[//first collumn
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Questionable", "inline" : true },
+							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
+							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
+							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ],
+							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : "Navel Vore" } ]
+						]},
+						// second collumn
+						{ "expandMode" : [2, 2]}, { "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Sexual", "inline" : true },
+							[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : "Anal Vore" } ],
+							[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : "Cock Vore" } ],
+							[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : "Breast Vore" } ],
+							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
+						]},
+						// third collumn
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Other", "inline" : true },
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned/Hugged" } ]
+						]}
+					],
+					{"type" : "panel", "style" : "convex", "children" : [
+						{"mode" : "h"},
+						[
+							[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : "Prey Enabled" }]
+						],
+						[
+							[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : "Digestion Immunity" }]
+						],
+						[
+							[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to predator's transformation effects" }, { "type" : "label", "text" : "Transformation Immunity" }],
+							[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : "Egg Immunity" }]
+						]
+					]},
+					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
+				]}
+			]},
+			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
+				[
+					{ "expandMode" : [2, 2]},
+					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [2, 2]},
+						{ "type" : "label", "text" : "Customize Colors", "inline" : true },
+						{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]},
+					{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
+						{ "expandMode" : [2, 2]},
+						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
+						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]}
+				],
+				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
+					{ "mode" : "h" },
+					{ "type" : "label", "text" : " Customize Preset", "inline" : true },
+					{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
+					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
+				]}]]
+			]}],
+
+			"bottomBar" : []
+		}
+	]
+}
