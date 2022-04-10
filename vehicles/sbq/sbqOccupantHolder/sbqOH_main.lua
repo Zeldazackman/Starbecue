@@ -371,7 +371,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 
 		local nextSlot = 1
 		for i = 0, sbq.occupantSlots do
-			if sbq.occupant[i].id ~= nil then
+			if type(sbq.occupant[i].id) == "number" then
 				local location = sbq.occupant[i].location
 				local massMultiplier = 0
 

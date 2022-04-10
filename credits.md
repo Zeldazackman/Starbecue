@@ -17,6 +17,8 @@
 	Rex Anivius
 
 # Patrons
+## Special Thanks
+	David stat man
 ## Thank you all for your support!
 	xeronious
 	BRZYN-Z18

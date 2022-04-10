@@ -20,7 +20,7 @@
   "inventoryIcon" : "sbqVoreColonyDeedIcon.png",
   "orientations" : [
     {
-      "image" : "colonydeed.png:scanning.<frame>",
+      "image" : "sbqVoreColonyDeed.png:scanning.<frame>",
       "direction": "right",
       "imagePosition" : [-8, -8],
 

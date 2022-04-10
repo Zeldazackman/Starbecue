@@ -93,7 +93,7 @@ function sbq.readOccupantData()
 		local y = 224
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
-			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (id ~= nil) and (world.entityExists( id )) then
+			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
 				y = y - 32
 				local species = occupant.species
 				if type(sbq.occupantList[id]) ~= "table" then
@@ -168,7 +168,7 @@ function sbq.updateBars()
 		for i, occupant in pairs(sbq.occupant) do
 			if not ((i == "0") or (i == 0)) then
 				local id = occupant.id
-				if id ~= nil and world.entityExists(id) and sbq.occupantList[id] ~= nil then
+				if type(id) == "number" and world.entityExists(id) and sbq.occupantList[id] ~= nil then
 					local health = world.entityHealth( id )
 					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], topBar )
 					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, bottomBar )

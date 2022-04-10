@@ -14,7 +14,7 @@ require("/scripts/SBQ_RPC_handling.lua")
 function sbq.getPatronsString()
 	local patronsString = ""
 	for _, patron in ipairs(root.assetJson("/patrons.json")) do
-		patronsString = patronsString..patron.."\n"
+		patronsString = patronsString..patron.."^reset;\n"
 	end
 	return patronsString
 end

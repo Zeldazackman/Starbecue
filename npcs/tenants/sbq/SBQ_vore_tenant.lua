@@ -27,7 +27,7 @@ function init()
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
-		if not sbq.talkingWithPrey and id ~= nil then
+		if not sbq.talkingWithPrey and type(id) == "number" then
 			local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
 			---@diagnostic disable-next-line: undefined-global
 			setInteracted(args)

@@ -61,11 +61,11 @@ message.setHandler( "despawn", function(_,_, eaten)
 end )
 
 message.setHandler( "digest", function(_,_, eid)
-	if eid ~= nil and sbq.lounging[eid] ~= nil then
+	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
 		for i = 0, sbq.occupantSlots do
-			if sbq.occupant[i].id ~= nil and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == eid then
+			if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == eid then
 				sbq.occupant[i].location = location
 				sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
 			end

@@ -59,7 +59,7 @@ function sbq.doTransition( direction, scriptargs )
 	if tconfig == nil then return "no data" end
 	local id = sbq.getTransitionVictimId(scriptargs, tconfig)
 
-	if tconfig.voreType ~= nil and id ~= nil and world.entityExists(id) then
+	if tconfig.voreType ~= nil and type(id) == "number" and world.entityExists(id) then
 		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
 			if enabled then
 				sbq.doingTransition(tconfig, direction, scriptargs)

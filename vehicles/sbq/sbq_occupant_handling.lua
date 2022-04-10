@@ -108,7 +108,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 
 		local nextSlot = 1
 		for i = 1, sbq.occupantSlots do
-			if sbq.occupant[i].id ~= nil then
+			if type(sbq.occupant[i].id) == "number" then
 				local location = sbq.occupant[i].location
 				local massMultiplier = 0
 
@@ -147,7 +147,7 @@ function sbq.sendPreyTo()
 		local nextSlot = 1
 		if world.entityExists(recepient.vehicle) then
 			for i = 0, sbq.occupantSlots do
-				if sbq.occupant[i].id ~= nil and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
+				if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
 
 					local occupantData = sb.jsonMerge(sbq.occupant[i], {
 						location = sbq.occupant[i].nestedPreyData.location,
@@ -250,7 +250,7 @@ end
 
 function sbq.applyStatusLists()
 	for i = 0, sbq.occupantSlots do
-		if sbq.occupant[i].id ~= nil and world.entityExists(sbq.occupant[i].id) then
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
 			if not sbq.weirdFixFrame then
 				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
 			end
@@ -293,7 +293,7 @@ function sbq.updateOccupants(dt)
 
 	for i = 0, sbq.occupantSlots do
 		if not (i == 0 and not sbq.includeDriver) then
-			if sbq.occupant[i].id ~= nil and world.entityExists(sbq.occupant[i].id) then
+			if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
 				sbq.occupants.total = sbq.occupants.total + 1
 				if not lastFilled and sbq.swapCooldown <= 0 then
 					sbq.swapOccupants( i-1, i )
@@ -396,7 +396,7 @@ function sbq.updateOccupants(dt)
 				end
 
 				lastFilled = true
-			elseif sbq.occupant[i].id ~= nil and not world.entityExists(sbq.occupant[i].id) then
+			elseif type(sbq.occupant[i].id) == "number" and not world.entityExists(sbq.occupant[i].id) then
 				sbq.occupant[i] = sbq.clearOccupant(i)
 				sbq.refreshList = true
 				lastFilled = false

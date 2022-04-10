@@ -9,7 +9,7 @@ function init()
 end
 
 function update(dt, fireMode, shiftHeld, controls)
-	if not player.isLounging() and fireMode == "primary" and not clicked then
+	if fireMode == "primary" or fireMode == "alt" and not clicked then
 		clicked = true
 
 		local predators = world.entityQuery( activeItem.ownerAimPosition(), 2, {

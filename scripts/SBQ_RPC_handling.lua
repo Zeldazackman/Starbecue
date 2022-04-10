@@ -21,7 +21,7 @@ end
 
 sbq.loopedMessages = {}
 function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
-	if eid ~= nil and world.entityExists(eid) then
+	if type(eid) == "number" and world.entityExists(eid) then
 		if sbq.loopedMessages[name] == nil then
 			sbq.loopedMessages[name] = {
 				rpc = world.sendEntityMessage(eid, message, table.unpack(args or {})),
