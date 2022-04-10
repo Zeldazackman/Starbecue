@@ -1,0 +1,12 @@
+{
+  "name" : "sbqSlimeSlow",
+  "blockingStat" : "tarStatusImmunity",
+  "effectConfig" : {},
+  "defaultDuration" : 3,
+
+  "scripts" : [
+    "sbqSlimeSlow.lua"
+  ],
+
+  "label" : "Slow"
+}

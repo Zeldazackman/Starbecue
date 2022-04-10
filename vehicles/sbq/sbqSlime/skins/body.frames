@@ -27,14 +27,14 @@
 		"1.s_front.5" : "1.idle.1",
 		"1.s_back.5" : "1.idle.1",
 
-		"1.escape.1" : "1.eat.8",
-		"1.escape.2" : "1.eat.7",
-		"1.escape.3" : "1.eat.6",
-		"1.escape.4" : "1.eat.4",
-		"1.escape.5" : "1.eat.3",
-		"1.escape.6" : "1.eat.2",
-		"1.escape.7" : "1.eat.2",
-		"1.escape.8" : "1.eat.1"
+		"0.escape.1" : "1.eat.8",
+		"0.escape.2" : "1.eat.7",
+		"0.escape.3" : "1.eat.6",
+		"0.escape.4" : "1.eat.4",
+		"0.escape.5" : "1.eat.3",
+		"0.escape.6" : "1.eat.2",
+		"0.escape.7" : "1.eat.2",
+		"0.escape.8" : "1.eat.1"
 
 	}
 }

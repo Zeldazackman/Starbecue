@@ -45,11 +45,13 @@ function state.smol.absorbVore( args )
 end
 
 function state.smol.absorbEscape( args )
-	local effect = "slimeslow"
-	if sbq.settings.replaceColors[1] == 8 then
-		effect = "glueslow"
+	local replaceColors = sbq.sbqData.replaceColors[1][sbq.settings.replaceColors[1]+1]
+	if type(sbq.settings.replaceColorTable[1]) == "table" then
+		replaceColors = sbq.settings.replaceColorTable[1]
 	end
-	return sbq.doEscape(args, {[effect] = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {})
+	local sbqSlimeSlowColor = replaceColors[3]
+
+	return sbq.doEscape(args, { sbqSlimeSlow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id(), property = sbqSlimeSlowColor }}, {})
 end
 
 function state.smol.checkAbsorbVore()

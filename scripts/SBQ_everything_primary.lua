@@ -1,6 +1,7 @@
 function sbq.everything_primary()
 	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
 		for statusEffect, data in pairs(statlist) do
+			status.setStatusProperty(statusEffect, data.property)
 			status.addEphemeralEffect(statusEffect, data.power, data.source)
 		end
 	end)

@@ -48,11 +48,11 @@
 		"1.fall.3" : "1.run.2",
 		"1.fall.4" : "1.run.1",
 
-		"1.escape.1" : "1.eat.5",
-		"1.escape.2" : "1.eat.4",
-		"1.escape.3" : "1.eat.3",
-		"1.escape.4" : "1.eat.2",
-		"1.escape.5" : "1.eat.1"
+		"0.escape.1" : "1.eat.5",
+		"0.escape.2" : "1.eat.4",
+		"0.escape.3" : "1.eat.3",
+		"0.escape.4" : "1.eat.2",
+		"0.escape.5" : "1.eat.1"
 
 	}
 }

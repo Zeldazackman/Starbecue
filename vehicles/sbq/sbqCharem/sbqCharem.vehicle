@@ -173,10 +173,7 @@
 					"timing" : 2,
 					"animation": {
 						"tail": "back.wag2"
-					},
-					"shrinkAnims": { "belly" : {
-						"body": "escape"
-					}}
+					}
 				},
 
 				"bed": {
@@ -210,6 +207,12 @@
 			],
 			"locationCenters" : {
 				"belly" : [-0.5, -2]
+			},
+			"shrinkAnims": {
+				"belly" : {"body": "escape"}
+			},
+			"expandAnims": {
+				"belly" : {"body": "anal"}
 			},
 			"struggle": {
 				"belly" : {
