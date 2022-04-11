@@ -5,7 +5,8 @@
   "defaultDuration" : 3,
 
   "scripts" : [
-    "sbqSlimeSlow.lua"
+    "sbqSlimeSlow.lua",
+    "/stats/speciesAnimOverride/storeDirectives.lua"
   ],
 
   "label" : "Slow"
