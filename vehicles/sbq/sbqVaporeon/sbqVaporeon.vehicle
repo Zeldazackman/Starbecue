@@ -862,7 +862,7 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"anal.escape"
+						"body":"dummy"
 					},
 					"victimAnimation": "back.anal.escape",
 					"script": "analEscape"
@@ -873,7 +873,7 @@
 					"location": "belly",
 					"failOnFull": 1,
 					"animation":{
-						"body":"anal.eat"
+						"body":"dummy"
 					},
 					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
@@ -889,6 +889,12 @@
 				{ "tail": "flick" },
 				{ "head": "back.blink" }
 			],
+			"shrinkAnims" : { "belly" : {
+				"body": "shrink"
+			}},
+			"expandAnims" : {"belly" :{
+				"body": "expand"
+			}},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body"],
@@ -980,7 +986,7 @@
 					"voreType" : "analVore",
 					"lock" : true,
 					"animation":{
-						"body":"anal.escape"
+						"body":"dummy"
 					},
 					"victimAnimation": "back.anal.escape",
 					"script": "analEscape"
@@ -991,7 +997,7 @@
 					"location": "belly",
 					"failOnFull": 1,
 					"animation":{
-						"body":"anal.eat"
+						"body":"dummy"
 					},
 					"victimAnimation": "back.anal.eat",
 					"script": "eatAnal"
@@ -1007,6 +1013,12 @@
 				{ "tail": "flick" },
 				{ "head": "back.blink" }
 			],
+			"shrinkAnims" : { "belly" : {
+				"body": "shrink"
+			}},
+			"expandAnims" : {"belly" :{
+				"body": "expand"
+			}},
 			"struggle": {
 				"belly" : {
 					"parts" : ["body", "legs"],

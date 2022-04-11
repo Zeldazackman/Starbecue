@@ -350,6 +350,12 @@
 				{ "tail": "back.wag" },
 				{ "head": "back.blink" }
 			],
+			"shrinkAnims": {
+				"belly" : {"body": "escape"}
+			},
+			"expandAnims": {
+				"belly" : {"body": "anal"}
+			},
 			"locationCenters" : {
 				"belly" : [-0.5, -2]
 			},

@@ -35,6 +35,7 @@
 
 					"absorb": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 
+					"dummy": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 2 },
 					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 
@@ -171,6 +172,8 @@
 					"back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
 					"pinlook": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
 
+					"dummy": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 2 },
+
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim" : "idle" },
 
@@ -179,7 +182,7 @@
 					"blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 					"back.blink": { "frames": 1, "cycle": 0.25, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 
-					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2, "baseAnim" : "idle" },
+					"pet": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 2, "baseAnim" : "idle", "animFrames" : "blink" },
 					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
 					"lick": { "frames": 5, "cycle": 0.75, "mode": "end", "priority": 3, "baseAnim" : "idle" },
@@ -273,6 +276,8 @@
 					"bodyState": {
 						"idle": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.<bodyStateAnim>.<bodyStateFrame><directives>" } },
 
+						"dummy": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.idle.1<directives>" } },
+
 						"smol.idle": { "properties": { "image": "skins/<skin>/smol/smol_body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame><directives>" } },
 
 						"smol.prey": { "properties": { "image": "skins/<skin>/smol/smol_body.png:smolprey.1<directives>" } },
@@ -292,6 +297,8 @@
 				"partStates": {
 					"bodyState": {
 						"idle": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.<bodyStateAnim>.<bodyStateFrame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/foreground/body.png:<bellyOccupants>.<state>.<bodyStateAnim>.<bodyStateFrame>" } },
+
+						"dummy": { "properties": { "image": "skins/<skin>/body.png:<bellyOccupants>.<state>.idle.1<directives>" } },
 
 						"smol.idle": { "properties": { "image": "skins/<skin>/smol/smol_body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame><directives>?addmask=/vehicles/sbq/sbqVaporeon/skins/<skin>/smol/foreground/smol_body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame>" } },
 
@@ -426,6 +433,8 @@
 				"partStates": {
 					"headState": {
 						"idle": { "properties": { "image": "skins/<skin>/head.png:<headStateAnim>.<headStateFrame><directives>" } },
+
+						"dummy": { "properties": { "image": "skins/<skin>/head.png:idle.1<directives>" } },
 
 						"rollover": { "properties": { "image": "skins/<skin>/head.png:<state>.rollover.<headStateFrame><directives>" } },
 
