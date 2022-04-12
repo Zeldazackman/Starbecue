@@ -9,8 +9,8 @@
 		]
 	},
 	"aliases" : {
-		"0.stand.idle.1" : "1.stand.expand.1",
-		"1.stand.idle.1" : "1.stand.expand.8",
+		"0.idle.1" : "1.stand.expand.1",
+		"1.idle.1" : "1.stand.expand.8",
 
 		"1.stand.s_up.5" : "1.stand.idle.1",
 		"1.stand.s_down.5" : "1.stand.idle.1",

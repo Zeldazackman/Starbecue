@@ -39,6 +39,23 @@
 			{ "type" : "label", "text" : "^cyan;Starbound Simple Vore Mod Overrides^reset;\n \nTo make compatibiliity smoother between Starbecue, as well as improve how some things are handled in SSVM, Starbecue overwrites the functions of some key things in SSVM, either to have better parity or to fix bugs.\nAlso Auri's Shop appears in what was an empty space in Foodhall.\n \n^cyan;Prey Enabling^reset;\nSSVM's system of enabling vore on a planet by placing a big lever down has been overwritten by Starbecue's prey enabling settings, it is now, per player, per vore type. This applies to both the SSVM NPC preds which perform their assigned vore type, and the SSVM Vore RP tech, for Oral Vore and Unbirth, which does recognize the distinction of which the player has active.\n \n^cyan;Bugfixes^reset;\nIt is well known that having multiple SSVM NPC preds free to roam around a colony can cause crashes if one has eaten another, therefore, Starbecue has modified the behavior so that SSVM Pred NPCs cannot eat other SSVM Pred NPCs, this also means that Starbecue predators cannot eat them either, both good for avoiding bugs, as well as probably respecting the wishes of the owner of the character.\nStarbecue makes SSVM compatible with other mods that modify monsters by having a copy of its monster script to add to the monster core loader.\n \n^cyan;Things that Starbecue does NOT do^reset;\nStarbecue's Preditor will not, and will never work on SSVM NPCs VSOs or SPOs.\nStarbecue's Prey Enabling System does not apply to SSVM VSOs and SPOs.\nStarbecue's Modifier Items will not effect SSVM NPCs, VSOs, or SPOs.\nStarbecue's Vore NPC Summoner will never effect SSVM NPCs.\n \n^cyan;Final Note^reset;\nOverriding functions for someone else's mod isn't always nice, but since SSVM is no longer in active development, it felt like it should be done, I will remove such overrides if Sheights were to ask." }
 		]}]}
 	]},
+	"speciesPresetList" : [
+		"human",
+		"avian",
+		"apex",
+		"floran",
+		"hylotl",
+		"glitch",
+		"novakid",
+		"fenerox",
+		"Zevi"
+	],
+	"speciesPresets" : {
+		"Zevi" : {
+			"species" : "sbqZevi",
+			"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
+		}
+	},
 
 	"speciesSettingsTabs" : {
 		"sbqAvian" : {

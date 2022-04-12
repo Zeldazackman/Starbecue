@@ -966,7 +966,7 @@
 						"owner": "body",
 						"part": "global",
 						"name": "bellymask",
-						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png"
+						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png;0;0"
 					}
 				]
 
@@ -1218,7 +1218,7 @@
 						"owner": "body",
 						"part": "global",
 						"name": "bellymask",
-						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png"
+						"value": "?addmask=/vehicles/sbq/sbqXeronious/skins/sit_belly_mask.png;0;0"
 					}
 				]
 

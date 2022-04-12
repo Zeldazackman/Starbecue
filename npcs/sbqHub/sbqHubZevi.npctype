@@ -26,10 +26,6 @@
 	],
 	"scriptConfig" : {
 		"uniqueId" : "sbqHubZevi",
-		"speciesAnimOverrideData" : {
-			"species" : "sbqZevi",
-			"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
-		},
 		"sbqPreyEnabled" : {
 			"enabled" : true
 		},
@@ -101,10 +97,10 @@
 					}
 				},
 				"shrinkAnims":{
-					"belly": { "body": "shrink" }
+					"belly": { "belly": "shrink" }
 				},
 				"expandAnims":{
-					"belly": { "body": "expand" }
+					"belly": { "belly": "expand" }
 				},
 				"locationCenters" : {
 					"belly" : [0, -2]
@@ -329,6 +325,12 @@
 		"stats" : {
 			"protection" : {
 				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+			"speciesAnimOverrideData" : {
+				"species" : "sbqZevi",
+				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
 			}
 		}
 	},

@@ -336,7 +336,7 @@
 				},
 				"partStates": {
 					"tailState": {
-						"idle": { "properties": { "image": "skins/<tailSkin>/tail.png:<tailStateAnim>.<tailStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<tailSkin>/foreground/tail.png:<tailStateAnim>.<tailStateFrame>" } },
+						"idle": { "properties": { "image": "skins/<tailSkin>/tail.png:<tailStateAnim>.<tailStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<tailSkin>/foreground/tail.png:<tailStateAnim>.<tailStateFrame>;0;0" } },
 
 						"none": { "properties": {} }
 					}
@@ -380,7 +380,7 @@
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "skins/<headSkin>/head.png:<headStateAnim>.<headStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<headSkin>/foreground/head.png:<headStateAnim>.<headStateFrame>" } },
+						"idle": { "properties": { "image": "skins/<headSkin>/head.png:<headStateAnim>.<headStateFrame><directives>?addmask=/vehicles/sbq/sbqZiellekDragon/skins/<headSkin>/foreground/head.png:<headStateAnim>.<headStateFrame>;0;0" } },
 
 						"none": { "properties": {} }
 					}

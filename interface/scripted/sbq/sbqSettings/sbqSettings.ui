@@ -107,6 +107,14 @@
 					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
 					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
+				]}]],
+				[[{ "type" : "panel", "id" : "speciesPanel", "style" : "convex", "children" : [
+					{ "mode" : "h" },
+					{ "type" : "label", "text" : " Species", "inline" : true },
+					{ "type" : "iconButton", "id" : "decSpecies", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+					{ "type" : "textBox", "id" : "speciesText", "expandMode" : [1, 0] },
+					{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+					{ "type" : "button", "id" : "applySpecies", "caption" : "Apply", "expandMode" : [0, 0] }
 				]}]]
 			]}],
 

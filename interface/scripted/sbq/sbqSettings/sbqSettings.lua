@@ -58,7 +58,7 @@ function init()
 
 	sbq.hammerspacePanel()
 
-	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil or sbq.predatorConfig.customizePresets ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
+	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
 
 		if sbq.predatorConfig.customizePresets ~= nil then
@@ -67,6 +67,11 @@ function init()
 			presetText:setText(sbq.predatorSettings.presetText or sbq.predatorConfig.presetList[sbq.preset])
 		else
 			presetsPanel:setVisible(false)
+		end
+		if not player.loungingIn() and sbq.sbqCurrentData.type ~= "object" then
+			speciesPanel:setVisible(true)
+		elseif sbq.sbqCurrentData.type ~= "object" then
+			speciesPanel:setVisible(false)
 		end
 
 
@@ -390,6 +395,18 @@ function sbq.changeHammerspaceLimit(location, inc, label)
 	sbq.saveSettings()
 end
 
+sbq.speciesOverrideIndex = 1
+function sbq.changeSpecies(inc)
+	local speciesIndex = (sbq.speciesOverrideIndex or 1) + inc
+	if speciesIndex > #sbq.extraTabs.speciesPresetList then
+		speciesIndex = 1
+	elseif speciesIndex < 1 then
+		speciesIndex = #sbq.extraTabs.speciesPresetList
+	end
+	sbq.speciesOverrideIndex = speciesIndex
+	speciesText:setText(sbq.extraTabs.speciesPresetList[sbq.speciesOverrideIndex])
+end
+
 --------------------------------------------------------------------------------------------------
 
 function BENone:onClick()
@@ -464,6 +481,38 @@ end
 
 function presetText:onEnter()
 	applyPreset:onClick()
+end
+
+--------------------------------------------------------------------------------------------------
+if speciesPanel ~= nil then
+	function decSpecies:onClick()
+		sbq.changeSpecies(-1)
+	end
+
+	function incSpecies:onClick()
+		sbq.changeSpecies(1)
+	end
+
+	function applySpecies:onClick()
+		if speciesText.text ~= "" then
+			local table = { species = speciesText.text }
+			if type(sbq.extraTabs.speciesPresets[speciesText.text]) == "table" then
+				table = sbq.extraTabs.speciesPresets[speciesText.text]
+			end
+			local success, table2 = pcall(json.decode, speciesText.text )
+			if success and type(table2) == "table" then
+				table = table2
+			end
+			status.setStatusProperty("speciesAnimOverrideData", table)
+			status.setPersistentEffects("speciesAnimOverride", { table.customAnimStatus or "speciesAnimOverride"})
+		else
+			status.clearPersistentEffects("speciesAnimOverride")
+			status.setStatusProperty("speciesAnimOverrideData", nil)
+		end
+	end
+	function speciesText:onEnter()
+		applySpecies:onClick()
+	end
 end
 
 --------------------------------------------------------------------------------------------------
