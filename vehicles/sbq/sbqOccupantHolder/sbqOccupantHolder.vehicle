@@ -74,7 +74,6 @@
 	"sbqData" : {
 		"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
 		},
 
 		"lights" : {
@@ -87,7 +86,7 @@
 
 		"locations" :{
 		},
-		"victimAnimations": "/vehicles/sbq/sbqOccupantHolder/victim_animations.config"
+		"victimAnimations": "/humanoid/victim_animations.config"
 	},
 
 	"states": {

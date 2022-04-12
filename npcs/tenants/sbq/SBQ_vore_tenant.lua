@@ -14,8 +14,20 @@ require("/scripts/SBQ_RPC_handling.lua")
 function init()
 	oldinit()
 	sbq.config = root.assetJson("/sbqGeneral.config")
-	sbq.sbqData = config.getParameter("sbqData") or {}
-	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(storage.sbqSettings or {}, (sbq.sbqData.defaultSettings or {})))
+	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
+
+	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+	local species = speciesAnimOverrideData.species or npc.species()
+	local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
+	if success then
+		if type(data.sbqData) == "table" then
+			sbq.speciesConfig.sbqData = data.sbqData
+		end
+		if type(data.states) == "table" then
+			sbq.speciesConfig.states = data.states
+		end
+	end
+	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(storage.sbqSettings or {}, (sbq.speciesConfig.sbqData.defaultSettings or {})))
 
 	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
 		local location = sbq.getOccupantArg(id, "location")
@@ -23,7 +35,7 @@ function init()
 		if location ~= nil then
 			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
@@ -69,7 +81,7 @@ function init()
 		setInteracted(args)
 	end)
 	message.setHandler("giveSbqData", function (_,_)
-		return { sbqData = config.getParameter("sbqData"), states = config.getParameter("states") }
+		return sbq.speciesConfig
 	end)
 end
 
