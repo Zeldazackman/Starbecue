@@ -199,20 +199,23 @@
 				"states" : {
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"dummyEat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
+					"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
+					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
+					"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim" : "walk" },
 
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
-					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "eat" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "eat" },
 
-					"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "idle" },
-					"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "idle" },
+					"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "eat" },
+					"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "eat" },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" },
@@ -239,6 +242,7 @@
 						"walk": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.<bellyStateAnim>.<bellyStateFrame><customizeDirectives><bellyMask><directives>" } },
 
 						"eat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame><customizeDirectives><bellyMask><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.idle.1<customizeDirectives><bellyMask><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -261,6 +265,7 @@
 						"walk": { "properties": { "image": "<partImage>:<bellyOccupants>.<direction>.<bellyStateAnim>.<bellyStateFrame><cosmeticDirectives><directives>" } },
 
 						"eat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame><cosmeticDirectives><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.idle.1<cosmeticDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -278,20 +283,23 @@
 				"states" : {
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "eat" },
+					"dummyEat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
 
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
-					"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "idle" },
+					"duck": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
+					"sit": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
+					"lay": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0, "baseAnim" : "eat" },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim" : "walk" },
 
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
-					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "eat" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "eat" },
 
-					"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "idle" },
-					"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "idle" },
+					"swim": { "frames": 7, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "eat" },
+					"swimIdle": { "frames": 2, "cycle": 0.50, "mode": "loop", "priority": 0, "baseAnim" : "eat" },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" },
@@ -318,6 +326,7 @@
 						"walk": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.<cockStateAnim>.<cockStateFrame><customizeDirectives><cockMask><directives>" } },
 
 						"eat": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.<cockStateAnim>.<cockStateFrame><customizeDirectives><cockMask><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.idle.1<customizeDirectives><cockMask><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -340,6 +349,7 @@
 						"walk": { "properties": { "image": "<partImage>:<cockOccupants>.<direction>.<cockStateAnim>.<cockStateFrame><cosmeticDirectives><directives>" } },
 
 						"eat": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.<cockStateAnim>.<cockStateFrame><cosmeticDirectives><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<cockOccupants>.<state>.idle.1<cosmeticDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}

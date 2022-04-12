@@ -65,7 +65,7 @@
 						"victimAnimation" : "oralEat",
 						"timing" : "belly",
 						"animation" : {
-							"belly" : "eat"
+							"belly" : "dummyEat"
 						}
 					},
 					"oralEscape" : {
@@ -75,7 +75,7 @@
 						"victimAnimation" : "oralEscape",
 						"timing" : "belly",
 						"animation" : {
-							"belly" : "escape"
+							"belly" : "dummyEat"
 						}
 					},
 					"analEat" : {
@@ -86,7 +86,7 @@
 						"victimAnimation" : "analEat",
 						"timing" : "belly",
 						"animation" : {
-							"belly" : "eat"
+							"belly" : "dummyEat"
 						}
 					},
 					"analEscape" : {
@@ -96,12 +96,15 @@
 						"victimAnimation" : "analEscape",
 						"timing" : "belly",
 						"animation" : {
-							"belly" : "escape"
+							"belly" : "dummyEat"
 						}
-					},
-					"cockEscape" : {
-						"script" : "escape"
 					}
+				},
+				"shrinkAnims":{
+					"belly": { "body": "shrink" }
+				},
+				"expandAnims":{
+					"belly": { "body": "expand" }
 				},
 				"locationCenters" : {
 					"belly" : [0, -2]
