@@ -141,3 +141,7 @@ message.setHandler( "getObjectSettingsMenuData", function (_,_)
 		spawner = sbq.spawner
 	}
 end)
+
+message.setHandler( "sbqSendAllPreyTo", function (_,_, id)
+	sbq.sendAllPreyTo = id
+end)

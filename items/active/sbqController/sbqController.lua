@@ -23,11 +23,14 @@ end
 
 function update(dt, fireMode, shiftHeld, controls)
 	if not player.isLounging() then
-		if shiftHeld then
+		local currentData = player.getProperty( "sbqCurrentData") or {}
 
+		if shiftHeld and fireMode == "primary" and not clicked then
+			if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+				world.sendEntityMessage(currentData.id, "despawn")
+			end
 		elseif fireMode == "primary" and not clicked then
 			clicked = true
-			local currentData = player.getProperty( "sbqCurrentData") or {}
 			if type(currentData.id) == "number" and world.entityExists(currentData.id) then
 				doVoreAction(currentData.id)
 			else

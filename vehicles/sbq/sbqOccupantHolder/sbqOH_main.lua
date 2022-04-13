@@ -130,6 +130,7 @@ require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
 require("/vehicles/sbq/sbq_animation.lua")
+require("/vehicles/sbq/sbq_replaceable_functions.lua")
 require("/scripts/SBQ_RPC_handling.lua")
 
 
@@ -204,10 +205,10 @@ function initAfterInit(data)
 		sbq.occupant[i] = sbq.clearOccupant(i)
 		sbq.seats["occupant"..i] = sbq.occupant[i]
 	end
-	sbq.occupant["S"] = sbq.clearOccupant("S")
-	sbq.seats["occupantS"] = sbq.occupant["S"]
-	sbq.lounging[sbq.spawner] = sbq.occupant["S"]
-	sbq.driverSeat = "occupantS"
+	sbq.seats.occupantD = sbq.clearOccupant("D")
+	sbq.seats.occupantD.id = sbq.spawner
+	sbq.lounging[sbq.spawner] = sbq.seats.occupantD
+	sbq.driverSeat = "occupantD"
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
@@ -246,7 +247,7 @@ function update(dt)
 	sbq.updateAnims(dt)
 
 	sbq.updateControls(dt)
-	sbq.getSeatData("S", "occupantS", sbq.driver)
+	sbq.getSeatData(sbq.seats.occupantD, "occupantD", sbq.driver)
 	sbq.openPredHud(dt)
 
 	sbq.updateOccupants(dt)
@@ -417,14 +418,6 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 		end
 		return true
 	end
-end
-
--- to have any extra effects applied to those in digest locations
-function sbq.extraBellyEffects(i, eid, health, status)
-end
-
--- to have effects applied to other locations, for example, womb if the predator does unbirth
-function sbq.otherLocationEffects(i, eid, health, status)
 end
 
 -------------------------------------------------------------------------------------------------------

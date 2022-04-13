@@ -74,18 +74,19 @@ function sbq.updateControls(dt)
 			sbq.updateControl(seatname, "altFire", dt)
 
 			sbq.occupant[i].controls.aim = vehicle.aimPosition( seatname ) or {0,0}
-			sbq.occupant[i].controls.species = world.entitySpecies(eid) or world.monsterType(eid)
-			sbq.occupant[i].controls.primaryHandItem = world.entityHandItem(eid, "primary")
-			sbq.occupant[i].controls.altHandItem = world.entityHandItem(eid, "alt")
-			sbq.occupant[i].controls.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
-			sbq.occupant[i].controls.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
-
-			sbq.getSeatData(i, seatname, eid)
+			sbq.getSeatData(sbq.occupant[i], seatname, eid)
 		end
 	end
 end
 
-function sbq.getSeatData(i, seatname, eid)
+function sbq.getSeatData(occupant, seatname, eid)
+
+	occupant.controls.species = world.entitySpecies(eid) or world.monsterType(eid)
+	occupant.controls.primaryHandItem = world.entityHandItem(eid, "primary")
+	occupant.controls.altHandItem = world.entityHandItem(eid, "alt")
+	occupant.controls.primaryHandItemDescriptor = world.entityHandItemDescriptor(eid, "primary")
+	occupant.controls.altHandItemDescriptor = world.entityHandItemDescriptor(eid, "alt")
+
 	local seatType
 	local data
 	if (seatname == sbq.driverSeat) then
@@ -96,7 +97,7 @@ function sbq.getSeatData(i, seatname, eid)
 		end
 		data = {
 			species = world.entityName(entity.id()),
-			layer = sbq.occupant[i].smolPreyData,
+			layer = occupant.smolPreyData,
 			state = sbq.state,
 			edible = sbq.stateconfig[sbq.state].edible,
 			totalOccupants = sbq.occupants.total,
@@ -105,24 +106,24 @@ function sbq.getSeatData(i, seatname, eid)
 		}
 	else
 		seatType = "prey"
-		data = sbq.occupant[i].smolPreyData
+		data = occupant.smolPreyData
 	end
 	data.type = seatType
 
-	if sbq.occupant[i].controls.primaryHandItem ~= nil and sbq.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and sbq.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
-		sbq.occupant[i].controls = sb.jsonMerge(sbq.occupant[i].controls, sbq.occupant[i].controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
-	elseif sbq.occupant[i].controls.altHandItem ~= nil and sbq.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage ~= nil and sbq.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
-		sbq.occupant[i].controls = sb.jsonMerge(sbq.occupant[i].controls, sbq.occupant[i].controls.altHandItemDescriptor.parameters.scriptStorage.seatdata)
+	if occupant.controls.primaryHandItem ~= nil and occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+		occupant.controls = sb.jsonMerge(occupant.controls, occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)
+	elseif occupant.controls.altHandItem ~= nil and occupant.controls.altHandItemDescriptor.parameters.scriptStorage ~= nil and occupant.controls.altHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
+		occupant.controls = sb.jsonMerge(occupant.controls, occupant.controls.altHandItemDescriptor.parameters.scriptStorage.seatdata)
 	else
-		sbq.occupant[i].controls.shiftReleased = sbq.occupant[i].controls.shift
-		sbq.occupant[i].controls.shift = 0
+		occupant.controls.shiftReleased = occupant.controls.shift
+		occupant.controls.shift = 0
 
 		sbq.loopedMessage(seatname .. "Info", eid, "sbqGetSeatInformation", { seatType }, function(seatdata)
-			sbq.occupant[i].controls = sb.jsonMerge(sbq.occupant[i].controls, seatdata)
+			occupant.controls = sb.jsonMerge(occupant.controls, seatdata)
 		end)
 	end
 	sbq.loopedMessage(seatname .. "Equips", eid, "sbqGetSeatEquips", { data }, function(seatdata)
-		sbq.occupant[i].controls = sb.jsonMerge(sbq.occupant[i].controls, seatdata)
+		occupant.controls = sb.jsonMerge(occupant.controls, seatdata)
 	end)
 end
 

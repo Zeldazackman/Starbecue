@@ -85,7 +85,7 @@ function sbq.readOccupantData()
 		local y = 224
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
-			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
+			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
 				y = y - 32
 				local species = occupant.species
 				if type(sbq.occupantList[id]) ~= "table" then
@@ -158,7 +158,7 @@ local bottomBar = {
 function sbq.updateBars()
 	if sbq.occupants.total > 0 and sbq.occupant ~= nil then
 		for i, occupant in pairs(sbq.occupant) do
-			if not ((i == "0") or (i == 0)) then
+			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") then
 				local id = occupant.id
 				if type(id) == "number" and world.entityExists(id) and sbq.occupantList[id] ~= nil then
 					local health = world.entityHealth( id )

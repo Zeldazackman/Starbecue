@@ -165,6 +165,22 @@ function sbq.sendPreyTo()
 	end
 end
 
+sbq.sendAllPreyTo = nil
+function sbq.sendAllPrey()
+	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
+		local nextSlot = 1
+		for i = 0, sbq.occupantSlots do
+			if type(sbq.occupant[i].id) == "number" then
+				sb.logInfo("sentPrey"..1)
+				world.sendEntityMessage(sbq.sendAllPreyTo, "addPrey", nextSlot, sbq.occupant[i])
+				sbq.occupant[i] = sbq.clearOccupant(i)
+				nextSlot = nextSlot + 1
+			end
+		end
+		sbq.onDeath(true)
+	end
+end
+
 function sbq.firstNotLounging(entityaimed)
 	for _, eid in ipairs(entityaimed) do
 		if not sbq.entityLounging(eid) then
@@ -287,6 +303,7 @@ end
 
 function sbq.updateOccupants(dt)
 	sbq.sendPreyTo()
+	sbq.sendAllPrey()
 	sbq.resetOccupantCount()
 
 	local lastFilled = true

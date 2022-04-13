@@ -8,36 +8,24 @@ local radialSelectionData = {}
 local spawnCooldown = 1
 local spawnedVehicle = nil
 
+sbq = {}
+require("/scripts/SBQ_RPC_handling.lua")
+
 function init()
 	message.setHandler( "sbqRefreshSettings", function(_,_, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
 		settings = newSettings
 	end)
 end
 
-function loadSettings()
-	rpc = world.sendEntityMessage( entity.id(), "sbqLoadSettings" )
-	rpcCallback = function(result)
-		settings = result
-	end
-end
-
 function update(args)
 	if not inited then
 		inited = true
-		loadSettings()
+		sbq.addRPC(world.sendEntityMessage( entity.id(), "sbqLoadSettings" ), function (result)
+			settings = result
+		end)
 	end
-	if rpc ~= nil and rpc:finished() then
-		if rpc:succeeded() then
-			local result = rpc:result()
-			if result ~= nil then
-				rpcCallback(result)
-			end
-		else
-			sb.logError( "Couldn't load SBQ settings." )
-			sb.logError( rpc:error() )
-		end
-		rpc = nil
-	end
+	sbq.checkRPCsFinished(args.dt)
+
 	if args.moves["special1"] then
 		sb.setLogMap("pressedTime", pressedTime)
 		pressedTime = pressedTime + args.dt
@@ -50,13 +38,16 @@ function update(args)
 		closeMenu()
 		radialMenuOpen = false
 		if not radialSelectionData.gotData and rpc == nil then
-			rpc = world.sendEntityMessage( entity.id(), "sbqGetRadialSelection" )
-			rpcCallback = function(data)
+			rpc = true
+			sbq.addRPC(world.sendEntityMessage(entity.id(), "sbqGetRadialSelection"), function (data)
 				if data.selection ~= nil and data.type == "sbqSelect" then
 					radialSelectionData = data
 					radialSelectionData.gotData = true
+					rpc = nil
 				end
-			end
+			end, function ()
+				rpc = nil
+			end)
 		end
 		radialSelectionData.gotData = nil
 		if radialSelectionData.selection ~= nil then
@@ -76,6 +67,10 @@ function spawnPredator(pred)
 	if (not spawnedVehicle or not world.entityExists(spawnedVehicle)) and spawnCooldown <= 0 then
 		spawnCooldown = 1
 		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "sbqSendAllPreyTo", spawnedVehicle)
+		end
 	end
 end
 
