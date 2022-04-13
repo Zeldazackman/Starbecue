@@ -351,7 +351,7 @@ function sbq.eatHandItem(entity, hand)
 	end
 end
 
-sbq.predHudOpen = 0
+sbq.predHudOpen = 1
 -- returns sourcePosition, sourceId, and interactPosition
 function onInteraction(args)
 	if sbq.transitionLock then return end

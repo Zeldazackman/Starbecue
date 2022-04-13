@@ -80,7 +80,7 @@ function init()
 		---@diagnostic disable-next-line: undefined-global
 		setInteracted(args)
 	end)
-	message.setHandler("giveSbqData", function (_,_)
+	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		return sbq.speciesConfig
 	end)
 end

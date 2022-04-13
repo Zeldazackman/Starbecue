@@ -33,7 +33,7 @@ function sbq.getInitialData()
 		mainTabField.tabs.globalPredSettings:setVisible(true)
 	end
 
-	sbq.predatorEntity = player.loungingIn()
+	sbq.predatorEntity = player.loungingIn() or sbq.sbqCurrentData.id
 end
 
 function sbq.getHelpTab()
@@ -206,7 +206,7 @@ function init()
 		end
 	end
 
-	sbq.predator = sbq.sbqCurrentData.species or "noPred"
+	sbq.predator = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
 

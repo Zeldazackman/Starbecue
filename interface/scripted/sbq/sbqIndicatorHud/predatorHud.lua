@@ -47,11 +47,9 @@ function update()
 end
 
 function sbq.checkRefresh(dt)
-	if sbq.refreshtime >= 0.1 and sbq.rpc == nil and sbq.sbqCurrentData.type == "driver" and player.loungingIn() ~= nil then
-		sbq.rpc = world.sendEntityMessage( player.loungingIn(), "settingsMenuRefresh")
-	elseif sbq.rpc ~= nil and sbq.rpc:finished() then
-		if sbq.rpc:succeeded() then
-			local result = sbq.rpc:result()
+	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	if sbq.sbqCurrentData.type == "driver" then
+		sbq.loopedMessage("checkRefresh", sbq.sbqCurrentData.id, "settingsMenuRefresh", {}, function (result)
 			if result ~= nil then
 				sbq.settings = result.settings
 				sbq.occupants = result.occupants
@@ -66,13 +64,7 @@ function sbq.checkRefresh(dt)
 
 				sbq.refreshed = true
 			end
-		else
-			sb.logError( "Couldn't refresh settings." )
-			sb.logError( sbq.rpc:error() )
-		end
-		sbq.rpc = nil
-	else
-		sbq.refreshtime = sbq.refreshtime + dt
+		end )
 	end
 end
 
@@ -234,11 +226,7 @@ function sbq.adjustBellyEffect(direction)
 
 	sbq.settings.bellyEffect = newBellyEffect
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end
 
 function sbq.updateBellyEffectIcon()
@@ -265,13 +253,15 @@ function sbq.changeEscapeModifier(inc)
 	sbq.sbqSettings.global.escapeDifficulty = (sbq.sbqSettings.global.escapeDifficulty or 0) + inc
 	escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end
 
+function sbq.saveSettings()
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+	if sbq.sbqCurrentData.type == "driver" and type(sbq.sbqCurrentData.id) == "number" and world.entityExists(sbq.sbqCurrentData.id) then
+		world.sendEntityMessage(sbq.sbqCurrentData.id, "settingsMenuSet", sbq.settings )
+	end
+end
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -288,11 +278,7 @@ function bellyEffectIcon:onClick()
 	sbq.sbqSettings.global.displayDigest = displayDigest
 	sbq.settings.displayDigest = displayDigest
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end
 
 function nextBellyEffect:onClick()
@@ -310,9 +296,5 @@ end
 function impossibleEscape:onClick()
 	sbq.sbqSettings.global.impossibleEscape = impossibleEscape.checked
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end

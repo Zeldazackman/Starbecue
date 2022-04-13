@@ -140,6 +140,7 @@ local inited
 function init()
 	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
 	sbq.driver = sbq.spawner
+	sbq.driving = world.entityType(sbq.spawner) == "player"
 	sbq.includeDriver = true
 end
 
@@ -203,7 +204,9 @@ function initAfterInit(data)
 		sbq.occupant[i] = sbq.clearOccupant(i)
 		sbq.seats["occupant"..i] = sbq.occupant[i]
 	end
-	sbq.seats["occupantS"] = sbq.clearOccupant("S")
+	sbq.occupant["S"] = sbq.clearOccupant("S")
+	sbq.seats["occupantS"] = sbq.occupant["S"]
+	sbq.lounging[sbq.spawner] = sbq.occupant["S"]
 	sbq.driverSeat = "occupantS"
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
@@ -223,7 +226,7 @@ local sentDataMessage
 function update(dt)
 	if not sentDataMessage then
 		sentDataMessage = true
-		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "giveSbqData"), function (data)
+		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data)
 			initAfterInit(data)
 			inited = true
 		end, function ()
@@ -243,6 +246,8 @@ function update(dt)
 	sbq.updateAnims(dt)
 
 	sbq.updateControls(dt)
+	sbq.getSeatData("S", "occupantS", sbq.driver)
+	sbq.openPredHud(dt)
 
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
@@ -253,6 +258,17 @@ function update(dt)
 end
 
 function uninit()
+end
+
+sbq.predHudOpen = 1
+
+function sbq.openPredHud(dt)
+	if not sbq.driving then return end
+	sbq.predHudOpen = math.max( 0, sbq.predHudOpen - dt )
+	if sbq.predHudOpen <= 0 then
+		sbq.predHudOpen = 2
+		world.sendEntityMessage( sbq.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
+	end
 end
 
 function sbq.checkSpawnerExists()

@@ -22,13 +22,32 @@ function init()
 end
 
 function update(dt, fireMode, shiftHeld, controls)
-	if not player.isLounging() and fireMode == "primary" and not clicked then
+	if not player.isLounging() then
+		if shiftHeld then
 
-	elseif fireMode == "none" then
-		if not player.isLounging() then
-			setIconAndDescription()
+		elseif fireMode == "primary" and not clicked then
+			clicked = true
+			local currentData = player.getProperty( "sbqCurrentData") or {}
+			if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+				doVoreAction(currentData.id)
+			else
+				local sbqSettings = player.getProperty("sbqSettings") or {}
+				local settings = sb.jsonMerge(sbqSettings.global or {}, sbqSettings.sbqOccupantHolder or {})
+				world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = player.id(), settings = settings } )
+			end
+		elseif fireMode == "none" then
+			clicked = false
 		end
-		clicked = false
+	end
+end
+
+function doVoreAction(id)
+	local entityaimed = world.entityQuery(activeItem.ownerAimPosition(), 2, {
+		withoutEntityId = player.id(),
+		includedTypes = {"creature"}
+	})
+	if type(entityaimed[1]) == "number" and entity.entityInSight(entityaimed[1]) then
+		world.sendEntityMessage( id, "requestTransition", storage.clickAction, { id = entityaimed[1] } )
 	end
 end
 

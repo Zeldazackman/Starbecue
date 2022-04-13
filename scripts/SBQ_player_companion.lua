@@ -164,6 +164,22 @@ function init()
 		end
 	end)
 
+	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
+		local speciesConfig = root.assetJson("/humanoid/sbqData.config")
+		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+		local species = speciesAnimOverrideData.species or player.species()
+		local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
+		if success then
+			if type(data.sbqData) == "table" then
+				speciesConfig.sbqData = data.sbqData
+			end
+			if type(data.states) == "table" then
+				speciesConfig.states = data.states
+			end
+		end
+		return speciesConfig
+	end)
+
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
