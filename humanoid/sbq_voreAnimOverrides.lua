@@ -52,8 +52,8 @@ local _chest_addon = setCosmetic.chest_addon
 function setCosmetic.chest_addon(cosmetic, item, images, directives)
 	local breasts = fixFilepath(images.breasts, item)
 
-	animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives )
-	animator.setPartTag("breasts_cosmetic", "partImage", breasts )
+	animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives or "" )
+	animator.setPartTag("breasts_cosmetic", "partImage", breasts or "" )
 
 	_chest_addon(cosmetic, item, images, directives)
 end
@@ -70,11 +70,11 @@ function setCosmetic.legs_addon(cosmetic, item, directives)
 	local belly = fixFilepath(item.config[self.gender.."BellyFrames"], item)
 	local cock = fixFilepath(item.config[self.gender.."CockFrames"], item)
 
-	animator.setPartTag("belly_cosmetic", "cosmeticDirectives", directives )
-	animator.setPartTag("belly_cosmetic", "partImage", belly )
+	animator.setPartTag("belly_cosmetic", "cosmeticDirectives", directives or "" )
+	animator.setPartTag("belly_cosmetic", "partImage", belly or "" )
 
-	animator.setPartTag("cock_cosmetic", "cosmeticDirectives", directives )
-	animator.setPartTag("cock_cosmetic", "partImage", cock )
+	animator.setPartTag("cock_cosmetic", "cosmeticDirectives", directives or "" )
+	animator.setPartTag("cock_cosmetic", "partImage", cock or "" )
 
 	_legs_addon(cosmetic, item, directives)
 end

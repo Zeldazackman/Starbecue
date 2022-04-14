@@ -49,7 +49,19 @@ function init()
 	sbq.globalSettings = sbq.sbqSettings.global or {}
 
 	if sbq.sbqCurrentData.species ~= nil then
-		sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
+			sbq.predatorConfig = root.assetJson("/humanoid/sbqData.config").sbqData
+			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+			local species = speciesAnimOverrideData.species or player.species()
+			local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
+			if success then
+				if type(data.sbqData) == "table" then
+					sbq.predatorConfig = data.sbqData
+				end
+			end
+		else
+			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		end
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
@@ -356,7 +368,7 @@ function sbq.hammerspacePanel()
 	hammerspaceScrollArea:clearChildren()
 	if sbq.globalSettings.hammerspace then
 		hammerspacePanel:setVisible(true)
-		for location, data in pairs(sbq.predatorConfig.locations) do
+		for location, data in pairs(sbq.predatorConfig.locations or {}) do
 			if data.hammerspace then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
 					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
@@ -503,6 +515,7 @@ if speciesPanel ~= nil then
 			if success and type(table2) == "table" then
 				table = table2
 			end
+			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", table)
 			status.setPersistentEffects("speciesAnimOverride", { table.customAnimStatus or "speciesAnimOverride"})
 		else

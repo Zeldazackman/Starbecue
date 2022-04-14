@@ -1,0 +1,18 @@
+[
+	{ "op": "add", "path": "/scripts/-", "value": "/humanoid/sbq_voreAnimOverrides.lua" },
+
+	{ "op": "add", "path": "/animations/idle/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/sit/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/lay/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/duck/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/walk/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/run/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/jump/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/fall/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/swim/belly", "value": "idle" },
+	{ "op": "add", "path": "/animations/swimIdle/belly", "value": "idle" },
+
+	{ "op": "add", "path": "/partImages/belly", "value": "/humanoid/<species>/belly.png" }
+
+
+]

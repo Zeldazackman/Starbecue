@@ -166,7 +166,6 @@ function checkPartsEnabled()
 	else
 		sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.shaft.max = 0
-		sbq.removeOccupantsFromLocation("shaft")
 	end
 	if sbq.settings.balls then
 		sbq.setPartTag("global", "ballsVisible", "")
@@ -176,8 +175,6 @@ function checkPartsEnabled()
 		sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
-		sbq.removeOccupantsFromLocation("ballsL")
-		sbq.removeOccupantsFromLocation("ballsR")
 	end
 	if sbq.settings.breasts then
 		sbq.setPartTag("global", "breastsVisible", "")
@@ -187,8 +184,6 @@ function checkPartsEnabled()
 		sbq.setPartTag("global", "breastsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.breastsL.max = 0
 		sbq.sbqData.locations.breastsR.max = 0
-		sbq.removeOccupantsFromLocation("breastsL")
-		sbq.removeOccupantsFromLocation("breastsR")
 	end
 end
 
