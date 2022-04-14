@@ -69,7 +69,8 @@ function spawnPredator(pred)
 		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
 		local currentData = status.statusProperty("sbqCurrentData") or {}
 		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-			world.sendEntityMessage(currentData.id, "sbqSendAllPreyTo", spawnedVehicle)
+			world.sendEntityMessage(currentData.id, "despawn")
+			--world.sendEntityMessage(currentData.id, "sbqSendAllPreyTo", spawnedVehicle)
 		end
 	end
 end

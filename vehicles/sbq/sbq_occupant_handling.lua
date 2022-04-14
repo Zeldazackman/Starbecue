@@ -168,6 +168,7 @@ end
 sbq.sendAllPreyTo = nil
 function sbq.sendAllPrey()
 	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
+		sb.logInfo("why aren't you running")
 		local nextSlot = 1
 		for i = 0, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
@@ -177,7 +178,7 @@ function sbq.sendAllPrey()
 				nextSlot = nextSlot + 1
 			end
 		end
-		sbq.onDeath(true)
+		sbq.onDeath()
 	end
 end
 
@@ -590,6 +591,46 @@ function sbq.doBellyEffects(dt)
 	end
 end
 
+function sbq.validStruggle(struggler, dt)
+	sbq.occupant[struggler].bellySettleDownTimer = math.max( 0, sbq.occupant[struggler].bellySettleDownTimer - dt)
+	if (sbq.occupant[struggler].seatname == sbq.driverSeat) and not sbq.includeDriver then return end
+	local movedir = sbq.getSeatDirections( sbq.occupant[struggler].seatname )
+	if not (sbq.occupant[struggler].bellySettleDownTimer <= 0) then return end
+	if not movedir then sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt) return end
+
+	local struggling
+	struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location]
+
+	if (struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil) then return end
+
+	if struggledata.parts ~= nil then
+		struggling = sbq.partsAreStruggling(struggledata.parts)
+	end
+	if (not struggling) and (struggledata.sided ~= nil) then
+		local parts = struggledata.sided.rightParts
+		if sbq.direction == -1 then
+			parts = struggledata.sided.leftParts
+		end
+		struggling = sbq.partsAreStruggling(parts)
+	end
+
+	if struggling then return end
+
+	if config.getParameter("name") ~= "sbqEgg" then
+		if sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species] then
+			if not sbq.driving then
+				sbq.occupant[struggler].struggleTime = math.max(0, sbq.occupant[struggler].struggleTime + dt)
+				if sbq.occupant[struggler].struggleTime > 1 then
+					sbq.letout(sbq.occupant[struggler].id)
+				end
+			end
+			return
+		end
+	end
+
+	return movedir, struggledata
+end
+
 function sbq.handleStruggles(dt)
 	if sbq.transitionLock then return end
 	local struggler = -1
@@ -598,49 +639,7 @@ function sbq.handleStruggles(dt)
 
 	while (movedir == nil) and struggler < sbq.occupantSlots do
 		struggler = struggler + 1
-		movedir = sbq.getSeatDirections( sbq.occupant[struggler].seatname )
-		sbq.occupant[struggler].bellySettleDownTimer = math.max( 0, sbq.occupant[struggler].bellySettleDownTimer - dt)
-
-		if (sbq.occupant[struggler].seatname == sbq.driverSeat) and not sbq.includeDriver then
-			movedir = nil
-		end
-		if sbq.occupant[struggler].bellySettleDownTimer <= 0 then
-			if movedir then
-				local struggling
-				struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location]
-				if struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil then
-					movedir = nil
-				else
-					if struggledata.parts ~= nil then
-						struggling = sbq.partsAreStruggling(struggledata.parts)
-					end
-					if (not struggling) and (struggledata.sided ~= nil) then
-						local parts = struggledata.sided.rightParts
-						if sbq.direction == -1 then
-							parts = struggledata.sided.leftParts
-						end
-						struggling = sbq.partsAreStruggling(parts)
-					end
-				end
-				if struggling then
-					movedir = nil
-				elseif config.getParameter("name") ~= "sbqEgg" then
-					if sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species] then
-						if not sbq.driving then
-							sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime + dt)
-							if sbq.occupant[struggler].struggleTime > 1 then
-								sbq.letout(sbq.occupant[struggler].id)
-							end
-						end
-						movedir = nil
-					end
-				end
-			else
-				sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt)
-			end
-		else
-			movedir = nil
-		end
+		movedir, struggledata = sbq.validStruggle(struggler, dt)
 	end
 
 	if movedir == nil then return end -- invalid struggle
@@ -705,11 +704,7 @@ function sbq.handleStruggles(dt)
 		if struggledata.directions[movedir].sound ~= nil then
 			sound = struggledata.directions[movedir].sound
 		end
-		if sound == nil then
-			animator.playSound( "struggle" )
-		elseif sound then
-			animator.playSound( sound )
-		end
+		animator.playSound( sound or "struggle" )
 	end
 end
 

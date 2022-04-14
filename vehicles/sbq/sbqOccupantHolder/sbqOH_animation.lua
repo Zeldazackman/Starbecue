@@ -12,6 +12,31 @@ function sbq.getAnimData()
 	end)
 end
 
+function sbq.updateAnims(dt)
+	for statename, state in pairs(sbq.animStateData) do
+		state.animationState.time = state.animationState.time + dt
+		local ended, times, time = sbq.hasAnimEnded(statename)
+		if (not ended) or (state.animationState.mode == "loop") then
+			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+		end
+	end
+
+	for i = 0, sbq.occupantSlots do
+		sbq.victimAnimUpdate(sbq.occupant[i].id)
+		sbq.updateVisibilityAndSmolprey(i)
+	end
+	sbq.offsetAnimUpdate()
+	sbq.rotationAnimUpdate()
+
+	sbq.emoteCooldown =  math.max( 0, sbq.emoteCooldown - dt )
+
+	for statename, state in pairs(sbq.animStateData) do
+		if state.animationState.time >= state.animationState.cycle then
+			sbq.endAnim(state, statename)
+		end
+	end
+end
+
 function sbq.doAnims( anims, force )
 	world.sendEntityMessage(sbq.spawner, "sbqDoAnims", anims, force)
 

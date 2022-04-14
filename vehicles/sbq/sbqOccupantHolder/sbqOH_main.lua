@@ -166,7 +166,7 @@ function initAfterInit(data)
 
 	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
-	sbq.partTags.global = root.assetJson( sbq.cfgAnimationFile ).globalTagDefaults
+	sbq.partTags.global = {}
 
 	for part, _ in pairs(root.assetJson( sbq.cfgAnimationFile ).animatedParts.parts) do
 		sbq.partTags[part] = {}
@@ -313,6 +313,7 @@ function sbq.onDeath(eaten)
 		for i = 0, #sbq.occupant do
 			sbq.uneat(sbq.occupant[i].id)
 		end
+		sbq.getAnimData()
 	end
 
 	vehicle.destroy()
