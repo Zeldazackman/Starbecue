@@ -281,6 +281,7 @@ function update(dt)
 	sbq.updatePathfinding(dt)
 	sbq.updateDriving(dt)
 
+	sbq.sendAllPrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)

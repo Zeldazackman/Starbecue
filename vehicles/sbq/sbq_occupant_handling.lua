@@ -169,7 +169,11 @@ sbq.sendAllPreyTo = nil
 function sbq.sendAllPrey()
 	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
 		local nextSlot = 1
-		for i = 0, sbq.occupantSlots do
+		local i = 1
+		if sbq.includeDriver then
+			i = 0
+		end
+		for i = i, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
 				world.sendEntityMessage(sbq.sendAllPreyTo, "addPrey", nextSlot, sbq.occupant[i])
 				sbq.occupant[i] = sbq.clearOccupant(i)
@@ -303,7 +307,6 @@ end
 
 function sbq.updateOccupants(dt)
 	sbq.sendPreyTo()
-	sbq.sendAllPrey()
 	sbq.resetOccupantCount()
 
 	local lastFilled = true

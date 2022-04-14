@@ -255,6 +255,7 @@ function update(dt)
 	sbq.getSeatData(sbq.seats.occupantD, "occupantD", sbq.driver)
 	sbq.openPredHud(dt)
 
+	sbq.sendAllPrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)
