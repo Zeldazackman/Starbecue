@@ -261,7 +261,13 @@ function sbq.doClickActions(state, dt)
 	elseif sbq.movement.assignClickActionRadial then
 		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
 		if sbq.lastRadialSelection == "despawn" then
-			sbq.onDeath()
+			if sbq.occupants.total > 0 then
+				sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
+					world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = sbq.driver, settings = settings, retrievePrey = entity.id() } )
+				end)
+			else
+				sbq.onDeath()
+			end
 		elseif sbq.lastRadialSelection ~= "cancel" and sbq.lastRadialSelection ~= nil then
 			if sbq.grabbing ~= nil then
 				sbq.uneat(sbq.grabbing)

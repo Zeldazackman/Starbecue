@@ -40,7 +40,9 @@ function update(dt, fireMode, shiftHeld)
 			player.enableTech("sbqSpawner")
 			player.equipTech("sbqSpawner")
 
-			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sbqSettings } )
+			local currentData = player.getProperty("sbqCurrentData") or {}
+
+			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sbqSettings, retrievePrey = currentData.id } )
 
 			player.radioMessage({
 				messageId = self.vehicle.."1", unique = false,

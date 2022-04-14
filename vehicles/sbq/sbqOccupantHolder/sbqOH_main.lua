@@ -220,6 +220,11 @@ function initAfterInit(data)
 	for _, script in ipairs(sbq.config.scripts) do
 		require(script)
 	end
+
+	local retrievePrey = config.getParameter("retrievePrey")
+	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then
+		world.sendEntityMessage(retrievePrey, "sbqSendAllPreyTo", entity.id())
+	end
 end
 
 sbq.totalTimeAlive = 0

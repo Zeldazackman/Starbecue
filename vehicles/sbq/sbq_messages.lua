@@ -103,6 +103,7 @@ end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)
 	sbq.occupant[seatindex] = data
+	sbq.refreshList = true
 end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)

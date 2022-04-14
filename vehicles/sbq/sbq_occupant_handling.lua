@@ -168,16 +168,15 @@ end
 sbq.sendAllPreyTo = nil
 function sbq.sendAllPrey()
 	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
-		sb.logInfo("why aren't you running")
 		local nextSlot = 1
 		for i = 0, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
-				sb.logInfo("sentPrey"..1)
 				world.sendEntityMessage(sbq.sendAllPreyTo, "addPrey", nextSlot, sbq.occupant[i])
 				sbq.occupant[i] = sbq.clearOccupant(i)
 				nextSlot = nextSlot + 1
 			end
 		end
+		sbq.updateOccupants(0)
 		sbq.onDeath()
 	end
 end

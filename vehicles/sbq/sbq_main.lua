@@ -142,6 +142,8 @@ function init()
 	sbq.spawner = config.getParameter("spawner")
 	sbq.settings.directives = sbq.sbqData.defaultDirectives or ""
 
+
+
 	if mcontroller_extensions then
 		for k,v in pairs(mcontroller_extensions) do
 			mcontroller[k] = v
@@ -254,8 +256,19 @@ function init()
 	sbq.init()
 end
 
+function sbq.initAfterInit()
+	local retrievePrey = config.getParameter("retrievePrey")
+	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then
+		world.sendEntityMessage(retrievePrey, "sbqSendAllPreyTo", entity.id())
+	end
+end
+
 sbq.totalTimeAlive = 0
 function update(dt)
+	if not inited then
+		inited = true
+		sbq.initAfterInit()
+	end
 	sbq.checkSpawnerExists()
 	sbq.totalTimeAlive = sbq.totalTimeAlive + dt
 	sbq.dt = dt

@@ -689,7 +689,7 @@ end
 function sbq.partsAreStruggling(parts)
 	for _, part in ipairs(parts) do
 		if (not sbq.hasAnimEnded( part.."State" ))
-		and (not sbq.animationIs( part.."State", sbq.stateconfig[sbq.state].idle[part] ))
+		and (not sbq.animationIs( part.."State", ((sbq.stateconfig[sbq.state] or {}).idle or {})[part] ))
 		then return true end
 	end
 end
