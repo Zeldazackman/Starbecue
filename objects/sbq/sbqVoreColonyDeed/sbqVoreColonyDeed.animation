@@ -1,4 +1,7 @@
 {
+  "globalTagDefaults":{
+    "directives" : ""
+  },
   "animatedParts" : {
     "stateTypes" : {
       "deedState" : {
@@ -86,60 +89,60 @@
           "deedState" : {
             "scanning" : {
               "properties" : {
-                "image" : "<partImage>:scanning.<frame>"
+                "image" : "<partImage>:scanning.<frame><directives>"
               }
             },
 
             "occupied" : {
               "properties" : {
-                "image" : "<partImage>:occupied.<frame>"
+                "image" : "<partImage>:occupied.<frame><directives>"
               }
             },
             "grumbling" : {
               "properties" : {
-                "image" : "<partImage>:grumbling.<frame>"
+                "image" : "<partImage>:grumbling.<frame><directives>"
               }
             },
             "vacated" : {
               "properties" : {
-                "image" : "<partImage>:vacated.<frame>"
+                "image" : "<partImage>:vacated.<frame><directives>"
               }
             },
             "error" : {
               "properties" : {
-                "image" : "<partImage>:error.<frame>"
+                "image" : "<partImage>:error.<frame><directives>"
               }
             },
             "rentdue" : {
               "properties" : {
-                "image" : "<partImage>:rentdue.<frame>"
+                "image" : "<partImage>:rentdue.<frame><directives>"
               }
             },
             "beacon" : {
               "properties" : {
-                "image" : "<partImage>:beacon.<frame>"
+                "image" : "<partImage>:beacon.<frame><directives>"
               }
             },
             "healing" : {
               "properties" : {
-                "image" : "<partImage>:healing.<frame>"
+                "image" : "<partImage>:healing.<frame><directives>"
               }
             }
           },
           "particles" : {
             "noParticles" : {
               "properties" : {
-                "image" : "<partImage>:occupied.<frame>"
+                "image" : "<partImage>:occupied.<frame><directives>"
               }
             },
             "newArrival" : {
               "properties" : {
-                "image" : "<partImage>:occupied.<frame>"
+                "image" : "<partImage>:occupied.<frame><directives>"
               }
             },
             "newArrival2" : {
               "properties" : {
-                "image" : "<partImage>:occupied.<frame>"
+                "image" : "<partImage>:occupied.<frame><directives>"
               }
             }
           }

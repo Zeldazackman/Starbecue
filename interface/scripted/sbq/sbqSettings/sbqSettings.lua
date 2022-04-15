@@ -80,7 +80,7 @@ function init()
 		else
 			presetsPanel:setVisible(false)
 		end
-		if not player.loungingIn() and sbq.sbqCurrentData.type ~= "object" then
+		if not player.loungingIn() and sbq.sbqCurrentData.type ~= "object" and player.isAdmin() then
 			speciesPanel:setVisible(true)
 		elseif sbq.sbqCurrentData.type ~= "object" then
 			speciesPanel:setVisible(false)

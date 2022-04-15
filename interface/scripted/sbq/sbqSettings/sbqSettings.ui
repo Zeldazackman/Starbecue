@@ -67,7 +67,7 @@
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned/Hugged" } ]
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed" } ]
 						]}
 					],
 					{"type" : "panel", "style" : "convex", "children" : [

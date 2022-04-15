@@ -3,7 +3,7 @@
   "colonyTags" : [],
   "rarity" : "Common",
   "description" : "A special colony deed meant to summon people who might partake in vore, be it pred, or prey!",
-  "shortdescription" : "^green; SBQ Colony Deed",
+  "shortdescription" : "^purple; SBQ Colony Deed",
   "race" : "generic",
   "printable" : false,
   "category" : "spawner",
@@ -33,7 +33,8 @@
     "/objects/spawner/colonydeed/colonydeed.lua",
     "/objects/spawner/colonydeed/scanning.lua",
     "/objects/spawner/colonydeed/timer.lua",
-    "/scripts/util.lua"
+    "/scripts/util.lua",
+    "/objects/sbq/sbqVoreColonyDeed/sbqVoreColonyDeed.lua"
   ],
   "scriptDelta" : 10,
 
