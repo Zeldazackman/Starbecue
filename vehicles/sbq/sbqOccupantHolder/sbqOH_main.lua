@@ -438,19 +438,40 @@ function state.stand.oralEscape(args)
 end
 
 function state.stand.analVore(args)
+	if sbq.detectPants() then return end
 	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.analEscape(args)
+	if sbq.detectPants() then return end
 	return sbq.doEscape(args, {}, {} )
 end
 
 function state.stand.unbirth(args)
+	if sbq.detectPants() or not sbq.settings.pussy then return end
 	return sbq.doVore(args, "womb", {}, "swallow")
 end
 
 function state.stand.unbirthEscape(args)
+	if sbq.detectPants() or not sbq.settings.pussy then return end
 	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+end
+
+function state.stand.cockVore(args)
+	if sbq.detectPants() or not sbq.settings.penis then return end
+	local success, func = sbq.doVore(args, "shaft", {}, "swallow")
+	if success then return success, func end
+	sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+end
+
+function state.stand.cockEscape(args)
+	if sbq.detectPants() or not sbq.settings.penis then return end
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
+end
+
+function sbq.detectPants()
+	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
+	return not sbq.config.legsVoreWhitelist[pants.name or "none"]
 end
 
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )

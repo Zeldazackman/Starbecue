@@ -124,14 +124,14 @@ function init()
 		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
 
 		return {
-			head = player.equippedItem("head"),
-			chest = player.equippedItem("chest"),
-			legs = player.equippedItem("legs"),
-			back = player.equippedItem("back"),
-			headCosmetic = player.equippedItem("headCosmetic"),
-			chestCosmetic = player.equippedItem("chestCosmetic"),
-			legsCosmetic = player.equippedItem("legsCosmetic"),
-			backCosmetic = player.equippedItem("backCosmetic"),
+			head = player.equippedItem("head") or false,
+			chest = player.equippedItem("chest") or false,
+			legs = player.equippedItem("legs") or false,
+			back = player.equippedItem("back") or false,
+			headCosmetic = player.equippedItem("headCosmetic") or false,
+			chestCosmetic = player.equippedItem("chestCosmetic") or false,
+			legsCosmetic = player.equippedItem("legsCosmetic") or false,
+			backCosmetic = player.equippedItem("backCosmetic") or false,
 			statusDirectives = status.statusProperty("speciesAnimOverrideDirectives"),
 			effectDirectives = status.statusProperty("effectDirectives")
 		}
