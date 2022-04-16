@@ -10,54 +10,44 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
-
-		"sbqData" : {
-			"locations" :{
-				"belly" : { "name" : "Belly", "max": 1, "digest" : true },
-				"tail" : { "name" : "Tail", "max": 1, "digest" : true },
-
-				"shaft" : { "name" : "Shaft", "max": 1 },
-				"balls" : { "max": 1, "sided" : true },
-				"ballsL" : { "name" : "Left Ball", "max": 1 },
-				"ballsR" : { "name" : "Right Ball", "max": 1 },
-
-				"breasts" : { "max": 1, "sided" : true },
-				"breastsL" : { "name" : "Left Breast", "max": 1 },
-				"breastsR" : { "name" : "Right Breast", "max": 1 }
-
-			},
-			/*
-			"defaultSettings" : {
-				"preyTypes" :{
-					"held" : { "enabled" : true, "feelingIt" : true },
-					"oralVore" : { "enabled" : true, "feelingIt" : true },
-					"tailVore" : { "enabled" : true, "feelingIt" : true },
-					"absorbVore" : { "enabled" : true, "feelingIt" : true },
-					"navelVore" : { "enabled" : true, "feelingIt" : false },
-
-					"analVore" : { "enabled" : true, "feelingIt" : false },
-					"unbirth" : { "enabled" : true, "feelingIt" : false },
-					"cockVore" : { "enabled" : true, "feelingIt" : false },
-					"breastVore" : { "enabled" : true, "feelingIt" : false }
-				},
-				"voreTypes" : {
-					"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" },
-					"tailVore" : { "enabled" : true, "feelingIt" : true, "location" : "tail" },
-					"absorbVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" },
-					"navelVore" : { "enabled" : true, "feelingIt" : false, "location" : "belly" },
-
-					"analVore" : { "enabled" : true, "feelingIt" : false, "location" : "belly" },
-					"unbirth" : { "enabled" : true, "feelingIt" : false, "location" : "womb" },
-					"cockVore" : { "enabled" : true, "feelingIt" : false, "location" : "shaft" },
-					"breastVore" : { "enabled" : true, "feelingIt" : false, "location" : "breasts" }
+		"dialogueTree" : {
+			"greeting" : {
+				"neutral" : {
+					"randomDialogue" : [
+						"Hi. \n I'm a WIP."
+					]
 				}
-			},*/
-			"allowedModifiers" : {
-				"fatten": {"min": 0, "max": 1},
-				"escapeDifficulty": {"min": -100, "max": 100},
-				"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
-				"bellyMultiplier": {"min": 0, "max": 100},
-				"displayDigest": "bool"
+			},
+			"oralVore" : {
+				"default" : {
+					"neutral" : {
+						"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ],
+							"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
+						},
+						"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ],
+							"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
+						},
+						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+						"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+					}
+				}
+			},
+
+			"cockVore" : {
+				"default" : {
+					"neutral" : {
+						"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ],
+							"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
+						},
+						"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ],
+							"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ] }
+						},
+						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+						"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ] },
+						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+					}
+				}
 			}
 		}
 	}

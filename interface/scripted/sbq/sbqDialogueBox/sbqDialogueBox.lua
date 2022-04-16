@@ -21,6 +21,7 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require( "/lib/stardust/json.lua" )
 
 function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
@@ -74,12 +75,29 @@ function sbq.getDialogueBranch(dialogueTreeLocation)
 	for _, branch in ipairs(dialogueTreeLocation) do
 		if branch == "mood" then
 			if dialogueTree[sbq.data.mood] ~= nil then
-				dialogueTree = dialogueTree[sbq.data.mood]
+				dialogueTree = dialogueTree[sbq.data.mood] or dialogueTree
 			else
-				dialogueTree = dialogueTree.neutral
+				dialogueTree = dialogueTree.neutral or dialogueTree
 			end
-		elseif dialogueTree[branch] ~= nil then
-			dialogueTree = dialogueTree[branch]
+		elseif branch == "personality" then
+			if dialogueTree[sbq.data.personality] ~= nil then
+				dialogueTree = dialogueTree[sbq.data.personality] or dialogueTree
+			else
+				dialogueTree = dialogueTree.default or dialogueTree
+			end
+		else
+			dialogueTree = dialogueTree[branch] or dialogueTree
+		end
+		-- for dialog in other files thats been pointed to
+		if type(dialogueTree) == "string" then
+			if dialogueTree[1] == "/" then
+				dialogueTree = root.assetJson(dialogueTree)
+			elseif dialogueTree[1] == "[" then
+				local decoded = json.decode(dialogueTree[1])
+				if type(decoded) == "table" then
+					dialogueTree = sbq.getDialogueBranch(decoded) -- I know, recursion is risky, but none of this stuff is randomly generated someone would have to intentionally make a loop to break it
+				end
+			end
 		end
 	end
 	return dialogueTree
@@ -257,10 +275,10 @@ function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 
-	local dialogueTree = sbq.updateDialogueBox({ voreType, active })
+	local dialogueTree = sbq.updateDialogueBox({ voreType, "personality", "mood", active })
 	if active == "yes" then
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
-			sbq.updateDialogueBox({ voreType, "yes", "tease"})
+			sbq.updateDialogueBox({ voreType, "personality", "mood", "yes", "tease"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
 	end
