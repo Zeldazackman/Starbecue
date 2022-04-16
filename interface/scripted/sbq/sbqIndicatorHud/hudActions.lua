@@ -1,6 +1,6 @@
 
 function sbq.letout(id, i)
-	world.sendEntityMessage( player.loungingIn(), "letout", id )
+	world.sendEntityMessage( sbq.sbqCurrentData.id, "letout", id )
 end
 
 function sbq.turboDigest(id, i)
@@ -10,7 +10,7 @@ end
 function sbq.transform(id, i)
 	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
 		if not immune then
-			world.sendEntityMessage( player.loungingIn(), "transform", id, 3 )
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3 )
 		end
 	end)
 end
@@ -24,7 +24,7 @@ function sbq.eggify(id, i)
 				math.random(1, #eggData.sbqData.replaceColors[2] - 1)
 			}
 
-			world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3, {
 				barColor = eggData.sbqData.replaceColors[2][replaceColors[2]+1],
 				forceSettings = true,
 				layer = true,
@@ -45,7 +45,7 @@ end
 function sbq.xeroEggify(id, i)
 	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "eggImmunity"), function (immune)
 		if not immune then
-			world.sendEntityMessage( player.loungingIn(), "transform", id, 3, {
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3, {
 				barColor = {"aa720a", "e4a126", "ffb62e", "ffca69"},
 				forceSettings = true,
 				layer = true,
@@ -69,7 +69,7 @@ end
 function sbq.cumTF(id, i)
 	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
 		if not immune then
-			world.sendEntityMessage( player.loungingIn(), "transform", id, 3, sbq.config.victimTransformPresets.cumBlob)
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3, sbq.config.victimTransformPresets.cumBlob)
 		end
 	end)
 end

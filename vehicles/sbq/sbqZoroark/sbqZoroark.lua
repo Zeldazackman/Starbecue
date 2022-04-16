@@ -172,27 +172,6 @@ function checkCockVore()
 	return sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
 end
 
-function shaftToBalls(args)
-	local side = "L"
-	if math.random() > 0.5 then
-		side = "R"
-	end
-	return sbq.moveOccupantLocation(args, "balls"..side)
-end
-
-function ballsToShaft(args)
-	sbq.moveOccupantLocation(args, "shaft")
-end
-
-function switchBalls(args)
-	local dx = sbq.lounging[args.id].controls.dx
-	if dx == -1 then
-		return sbq.moveOccupantLocation(args, "ballsR")
-	elseif dx == 1 then
-		return sbq.moveOccupantLocation(args, "ballsL")
-	end
-end
-
 -------------------------------------------------------------------------------
 function state.stand.begin()
 	sbq.setMovementParams( "default" )
@@ -207,9 +186,9 @@ state.stand.cockEscape = cockEscape
 state.stand.checkCockVore = checkCockVore
 state.stand.checkOralVore = checkOralVore
 
-state.stand.shaftToBalls = shaftToBalls
-state.stand.ballsToShaft = ballsToShaft
-state.stand.switchBalls = switchBalls
+state.stand.shaftToBalls = sbq.shaftToBalls
+state.stand.ballsToShaft = sbq.ballsToShaft
+state.stand.switchBalls = sbq.switchBalls
 
 state.stand.grab = grab
 

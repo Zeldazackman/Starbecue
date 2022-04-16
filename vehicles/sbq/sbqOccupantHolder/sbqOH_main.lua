@@ -429,14 +429,95 @@ end
 
 -------------------------------------------------------------------------------------------------------
 
-function state.stand.eat(args)
+function state.stand.oralVore(args)
 	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
-function state.stand.escape(args)
+function state.stand.oralEscape(args)
 	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+end
+
+function state.stand.analVore(args)
+	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.analEscape(args)
 	return sbq.doEscape(args, {}, {} )
+end
+
+function state.stand.unbirth(args)
+	return sbq.doVore(args, "womb", {}, "swallow")
+end
+
+function state.stand.unbirthEscape(args)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+end
+
+function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
+	if location == "womb" then
+		local bellyEffect = "sbqHeal"
+		if sbq.settings.displayDigest then
+			if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
+				bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
+			end
+		end
+		world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id())
+	end
+
+	if (sbq.occupant[i].progressBar <= 0) then
+		if (sbq.settings.penisCumTF and location == "shaft") or (sbq.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" )) then
+			sbq.loopedMessage("CumTF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
+				if not immune then
+					transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
+				end
+			end)
+		elseif sbq.settings.wombEggify and location == "womb" then
+			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
+				if not immune then
+					local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
+					local replaceColors = {
+					math.random(1, #eggData.sbqData.replaceColors[1] - 1),
+					math.random(1, #eggData.sbqData.replaceColors[2] - 1)
+					}
+					transformMessageHandler( eid, 3, {
+						barColor = eggData.sbqData.replaceColors[2][replaceColors[2]+1],
+						forceSettings = true,
+						layer = true,
+						state = "smol",
+						species = "sbqEgg",
+						layerLocation = "egg",
+						settings = {
+							cracks = 0,
+							bellyEffect = "sbqHeal",
+							escapeDifficulty = sbq.settings.escapeDifficulty,
+							replaceColors = replaceColors
+						}
+					})
+				end
+			end)
+		end
+	end
+end
+
+function sbq.letout(id)
+	local id = id
+	if id == nil then
+		id = sbq.occupant[sbq.occupants.total].id
+	end
+	if not id then return end
+	local location = sbq.lounging[id].location
+
+	if location == "belly" then
+		if (sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController") and sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction == "analVore" then
+			return sbq.doTransition("analEscape", {id = id})
+		else
+			return sbq.doTransition("oralEscape", {id = id})
+		end
+	elseif location == "shaft" then
+		return sbq.doTransition("cockEscape", {id = id})
+	elseif location == "ballsL" or location == "ballsR" then
+		return sbq.ballsToShaft({id = id})
+	elseif location == "womb" then
+		return sbq.doTransition("unbirthEscape", {id = id})
+	end
 end
