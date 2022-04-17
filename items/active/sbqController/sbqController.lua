@@ -95,10 +95,12 @@ function update(dt, fireMode, shiftHeld, controls)
 						if data.selection == "cancel" then return end
 						if data.selection == "despawn" and data.pressed and not sbq.click then
 							sbq.click = true
-							if (currentData.totalOccupants or 0) > 0 then
-								world.sendEntityMessage( currentData.id, "letout" )
-							else
-								world.sendEntityMessage( currentData.id, "despawn" )
+							if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+								if (currentData.totalOccupants or 0) > 0 then
+									world.sendEntityMessage(currentData.id, "letout")
+								else
+									world.sendEntityMessage(currentData.id, "despawn")
+								end
 							end
 						elseif data.button == 0 and data.pressed and not sbq.click then
 							sbq.click = true
@@ -115,10 +117,12 @@ function update(dt, fireMode, shiftHeld, controls)
 		elseif assignedMenu then
 			world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqClose" )
 			if sbq.lastRadialSelection == "despawn" then
-				if (currentData.totalOccupants or 0) > 0 then
-					world.sendEntityMessage( currentData.id, "letout" )
-				else
-					world.sendEntityMessage( currentData.id, "despawn" )
+				if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+					if (currentData.totalOccupants or 0) > 0 then
+						world.sendEntityMessage(currentData.id, "letout")
+					else
+						world.sendEntityMessage(currentData.id, "despawn")
+					end
 				end
 			end
 			assignedMenu = nil

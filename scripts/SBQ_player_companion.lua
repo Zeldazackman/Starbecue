@@ -152,8 +152,15 @@ function init()
 		player.consumeItem(item, partial, match )
 	end)
 
-	message.setHandler("sbqPredatorDespawned", function ()
+	message.setHandler("sbqPredatorDespawned", function (_,_, eaten)
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
+		local sbqCurrentData = player.getProperty( "sbqCurrentData" ) or {}
+		if sbqCurrentData.totalOccupants == 0 and not eaten
+		and not (status.statusProperty("speciesAnimOverrideData") or {}).permanent
+		then
+			status.clearPersistentEffects("speciesAnimOverride")
+		end
+
 		player.setProperty( "sbqCurrentData", nil)
 		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
@@ -176,6 +183,10 @@ function init()
 			if type(data.states) == "table" then
 				speciesConfig.states = data.states
 			end
+		end
+		local effects = status.getPersistentEffects("speciesAnimOverride")
+		if not effects[1] then
+			status.setPersistentEffects("speciesAnimOverride", {  speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
 		end
 		return speciesConfig
 	end)

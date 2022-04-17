@@ -72,8 +72,13 @@ end
 -- for letting out prey, some predators might wand more specific logic regarding this
 function sbq.letout(id)
 	local id = id
-	if id == nil then
-		id = sbq.occupant[sbq.occupants.total].id
+	for i = sbq.occupants.total, 0, -1 do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		then
+			id = sbq.occupant[i].id
+			break
+		end
 	end
 	return sbq.doTransition( "escape", {id = id} )
 end

@@ -523,7 +523,7 @@ end
 
 function sbq.onDeath(eaten)
 	if sbq.spawner ~= nil then
-		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", sbq.settings)
+		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", eaten)
 	end
 
 	if not eaten then

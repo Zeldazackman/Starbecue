@@ -312,7 +312,7 @@ end
 
 function sbq.onDeath(eaten)
 	if sbq.spawner ~= nil then
-		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", sbq.settings)
+		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", eaten)
 	end
 
 	if not eaten then
@@ -522,8 +522,13 @@ end
 
 function sbq.letout(id)
 	local id = id
-	if id == nil then
-		id = sbq.occupant[sbq.occupants.total].id
+	for i = sbq.occupants.total, 0, -1 do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		then
+			id = sbq.occupant[i].id
+			break
+		end
 	end
 	if not id then return end
 	local location = sbq.lounging[id].location
