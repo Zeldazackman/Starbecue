@@ -55,12 +55,21 @@ end
 -- this function need to be replaced/modified because of stuff that would be in the chest area for say, breast vore
 local _chest_addon = setCosmetic.chest_addon
 function setCosmetic.chest_addon(cosmetic, item, images, directives)
-	local breasts = fixFilepath(images.breasts, item)
-
-	animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives or "" )
-	animator.setPartTag("breasts_cosmetic", "partImage", breasts or "" )
+	sbq.getSettings(function (settings)
+		if settings.breasts then
+			local breasts = fixFilepath(images.breasts, item)
+			animator.setPartTag("breasts_cosmetic", "cosmeticDirectives", directives or "" )
+			animator.setPartTag("breasts_cosmetic", "partImage", breasts or "" )
+		else
+			sbq.clearBreasts()
+		end
+	end)
 
 	_chest_addon(cosmetic, item, images, directives)
+end
+
+function sbq.clearBreasts()
+	animator.setPartTag("breasts_cosmetic", "partImage", "" )
 end
 
 local _chest_clear = setCosmetic.chest_clear
