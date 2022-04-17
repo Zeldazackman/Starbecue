@@ -126,6 +126,7 @@ function sbq.clearOccupant(i)
 	}
 end
 
+require("/vehicles/sbq/sbq_general_functions.lua")
 require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
@@ -325,47 +326,8 @@ function sbq.onDeath(eaten)
 	vehicle.destroy()
 end
 
-function sbq.localToGlobal( position )
-	local lpos = { position[1], position[2] }
-	if sbq.direction == -1 then lpos[1] = -lpos[1] end
-	local mpos = mcontroller.position()
-	local gpos = { mpos[1] + lpos[1], mpos[2] + lpos[2] }
-	return world.xwrap( gpos )
-end
-function sbq.globalToLocal( position )
-	local pos = world.distance( position, mcontroller.position() )
-	if sbq.direction == -1 then pos[1] = -pos[1] end
-	return pos
-end
-
-function sbq.occupantArray( maybearray )
-	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
-		if maybearray.location then
-			if maybearray.failOnFull then
-				if type(maybearray.failOnFull) == "number" and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif sbq.locationFull(maybearray.location) then return maybearray.failTransition end
-			else
-				if sbq.locationEmpty(maybearray.location) then return maybearray.failTransition end
-			end
-		end
-		return maybearray
-	else -- pick one depending on number of occupants
-		return maybearray[(sbq.occupants[maybearray[1].location or "total"] or 0) + 1]
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------
-
-function sbq.getSmolPreyData(settings, species, state, tags, layer)
-	return {
-		species = species,
-		recieved = true,
-		layer = layer,
-		settings = settings,
-		state = state
-	}
-end
 
 function sbq.entityLounging( entity )
 	if entity == sbq.spawner then return true end

@@ -28,10 +28,12 @@ end
 
 function sbq.listSlots()
 	occupantSlots:clearChildren()
-	local y = 216
+	local y = 217
 	for i = 1, sbq.occupants.total + 1 do
-		y = y - 32
-		occupantSlots:addChild({ type = "image", noAutoCrop = true, position = {80,y}, file = "portraitSlot.png" })
+		if i <= 8 then
+			y = y - 25
+			occupantSlots:addChild({ type = "image", noAutoCrop = true, position = {80,y}, file = "portraitSlot.png" })
+		end
 	end
 end
 
@@ -86,15 +88,15 @@ function sbq.readOccupantData()
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
 			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
-				y = y - 32
+				y = y - 25
 				local species = occupant.species
 				if type(sbq.occupantList[id]) ~= "table" then
-					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,32}, children = {
+					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,24}, children = {
 						{ type = "image", noAutoCrop = true, position = {0,0}, file = "portrait.png"  },
-						{ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} },
-						{ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) },
+						{ type = "canvas", id = id.."PortraitCanvas", position = {8,4}, size = {16,16} },
+						{ type = "label", id = id.."Name", position = {32,8.5}, size = {48,10}, text = world.entityName( id ) },
 						{ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} },
-						{ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}},
+						{ type = "canvas", id = id.."ProgressBar", position = {23,19}, size = {61,5}},
 						{ type = "iconButton", id = id.."ActionButton", noAutoCrop = true, position = {0,0}, image = "portrait.png?setcolor=FFFFFF?multiply=00000001"  }
 					}})}
 					sbq.occupantList[id].portrait = _ENV[id.."PortraitCanvas"]
