@@ -19,7 +19,7 @@ canvas:clear()
 require("/scripts/SBQ_RPC_handling.lua")
 
 function init()
-	local sbqData = player.getProperty("sbqSettings")
+	local sbqData = player.getProperty("sbqSettings") or {}
 	if sbqData.global == nil then
 		sbqData.global = {}
 		player.setProperty("sbqSettings", sbqData)
