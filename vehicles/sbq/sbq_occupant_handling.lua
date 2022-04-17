@@ -24,7 +24,7 @@ function sbq.eat( occupantId, location )
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "p.entityLounging", callScriptArgs = { occupantId }
+		callScript = "sbq.entityLounging", callScriptArgs = { occupantId }
 	} )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
