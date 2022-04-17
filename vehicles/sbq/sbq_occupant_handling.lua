@@ -19,6 +19,7 @@ function sbq.eat( occupantId, location )
 		seatindex = seatindex + 1
 		emptyslots = emptyslots - 1
 	end
+	if seatindex > sbq.occupantSlots then return false end
 
 	if occupantId == nil or sbq.entityLounging(occupantId) or sbq.inedible(occupantId) or sbq.locationFull(location) then return false end -- don't eat self
 
@@ -555,7 +556,7 @@ function sbq.doBellyEffects(dt)
 
 	for i = 0, sbq.occupantSlots do
 		local eid = sbq.occupant[i].id
-		if eid and world.entityExists(eid) and (not (i == 0 and not sbq.includeDriver)) then
+		if type(eid) == "number" and world.entityExists(eid) and (not (i == 0 and not sbq.includeDriver)) then
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey
 			if light ~= nil then

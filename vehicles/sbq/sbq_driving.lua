@@ -23,7 +23,7 @@ function sbq.updateDriving(dt)
 		--world.sendEntityMessage( sbq.driver, "sbqDrawCursor", aim, cursor)
 	end
 	if sbq.pressControl(sbq.driverSeat, "special2") then
-		sbq.letout(sbq.occupant[sbq.occupants.total].id)
+		sbq.letout()
 	end
 
 	if not mcontroller.onGround() and not sbq.underWater() then

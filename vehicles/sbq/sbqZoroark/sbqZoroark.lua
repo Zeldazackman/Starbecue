@@ -118,7 +118,7 @@ end
 
 function sbq.letout(id)
 	local id = id
-	for i = sbq.occupants.total, 0, -1 do
+	for i = sbq.occupantSlots, 0, -1 do
 		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
 		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
 		then

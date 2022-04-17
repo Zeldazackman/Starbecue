@@ -56,7 +56,7 @@ function sbq.updateDirectionControl(seatname, control, direction, val, dt, force
 end
 
 function sbq.updateControls(dt)
-	for i = 0, sbq.occupants.total do
+	for i = 0, sbq.occupantSlots do
 		local seatname = sbq.occupant[i].seatname
 		local eid = sbq.occupant[i].id
 		if type(eid) == "number" and world.entityExists(eid) and not (seatname == sbq.driverSeat and sbq.isPathfinding) then
