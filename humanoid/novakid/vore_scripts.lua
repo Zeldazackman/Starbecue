@@ -21,8 +21,8 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 				if not immune then
 					local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
 					local replaceColorTable = {
-						eggData.sbqData.plasticReplaceColors[1][math.random(1, #eggData.sbqData.plasticReplaceColors[1])],
-						eggData.sbqData.plasticReplaceColors[2][math.random(1, #eggData.sbqData.plasticReplaceColors[2])]
+						eggData.sbqData.glassReplaceColors[1][math.random(1, #eggData.sbqData.glassReplaceColors[1])],
+						eggData.sbqData.glassReplaceColors[2][math.random(1, #eggData.sbqData.glassReplaceColors[2])]
 					}
 					transformMessageHandler( eid, 3, {
 						barColor = replaceColorTable[2],
@@ -35,9 +35,7 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 							cracks = 0,
 							bellyEffect = "sbqHeal",
 							escapeDifficulty = sbq.settings.escapeDifficulty,
-							replaceColorTable = replaceColorTable,
-							skinNames = { head = "plastic" },
-							firstLoadDone = true
+							replaceColorTable = replaceColorTable
 						}
 					})
 				end

@@ -101,3 +101,29 @@ function sbq.plasticEggify(id, i)
 		end
 	end)
 end
+
+function sbq.glassEggify(id, i)
+	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "eggImmunity"), function (immune)
+		if not immune then
+			local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
+			local replaceColorTable = {
+				eggData.sbqData.glassReplaceColors[1][math.random(1, #eggData.sbqData.glassReplaceColors[1])],
+				eggData.sbqData.glassReplaceColors[2][math.random(1, #eggData.sbqData.glassReplaceColors[2])]
+			}
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3, {
+				barColor = replaceColorTable[2],
+				forceSettings = true,
+				layer = true,
+				state = "smol",
+				species = "sbqEgg",
+				layerLocation = "egg",
+				settings = {
+					cracks = 0,
+					bellyEffect = "sbqHeal",
+					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
+					replaceColorTable = replaceColorTable
+				}
+			})
+		end
+	end)
+end

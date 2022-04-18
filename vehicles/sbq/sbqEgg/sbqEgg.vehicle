@@ -169,6 +169,23 @@
 				["563c6abc", "634878bc", "75588bbc", "8968a1bc"] // purble
 			]
 		],
+		"glassReplaceColors" : [
+			[
+				["70695a", "a99f87", "eae0c8", "fff6de"]
+			],
+			[
+				["352b127f", "f6b9197f", "fde03f7f", "fff8b57f"], // yellow
+				["40110a7f", "fa81317f", "feb0537f", "ffedc47f"], // orange
+				["4f160d7f", "ef54437f", "fe98757f", "ffe2c97f"], // red
+				["4c21537f", "f57afc7f", "f6bbg97f", "fee5ff7f"], // pink
+				["340e527f", "ae38f17f", "da89f77f", "fedbff7f"], // purple
+				["0c2b4b7f", "12c2e87f", "56ebf87f", "c7feff7f"], // cyan
+				["0c482d7f", "0cd6b87f", "4df4df7f", "c3fffc7f"], // teal
+				["0df00f7f", "17dc0d7f", "63f5747f", "c7ffdc7f"], // green
+				["2d510d7f", "8ae1007f", "c9f2367f", "fffdae7f"], // lime
+				["222d337f", "6ea2a97f", "a2dbdb7f", "deffff7f"] // pale
+			]
+		],
 
 		"skinEggShards" : {
 			"plastic" : {
