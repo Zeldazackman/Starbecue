@@ -44,7 +44,7 @@ function sbq.init()
 		_onDeath = sbq.onDeath
 		function sbq.onDeath(eaten)
 			if not eaten then
-				local item = { name = "sbqPlasticEgg", parameters = { scriptStorage = { settings = { color = sbq.settings.color, replaceColorTable = sbq.settings.replaceColorTable, directives = sbq.settings.directives, skinNames = sbq.settings.skinNames} } } }
+				local item = { name = "sbqPlasticEgg", parameters = { scriptStorage = { settings = sbq.settings } } }
 				world.spawnItem(item, mcontroller.position() )
 			end
 			_onDeath(eaten)
