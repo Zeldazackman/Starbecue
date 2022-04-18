@@ -241,8 +241,9 @@ function sbq.adjustBellyEffect(direction)
 	end
 
 	sbq.settings.bellyEffect = newBellyEffect
-
 	sbq.saveSettings()
+
+	sbq.updateBellyEffectIcon()
 end
 
 function sbq.updateBellyEffectIcon()
@@ -257,10 +258,10 @@ function sbq.updateBellyEffectIcon()
 			appendTooltip = "Display "
 		end
 
-		bellyEffectIcon:setImage(effect.icon)
 		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
-		prevBellyEffect.toolTip = appendTooltip..bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].prev].toolTip
-		nextBellyEffect.toolTip = appendTooltip..bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].next].toolTip
+		prevBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].prev].toolTip
+		nextBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].next].toolTip
+		bellyEffectIcon:setImage(effect.icon)
 
 		escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
 		impossibleEscape:setChecked(sbq.sbqSettings.global.impossibleEscape)
@@ -297,6 +298,7 @@ function bellyEffectIcon:onClick()
 	sbq.settings.displayDigest = displayDigest
 
 	sbq.saveSettings()
+	sbq.updateBellyEffectIcon()
 end
 
 function nextBellyEffect:onClick()
