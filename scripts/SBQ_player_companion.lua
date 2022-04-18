@@ -211,7 +211,7 @@ function update(dt)
 	if current.species then
 		world.spawnVehicle(current.species, entity.position(), {
 			driver = player.id(), layer = current.layer, startState = current.state,
-			settings = player.getProperty( "sbqSettings", {} )[current.species] or {},
+			settings = current.settings,
 		})
 	elseif current.type == "prey" then
 		player.setProperty("sbqCurrentData", {})

@@ -243,7 +243,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "ziellekDragonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "ziellekDragonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've been turned into a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;belly^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in your config.\n \nPrey within the womb will be healed, you can also trap them in eggs by using the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;womb^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in your config.\n \nPrey within the womb will be healed, you can also trap them in eggs by using the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -253,8 +253,6 @@
 				]}
 			]}
 		]}
-
-
 	},
 	"speciesInfoTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -346,7 +344,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "ziellekDragonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "ziellekDragonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;belly^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nPrey within the womb will be healed, and could also become trapped eggs if the option is set.\n \nPrey within the balls may be turned into a blob of cum if the option is set." }
+						{ "type" : "label", "text" : "^cyan;So you've met a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;womb^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nPrey within the womb will be healed, and could also become trapped eggs if the option is set.\n \nPrey within the balls may be turned into a blob of cum if the option is set." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [

@@ -97,6 +97,7 @@ function sbq.getSeatData(occupant, seatname, eid)
 		end
 		data = {
 			species = world.entityName(entity.id()),
+			settings = sbq.settings,
 			layer = occupant.smolPreyData,
 			state = sbq.state,
 			edible = sbq.stateconfig[sbq.state].edible,

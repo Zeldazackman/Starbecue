@@ -1,7 +1,7 @@
 {
 	"itemName" : "sbqController",
 	"shortdescription" : "Vore Controller",
-	"description" : "Triggers the default actions of a predator.",
+	"description" : "Triggers the vore actions of a predator.",
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",
@@ -41,7 +41,7 @@
 		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a predator."}
 	},
 
-	"appendedDescription" : " Use when not in a vehicle to cycle actions.",
+	"appendedDescription" : " Hold shift to re-assign action.",
 
 	"retainScriptStorageInItem": true,
 	"builder" : "/items/active/sbqController/sbqControllerBuilder.lua",

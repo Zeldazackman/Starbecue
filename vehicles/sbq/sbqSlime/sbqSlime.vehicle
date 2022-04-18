@@ -118,11 +118,12 @@
 				"runSpeed": 5
 			}
 		},
-		"occupant0StatusEffects": {
+		"driverStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
+			"breathprotectionvehicle" : { "power" : 1 },
+			"sbqEggMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqSlime/mask.png" }
 		},
 
 		"lights" : {
