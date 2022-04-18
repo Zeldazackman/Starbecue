@@ -28,12 +28,10 @@ function sbq.init()
 	if sbq.settings.skinNames.head == "plastic" then
 		if not sbq.settings.firstLoadDone then
 			-- get random directives for anyone thats not an avian
-			sbq.settings.color = (sbq.settings.color or 0) + 1
 			for i = 1, #sbq.sbqData.replaceColors do
-
-				sbq.settings.replaceColorTable[i] = sbq.sbqData.plasticReplaceColors[i][ (sbq.settings.color) or (math.random( #sbq.sbqData.plasticReplaceColors[i]))]
+				sbq.settings.replaceColorTable[i] = sbq.sbqData.plasticReplaceColors[i][ (math.random( #sbq.sbqData.plasticReplaceColors[i]))]
 			end
-			--sbq.settings.firstLoadDone = true
+			sbq.settings.firstLoadDone = true
 			sbq.setColorReplaceDirectives()
 		end
 		animator.setSoundPool("crack", {"/sfx/npc/enemydeathpuff.ogg"})
@@ -47,7 +45,6 @@ function sbq.init()
 		function sbq.onDeath(eaten)
 			if not eaten then
 				local item = { name = "sbqPlasticEgg", parameters = { scriptStorage = { settings = { color = sbq.settings.color, replaceColorTable = sbq.settings.replaceColorTable, directives = sbq.settings.directives, skinNames = sbq.settings.skinNames} } } }
-				sb.logInfo(sb.printJson(item))
 				world.spawnItem(item, mcontroller.position() )
 			end
 			_onDeath(eaten)
