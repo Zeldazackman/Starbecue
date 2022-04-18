@@ -102,6 +102,7 @@ message.setHandler( "fixWeirdSeatBehavior", function(_,_, eid)
 end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)
+	if seatindex > sbq.occupantSlots then return false end
 	sbq.occupant[seatindex] = data
 	sbq.refreshList = true
 end)
