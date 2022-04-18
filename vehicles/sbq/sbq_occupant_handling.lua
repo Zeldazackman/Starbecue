@@ -149,12 +149,12 @@ function sbq.sendPreyTo()
 		if world.entityExists(recepient.vehicle) then
 			for i = 0, sbq.occupantSlots do
 				if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
+					local occupantData = sbq.occupant[i]
 
-					local occupantData = sb.jsonMerge(sbq.occupant[i], {
-						location = sbq.occupant[i].nestedPreyData.location,
-						visible = false,
-						nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
-					})
+					occupantData.location = sbq.occupant[i].nestedPreyData.location
+					occupantData.visible = false
+					occupantData.nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
+
 					world.sendEntityMessage( recepient.vehicle, "addPrey", nextSlot, occupantData)
 
 					sbq.occupant[i] = sbq.clearOccupant(i)

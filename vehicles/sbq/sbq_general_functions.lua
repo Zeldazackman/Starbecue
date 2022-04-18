@@ -101,7 +101,7 @@ function sbq.smolPreyAnimationPaths(settings, species, state, tags)
 	local directory = "/vehicles/sbq/"..species.."/"
 	local animatedParts = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).animatedParts
 	local vehicle = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".vehicle" )
-	local edibleAnims = vehicle.states[state].edibleAnims
+	local edibleAnims = vehicle.states[state].edibleAnims or {}
 	local tags = tags
 	if tags == nil then
 		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }

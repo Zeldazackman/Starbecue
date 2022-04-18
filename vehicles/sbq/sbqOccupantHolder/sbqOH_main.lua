@@ -4,10 +4,7 @@ state = {
 
 sbq = {
 	occupants = {
-		maximum = 8,
-		total = 8,
-		belly = 1,
-		cock = 1
+		maximum = 8
 	},
 	includeDriver = true,
 	occupant = {},
@@ -49,7 +46,7 @@ function sbq.clearOccupant(i)
 		seatname = "occupant"..i,
 		index = i,
 		id = nil,
-		statList = sbq.sbqData.occupantStatusEffects or {},
+		statList = (sbq.sbqData or {}).occupantStatusEffects or {},
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -140,10 +137,24 @@ require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 local inited
 
 function init()
+	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
 	sbq.driver = sbq.spawner
 	sbq.driving = world.entityType(sbq.spawner) == "player"
 	sbq.includeDriver = true
+
+	for i = 0, sbq.occupantSlots do
+		sbq.occupant[i] = sbq.clearOccupant(i)
+		sbq.seats["occupant"..i] = sbq.occupant[i]
+	end
+	sbq.seats.occupantD = sbq.clearOccupant("D")
+	sbq.seats.occupantD.id = sbq.spawner
+	sbq.lounging[sbq.spawner] = sbq.seats.occupantD
+	sbq.driverSeat = "occupantD"
+
+	for _, script in ipairs(sbq.config.scripts) do
+		require(script)
+	end
 end
 
 function initAfterInit(data)
@@ -153,7 +164,6 @@ function initAfterInit(data)
 	sbq.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
 	sbq.loungePositions = config.getParameter("loungePositions")
 	sbq.animStateData = root.assetJson( sbq.cfgAnimationFile ).animatedParts.stateTypes
-	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.transformGroups = {
 		occupant0Position = {},
 		occupant1Position = {},
@@ -202,24 +212,12 @@ function initAfterInit(data)
 
 	sbq.resetOccupantCount()
 
-	for i = 0, sbq.occupantSlots do
-		sbq.occupant[i] = sbq.clearOccupant(i)
-		sbq.seats["occupant"..i] = sbq.occupant[i]
-	end
-	sbq.seats.occupantD = sbq.clearOccupant("D")
-	sbq.seats.occupantD.id = sbq.spawner
-	sbq.lounging[sbq.spawner] = sbq.seats.occupantD
-	sbq.driverSeat = "occupantD"
-
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
 	if sbq.sbqData.scripts ~= nil then
 		for _, script in ipairs(sbq.sbqData.scripts) do
 			require(script)
 		end
-	end
-	for _, script in ipairs(sbq.config.scripts) do
-		require(script)
 	end
 
 	local retrievePrey = config.getParameter("retrievePrey")
@@ -338,11 +336,11 @@ function sbq.entityLounging( entity )
 	return false
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total
 	total = total + 1
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
+	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(
