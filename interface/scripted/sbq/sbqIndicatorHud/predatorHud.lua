@@ -85,6 +85,16 @@ sbq.occupantList = {}
 function sbq.readOccupantData()
 	if sbq.occupants.total > 0 then
 		local y = 224
+		local playerSpecies = (sbq.sbqCurrentData or {}).species
+
+		if playerSpecies == "sbqOccupantHolder" then
+			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+			local maybeSpecies = (speciesAnimOverrideData.species or player.species())
+			if type(sbq.hudActions[maybeSpecies]) == "table" then
+				playerSpecies = maybeSpecies
+			end
+		end
+
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
 			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
@@ -112,8 +122,8 @@ function sbq.readOccupantData()
 								table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
 							end
 						end
-						if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
-							for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
+						if type(sbq.hudActions[playerSpecies]) == "table" then
+							for _, action in ipairs(sbq.hudActions[playerSpecies]) do
 								if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
 									table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
 								end
@@ -164,8 +174,8 @@ function sbq.updateBars()
 				local id = occupant.id
 				if type(id) == "number" and world.entityExists(id) and sbq.occupantList[id] ~= nil then
 					local health = world.entityHealth( id )
-					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], topBar )
-					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, bottomBar )
+					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], bottomBar )
+					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, topBar )
 				end
 			end
 		end

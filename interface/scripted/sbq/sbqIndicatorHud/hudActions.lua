@@ -73,3 +73,31 @@ function sbq.cumTF(id, i)
 		end
 	end)
 end
+
+function sbq.plasticEggify(id, i)
+	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "eggImmunity"), function (immune)
+		if not immune then
+			local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
+			local replaceColorTable = {
+				eggData.sbqData.plasticReplaceColors[1][math.random(1, #eggData.sbqData.plasticReplaceColors[1])],
+				eggData.sbqData.plasticReplaceColors[2][math.random(1, #eggData.sbqData.plasticReplaceColors[2])]
+			}
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3, {
+				barColor = replaceColorTable[2],
+				forceSettings = true,
+				layer = true,
+				state = "smol",
+				species = "sbqEgg",
+				layerLocation = "egg",
+				settings = {
+					cracks = 0,
+					bellyEffect = "sbqHeal",
+					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
+					replaceColorTable = replaceColorTable,
+					skinNames = { head = "plastic" },
+					firstLoadDone = true
+				}
+			})
+		end
+	end)
+end

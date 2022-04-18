@@ -39,7 +39,7 @@ function sbq.init()
 		sbq.stateconfig.smol.struggle.egg.directions = {
 			front = { victimAnimation = "s_front" },
 			back = { victimAnimation = "s_back" },
-			up = { chances = { min = 0, max = 0}, transition = "crack", victimAnimation = "s_back", indicate = "red" }
+			up = { chances = { min = 1, max = 1}, transition = "crack", victimAnimation = "s_back", indicate = "red" }
 		}
 		_onDeath = sbq.onDeath
 		function sbq.onDeath(eaten)
