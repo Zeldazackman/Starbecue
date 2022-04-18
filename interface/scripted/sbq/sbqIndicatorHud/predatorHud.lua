@@ -29,8 +29,12 @@ end
 function sbq.listSlots()
 	occupantSlots:clearChildren()
 	local y = 217
+	local slots = 7
+	if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
+		slots = 8
+	end
 	for i = 1, sbq.occupants.total + 1 do
-		if i <= 8 then
+		if i <= slots then
 			y = y - 25
 			occupantSlots:addChild({ type = "image", noAutoCrop = true, position = {80,y}, file = "portraitSlot.png" })
 		end
@@ -255,6 +259,8 @@ function sbq.updateBellyEffectIcon()
 
 		bellyEffectIcon:setImage(effect.icon)
 		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
+		prevBellyEffect.toolTip = appendTooltip..bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].prev].toolTip
+		nextBellyEffect.toolTip = appendTooltip..bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].next].toolTip
 
 		escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
 		impossibleEscape:setChecked(sbq.sbqSettings.global.impossibleEscape)
