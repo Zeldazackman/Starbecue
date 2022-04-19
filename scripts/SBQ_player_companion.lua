@@ -154,6 +154,8 @@ function init()
 
 	message.setHandler("sbqPredatorDespawned", function (_,_, eaten)
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
+		world.sendEntityMessage(player.id(), "sbqLight")
+
 		local sbqCurrentData = player.getProperty( "sbqCurrentData" ) or {}
 		if sbqCurrentData.totalOccupants == 0 and not eaten
 		and not (status.statusProperty("speciesAnimOverrideData") or {}).permanent

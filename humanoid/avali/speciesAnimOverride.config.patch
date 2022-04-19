@@ -97,6 +97,6 @@
 	{ "op": "add", "path": "/animations/swimIdle/breastsBack", "value": "idle" },
 
 	{ "op": "add", "path": "/partImages/breastsBack", "value": "/humanoid/<species>/breastsBack.png" },
-	{ "op": "add", "path": "/globalTagDefaults/breastsBackMask", "value": "/humanoid/<species>/breastBack.png" }
+	{ "op": "add", "path": "/globalTagDefaults/breastsBackMask", "value": "/humanoid/<species>/breastsBack.png" }
 
 ]
