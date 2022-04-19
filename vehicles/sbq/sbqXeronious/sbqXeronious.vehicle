@@ -448,6 +448,7 @@
 						"legs": "walk",
 						"body": "idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -465,6 +466,7 @@
 						"legs": "run",
 						"body": "idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -634,6 +636,7 @@
 						"arms": "crawl",
 						"legs": "crawl",
 						"offset" : {
+							"reversible" : true,
 							"parts" : [
 								{"x": [12], "y": [-27], "groups": ["headbob"] },
 								{"x": [-8], "y": [-12], "groups": ["tailbob"] }

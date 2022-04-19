@@ -45,7 +45,8 @@ function sbq.updateDriving(dt)
 			if (sbq.movement.aimingLock <= 0) then
 				sbq.faceDirection( dx )
 			end
-			sbq.setPartTag( "global","direction", sbq.direction * dx)
+			sbq.movement.direction = sbq.direction * dx
+			sbq.setPartTag( "global","direction", sbq.movement.direction)
 		end
 
 		if sbq.stateconfig[sbq.state].defaultActions ~= nil and sbq.driver ~= nil then

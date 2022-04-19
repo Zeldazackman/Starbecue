@@ -628,6 +628,7 @@
 						"head": "idle",
 						"cock": "run",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -641,6 +642,7 @@
 						"head": "idle",
 						"cock": "run",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

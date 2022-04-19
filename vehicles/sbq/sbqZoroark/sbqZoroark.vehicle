@@ -492,6 +492,7 @@
 						"legs": "walk",
 						"body": "idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -505,6 +506,7 @@
 						"body": "run",
 						"cock": "run",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -585,6 +587,7 @@
 						"legs": "smol.walk",
 						"body": "smol.idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -597,6 +600,7 @@
 						"legs": "smol.run",
 						"body": "smol.run",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

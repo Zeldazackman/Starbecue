@@ -259,7 +259,7 @@ function sbq.lockItem(itemDescriptor, type)
 
 	local lockItemDescriptor = player.essentialItem("painttool")
 	if lockItemDescriptor.name ~= "sbqLockedItem" then
-		sbq.lockEssentialItem(lockItemDescriptor, "painttool", type)
+		sbq.lockEssentialItem(lockItemDescriptor, "painttool", type, true)
 		lockItemDescriptor = player.essentialItem("painttool")
 	end
 
@@ -271,7 +271,11 @@ function sbq.lockItem(itemDescriptor, type)
 	end
 end
 
-function sbq.lockEssentialItem(itemDescriptor, slot, type)
+function sbq.lockEssentialItem(itemDescriptor, slot, type, force)
+	if not force and (itemDescriptor.parameters ~= nil and itemDescriptor.parameters.itemHasOverrideLockScript) then
+		return world.sendEntityMessage(entity.id(), itemDescriptor.name.."Lock", true)
+	end
+
 	local lockItemDescriptor = root.assetJson("/sbqGeneral.config:lockItemDescriptor")
 	lockItemDescriptor.parameters.scriptStorage.lockedEssentialItems[slot] = itemDescriptor
 	lockItemDescriptor.parameters.scriptStorage.lockType = type

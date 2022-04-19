@@ -4,7 +4,9 @@ function sbq.updateAnims(dt)
 		state.animationState.time = state.animationState.time + dt
 		local ended, times, time = sbq.hasAnimEnded(statename)
 		if (not ended) or (state.animationState.mode == "loop") then
-			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+			local frame = math.floor( time * state.animationState.speed )
+			state.animationState.frame = frame + 1
+			state.animationState.reverseFrame = math.abs(frame - state.animationState.frames)
 			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
 		end
 	end
@@ -413,7 +415,9 @@ function sbq.offsetAnimUpdate()
 	local ended, times, time = sbq.hasAnimEnded(state)
 	if ended and not sbq.offsets.loop then sbq.offsets.enabled = false end
 	local frame = sbq.animStateData[state].animationState.frame
-
+	if sbq.offsets.reversible and sbq.movement.direction == -1 then
+		frame = sbq.animStateData[state].animationState.reverseFrame
+	end
 	for _,r in ipairs(sbq.offsets.parts) do
 		local x = r.x[ frame ] or r.x[#r.x] or 0
 		local y = r.y[ frame ] or r.y[#r.y] or 0
@@ -571,6 +575,7 @@ function sbq.offsetAnim( data )
 	sbq.offsets = {
 		enabled = data ~= nil,
 		data = data,
+		reversible = data.reversible,
 		parts = {},
 		loop = data.loop or false,
 		timing = data.timing or "body"

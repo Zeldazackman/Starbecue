@@ -461,6 +461,7 @@
 						"tail": "walk",
 						"head": "idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -474,6 +475,7 @@
 						"tail": "run",
 						"head": "idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -1145,6 +1147,7 @@
 						"tail": "smol.walk",
 						"head": "smol.idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -1158,6 +1161,7 @@
 						"tail": "smol.run",
 						"head": "smol.idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

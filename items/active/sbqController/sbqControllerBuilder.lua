@@ -17,6 +17,9 @@ function build(directory, config, parameters, level, seed)
 		config.shortdescription = shortdescription
 		config.description = description..config.appendedDescription
 		config.inventoryIcon = (parameters.scriptStorage.icon or ("/items/active/sbqController/"..(parameters.scriptStorage.clickAction or "unassigned")..".png"))..(parameters.scriptStorage.directives or "")
+
+		parameters.config = config
+
 	end
 
 	return config, parameters
