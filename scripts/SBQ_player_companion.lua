@@ -120,8 +120,10 @@ function init()
 		local type = current.type or "prey"
 		player.setProperty( "sbqCurrentData", current)
 		status.setStatusProperty( "sbqCurrentData", current)
-		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
-		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
+		if not (current.type == "driver" and current.species == "sbqOccupantHolder") then
+			sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
+			sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
+		end
 
 		return {
 			head = player.equippedItem("head") or false,

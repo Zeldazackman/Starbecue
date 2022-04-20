@@ -9,14 +9,17 @@ state = {
 
 -------------------------------------------------------------------------------
 
-function sbq.init()
-	sbq.occupant[0].location = "egg"
+local _initAfterInit = sbq.initAfterInit
+function sbq.initAfterInit()
+	_initAfterInit()
+	sbq.occupants.total = 0
+	sbq.eat(sbq.driver, "egg", true)
 	sbq.occupant[0].visible = true
-	sbq.occupants.total = 1
-	sbq.occupants.egg = 1
+end
+
+function sbq.init()
 	sbq.includeDriver = true
 	sbq.driving = false
-
 	if not sbq.settings.cracks then
 		sbq.settings.cracks = 0
 	end
@@ -58,14 +61,8 @@ end
 function sbq.warpInEffect() end
 function sbq.warpOutEffect() end
 
--------------------------------------------------------------------------------
-
-function state.smol.crack( args )
-	sbq.settings.cracks = sbq.settings.cracks + 1
-	animator.playSound("crack")
-	sbq.doAnim("bodyState", "s_"..args.direction)
-
-	if sbq.settings.cracks > 3 then
+function sbq.update(dt)
+	if sbq.queueDeath and sbq.occupants.total == 0 then
 		local skinNames = sbq.settings.skinNames or {}
 		local skin = skinNames.head or "default"
 		local shard = ((sbq.sbqData.skinEggShards[skin] or {}).mask or "?addmask=/vehicles/sbq/sbqEgg/skins/shards.png")..":"
@@ -93,6 +90,18 @@ function state.smol.crack( args )
 			end
 		end
 		sbq.onDeath()
+	end
+end
+-------------------------------------------------------------------------------
+
+function state.smol.crack( args )
+	sbq.settings.cracks = sbq.settings.cracks + 1
+	animator.playSound("crack")
+	sbq.doAnim("bodyState", "s_"..args.direction)
+
+	if sbq.settings.cracks > 3 then
+		sbq.uneat(args.id)
+		sbq.queueDeath = true
 	else sbq.setPartTag( "global", "cracks", sbq.settings.cracks )
 	end
 end

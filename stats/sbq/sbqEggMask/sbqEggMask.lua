@@ -1,7 +1,7 @@
 function init()
-	local playerimage = world.entityPortrait(effect.sourceEntity(), "full")
+	local playerimage = world.entityPortrait(entity.id(), "full")
 	local farthest = { 0, 0, 0, 0 }
-	for _, part in ipairs(playerimage) do
+	for _, part in ipairs(playerimage or {}) do
 		local size = { -part.transformation[1][3], -part.transformation[2][3] }
 		local pos = part.position
 		if farthest[1] > pos[1] - size[1] then farthest[1] = pos[1] - size[1] end

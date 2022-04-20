@@ -12,7 +12,7 @@ function sbq.unForceSeat(occupantId)
 	end
 end
 
-function sbq.eat( occupantId, location )
+function sbq.eat( occupantId, location, force )
 	local seatindex = sbq.occupants.total
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total
 	if not sbq.includeDriver then
@@ -21,7 +21,7 @@ function sbq.eat( occupantId, location )
 	end
 	if seatindex > sbq.occupantSlots then return false end
 
-	if occupantId == nil or sbq.entityLounging(occupantId) or sbq.inedible(occupantId) or sbq.locationFull(location) then return false end -- don't eat self
+	if not force and (occupantId == nil or sbq.entityLounging(occupantId) or sbq.inedible(occupantId) or sbq.locationFull(location)) then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
@@ -149,7 +149,7 @@ function sbq.sendPreyTo()
 		if world.entityExists(recepient.vehicle) then
 			for i = 0, sbq.occupantSlots do
 				if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
-					local occupantData = sbq.occupant[i]
+					local occupantData = sb.jsonMerge(sbq.occupant[i], {})
 
 					occupantData.location = sbq.occupant[i].nestedPreyData.location
 					occupantData.visible = false
