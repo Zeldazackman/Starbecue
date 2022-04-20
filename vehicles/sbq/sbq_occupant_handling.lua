@@ -391,7 +391,7 @@ function sbq.updateOccupants(dt)
 					-- p.occupant[i].indicatorCooldown = 0.5
 					local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
 					local directions = {}
-					if not sbq.transitionLock then
+					if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" and sbq.occupant[i].location ~= "nested" then
 						for dir, data in pairs(struggledata.directions or {}) do
 							if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
 								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
@@ -400,6 +400,11 @@ function sbq.updateOccupants(dt)
 							end
 						end
 					end
+					local nested
+					if sbq.occupant[i].location == "nested" then
+						nested = "Nested"
+					end
+
 					sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
 						"sbqOpenInterface", {"sbqIndicatorHud",
 						{
@@ -412,7 +417,7 @@ function sbq.updateOccupants(dt)
 								dx = (math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
 							},
 							time = sbq.occupant[i].occupantTime,
-							location = (sbq.sbqData.locations[location] or {}).name or ""
+							location = (sbq.sbqData.locations[location] or {}).name or nested or ""
 						}
 					})
 				end
