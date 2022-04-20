@@ -17,6 +17,13 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 				end
 			end)
 		elseif sbq.settings.wombEggify and location == "womb" then
+			local bellyEffect = "sbqHeal"
+			if sbq.settings.displayDigest then
+				if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
+					bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
+				end
+			end
+
 			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
 				if not immune then
 					local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
@@ -31,9 +38,10 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 						state = "smol",
 						species = "sbqEgg",
 						layerLocation = "egg",
+						layerDigest = true,
 						settings = {
 							cracks = 0,
-							bellyEffect = "sbqHeal",
+							bellyEffect = bellyEffect,
 							escapeDifficulty = sbq.settings.escapeDifficulty,
 							replaceColorTable = replaceColorTable,
 							skinNames = { head = "plastic" },

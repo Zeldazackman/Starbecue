@@ -6,7 +6,8 @@
 		"frame": "1",
 		"directives": "",
 		"smolpath": "",
-		"skin": "default"
+		"skin": "default",
+		"headSkin": "default"
 	},
 	"animatedParts": {
 		"stateTypes": {

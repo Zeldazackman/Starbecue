@@ -215,7 +215,9 @@ function sbq.transformPrey(i)
 					sbq.occupant[j].nestedPreyData = {
 						nestedPreyData = nestedPreyData,
 						location = smolPreyData.layerLocation,
-						owner = sbq.occupant[i].id
+						owner = sbq.occupant[i].id,
+						massMultiplier = smolPreyData.layerMass or 1,
+						digest = smolPreyData.layerDigest
 					}
 				end
 			end
