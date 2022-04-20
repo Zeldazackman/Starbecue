@@ -1,5 +1,5 @@
 {
-	"type" : "sbqZevi",
+	"type" : "sbqzevi",
 	"baseType" : "sbqVoreVillager",
 
 	"keepAlive" : true,
@@ -21,10 +21,7 @@
 	],
 	"scriptConfig" : {
 		"uniqueId" : "sbqZevi",
-		"sbqPreyEnabled" : {
-			"enabled" : true
-		},
-		"defaultPortrait" : "/humanoid/sbqZevi/portraits/ZNeutral.png",
+		"defaultPortrait" : "/humanoid/sbqzevi/portraits/ZNeutral.png",
 		"dialogueTree" : {
 			"greeting" : {
 				"neutral" : {
@@ -37,7 +34,7 @@
 					"jump" : ["converse"]
 				},
 				"fearful" : {
-					"randomPortrait" : "/humanoid/sbqZevi/portraits/ZShocked.png",
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZShocked.png",
 					"randomDialogue" : [
 						"AH!",
 						"I-I didn't see you there!",
@@ -49,7 +46,7 @@
 					]
 				},
 				"horny" : {
-					"randomPortrait" : "/humanoid/sbqZevi/portraits/ZUwU.png",
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZUwU.png",
 					"randomDialogue" : [
 						"UwU",
 						"Hehe, hey there~",
@@ -58,7 +55,7 @@
 					"jump" : ["converse"]
 				},
 				"friendly" : {
-					"randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png",
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png",
 					"randomDialogue" : [
 						"Hi!",
 						"Hey <entityname>!",
@@ -119,36 +116,36 @@
 
 			//vore buttons
 			"oralVore" : {
-				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZBlep.png",
-					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png"}
+				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
 				},
-				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
+				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
 				},
-				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZTired.png" },
-				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
 			},
 			"cockVore" : {
-				"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSmug.png" }
+				"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
 				},
-				"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSmug.png",
-					"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSmug.png"}
+				"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
 				},
-				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZSad.png" },
-				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" },
-				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZTired.png" }
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
 			},
 
 			//talking while prey
 			"belly" : {
-				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" },
-				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZHappy.png" }
+				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
 			},
-			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqZevi/portraits/ZBlep.png" }
+			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
 		},
 		"voreIcons" : {
 			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
@@ -223,8 +220,11 @@
 			}
 		},
 		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"enabled" : true
+			},
 			"speciesAnimOverrideData" : {
-				"species" : "sbqZevi",
+				"species" : "sbqzevi",
 				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
 			}
 		}

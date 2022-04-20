@@ -16,6 +16,7 @@ function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
 
+
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 	local species = speciesAnimOverrideData.species or npc.species()
 	local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
@@ -27,7 +28,8 @@ function init()
 			sbq.speciesConfig.states = data.states
 		end
 	end
-	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(storage.sbqSettings or {}, (sbq.speciesConfig.sbqData.defaultSettings or {})))
+
+	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, storage.sbqSettings or {})))
 
 	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
 		local location = sbq.getOccupantArg(id, "location")
