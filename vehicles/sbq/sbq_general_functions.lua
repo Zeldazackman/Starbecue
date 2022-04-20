@@ -211,9 +211,12 @@ function sbq.transformPrey(i)
 			smolPreyData.layer = sbq.occupant[i].smolPreyData
 			for j = 0, sbq.occupantSlots do
 				if sbq.occupant[j].location == "nested" and sbq.occupant[j].nestedPreyData.owner == sbq.occupant[i].id then
-					local nestedPreyData = sbq.occupant[j].nestedPreyData
-					sbq.occupant[j].nestedPreyData.nestedPreyData = nestedPreyData
-					sbq.occupant[j].nestedPreyData.location = smolPreyData.layerLocation
+					local nestedPreyData = sb.jsonMerge(sbq.occupant[j].nestedPreyData, {})
+					sbq.occupant[j].nestedPreyData = {
+						nestedPreyData = nestedPreyData,
+						location = smolPreyData.layerLocation,
+						owner = sbq.occupant[i].id
+					}
 				end
 			end
 		end
