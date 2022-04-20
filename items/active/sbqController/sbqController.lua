@@ -149,7 +149,17 @@ function doVoreAction(id)
 		withoutEntityId = player.id(),
 		includedTypes = {"creature"}
 	})
-	world.sendEntityMessage( id, "requestTransition", storage.clickAction, { id = entityaimed[1] } )
+	local entityInRange = world.entityQuery(mcontroller.position(), 5, {
+		withoutEntityId = player.id(),
+		includedTypes = {"creature"}
+	})
+	for i, victimId in ipairs(entityaimed) do
+		for j, eid in ipairs(entityInRange) do
+			if victimId == eid and entity.entityInSight(victimId) then
+				world.sendEntityMessage( id, "requestTransition", storage.clickAction, { id = victimId } )
+			end
+		end
+	end
 end
 
 
