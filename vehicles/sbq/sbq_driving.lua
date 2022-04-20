@@ -211,7 +211,7 @@ function sbq.doClickActions(state, dt)
 		sbq.clickActionCooldowns[name] = math.max( 0, cooldown - dt)
 	end
 
-	if sbq.heldControl(sbq.driverSeat, "special1", 0.2) and sbq.totalTimeAlive > 1 then
+	if sbq.heldControl(sbq.driverSeat, "shift", 0.2) and sbq.heldControl(sbq.driverSeat, "up", 0.2) then
 		if not sbq.movement.assignClickActionRadial then
 			sbq.movement.assignClickActionRadial = true
 			sbq.assignClickActionMenu(state)

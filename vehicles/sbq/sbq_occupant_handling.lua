@@ -510,10 +510,12 @@ function sbq.setOccupantTags()
 		else
 			sbq.setPartTag( "global", location.."Occupants", tostring(math.min(sbq.occupants[location], sbq.sbqData.locations[location].max or sbq.occupants[location])) )
 
-			if sbq.occupants[location] > sbq.occupantsPrev[location] then
-				sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
-			elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
-				sbq.doAnims(sbq.shrinkQueue[location] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location])
+			if sbq.totalTimeAlive > 0.5 then
+				if sbq.occupants[location] > sbq.occupantsPrev[location] then
+					sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
+				elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+					sbq.doAnims(sbq.shrinkQueue[location] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location])
+				end
 			end
 		end
 

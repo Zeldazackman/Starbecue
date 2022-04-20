@@ -41,7 +41,7 @@
 		"succ" : {"shortdescription" : "Inhale Controller", "description" : "Triggers the inhale action of a predator."}
 	},
 
-	"appendedDescription" : " Hold shift to re-assign action.",
+	"appendedDescription" : " Hold shift+up to re-assign action.",
 
 	"retainScriptStorageInItem": true,
 	"builder" : "/items/active/sbqController/sbqControllerBuilder.lua",

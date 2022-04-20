@@ -37,7 +37,7 @@ function update(dt, fireMode, shiftHeld, controls)
 	if not player.isLounging() then
 		currentData = player.getProperty( "sbqCurrentData") or {}
 
-		if (storage.seatdata.shift or 0) > 0.2 then
+		if (storage.seatdata.shift or 0) > 0.2 and controls.up then
 			if not assignedMenu then
 				if activeItem.hand() == "primary" then activeItem.callOtherHandScript("dontDoRadialMenu", true) end
 				if dontDoMenu then return end
