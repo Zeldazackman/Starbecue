@@ -94,6 +94,24 @@
 		"-1.0.walk.5" : "-1.walk.5",
 		"-1.0.walk.6" : "-1.walk.6",
 		"-1.0.walk.7" : "-1.walk.7",
-		"-1.0.walk.8" : "-1.walk.8"
+		"-1.0.walk.8" : "-1.walk.8",
+
+		"0.idle.1" : "idle.1",
+		"0.idle.2" : "idle.2",
+		"0.idle.3" : "idle.3",
+		"0.idle.4" : "idle.4",
+		"0.idle.5" : "idle.5",
+		"0.sit.1" : "sit.1",
+		"0.duck.1" : "duck.1",
+
+		"0.swim.1" : "swim.1",
+		"0.swim.2" : "swim.2",
+		"0.swim.3" : "swim.3",
+		"0.swim.4" : "swim.4",
+		"0.swim.5" : "swim.5",
+		"0.swim.6" : "swim.6",
+		"0.swim.7" : "swim.7",
+
+		"0.swimIdle.1" : "swimIdle.1"
 	}
 }
