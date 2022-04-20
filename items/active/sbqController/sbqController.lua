@@ -28,6 +28,7 @@ end
 
 local assignedMenu
 local currentData
+local occpantsWhenAssigned
 
 function dontDoRadialMenu(arg)
 	dontDoMenu = arg
@@ -36,12 +37,16 @@ end
 function update(dt, fireMode, shiftHeld, controls)
 	if not player.isLounging() then
 		currentData = player.getProperty( "sbqCurrentData") or {}
+		if occpantsWhenAssigned ~= (currentData.totalOccupants or 0) then
+			assignedMenu = nil
+		end
 
 		if (storage.seatdata.shift or 0) > 0.2 and controls.up then
 			if not assignedMenu then
 				if activeItem.hand() == "primary" then activeItem.callOtherHandScript("dontDoRadialMenu", true) end
 				if dontDoMenu then return end
 				assignedMenu = true
+
 
 				local sbqSettings = player.getProperty("sbqSettings") or {}
 				local settings = sb.jsonMerge(sbqSettings.global or {}, sbqSettings.sbqOccupantHolder or {})
@@ -60,6 +65,10 @@ function update(dt, fireMode, shiftHeld, controls)
 						icon = "/items/active/sbqController/analVore.png"
 					}
 				}
+				occpantsWhenAssigned = currentData.totalOccupants or 0
+				if (currentData.totalOccupants or 0) > 0 then
+					options[1].icon = "/items/active/sbqController/letout.png"
+				end
 				if settings.tailMaw then
 					table.insert(options, 3, {
 						name = "tailVore",
@@ -89,7 +98,6 @@ function update(dt, fireMode, shiftHeld, controls)
 			else
 				if dontDoMenu then return end
 				sbq.loopedMessage("radialSelection", player.id(), "sbqGetRadialSelection", {}, function(data)
-
 					if data.selection ~= nil and data.type == "controllerActionSelect" then
 						sbq.lastRadialSelection = data.selection
 						if data.selection == "cancel" then return end
