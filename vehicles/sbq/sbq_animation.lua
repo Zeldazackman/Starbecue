@@ -8,6 +8,8 @@ function sbq.updateAnims(dt)
 			state.animationState.frame = frame + 1
 			state.animationState.reverseFrame = math.abs(frame - state.animationState.frames)
 			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
+		elseif ended and state.animationState.mode == "transition" then
+			doAnim(statename, state.animationState.transition)
 		end
 	end
 
@@ -490,6 +492,15 @@ function sbq.queueAnimEndFunction(state, func, newPriority)
 end
 
 function sbq.doAnim( state, anim, force)
+	if not sbq.animStateData[state] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state))
+		return
+	end
+	if not sbq.animStateData[state].states[anim] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state).."."..tostring(anim))
+		return
+	end
+
 	local oldPriority = (sbq.animStateData[state].animationState or {}).priority or 0
 	local newPriority = (sbq.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = sbq.animationIs( state, anim )
@@ -511,6 +522,7 @@ function sbq.doAnim( state, anim, force)
 			frames = sbq.animStateData[state].states[anim].frames,
 			mode = sbq.animStateData[state].states[anim].mode,
 			speed = sbq.animStateData[state].states[anim].frames / sbq.animStateData[state].states[anim].cycle,
+			transition = sbq.animStateData[state].states[anim].transition,
 			frame = 1,
 			time = 0
 		}

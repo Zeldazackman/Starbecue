@@ -2,6 +2,7 @@
 local oldinit = init
 function init()
 	if oldinit ~= nil then oldinit() end
+	activeItem.setInstanceValue("itemHasSbqControllerScript", true)
 	storage.seatdata = {}
 end
 
