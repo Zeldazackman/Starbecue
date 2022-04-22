@@ -250,6 +250,7 @@ function sbq.transformAction()
 
 				if data.selection ~= nil and data.type == "transformSelect" then
 					sbq.lastRadialSelection = data.selection
+					sbq.radialSelectionType = data.type
 					if data.selection == "cancel" then return end
 					if data.pressed and data.selection == "despawn" and not sbq.click then
 						if sbq.occupants.total > 0 then
@@ -275,18 +276,20 @@ function sbq.transformAction()
 		return true
 	elseif sbq.movement.transformActionRadial then
 		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
-		if sbq.lastRadialSelection == "despawn" then
-			if sbq.occupants.total > 0 then
-				sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
-					world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+		if sbq.radialSelectionType == "transformSelect" then
+			if sbq.lastRadialSelection == "despawn" then
+				if sbq.occupants.total > 0 then
+					sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
+						world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+					end)
+				else
+					sbq.onDeath()
+				end
+			elseif sbq.lastRadialSelection ~= "cancel" then
+				sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection ), function (settings)
+					world.spawnVehicle( sbq.lastRadialSelection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
 				end)
-			else
-				sbq.onDeath()
 			end
-		elseif sbq.lastRadialSelection ~= "cancel" then
-			sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection ), function (settings)
-				world.spawnVehicle( sbq.lastRadialSelection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
-			end)
 		end
 		sbq.movement.transformActionRadial = nil
 	end
@@ -306,6 +309,7 @@ function sbq.assignClickAction(state)
 
 				if data.selection ~= nil and data.type == "actionSelect" then
 					sbq.lastRadialSelection = data.selection
+					sbq.radialSelectionType = data.type
 					if data.selection == "cancel" then return end
 					if data.pressed and data.selection == "despawn" then
 						if sbq.occupants.total > 0 then
@@ -356,21 +360,23 @@ function sbq.assignClickAction(state)
 		return true
 	elseif sbq.movement.assignClickActionRadial then
 		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
-		if sbq.lastRadialSelection == "despawn" then
-			if sbq.occupants.total > 0 then
-				sbq.letout()
-			else
-				sbq.onDeath()
-			end
-		elseif sbq.lastRadialSelection ~= "cancel" and sbq.lastRadialSelection ~= nil then
-			if sbq.grabbing ~= nil then
-				sbq.uneat(sbq.grabbing)
-				local victim = sbq.grabbing
-				sbq.grabbing = nil
-				sbq.doTransition(sbq.lastRadialSelection, { id = victim })
-				return
-			else
-				sbq.action(state, sbq.lastRadialSelection, "force")
+		if sbq.radialSelectionType == "actionSelect" then
+			if sbq.lastRadialSelection == "despawn" then
+				if sbq.occupants.total > 0 then
+					sbq.letout()
+				else
+					sbq.onDeath()
+				end
+			elseif sbq.lastRadialSelection ~= "cancel" and sbq.lastRadialSelection ~= nil then
+				if sbq.grabbing ~= nil then
+					sbq.uneat(sbq.grabbing)
+					local victim = sbq.grabbing
+					sbq.grabbing = nil
+					sbq.doTransition(sbq.lastRadialSelection, { id = victim })
+					return
+				else
+					sbq.action(state, sbq.lastRadialSelection, "force")
+				end
 			end
 		end
 		sbq.movement.assignClickActionRadial = nil
