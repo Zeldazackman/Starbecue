@@ -154,15 +154,17 @@ function init()
 		player.consumeItem(item, partial, match )
 	end)
 
-	message.setHandler("sbqPredatorDespawned", function (_,_, eaten)
+	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
 		world.sendEntityMessage(player.id(), "sbqLight")
 
-		local sbqCurrentData = player.getProperty( "sbqCurrentData" ) or {}
-		if sbqCurrentData.totalOccupants == 0 and not eaten
-		and not (status.statusProperty("speciesAnimOverrideData") or {}).permanent
-		then
-			status.clearPersistentEffects("speciesAnimOverride")
+		if not eaten then
+			for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+				status.removeEphemeralEffect(effect)
+			end
+			if species == "sbqOccupantHolder" and occupants == 0 and not (status.statusProperty("speciesAnimOverrideData") or {}).permanent then
+				status.clearPersistentEffects("speciesAnimOverride")
+			end
 		end
 
 		player.setProperty( "sbqCurrentData", nil)
@@ -219,8 +221,9 @@ function update(dt)
 		})
 	elseif current.type == "prey" then
 		player.setProperty("sbqCurrentData", {})
-		status.removeEphemeralEffect("sbqInvisible")
-		status.removeEphemeralEffect("sbqScaling")
+		for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+			status.removeEphemeralEffect(effect)
+		end
 	end
 	initStage = 2 -- post-init finished
 end
