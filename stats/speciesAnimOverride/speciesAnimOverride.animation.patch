@@ -53,7 +53,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant0",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant0Position"], "occupant0Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant0Position"], "occupant0Position": [0.0, 0.0] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -74,7 +74,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant1",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant1Position"], "occupant1Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant1Position"], "occupant1Position": [0.0, 0.0] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -95,7 +95,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant2",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant2Position"], "occupant2Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant2Position"], "occupant2Position": [0.0, 0.0] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -116,7 +116,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant3",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant3Position"], "occupant3Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant3Position"], "occupant3Position": [0.0, 0.0] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -137,7 +137,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant4",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant4Position"], "occupant4Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant4Position"], "occupant4Position": [0.0, 0.0] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -158,7 +158,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant5",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant5Position"], "occupant5Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant5Position"], "occupant5Position": [0.0, 0.0] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -179,7 +179,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant6",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant6Position"], "occupant6Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant6Position"], "occupant6Position": [0.0, 0.0] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		},
@@ -200,7 +200,7 @@
 			"op" : "add",
 			"path" : "/animatedParts/parts/occupant7",
 			"value" : {
-				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["flip", "occupant7Position"], "occupant7Position": [0.0, 0.0] },
+				"properties": { "centered": true, "zLevel": 0, "transformationGroups": ["occupant7Position"], "occupant7Position": [0.0, 0.0] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			}
 		}
@@ -248,7 +248,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.3,
-					"transformationGroups": ["flip", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"bellyState": {
@@ -271,7 +271,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.31,
-					"transformationGroups": ["flip", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"bellyState": {
@@ -361,7 +361,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.18,
-					"transformationGroups": ["flip", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"cockState": {
@@ -384,7 +384,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.19,
-					"transformationGroups": ["flip", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"cockState": {
@@ -445,7 +445,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.12,
-					"transformationGroups": ["flip", "ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"ballsFrontState": {
@@ -468,7 +468,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.13,
-					"transformationGroups": ["flip", "ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"ballsFrontState": {
@@ -529,7 +529,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.1,
-					"transformationGroups": ["flip", "ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"ballsBackState": {
@@ -552,7 +552,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.11,
-					"transformationGroups": ["flip", "ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"ballsBackState": {
@@ -613,7 +613,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.01,
-					"transformationGroups": ["flip", "pussybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["pussybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"pussyState": {
@@ -636,7 +636,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.02,
-					"transformationGroups": ["flip", "pussybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["pussybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"pussyState": {
@@ -697,7 +697,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.4,
-					"transformationGroups": ["flip", "breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"breastsFrontState": {
@@ -720,7 +720,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.41,
-					"transformationGroups": ["flip", "breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"breastsFrontState": {
@@ -781,7 +781,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.28,
-					"transformationGroups": ["flip", "breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"breastsBackState": {
@@ -804,7 +804,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.29,
-					"transformationGroups": ["flip", "breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
 				},
 				"partStates": {
 					"breastsBackState": {
