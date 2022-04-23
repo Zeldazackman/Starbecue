@@ -1,9 +1,11 @@
 {
 	"frameGrid" : {
 		"size" : [43, 43],
-		"dimensions" : [8, 3],
+		"dimensions" : [8, 5],
 		"names" : [
+			[ "0.jump.1", "0.jump.2", "0.jump.3", "0.jump.4" ],
 			[ "1.stand.expand.1", "1.stand.expand.2", "1.stand.expand.3", "1.stand.expand.4", "1.stand.expand.5", "1.stand.expand.6", "1.stand.expand.7", "1.stand.expand.8"],
+			[ "1.jump.1", "1.jump.2", "1.jump.3", "1.jump.4" ],
 			[ "1.stand.s_up.1", "1.stand.s_up.2", "1.stand.s_up.3", "1.stand.s_up.4", "1.stand.s_down.1", "1.stand.s_down.2", "1.stand.s_down.3", "1.stand.s_down.4"],
 			[ "1.stand.s_back.1", "1.stand.s_back.2", "1.stand.s_back.3", "1.stand.s_back.4", "1.stand.s_front.1", "1.stand.s_front.2", "1.stand.s_front.3", "1.stand.s_front.4"]
 		]
@@ -27,6 +29,11 @@
 		"0.stand.shrink.6" : "1.stand.expand.2",
 		"0.stand.shrink.7" : "1.stand.expand.2",
 		"0.stand.shrink.8" : "1.stand.expand.1",
+
+		"0.fall.1" : "0.jump.4",
+		"0.fall.2" : "0.jump.3",
+		"0.fall.3" : "0.jump.2",
+		"0.fall.4" : "0.jump.1",
 
 		// error handling
 

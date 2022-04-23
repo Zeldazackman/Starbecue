@@ -159,6 +159,7 @@ end
 
 function initAfterInit(data)
 	sbq.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
+	sbq.defaultSbqData = sb.jsonMerge(sbq.sbqData, {})
 	sbq.cfgAnimationFile = sbq.sbqData.animation
 	sbq.victimAnimations = root.assetJson(sbq.sbqData.victimAnimations)
 	sbq.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
@@ -423,7 +424,9 @@ function state.stand.cockVore(args)
 	if sbq.detectPants() or not sbq.settings.penis then return end
 	local success, func = sbq.doVore(args, "shaft", {}, "swallow")
 	if success then return success, func end
-	sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+	if not sbq.transitionLock then
+		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+	end
 end
 
 function state.stand.cockEscape(args)
@@ -432,7 +435,7 @@ function state.stand.cockEscape(args)
 end
 
 function sbq.detectPants()
-	if sbq.settings.underwear then return false end
+	if sbq.settings.underwear then return true end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
 	return not sbq.config.legsVoreWhitelist[pants.name or "none"]
 end
@@ -520,7 +523,7 @@ function sbq.letout(id)
 end
 
 function sbq.settingsMenuUpdated()
-	local defaultSbqData = config.getParameter("sbqData")
+	local defaultSbqData = sbq.defaultSbqData
 	if sbq.settings.penis then
 		if sbq.settings.underwear then
 			sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
@@ -575,4 +578,9 @@ function sbq.handleUnderwear()
 
 	world.sendEntityMessage(sbq.driver, "sbqEnableUnderwear", sbq.settings.underwear)
 	world.sendEntityMessage(sbq.driver, "sbqEnableBra", sbq.settings.bra)
+end
+
+function sbq.update(dt)
+	sbq.setPartTag("global", "bullgeOccupants", tostring(math.max(0, sbq.occupants.shaft, sbq.occupants.ballsL, sbq.occupants.ballsR)))
+
 end

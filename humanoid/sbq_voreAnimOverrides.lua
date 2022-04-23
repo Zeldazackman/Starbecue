@@ -19,9 +19,8 @@ end)
 
 message.setHandler("sbqEnableUnderwear", function (_,_, enable)
 	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/malebody.png")
-	local success, size = pcall(root.imageSize, (part))
-	sb.logInfo(sb.printJson(size))
-	if success and enable and size[1] ~= 64 then
+	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and enable and notEmpty ~= nil then
 		local partname = "crotch_underwear"
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
@@ -56,8 +55,8 @@ message.setHandler("sbqEnableBra", function (_,_, enable)
 	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/<gender>BreastsCover.png")
 	local partname = "breastsCover_underwear"
 
-	local success, size = pcall(root.imageSize, (part))
-	if success and enable and size[1] ~= 64 then
+	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and enable and notEmpty ~= nil then
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
 	elseif enable then
@@ -73,8 +72,8 @@ message.setHandler("sbqEnableBra", function (_,_, enable)
 	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsFront.png")
 	partname = "breastsFront_underwear"
 
-	success, size = pcall(root.imageSize, (part))
-	if success and enable and size[1] ~= 64 then
+	success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and enable and notEmpty ~= nil then
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
 	elseif enable then
@@ -90,8 +89,8 @@ message.setHandler("sbqEnableBra", function (_,_, enable)
 	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsBack.png")
 	partname = "breastsBack_underwear"
 
-	success, size = pcall(root.imageSize, (part))
-	if success and enable and size[1] ~= 64 then
+	success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and enable and notEmpty ~= nil then
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
 	elseif enable then
