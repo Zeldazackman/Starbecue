@@ -17,6 +17,104 @@ message.setHandler("sbqUpdateAnimPartTag", function (_,_, part, animTags)
 	end
 end)
 
+message.setHandler("sbqEnableUnderwear", function (_,_, enable)
+	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/malebody.png")
+	local success, size = pcall(root.imageSize, (part))
+	sb.logInfo(sb.printJson(size))
+	if success and enable and size[1] ~= 64 then
+		local partname = "crotch_underwear"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+
+		partname = "crotch_underwear_frontlegs"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	elseif enable then
+		part = replaceSpeciesGenderTags("/humanoid/any/underwear/malebody.png")
+
+		local partname = "crotch_underwear"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+
+		partname = "crotch_underwear_frontlegs"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	else
+		part = ""
+		local partname = "crotch_underwear"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+
+		partname = "crotch_underwear_frontlegs"
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
+end)
+
+message.setHandler("sbqEnableBra", function (_,_, enable)
+
+	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/<gender>BreastsCover.png")
+	local partname = "breastsCover_underwear"
+
+	local success, size = pcall(root.imageSize, (part))
+	if success and enable and size[1] ~= 64 then
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	elseif enable then
+		part = replaceSpeciesGenderTags("/humanoid/any/underwear/<gender>BreastsCover.png")
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	else
+		part = ""
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
+
+	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsFront.png")
+	partname = "breastsFront_underwear"
+
+	success, size = pcall(root.imageSize, (part))
+	if success and enable and size[1] ~= 64 then
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	elseif enable then
+		part = replaceSpeciesGenderTags("/humanoid/any/underwear/breastsFront.png")
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	else
+		part = ""
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
+
+	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsBack.png")
+	partname = "breastsBack_underwear"
+
+	success, size = pcall(root.imageSize, (part))
+	if success and enable and size[1] ~= 64 then
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	elseif enable then
+		part = replaceSpeciesGenderTags("/humanoid/any/underwear/breastsBack.png")
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	else
+		part = ""
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
+
+end)
+
+message.setHandler("sbqUpdateAnimPartImage", function (_,_, partname, string)
+	local part = replaceSpeciesGenderTags(string)
+	local success, size = pcall(root.imageSize, (part))
+	if success and size[1] ~= 64 then
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
+end)
+
 message.setHandler("sbqDoAnimsName", function (_,_, animsName, force)
 	doAnims(self.speciesData.animations[animsName], force)
 end)

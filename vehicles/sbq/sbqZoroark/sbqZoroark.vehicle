@@ -266,12 +266,12 @@
 
 			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 
-			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1, "maxNested" : -1 },
+			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
 			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
 
-			"breasts" : { "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
+			"breasts" : { "sided" : true, "max": 1, "mass": 0.1 },
 			"breastsL" : { "name" : "Left Breast", "max": 1, "mass": 0.1, "hammerspace" : true },
 			"breastsR" : { "name" : "Right Breast", "max": 1, "mass": 0.1, "hammerspace" : true }
 		},

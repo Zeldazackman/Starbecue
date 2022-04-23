@@ -224,6 +224,8 @@ function initAfterInit(data)
 	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then
 		world.sendEntityMessage(retrievePrey, "sbqSendAllPreyTo", entity.id())
 	end
+
+	sbq.settingsMenuUpdated()
 end
 
 sbq.totalTimeAlive = 0
@@ -430,6 +432,7 @@ function state.stand.cockEscape(args)
 end
 
 function sbq.detectPants()
+	if sbq.settings.underwear then return false end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
 	return not sbq.config.legsVoreWhitelist[pants.name or "none"]
 end
@@ -514,4 +517,62 @@ function sbq.letout(id)
 	elseif location == "womb" then
 		return sbq.doTransition("unbirthEscape", {id = id})
 	end
+end
+
+function sbq.settingsMenuUpdated()
+	local defaultSbqData = config.getParameter("sbqData")
+	if sbq.settings.penis then
+		if sbq.settings.underwear then
+			sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
+		else
+			sbq.setPartTag("global", "cockVisible", "")
+		end
+		sbq.sbqData.locations.shaft.max = defaultSbqData.locations.shaft.max
+	else
+		sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.shaft.max = 0
+	end
+	if sbq.settings.balls then
+		if sbq.settings.underwear then
+			sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
+		else
+			sbq.setPartTag("global", "ballsVisible", "")
+		end
+		sbq.sbqData.locations.ballsL.max = defaultSbqData.locations.balls.max
+		sbq.sbqData.locations.ballsR.max = defaultSbqData.locations.balls.max
+	else
+		sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.ballsL.max = 0
+		sbq.sbqData.locations.ballsR.max = 0
+	end
+	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
+	if sbq.settings.breasts then
+		sbq.setPartTag("global", "breastsVisible", "")
+		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.balls.max
+		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.balls.max
+	else
+		sbq.setPartTag("global", "breastsVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.breastsL.max = 0
+		sbq.sbqData.locations.breastsR.max = 0
+	end
+	sbq.sbqData.locations.breasts.symmetrical = sbq.settings.symmetricalBreasts
+
+	if sbq.settings.pussy then
+		if sbq.settings.underwear then
+			sbq.setPartTag("global", "pussyVisible", "?crop;0;0;0;0")
+		else
+			sbq.setPartTag("global", "pussyVisible", "")
+		end
+	else
+		sbq.setPartTag("global", "pussyVisible", "?crop;0;0;0;0")
+	end
+	sbq.handleUnderwear()
+end
+
+function sbq.handleUnderwear()
+	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "frontlegs", "/humanoid/<species>/nude/<gender>body.png")
+	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "body", "/humanoid/<species>/nude/<gender>body.png")
+
+	world.sendEntityMessage(sbq.driver, "sbqEnableUnderwear", sbq.settings.underwear)
+	world.sendEntityMessage(sbq.driver, "sbqEnableBra", sbq.settings.bra)
 end

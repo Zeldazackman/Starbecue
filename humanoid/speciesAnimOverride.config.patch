@@ -1,6 +1,8 @@
 [
 	{ "op": "add", "path": "/scripts/-", "value": "/humanoid/sbq_voreAnimOverrides.lua" },
 
+	{ "op": "add", "path": "/partImages/breastsCover", "value": "/humanoid/<species>/nude/<gender>BreastsCover.png" },
+
 	{ "op": "add", "path": "/animations/idle/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/sit/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/belly", "value": "idle" },

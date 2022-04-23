@@ -14,6 +14,16 @@ penisCumTF:setChecked(sbq.predatorSettings.penisCumTF)
 ballsCumTF:setChecked(sbq.predatorSettings.ballsCumTF)
 wombEggify:setChecked(sbq.predatorSettings.wombEggify)
 
+bra:setChecked(sbq.predatorSettings.bra)
+underwear:setChecked(sbq.predatorSettings.underwear)
+
+function bra:onClick()
+	sbq.changePredatorSetting("bra", bra.checked)
+end
+function underwear:onClick()
+	sbq.changePredatorSetting("underwear", underwear.checked)
+end
+
 function tail:onClick()
 	sbq.changePredatorSetting("tail", tail.checked)
 end
