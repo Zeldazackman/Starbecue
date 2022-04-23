@@ -369,9 +369,9 @@ function sbq.hammerspacePanel()
 	if sbq.globalSettings.hammerspace then
 		hammerspacePanel:setVisible(true)
 		for location, data in pairs(sbq.predatorConfig.locations or {}) do
-			if data.hammerspace then
+			if data.hammerspace or data.minVisual ~= nil then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
-					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
+					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visble = data.hammerspace or false, toolTip = "Enable Hammerspace for this location" },
 					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
 					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
 					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
@@ -400,7 +400,7 @@ end
 
 function sbq.changeHammerspaceLimit(location, inc, label)
 	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 1) + inc
-	if newValue < 1 then return
+	if newValue < sbq.predatorConfig.locations[location].minVisual or 1 then return
 	elseif newValue > sbq.predatorConfig.locations[location].max then return end
 	label:setText(newValue)
 	sbq.predatorSettings.hammerspaceLimits[location] = newValue

@@ -196,7 +196,7 @@ function sbq.firstNotLounging(entityaimed)
 end
 
 function sbq.moveOccupantLocation(args, location)
-	if sbq.locationFull(location) then return false end
+	if not args.id or sbq.locationFull(location) then return false end
 	local maxNested = sbq.sbqData.locations[location].maxNested or ( sbq.sbqData.locations[location].max - 1 )
 	local nestCount = 0
 	for i = 0, sbq.occupantSlots do
@@ -211,7 +211,7 @@ end
 
 function sbq.findFirstOccupantIdForLocation(location)
 	for i = 0, sbq.occupantSlots do
-		if sbq.occupant[i].location == location then
+		if sbq.occupant[i].location == location and type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
 			return sbq.occupant[i].id, i
 		end
 	end

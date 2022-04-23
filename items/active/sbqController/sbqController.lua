@@ -100,6 +100,7 @@ function update(dt, fireMode, shiftHeld, controls)
 				sbq.loopedMessage("radialSelection", player.id(), "sbqGetRadialSelection", {}, function(data)
 					if data.selection ~= nil and data.type == "controllerActionSelect" then
 						sbq.lastRadialSelection = data.selection
+						sbq.radialSelectionType = data.type
 						if data.selection == "cancel" then return end
 						if data.selection == "despawn" and data.pressed and not sbq.click then
 							sbq.click = true
@@ -124,12 +125,14 @@ function update(dt, fireMode, shiftHeld, controls)
 			end
 		elseif assignedMenu then
 			world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqClose" )
-			if sbq.lastRadialSelection == "despawn" then
-				if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-					if (currentData.totalOccupants or 0) > 0 then
-						world.sendEntityMessage(currentData.id, "letout")
-					else
-						world.sendEntityMessage(currentData.id, "despawn")
+			if sbq.radialSelectionType == "controllerActionSelect" then
+				if sbq.lastRadialSelection == "despawn" then
+					if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+						if (currentData.totalOccupants or 0) > 0 then
+							world.sendEntityMessage(currentData.id, "letout")
+						else
+							world.sendEntityMessage(currentData.id, "despawn")
+						end
 					end
 				end
 			end
@@ -161,6 +164,7 @@ function doVoreAction(id)
 		withoutEntityId = player.id(),
 		includedTypes = {"creature"}
 	})
+	local sent
 	for i, victimId in ipairs(entityaimed) do
 		for j, eid in ipairs(entityInRange) do
 			if victimId == eid and entity.entityInSight(victimId) then
@@ -168,6 +172,7 @@ function doVoreAction(id)
 			end
 		end
 	end
+	world.sendEntityMessage( id, "requestTransition", storage.clickAction, {} )
 end
 
 

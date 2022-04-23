@@ -49,7 +49,7 @@ end
 
 function sbq.checkSettings(checkSettings)
 	for setting, value in pairs(checkSettings) do
-		if sbq.settings[setting] ~= value then
+		if (sbq.settings[setting] or false) ~= value  then
 			return false
 		end
 	end

@@ -123,10 +123,10 @@
 			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1, "maxNested" : -1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
-			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
-			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true }
+			"shaft" : { "name" : "Shaft", "max": 1, "maxNested" : -1 },
+			"balls" : { "sided" : true, "max": 1 },
+			"ballsL" : { "name" : "Left Ball", "max": 1, "hammerspace" : true },
+			"ballsR" : { "name" : "Right Ball", "max": 1, "hammerspace" : true }
 		},
 
 		"defaultSettings" : {

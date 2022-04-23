@@ -62,6 +62,15 @@ function sbq.doAnim( state, anim, force )
 end
 
 function sbq.doAnimData(state, anim, force)
+	if not sbq.animStateData[state] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state))
+		return
+	end
+	if not sbq.animStateData[state].states[anim] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state).."."..tostring(anim))
+		return
+	end
+
 	local oldPriority = (sbq.animStateData[state].animationState or {}).priority or 0
 	local newPriority = (sbq.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = sbq.animationIs( state, anim )

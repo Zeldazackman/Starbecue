@@ -421,13 +421,17 @@ function state.stand.unbirthEscape(args)
 end
 
 function state.stand.cockVore(args)
-	if sbq.detectPants() or not sbq.settings.penis then return end
-	local success, func = sbq.doVore(args, "shaft", {}, "swallow")
-	if success then return success, func end
-	if not sbq.transitionLock then
+	if not args.id then
 		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+		return
 	end
+	if sbq.detectPants() or not sbq.settings.penis then return end
+	return sbq.doVore(args, "shaft", {}, "swallow")
 end
+
+state.stand.ballsToShaft = sbq.ballsToShaft
+state.stand.shaftToBalls = sbq.shaftToBalls
+state.stand.switchBalls = sbq.switchBalls
 
 function state.stand.cockEscape(args)
 	if sbq.detectPants() or not sbq.settings.penis then return end
