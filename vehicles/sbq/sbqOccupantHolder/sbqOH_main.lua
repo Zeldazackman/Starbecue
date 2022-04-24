@@ -401,22 +401,22 @@ function state.stand.oralEscape(args)
 end
 
 function state.stand.analVore(args)
-	if sbq.detectPants() then return end
+	if sbq.detectPants() then return false end
 	return sbq.doVore(args, "belly", {}, "swallow")
 end
 
 function state.stand.analEscape(args)
-	if sbq.detectPants() then return end
+	if sbq.detectPants() then return false end
 	return sbq.doEscape(args, {}, {} )
 end
 
 function state.stand.unbirth(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return end
+	if sbq.detectPants() or not sbq.settings.pussy then return false end
 	return sbq.doVore(args, "womb", {}, "swallow")
 end
 
 function state.stand.unbirthEscape(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return end
+	if sbq.detectPants() or not sbq.settings.pussy then return false end
 	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
 end
 
@@ -425,7 +425,7 @@ function state.stand.cockVore(args)
 		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
 		return
 	end
-	if sbq.detectPants() or not sbq.settings.penis then return end
+	if sbq.detectPants() or not sbq.settings.penis then return false end
 	return sbq.doVore(args, "shaft", {}, "swallow")
 end
 
@@ -434,7 +434,7 @@ state.stand.shaftToBalls = sbq.shaftToBalls
 state.stand.switchBalls = sbq.switchBalls
 
 function state.stand.cockEscape(args)
-	if sbq.detectPants() or not sbq.settings.penis then return end
+	if sbq.detectPants() or not sbq.settings.penis then return false end
 	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
 end
 

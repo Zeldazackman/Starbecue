@@ -459,6 +459,14 @@ function sbq.setOccupantTags()
 				sbq.occupants[combine] = sbq.occupants[location]
 			end
 		end
+
+		if data.copy then
+			local copyTable = {0}
+			for _, copy in ipairs(data.copy) do
+				table.insert(copyTable, sbq.occupants[copy])
+			end
+			sbq.occupants[location] = math.max(table.unpack(copyTable))
+		end
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do
@@ -680,22 +688,25 @@ function sbq.handleStruggles(dt)
 				parts = struggledata.sided.leftParts
 			end
 		end
+
+		local time = dt
 		if parts ~= nil then
 			for _, part in ipairs(parts) do
 				animation[part] = prefix.."s_"..movedir
 			end
+			for _, part in ipairs(struggledata.additionalParts or {}) do -- these are parts that it doesn't matter if it struggles or not, meant for multiple parts triggering the animation but never conflicting since it doesn't check if its struggling already or not
+				animation[part] = prefix.."s_"..movedir
+			end
 			sbq.doAnims(animation)
-			local time = dt
 			for _, part in ipairs(parts) do
 				local newtime = sbq.animStateData[part.."State"].animationState.cycle
 				if newtime > time then
 					time = newtime
 				end
 			end
-			sbq.occupant[struggler].bellySettleDownTimer = time
-			sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 		end
-
+		sbq.occupant[struggler].bellySettleDownTimer = time
+		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
 		if not sbq.movement.animating then
 			sbq.doAnims( struggledata.directions[movedir].animation or struggledata.animation )

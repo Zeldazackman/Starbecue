@@ -48,6 +48,23 @@ message.setHandler("sbqEnableUnderwear", function (_,_, enable)
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
 	end
+
+	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/bulge.png")
+	partname = "bulge"
+
+	success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and enable and notEmpty ~= nil then
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	elseif enable then
+		part = replaceSpeciesGenderTags("/humanoid/any/underwear/bulge.png")
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	else
+		part = ""
+		animator.setPartTag(partname, "partImage", part)
+		self.parts[partname] = part
+	end
 end)
 
 message.setHandler("sbqEnableBra", function (_,_, enable)
