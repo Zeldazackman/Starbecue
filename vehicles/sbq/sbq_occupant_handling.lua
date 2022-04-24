@@ -237,6 +237,26 @@ function sbq.locationEmpty(location)
 end
 
 function sbq.doVore(args, location, statuses, sound )
+	local location = location
+	if sbq.sbqData.locations[location].sided then
+		if sbq.direction > 0 then
+			if not sbq.locationFull(location.."L") then
+				location = location.."L"
+			elseif not sbq.locationFull(location.."R") then
+				location = location.."R"
+			else
+				return false
+			end
+		else
+			if not sbq.locationFull(location.."R") then
+				location = location.."R"
+			elseif not sbq.locationFull(location.."L") then
+				location = location.."L"
+			else
+				return false
+			end
+		end
+	end
 	if sbq.eat( args.id, location ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )

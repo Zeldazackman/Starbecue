@@ -3,9 +3,12 @@
 tail:setChecked(sbq.predatorSettings.tail)
 tailMaw:setChecked(sbq.predatorSettings.tailMaw)
 
+navel:setChecked(sbq.predatorSettings.navel)
+
 penis:setChecked(sbq.predatorSettings.penis)
 balls:setChecked(sbq.predatorSettings.balls)
 symmetricalBalls:setChecked(sbq.predatorSettings.symmetricalBalls)
+
 breasts:setChecked(sbq.predatorSettings.breasts)
 symmetricalBreasts:setChecked(sbq.predatorSettings.symmetricalBreasts)
 pussy:setChecked(sbq.predatorSettings.pussy)
@@ -30,6 +33,10 @@ end
 
 function tailMaw:onClick()
 	sbq.changePredatorSetting("tailMaw", tailMaw.checked)
+end
+
+function navel:onClick()
+	sbq.changePredatorSetting("navel", navel.checked)
 end
 
 function penis:onClick()

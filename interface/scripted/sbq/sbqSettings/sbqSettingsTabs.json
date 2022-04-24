@@ -69,11 +69,15 @@
 
 					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything ususally has a tail, this might give things one"}, { "type" : "label", "text" : "Tail" }],
 					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw"}, { "type" : "label", "text" : "Tailmaw" }],
-					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes"}, { "type" : "label", "text" : "Navel" }],
+
+					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Boobs! for breast vore"}, { "type" : "label", "text" : "Breasts" }],
 					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Breasts" }],
+
 					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
 					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }],
 					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Balls" }],
+
 					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "label", "text" : "Pussy" }]
 				]},
 				{ "type" : "panel", "style" : "convex", "children" : [

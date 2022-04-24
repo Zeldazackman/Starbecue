@@ -75,6 +75,12 @@ function update(dt, fireMode, shiftHeld, controls)
 						icon = "/items/active/sbqController/tailVore.png"
 					} )
 				end
+				if settings.navel then
+					table.insert(options, {
+						name = "navelVore",
+						icon = "/items/active/sbqController/navelVore.png"
+					} )
+				end
 				if settings.breasts then
 					table.insert(options, {
 						name = "breastVore",

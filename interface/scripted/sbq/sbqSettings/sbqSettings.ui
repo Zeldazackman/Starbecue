@@ -36,9 +36,9 @@
 						]}
 					]],
 					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "mode" : "v", "expandMode" : [0, 0] },
+						{ "mode" : "v" },
 						{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-						{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "mode" : "v" } ]}
+						[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
 					]},
 					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}

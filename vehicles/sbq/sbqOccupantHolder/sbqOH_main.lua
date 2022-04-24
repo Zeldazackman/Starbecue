@@ -438,6 +438,32 @@ function state.stand.cockEscape(args)
 	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
 end
 
+function state.stand.breastVore(args)
+	if sbq.detectShirt() or not sbq.settings.breasts then return false end
+	return sbq.doVore(args, "breasts", {}, "swallow")
+end
+
+function state.stand.breastEscape(args)
+	if sbq.detectShirt() or not sbq.settings.breasts then return false end
+	return sbq.doEscape(args, {}, {} )
+end
+
+function state.stand.navelVore(args)
+	if not sbq.settings.navel then return false end
+	return sbq.doVore(args, "belly", {}, "swallow")
+end
+
+function state.stand.navelEscape(args)
+	if not sbq.settings.navel then return false end
+	return sbq.doEscape(args, {}, {} )
+end
+
+function sbq.detectShirt()
+	if sbq.settings.bra then return true end
+	local shirt = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
+	return not sbq.config.chestVoreWhitelist[shirt.name or "none"]
+end
+
 function sbq.detectPants()
 	if sbq.settings.underwear then return true end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
@@ -514,6 +540,8 @@ function sbq.letout(id)
 	if location == "belly" then
 		if (sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController") and sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction == "analVore" then
 			return sbq.doTransition("analEscape", {id = id})
+		elseif (sbq.seats[sbq.driverSeat].controls.primaryHandItem == "sbqController") and sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor.parameters.scriptStorage.clickAction == "navelVore" then
+			return sbq.doTransition("navelEscape", {id = id})
 		else
 			return sbq.doTransition("oralEscape", {id = id})
 		end
@@ -521,6 +549,8 @@ function sbq.letout(id)
 		return sbq.doTransition("cockEscape", {id = id})
 	elseif location == "ballsL" or location == "ballsR" then
 		return sbq.ballsToShaft({id = id})
+	elseif location == "breastsL" or location == "breastsR" then
+		return sbq.doTransition("breastEscape", {id = id})
 	elseif location == "womb" then
 		return sbq.doTransition("unbirthEscape", {id = id})
 	end
