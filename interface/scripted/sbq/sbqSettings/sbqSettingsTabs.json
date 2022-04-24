@@ -67,7 +67,7 @@
 					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore"}, { "type" : "label", "text" : "Bra" }],
 					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth"}, { "type" : "label", "text" : "Underwear" }],
 
-					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything ususally has a tail, this might give things one"}, { "type" : "label", "text" : "Tail" }],
+					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one"}, { "type" : "label", "text" : "Tail" }],
 					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw"}, { "type" : "label", "text" : "Tailmaw" }],
 					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes"}, { "type" : "label", "text" : "Navel" }],
 
@@ -95,7 +95,7 @@
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Body Parts", "inline" : true },
-					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything ususally has a tail, this might give things one", "visible" : false}, { "type" : "label", "visible" : false, "text" : "Tail" }],
+					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one", "visible" : false}, { "type" : "label", "visible" : false, "text" : "Tail" }],
 					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw", "visible" : false}, { "type" : "label", "text" : "Tailmaw", "visible" : false }],
 					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
 					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Breasts" }],
