@@ -57,6 +57,11 @@ function init()
 			if success then
 				if type(data.sbqData) == "table" then
 					sbq.predatorConfig = data.sbqData
+					if type(data.sbqData.merge) == "table" then
+						for i, path in ipairs(data.sbqData.merge) do
+							sbq.predatorConfig = sb.jsonMerge(root.assetJson(path).sbqData, sbq.predatorConfig)
+						end
+					end
 				end
 			end
 		else

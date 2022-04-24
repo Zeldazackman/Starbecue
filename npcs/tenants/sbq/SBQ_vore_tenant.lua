@@ -23,9 +23,19 @@ function init()
 	if success then
 		if type(data.sbqData) == "table" then
 			sbq.speciesConfig.sbqData = data.sbqData
+			if type(data.sbqData.merge) == "table" then
+				for i, path in ipairs(data.sbqData.merge) do
+					sbq.speciesConfig.sbqData = sb.jsonMerge(root.assetJson(path).sbqData, sbq.speciesConfig.sbqData)
+				end
+			end
 		end
 		if type(data.states) == "table" then
 			sbq.speciesConfig.states = data.states
+			if type(data.states.merge) == "table" then
+				for i, path in ipairs(data.states.merge) do
+					sbq.speciesConfig.states = sb.jsonMerge(root.assetJson(path).states, sbq.speciesConfig.states)
+				end
+			end
 		end
 	end
 

@@ -185,9 +185,19 @@ function init()
 		if success then
 			if type(data.sbqData) == "table" then
 				speciesConfig.sbqData = data.sbqData
+				if type(data.sbqData.merge) == "table" then
+					for i, path in ipairs(data.sbqData.merge) do
+						speciesConfig.sbqData = sb.jsonMerge(root.assetJson(path).sbqData, speciesConfig.sbqData)
+					end
+				end
 			end
 			if type(data.states) == "table" then
 				speciesConfig.states = data.states
+				if type(data.states.merge) == "table" then
+					for i, path in ipairs(data.states.merge) do
+						speciesConfig.states = sb.jsonMerge(root.assetJson(path).states, speciesConfig.states)
+					end
+				end
 			end
 		end
 		local effects = status.getPersistentEffects("speciesAnimOverride")

@@ -1,6 +1,8 @@
 [
 	{ "op": "add", "path": "/scripts/-", "value": "/humanoid/sbq_voreAnimOverrides.lua" },
 
+	{ "op": "add", "path": "/partImages/breastsCover", "value": "/humanoid/<species>/nude/<gender>BreastsCover.png" },
+
 	{ "op": "add", "path": "/animations/idle/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/sit/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/belly", "value": "idle" },
@@ -19,11 +21,11 @@
 	{ "op": "add", "path": "/animations/sit/cock", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/cock", "value": "idle" },
 	{ "op": "add", "path": "/animations/duck/cock", "value": "idle" },
-	{ "op": "add", "path": "/animations/walk/cock", "value": "idle" },
-	{ "op": "add", "path": "/animations/run/cock", "value": "idle" },
-	{ "op": "add", "path": "/animations/jump/cock", "value": "idle" },
-	{ "op": "add", "path": "/animations/fall/cock", "value": "idle" },
-	{ "op": "add", "path": "/animations/swim/cock", "value": "idle" },
+	{ "op": "add", "path": "/animations/walk/cock", "value": "walk" },
+	{ "op": "add", "path": "/animations/run/cock", "value": "run" },
+	{ "op": "add", "path": "/animations/jump/cock", "value": "jump" },
+	{ "op": "add", "path": "/animations/fall/cock", "value": "fall" },
+	{ "op": "add", "path": "/animations/swim/cock", "value": "walk" },
 	{ "op": "add", "path": "/animations/swimIdle/cock", "value": "idle" },
 
 	{ "op": "add", "path": "/partImages/cock", "value": "/humanoid/<species>/cock.png" },
