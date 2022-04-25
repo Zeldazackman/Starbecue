@@ -8,6 +8,7 @@
 	"friendlyName" : "Starbecue",
 	"includes" : [
 		"starboundSpeciesAnimOverrides",
+		"Umbreon Race Mod",
 		"StarboundSimpleVoreModVSO", "ssvm", "Starbound Simple Vore Mod", "SSVMVSOchars", "SSVMSPOVZovoroth", "SSVMSPOVLekrashar", "SSVMSPOVHappers", "SSVMSPOVelric", "SSVMSPOV_TEMPLATE", // to make sure we overwrite anything from SSVM that we need to
 		"StardustLib", "Stardust Core", "QuickbarMini", "Stardust Core Lite", // we use them for UIs
 		"FrackinUniverse", "Frackin' Universe" // have to include FU to make sure it loads after so it doesn't kill our goddam fireplace as its terrestrial worlds patch doesn't give a shit about other mods adding shit to garden planets

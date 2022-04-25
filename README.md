@@ -12,12 +12,36 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
-### Playable Predators
+### Playable Predator transformation
 - Vaporeon
 - Xeronious
 - Avian
 - Slime
 - Ziellek Dragon
+
+### Player/NPC Predator species
+- Human
+- Hylotl
+- Floran
+- Avian
+- Apex
+- Glitch
+- Novakid
+- Fenerox
+- Avali
+- Novali
+- Lucario
+- Lycanroc
+- Eevee
+- Umbreon
+- Crylan
+- Rodent
+- Lyceen
+- Latex
+- Elysian
+- Fennix
+- Felin
+
 
 ### NPC Vore Tenants
 - Zevi (Pred/Prey)
@@ -36,7 +60,9 @@ Full use of this system requires you to bind Tech Action 2 and 3 in the options 
 
 When turning into a predator you will be given a controller item, this is required for the predator transformation to detect some keys being pressed, such as Shift, as well as pass some more data to the vehicle that it cannot detect without it.
 
-Holding Shift+Up while controlling a pred allows you to bring up its action wheel, the X at the bottom will despawn the pred, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a pred might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the pred does not have will not result in anything.
+You can also click with a controller when not transformed to activate "vore mode" where those actions can be used to eat other players in the base state, if the species you are has support, it will have visual effects on your player sprite, such as the belly expanding and struggles from the prey within, some items in hands may not animate correctly while in vore mode if you don't have certain techs equipped
+
+Holding Shift+Up with a controller allows you to bring up the action wheel, at the bottom you will be able to let out the most recently eaten prey, or despawn the predator transformation/occupant holder, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a pred might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the pred does not have will not result in anything.
 
 Most predators will have the same movement controls a player would, but tapping movment keys can be used to transition between different poses, like standing or sitting or sleeping, etc.
 

@@ -300,7 +300,7 @@
 		},
 		{ "op" : "add", "path" : "/transformationGroups/bellybob", "value" : { "interpolated": false } }
 	],
-	[ // tail parts and state		{ "op" : "add", "path" : "/animatedParts/stateTypes/tailState/states/s_front", "value" : { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" } },
+	[ // tail parts and state
 
 
 		{ "op" : "add", "path" : "/animatedParts/stateTypes/tailState/states/eat", "value" : { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 } },
