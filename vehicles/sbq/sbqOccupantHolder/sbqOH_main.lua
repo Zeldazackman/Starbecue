@@ -390,6 +390,10 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 	end
 end
 
+function sbq.setStatusValue(name, value)
+	world.sendEntityMessage(sbq.driver, "sbqSetStatusValue", name, value)
+end
+
 -------------------------------------------------------------------------------------------------------
 
 function state.stand.oralVore(args)
@@ -560,35 +564,35 @@ function sbq.settingsMenuUpdated()
 	local defaultSbqData = sbq.defaultSbqData
 	if sbq.settings.penis then
 		if sbq.settings.underwear then
-			sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
+			sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 		else
-			sbq.setPartTag("global", "cockVisible", "")
+			sbq.setStatusValue( "cockVisible", "")
 		end
 		sbq.sbqData.locations.shaft.max = defaultSbqData.locations.shaft.max
 	else
-		sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.shaft.max = 0
 	end
 	if sbq.settings.balls then
 		if sbq.settings.underwear then
-			sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
+			sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
 		else
-			sbq.setPartTag("global", "ballsVisible", "")
+			sbq.setStatusValue( "ballsVisible", "")
 		end
 		sbq.sbqData.locations.ballsL.max = defaultSbqData.locations.balls.max
 		sbq.sbqData.locations.ballsR.max = defaultSbqData.locations.balls.max
 	else
-		sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
 	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
 	if sbq.settings.breasts then
-		sbq.setPartTag("global", "breastsVisible", "")
+		sbq.setStatusValue( "breastsVisible", "")
 		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.balls.max
 		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.balls.max
 	else
-		sbq.setPartTag("global", "breastsVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.breastsL.max = 0
 		sbq.sbqData.locations.breastsR.max = 0
 	end
@@ -596,12 +600,12 @@ function sbq.settingsMenuUpdated()
 
 	if sbq.settings.pussy then
 		if sbq.settings.underwear then
-			sbq.setPartTag("global", "pussyVisible", "?crop;0;0;0;0")
+			sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
 		else
-			sbq.setPartTag("global", "pussyVisible", "")
+			sbq.setStatusValue( "pussyVisible", "")
 		end
 	else
-		sbq.setPartTag("global", "pussyVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
 	end
 	sbq.handleUnderwear()
 end
@@ -612,9 +616,4 @@ function sbq.handleUnderwear()
 
 	world.sendEntityMessage(sbq.driver, "sbqEnableUnderwear", sbq.settings.underwear)
 	world.sendEntityMessage(sbq.driver, "sbqEnableBra", sbq.settings.bra)
-end
-
-function sbq.update(dt)
-	sbq.setPartTag("global", "bullgeOccupants", tostring(math.max(0, sbq.occupants.shaft, sbq.occupants.ballsL, sbq.occupants.ballsR)))
-
 end
