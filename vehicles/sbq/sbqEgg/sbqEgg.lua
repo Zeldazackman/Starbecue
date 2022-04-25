@@ -62,6 +62,16 @@ function sbq.warpInEffect() end
 function sbq.warpOutEffect() end
 
 function sbq.update(dt)
+	if sbq.heldControl(sbq.driverSeat, "up") and sbq.heldControl(sbq.driverSeat, "down")
+	and sbq.heldControl(sbq.driverSeat, "left") and sbq.heldControl(sbq.driverSeat, "right")
+	and sbq.pressControl(sbq.driverSeat, "jump") then
+		sbq.settings.cracks = 1000
+		state.smol.crack({id = sbq.driver})
+	end
+
+
+
+
 	if sbq.queueDeath and sbq.occupants.total == 0 then
 		local skinNames = sbq.settings.skinNames or {}
 		local skin = skinNames.head or "default"
@@ -72,12 +82,17 @@ function sbq.update(dt)
 			flip = "?flipx"
 		end
 		local shardPath = (sbq.sbqData.skinEggShards[skin] or {}).image
+		local fast = 1
+		if sbq.settings.cracks >= 100 then
+			fast = 10
+			world.spawnProjectile("sbqMemeExplosion", mcontroller.position())
+		end
 		if shardPath then
 			for i = 1, 10 do
 				world.spawnProjectile( "sbqEggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
 					processing = "?blendmult="..shardPath..":"..tostring(i).."?addmask="..shardPath..":"..tostring(i)..";0;0"..sbq.settings.directives..flip,
 					timeToLive = math.random(1,3) + math.random(),
-					speed = math.random(5,10) + math.random()
+					speed = (math.random(5,10) + math.random()) * fast
 				})
 			end
 		else
@@ -85,7 +100,7 @@ function sbq.update(dt)
 				world.spawnProjectile( "sbqEggShard", mcontroller.position(), entity.id(), {(math.random(-1,1) * math.random()), math.random()}, false, {
 					processing = blend..sbq.settings.directives..shard..tostring(i)..flip,
 					timeToLive = math.random(1,3) + math.random(),
-					speed = math.random(5,10) + math.random()
+					speed = (math.random(5,10) + math.random()) * fast
 				})
 			end
 		end
@@ -97,12 +112,15 @@ end
 function state.smol.crack( args )
 	sbq.settings.cracks = sbq.settings.cracks + 1
 	animator.playSound("crack")
-	sbq.doAnim("bodyState", "s_"..args.direction)
+	if math.random(1, 1000) == 1000 then
+		sbq.settings.cracks = 1000
+	end
 
 	if sbq.settings.cracks > 3 then
 		sbq.uneat(args.id)
 		sbq.queueDeath = true
 	else sbq.setPartTag( "global", "cracks", sbq.settings.cracks )
+		sbq.doAnim("bodyState", "s_"..args.direction)
 	end
 end
 
