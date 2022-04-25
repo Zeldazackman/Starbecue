@@ -1,5 +1,5 @@
 {
-	"objectName": "sbqShopDungeonPlacer",
+	"objectName": "sbqShopNpcSpawner",
 	"colonyTags": [],
 	"rarity": "Uncommon",
 	"race": "generic",
@@ -7,18 +7,16 @@
 	"price": 10,
 	"health" : 5,
 	"itemTags": [],
-	"shortdescription" : "dungeon placer",
+	"shortdescription" : "npc spawner",
 
-	"inventoryIcon": "sbqShopDungeonPlacer.png",
+	"inventoryIcon": "sbqShopNpcSpawner.png",
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "sbqShopDungeonPlacer.png" } ],
+			"imageLayers" : [ { "image" : "sbqShopNpcSpawner.png" } ],
 			"imagePosition": [0, 0]
 		}
 	],
-
-	"dungeon" : "sbqHub_auriShop",
 
 	"retainObjectParametersInItem" : true,
 	"isWired" : false,
@@ -29,6 +27,6 @@
 	"allowScanning" : false,
 	"isContainer" : false,
 	"scripts": [
-		"sbqShopDungeonPlacer.lua"
+		"sbqShopNpcSpawner.lua"
 	]
 }

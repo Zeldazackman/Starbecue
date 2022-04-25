@@ -730,7 +730,7 @@
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":false,
+                 "visible":true,
                  "width":104,
                  "x":152,
                  "y":280
@@ -746,7 +746,7 @@
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":false,
+                 "visible":true,
                  "width":104,
                  "x":152,
                  "y":280
@@ -762,7 +762,7 @@
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":false,
+                 "visible":true,
                  "width":104,
                  "x":152,
                  "y":280
@@ -1182,6 +1182,23 @@
                  "width":16,
                  "x":336,
                  "y":280
+                }, 
+                {
+                 "gid":1348,
+                 "height":8,
+                 "id":131,
+                 "name":"Rex",
+                 "properties":
+                    {
+                     "npc":"crylan",
+                     "typeName":"sbqHubRex"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":272,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1661,7 +1678,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":126,
+ "nextobjectid":132,
  "orientation":"orthogonal",
  "properties":
     {
@@ -1709,6 +1726,10 @@
         {
          "firstgid":1345,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/generic.json"
+        }, 
+        {
+         "firstgid":1347,
+         "source":"..\/..\/..\/tilesets\/dungeonPlacers.json"
         }],
  "tilewidth":8,
  "version":1,

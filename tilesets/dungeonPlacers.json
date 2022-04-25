@@ -6,15 +6,21 @@
 
     },
  "spacing":0,
- "tilecount":1,
+ "tilecount":2,
  "tileheight":8,
  "tileproperties":
     {
      "0":
         {
-         "imagePositionX" : "0",
-         "imagePositionY" : "0",
+         "imagePositionX":"0",
+         "imagePositionY":"0",
          "object":"sbqShopDungeonPlacer"
+        },
+     "1":
+        {
+         "imagePositionX":"0",
+         "imagePositionY":"0",
+         "object":"sbqShopNpcSpawner"
         }
     },
  "tiles":
@@ -22,6 +28,10 @@
      "0":
         {
          "image":"dungeonPlacer.png"
+        },
+     "1":
+        {
+         "image":"npcSpawner.png"
         }
     },
  "tilewidth":8

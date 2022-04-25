@@ -12,120 +12,120 @@
     {
      "0":
         {
-         "imagePositionX" : "-32",
-         "imagePositionY" : "0",
+         "imagePositionX":"-32",
+         "imagePositionY":"0",
          "object":"sbqBigFireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "1":
         {
-         "imagePositionX" : "-16",
-         "imagePositionY" : "0",
+         "imagePositionX":"-16",
+         "imagePositionY":"0",
          "object":"sbqFireplaceTeleporter",
          "tilesetDirection":"right"
         },
      "10":
         {
-         "imagePositionX" : "-32",
-         "imagePositionY" : "0",
+         "imagePositionX":"-32",
+         "imagePositionY":"0",
          "object":"sbqShopCauldron",
          "tilesetDirection":"right"
         },
      "11":
         {
-         "imagePositionX" : "0",
-         "imagePositionY" : "0",
+         "imagePositionX":"0",
+         "imagePositionY":"0",
          "object":"sbqShopBookshelfBG",
          "tilesetDirection":"right"
         },
      "12":
         {
-         "imagePositionX" : "-12",
-         "imagePositionY" : "0",
+         "imagePositionX":"-12",
+         "imagePositionY":"0",
          "object":"sbqCatTowerBed",
          "tilesetDirection":"right"
         },
      "13":
         {
-         "imagePositionX" : "-12",
-         "imagePositionY" : "0",
+         "imagePositionX":"-12",
+         "imagePositionY":"0",
          "object":"sbqCatTowerBox",
          "tilesetDirection":"right"
         },
      "14":
         {
-         "imagePositionX" : "0",
-         "imagePositionY" : "0",
+         "imagePositionX":"0",
+         "imagePositionY":"0",
          "object":"sbqCatTowerToy",
          "tilesetDirection":"right"
         },
      "15":
         {
-         "imagePositionX" : "0",
-         "imagePositionY" : "0",
+         "imagePositionX":"0",
+         "imagePositionY":"0",
          "object":"sbqCatTowerToy",
          "tilesetDirection":"left"
         },
      "16":
         {
-         "imagePositionX" : "-24",
-         "imagePositionY" : "0",
+         "imagePositionX":"-24",
+         "imagePositionY":"0",
          "object":"sbqLargeWoodenArmchair",
          "tilesetDirection":"left"
         },
      "2":
         {
-         "imagePositionX" : "-24",
-         "imagePositionY" : "0",
+         "imagePositionX":"-24",
+         "imagePositionY":"0",
          "object":"sbqCatTower",
          "tilesetDirection":"right"
         },
      "3":
         {
-         "imagePositionX" : "-24",
-         "imagePositionY" : "0",
+         "imagePositionX":"-24",
+         "imagePositionY":"0",
          "object":"sbqLargeWoodenArmchair",
          "tilesetDirection":"right"
         },
      "4":
         {
-         "imagePositionX" : "-5",
-         "imagePositionY" : "0",
+         "imagePositionX":"-5",
+         "imagePositionY":"0",
          "object":"sbqLargeWoodenDoor",
          "tilesetDirection":"right"
         },
      "5":
         {
-         "imagePositionX" : "-8",
-         "imagePositionY" : "0",
+         "imagePositionX":"-8",
+         "imagePositionY":"0",
          "object":"sbqPurpleCrystalLantern",
          "tilesetDirection":"right"
         },
      "6":
         {
-         "imagePositionX" : "0",
-         "imagePositionY" : "0",
+         "imagePositionX":"0",
+         "imagePositionY":"0",
          "object":"sbqPurpleCrystalTorch",
          "tilesetDirection":"right"
         },
      "7":
         {
-         "imagePositionX" : "-48",
-         "imagePositionY" : "0",
+         "imagePositionX":"-48",
+         "imagePositionY":"0",
          "object":"sbqShopAuri",
          "tilesetDirection":"right"
         },
      "8":
         {
-         "imagePositionX" : "-40",
-         "imagePositionY" : "0",
+         "imagePositionX":"-40",
+         "imagePositionY":"0",
          "object":"sbqShopChair",
          "tilesetDirection":"right"
         },
      "9":
         {
-         "imagePositionX" : "-56",
-         "imagePositionY" : "0",
+         "imagePositionX":"-56",
+         "imagePositionY":"0",
          "object":"sbqShopCounter",
          "tilesetDirection":"right"
         }

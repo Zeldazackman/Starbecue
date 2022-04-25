@@ -417,6 +417,10 @@ function sbq.updateOccupants(dt)
 								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
 								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
 								directions[dir] = data.indicate or "default"
+							elseif data then
+								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
+								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
+								directions[dir] = "default"
 							end
 						end
 					end

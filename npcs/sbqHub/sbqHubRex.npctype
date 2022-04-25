@@ -1,0 +1,119 @@
+{
+	"type" : "sbqHubRex",
+	"baseType" : "sbqVoreVillager",
+
+	"keepAlive" : true,
+
+	"npcname" : "Rex",
+	"identity" : {
+		"facialHairType" : "",
+		"facialHairGroup" : "",
+		"personalityArmOffset" : [0, 0],
+		"hairType" : "3",
+		"bodyDirectives" : "?replace;d0a1ff=c9ff99;790de5=51be3d;c7815b=988bbe;dd15bd=4e0574;ff76e9=9814dc;ff3ee0=6a079d;ffe2c5=d4caff;ffc181=ccbcff;ffa9f1=cd36ff;af60ff=aeff7b;962dff=78d851;d39c6c=ab9ed6?replace;ff9133=6952e9;ac4f00=3c2e85;d36200=4c3ba9;ff7600=5e49d1?replace;dc1f00=e4d200;951500=bfbf00;be1b00=c0b100?replace;dc1f00=e4d200;951500=bfbf00;be1b00=c0b100",
+		"personalityArmIdle" : "idle.2",
+		"gender" : "male",
+		"color" : [51, 117, 237],
+		"personalityHeadOffset" : [-1, 0],
+		"hairGroup" : "hair",
+		"facialMaskDirectives" : "",
+		"species" : "crylan",
+		"personalityIdle" : "idle.2",
+		"facialMaskGroup" : "",
+		"name" : "Rex",
+		"facialHairDirectives" : "",
+		"emoteDirectives" : "?replace;d0a1ff=c9ff99;790de5=51be3d;c7815b=988bbe;dd15bd=4e0574;ff76e9=9814dc;ff3ee0=6a079d;ffe2c5=d4caff;ffc181=ccbcff;ffa9f1=cd36ff;af60ff=aeff7b;962dff=78d851;d39c6c=ab9ed6?replace;ff9133=6952e9;ac4f00=3c2e85;d36200=4c3ba9;ff7600=5e49d1?replace;dc1f00=e4d200;951500=bfbf00;be1b00=c0b100?replace;dc1f00=e4d200;951500=bfbf00;be1b00=c0b100",
+		"hairDirectives" : "?replace;ff9133=6952e9;ac4f00=3c2e85;d36200=4c3ba9;ff7600=5e49d1?replace;dc1f00=e4d200;951500=bfbf00;be1b00=c0b100",
+		"facialMaskType" : ""
+	},
+
+	"persistent" : true,
+
+	"dropPools" : [],
+
+	"scripts" : [
+		"/npcs/bmain.lua",
+		"/scripts/SBQ_npc_bmain.lua",
+		"/scripts/speciesAnimOverride_npc_bmain.lua",
+		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
+	],
+	"scriptConfig" : {
+		"uniqueId" : "sbqHubRex",
+		"sbqDefaultSettings" : {
+			"voreTypes" : {
+				"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" }
+			}
+		},
+
+		"dialogueTree" : {
+			"greeting" : {
+				"neutral" : {
+					"randomDialogue" : [
+						"Hi.",
+						"Hey there.",
+						"Mrow."
+					],
+					"randomButtonText" : "Hi.",
+					"jump" : ["converse"]
+				},
+				"hungry" : {
+					"randomDialogue" : [
+						"Mmmm... feeling a bit hungry.",
+						"Hey <entityname>, I'm looking for some food, have any?",
+						"Oh huh, I probably need to find something to eat."
+					],
+					"jump" : ["converse"]
+				}
+			},
+			"converse" : {
+				"randomDialogue" : [ "we talking" ]
+			},
+
+			//vore buttons
+			"oralVore" : {
+				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
+				},
+				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+				},
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+			},
+
+			//talking while prey
+			"belly" : {
+				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+			},
+			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+		}
+	},
+
+	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"enabled" : true
+			},
+			"speciesAnimOverrideData" : {}
+		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+					}
+				]
+			]
+		]
+	}
+}
