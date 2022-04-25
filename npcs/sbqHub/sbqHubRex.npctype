@@ -50,8 +50,7 @@
 				"neutral" : {
 					"randomDialogue" : [
 						"Hi.",
-						"Hey there.",
-						"Mrow."
+						"Hey there."
 					],
 					"randomButtonText" : "Hi.",
 					"jump" : ["converse"]
@@ -66,30 +65,29 @@
 				}
 			},
 			"converse" : {
-				"randomDialogue" : [ "we talking" ]
+				"randomDialogue" : [ "Wow I don't know what to put here" ]
 			},
 
 			//vore buttons
 			"oralVore" : {
-				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png",
-					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
+				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ],
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
 				},
-				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
-					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ],
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
 				},
-				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
-				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
-				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
 			},
 
 			//talking while prey
 			"belly" : {
-				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
-			},
-			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ]},
+				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ]},
+				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] },
+				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] }
+			}
 		}
 	},
 
