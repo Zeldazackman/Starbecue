@@ -9,7 +9,7 @@
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
-					[[//first collumn
+					[[//first quarter
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
@@ -18,7 +18,7 @@
 							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
 							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
 						]}
-					],[// second collumn
+					],[// second quarter
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "h" },
@@ -35,12 +35,15 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
-					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "mode" : "v" },
-						{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-						[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
-					]},
-					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
+					[[ // third quarter
+						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
+							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+						]}
+					],[ // fourth quarter
+						{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
+					]]
 				]}
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [

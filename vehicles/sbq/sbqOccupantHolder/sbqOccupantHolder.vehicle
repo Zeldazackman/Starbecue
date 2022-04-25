@@ -83,6 +83,13 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly",
+			"womb",
+			"shaft",
+			"balls",
+			"breasts"
+		],
 
 		"locations" :{
 			"belly" : {},

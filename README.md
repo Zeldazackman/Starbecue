@@ -6,7 +6,7 @@ This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/fi
 
 Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable.
 
-While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
+While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), if you're using Stardust Core then you should get [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2690363974) and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
 
 ## Features
 
@@ -41,6 +41,11 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Elysian
 - Fennix
 - Felin
+- Draconis
+- Draconis Full Dragon Reskin
+- Gnolls
+
+This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 
 
 ### NPC Vore Tenants
@@ -51,6 +56,7 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ### Other Things
 - Egg
+- Plastic Egg
 
 ### Playable Predator Info
 
@@ -136,42 +142,6 @@ Artist, Lua scripting and debugging.
 > https://www.furaffinity.net/user/lokithevulpix/
 > https://twitter.com/LokiVulpix
 
-## Planned Future Additions
-
-### Vore RP tech
-To replace the one used by SSVM
-- will be further improved by allowing player prey to warp with you when warping to another world
-- may have a setting to warp prey into a special "belly" world for that predator player
-
-### Predators
-
-From Scratch
-- Eevee
-- Flareon
-- Jolteon
-- Espeon
-- Umbreon
-- Leafeon
-- Glaceon
-- Sylveon
-- Yoshi
-- Masotan
-- Protogen
-
-Vanilla Races
-- Humans
-- Apex
-- Floran
-- Hylotl
-- Glitch
-- Novakid
-
-Modded Races
-- Avali (Forum page gives permssion to use assets)
-- Crylan (Permission granted by Crescent)
-- Hibani (Premission granted by htfcuddles and Sheights)
-- Rodent (Premission granted by Sheights)
-- Draikin (Abandoned by creator)
 
 ## Do Not Ask/Contact
 

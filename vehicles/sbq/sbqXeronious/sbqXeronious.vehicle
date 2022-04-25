@@ -135,6 +135,10 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly",
+			"tail"
+		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 3, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"tail" : { "name" : "Tail", "max": 1, "digest" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },

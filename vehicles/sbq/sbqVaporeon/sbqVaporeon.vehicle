@@ -150,6 +150,9 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly"
+		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true },
 			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 },

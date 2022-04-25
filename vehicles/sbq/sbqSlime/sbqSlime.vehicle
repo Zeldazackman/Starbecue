@@ -167,7 +167,9 @@
 			]
 		],
 
-
+		"listLocations" : [
+			"belly"
+		],
 		"locations" :{
 			"belly" : { "name" : "Slime", "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},

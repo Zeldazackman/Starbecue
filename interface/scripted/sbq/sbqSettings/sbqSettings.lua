@@ -373,10 +373,11 @@ function sbq.hammerspacePanel()
 	hammerspaceScrollArea:clearChildren()
 	if sbq.globalSettings.hammerspace then
 		hammerspacePanel:setVisible(true)
-		for location, data in pairs(sbq.predatorConfig.locations or {}) do
-			if data.hammerspace or data.minVisual ~= nil then
+		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
+			local data = sbq.predatorConfig.locations[location]
+			if data.hammerspace then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
-					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visble = data.hammerspace or false, toolTip = "Enable Hammerspace for this location" },
+					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
 					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
 					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
 					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
@@ -387,13 +388,25 @@ function sbq.hammerspacePanel()
 				local label = _ENV[location.."Value"]
 				local next = _ENV[location.."Next"]
 				function enable:onClick()
+					if data.sided then
+						sbq.predatorSettings.hammerspaceDisabled[location.."L"] = not enable.checked
+						sbq.predatorSettings.hammerspaceDisabled[location.."R"] = not enable.checked
+					end
 					sbq.predatorSettings.hammerspaceDisabled[location] = not enable.checked
 					sbq.saveSettings()
 				end
 				function prev:onClick()
+					if data.sided then
+						sbq.changeHammerspaceLimit(location.."L", -1, label)
+						sbq.changeHammerspaceLimit(location.."R", -1, label)
+					end
 					sbq.changeHammerspaceLimit(location, -1, label)
 				end
 				function next:onClick()
+					if data.sided then
+						sbq.changeHammerspaceLimit(location.."L", 1, label)
+						sbq.changeHammerspaceLimit(location.."R", 1, label)
+					end
 					sbq.changeHammerspaceLimit(location, 1, label)
 				end
 			end

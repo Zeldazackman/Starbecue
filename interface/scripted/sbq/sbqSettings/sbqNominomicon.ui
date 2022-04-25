@@ -35,15 +35,19 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
-					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "mode" : "v", "expandMode" : [0, 0] },
-						{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-						{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "mode" : "v" } ]}
-					]},
+					[[ // third quarter
+						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
+							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+						]}
+					],[ // fourth quarter
+						{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
+					]],
+
 					{"type" : "panel", "style" : "convex", "children" : [
 						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
-					]},
-					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
+					]}
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
