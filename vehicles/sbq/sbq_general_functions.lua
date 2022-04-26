@@ -228,12 +228,20 @@ function sbq.transformPrey(i)
 		if world.entityType(sbq.occupant[i].id) == "player" and not smolPreyData.forceSettings then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
 				smolPreyData.settings = settings
-				sbq.occupant[i].smolPreyData = smolPreyData
-				sbq.occupant[i].species = smolPreyData.species
+				if sbq.occupant[i].species == "sbqEgg" then
+					sbq.occupant[i].smolPreyData.layer = smolPreyData
+				else
+					sbq.occupant[i].smolPreyData = smolPreyData
+					sbq.occupant[i].species = smolPreyData.species
+				end
 			end)
 		else
-			sbq.occupant[i].smolPreyData = smolPreyData
-			sbq.occupant[i].species = smolPreyData.species
+			if sbq.occupant[i].species == "sbqEgg" then
+				sbq.occupant[i].smolPreyData.layer = smolPreyData
+			else
+				sbq.occupant[i].smolPreyData = smolPreyData
+				sbq.occupant[i].species = smolPreyData.species
+			end
 		end
 	else
 		local species = world.entityName( entity.id() )
@@ -246,12 +254,22 @@ function sbq.transformPrey(i)
 
 		if world.entityType(sbq.occupant[i].id) == "player" then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", species), function(settings)
-				sbq.occupant[i].smolPreyData = sbq.getSmolPreyData(settings, species, "smol", tags)
-				sbq.occupant[i].species = species
+				smolPreyData = sbq.getSmolPreyData(settings, species, "smol", tags)
+				if sbq.occupant[i].species == "sbqEgg" then
+					sbq.occupant[i].smolPreyData.layer = smolPreyData
+				else
+					sbq.occupant[i].smolPreyData = smolPreyData
+					sbq.occupant[i].species = smolPreyData.species
+				end
 			end)
 		else
-			sbq.occupant[i].smolPreyData = sbq.getSmolPreyData(sbq.settings, species, "smol", tags)
-			sbq.occupant[i].species = species
+			smolPreyData = sbq.getSmolPreyData(sbq.settings, species, "smol", tags)
+			if sbq.occupant[i].species == "sbqEgg" then
+				sbq.occupant[i].smolPreyData.layer = smolPreyData
+			else
+				sbq.occupant[i].smolPreyData = smolPreyData
+				sbq.occupant[i].species = smolPreyData.species
+			end
 		end
 	end
 	sbq.refreshList = true

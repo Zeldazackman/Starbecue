@@ -23,6 +23,7 @@ function transformMessageHandler(eid, multiplier, data)
 	else
 		if sbq.lounging[eid].species == world.entityName( entity.id() ) then return end
 	end
+	local data = data or {}
 	if sbq.lounging[eid].species == "sbqOccupantHolder" then
 		data.layer = true
 	end
