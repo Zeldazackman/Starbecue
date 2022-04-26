@@ -97,18 +97,25 @@ function sbq.getSmolPreyData(settings, species, state, tags, layer)
 	}
 end
 
-function sbq.smolPreyAnimationPaths(settings, species, state, tags)
+function sbq.smolPreyAnimationPaths(settings, species, state, newTags)
 	local directory = "/vehicles/sbq/"..species.."/"
 	local animatedParts = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).animatedParts
 	local vehicle = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".vehicle" )
 	local edibleAnims = vehicle.states[state].edibleAnims or {}
-	local tags = tags
-	if tags == nil then
-		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }
-		for part, skin in pairs(settings.skinNames or {}) do
-			tags.global[part.."Skin"] = skin
+	local tags = { global = root.assetJson("/vehicles/sbq/" .. species .. "/" .. species .. ".animation").globalTagDefaults or {} }
+	for part, skin in pairs(settings.skinNames or {}) do
+		tags.global[part .. "Skin"] = skin
+	end
+	for partname, data in pairs(animatedParts.parts or {}) do
+		tags[partname] = {}
+		for tagname, tag in pairs(data.properties or {}) do
+			local tagType = type(tag)
+			if (tagType == "string" or tagType == "number") and (tagname ~= "zLevel" and tagname ~= "image") then
+				tags[partname][tagname] = tostring(tag)
+			end
 		end
 	end
+	tags = sb.jsonMerge(tags, newTags or {})
 
 	settings.directives = sbq.getColorReplaceDirectives(vehicle.sbqData, settings)
 
@@ -205,26 +212,23 @@ end
 
 
 function sbq.transformPrey(i)
-	local smolPreyData
-	if sbq.occupant[i].progressBarData ~= nil then
-		smolPreyData = sbq.occupant[i].progressBarData
-	end
-	if smolPreyData ~= nil then
-		if smolPreyData.layer == true then
-			smolPreyData.layer = sbq.occupant[i].smolPreyData
-			for j = 0, sbq.occupantSlots do
-				if sbq.occupant[j].location == "nested" and sbq.occupant[j].nestedPreyData.owner == sbq.occupant[i].id then
-					local nestedPreyData = sb.jsonMerge(sbq.occupant[j].nestedPreyData, {})
-					sbq.occupant[j].nestedPreyData = {
-						nestedPreyData = nestedPreyData,
-						location = "nested",
-						owner = sbq.occupant[i].id,
-						massMultiplier = smolPreyData.layerMass or 1,
-						digest = false
-					}
-				end
+	local smolPreyData = sbq.occupant[i].progressBarData
+	if smolPreyData.layer == true then
+		smolPreyData.layer = sbq.occupant[i].smolPreyData
+		for j = 0, sbq.occupantSlots do
+			if sbq.occupant[j].location == "nested" and sbq.occupant[j].nestedPreyData.owner == sbq.occupant[i].id then
+				local nestedPreyData = sb.jsonMerge(sbq.occupant[j].nestedPreyData, {})
+				sbq.occupant[j].nestedPreyData = {
+					nestedPreyData = nestedPreyData,
+					location = "nested",
+					owner = sbq.occupant[i].id,
+					massMultiplier = smolPreyData.layerMass or 1,
+					digest = false
+				}
 			end
 		end
+	end
+	if type(smolPreyData.species) == "string" then
 		if world.entityType(sbq.occupant[i].id) == "player" and not smolPreyData.forceSettings then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
 				smolPreyData.settings = settings
@@ -244,17 +248,11 @@ function sbq.transformPrey(i)
 			end
 		end
 	else
-		local species = world.entityName( entity.id() )
-		local tags = {}
-		local animationFile = root.assetJson("/vehicles/sbq/"..species.."/"..species..".vehicle").animation
-		tags.global = root.assetJson( animationFile ).globalTagDefaults
-		for part, _ in pairs(root.assetJson( animationFile ).animatedParts.parts ) do
-			tags[part] = {}
-		end
+		smolPreyData.species = world.entityName( entity.id() )
 
 		if world.entityType(sbq.occupant[i].id) == "player" then
-			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", species), function(settings)
-				smolPreyData = sbq.getSmolPreyData(settings, species, "smol", tags)
+			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
+				smolPreyData = sbq.getSmolPreyData(settings, smolPreyData.species, "smol")
 				if sbq.occupant[i].species == "sbqEgg" then
 					sbq.occupant[i].smolPreyData.layer = smolPreyData
 				else
@@ -263,7 +261,7 @@ function sbq.transformPrey(i)
 				end
 			end)
 		else
-			smolPreyData = sbq.getSmolPreyData(sbq.settings, species, "smol", tags)
+			smolPreyData = sbq.getSmolPreyData(sbq.settings, smolPreyData.species, "smol")
 			if sbq.occupant[i].species == "sbqEgg" then
 				sbq.occupant[i].smolPreyData.layer = smolPreyData
 			else

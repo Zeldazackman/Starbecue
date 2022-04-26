@@ -389,7 +389,8 @@ function sbq.updateOccupants(dt)
 				end
 
 				if sbq.occupant[i].progressBarActive == true then
-					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + (((math.log(sbq.occupant[i].controls.powerMultiplier)+1) * dt) * sbq.occupant[i].progressBarMultiplier)
+					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + dt*((math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier)
+					sb.logInfo(tostring(sbq.occupant[i].progressBar))
 					if sbq.occupant[i].progressBarMultiplier > 0 then
 						sbq.occupant[i].progressBar = math.min(100, sbq.occupant[i].progressBar)
 						if sbq.occupant[i].progressBar >= 100 and sbq.occupant[i].progressBarFinishFuncName ~= nil then

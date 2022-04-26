@@ -707,6 +707,9 @@
 		},
 		"tailbob": {
 			"interpolated": false
+		},
+		"preybob": {
+			"interpolated": false
 		}
 	},
 	"sounds": {
