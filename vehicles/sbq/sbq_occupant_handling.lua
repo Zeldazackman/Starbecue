@@ -389,8 +389,8 @@ function sbq.updateOccupants(dt)
 				end
 
 				if sbq.occupant[i].progressBarActive == true then
-					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + dt*((math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier)
-					sb.logInfo(tostring(sbq.occupant[i].progressBar))
+					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + dt*((math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier)
+
 					if sbq.occupant[i].progressBarMultiplier > 0 then
 						sbq.occupant[i].progressBar = math.min(100, sbq.occupant[i].progressBar)
 						if sbq.occupant[i].progressBar >= 100 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
@@ -439,7 +439,7 @@ function sbq.updateOccupants(dt)
 								active = sbq.occupant[i].progressBarActive,
 								color = sbq.occupant[i].progressBarColor,
 								percent = sbq.occupant[i].progressBar,
-								dx = (math.log(sbq.occupant[i].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
+								dx = (math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
 							},
 							time = sbq.occupant[i].occupantTime,
 							location = (sbq.sbqData.locations[location] or {}).name or nested or ""

@@ -40,7 +40,6 @@ function transformMessageHandler(eid, multiplier, data)
 		sbq.lounging[eid].progressBarData.layer = true
 	end
 
-	sb.logInfo(tostring(multiplier))
 	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
 	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
 end
