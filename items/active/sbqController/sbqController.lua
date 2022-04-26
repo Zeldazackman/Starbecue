@@ -151,7 +151,7 @@ function update(dt, fireMode, shiftHeld, controls)
 					doVoreAction(currentData.id)
 				else
 					local sbqSettings = player.getProperty("sbqSettings") or {}
-					local settings = sb.jsonMerge(sbqSettings.global or {}, sbqSettings.sbqOccupantHolder or {})
+					local settings = sb.jsonMerge( sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
 					world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { spawner = player.id(), settings = settings } )
 				end
 			elseif fireMode == "none" then
