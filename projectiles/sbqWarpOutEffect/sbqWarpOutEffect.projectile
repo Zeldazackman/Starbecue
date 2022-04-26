@@ -8,5 +8,6 @@
   "piercing" : true,
   "renderLayer" : "Player+1",
 	"orientationLocked" : true,
+  "fullbright" : true,
   "bounces" : -1
 }
