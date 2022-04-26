@@ -38,6 +38,7 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
+		"behavior" : "sbqvorevillager",
 		"uniqueId" : "sbqHubRex",
 		"sbqDefaultSettings" : {
 			"voreTypes" : {
