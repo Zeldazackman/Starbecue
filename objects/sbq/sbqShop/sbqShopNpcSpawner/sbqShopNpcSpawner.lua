@@ -4,8 +4,10 @@ end
 
 function die()
 	local npc = config.getParameter("npc")
-	local success, data = pcall(root.assetJson, ("/species/"..npc..".species"))
-	if success then
-		world.spawnNpc(object.position(), npc, config.getParameter("typeName"), config.getParameter("level"), config.getParameter("seed"), config.getParameter("npcParameters") )
+	if type(npc) == "string" then
+		local success, data = pcall(root.assetJson, ("/species/" .. npc .. ".species"))
+		if success then
+			world.spawnNpc(object.position(), npc, config.getParameter("typeName"), config.getParameter("level"), config.getParameter("seed"), config.getParameter("npcParameters"))
+		end
 	end
 end
