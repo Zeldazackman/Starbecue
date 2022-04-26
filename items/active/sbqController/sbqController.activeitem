@@ -1,7 +1,7 @@
 {
 	"itemName" : "sbqController",
 	"shortdescription" : "Vore Controller",
-	"description" : "Triggers the vore actions of a predator.",
+	"description" : "Triggers the vore actions of a predator.\nHold shift+up to re-assign action.",
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",
