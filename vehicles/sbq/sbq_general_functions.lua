@@ -105,6 +105,9 @@ function sbq.smolPreyAnimationPaths(settings, species, state, tags)
 	local tags = tags
 	if tags == nil then
 		tags = { global = root.assetJson( "/vehicles/sbq/"..species.."/"..species..".animation" ).globalTagDefaults }
+		for part, skin in pairs(settings.skinNames or {}) do
+			tags.global[part.."Skin"] = skin
+		end
 	end
 
 	settings.directives = sbq.getColorReplaceDirectives(vehicle.sbqData, settings)
