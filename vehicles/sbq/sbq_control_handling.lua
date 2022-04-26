@@ -130,18 +130,26 @@ end
 
 sbq.monsterstrugglecooldown = {}
 
+local struggleDirections = { "back", "front", "up", "down", "jump" }
 function sbq.getSeatDirections(seatname)
 	local occupantId = sbq.seats[seatname].id
+	local occupantData = sbq.seats[seatname]
+
 	if not occupantId or not world.entityExists(occupantId) then return end
 
 	if world.entityType( occupantId ) ~= "player" then
-		if not sbq.monsterstrugglecooldown[seatname] or sbq.monsterstrugglecooldown[seatname] <= 0 then
-			local randomDirections = { "back", "front", "up", "down", "jump", nil}
-			sbq.monsterstrugglecooldown[seatname] = (math.random(10, 300)/100)
-			return randomDirections[math.random(1,6)]
+		sbq.monsterstrugglecooldown[occupantId] = math.max(0, (sbq.monsterstrugglecooldown[occupantId] or 0) - sbq.dt)
+		if (sbq.monsterstrugglecooldown[occupantId] or 0) > 0 then return end
+		if (math.random() < 0.25) and not sbq.settings.bellyEffect == "digest" then sbq.monsterstrugglecooldown[occupantId] = math.random() end -- there still should be a chance for them to "rest" but not when being digested because it'd be urgent to escape
+
+		if occupantData.controls.favorDirection and (math.random() > 0.5) then
+			return occupantData.controls.favorDirection
 		else
-			sbq.monsterstrugglecooldown[seatname] = sbq.monsterstrugglecooldown[seatname] - sbq.dt
-			return
+			local dir = struggleDirections[math.random(1, #struggleDirections)]
+			if dir == occupantData.controls.disfavorDirection then
+				dir = struggleDirections[math.random(1, #struggleDirections)]
+			end
+			return dir
 		end
 	else
 		local direction = sbq.relativeDirectionName(sbq.seats[seatname].controls.dx, sbq.seats[seatname].controls.dy)

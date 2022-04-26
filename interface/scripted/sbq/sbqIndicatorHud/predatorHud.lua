@@ -240,7 +240,6 @@ function sbq.adjustBellyEffect(direction)
 		sbq.sbqSettings.global = {bellyEffect = newBellyEffect}
 	end
 
-	sbq.settings.bellyEffect = newBellyEffect
 	sbq.saveSettings()
 
 	sbq.updateBellyEffectIcon()
@@ -277,6 +276,8 @@ end
 
 function sbq.saveSettings()
 	player.setProperty("sbqSettings", sbq.sbqSettings)
+	sbq.settings = sb.jsonMerge(sbq.settings, sbq.sbqSettings.global)
+
 	if sbq.sbqCurrentData.type == "driver" and type(sbq.sbqCurrentData.id) == "number" and world.entityExists(sbq.sbqCurrentData.id) then
 		world.sendEntityMessage(sbq.sbqCurrentData.id, "settingsMenuSet", sbq.settings )
 	end
@@ -295,7 +296,6 @@ end
 function bellyEffectIcon:onClick()
 	local displayDigest = not sbq.sbqSettings.global.displayDigest
 	sbq.sbqSettings.global.displayDigest = displayDigest
-	sbq.settings.displayDigest = displayDigest
 
 	sbq.saveSettings()
 	sbq.updateBellyEffectIcon()

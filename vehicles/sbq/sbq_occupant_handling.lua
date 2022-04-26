@@ -703,6 +703,12 @@ function sbq.handleStruggles(dt)
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId} )
 	else
 
+		if (struggledata.directions[movedir].indicate == "red" or struggledata.directions[movedir].indicate == "green") and ( struggledata.directions[movedir].settings == nil or sbq.checkSettings(struggledata.directions[movedir].settings) ) then
+			sbq.occupant[struggler].controls.favorDirection = movedir
+		elseif not struggledata.directions[movedir].indicate then
+			sbq.occupant[struggler].controls.disfavorDirection = movedir
+		end
+
 		local animation = {offset = struggledata.directions[movedir].offset}
 		local prefix = struggledata.prefix or ""
 		local parts = struggledata.parts
@@ -760,10 +766,11 @@ function sbq.struggleChance(struggledata, struggler, movedir)
 		chances = struggledata.directions[movedir].chances
 	end
 	if chances ~= nil and chances.max == 0 then return true end
-	return (not sbq.settings.impossibleEscape)
-	and chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
+	if sbq.settings.impossibleEscape then return false end
+	if sbq.driving and not struggledata.directions[movedir].drivingEnabled then return false end
+
+	return chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
 	and (math.random(math.floor(chances.min * 2^((sbq.settings.escapeDifficulty or 0)/5)), math.ceil(chances.max * 2^((sbq.settings.escapeDifficulty or 0)/5))) <= (sbq.occupant[struggler].struggleTime or 0))
-	and ((not sbq.driving) or struggledata.directions[movedir].drivingEnabled)
 end
 
 function sbq.inedible(occupantId)
