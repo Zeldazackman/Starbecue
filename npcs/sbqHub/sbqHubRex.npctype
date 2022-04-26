@@ -1,6 +1,6 @@
 {
 	"type" : "sbqHubRex",
-	"baseType" : "sbqVoreVillager",
+	"baseType" : "villager",
 
 	"keepAlive" : true,
 
