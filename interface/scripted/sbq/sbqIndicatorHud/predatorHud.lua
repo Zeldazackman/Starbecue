@@ -121,6 +121,9 @@ function sbq.readOccupantData()
 					local occupantButton = sbq.occupantList[id].actionButton
 					function occupantButton:onClick()
 						local actionList = {}
+						if world.entityType(id) == "npc" then
+							table.insert(actionList, {"Interact", function() sbq.npcInteract(id, i) end})
+						end
 						for _, action in ipairs(sbq.hudActions.global) do
 							if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
 								table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})

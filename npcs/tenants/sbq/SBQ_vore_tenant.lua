@@ -52,9 +52,8 @@ function init()
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
 		if not sbq.talkingWithPrey and type(id) == "number" then
-			local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
-			---@diagnostic disable-next-line: undefined-global
-			setInteracted(args)
+			self.interacted = true
+			self.board:setEntity("interactionSource", id)
 		end
 		sbq.dialogueBoxOpen = 0.5
 		return { settings = storage.sbqSettings, occupantHolder = sbq.occupantHolder }
@@ -88,9 +87,8 @@ function init()
 		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 	message.setHandler("sbqSetInteracted", function (_,_, id)
-		local args = { sourceId = id, sourcePosition = world.entityPosition(id) }
-		---@diagnostic disable-next-line: undefined-global
-		setInteracted(args)
+		self.interacted = true
+		self.board:setEntity("interactionSource", id)
 	end)
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		return sbq.speciesConfig
@@ -122,10 +120,15 @@ function uninit()
 	olduninit()
 end
 
-function handleInteract(args)
-	if sbq.dialogueBoxOpen == 0 then
-		world.sendEntityMessage( args.sourceId, "sbqOpenMetagui", "starbecue:dialogueBox", entity.id() )
+function interact(args)
+	local location = sbq.getOccupantArg(args.sourceId, "location")
+	local dialogueTreeStart
+	if location ~= nil then
+		dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 	end
+	local dialogueBoxData = { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+
+	return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:dialogueBox" }}
 end
 
 function sbq.getOccupantArg(id, arg)

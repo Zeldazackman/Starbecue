@@ -55,7 +55,7 @@ function init()
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", sbqSettings )
 	end)
 
-	message.setHandler( "sbqOpenMetagui", function(_,_, name, sourceEntity)
+	message.setHandler( "sbqOpenMetagui", function(_,_, name, sourceEntity, data)
 		player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = name }, sourceEntity )
 	end)
 

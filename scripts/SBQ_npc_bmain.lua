@@ -20,6 +20,9 @@ function init()
 		}
 	end)
 
+	message.setHandler("sbqInteract", function(_,_, pred, location)
+		return interact({sourceId = pred, sourcePosition = world.entityPosition(pred), preyLocation = location})
+	end)
 
 	message.setHandler("sbqMakeNonHostile", function(_,_)
 		if (status.statusProperty("sbqOriginalDamageTeam") == nil)

@@ -5,6 +5,7 @@
 	"uniqueBy" : "path",
 	"anchor" : ["bottomRight", [3,3]],
 	"scripts" : ["predatorHud.lua", "hudActions.lua"],
+	"forceTheme" : "starbound",
 	"children" : [
 		{ "type" : "layout", "mode" : "manual", "size" : [96,256], "children" : [
 			{ "type" : "layout", "id" : "occupantSlots", "mode" : "manual", "size" : [96,224], "children" : [

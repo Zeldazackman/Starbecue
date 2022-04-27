@@ -154,7 +154,20 @@
 		},
 		"statusProperties" : {
 			"sbqPreyEnabled" : {
-				"enabled" : true
+				"enabled": true,
+				"digestImmunity": true,
+				"transformImmunity": true,
+				"eggImmunity": false,
+				"held": false,
+				"oralVore": true,
+				"tailVore": true,
+				"absorbVore": false,
+
+				"navelVore": false,
+				"analVore": true,
+				"unbirth": true,
+				"cockVore": true,
+				"breastVore": false
 			},
 			"speciesAnimOverrideData" : {}
 		}

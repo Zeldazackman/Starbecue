@@ -3,6 +3,10 @@ function sbq.letout(id, i)
 	world.sendEntityMessage( sbq.sbqCurrentData.id, "letout", id )
 end
 
+function sbq.npcInteract(id, i)
+	world.sendEntityMessage(id, "sbqInteract", player.id(), sbq.occupant[i].location)
+end
+
 function sbq.turboDigest(id, i)
 	world.sendEntityMessage( id, "sbqTurboDigest" )
 end

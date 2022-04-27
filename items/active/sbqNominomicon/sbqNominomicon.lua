@@ -17,9 +17,9 @@ function update(dt, fireMode, shiftHeld, controls)
 		} )
 
 		if predators[1] ~= nil then
-			sbq.addRPC(world.sendEntityMessage( predators[1], "objectPredCheck" ), function (isObject)
-				if isObject then
-					player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:nominomicon" }, predators[1])
+			sbq.addRPC(world.sendEntityMessage( predators[1], "getObjectSettingsMenuData" ), function (data)
+				if data then
+					player.interact("ScriptPane", { data = data, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:nominomicon" }, predators[1])
 				end
 			end)
 		end

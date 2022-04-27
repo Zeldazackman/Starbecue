@@ -28,23 +28,19 @@ function init()
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
-	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData", player.id() ), function (dialogueBoxData)
-		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
-		if sbq.data.dialogueBoxScripts ~= nil then
-			for _, script in ipairs(sbq.data.dialogueBoxScripts) do
-				require(script)
-			end
+	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
+	if sbq.data.dialogueBoxScripts ~= nil then
+		for _, script in ipairs(sbq.data.dialogueBoxScripts) do
+			require(script)
 		end
-		sbq.updateDialogueBox( dialogueBoxData.dialogueTreeStart or {"greeting", "mood"})
-		inited = true
-	end)
+	end
+	sbq.updateDialogueBox(sbq.data.dialogueTreeStart or { "greeting", "mood" })
 end
 
 function update()
 	local dt = script.updateDt()
 	sbq.checkRPCsFinished(dt)
 	sbq.checkTimers(dt)
-	if not inited then return end
 	sbq.refreshData()
 	sbq.getOccupancy()
 end

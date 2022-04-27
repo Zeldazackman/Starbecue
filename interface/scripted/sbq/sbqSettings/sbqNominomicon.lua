@@ -14,30 +14,30 @@ function init()
 		type = "object"
 	}
 
-	sbq.addRPC(world.sendEntityMessage(sbq.predatorEntity, "getObjectSettingsMenuData"), function (data)
-		sbq.sbqSettings = { global = data.settings }
-		sbq.sbqSettings[sbq.sbqCurrentData.species] = data.settings
-		sbq.predatorSpawner = data.spawner
+	local data = metagui.inputData
 
-		oldInit()
 
-		lockSettings:setChecked(data.settings.lockSettings)
+	sbq.sbqSettings = { global = data.settings }
+	sbq.sbqSettings[sbq.sbqCurrentData.species] = data.settings
+	sbq.predatorSpawner = data.spawner
 
-		if (data.settings.lockSettings and data.settings.ownerId ~= player.uniqueId()) and not player.isAdmin() then
-			mainTabField.tabs.globalPredSettings:setVisible(false)
-			mainTabField.tabs.customizeTab:setVisible(false)
-			if sbq.speciesSettingsTab ~= nil then
-				sbq.speciesSettingsTab:setVisible(false)
-			end
+	oldInit()
+
+	lockSettings:setChecked(data.settings.lockSettings)
+
+	if (data.settings.lockSettings and data.settings.ownerId ~= player.uniqueId()) and not player.isAdmin() then
+		mainTabField.tabs.globalPredSettings:setVisible(false)
+		mainTabField.tabs.customizeTab:setVisible(false)
+		if sbq.speciesSettingsTab ~= nil then
+			sbq.speciesSettingsTab:setVisible(false)
 		end
-		if data.settings.ownerName ~= nil and data.settings.ownerName ~= "" then
-			ownerLabel:setText("Owner: "..data.settings.ownerName)
-			ownerBar:setVisible(true)
-		else
-			ownerBar:setVisible(false)
-		end
-		--mainTabField.tabs.customizeTab:select()
-	end)
+	end
+	if data.settings.ownerName ~= nil and data.settings.ownerName ~= "" then
+		ownerLabel:setText("Owner: "..data.settings.ownerName)
+		ownerBar:setVisible(true)
+	else
+		ownerBar:setVisible(false)
+	end
 end
 
 function update()
