@@ -57,13 +57,25 @@ function init()
 			if success then
 				if type(data.sbqData) == "table" then
 					sbq.predatorConfig = data.sbqData
-					if type(data.sbqData.merge) == "table" then
-						for i, path in ipairs(data.sbqData.merge) do
-							sbq.predatorConfig = sb.jsonMerge(root.assetJson(path).sbqData, sbq.predatorConfig)
-						end
-					end
 				end
 			end
+
+			local scripts = sbq.predatorConfig.scripts or {}
+			local mergeConfigs = sbq.predatorConfig.merge or {}
+			while type(mergeConfigs[1]) == "string" do
+				local newConfig = root.assetJson(mergeConfigs[1])
+				for i, path in ipairs(newConfig.merge or {}) do
+					table.insert(mergeConfigs, path)
+				end
+				for i, script in ipairs(newConfig.scripts or {}) do -- make sure to get new scripts and add them rather than overwrite them
+					table.insert(scripts, 1, script)
+				end
+
+				sbq.predatorConfig = sb.jsonMerge(newConfig, sbq.predatorConfig)
+				table.remove(mergeConfigs, 1)
+			end
+			sbq.predatorConfig.scripts = scripts
+
 		else
 			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		end
@@ -372,7 +384,6 @@ end
 function sbq.hammerspacePanel()
 	hammerspaceScrollArea:clearChildren()
 	if sbq.globalSettings.hammerspace then
-		hammerspacePanel:setVisible(true)
 		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 			local data = sbq.predatorConfig.locations[location]
 			if data.hammerspace then
@@ -411,6 +422,7 @@ function sbq.hammerspacePanel()
 				end
 			end
 		end
+		hammerspacePanel:setVisible(true)
 	else
 		hammerspacePanel:setVisible(false)
 	end

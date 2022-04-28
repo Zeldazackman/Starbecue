@@ -23,21 +23,53 @@ function init()
 	if success then
 		if type(data.sbqData) == "table" then
 			sbq.speciesConfig.sbqData = data.sbqData
-			if type(data.sbqData.merge) == "table" then
-				for i, path in ipairs(data.sbqData.merge) do
-					sbq.speciesConfig.sbqData = sb.jsonMerge(root.assetJson(path).sbqData, sbq.speciesConfig.sbqData)
-				end
-			end
 		end
 		if type(data.states) == "table" then
 			sbq.speciesConfig.states = data.states
-			if type(data.states.merge) == "table" then
-				for i, path in ipairs(data.states.merge) do
-					sbq.speciesConfig.states = sb.jsonMerge(root.assetJson(path).states, sbq.speciesConfig.states)
-				end
-			end
 		end
 	end
+	local mergeConfigs = sbq.speciesConfig.sbqData.merge or {}
+	local configs = { sbq.speciesConfig.sbqData }
+	while type(mergeConfigs[#mergeConfigs]) == "string" do
+		local insertPos = #mergeConfigs
+		local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+		for i = #(newConfig.merge or {}), 1, -1 do
+			table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+		end
+
+		table.insert(configs, 1, newConfig)
+
+		table.remove(mergeConfigs, #mergeConfigs)
+	end
+	local scripts = {}
+	local finalConfig = {}
+	for i, config in ipairs(configs) do
+		finalConfig = sb.jsonMerge(finalConfig, config)
+		for j, script in ipairs(config.scripts or {}) do
+			table.insert(scripts, script)
+		end
+	end
+	sbq.speciesConfig.sbqData = finalConfig
+	sbq.speciesConfig.sbqData.scripts = scripts
+
+	local mergeConfigs = sbq.speciesConfig.states.merge or {}
+	local configs = { sbq.speciesConfig.states }
+	while type(mergeConfigs[#mergeConfigs]) == "string" do
+		local insertPos = #mergeConfigs
+		local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).states
+		for i = #(newConfig.merge or {}), 1, -1 do
+			table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+		end
+
+		table.insert(configs, 1, newConfig)
+
+		table.remove(mergeConfigs, #mergeConfigs)
+	end
+	local finalConfig = {}
+	for i, config in ipairs(configs) do
+		finalConfig = sb.jsonMerge(finalConfig, config)
+	end
+	sbq.speciesConfig.states = finalConfig
 
 	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, storage.sbqSettings or {})))
 

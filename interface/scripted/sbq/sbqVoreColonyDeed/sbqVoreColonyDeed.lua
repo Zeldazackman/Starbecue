@@ -4,7 +4,6 @@ sbq = {}
 require("/scripts/SBQ_RPC_handling.lua")
 
 function init()
-	sbq.addRPC( world.sendEntityMessage(  ) )
 
 end
 

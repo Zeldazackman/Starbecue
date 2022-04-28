@@ -251,6 +251,7 @@ function setCosmetic.legs_addon(cosmetic, item, directives)
 
 	sbq.hidePenis(not whitelisted)
 	sbq.hideBalls(not whitelisted)
+	sbq.hidePussy(not whitelisted)
 
 	_legs_addon(cosmetic, item, directives)
 end
@@ -276,6 +277,14 @@ function sbq.hideBalls(bool)
 		animator.setGlobalTag( "ballsVisible", self.ballsVisible or "?crop;0;0;0;0" )
 	else
 		animator.setGlobalTag( "ballsVisible", "?crop;0;0;0;0" )
+	end
+end
+
+function sbq.hidePussy(bool)
+	if not bool then
+		animator.setGlobalTag( "pussyVisible", self.ballsVisible or "?crop;0;0;0;0" )
+	else
+		animator.setGlobalTag( "pussyVisible", "?crop;0;0;0;0" )
 	end
 end
 
