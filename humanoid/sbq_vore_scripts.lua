@@ -202,13 +202,9 @@ function sbq.settingsMenuUpdated()
 	sbq.sbqData.locations.breasts.symmetrical = sbq.settings.symmetricalBreasts
 
 	if sbq.settings.pussy then
-		if sbq.settings.underwear then
-			sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
-		else
-			sbq.setStatusValue( "pussyVisible", "")
-		end
+		sbq.setPartTag( "global", "pussyVisible", "")
 	else
-		sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
+		sbq.setPartTag( "global", "pussyVisible", "?crop;0;0;0;0")
 	end
 	sbq.handleUnderwear()
 end
