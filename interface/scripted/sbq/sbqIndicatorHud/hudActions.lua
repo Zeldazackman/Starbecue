@@ -4,7 +4,11 @@ function sbq.letout(id, i)
 end
 
 function sbq.npcInteract(id, i)
-	world.sendEntityMessage(id, "sbqInteract", player.id(), sbq.occupant[i].location)
+	sbq.addRPC(world.sendEntityMessage(id, "sbqInteract", player.id(), sbq.occupant[i].location), function (data)
+		if data then
+			player.interact(data[1], data[2], id)
+		end
+	end)
 end
 
 function sbq.turboDigest(id, i)

@@ -10,9 +10,6 @@ function init()
 	message.setHandler("sbqGetSettings", function (_,_)
 	end)
 
-	message.setHandler("sbqInteraction", function (_,_, id)
-
-	end)
 end
 
 function countTags(...)
