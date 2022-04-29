@@ -44,7 +44,7 @@ function sbq.everything_primary()
 		if (status.statusProperty("sbqPreyEnabled") or {})[voreType] == nil then
 			local entityType = world.entityType(entity.id())
 			local defaults = root.assetJson("/sbqGeneral.config:defaultPreyEnabled")
-			return defaults[entityType]
+			return defaults[entityType][voreType]
 		end
 		return (status.statusProperty("sbqPreyEnabled") or {})[voreType]
 	end)
