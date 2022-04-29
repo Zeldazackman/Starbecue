@@ -11,41 +11,50 @@
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
 		"dialogueTree" : {
+			// path is: personality -> mood
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself
 			"greeting" : {
-				"neutral" : {
-					"randomDialogue" : [
-						"Hi. \n I'm a WIP."
-					]
-				}
-			},
-			"oralVore" : {
 				"default" : {
-					"neutral" : {
-						"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ],
-							"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
-						},
-						"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ],
-							"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
-						},
-						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-						"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+					"default" : {
+						"randomDialogue" : [
+							"Hi. \n I'm a WIP."
+						]
 					}
 				}
 			},
-
-			"cockVore" : {
-				"default" : {
-					"neutral" : {
-						"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ],
-							"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
-						},
-						"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ],
-							"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ] }
-						},
-						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-						"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ] },
-						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+			// path is: voreType -> personality -> mood
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself
+			"vore" : {
+				"oralVore" : {
+					"default" : {
+						"default" : {
+							"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ],
+								"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
+							},
+							"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ],
+								"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+						}
+					}
+				},
+				"cockVore" : {
+					"default" : {
+						"default" : {
+							"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ],
+								"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
+							},
+							"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ],
+								"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+						}
 					}
 				}
 			}

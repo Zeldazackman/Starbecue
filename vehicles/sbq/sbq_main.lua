@@ -258,6 +258,8 @@ function init()
 end
 
 function sbq.initAfterInit()
+	sbq.species = world.entityName(entity.id())
+
 	local retrievePrey = config.getParameter("retrievePrey")
 	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then
 		world.sendEntityMessage(retrievePrey, "sbqSendAllPreyTo", entity.id())

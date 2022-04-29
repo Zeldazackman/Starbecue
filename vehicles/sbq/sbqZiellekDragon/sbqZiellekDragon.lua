@@ -189,7 +189,7 @@ end
 
 function oralVore(args)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function checkOralVore()
@@ -197,14 +197,14 @@ function checkOralVore()
 end
 
 function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 -------------------------------------------------------------------------------
 
 function cockVore(args)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "shaft", {}, "swallow")
+	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
 end
 
 function checkCockVore()
@@ -215,14 +215,14 @@ function checkCockVore()
 end
 
 function cockEscape(args)
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
 end
 
 -------------------------------------------------------------------------------
 
 function analVore(args)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
 end
 
 function checkAnalVore()
@@ -230,14 +230,14 @@ function checkAnalVore()
 end
 
 function analEscape(args)
-	return sbq.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {}, "analVore" )
 end
 
 -------------------------------------------------------------------------------
 
 function unbirth(args)
 	if not sbq.settings.pussy or not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "womb", {}, "swallow")
+	return sbq.doVore(args, "womb", {}, "swallow", "unbirth")
 end
 
 function checkUnbirth()
@@ -247,7 +247,7 @@ end
 
 function unbirthEscape(args)
 	if not sbq.settings.pussy then return false end
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "unbirth" )
 end
 
 -------------------------------------------------------------------------------

@@ -221,20 +221,20 @@ function grab()
 end
 
 function cockVore(args)
-	return sbq.doVore(args, "shaft", {}, "swallow")
+	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
 end
 
 function cockEscape(args)
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
 end
 
 function oralVore(args)
 	sbq.grabbing = args.id
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 function checkVore()

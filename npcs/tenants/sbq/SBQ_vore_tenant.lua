@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local oldinit = init
 local oldupdate = update
 local olduninit = uninit
@@ -9,12 +11,14 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require( "/lib/stardust/json.lua" )
 
 
 function init()
 	oldinit()
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
+	sbq.dialogueTree = config.getParameter("dialogueTree")
 
 
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
@@ -28,6 +32,7 @@ function init()
 			sbq.speciesConfig.states = data.states
 		end
 	end
+	sbq.speciesConfig.species = species
 	local mergeConfigs = sbq.speciesConfig.sbqData.merge or {}
 	local configs = { sbq.speciesConfig.sbqData }
 	while type(mergeConfigs[#mergeConfigs]) == "string" do
@@ -79,7 +84,7 @@ function init()
 		if location ~= nil then
 			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
@@ -104,12 +109,37 @@ function init()
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		return sbq.speciesConfig
 	end)
+	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location, settings, predator)
+		sb.logInfo("got the message")
+		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", "digestionImmunity"), function (immune)
+			sb.logInfo("got here")
+			sbq.getRandomDialogue({ "pred", "location", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.sbqSettings, {location = location, digestionImmunity = immune}))
+		end)
+	end)
+	message.setHandler("sbqStrugglerSpeak", function (_,_, entity, location, settings, predator)
+		sbq.getRandomDialogue({ "prey", "location", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {location = location, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+	end)
+	message.setHandler("sbqVoredSpeak", function (_,_, entity, voreType, settings, predator)
+		sbq.getRandomDialogue({ "vored", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+	end)
+	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator)
+		sbq.getRandomDialogue({ "escape", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+	end)
+
+
 end
 
 function update(dt)
 	sbq.currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.checkRPCsFinished(dt)
 	sbq.occupantHolder = sbq.currentData.id
+	sbq.loopedMessage("checkRefresh", sbq.occupantHolder, "settingsMenuRefresh", {}, function (result)
+		if result ~= nil then
+			sbq.occupants = result.occupants
+			sbq.occupant = result.occupant
+		end
+	end )
+
 
 	if (not sbq.occupantHolder) and (sbq.timeUntilNewHolder <= 0) then
 		sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = storage.settings } )
@@ -132,23 +162,20 @@ function uninit()
 end
 
 function interact(args)
-	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
-
-	sb.logInfo(sb.printJson(args))
+	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	if sbq.currentData.type == "prey" then
 		if args.predData then
 			sbq.predData = args.predData
 			local settings = args.predData.settings
 			settings.location = args.predData.location
 			settings.predator = args.predData.predator
-			settings.predEnabled = storage.sbqSettings.predEnabled
 
-			settings.personality = storage.sbqSettings.personality or "default"
-			settings.mood = storage.sbqSettings.mood or "neutral"
+			settings.personality = storage.sbqSettings.personality
+			settings.mood = storage.sbqSettings.mood
 			settings.digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity or false
 
 			dialogueBoxData.settings = settings
-			dialogueBoxData.dialogueTreeStart = { "prey", "location", "predator", "bellyEffect", "digestionImmunity" }
+			dialogueBoxData.dialogueTreeStart = { "prey", "location", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }
 			return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:dialogueBox" }}
 		else
 			return
@@ -156,15 +183,11 @@ function interact(args)
 	else
 		local location = sbq.getOccupantArg(args.sourceId, "location")
 		if location ~= nil then
-			dialogueBoxData.dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
+			dialogueBoxData.dialogueTreeStart = { "pred", "location", "personality", "mood", "bellyEffect", "digestionImmunity" }
+			dialogueBoxData.settings.location = location
 		end
 		return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:dialogueBox" }}
 	end
-end
-
-function sbq.preyDialogue()
-
-
 end
 
 function sbq.getOccupantArg(id, arg)
@@ -174,4 +197,55 @@ function sbq.getOccupantArg(id, arg)
 			return occupant[arg]
 		end
 	end
+end
+
+function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
+	sb.logInfo(sb.printJson(dialogueTreeLocation))
+	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, settings)
+	sb.logInfo(sb.printJson(dialogueTree))
+	if not dialogueTree then return false end
+	local randomRolls = {}
+	local randomDialogue = dialogueTree.randomDialogue
+	local i = 1
+	while type(randomDialogue) == "table" do
+		if randomRolls[i] == nil then
+			table.insert(randomRolls, math.random(#randomDialogue))
+		end
+		randomDialogue = randomDialogue[randomRolls[i]]
+		i = i + 1
+	end
+	local playerName
+
+	if type(entity) == "number" then
+		playerName = world.entityName(entity)
+	end
+
+	local tags = { entityname = playerName }
+
+	if type(randomDialogue) == "string" then
+		npc.say( randomDialogue, tags )
+	end
+end
+
+function sbq.getDialogueBranch(dialogueTreeLocation, settings)
+	local dialogueTree = sbq.dialogueTree
+	for _, branch in ipairs(dialogueTreeLocation) do
+		if settings[branch] ~= nil then
+			dialogueTree =  dialogueTree[tostring(settings[branch])] or dialogueTree.default or dialogueTree
+		else
+			dialogueTree = dialogueTree[branch] or dialogueTree
+		end
+		-- for dialog in other files thats been pointed to
+		if type(dialogueTree) == "string" then
+			if dialogueTree[1] == "/" then
+				dialogueTree = root.assetJson(dialogueTree)
+			elseif dialogueTree[1] == "[" then
+				local decoded = json.decode(dialogueTree[1])
+				if type(decoded) == "table" then
+					dialogueTree = sbq.getDialogueBranch(decoded) -- I know, recursion is risky, but none of this stuff is randomly generated someone would have to intentionally make a loop to break it
+				end
+			end
+		end
+	end
+	return dialogueTree
 end

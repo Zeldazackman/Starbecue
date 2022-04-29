@@ -276,15 +276,15 @@ function sitCheckAnal()
 end
 
 function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 function analEscape(args)
-	return sbq.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {}, "analVore" )
 end
 
 function tailEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "tailVore" )
 end
 
 function checkVore()

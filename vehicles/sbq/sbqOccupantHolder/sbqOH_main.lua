@@ -159,6 +159,7 @@ end
 
 function initAfterInit(data)
 	sbq.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
+	sbq.species = data.species
 	sbq.defaultSbqData = sb.jsonMerge(sbq.sbqData, {})
 	sbq.cfgAnimationFile = sbq.sbqData.animation
 	sbq.victimAnimations = root.assetJson(sbq.sbqData.victimAnimations)

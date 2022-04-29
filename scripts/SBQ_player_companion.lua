@@ -195,6 +195,7 @@ function init()
 				speciesConfig.states = data.states
 			end
 		end
+		speciesConfig.species = species
 		local mergeConfigs = speciesConfig.sbqData.merge or {}
 		local configs = { speciesConfig.sbqData }
 		while type(mergeConfigs[#mergeConfigs]) == "string" do

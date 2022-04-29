@@ -61,7 +61,7 @@ function state.smol.absorbEscape( args )
 	end
 	local sbqSlimeSlowColor = replaceColors[3]
 
-	return sbq.doEscape(args, { sbqSlimeSlow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id(), property = sbqSlimeSlowColor }}, {})
+	return sbq.doEscape(args, { sbqSlimeSlow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id(), property = sbqSlimeSlowColor }}, {}, "absorbVore")
 end
 
 function state.smol.checkAbsorbVore()

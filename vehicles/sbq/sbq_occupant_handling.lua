@@ -236,7 +236,7 @@ function sbq.locationEmpty(location)
 	end
 end
 
-function sbq.doVore(args, location, statuses, sound )
+function sbq.doVore(args, location, statuses, sound, voreType )
 	local location = location
 	if sbq.sbqData.locations[location].sided then
 		if sbq.direction > 0 then
@@ -263,6 +263,8 @@ function sbq.doVore(args, location, statuses, sound )
 		sbq.showEmote("emotehappy")
 		sbq.transitionLock = true
 		world.sendEntityMessage( args.id, "sbqApplyStatusEffects", statuses )
+		world.sendEntityMessage( args.id, "sbqVoredSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species )
+
 		return true, function()
 			sbq.justAte = nil
 			sbq.transitionLock = false
@@ -274,7 +276,7 @@ function sbq.doVore(args, location, statuses, sound )
 	end
 end
 
-function sbq.doEscape(args, statuses, afterstatuses )
+function sbq.doEscape(args, statuses, afterstatuses, voreType )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
 	sbq.lounging[victim].location = "escaping"
@@ -283,6 +285,7 @@ function sbq.doEscape(args, statuses, afterstatuses )
 	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
 	sbq.transitionLock = true
 	return true, function()
+		world.sendEntityMessage( args.id, "sbqEscapeSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species )
 		sbq.transitionLock = false
 		sbq.checkDrivingInteract()
 		sbq.uneat( victim )
@@ -742,6 +745,14 @@ function sbq.handleStruggles(dt)
 			sbq.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
 		else
 			sbq.doAnims( struggledata.directions[movedir].animationWhenMoving or struggledata.animationWhenMoving )
+		end
+		local entityType = world.entityType(strugglerId)
+		if entityType == "npc" or entityType == "player" then
+			if math.random() >= 0.9 then
+				world.sendEntityMessage(sbq.driver, "sbqPredatorSpeak", strugglerId, sbq.occupant[struggler].location )
+			elseif math.random() <= 0.1 then
+				world.sendEntityMessage(strugglerId, "sbqStrugglerSpeak", sbq.driver, sbq.occupant[struggler].location, sbq.settings, sbq.species )
+			end
 		end
 
 		if struggledata.directions[movedir].victimAnimation then

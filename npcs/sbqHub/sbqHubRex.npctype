@@ -41,29 +41,36 @@
 		"behavior" : "sbqvorevillager",
 		"uniqueId" : "sbqHubRex",
 		"sbqDefaultSettings" : {
+			"mood" : "default",
+			"personality" : "default",
 			"voreTypes" : {
 				"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" }
 			}
 		},
 
 		"dialogueTree" : {
+			// path is: personality -> mood
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself
 			"greeting" : {
-				"neutral" : {
-					"randomDialogue" : [
-						"Hi.",
-						"Hey there.",
-						"Greetings!"
-					],
-					"randomButtonText" : "Hi.",
-					"jump" : ["converse"]
-				},
-				"hungry" : {
-					"randomDialogue" : [
-						"Mmmm... feeling a bit hungry.",
-						"Hey <entityname>, I'm looking for some food, have any?",
-						"Oh huh, I probably need to find something to eat."
-					],
-					"jump" : ["converse"]
+				"default" : {
+					"default" : {
+						"randomDialogue" : [
+							"Hi.",
+							"Hey there.",
+							"Greetings!"
+						],
+						"randomButtonText" : "Hi.",
+						"jump" : ["converse"]
+					},
+					"hungry" : {
+						"randomDialogue" : [
+							"Mmmm... feeling a bit hungry.",
+							"Hey <entityname>, I'm looking for some food, have any?",
+							"Oh huh, I probably need to find something to eat."
+						],
+						"jump" : ["converse"]
+					}
 				}
 			},
 			"converse" : {
@@ -125,24 +132,32 @@
 
 			//vore buttons
 			"oralVore" : {
-				"yes" : { "randomDialogue" : [ "With pleasure~" ],
-					"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-				},
-				"unprompted" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ],
-					"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-				},
-				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-				"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+				"default" : {
+					"default": {
+						"yes" : { "randomDialogue" : [ "With pleasure~" ],
+							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+						},
+						"unprompted" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ],
+							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+						},
+						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+						"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+					}
+				}
 			},
 
 			//talking while prey
 			"pred" : {
 				"belly" : {
-					"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun in there?~","I do enjoy it when you wiggle around~","Mmh, quite filling!~","That hit the spot nicely!~" ]},
-					"sbqHeal" : { "randomDialogue" : [ "I will make you feel all better~","Not many know this, but I do also have dreamy liquids that heal~","Arhh, you feel so warm in there~" ]},
-					"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I can feel you getting weaker in there~","I wonder how many feathers you will grow on me~","I got a place for you among the stars~" ] },
-					"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I'm sure you will look even better on my feathers once you're gone~","Going to be part of this crylan very soon!~","Enjoy your last squirms before you're gone~" ] }
+					"default" : {
+						"default" : {
+							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun in there?~","I do enjoy it when you wiggle around~","Mmh, quite filling!~","That hit the spot nicely!~" ]},
+							"sbqHeal" : { "randomDialogue" : [ "I will make you feel all better~","Not many know this, but I do also have dreamy liquids that heal~","Arhh, you feel so warm in there~" ]},
+							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I can feel you getting weaker in there~","I wonder how many feathers you will grow on me~","I got a place for you among the stars~" ] },
+							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I'm sure you will look even better on my feathers once you're gone~","Going to be part of this crylan very soon!~","Enjoy your last squirms before you're gone~" ] }
+						}
+					}
 				}
 			}
 		}

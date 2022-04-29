@@ -4,7 +4,7 @@ local inited
 
 sbq = {
 	data = {
-		settings = { mood = "neutral", personality = "default" },
+		settings = { personality = "default", mood = "default" },
 		defaultPortrait = "/empty_image.png",
 		icons = {
 			oralVore = "/items/active/sbqController/oralVore.png",
@@ -29,12 +29,15 @@ function init()
 	nameLabel:setText(sbq.name)
 
 	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
+	if sbq.data.settings.digestionImmunity == nil then
+		sbq.data.settings.digestionImmunity = (player.getProperty("sbqPreyEnabled") or {}).digestionImmunity or false
+	end
 	if sbq.data.dialogueBoxScripts ~= nil then
 		for _, script in ipairs(sbq.data.dialogueBoxScripts) do
 			require(script)
 		end
 	end
-	sbq.updateDialogueBox(sbq.data.dialogueTreeStart or { "greeting", "mood" })
+	sbq.updateDialogueBox(sbq.data.dialogueTreeStart or { "greeting", "personality", "mood" })
 end
 
 function update()
@@ -188,14 +191,15 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	if dialogueTree.speaker ~= nil then
 		speaker = dialogueTree.speaker
 	end
+	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
-		dialogueLabel:setText(sb.replaceTags(randomDialogue, { entityname = playerName }))
-		world.sendEntityMessage(speaker, "sbqSay", randomDialogue)
+		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
+		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags)
 		finished = true
 	elseif dialogueTree.dialogue ~= nil then
-		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], { entityname = playerName } ))
-		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos])
+		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], tags ))
+		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos], tags)
 
 		if dialoguePos >= #dialogueTree.dialogue then
 			finished = true
@@ -261,10 +265,10 @@ function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 
-	local dialogueTree = sbq.updateDialogueBox({ voreType, "personality", "mood", active })
+	local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active })
 	if active == "yes" then
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
-			sbq.updateDialogueBox({ voreType, "personality", "mood", "yes", "tease"})
+			sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "yes", "tease"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
 	end
