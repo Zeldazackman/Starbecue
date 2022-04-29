@@ -40,6 +40,16 @@ end
 
 -------------------------------------------------------------------------------
 
+function sbq.extraBellyEffects(i, eid, health, bellyEffect)
+	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.bellyTF then
+		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
+			if not immune then
+				transformMessageHandler( eid , 3 )
+			end
+		end)
+	end
+end
+
 function state.smol.absorbVore( args )
 	return sbq.doVore(args, "belly", {}, "slurp")
 end

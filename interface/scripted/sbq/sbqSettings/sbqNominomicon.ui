@@ -22,7 +22,6 @@
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "h" },
-							{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible", "visible" : false },
 							{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 							{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
 							{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
@@ -36,14 +35,16 @@
 						]}
 					]],
 					[[ // third quarter
+						{ "expandMode" : [2, 2]},
 						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
 							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
 						]}
 					],[ // fourth quarter
-						{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." }
+						{ "expandMode" : [2, 2]}
 					]],
+					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." },
 
 					{"type" : "panel", "style" : "convex", "children" : [
 						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]

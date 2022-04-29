@@ -46,7 +46,7 @@ function init()
 
 	sbq.getInitialData()
 
-	sbq.globalSettings = sbq.sbqSettings.global or {}
+	sbq.globalSettings = sbq.sbqSettings.global or sbq.config.defaultSettings
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
@@ -238,13 +238,31 @@ function init()
 	sbq.predator = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
-
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-	impossibleEscape:setChecked(sbq.globalSettings.impossibleEscape)
 
-	displayDigest:setChecked(sbq.globalSettings.displayDigest)
-	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
-	hammerspace:setChecked(sbq.globalSettings.hammerspace)
+	for setting, value in pairs(sbq.predatorSettings) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changePredatorSetting(setting, button.checked)
+			end
+		end
+	end
+	for setting, value in pairs(sbq.globalSettings) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changeGlobalSetting(setting, button.checked)
+			end
+		end
+	end
+
+	function hammerspace:onClick() -- only one that has unique logic
+		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
+		sbq.hammerspacePanel()
+	end
 
 end
 local init = init
@@ -477,26 +495,6 @@ function incEscape:onClick()
 	sbq.changeEscapeModifier(1)
 end
 
-function impossibleEscape:onClick()
-	sbq.changeGlobalSetting("impossibleEscape", impossibleEscape.checked)
-end
-
---------------------------------------------------------------------------------------------------
-
-function displayDigest:onClick()
-	sbq.changeGlobalSetting("displayDigest", displayDigest.checked)
-end
-
-function bellySounds:onClick()
-	sbq.changeGlobalSetting("bellySounds", bellySounds.checked)
-end
-
-function hammerspace:onClick()
-	sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-	sbq.hammerspacePanel()
-end
-
-
 --------------------------------------------------------------------------------------------------
 
 function decPreset:onClick()
@@ -564,22 +562,17 @@ end
 if mainTabField.tabs.globalPreySettings ~= nil then
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
+	for setting, value in pairs(sbq.sbqPreyEnabled) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changePreySetting(setting, button.checked)
+			end
+		end
+	end
+
 	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
-	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
-	transformImmunity:setChecked(sbq.sbqPreyEnabled.transformImmunity)
-	eggImmunity:setChecked(sbq.sbqPreyEnabled.eggImmunity)
-
-	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
-	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
-	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)
-
-	analVore:setChecked(sbq.sbqPreyEnabled.analVore)
-	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)
-	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)
-	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
-
-	held:setChecked(sbq.sbqPreyEnabled.held)
-
 	function preyEnabled:onClick()
 		sbq.changePreySetting("enabled", preyEnabled.checked)
 	end
@@ -591,46 +584,6 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 		else
 			status.clearPersistentEffects("digestImmunity")
 		end
-	end
-
-	function transformImmunity:onClick()
-		sbq.changePreySetting("transformImmunity", transformImmunity.checked)
-	end
-
-	function eggImmunity:onClick()
-		sbq.changePreySetting("eggImmunity", eggImmunity.checked)
-	end
-
-	function oralVore:onClick()
-		sbq.changePreySetting("oralVore", oralVore.checked)
-	end
-
-	function tailVore:onClick()
-		sbq.changePreySetting("tailVore", tailVore.checked)
-	end
-
-	function absorbVore:onClick()
-		sbq.changePreySetting("absorbVore", absorbVore.checked)
-	end
-
-	function analVore:onClick()
-		sbq.changePreySetting("analVore", analVore.checked)
-	end
-
-	function cockVore:onClick()
-		sbq.changePreySetting("cockVore", cockVore.checked)
-	end
-
-	function breastVore:onClick()
-		sbq.changePreySetting("breastVore", breastVore.checked)
-	end
-
-	function unbirth:onClick()
-		sbq.changePreySetting("unbirth", unbirth.checked)
-	end
-
-	function held:onClick()
-		sbq.changePreySetting("held", held.checked)
 	end
 end
 --------------------------------------------------------------------------------------------------

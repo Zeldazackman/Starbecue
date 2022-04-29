@@ -120,7 +120,18 @@
 		},
 		"defaultSettings" : {
 			"replaceColors" : [1,1,1,1,1,1],
-			"fullbright" : [false,false,false,false,true,false]
+			"fullbright" : [false,false,false,false,true,false],
+
+			"symmetricalBalls" : true,
+			"symmetricalBreasts" : true,
+			"breasts" : false,
+			"penis" : false,
+			"balls" : false,
+			"pussy" : false,
+
+			"penisCumTF" : false,
+			"ballsCumTF" : false,
+			"wombEggify" : false
 		},
 
 		"allowedModifiers": {

@@ -139,7 +139,14 @@
 			"replaceColors" : [1,1,1,1,1,1,1],
 			"fullbright" : [false,false,false,false,false,true,false],
 
-			"symmetricalBalls" : true
+			"symmetricalBalls" : true,
+			"penis" : false,
+			"balls" : false,
+			"pussy" : false,
+
+			"penisCumTF" : false,
+			"ballsCumTF" : false,
+			"wombEggify" : false
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},

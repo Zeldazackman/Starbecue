@@ -23,7 +23,22 @@ function init()
 
 	oldInit()
 
-	lockSettings:setChecked(data.settings.lockSettings)
+	function lockSettings:onClick()
+		sbq.changeGlobalSetting("lockSettings", lockSettings.checked)
+		if lockSettings.checked then
+			sbq.changeGlobalSetting("ownerId", player.uniqueId())
+			local ownerName = world.entityName(player.id())
+			sbq.changeGlobalSetting("ownerName", ownerName)
+			ownerLabel:setText("Owner: "..ownerName)
+			ownerBar:setVisible(true)
+		else
+			sbq.changeGlobalSetting("ownerId", "")
+			sbq.changeGlobalSetting("ownerName", "")
+			ownerLabel:setText("")
+			ownerBar:setVisible(false)
+		end
+	end
+
 
 	if (data.settings.lockSettings and data.settings.ownerId ~= player.uniqueId()) and not player.isAdmin() then
 		mainTabField.tabs.globalPredSettings:setVisible(false)
@@ -62,19 +77,3 @@ end
 sbq.changePredatorSetting = sbq.changeGlobalSetting
 
 --------------------------------------------------------------------------------------
-
-function lockSettings:onClick()
-	sbq.changeGlobalSetting("lockSettings", lockSettings.checked)
-	if lockSettings.checked then
-		sbq.changeGlobalSetting("ownerId", player.uniqueId())
-		local ownerName = world.entityName(player.id())
-		sbq.changeGlobalSetting("ownerName", ownerName)
-		ownerLabel:setText("Owner: "..ownerName)
-		ownerBar:setVisible(true)
-	else
-		sbq.changeGlobalSetting("ownerId", "")
-		sbq.changeGlobalSetting("ownerName", "")
-		ownerLabel:setText("")
-		ownerBar:setVisible(false)
-	end
-end

@@ -36,14 +36,16 @@
 						]}
 					]],
 					[[ // third quarter
+						{ "expandMode" : [2, 2]},
 						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
 							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
 						]}
 					],[ // fourth quarter
-						{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
-					]]
+						{ "expandMode" : [2, 2]}
+					]],
+					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [

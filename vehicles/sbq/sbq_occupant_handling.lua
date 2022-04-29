@@ -628,9 +628,8 @@ function sbq.doBellyEffects(dt)
 				sbq.hunger = math.min(100, sbq.hunger + hunger_change)
 
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
-			else
-				sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 			end
+			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 		end
 	end
 end

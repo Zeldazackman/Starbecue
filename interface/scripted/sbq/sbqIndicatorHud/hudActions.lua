@@ -60,10 +60,10 @@ function sbq.xeroEggify(id, i)
 					cracks = 0,
 					bellyEffect = "sbqHeal",
 					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
-					skinNames = {
-						head = "xeronious",
-						body = "xeronious"
-					}
+					replaceColorTable = {
+						{"aa720a", "e4a126", "ffb62e", "ffca69"},
+						{"aa720a", "e4a126", "ffb62e", "ffca69"}
+					},
 				}
 			})
 		end
