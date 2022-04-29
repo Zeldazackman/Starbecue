@@ -27,37 +27,43 @@ function update(args)
 	sbq.checkRPCsFinished(args.dt)
 
 	if args.moves["special1"] then
-		sb.setLogMap("pressedTime", pressedTime)
 		pressedTime = pressedTime + args.dt
-		if pressedTime >= 0.2 and not radialMenuOpen then -- long hold
-			openRadialMenu()
-			radialMenuOpen = true
-		end
-	elseif pressedTime > 0 or radialSelectionData.gotData then
-		pressedTime = 0
-		closeMenu()
-		radialMenuOpen = false
-		if not radialSelectionData.gotData and rpc == nil then
-			rpc = true
-			sbq.addRPC(world.sendEntityMessage(entity.id(), "sbqGetRadialSelection"), function (data)
-				if data.selection ~= nil and data.type == "sbqSelect" then
-					radialSelectionData = data
-					radialSelectionData.gotData = true
-					rpc = nil
-				end
-			end, function ()
-				rpc = nil
-			end)
-		end
-		radialSelectionData.gotData = nil
-		if radialSelectionData.selection ~= nil then
-			if radialSelectionData.selection == "cancel" then
-			elseif radialSelectionData.selection == "settings" then
-				openSettingsMenu()
-			else -- any other selection
-				spawnPredator(radialSelectionData.selection)
+		if pressedTime >= 0.2 then -- long hold
+			if not radialMenuOpen then
+				openRadialMenu()
+				radialMenuOpen = true
+			else
+				sbq.loopedMessage("radialSelect", entity.id(), "sbqGetRadialSelection", {}, function(data)
+					if data.selection ~= nil and data.type == "sbqSelect" then
+						sbq.lastRadialSelection = data.selection
+						sbq.radialSelectionType = data.type
+						if data.selection == "cancel" then return end
+						if data.pressed and data.selection == "settings" and not sbq.click then
+							openSettingsMenu()
+							return
+						elseif data.pressed and not sbq.click then
+							spawnPredator(data.selection)
+							return
+						end
+						if data.button == 0 and not sbq.click then
+						elseif data.button == 2 and not sbq.click then
+						end
+						sbq.click = data.pressed
+					end
+				end)
 			end
 		end
+	elseif radialMenuOpen then
+		world.sendEntityMessage(entity.id(), "sbqOpenInterface", "sbqClose")
+		if sbq.radialSelectionType == "sbqSelect" then
+			if sbq.lastRadialSelection == "settings" then
+				openSettingsMenu()
+				return
+			elseif sbq.lastRadialSelection ~= "cancel" then
+				spawnPredator(sbq.lastRadialSelection)
+			end
+		end
+		radialMenuOpen = nil
 	end
 	spawnCooldown = math.max(0, spawnCooldown - args.dt)
 	pressed = args.moves["special1"]
