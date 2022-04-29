@@ -4,7 +4,16 @@ function sbq.letout(id, i)
 end
 
 function sbq.npcInteract(id, i)
-	sbq.addRPC(world.sendEntityMessage(id, "sbqInteract", player.id(), sbq.occupant[i].location), function (data)
+	local predator = sbq.sbqCurrentData.species
+	if predator == "sbqOccupantHolder" then
+		predator = (status.statusProperty("speciesAnimOverrideData") or {}).species or player.species()
+	end
+	local predData = {
+		settings = sbq.sbqCurrentData.settings,
+		location = sbq.occupant[i].location,
+		predator = predator
+	}
+	sbq.addRPC(world.sendEntityMessage(id, "sbqInteract", player.id(), predData), function (data)
 		if data then
 			player.interact(data[1], data[2], id)
 		end

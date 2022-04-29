@@ -72,6 +72,11 @@ function init()
 		end
 		player.interact("ScriptPane", pane, sourceEntity or entity.id())
 	end)
+	message.setHandler( "sbqPlayerInteract", function(_,_, data, id)
+		player.interact(data[1], data[2], id)
+
+	end)
+
 
 	message.setHandler( "sbqLoungingIn", function()
 		return player.loungingIn()

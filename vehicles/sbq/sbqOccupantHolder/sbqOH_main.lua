@@ -283,19 +283,6 @@ end
 function sbq.checkSpawnerExists()
 	if sbq.spawner and world.entityExists(sbq.spawner) then
 		mcontroller.setPosition(world.entityPosition(sbq.spawner))
-
-		sbq.loopedMessage( "occupantHolderExists", sbq.spawner, "sbqOccupantHolderExists", {
-			entity.id(),
-			{occupant = sbq.occupant, occupants = sbq.occupants},
-			{
-				species = world.entityName(entity.id()),
-				type = "driver"
-			}
-		},
-		function (seatdata)
-			sbq.spawnerEquips = seatdata
-		end)
-
 	elseif (sbq.spawnerUUID ~= nil) then
 		sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {},
 		function(data)

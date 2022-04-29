@@ -157,24 +157,58 @@
 			},
 			// when being prey, responses to the pred that ate them
 			"prey" : {
-				"any" : {
-					"any" : {
-						"randomDialogue" : [ "Mmm I'm pretty stuck in here aren't I?" ]
-					},
-					"belly" : {
+				"default" : {
+					"default" : { "randomDialogue" : [ "Mmm I'm pretty stuck in here aren't I?" ] }
+				},
+				"belly" : {
+					"default" : {
 						"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
 						"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
-						"sbqSoftDigest" : { "randomDialogue" : [ "Trying to melt me down?" ] },
-						"sbqDigest" : { "randomDialogue" : [ "Trying to melt me down?" ] }
-					}
-				},
-				"sbqVaporeon" : {
-					"belly" : {
+						"sbqSoftDigest" : {
+							"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+						},
+						"sbqDigest" : {
+							"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+						}
+					},
+					"sbqVaporeon" : {
 						"sbqRemoveBellyEffects" : { "randomDialogue" : [ "gooey vappy belly." ]},
 						"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
-						"sbqSoftDigest" : { "randomDialogue" : [ "Hehe, trying to melt me into goo" ] },
-						"sbqDigest" : { "randomDialogue" : [ "Hehe, trying to melt me into goo" ] }
+						"sbqSoftDigest" : {
+							"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+						},
+						"sbqDigest" : {
+							"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+						}
+					},
+					"sbqSlime" : {
+						"sbqRemoveBellyEffects" : { "randomDialogue" : [ "This slime is so sticky." ]},
+						"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
+						"sbqSoftDigest" : {
+							"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+						},
+						"sbqDigest" : {
+							"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+							"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+						}
 					}
+				},
+				"balls" : {
+					"default" : { "randomDialogue" : [ "Theres so much cum in here~" ] }
+				},
+				"shaft" : {
+					"default" : { "randomDialogue" : [ "Ahh your dick is so hard its squeezing me!" ] }
+				},
+				"womb" : {
+					"default" : { "randomDialogue" : [ "Its so soft in here~" ] }
+				},
+				"breasts" : {
+					"default" : { "randomDialogue" : [ "Heh, surrounded by milk to drink~" ] }
 				}
 			}
 		},

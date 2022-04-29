@@ -90,11 +90,7 @@ function sbq.getSeatData(occupant, seatname, eid)
 	local seatType
 	local data
 	if (seatname == sbq.driverSeat) then
-		if sbq.driving then
-			seatType = "driver"
-		else
-			seatType = "prey"
-		end
+		seatType = "driver"
 		data = {
 			species = world.entityName(entity.id()),
 			settings = sbq.settings,

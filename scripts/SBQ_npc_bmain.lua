@@ -20,8 +20,15 @@ function init()
 		}
 	end)
 
-	message.setHandler("sbqInteract", function(_,_, pred, location)
-		return interact({sourceId = pred, sourcePosition = world.entityPosition(pred), preyLocation = location})
+	message.setHandler("sbqInteract", function(_,_, pred, predData)
+		return interact({sourceId = pred, sourcePosition = world.entityPosition(pred), predData = predData})
+	end)
+	message.setHandler("sbqVehicleInteracted", function (_,_, args)
+		world.sendEntityMessage(args.sourceId, "sbqPlayerInteract", interact(args), npc.id() )
+	end)
+
+	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
+		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 
 	message.setHandler("sbqMakeNonHostile", function(_,_)
@@ -41,4 +48,5 @@ function init()
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end
+	status.setStatusProperty( "sbqCurrentData", nil)
 end

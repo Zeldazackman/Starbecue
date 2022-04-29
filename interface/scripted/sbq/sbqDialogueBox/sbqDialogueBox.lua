@@ -4,7 +4,7 @@ local inited
 
 sbq = {
 	data = {
-		mood = "neutral",
+		settings = { mood = "neutral", personality = "default" },
 		defaultPortrait = "/empty_image.png",
 		icons = {
 			oralVore = "/items/active/sbqController/oralVore.png",
@@ -69,18 +69,8 @@ end
 function sbq.getDialogueBranch(dialogueTreeLocation)
 	local dialogueTree = sbq.data.dialogueTree
 	for _, branch in ipairs(dialogueTreeLocation) do
-		if branch == "mood" then
-			if dialogueTree[sbq.data.mood] ~= nil then
-				dialogueTree = dialogueTree[sbq.data.mood] or dialogueTree
-			else
-				dialogueTree = dialogueTree.neutral or dialogueTree
-			end
-		elseif branch == "personality" then
-			if dialogueTree[sbq.data.personality] ~= nil then
-				dialogueTree = dialogueTree[sbq.data.personality] or dialogueTree
-			else
-				dialogueTree = dialogueTree.default or dialogueTree
-			end
+		if sbq.data.settings[branch] ~= nil then
+			dialogueTree =  dialogueTree[tostring(sbq.data.settings[branch])] or dialogueTree.default or dialogueTree
 		else
 			dialogueTree = dialogueTree[branch] or dialogueTree
 		end

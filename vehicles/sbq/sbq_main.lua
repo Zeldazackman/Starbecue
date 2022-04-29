@@ -372,6 +372,11 @@ function onInteraction(args)
 	if sbq.transitionLock then return end
 	local stateData = sbq.stateconfig[sbq.state]
 
+	if type(sbq.driver) == "number" and world.entityType(sbq.driver) == "npc" then
+		world.sendEntityMessage(sbq.driver, "sbqVehicleInteracted", args)
+		return
+	end
+
 	if not sbq.driver then
 		if sbq.eatFeedableHandItems(args.sourceId) then sbq.showEmote( "emotehappy" ) return end
 	end
