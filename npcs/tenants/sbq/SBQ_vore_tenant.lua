@@ -7,7 +7,8 @@ local olduninit = uninit
 sbq = {
 	currentData = {},
 	timeUntilNewHolder = 0,
-	dialogueBoxOpen = 0
+	dialogueBoxOpen = 0,
+	targetedEntities = {}
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
@@ -248,4 +249,36 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings)
 		end
 	end
 	return dialogueTree
+end
+
+function sbq.searchForValidPrey(voreType)
+	local players = world.playerQuery(mcontroller.position(), 50)
+	local npcs = world.npcQuery(mcontroller.position(), 50, { withoutEntityId = npc.id() })
+	local monsters = world.monsterQuery(mcontroller.position(), 50)
+
+	for i, entity in ipairs(players) do
+		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+			if enabled then
+				table.insert(sbq.targetedEntities, {entity, voreType})
+			end
+		end)
+	end
+	for i, entity in ipairs(npcs) do
+		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+			if enabled then
+				table.insert(sbq.targetedEntities, {entity, voreType})
+			end
+		end)
+	end
+	for i, entity in ipairs(monsters) do
+		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+			if enabled then
+				table.insert(sbq.targetedEntities, {entity, voreType})
+			end
+		end)
+	end
+end
+
+function sbq.searchForValidPred(setting)
+
 end

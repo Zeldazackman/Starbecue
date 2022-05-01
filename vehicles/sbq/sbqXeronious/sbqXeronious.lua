@@ -227,19 +227,19 @@ end
 
 function grabOralEat(args)
 	sbq.grabbing = args.id
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function oralEat(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function tailVore(args)
-	return sbq.doVore(args, "tail", {}, "swallow")
+	return sbq.doVore(args, "tail", {}, "swallow", "tailVore")
 end
 
 function analVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
 end
 
 function sitAnalEat(args)

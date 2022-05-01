@@ -60,20 +60,28 @@ function init()
 				end
 			end
 
-			local scripts = sbq.predatorConfig.scripts or {}
 			local mergeConfigs = sbq.predatorConfig.merge or {}
-			while type(mergeConfigs[1]) == "string" do
-				local newConfig = root.assetJson(mergeConfigs[1])
-				for i, path in ipairs(newConfig.merge or {}) do
-					table.insert(mergeConfigs, path)
-				end
-				for i, script in ipairs(newConfig.scripts or {}) do -- make sure to get new scripts and add them rather than overwrite them
-					table.insert(scripts, 1, script)
+			local configs = { sbq.predatorConfig }
+			while type(mergeConfigs[#mergeConfigs]) == "string" do
+				local insertPos = #mergeConfigs
+				local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+				for i = #(newConfig.merge or {}), 1, -1 do
+					table.insert(mergeConfigs, insertPos, newConfig.merge[i])
 				end
 
-				sbq.predatorConfig = sb.jsonMerge(newConfig, sbq.predatorConfig)
-				table.remove(mergeConfigs, 1)
+				table.insert(configs, 1, newConfig)
+
+				table.remove(mergeConfigs, #mergeConfigs)
 			end
+			local scripts = {}
+			local finalConfig = {}
+			for i, config in ipairs(configs) do
+				finalConfig = sb.jsonMerge(finalConfig, config)
+				for j, script in ipairs(config.scripts or {}) do
+					table.insert(scripts, script)
+				end
+			end
+			sbq.predatorConfig = finalConfig
 			sbq.predatorConfig.scripts = scripts
 
 		else

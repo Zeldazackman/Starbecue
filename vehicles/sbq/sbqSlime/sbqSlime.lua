@@ -51,7 +51,7 @@ function sbq.extraBellyEffects(i, eid, health, bellyEffect)
 end
 
 function state.smol.absorbVore( args )
-	return sbq.doVore(args, "belly", {}, "slurp")
+	return sbq.doVore(args, "belly", {}, "slurp", "absorbVore")
 end
 
 function state.smol.absorbEscape( args )

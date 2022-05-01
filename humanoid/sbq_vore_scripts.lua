@@ -33,7 +33,7 @@ function state.stand.cockVore(args)
 		return
 	end
 	if sbq.detectPants() or not sbq.settings.penis then return false end
-	return sbq.doVore(args, "shaft", {}, "swallow")
+	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
 end
 
 state.stand.ballsToShaft = sbq.ballsToShaft
