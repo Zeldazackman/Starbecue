@@ -23,22 +23,24 @@ function transformMessageHandler(eid, multiplier, data)
 	else
 		if sbq.lounging[eid].species == world.entityName( entity.id() ) then return end
 	end
-	if sbq.lounging[eid].species == "sbqOccupantHolder" then
-		data.layer = true
-	end
 
 	sbq.lounging[eid].progressBarActive = true
 	sbq.lounging[eid].progressBar = 0
-	sbq.lounging[eid].progressBarData = data
-	if data == nil then
-		sbq.lounging[eid].progressBarColor = (sbq.settings.replaceColorTable[1] or (sbq.sbqData.replaceColors[1][(sbq.settings.replaceColors[1] or sbq.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
-	elseif data.barColor ~= nil then
+	sbq.lounging[eid].progressBarData = data or {}
+
+	if type(sbq.lounging[eid].progressBarData.barColor) == "table" then
 		sbq.lounging[eid].progressBarColor = data.barColor
 	else
+		sbq.lounging[eid].progressBarColor = (sbq.settings.replaceColorTable[1] or (sbq.sbqData.replaceColors[1][(sbq.settings.replaceColors[1] or sbq.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
 		-- p.lounging[eid].progressBarColor = root.assetJson("something about data:sbqData.replaceColors.0.1")
 		-- or maybe define it some other way, I dunno
 	end
-	sbq.lounging[eid].progressBarMultiplier = multiplier or 1
+
+	if sbq.lounging[eid].species == "sbqOccupantHolder" then
+		sbq.lounging[eid].progressBarData.layer = true
+	end
+
+	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
 	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
 end
 
@@ -102,7 +104,9 @@ message.setHandler( "fixWeirdSeatBehavior", function(_,_, eid)
 end )
 
 message.setHandler( "addPrey", function (_,_, seatindex, data)
+	if seatindex > sbq.occupantSlots then return false end
 	sbq.occupant[seatindex] = data
+	sbq.refreshList = true
 end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)
@@ -129,15 +133,15 @@ message.setHandler( "requestTransition", function (_,_, transition, args)
 	sbq.doTransition( transition, args )
 end)
 
-message.setHandler( "objectPredCheck", function (_,_)
+message.setHandler( "getObjectSettingsMenuData", function (_,_)
 	if not sbq.driver then
-		return true
+		return {
+			settings = sbq.settings,
+			spawner = sbq.spawner
+		}
 	end
 end)
 
-message.setHandler( "getObjectSettingsMenuData", function (_,_)
-	return {
-		settings = sbq.settings,
-		spawner = sbq.spawner
-	}
+message.setHandler( "sbqSendAllPreyTo", function (_,_, id)
+	sbq.sendAllPreyTo = id
 end)

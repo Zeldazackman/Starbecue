@@ -2,6 +2,7 @@
 local occupantHolder = nil
 
 function init()
+	object.setInteractive(true)
 	self.timerList = {}
 	self.offsets = {enabled = false, parts = {}}
 	self.rotating = {enabled = false, parts = {}}
@@ -19,10 +20,6 @@ function init()
 		state.tag = nil
 	end
 
-	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
-		local dialogueTreeStart
-		return { dialogueTreeStart = dialogueTreeStart, settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
-	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		talkingWithPrey = (isPrey == "prey")
 		dialogueBoxOpen = 0.5
@@ -31,6 +28,11 @@ function init()
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		object.say(string, tags)
 	end)
+end
+
+function onInteraction(args)
+	local dialogueBoxData = { dialogueTreeStart = config.getParameter("dialogueTreeStart"), settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
+	return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:auriShop" }}
 end
 
 function update(dt)

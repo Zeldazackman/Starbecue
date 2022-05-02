@@ -4,7 +4,7 @@ local inited
 
 sbq = {
 	data = {
-		mood = "neutral",
+		settings = { personality = "default", mood = "default" },
 		defaultPortrait = "/empty_image.png",
 		icons = {
 			oralVore = "/items/active/sbqController/oralVore.png",
@@ -21,29 +21,29 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require( "/lib/stardust/json.lua" )
 
 function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
-	sbq.addRPC( world.sendEntityMessage( pane.sourceEntity(), "sbqGetDialogueBoxData", player.id() ), function (dialogueBoxData)
-		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
-		if sbq.data.dialogueBoxScripts ~= nil then
-			for _, script in ipairs(sbq.data.dialogueBoxScripts) do
-				require(script)
-			end
+	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
+	if sbq.data.settings.digestionImmunity == nil then
+		sbq.data.settings.digestionImmunity = (player.getProperty("sbqPreyEnabled") or {}).digestionImmunity or false
+	end
+	if sbq.data.dialogueBoxScripts ~= nil then
+		for _, script in ipairs(sbq.data.dialogueBoxScripts) do
+			require(script)
 		end
-		sbq.updateDialogueBox( dialogueBoxData.dialogueTreeStart or {"greeting", "mood"})
-		inited = true
-	end)
+	end
+	sbq.updateDialogueBox(sbq.data.dialogueTreeStart or { "greeting", "personality", "mood" })
 end
 
 function update()
 	local dt = script.updateDt()
 	sbq.checkRPCsFinished(dt)
 	sbq.checkTimers(dt)
-	if not inited then return end
 	sbq.refreshData()
 	sbq.getOccupancy()
 end
@@ -72,14 +72,21 @@ end
 function sbq.getDialogueBranch(dialogueTreeLocation)
 	local dialogueTree = sbq.data.dialogueTree
 	for _, branch in ipairs(dialogueTreeLocation) do
-		if branch == "mood" then
-			if dialogueTree[sbq.data.mood] ~= nil then
-				dialogueTree = dialogueTree[sbq.data.mood]
-			else
-				dialogueTree = dialogueTree.neutral
+		if sbq.data.settings[branch] ~= nil then
+			dialogueTree =  dialogueTree[tostring(sbq.data.settings[branch])] or dialogueTree.default or dialogueTree
+		else
+			dialogueTree = dialogueTree[branch] or dialogueTree
+		end
+		-- for dialog in other files thats been pointed to
+		if type(dialogueTree) == "string" then
+			if dialogueTree[1] == "/" then
+				dialogueTree = root.assetJson(dialogueTree)
+			elseif dialogueTree[1] == "[" then
+				local decoded = json.decode(dialogueTree[1])
+				if type(decoded) == "table" then
+					dialogueTree = sbq.getDialogueBranch(decoded) -- I know, recursion is risky, but none of this stuff is randomly generated someone would have to intentionally make a loop to break it
+				end
 			end
-		elseif dialogueTree[branch] ~= nil then
-			dialogueTree = dialogueTree[branch]
 		end
 	end
 	return dialogueTree
@@ -184,14 +191,15 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	if dialogueTree.speaker ~= nil then
 		speaker = dialogueTree.speaker
 	end
+	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
-		dialogueLabel:setText(sb.replaceTags(randomDialogue, { entityname = playerName }))
-		world.sendEntityMessage(speaker, "sbqSay", randomDialogue)
+		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
+		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags)
 		finished = true
 	elseif dialogueTree.dialogue ~= nil then
-		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], { entityname = playerName } ))
-		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos])
+		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], tags ))
+		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos], tags)
 
 		if dialoguePos >= #dialogueTree.dialogue then
 			finished = true
@@ -257,10 +265,10 @@ function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
 	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 
-	local dialogueTree = sbq.updateDialogueBox({ voreType, active })
+	local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active })
 	if active == "yes" then
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
-			sbq.updateDialogueBox({ voreType, "yes", "tease"})
+			sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "yes", "tease"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
 	end

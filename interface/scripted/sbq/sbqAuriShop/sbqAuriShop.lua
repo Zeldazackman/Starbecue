@@ -7,6 +7,20 @@ local catagoryLabels = root.assetJson("/items/categories.config").labels
 
 local buyRecipe
 
+function fixFilepath(string, item)
+	if type(string) == "string" then
+		if string == "" then return
+		elseif string:sub(1,1) == "?" then return
+		elseif string:find("^/") then
+			return string
+		else
+			return item.directory..string
+		end
+	else
+		return
+	end
+end
+
 for tab, recipes in pairs(shopRecipes) do
 	local tabScrollArea = _ENV[tab.."ScrollArea"]
 	for i, recipe in ipairs(recipes) do
@@ -39,10 +53,9 @@ for tab, recipes in pairs(shopRecipes) do
 			image = resultItemConfig.config.largeImage
 			scale = 1.5
 		end
-		if not (image:sub(1,1) == "/") then
-			image = resultItemConfig.directory..image
-		end
-		if wasObject then
+		image = fixFilepath(image, resultItemConfig)
+
+		if wasObject and image ~= nil then
 			local size = root.imageSize(image)
 			if size[1] > 90 or size[2] > 90 then
 				local x = 90/(size[1])

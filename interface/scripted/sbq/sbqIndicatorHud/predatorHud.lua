@@ -19,7 +19,7 @@ canvas:clear()
 require("/scripts/SBQ_RPC_handling.lua")
 
 function init()
-	local sbqData = player.getProperty("sbqSettings")
+	local sbqData = player.getProperty("sbqSettings") or {}
 	if sbqData.global == nil then
 		sbqData.global = {}
 		player.setProperty("sbqSettings", sbqData)
@@ -28,10 +28,16 @@ end
 
 function sbq.listSlots()
 	occupantSlots:clearChildren()
-	local y = 216
+	local y = 217
+	local slots = 7
+	if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
+		slots = 8
+	end
 	for i = 1, sbq.occupants.total + 1 do
-		y = y - 32
-		occupantSlots:addChild({ type = "image", noAutoCrop = true, position = {80,y}, file = "portraitSlot.png" })
+		if i <= slots then
+			y = y - 25
+			occupantSlots:addChild({ type = "image", noAutoCrop = true, position = {80,y}, file = "portraitSlot.png" })
+		end
 	end
 end
 
@@ -47,11 +53,9 @@ function update()
 end
 
 function sbq.checkRefresh(dt)
-	if sbq.refreshtime >= 0.1 and sbq.rpc == nil and sbq.sbqCurrentData.type == "driver" and player.loungingIn() ~= nil then
-		sbq.rpc = world.sendEntityMessage( player.loungingIn(), "settingsMenuRefresh")
-	elseif sbq.rpc ~= nil and sbq.rpc:finished() then
-		if sbq.rpc:succeeded() then
-			local result = sbq.rpc:result()
+	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	if sbq.sbqCurrentData.type == "driver" then
+		sbq.loopedMessage("checkRefresh", sbq.sbqCurrentData.id, "settingsMenuRefresh", {}, function (result)
 			if result ~= nil then
 				sbq.settings = result.settings
 				sbq.occupants = result.occupants
@@ -66,13 +70,7 @@ function sbq.checkRefresh(dt)
 
 				sbq.refreshed = true
 			end
-		else
-			sb.logError( "Couldn't refresh settings." )
-			sb.logError( sbq.rpc:error() )
-		end
-		sbq.rpc = nil
-	else
-		sbq.refreshtime = sbq.refreshtime + dt
+		end )
 	end
 end
 
@@ -91,18 +89,28 @@ sbq.occupantList = {}
 function sbq.readOccupantData()
 	if sbq.occupants.total > 0 then
 		local y = 224
+		local playerSpecies = (sbq.sbqCurrentData or {}).species
+
+		if playerSpecies == "sbqOccupantHolder" then
+			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+			local maybeSpecies = (speciesAnimOverrideData.species or player.species())
+			if type(sbq.hudActions[maybeSpecies]) == "table" then
+				playerSpecies = maybeSpecies
+			end
+		end
+
 		for i, occupant in pairs(sbq.occupant) do
 			local id = occupant.id
-			if not ((i == "0") or (i == 0)) and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
-				y = y - 32
+			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") and (occupant ~= nil) and (type(id) == "number") and (world.entityExists( id )) then
+				y = y - 25
 				local species = occupant.species
 				if type(sbq.occupantList[id]) ~= "table" then
-					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,32}, children = {
+					sbq.occupantList[id] = { layout = occupantsArea:addChild({ type = "layout", mode = "manual", position = {0,y}, size = {96,24}, children = {
 						{ type = "image", noAutoCrop = true, position = {0,0}, file = "portrait.png"  },
-						{ type = "canvas", id = id.."PortraitCanvas", position = {6,7}, size = {16,16} },
-						{ type = "label", id = id.."Name", position = {33,9}, size = {47,10}, text = world.entityName( id ) },
-						{ type = "canvas", id = id.."HealthBar", position = {23,0}, size = {61,5} },
-						{ type = "canvas", id = id.."ProgressBar", position = {23,25}, size = {61,5}},
+						{ type = "canvas", id = id.."PortraitCanvas", position = {8,4}, size = {16,16} },
+						{ type = "label", id = id.."Name", position = {32,8.5}, size = {48,10}, text = world.entityName( id ) },
+						{ type = "canvas", id = id.."ProgressBar", position = {23,0}, size = {61,5} },
+						{ type = "canvas", id = id.."HealthBar", position = {23,19}, size = {61,5}},
 						{ type = "iconButton", id = id.."ActionButton", noAutoCrop = true, position = {0,0}, image = "portrait.png?setcolor=FFFFFF?multiply=00000001"  }
 					}})}
 					sbq.occupantList[id].portrait = _ENV[id.."PortraitCanvas"]
@@ -113,13 +121,16 @@ function sbq.readOccupantData()
 					local occupantButton = sbq.occupantList[id].actionButton
 					function occupantButton:onClick()
 						local actionList = {}
+						if world.entityType(id) == "npc" then
+							table.insert(actionList, {"Interact", function() sbq.npcInteract(id, i) end})
+						end
 						for _, action in ipairs(sbq.hudActions.global) do
 							if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
 								table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
 							end
 						end
-						if sbq.hudActions[sbq.sbqCurrentData.species] ~= nil then
-							for _, action in ipairs(sbq.hudActions[sbq.sbqCurrentData.species]) do
+						if type(sbq.hudActions[playerSpecies]) == "table" then
+							for _, action in ipairs(sbq.hudActions[playerSpecies]) do
 								if action.locations == nil or sbq.checkOccupantLocation(occupant.location, action.locations) then
 									table.insert(actionList, {action.name, function() sbq[action.script](id, i) end})
 								end
@@ -166,12 +177,12 @@ local bottomBar = {
 function sbq.updateBars()
 	if sbq.occupants.total > 0 and sbq.occupant ~= nil then
 		for i, occupant in pairs(sbq.occupant) do
-			if not ((i == "0") or (i == 0)) then
+			if ((not ((i == "0") or (i == 0))) or sbq.sbqCurrentData.species == "sbqOccupantHolder") then
 				local id = occupant.id
 				if type(id) == "number" and world.entityExists(id) and sbq.occupantList[id] ~= nil then
 					local health = world.entityHealth( id )
-					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], topBar )
-					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, bottomBar )
+					sbq.progressBar( sbq.occupantList[id].healthbar, HPPal, health[1] / health[2], bottomBar )
+					sbq.progressBar( sbq.occupantList[id].progressbar, occupant.progressBarColor, (occupant.progressBar or 0) / 100, topBar )
 				end
 			end
 		end
@@ -232,13 +243,9 @@ function sbq.adjustBellyEffect(direction)
 		sbq.sbqSettings.global = {bellyEffect = newBellyEffect}
 	end
 
-	sbq.settings.bellyEffect = newBellyEffect
+	sbq.saveSettings()
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.updateBellyEffectIcon()
 end
 
 function sbq.updateBellyEffectIcon()
@@ -253,8 +260,10 @@ function sbq.updateBellyEffectIcon()
 			appendTooltip = "Display "
 		end
 
-		bellyEffectIcon:setImage(effect.icon)
 		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
+		prevBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].prev].toolTip
+		nextBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].next].toolTip
+		bellyEffectIcon:setImage(effect.icon)
 
 		escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
 		impossibleEscape:setChecked(sbq.sbqSettings.global.impossibleEscape)
@@ -265,13 +274,17 @@ function sbq.changeEscapeModifier(inc)
 	sbq.sbqSettings.global.escapeDifficulty = (sbq.sbqSettings.global.escapeDifficulty or 0) + inc
 	escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end
 
+function sbq.saveSettings()
+	player.setProperty("sbqSettings", sbq.sbqSettings)
+	sbq.settings = sb.jsonMerge(sbq.settings, sbq.sbqSettings.global)
+
+	if sbq.sbqCurrentData.type == "driver" and type(sbq.sbqCurrentData.id) == "number" and world.entityExists(sbq.sbqCurrentData.id) then
+		world.sendEntityMessage(sbq.sbqCurrentData.id, "settingsMenuSet", sbq.settings )
+	end
+end
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -286,13 +299,9 @@ end
 function bellyEffectIcon:onClick()
 	local displayDigest = not sbq.sbqSettings.global.displayDigest
 	sbq.sbqSettings.global.displayDigest = displayDigest
-	sbq.settings.displayDigest = displayDigest
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
+	sbq.updateBellyEffectIcon()
 end
 
 function nextBellyEffect:onClick()
@@ -310,9 +319,5 @@ end
 function impossibleEscape:onClick()
 	sbq.sbqSettings.global.impossibleEscape = impossibleEscape.checked
 
-	player.setProperty("sbqSettings", sbq.sbqSettings)
-
-	if player.loungingIn() ~= nil then
-		world.sendEntityMessage(player.loungingIn(), "settingsMenuSet", sbq.settings )
-	end
+	sbq.saveSettings()
 end

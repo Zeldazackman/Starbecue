@@ -2,7 +2,7 @@
 	"name" : "sbqSpawner",
 	"type" : "head",
 
-	"scripts" : ["sbqSpawner.lua"],
+	"scripts" : ["sbqSpawner.lua", "/tech/storeDirectives.lua"],
 
 	"description" : "Press ^green;[F]^reset; to transform, hold to choose which.",
 	"shortDescription" : "Predator Selector",

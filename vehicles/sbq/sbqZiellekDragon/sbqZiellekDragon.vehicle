@@ -118,22 +118,35 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly",
+			"womb",
+			"shaft",
+			"balls"
+		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
 			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
-			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
-			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true }
+			"shaft" : { "name" : "Shaft", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
+			"balls" : { "name" : "Balls", "sided" : true, "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"ballsL" : { "name" : "Left Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"ballsR" : { "name" : "Right Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true }
 		},
 
 		"defaultSettings" : {
 			"replaceColors" : [1,1,1,1,1,1,1],
 			"fullbright" : [false,false,false,false,false,true,false],
 
-			"symmetricalBalls" : true
+			"symmetricalBalls" : true,
+			"penis" : false,
+			"balls" : false,
+			"pussy" : false,
+
+			"penisCumTF" : false,
+			"ballsCumTF" : false,
+			"wombEggify" : false
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},
@@ -628,6 +641,7 @@
 						"head": "idle",
 						"cock": "run",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -641,6 +655,7 @@
 						"head": "idle",
 						"cock": "run",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

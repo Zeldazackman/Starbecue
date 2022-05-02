@@ -119,7 +119,17 @@
 			}
 		},
 		"defaultSettings" : {
-			"directives" : "?replace;ffca8a=f0608b;e0975c=cd5061;a85636=95484c;6f2919=6a3836;f32200=f6fbfb;dc1f00=d7e8e8;be1b00=8fa7a3;951500=5d6d69;d9c189=eacf60;a38d59=c1a24e;735e3a=977841"
+			"directives" : "?replace;ffca8a=f0608b;e0975c=cd5061;a85636=95484c;6f2919=6a3836;f32200=f6fbfb;dc1f00=d7e8e8;be1b00=8fa7a3;951500=5d6d69;d9c189=eacf60;a38d59=c1a24e;735e3a=977841",
+			"symmetricalBalls" : true,
+			"symmetricalBreasts" : true,
+			"breasts" : false,
+			"penis" : false,
+			"balls" : false,
+			"pussy" : false,
+
+			"penisCumTF" : false,
+			"ballsCumTF" : false,
+			"wombEggify" : false
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 1},
@@ -196,17 +206,24 @@
 				"name" : "Body"
 			}
 		},
+		"listLocations" : [
+			"belly",
+			"womb",
+			"shaft",
+			"balls",
+			"breasts"
+		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 1, "digest" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1 },
-			"balls" : { "sided" : true, "max": 1, "mass": 0.1 },
+			"shaft" : { "name" : "Shaft", "max": 1, "mass": 0.1, "maxNested" : -1 },
+			"balls" : { "name" : "Balls", "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
 			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
 
-			"breasts" : { "max": 1, "mass": 0.1 },
+			"breasts" : { "name" : "Breasts", "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
 			"breastsL" : { "name" : "Left Breast", "max": 1, "mass": 0.1, "hammerspace" : true },
 			"breastsR" : { "name" : "Right Breast", "max": 1, "mass": 0.1, "hammerspace" : true }
 		},
@@ -425,6 +442,7 @@
 						"legs": "walk",
 						"body": "idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -438,6 +456,7 @@
 						"body": "run",
 						"cock": "run",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -519,6 +538,7 @@
 						"legs": "smol.walk",
 						"body": "smol.idle",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -531,6 +551,7 @@
 						"legs": "smol.run",
 						"body": "smol.run",
 						"offset": {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

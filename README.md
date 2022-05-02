@@ -6,18 +6,47 @@ This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/fi
 
 Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable.
 
-While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
+While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), if you're using Stardust Core then you should get [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2690363974) and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
 
 ## Features
 
 ![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
-### Playable Predators
+### Playable Predator transformation
 - Vaporeon
 - Xeronious
 - Avian
 - Slime
 - Ziellek Dragon
+
+### Player/NPC Predator species
+- Human
+- Hylotl
+- Floran
+- Avian
+- Apex
+- Glitch
+- Novakid
+- Fenerox
+- Avali
+- Novali
+- Lucario
+- Lycanroc
+- Eevee
+- Umbreon
+- Crylan
+- Rodent
+- Lyceen
+- Latex
+- Elysian
+- Fennix
+- Felin
+- Draconis
+- Draconis Full Dragon Reskin
+- Gnolls
+
+This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
+
 
 ### NPC Vore Tenants
 - Zevi (Pred/Prey)
@@ -27,6 +56,7 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ### Other Things
 - Egg
+- Plastic Egg
 
 ### Playable Predator Info
 
@@ -36,7 +66,9 @@ Full use of this system requires you to bind Tech Action 2 and 3 in the options 
 
 When turning into a predator you will be given a controller item, this is required for the predator transformation to detect some keys being pressed, such as Shift, as well as pass some more data to the vehicle that it cannot detect without it.
 
-Holding Tech Action 1 (F) while controlling a pred allows you to bring up its action wheel, the X at the bottom will despawn the pred, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a pred might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the pred does not have will not result in anything.
+You can also click with a controller when not transformed to activate "vore mode" where those actions can be used to eat other players in the base state, if the species you are has support, it will have visual effects on your player sprite, such as the belly expanding and struggles from the prey within, some items in hands may not animate correctly while in vore mode if you don't have certain techs equipped
+
+Holding Shift+Up with a controller allows you to bring up the action wheel, at the bottom you will be able to let out the most recently eaten prey, or despawn the predator transformation/occupant holder, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a pred might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the pred does not have will not result in anything.
 
 Most predators will have the same movement controls a player would, but tapping movment keys can be used to transition between different poses, like standing or sitting or sleeping, etc.
 
@@ -110,42 +142,6 @@ Artist, Lua scripting and debugging.
 > https://www.furaffinity.net/user/lokithevulpix/
 > https://twitter.com/LokiVulpix
 
-## Planned Future Additions
-
-### Vore RP tech
-To replace the one used by SSVM
-- will be further improved by allowing player prey to warp with you when warping to another world
-- may have a setting to warp prey into a special "belly" world for that predator player
-
-### Predators
-
-From Scratch
-- Eevee
-- Flareon
-- Jolteon
-- Espeon
-- Umbreon
-- Leafeon
-- Glaceon
-- Sylveon
-- Yoshi
-- Masotan
-- Protogen
-
-Vanilla Races
-- Humans
-- Apex
-- Floran
-- Hylotl
-- Glitch
-- Novakid
-
-Modded Races
-- Avali (Forum page gives permssion to use assets)
-- Crylan (Permission granted by Crescent)
-- Hibani (Premission granted by htfcuddles and Sheights)
-- Rodent (Premission granted by Sheights)
-- Draikin (Abandoned by creator)
 
 ## Do Not Ask/Contact
 

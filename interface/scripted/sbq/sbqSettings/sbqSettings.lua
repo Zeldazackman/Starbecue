@@ -33,7 +33,7 @@ function sbq.getInitialData()
 		mainTabField.tabs.globalPredSettings:setVisible(true)
 	end
 
-	sbq.predatorEntity = player.loungingIn()
+	sbq.predatorEntity = player.loungingIn() or sbq.sbqCurrentData.id
 end
 
 function sbq.getHelpTab()
@@ -46,10 +46,47 @@ function init()
 
 	sbq.getInitialData()
 
-	sbq.globalSettings = sbq.sbqSettings.global or {}
+	sbq.globalSettings = sbq.sbqSettings.global or sbq.config.defaultSettings
 
 	if sbq.sbqCurrentData.species ~= nil then
-		sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
+			sbq.predatorConfig = root.assetJson("/humanoid/sbqData.config").sbqData
+			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+			local species = speciesAnimOverrideData.species or player.species()
+			local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
+			if success then
+				if type(data.sbqData) == "table" then
+					sbq.predatorConfig = data.sbqData
+				end
+			end
+
+			local mergeConfigs = sbq.predatorConfig.merge or {}
+			local configs = { sbq.predatorConfig }
+			while type(mergeConfigs[#mergeConfigs]) == "string" do
+				local insertPos = #mergeConfigs
+				local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+				for i = #(newConfig.merge or {}), 1, -1 do
+					table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+				end
+
+				table.insert(configs, 1, newConfig)
+
+				table.remove(mergeConfigs, #mergeConfigs)
+			end
+			local scripts = {}
+			local finalConfig = {}
+			for i, config in ipairs(configs) do
+				finalConfig = sb.jsonMerge(finalConfig, config)
+				for j, script in ipairs(config.scripts or {}) do
+					table.insert(scripts, script)
+				end
+			end
+			sbq.predatorConfig = finalConfig
+			sbq.predatorConfig.scripts = scripts
+
+		else
+			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+		end
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
 		sbq.predatorConfig = {}
@@ -58,7 +95,7 @@ function init()
 
 	sbq.hammerspacePanel()
 
-	if (sbq.predatorConfig.replaceColors ~= nil or sbq.predatorConfig.replaceSkin ~= nil or sbq.predatorConfig.customizePresets ~= nil) and ((sbq.sbqCurrentData.type == "driver") or (sbq.sbqCurrentData.type == "object")) then
+	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
 
 		if sbq.predatorConfig.customizePresets ~= nil then
@@ -67,6 +104,11 @@ function init()
 			presetText:setText(sbq.predatorSettings.presetText or sbq.predatorConfig.presetList[sbq.preset])
 		else
 			presetsPanel:setVisible(false)
+		end
+		if not player.loungingIn() and sbq.sbqCurrentData.type ~= "object" and player.isAdmin() then
+			speciesPanel:setVisible(true)
+		elseif sbq.sbqCurrentData.type ~= "object" then
+			speciesPanel:setVisible(false)
 		end
 
 
@@ -201,16 +243,34 @@ function init()
 		end
 	end
 
-	sbq.predator = sbq.sbqCurrentData.species or "noPred"
+	sbq.predator = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
-
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-	impossibleEscape:setChecked(sbq.globalSettings.impossibleEscape)
 
-	displayDigest:setChecked(sbq.globalSettings.displayDigest)
-	bellySounds:setChecked(sbq.globalSettings.bellySounds or sbq.globalSettings.bellySounds == nil)
-	hammerspace:setChecked(sbq.globalSettings.hammerspace)
+	for setting, value in pairs(sbq.predatorSettings) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changePredatorSetting(setting, button.checked)
+			end
+		end
+	end
+	for setting, value in pairs(sbq.globalSettings) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changeGlobalSetting(setting, button.checked)
+			end
+		end
+	end
+
+	function hammerspace:onClick() -- only one that has unique logic
+		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
+		sbq.hammerspacePanel()
+	end
 
 end
 local init = init
@@ -350,8 +410,8 @@ end
 function sbq.hammerspacePanel()
 	hammerspaceScrollArea:clearChildren()
 	if sbq.globalSettings.hammerspace then
-		hammerspacePanel:setVisible(true)
-		for location, data in pairs(sbq.predatorConfig.locations) do
+		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
+			local data = sbq.predatorConfig.locations[location]
 			if data.hammerspace then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
 					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
@@ -365,17 +425,30 @@ function sbq.hammerspacePanel()
 				local label = _ENV[location.."Value"]
 				local next = _ENV[location.."Next"]
 				function enable:onClick()
+					if data.sided then
+						sbq.predatorSettings.hammerspaceDisabled[location.."L"] = not enable.checked
+						sbq.predatorSettings.hammerspaceDisabled[location.."R"] = not enable.checked
+					end
 					sbq.predatorSettings.hammerspaceDisabled[location] = not enable.checked
 					sbq.saveSettings()
 				end
 				function prev:onClick()
+					if data.sided then
+						sbq.changeHammerspaceLimit(location.."L", -1, label)
+						sbq.changeHammerspaceLimit(location.."R", -1, label)
+					end
 					sbq.changeHammerspaceLimit(location, -1, label)
 				end
 				function next:onClick()
+					if data.sided then
+						sbq.changeHammerspaceLimit(location.."L", 1, label)
+						sbq.changeHammerspaceLimit(location.."R", 1, label)
+					end
 					sbq.changeHammerspaceLimit(location, 1, label)
 				end
 			end
 		end
+		hammerspacePanel:setVisible(true)
 	else
 		hammerspacePanel:setVisible(false)
 	end
@@ -383,11 +456,23 @@ end
 
 function sbq.changeHammerspaceLimit(location, inc, label)
 	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 1) + inc
-	if newValue < 1 then return
+	if newValue < sbq.predatorConfig.locations[location].minVisual or 1 then return
 	elseif newValue > sbq.predatorConfig.locations[location].max then return end
 	label:setText(newValue)
 	sbq.predatorSettings.hammerspaceLimits[location] = newValue
 	sbq.saveSettings()
+end
+
+sbq.speciesOverrideIndex = 1
+function sbq.changeSpecies(inc)
+	local speciesIndex = (sbq.speciesOverrideIndex or 1) + inc
+	if speciesIndex > #sbq.extraTabs.speciesPresetList then
+		speciesIndex = 1
+	elseif speciesIndex < 1 then
+		speciesIndex = #sbq.extraTabs.speciesPresetList
+	end
+	sbq.speciesOverrideIndex = speciesIndex
+	speciesText:setText(sbq.extraTabs.speciesPresetList[sbq.speciesOverrideIndex])
 end
 
 --------------------------------------------------------------------------------------------------
@@ -418,26 +503,6 @@ function incEscape:onClick()
 	sbq.changeEscapeModifier(1)
 end
 
-function impossibleEscape:onClick()
-	sbq.changeGlobalSetting("impossibleEscape", impossibleEscape.checked)
-end
-
---------------------------------------------------------------------------------------------------
-
-function displayDigest:onClick()
-	sbq.changeGlobalSetting("displayDigest", displayDigest.checked)
-end
-
-function bellySounds:onClick()
-	sbq.changeGlobalSetting("bellySounds", bellySounds.checked)
-end
-
-function hammerspace:onClick()
-	sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-	sbq.hammerspacePanel()
-end
-
-
 --------------------------------------------------------------------------------------------------
 
 function decPreset:onClick()
@@ -467,27 +532,55 @@ function presetText:onEnter()
 end
 
 --------------------------------------------------------------------------------------------------
+if speciesPanel ~= nil then
+	function decSpecies:onClick()
+		sbq.changeSpecies(-1)
+	end
+
+	function incSpecies:onClick()
+		sbq.changeSpecies(1)
+	end
+
+	function applySpecies:onClick()
+		if speciesText.text ~= "" then
+			local table = { species = speciesText.text }
+			if type(sbq.extraTabs.speciesPresets[speciesText.text]) == "table" then
+				table = sbq.extraTabs.speciesPresets[speciesText.text]
+			end
+			local success, table2 = pcall(json.decode, speciesText.text )
+			if success and type(table2) == "table" then
+				table = table2
+			end
+			status.clearPersistentEffects("speciesAnimOverride")
+			status.setStatusProperty("speciesAnimOverrideData", table)
+			status.setPersistentEffects("speciesAnimOverride", { table.customAnimStatus or "speciesAnimOverride"})
+		else
+			status.clearPersistentEffects("speciesAnimOverride")
+			status.setStatusProperty("speciesAnimOverrideData", nil)
+		end
+	end
+	function speciesText:onEnter()
+		applySpecies:onClick()
+	end
+end
+
+--------------------------------------------------------------------------------------------------
 
 
 if mainTabField.tabs.globalPreySettings ~= nil then
 	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 
+	for setting, value in pairs(sbq.sbqPreyEnabled) do
+		local button = _ENV[setting]
+		if button ~= nil and type(value) == "boolean" then
+			button:setChecked(value)
+			function button:onClick()
+				sbq.changePreySetting(setting, button.checked)
+			end
+		end
+	end
+
 	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
-	digestImmunity:setChecked(sbq.sbqPreyEnabled.digestImmunity)
-	transformImmunity:setChecked(sbq.sbqPreyEnabled.transformImmunity)
-	eggImmunity:setChecked(sbq.sbqPreyEnabled.eggImmunity)
-
-	oralVore:setChecked(sbq.sbqPreyEnabled.oralVore)
-	tailVore:setChecked(sbq.sbqPreyEnabled.tailVore)
-	absorbVore:setChecked(sbq.sbqPreyEnabled.absorbVore)
-
-	analVore:setChecked(sbq.sbqPreyEnabled.analVore)
-	cockVore:setChecked(sbq.sbqPreyEnabled.cockVore)
-	breastVore:setChecked(sbq.sbqPreyEnabled.breastVore)
-	unbirth:setChecked(sbq.sbqPreyEnabled.unbirth)
-
-	held:setChecked(sbq.sbqPreyEnabled.held)
-
 	function preyEnabled:onClick()
 		sbq.changePreySetting("enabled", preyEnabled.checked)
 	end
@@ -499,46 +592,6 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 		else
 			status.clearPersistentEffects("digestImmunity")
 		end
-	end
-
-	function transformImmunity:onClick()
-		sbq.changePreySetting("transformImmunity", transformImmunity.checked)
-	end
-
-	function eggImmunity:onClick()
-		sbq.changePreySetting("eggImmunity", eggImmunity.checked)
-	end
-
-	function oralVore:onClick()
-		sbq.changePreySetting("oralVore", oralVore.checked)
-	end
-
-	function tailVore:onClick()
-		sbq.changePreySetting("tailVore", tailVore.checked)
-	end
-
-	function absorbVore:onClick()
-		sbq.changePreySetting("absorbVore", absorbVore.checked)
-	end
-
-	function analVore:onClick()
-		sbq.changePreySetting("analVore", analVore.checked)
-	end
-
-	function cockVore:onClick()
-		sbq.changePreySetting("cockVore", cockVore.checked)
-	end
-
-	function breastVore:onClick()
-		sbq.changePreySetting("breastVore", breastVore.checked)
-	end
-
-	function unbirth:onClick()
-		sbq.changePreySetting("unbirth", unbirth.checked)
-	end
-
-	function held:onClick()
-		sbq.changePreySetting("held", held.checked)
 	end
 end
 --------------------------------------------------------------------------------------------------

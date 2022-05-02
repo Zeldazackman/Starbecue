@@ -36,6 +36,36 @@ function sbq.update(dt)
 	end
 end
 
+function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
+
+	if (sbq.occupant[i].progressBar <= 0) then
+		if sbq.settings.bellyEggify and location == "belly" then
+			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
+				if not immune then
+					transformMessageHandler( eid, 3, {
+						barColor = {"aa720a", "e4a126", "ffb62e", "ffca69"},
+						forceSettings = true,
+						layer = true,
+						state = "smol",
+						species = "sbqEgg",
+						layerLocation = "egg",
+						settings = {
+							cracks = 0,
+							bellyEffect = "sbqHeal",
+							escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
+							replaceColorTable = {
+								{"aa720a", "e4a126", "ffb62e", "ffca69"},
+								{"aa720a", "e4a126", "ffb62e", "ffca69"}
+							},
+						}
+					})
+				end
+			end)
+		end
+	end
+end
+
+
 -------------------------------------------------------------------------------
 
 function sbq.whenFalling()
@@ -91,8 +121,13 @@ end
 
 function sbq.letout(id)
 	local id = id
-	if id == nil then
-		id = sbq.occupant[sbq.occupants.total].id
+	for i = sbq.occupantSlots, 0, -1 do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		then
+			id = sbq.occupant[i].id
+			break
+		end
 	end
 	if not id then return end
 	local location = sbq.lounging[id].location
@@ -192,19 +227,19 @@ end
 
 function grabOralEat(args)
 	sbq.grabbing = args.id
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function oralEat(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function tailVore(args)
-	return sbq.doVore(args, "tail", {}, "swallow")
+	return sbq.doVore(args, "tail", {}, "swallow", "tailVore")
 end
 
 function analVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
 end
 
 function sitAnalEat(args)
@@ -241,15 +276,15 @@ function sitCheckAnal()
 end
 
 function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 function analEscape(args)
-	return sbq.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {}, "analVore" )
 end
 
 function tailEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "tailVore" )
 end
 
 function checkVore()

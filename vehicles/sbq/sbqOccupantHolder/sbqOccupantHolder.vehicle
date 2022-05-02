@@ -74,7 +74,6 @@
 	"sbqData" : {
 		"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
 		},
 
 		"lights" : {
@@ -84,10 +83,43 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly",
+			"womb",
+			"shaft",
+			"balls",
+			"breasts"
+		],
+		"defaultSettings" : {
+			"bra" : false,
+			"underwear" : false,
+
+			"symmetricalBalls" : true,
+			"symmetricalBreasts" : true,
+			"breasts" : false,
+			"penis" : false,
+			"balls" : false,
+			"pussy" : false,
+
+			"penisCumTF" : false,
+			"ballsCumTF" : false,
+			"wombEggify" : false
+		},
 
 		"locations" :{
+			"belly" : {},
+			"womb" : {},
+
+			"shaft" : {},
+			"balls" : {},
+			"ballsL" : {},
+			"ballsR" : {},
+
+			"breasts" : {},
+			"breastsL" : {},
+			"breastsR" : {}
 		},
-		"victimAnimations": "/vehicles/sbq/sbqOccupantHolder/victim_animations.config"
+		"victimAnimations": "/humanoid/victim_animations.config"
 	},
 
 	"states": {

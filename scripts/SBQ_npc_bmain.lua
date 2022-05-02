@@ -7,19 +7,29 @@ function init()
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		status.setStatusProperty( "sbqCurrentData", current)
 		return {
-			head = npc.getItemSlot("head"),
-			chest = npc.getItemSlot("chest"),
-			legs = npc.getItemSlot("legs"),
-			back = npc.getItemSlot("back"),
-			headCosmetic = npc.getItemSlot("headCosmetic"),
-			chestCosmetic = npc.getItemSlot("chestCosmetic"),
-			legsCosmetic = npc.getItemSlot("legsCosmetic"),
-			backCosmetic = npc.getItemSlot("backCosmetic"),
+			head = npc.getItemSlot("head") or false,
+			chest = npc.getItemSlot("chest") or false,
+			legs = npc.getItemSlot("legs") or false,
+			back = npc.getItemSlot("back") or false,
+			headCosmetic = npc.getItemSlot("headCosmetic") or false,
+			chestCosmetic = npc.getItemSlot("chestCosmetic") or false,
+			legsCosmetic = npc.getItemSlot("legsCosmetic") or false,
+			backCosmetic = npc.getItemSlot("backCosmetic") or false,
 			statusDirectives = status.statusProperty("speciesAnimOverrideDirectives"),
 			effectDirectives = status.statusProperty("effectDirectives")
 		}
 	end)
 
+	message.setHandler("sbqInteract", function(_,_, pred, predData)
+		return interact({sourceId = pred, sourcePosition = world.entityPosition(pred), predData = predData})
+	end)
+	message.setHandler("sbqVehicleInteracted", function (_,_, args)
+		world.sendEntityMessage(args.sourceId, "sbqPlayerInteract", interact(args), npc.id() )
+	end)
+
+	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
+		status.setStatusProperty( "sbqCurrentData", nil)
+	end)
 
 	message.setHandler("sbqMakeNonHostile", function(_,_)
 		if (status.statusProperty("sbqOriginalDamageTeam") == nil)
@@ -38,4 +48,5 @@ function init()
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end
+	status.setStatusProperty( "sbqCurrentData", nil)
 end

@@ -9,7 +9,7 @@
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
-					[[//first collumn
+					[[//first quarter
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
@@ -18,7 +18,7 @@
 							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
 							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
 						]}
-					],[// second collumn
+					],[// second quarter
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "h" },
@@ -35,11 +35,16 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
-					{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "mode" : "v", "expandMode" : [0, 0] },
-						{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-						{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "mode" : "v" } ]}
-					]},
+					[[ // third quarter
+						{ "expandMode" : [2, 2]},
+						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
+							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+						]}
+					],[ // fourth quarter
+						{ "expandMode" : [2, 2]}
+					]],
 					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}
 			]},
@@ -67,7 +72,7 @@
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed/Held/Pinned/Hugged" } ]
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed" } ]
 						]}
 					],
 					{"type" : "panel", "style" : "convex", "children" : [
@@ -107,6 +112,14 @@
 					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
 					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
+				]}]],
+				[[{ "type" : "panel", "id" : "speciesPanel", "style" : "convex", "children" : [
+					{ "mode" : "h" },
+					{ "type" : "label", "text" : " Species", "inline" : true },
+					{ "type" : "iconButton", "id" : "decSpecies", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+					{ "type" : "textBox", "id" : "speciesText", "expandMode" : [1, 0] },
+					{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+					{ "type" : "button", "id" : "applySpecies", "caption" : "Apply", "expandMode" : [0, 0] }
 				]}]]
 			]}],
 

@@ -4,8 +4,12 @@ function sbq.updateAnims(dt)
 		state.animationState.time = state.animationState.time + dt
 		local ended, times, time = sbq.hasAnimEnded(statename)
 		if (not ended) or (state.animationState.mode == "loop") then
-			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+			local frame = math.floor( time * state.animationState.speed )
+			state.animationState.frame = frame + 1
+			state.animationState.reverseFrame = math.abs(frame - state.animationState.frames)
 			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
+		elseif ended and state.animationState.mode == "transition" then
+			doAnim(statename, state.animationState.transition)
 		end
 	end
 
@@ -413,7 +417,9 @@ function sbq.offsetAnimUpdate()
 	local ended, times, time = sbq.hasAnimEnded(state)
 	if ended and not sbq.offsets.loop then sbq.offsets.enabled = false end
 	local frame = sbq.animStateData[state].animationState.frame
-
+	if sbq.offsets.reversible and sbq.movement.direction == -1 then
+		frame = sbq.animStateData[state].animationState.reverseFrame
+	end
 	for _,r in ipairs(sbq.offsets.parts) do
 		local x = r.x[ frame ] or r.x[#r.x] or 0
 		local y = r.y[ frame ] or r.y[#r.y] or 0
@@ -486,6 +492,15 @@ function sbq.queueAnimEndFunction(state, func, newPriority)
 end
 
 function sbq.doAnim( state, anim, force)
+	if not sbq.animStateData[state] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state))
+		return
+	end
+	if not sbq.animStateData[state].states[anim] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state).."."..tostring(anim))
+		return
+	end
+
 	local oldPriority = (sbq.animStateData[state].animationState or {}).priority or 0
 	local newPriority = (sbq.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = sbq.animationIs( state, anim )
@@ -507,6 +522,7 @@ function sbq.doAnim( state, anim, force)
 			frames = sbq.animStateData[state].states[anim].frames,
 			mode = sbq.animStateData[state].states[anim].mode,
 			speed = sbq.animStateData[state].states[anim].frames / sbq.animStateData[state].states[anim].cycle,
+			transition = sbq.animStateData[state].states[anim].transition,
 			frame = 1,
 			time = 0
 		}
@@ -571,6 +587,7 @@ function sbq.offsetAnim( data )
 	sbq.offsets = {
 		enabled = data ~= nil,
 		data = data,
+		reversible = data.reversible,
 		parts = {},
 		loop = data.loop or false,
 		timing = data.timing or "body"
@@ -689,7 +706,7 @@ end
 function sbq.partsAreStruggling(parts)
 	for _, part in ipairs(parts) do
 		if (not sbq.hasAnimEnded( part.."State" ))
-		and (not sbq.animationIs( part.."State", sbq.stateconfig[sbq.state].idle[part] ))
+		and (not sbq.animationIs( part.."State", ((sbq.stateconfig[sbq.state] or {}).idle or {})[part] ))
 		then return true end
 	end
 end

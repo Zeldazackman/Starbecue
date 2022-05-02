@@ -1,0 +1,16 @@
+{
+  "projectileName" : "sbqMemeExplosion",
+  "image" : "sbqMemeExplosion.png",
+  "processing" : "scalenearest=0.5",
+  "animationCycle" : 0.75,
+  "frameNumber" : 18,
+  "animationLoops" : false,
+  "timeToLive" : 1.9,
+  "piercing" : true,
+  "renderLayer" : "Player+1",
+	"orientationLocked" : true,
+  "bounces" : -1,
+  "persistentAudio" : "/sfx/meme/deltarune-explosion.ogg",
+  "fullbright" : true
+
+}

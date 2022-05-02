@@ -23,7 +23,10 @@
 		"/items/active/sbqEggWand/sbqEggWand.lua",
 		"/items/active/activeitemOverrides.lua"
 	],
-	"inventoryIcon" : "/vehicles/sbq/sbqEgg/skins/default/icon.png",
+	"inventoryIcon" : [
+		{"image":"/items/active/weapons/wand/generated/handle/7.png"},
+		{"image":"/vehicles/sbq/sbqEgg/skins/default/icon.png"}
+	],
 
 	"baseDamageFactor" : 0,
 

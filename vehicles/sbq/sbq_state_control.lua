@@ -38,12 +38,16 @@ end
 
 function sbq.checkDrivingInteract()
 	if sbq.driving and sbq.stateconfig[sbq.state].interact ~= nil then
-		for _, interaction in pairs(sbq.stateconfig[sbq.state].interact) do
-			if interaction.drivingEnabled then
-				return vehicle.setInteractive(true)
+		if type(sbq.driver) == "number" and world.entityType(sbq.driver) == "npc" then
+			vehicle.setInteractive(true)
+		else
+			for _, interaction in pairs(sbq.stateconfig[sbq.state].interact) do
+				if interaction.drivingEnabled then
+					return vehicle.setInteractive(true)
+				end
 			end
+			vehicle.setInteractive(false)
 		end
-		vehicle.setInteractive(false)
 	else
 		vehicle.setInteractive(sbq.stateconfig[sbq.state].interact ~= nil)
 	end

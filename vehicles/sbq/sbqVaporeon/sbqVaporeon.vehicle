@@ -150,6 +150,9 @@
 				"pointLight" : true
 			}
 		},
+		"listLocations" : [
+			"belly"
+		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true },
 			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 },
@@ -160,11 +163,7 @@
 			"fullbright" : [false,false,false,false,false,true,false],
 			"directives" : "?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff", // a default value to make sure the neck fins don't show up as pink
 
-			"fatten": 0,
-			"escapeDifficulty": 0,
-			"bellyEffect": "sbqRemoveBellyEffects",
-			"bellyMultiplier": 1,
-			"displayDigest": false
+			"bellyTF" : false
 		},
 		"allowedModifiers": {
 			"fatten": {"min": 0, "max": 2},
@@ -461,6 +460,7 @@
 						"tail": "walk",
 						"head": "idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -474,6 +474,7 @@
 						"tail": "run",
 						"head": "idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -1145,6 +1146,7 @@
 						"tail": "smol.walk",
 						"head": "smol.idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [
@@ -1158,6 +1160,7 @@
 						"tail": "smol.run",
 						"head": "smol.idle",
 						"offset" : {
+							"reversible" : true,
 							"timing": "legs",
 							"loop": true,
 							"parts" : [

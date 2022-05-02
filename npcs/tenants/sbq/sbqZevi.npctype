@@ -1,21 +1,13 @@
 {
-	"type" : "sbqZevi",
-	"baseType" : "villager",
+	"type" : "sbqzevi",
+	"baseType" : "sbqVoreVillager",
 
 	"keepAlive" : true,
 
 	"npcname" : "Zevi",
 	"identity" : {
-		"imagePath" : "sbqZevi",
-		"gender" : "male",
-		"hairGroup" : "hair",
-		"hairType" : "1",
-		"facialHairGroup" : "brand",
-		"facialHairType" : "0"
+		"gender" : "male"
 	},
-
-	"damageTeamType" : "assistant",
-	"damageTeam" : 1,
 
 	"persistent" : true,
 
@@ -28,16 +20,140 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
-		//"chatPortrait" : "/interface/chatbubbles/Zevi.png:<frame>",
-		"sbqPreyEnabled" : {
-			"enabled" : true
-		},
-		"speciesAnimOverrideData" : {
-			"species" : "sbqZevi",
-			"directives" : "?replace;418093=418093fb?replace;57a3b9=57a3b9fb?replace;70b9cf=70b9cffb"
-		},
-		"sbqDialogueTree" : {
+		"uniqueId" : "sbqZevi",
+		"defaultPortrait" : "/humanoid/sbqzevi/portraits/ZNeutral.png",
+		"dialogueTree" : {
+			"greeting" : {
+				"neutral" : {
+					"randomDialogue" : [
+						"Hi.",
+						"Hey there.",
+						"Mrow."
+					],
+					"randomButtonText" : "Hi.",
+					"jump" : ["converse"]
+				},
+				"fearful" : {
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZShocked.png",
+					"randomDialogue" : [
+						"AH!",
+						"I-I didn't see you there!",
+						"O-oh its you!"
+					],
+					"options" : [
+						["Hehe, did I scare you~?", {}],
+						["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
+					]
+				},
+				"horny" : {
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZUwU.png",
+					"randomDialogue" : [
+						"UwU",
+						"Hehe, hey there~",
+						"Mrow~"
+					],
+					"jump" : ["converse"]
+				},
+				"friendly" : {
+					"randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png",
+					"randomDialogue" : [
+						"Hi!",
+						"Hey <entityname>!",
+						"Nya!"
+					],
+					"jump" : ["converse"]
+				},
+				"hungry" : {
+					"randomDialogue" : [
+						"Mmmm... feeling a bit hungry.",
+						"Hey <entityname>, I'm looking for some food, have any?",
+						"Oh huh, I probably need to find something to eat."
+					],
+					"jump" : ["converse"]
+				}
+			},
 
+			"converse" : {
+				"randomDialogue" : ["So what did you want to talk about?"],
+				"randomButtonText" : "[options]",
+				"options" : [
+					["Can we talk about you?", {
+						"randomButtonText" : ["[options]"],
+						"randomDialogue" : [ "What about me?" ],
+						"options" : [
+							[ "Who are you?", { "randomDialogue" : [ "Zevi, A Magic Goocat, like Levi but with a Z." ], "randomButtonText" : "Okay.", "jump" : [ "converse", "options", 1, 2 ] }],
+							[ "Tell me more about the vore NPC stuff", {
+								"dismissTime" : -1,
+								"buttonText" : [
+									"Okay.",
+									"Got it.",
+									"Cool.",
+									"Thats nice.",
+									"Oh.",
+									"Makes sense.",
+									"Mhm.",
+									"Finally."
+								],
+								"dialogue" : [
+									"So, currently unfinished, I'm the only NPC with it and no tenants can be summoned yet. When its done vore NPCs will have dialogue trees like this to talk about stuff.",
+									"Talking could impact what types of vore they're in the mood to do. This could mean a pred seeking out prey, player or NPC, when they're hungry, or a prey seeking out a pred, etc.",
+									"NPCs in this system can do multiple kinds of vore rather than just one, and kinds will be able to be enabled and disabled from a settings menu.",
+									"And of course you'll only ever be able to be prey for what you have enabled, and dialogue options for stuff you don't just won't even show up.",
+									"In addition to talking to change mood an NPC's settings panel could be used to just lock them to always in the mood, this applies to both pred, and prey.",
+									"When its finished, rather than placing vore badges in the room, there will be a settings panel that goes under the colony deed. To be clear, this will not work for SSVM NPCs.",
+									"this will communicate with the deed and the NPC and will be used for selecting their vore prefs, OC NPCs might have certain ones locked and unchangable out of repect to the owner's prefs.",
+									"Thats about it for now, mainly the general concept aside from what you're seeing at work here."
+								],
+								"jump" : [ "converse", "options", 1, 2 ]
+							}],
+							[ "Thats all I wanted to know about you.", { "jump" : [ "converse" ] }]
+						]
+					}],
+					[ "Whats this whole dialogue box thingy?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "This is for the vore NPC system, its not finished yet, so I'm a bit of a demo" ], "jump" : [ "converse" ] }],
+					[ "What is this place?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "A shop for vore stuff, you downloaded a vore mod after all."], "jump" : [ "converse" ]}]
+				]
+			},
+
+			//vore buttons
+			"oralVore" : {
+				"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
+				},
+				"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+				},
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+			},
+			"cockVore" : {
+				"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
+				},
+				"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
+					"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
+				},
+				"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
+				"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
+				"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+			},
+
+			//talking while prey
+			"belly" : {
+				"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+				"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+			},
+			"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+		},
+		"voreIcons" : {
+			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"absorbVore" : "/items/active/sbqController/absorbVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+
+			"analVore" : "/items/active/sbqController/analVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb"
 		},
 
 		"dialog" : {
@@ -62,14 +178,14 @@
 				"helpthem" : {
 					"default" : {
 						"default" : [
-							"Oh no!"
+							"Oh no help them!"
 						]
 					}
 				},
 				"encourage" : {
 					"default" : {
 						"default" : [
-							"Encouragement?"
+							"Yeah, get em!"
 						]
 					}
 				},
@@ -101,6 +217,15 @@
 		"stats" : {
 			"protection" : {
 				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"enabled" : true
+			},
+			"speciesAnimOverrideData" : {
+				"species" : "sbqzevi",
+				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
 			}
 		}
 	},

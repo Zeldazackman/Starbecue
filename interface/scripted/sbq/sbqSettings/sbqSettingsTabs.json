@@ -3,7 +3,7 @@
 		{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "helpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 			{ "type" : "tab", "id" : "predHelpTab", "title" : "Forms", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-					{ "type" : "label", "text" : "^cyan;Predator Transformations^reset;\n \nFirst off, holding ^green;[F]^reset; will allow you to bring up an action wheel, under normal circumstances the ^red;X^reset; at the bottom will return you to your original form.\n \nThe other actions on the action wheel can be clicked to assign to a ^yellow;Vore Controller^reset; in the respective hand, or will give you a new one if there isn't one in hand. Releasing ^green;[F]^reset; will attempt to perform the selected action once, if a ^yellow;Vore Controller^reset; has been assigned an action, it can be used to attempt that action at any time.\n \nUnder certain transformation conditions the ability to revert to your original form may not be there, and you might not be able to change size either, meaning you're stuck in that form until you find a way to cure it, or find a way to control the transformation... if you do gain control, the transformation will be unlocked in the ^yellow;Predator Selector^reset; tech for you to transform whenever you wish.\n \nYou will notice upon transforming a HUD will open in the bottom right, this HUD lets you quickly access the starbecue settings menu, as well as quickly change your belly effect, it also shows you the health of all your current occupants, the progress of any effects acting on them, such as a transformation, as well as any occupants nested inside them, if you click on the icon of an occupant, you will be given a list of actions your predator can perform.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;\n \nFinal note, the ^green;[Shift]^reset; key can only be detected if you are holding a ^yellow;Vore Controller^reset;." }
+					{ "type" : "label", "text" : "^cyan;Predator Transformations^reset;\n \nFirst off, holding ^green;[Shift]+[Up]^reset; will allow you to bring up an action wheel, under normal circumstances the ^red;X^reset; at the bottom will return you to your original form.\n \nThe other actions on the action wheel can be clicked to assign to a ^yellow;Vore Controller^reset; in the respective hand, or will give you a new one if there isn't one in hand. Releasing held keys will attempt to perform the hoveref action once, if a ^yellow;Vore Controller^reset; has been assigned an action, it can be used to attempt that action at any time.\n \nUnder certain transformation conditions the ability to revert to your original form may not be there, and you might not be able to change size either, meaning you're stuck in that form until you find a way to cure it, or find a way to control the transformation... if you do gain control, the transformation will be unlocked in the ^yellow;Predator Selector^reset; tech for you to transform whenever you wish.\n \nYou will notice upon transforming a HUD will open in the bottom right, this HUD lets you quickly access the starbecue settings menu, as well as quickly change your belly effect, it also shows you the health of all your current occupants, the progress of any effects acting on them, such as a transformation, as well as any occupants nested inside them, if you click on the icon of an occupant, you will be given a list of actions your predator can perform.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;\n \nFinal note, the ^green;[Shift]^reset; key can only be detected if you are holding a ^yellow;Vore Controller^reset;." }
 				]}]}
 			]},
 			{ "type" : "tab", "id" : "predObjectHelpTab", "title" : "Objects", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -39,17 +39,93 @@
 			{ "type" : "label", "text" : "^cyan;Starbound Simple Vore Mod Overrides^reset;\n \nTo make compatibiliity smoother between Starbecue, as well as improve how some things are handled in SSVM, Starbecue overwrites the functions of some key things in SSVM, either to have better parity or to fix bugs.\nAlso Auri's Shop appears in what was an empty space in Foodhall.\n \n^cyan;Prey Enabling^reset;\nSSVM's system of enabling vore on a planet by placing a big lever down has been overwritten by Starbecue's prey enabling settings, it is now, per player, per vore type. This applies to both the SSVM NPC preds which perform their assigned vore type, and the SSVM Vore RP tech, for Oral Vore and Unbirth, which does recognize the distinction of which the player has active.\n \n^cyan;Bugfixes^reset;\nIt is well known that having multiple SSVM NPC preds free to roam around a colony can cause crashes if one has eaten another, therefore, Starbecue has modified the behavior so that SSVM Pred NPCs cannot eat other SSVM Pred NPCs, this also means that Starbecue predators cannot eat them either, both good for avoiding bugs, as well as probably respecting the wishes of the owner of the character.\nStarbecue makes SSVM compatible with other mods that modify monsters by having a copy of its monster script to add to the monster core loader.\n \n^cyan;Things that Starbecue does NOT do^reset;\nStarbecue's Preditor will not, and will never work on SSVM NPCs VSOs or SPOs.\nStarbecue's Prey Enabling System does not apply to SSVM VSOs and SPOs.\nStarbecue's Modifier Items will not effect SSVM NPCs, VSOs, or SPOs.\nStarbecue's Vore NPC Summoner will never effect SSVM NPCs.\n \n^cyan;Final Note^reset;\nOverriding functions for someone else's mod isn't always nice, but since SSVM is no longer in active development, it felt like it should be done, I will remove such overrides if Sheights were to ask." }
 		]}]}
 	]},
+	"speciesPresetList" : [
+		"human",
+		"avian",
+		"apex",
+		"floran",
+		"hylotl",
+		"glitch",
+		"novakid",
+		"fenerox",
+		"Zevi"
+	],
+	"speciesPresets" : {
+		"Zevi" : {
+			"species" : "sbqzevi",
+			"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
+		}
+	},
 
 	"speciesSettingsTabs" : {
+		"sbqOccupantHolder" : {
+			"scripts" : [],
+			"tab": { "type" : "tab", "id" : "occupantHolderSettingsTab", "title" : "Config", "icon" : "/items/active/sbqController/unassigned.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Body Parts", "inline" : true },
+					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore"}, { "type" : "label", "text" : "Bra" }],
+					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth"}, { "type" : "label", "text" : "Underwear" }],
+
+					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one"}, { "type" : "label", "text" : "Tail" }],
+					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw"}, { "type" : "label", "text" : "Tailmaw" }],
+					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes"}, { "type" : "label", "text" : "Navel" }],
+
+					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Boobs! for breast vore"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Breasts" }],
+
+					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Balls" }],
+
+					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "label", "text" : "Pussy" }]
+				]},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : "Penis Cum TF" }],
+					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }],
+					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : "Womb Eggify" }]
+				]}
+			]}
+		},
+		"sbqVaporeon" : {
+			"scripts" : [],
+			"tab": { "type" : "tab", "id" : "vaporeonSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqVaporeon/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Body Parts", "inline" : true }
+				]},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "bellyTF", "toolTip" : "People in the belly will be transformed into more vappies!"}, { "type" : "label", "text" : "Belly TF" }]
+				]}
+			]}
+		},
+		"sbqXeronious" : {
+			"scripts" : [],
+			"tab": { "type" : "tab", "id" : "xeroniousSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqXeronious/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Body Parts", "inline" : true }
+				]},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "bellyEggify", "toolTip" : "People in the belly will be trapped within an Egg"}, { "type" : "label", "text" : "Belly Eggify" }]
+				]}
+			]}
+		},
 		"sbqAvian" : {
-			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqPredScripts/sbqHumanoidSettings.lua"],
+			"scripts" : [],
 			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Body Parts", "inline" : true },
 					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Breasts" }],
+
 					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
-					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }]
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Balls" }]
 				]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
@@ -59,7 +135,7 @@
 			]}
 		},
 		"sbqZoroark" : {
-			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqPredScripts/sbqZoroarkSettings.lua"],
+			"scripts" : [],
 			"tab": { "type" : "tab", "id" : "zoroarkSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqZoroark/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
@@ -67,18 +143,34 @@
 					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Have a fluffy tail! Zoroark usually don't have those, but you can!"}, { "type" : "label", "text" : "Tail" }],
 					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your fluffy tail a Tailmaw! use the Tail Vore action to eat people"}, { "type" : "label", "text" : "Tailmaw" }],
 					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Breast Vore has not yet been implemented, but you can have boobs"}, { "type" : "label", "text" : "Breasts" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Breasts" }],
+
 					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "label", "text" : "Penis" }],
-					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }]
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "label", "text" : "Balls" }],
+					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "label", "text" : "Symmetrical Balls" }],
+					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "label", "text" : "Pussy" }]
 				]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
 					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : "Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }]
+					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }],
+					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : "Womb Eggify" }]
 				]}
 			]}
 		},
+		"sbqSlime" : {
+			"scripts" : [],
+			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"mode": "horizontal"},
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
+					[{ "type" : "checkBox", "id" : "bellyTF", "toolTip" : "People trapped inside will be transformed into more slimes"}, { "type" : "label", "text" : "Slime TF" }]
+				]}
+			]}
+		},
+
 		"sbqZiellekDragon" : {
-			"scripts" : ["/interface/scripted/sbq/sbqSettings/sbqPredScripts/sbqZiellekDragonSettings.lua"],
+			"scripts" : [],
 			"tab": { "type" : "tab", "id" : "ziellekDragonSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqZiellekDragon/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
@@ -190,7 +282,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "ziellekDragonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "ziellekDragonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've been turned into a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;belly^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in your config.\n \nPrey within the womb will be healed, you can also trap them in eggs by using the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;womb^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in your config.\n \nPrey within the womb will be healed, you can also trap them in eggs by using the ^yellow;Eggify^reset; action.\n^#555;(This is finicky, Stardust Metagui context menus sometimes seem to not function at all, try selecting a different occupant and trying again when it doesn't work)^reset;" }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -199,9 +291,16 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqOccupantHolder" : { "type" : "tab", "id" : "occupantHolderHelpTab", "title" : "", "icon" : "/items/active/sbqNominomicon/sbqNominomicon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "occupantHolderHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "occupantHolderGeneralHelpTab", "title" : "General", "icon" : "/items/active/sbqNominomicon/sbqNominomicon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you're into vore...^reset;\n \nYou'll be able to fit two prey within your ^yellow;belly^reset; or two in your ^yellow;womb^reset;\n \nIf you have the ^yellow;navel^reset; enabled, prey within the ^yellow;belly^reset; are able to struggle out of it.\n \nPrey within the ^yellow;womb^reset; will be healed, and you can also trap prey within eggs via the pred hud or an option, some species may create eggs with unique eggshells.\n \nYou can also stretch out your ^yellow;dick^reset; to fit one person inside it, and then one in each of your ^yellow;balls^reset;, if they're enabled, you can also transform prey within those locations into cum blobs via an option or the pred hud.\n \nYou can also stretch out your ^yellow;breasts^reset; to fit one person in each if they're enabled. ^#555;(Breast Vore currently does not have sprites drawn for any species, but the action still works)^reset;\n \nTo let prey back out, you have to click on the prey and select ^green;Let Out^reset; in the predator hud, or while holding a ^yellow;Vore Controller^reset; hold ^green;Shift+Up^reset; and select ^green;Let Out^reset; in the action wheel to release the most recent prey.\n \nYou can use the ^yellow;Oral Vore^reset; action to ^yellow;eat^reset; prey, sending them to your ^yellow;belly^reset;.\n \nIf your rear is exposed, you can use the ^yellow;Anal Vore^reset; action to squeeze prey up your ^yellow;butt^reset;, sending them to your ^yellow;belly^reset;.\n \nIf you have a ^yellow;pussy^reset;, and have it exposed, you can use the ^yellow;Unbirth^reset; action to send prey into your ^yellow;womb^reset;.\n \nIf you have a ^yellow;penis^reset;, and have it exposed, you can use the ^yellow;Cock Vore^reset; action to squeeze prey inside it, as well as force prey already inside deeper into your ^yellow;balls^reset;, if you have them.\n \nIf you have ^yellow;breasts^reset;, and have them exposed, you can use the ^yellow;Breast Vore^reset; action to squeeze prey inside them.\n \nIf you have a ^yellow;navel^reset;, you can use the ^yellow;Navel Vore^reset; action to squeeze prey into your ^yellow;belly^reset;." }
+					]}]}
+				]}
+			]}
 		]}
-
-
 	},
 	"speciesInfoTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -293,7 +392,7 @@
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "ziellekDragonHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "ziellekDragonGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;belly^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nPrey within the womb will be healed, and could also become trapped eggs if the option is set.\n \nPrey within the balls may be turned into a blob of cum if the option is set." }
+						{ "type" : "label", "text" : "^cyan;So you've met a noodle dragon...^reset;\n \nZiellek dragons have the space for two prey to fit within their ^yellow;belly^reset;, or two in their ^yellow;womb^reset;. They can also stretch out their ^yellow;dick^reset; to fit one person inside it, and then one in each of their ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in their config.\n \nPrey within the womb will be healed, and could also become trapped eggs if the option is set.\n \nPrey within the balls may be turned into a blob of cum if the option is set." }
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [

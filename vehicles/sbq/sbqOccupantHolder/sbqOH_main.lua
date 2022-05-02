@@ -4,10 +4,7 @@ state = {
 
 sbq = {
 	occupants = {
-		maximum = 8,
-		total = 8,
-		belly = 1,
-		cock = 1
+		maximum = 8
 	},
 	includeDriver = true,
 	occupant = {},
@@ -49,7 +46,7 @@ function sbq.clearOccupant(i)
 		seatname = "occupant"..i,
 		index = i,
 		id = nil,
-		statList = sbq.sbqData.occupantStatusEffects or {},
+		statList = (sbq.sbqData or {}).occupantStatusEffects or {},
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -126,10 +123,12 @@ function sbq.clearOccupant(i)
 	}
 end
 
+require("/vehicles/sbq/sbq_general_functions.lua")
 require("/vehicles/sbq/sbq_control_handling.lua")
 require("/vehicles/sbq/sbq_occupant_handling.lua")
 require("/vehicles/sbq/sbq_state_control.lua")
 require("/vehicles/sbq/sbq_animation.lua")
+require("/vehicles/sbq/sbq_replaceable_functions.lua")
 require("/scripts/SBQ_RPC_handling.lua")
 
 
@@ -138,19 +137,35 @@ require("/vehicles/sbq/sbqOccupantHolder/sbqOH_animation.lua")
 local inited
 
 function init()
+	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
 	sbq.driver = sbq.spawner
+	sbq.driving = world.entityType(sbq.spawner) == "player"
 	sbq.includeDriver = true
+
+	for i = 0, sbq.occupantSlots do
+		sbq.occupant[i] = sbq.clearOccupant(i)
+		sbq.seats["occupant"..i] = sbq.occupant[i]
+	end
+	sbq.seats.occupantD = sbq.clearOccupant("D")
+	sbq.seats.occupantD.id = sbq.spawner
+	sbq.lounging[sbq.spawner] = sbq.seats.occupantD
+	sbq.driverSeat = "occupantD"
+
+	for _, script in ipairs(sbq.config.scripts) do
+		require(script)
+	end
 end
 
 function initAfterInit(data)
 	sbq.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
+	sbq.species = data.species
+	sbq.defaultSbqData = sb.jsonMerge(sbq.sbqData, {})
 	sbq.cfgAnimationFile = sbq.sbqData.animation
 	sbq.victimAnimations = root.assetJson(sbq.sbqData.victimAnimations)
 	sbq.stateconfig = sb.jsonMerge(config.getParameter("states"), data.states)
 	sbq.loungePositions = config.getParameter("loungePositions")
 	sbq.animStateData = root.assetJson( sbq.cfgAnimationFile ).animatedParts.stateTypes
-	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.transformGroups = {
 		occupant0Position = {},
 		occupant1Position = {},
@@ -164,7 +179,7 @@ function initAfterInit(data)
 
 	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
-	sbq.partTags.global = root.assetJson( sbq.cfgAnimationFile ).globalTagDefaults
+	sbq.partTags.global = {}
 
 	for part, _ in pairs(root.assetJson( sbq.cfgAnimationFile ).animatedParts.parts) do
 		sbq.partTags[part] = {}
@@ -199,13 +214,6 @@ function initAfterInit(data)
 
 	sbq.resetOccupantCount()
 
-	for i = 0, sbq.occupantSlots do
-		sbq.occupant[i] = sbq.clearOccupant(i)
-		sbq.seats["occupant"..i] = sbq.occupant[i]
-	end
-	sbq.seats["occupantS"] = sbq.clearOccupant("S")
-	sbq.driverSeat = "occupantS"
-
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})
 
 	if sbq.sbqData.scripts ~= nil then
@@ -213,9 +221,13 @@ function initAfterInit(data)
 			require(script)
 		end
 	end
-	for _, script in ipairs(sbq.config.scripts) do
-		require(script)
+
+	local retrievePrey = config.getParameter("retrievePrey")
+	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then
+		world.sendEntityMessage(retrievePrey, "sbqSendAllPreyTo", entity.id())
 	end
+
+	sbq.settingsMenuUpdated()
 end
 
 sbq.totalTimeAlive = 0
@@ -223,7 +235,7 @@ local sentDataMessage
 function update(dt)
 	if not sentDataMessage then
 		sentDataMessage = true
-		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "giveSbqData"), function (data)
+		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data)
 			initAfterInit(data)
 			inited = true
 		end, function ()
@@ -243,7 +255,10 @@ function update(dt)
 	sbq.updateAnims(dt)
 
 	sbq.updateControls(dt)
+	sbq.getSeatData(sbq.seats.occupantD, "occupantD", sbq.driver)
+	sbq.openPredHud(dt)
 
+	sbq.sendAllPrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)
@@ -255,22 +270,20 @@ end
 function uninit()
 end
 
+sbq.predHudOpen = 1
+
+function sbq.openPredHud(dt)
+	if not sbq.driving then return end
+	sbq.predHudOpen = math.max( 0, sbq.predHudOpen - dt )
+	if sbq.predHudOpen <= 0 then
+		sbq.predHudOpen = 2
+		world.sendEntityMessage( sbq.driver, "sbqOpenMetagui", "starbecue:predHud", entity.id())
+	end
+end
+
 function sbq.checkSpawnerExists()
 	if sbq.spawner and world.entityExists(sbq.spawner) then
 		mcontroller.setPosition(world.entityPosition(sbq.spawner))
-
-		sbq.loopedMessage( "occupantHolderExists", sbq.spawner, "sbqOccupantHolderExists", {
-			entity.id(),
-			{occupant = sbq.occupant, occupants = sbq.occupants},
-			{
-				species = world.entityName(entity.id()),
-				type = "driver"
-			}
-		},
-		function (seatdata)
-			sbq.spawnerEquips = seatdata
-		end)
-
 	elseif (sbq.spawnerUUID ~= nil) then
 		sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {},
 		function(data)
@@ -289,59 +302,21 @@ end
 
 function sbq.onDeath(eaten)
 	if sbq.spawner ~= nil then
-		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", sbq.settings)
+		world.sendEntityMessage(sbq.spawner, "sbqPredatorDespawned", eaten, world.entityName(entity.id()), sbq.occupants.total)
 	end
 
 	if not eaten then
 		for i = 0, #sbq.occupant do
 			sbq.uneat(sbq.occupant[i].id)
 		end
+		sbq.getAnimData()
 	end
 
 	vehicle.destroy()
 end
 
-function sbq.localToGlobal( position )
-	local lpos = { position[1], position[2] }
-	if sbq.direction == -1 then lpos[1] = -lpos[1] end
-	local mpos = mcontroller.position()
-	local gpos = { mpos[1] + lpos[1], mpos[2] + lpos[2] }
-	return world.xwrap( gpos )
-end
-function sbq.globalToLocal( position )
-	local pos = world.distance( position, mcontroller.position() )
-	if sbq.direction == -1 then pos[1] = -pos[1] end
-	return pos
-end
-
-function sbq.occupantArray( maybearray )
-	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
-		if maybearray.location then
-			if maybearray.failOnFull then
-				if type(maybearray.failOnFull) == "number" and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif sbq.locationFull(maybearray.location) then return maybearray.failTransition end
-			else
-				if sbq.locationEmpty(maybearray.location) then return maybearray.failTransition end
-			end
-		end
-		return maybearray
-	else -- pick one depending on number of occupants
-		return maybearray[(sbq.occupants[maybearray[1].location or "total"] or 0) + 1]
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------
-
-function sbq.getSmolPreyData(settings, species, state, tags, layer)
-	return {
-		species = species,
-		recieved = true,
-		layer = layer,
-		settings = settings,
-		state = state
-	}
-end
 
 function sbq.entityLounging( entity )
 	if entity == sbq.spawner then return true end
@@ -352,11 +327,11 @@ function sbq.entityLounging( entity )
 	return false
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total
 	total = total + 1
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1) then return false end
+	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(
@@ -403,24 +378,8 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	end
 end
 
--- to have any extra effects applied to those in digest locations
-function sbq.extraBellyEffects(i, eid, health, status)
-end
-
--- to have effects applied to other locations, for example, womb if the predator does unbirth
-function sbq.otherLocationEffects(i, eid, health, status)
+function sbq.setStatusValue(name, value)
+	world.sendEntityMessage(sbq.driver, "sbqSetStatusValue", name, value)
 end
 
 -------------------------------------------------------------------------------------------------------
-
-function state.stand.eat(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
-end
-
-function state.stand.escape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
-end
-
-function state.stand.analEscape(args)
-	return sbq.doEscape(args, {}, {} )
-end

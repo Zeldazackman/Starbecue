@@ -8,65 +8,62 @@ local radialSelectionData = {}
 local spawnCooldown = 1
 local spawnedVehicle = nil
 
+sbq = {}
+require("/scripts/SBQ_RPC_handling.lua")
+
 function init()
 	message.setHandler( "sbqRefreshSettings", function(_,_, newSettings) -- this only ever gets called when the prey despawns or other such occasions, we kinda hijack it for other purposes on the player
 		settings = newSettings
 	end)
 end
 
-function loadSettings()
-	rpc = world.sendEntityMessage( entity.id(), "sbqLoadSettings" )
-	rpcCallback = function(result)
-		settings = result
-	end
-end
-
 function update(args)
 	if not inited then
 		inited = true
-		loadSettings()
+		sbq.addRPC(world.sendEntityMessage( entity.id(), "sbqLoadSettings" ), function (result)
+			settings = result
+		end)
 	end
-	if rpc ~= nil and rpc:finished() then
-		if rpc:succeeded() then
-			local result = rpc:result()
-			if result ~= nil then
-				rpcCallback(result)
-			end
-		else
-			sb.logError( "Couldn't load SBQ settings." )
-			sb.logError( rpc:error() )
-		end
-		rpc = nil
-	end
+	sbq.checkRPCsFinished(args.dt)
+
 	if args.moves["special1"] then
-		sb.setLogMap("pressedTime", pressedTime)
 		pressedTime = pressedTime + args.dt
-		if pressedTime >= 0.2 and not radialMenuOpen then -- long hold
-			openRadialMenu()
-			radialMenuOpen = true
-		end
-	elseif pressedTime > 0 or radialSelectionData.gotData then
-		pressedTime = 0
-		closeMenu()
-		radialMenuOpen = false
-		if not radialSelectionData.gotData and rpc == nil then
-			rpc = world.sendEntityMessage( entity.id(), "sbqGetRadialSelection" )
-			rpcCallback = function(data)
-				if data.selection ~= nil and data.type == "sbqSelect" then
-					radialSelectionData = data
-					radialSelectionData.gotData = true
-				end
+		if pressedTime >= 0.2 then -- long hold
+			if not radialMenuOpen then
+				openRadialMenu()
+				radialMenuOpen = true
+			else
+				sbq.loopedMessage("radialSelect", entity.id(), "sbqGetRadialSelection", {}, function(data)
+					if data.selection ~= nil and data.type == "sbqSelect" then
+						sbq.lastRadialSelection = data.selection
+						sbq.radialSelectionType = data.type
+						if data.selection == "cancel" then return end
+						if data.pressed and data.selection == "settings" and not sbq.click then
+							openSettingsMenu()
+							return
+						elseif data.pressed and not sbq.click then
+							spawnPredator(data.selection)
+							return
+						end
+						if data.button == 0 and not sbq.click then
+						elseif data.button == 2 and not sbq.click then
+						end
+						sbq.click = data.pressed
+					end
+				end)
 			end
 		end
-		radialSelectionData.gotData = nil
-		if radialSelectionData.selection ~= nil then
-			if radialSelectionData.selection == "cancel" then
-			elseif radialSelectionData.selection == "settings" then
+	elseif radialMenuOpen then
+		world.sendEntityMessage(entity.id(), "sbqOpenInterface", "sbqClose")
+		if sbq.radialSelectionType == "sbqSelect" then
+			if sbq.lastRadialSelection == "settings" then
 				openSettingsMenu()
-			else -- any other selection
-				spawnPredator(radialSelectionData.selection)
+				return
+			elseif sbq.lastRadialSelection ~= "cancel" then
+				spawnPredator(sbq.lastRadialSelection)
 			end
 		end
+		radialMenuOpen = nil
 	end
 	spawnCooldown = math.max(0, spawnCooldown - args.dt)
 	pressed = args.moves["special1"]
@@ -75,7 +72,8 @@ end
 function spawnPredator(pred)
 	if (not spawnedVehicle or not world.entityExists(spawnedVehicle)) and spawnCooldown <= 0 then
 		spawnCooldown = 1
-		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection()  } )
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		spawnedVehicle = world.spawnVehicle( pred, mcontroller.position(), { driver = entity.id(), settings = sb.jsonMerge(settings[pred] or {}, settings.global or {}), direction = mcontroller.facingDirection(), retrievePrey = currentData.id } )
 	end
 end
 

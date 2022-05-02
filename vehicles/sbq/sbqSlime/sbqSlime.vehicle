@@ -118,11 +118,12 @@
 				"runSpeed": 5
 			}
 		},
-		"occupant0StatusEffects": {
+		"driverStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 }
 		},
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
+			"breathprotectionvehicle" : { "power" : 1 },
+			"sbqEggMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqSlime/mask.png" }
 		},
 
 		"lights" : {
@@ -140,7 +141,8 @@
 
 		"defaultSettings" : {
 			"replaceColors" : [5],
-			"directives" : "?replace;A1A1A1=2D5396Bc;DCDCDC=4188FABc;EFEFEF=4C9FFFBc;FFFFFF=7DBCFFBc"
+			"directives" : "?replace;A1A1A1=2D5396Bc;DCDCDC=4188FABc;EFEFEF=4C9FFFBc;FFFFFF=7DBCFFBc",
+			"bellyTF" : false
 		},
 		"allowedModifiers": {
 			"escapeDifficulty": {"min": -100, "max": 100},
@@ -166,9 +168,11 @@
 			]
 		],
 
-
+		"listLocations" : [
+			"belly"
+		],
 		"locations" :{
-			"belly" : { "name" : "Slime", "max": 1, "digest" : true } // this looks odd but its just mostly so people can make it set the heal effect or not
+			"belly" : { "name" : "Slime", "max": 1, "digest" : true, "transformGroups" : ["preybob"] } // this looks odd but its just mostly so people can make it set the heal effect or not
 		},
 		"victimAnimations": "/vehicles/sbq/sbqSlime/victim_animations.config"
 	},
@@ -202,7 +206,8 @@
 				}
 			},
 			"idle": {
-				"body": "idle"
+				"body": "idle",
+				"offset" : {}
 			},
 			"idleAnimations": [],
 			"defaultActions" : [ "absorbVore", "absorbVore" ],
@@ -221,13 +226,28 @@
 				"waterMovementDisabled":true,
 				"animations" : {
 					"walk" : {
-						"body" : "walk"
+						"body" : "walk",
+						"offset" : {
+							"reversible" : true,
+							"loop": true,
+							"parts" : [
+								{"x": [1,2,3,4,3,2], "y": [0,-1,-2,-3,-2,-1], "groups": ["preybob"] }
+							]
+						}
 					},
 					"run" : {
-						"body" : "run"
+						"body" : "run",
+						"offset" : {
+							"reversible" : true,
+							"loop": true,
+							"parts" : [
+								{"x": [1,2,3,4,3,2], "y": [0,-1,-2,-3,-2,-1], "groups": ["preybob"] }
+							]
+						}
 					},
 					"fall" : {
-						"body" : "fall"
+						"body" : "fall",
+						"offset" : {}
 					}
 				}
 			},

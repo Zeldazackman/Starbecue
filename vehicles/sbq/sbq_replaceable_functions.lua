@@ -72,8 +72,13 @@ end
 -- for letting out prey, some predators might wand more specific logic regarding this
 function sbq.letout(id)
 	local id = id
-	if id == nil then
-		id = sbq.occupant[sbq.occupants.total].id
+	for i = sbq.occupantSlots, 0, -1 do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		then
+			id = sbq.occupant[i].id
+			break
+		end
 	end
 	return sbq.doTransition( "escape", {id = id} )
 end
@@ -95,8 +100,33 @@ function sbq.getWarpInOutDirectives()
 	end
 end
 
--- called whenever the settings manu is updated
+-- called whenever the settings menu is updated
 function sbq.settingsMenuUpdated()
+end
+
+-- used for moving around between locations
+
+function sbq.shaftToBalls(args)
+	if math.random() > 0.5 then
+		if sbq.moveOccupantLocation(args, "ballsL") then return true end
+		if sbq.moveOccupantLocation(args, "ballsR") then return true end
+	else
+		if sbq.moveOccupantLocation(args, "ballsR") then return true end
+		if sbq.moveOccupantLocation(args, "ballsL") then return true end
+	end
+end
+
+function sbq.ballsToShaft(args)
+	sbq.moveOccupantLocation(args, "shaft")
+end
+
+function sbq.switchBalls(args)
+	local dx = sbq.lounging[args.id].controls.dx
+	if dx == -1 then
+		return sbq.moveOccupantLocation(args, "ballsR")
+	elseif dx == 1 then
+		return sbq.moveOccupantLocation(args, "ballsL")
+	end
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------

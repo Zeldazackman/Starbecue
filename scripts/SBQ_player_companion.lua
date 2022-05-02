@@ -55,7 +55,7 @@ function init()
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", sbqSettings )
 	end)
 
-	message.setHandler( "sbqOpenMetagui", function(_,_, name, sourceEntity)
+	message.setHandler( "sbqOpenMetagui", function(_,_, name, sourceEntity, data)
 		player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = name }, sourceEntity )
 	end)
 
@@ -72,6 +72,11 @@ function init()
 		end
 		player.interact("ScriptPane", pane, sourceEntity or entity.id())
 	end)
+	message.setHandler( "sbqPlayerInteract", function(_,_, data, id)
+		player.interact(data[1], data[2], id)
+
+	end)
+
 
 	message.setHandler( "sbqLoungingIn", function()
 		return player.loungingIn()
@@ -120,18 +125,20 @@ function init()
 		local type = current.type or "prey"
 		player.setProperty( "sbqCurrentData", current)
 		status.setStatusProperty( "sbqCurrentData", current)
-		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
-		sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
+		if not (current.type == "driver" and current.species == "sbqOccupantHolder") then
+			sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "primary" ), type)
+			sbq.checkLockItem(world.entityHandItemDescriptor( entity.id(), "alt" ), type)
+		end
 
 		return {
-			head = player.equippedItem("head"),
-			chest = player.equippedItem("chest"),
-			legs = player.equippedItem("legs"),
-			back = player.equippedItem("back"),
-			headCosmetic = player.equippedItem("headCosmetic"),
-			chestCosmetic = player.equippedItem("chestCosmetic"),
-			legsCosmetic = player.equippedItem("legsCosmetic"),
-			backCosmetic = player.equippedItem("backCosmetic"),
+			head = player.equippedItem("head") or false,
+			chest = player.equippedItem("chest") or false,
+			legs = player.equippedItem("legs") or false,
+			back = player.equippedItem("back") or false,
+			headCosmetic = player.equippedItem("headCosmetic") or false,
+			chestCosmetic = player.equippedItem("chestCosmetic") or false,
+			legsCosmetic = player.equippedItem("legsCosmetic") or false,
+			backCosmetic = player.equippedItem("backCosmetic") or false,
 			statusDirectives = status.statusProperty("speciesAnimOverrideDirectives"),
 			effectDirectives = status.statusProperty("effectDirectives")
 		}
@@ -152,8 +159,19 @@ function init()
 		player.consumeItem(item, partial, match )
 	end)
 
-	message.setHandler("sbqPredatorDespawned", function ()
+	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
+		world.sendEntityMessage(player.id(), "sbqLight")
+
+		if not eaten then
+			for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+				status.removeEphemeralEffect(effect)
+			end
+			if species == "sbqOccupantHolder" and occupants == 0 and not (status.statusProperty("speciesAnimOverrideData") or {}).permanent then
+				status.clearPersistentEffects("speciesAnimOverride")
+			end
+		end
+
 		player.setProperty( "sbqCurrentData", nil)
 		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
@@ -162,6 +180,70 @@ function init()
 		if player.loungingIn() ~= nil then
 			world.sendEntityMessage( player.loungingIn(), "uneat", player.id() )
 		end
+	end)
+
+	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
+		local speciesConfig = root.assetJson("/humanoid/sbqData.config")
+		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+		local species = speciesAnimOverrideData.species or player.species()
+		local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
+		if success then
+			if type(data.sbqData) == "table" then
+				speciesConfig.sbqData = data.sbqData
+			end
+			if type(data.states) == "table" then
+				speciesConfig.states = data.states
+			end
+		end
+		speciesConfig.species = species
+		local mergeConfigs = speciesConfig.sbqData.merge or {}
+		local configs = { speciesConfig.sbqData }
+		while type(mergeConfigs[#mergeConfigs]) == "string" do
+			local insertPos = #mergeConfigs
+			local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+			for i = #(newConfig.merge or {}), 1, -1 do
+				table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+			end
+
+			table.insert(configs, 1, newConfig)
+
+			table.remove(mergeConfigs, #mergeConfigs)
+		end
+		local scripts = {}
+		local finalConfig = {}
+		for i, config in ipairs(configs) do
+			finalConfig = sb.jsonMerge(finalConfig, config)
+			for j, script in ipairs(config.scripts or {}) do
+				table.insert(scripts, script)
+			end
+		end
+		speciesConfig.sbqData = finalConfig
+		speciesConfig.sbqData.scripts = scripts
+
+		local mergeConfigs = speciesConfig.states.merge or {}
+		local configs = { speciesConfig.states }
+		while type(mergeConfigs[#mergeConfigs]) == "string" do
+			local insertPos = #mergeConfigs
+			local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).states
+			for i = #(newConfig.merge or {}), 1, -1 do
+				table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+			end
+
+			table.insert(configs, 1, newConfig)
+
+			table.remove(mergeConfigs, #mergeConfigs)
+		end
+		local finalConfig = {}
+		for i, config in ipairs(configs) do
+			finalConfig = sb.jsonMerge(finalConfig, config)
+		end
+		speciesConfig.states = finalConfig
+
+		local effects = status.getPersistentEffects("speciesAnimOverride")
+		if not effects[1] then
+			status.setPersistentEffects("speciesAnimOverride", {  speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
+		end
+		return speciesConfig
 	end)
 
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
@@ -184,12 +266,13 @@ function update(dt)
 	if current.species then
 		world.spawnVehicle(current.species, entity.position(), {
 			driver = player.id(), layer = current.layer, startState = current.state,
-			settings = player.getProperty( "sbqSettings", {} )[current.species] or {},
+			settings = current.settings,
 		})
 	elseif current.type == "prey" then
 		player.setProperty("sbqCurrentData", {})
-		status.removeEphemeralEffect("sbqInvisible")
-		status.removeEphemeralEffect("sbqScaling")
+		for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+			status.removeEphemeralEffect(effect)
+		end
 	end
 	initStage = 2 -- post-init finished
 end
@@ -230,7 +313,7 @@ function sbq.lockItem(itemDescriptor, type)
 		return giveHeldItemOverrideLockScript(itemDescriptor) ---@diagnostic disable-line:undefined-global
 	end
 
-	local lockItemDescriptor = player.essentialItem("painttool")
+	local lockItemDescriptor = player.essentialItem("painttool") or {}
 	if lockItemDescriptor.name ~= "sbqLockedItem" then
 		sbq.lockEssentialItem(lockItemDescriptor, "painttool", type)
 		lockItemDescriptor = player.essentialItem("painttool")

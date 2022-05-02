@@ -37,9 +37,11 @@
 	pelle
 	Ethan Hennen
 	Sandyagos
-	Estrane Proctor
 	Arden Umbraheart
 	LefTonbo
 	Koole
 	Vargo_Bargo
 	LP
+	assasin604
+	Brandon Proctor
+	Dragon_hero76

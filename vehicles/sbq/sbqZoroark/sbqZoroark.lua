@@ -97,7 +97,6 @@ function checkPartsEnabled()
 	else
 		sbq.setPartTag("global", "tailVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.tail.max = 0
-		sbq.removeOccupantsFromLocation("tail")
 	end
 	if sbq.settings.penis then
 		sbq.setPartTag("global", "cockVisible", "")
@@ -105,7 +104,6 @@ function checkPartsEnabled()
 	else
 		sbq.setPartTag("global", "cockVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.shaft.max = 0
-		sbq.removeOccupantsFromLocation("shaft")
 	end
 	if sbq.settings.balls then
 		sbq.setPartTag("global", "ballsVisible", "")
@@ -115,15 +113,18 @@ function checkPartsEnabled()
 		sbq.setPartTag("global", "ballsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
-		sbq.removeOccupantsFromLocation("ballsL")
-		sbq.removeOccupantsFromLocation("ballsR")
 	end
 end
 
 function sbq.letout(id)
 	local id = id
-	if id == nil then
-		id = sbq.occupant[sbq.occupants.total].id
+	for i = sbq.occupantSlots, 0, -1 do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		then
+			id = sbq.occupant[i].id
+			break
+		end
 	end
 	if not id then return end
 	local location = sbq.lounging[id].location
@@ -147,20 +148,20 @@ function grab()
 end
 
 function cockVore(args)
-	return sbq.doVore(args, "shaft", {}, "swallow")
+	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
 end
 
 function cockEscape(args)
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {} )
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
 end
 
 function oralVore(args)
 	sbq.grabbing = args.id
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 function checkVore()
@@ -174,27 +175,6 @@ end
 
 function checkCockVore()
 	return sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
-end
-
-function shaftToBalls(args)
-	local side = "L"
-	if math.random() > 0.5 then
-		side = "R"
-	end
-	return sbq.moveOccupantLocation(args, "balls"..side)
-end
-
-function ballsToShaft(args)
-	sbq.moveOccupantLocation(args, "shaft")
-end
-
-function switchBalls(args)
-	local dx = sbq.lounging[args.id].controls.dx
-	if dx == -1 then
-		return sbq.moveOccupantLocation(args, "ballsR")
-	elseif dx == 1 then
-		return sbq.moveOccupantLocation(args, "ballsL")
-	end
 end
 
 -------------------------------------------------------------------------------
@@ -211,9 +191,9 @@ state.stand.cockEscape = cockEscape
 state.stand.checkCockVore = checkCockVore
 state.stand.checkOralVore = checkOralVore
 
-state.stand.shaftToBalls = shaftToBalls
-state.stand.ballsToShaft = ballsToShaft
-state.stand.switchBalls = switchBalls
+state.stand.shaftToBalls = sbq.shaftToBalls
+state.stand.ballsToShaft = sbq.ballsToShaft
+state.stand.switchBalls = sbq.switchBalls
 
 state.stand.grab = grab
 

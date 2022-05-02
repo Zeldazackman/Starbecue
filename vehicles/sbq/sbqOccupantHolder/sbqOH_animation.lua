@@ -12,6 +12,31 @@ function sbq.getAnimData()
 	end)
 end
 
+function sbq.updateAnims(dt)
+	for statename, state in pairs(sbq.animStateData) do
+		state.animationState.time = state.animationState.time + dt
+		local ended, times, time = sbq.hasAnimEnded(statename)
+		if (not ended) or (state.animationState.mode == "loop") then
+			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+		end
+	end
+
+	for i = 0, sbq.occupantSlots do
+		sbq.victimAnimUpdate(sbq.occupant[i].id)
+		sbq.updateVisibilityAndSmolprey(i)
+	end
+	sbq.offsetAnimUpdate()
+	sbq.rotationAnimUpdate()
+
+	sbq.emoteCooldown =  math.max( 0, sbq.emoteCooldown - dt )
+
+	for statename, state in pairs(sbq.animStateData) do
+		if state.animationState.time >= state.animationState.cycle then
+			sbq.endAnim(state, statename)
+		end
+	end
+end
+
 function sbq.doAnims( anims, force )
 	world.sendEntityMessage(sbq.spawner, "sbqDoAnims", anims, force)
 
@@ -37,6 +62,15 @@ function sbq.doAnim( state, anim, force )
 end
 
 function sbq.doAnimData(state, anim, force)
+	if not sbq.animStateData[state] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state))
+		return
+	end
+	if not sbq.animStateData[state].states[anim] then
+		sb.logError("Attempt to call invalid Anim State: "..tostring(state).."."..tostring(anim))
+		return
+	end
+
 	local oldPriority = (sbq.animStateData[state].animationState or {}).priority or 0
 	local newPriority = (sbq.animStateData[state].states[anim] or {}).priority or 0
 	local isSame = sbq.animationIs( state, anim )

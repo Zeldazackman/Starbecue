@@ -10,9 +10,6 @@
 	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
 	"shortdescription": "Vore Shop Auri",
 
-	"interactAction" : "ScriptPane",
-	"interactData" : { "gui" : { }, "scripts" : ["/metagui.lua"], "ui" : "starbecue:auriShop" },
-
 	"orientations": [
 		{
 			"imageLayers" : [ { "image" : "sbqShopAuri.png" } ],
@@ -52,16 +49,16 @@
 	"defaultName" : "Auri",
 	"dialogueTree" : {
 		"greeting" : {
-			"neutral" : {
+			"default" : {
 				"randomDialogue" : [ "Hello, welcome to my shop.", "Hey there.", "Gonna buy anything?" ],
 				"randomButtonText" : ["Hi.", "Hey.", "Possibly."],
 				"continue" : {
 					"randomDialogue" : [ "So can I help you with anything?" ],
 					"randomButtonText" : "[options]",
 					"options" : [
-						[ "What is this place?", { "randomDialogue" : [ "Oh this is just some weird little planet linked to a bunch of others, so I decided to build my shop here to sell this weird stuff."], "jump" : [ "greeting", "neutral", "continue"]} ],
-						[ "Who are you?", { "randomDialogue" : [ "I'm Auri, pronounced \"Ar-ee\" a fluffy furry fox dragon thing, pleased to (m)eet you."], "jump" : [ "greeting", "neutral", "continue"]} ],
-						[ "Can you eat me?", { "randomPortrait" : [ "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png" ],  "randomDialogue" : [ "I could probably, but my real world counterpart hasn't animated that yet!"], "jump" : [ "greeting", "neutral", "continue"]} ]
+						[ "What is this place?", { "randomDialogue" : [ "Oh this is just some weird little planet linked to a bunch of others, so I decided to build my shop here to sell this weird stuff."], "jump" : [ "greeting", "mood", "continue"]} ],
+						[ "Who are you?", { "randomDialogue" : [ "I'm Auri, pronounced \"Ar-ee\" a fluffy furry fox dragon thing, pleased to (m)eet you."], "jump" : [ "greeting", "mood", "continue"]} ],
+						[ "Can you eat me?", { "randomPortrait" : [ "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png" ],  "randomDialogue" : [ "I could probably, but my real world counterpart hasn't animated that yet!"], "jump" : [ "greeting", "mood", "continue"]} ]
 					]
 				}
 			}
@@ -90,9 +87,9 @@
 					"range" : 8,
 					"randomName" : "Zevi",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi/portraits/ZUwU.png",
-						"/humanoid/sbqZevi/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi/portraits/ZBlep.png"
+						"/humanoid/sbqzevi/portraits/ZUwU.png",
+						"/humanoid/sbqzevi/portraits/ZNeutral.png",
+						"/humanoid/sbqzevi/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy TF UwU",
@@ -104,9 +101,9 @@
 						"Interesting.",
 						"God Damn It."
 					],
-					"jump" : [ "greeting", "neutral", "continue"]
+					"jump" : [ "greeting", "mood", "continue"]
 				},
-				"failJump" : [ "greeting", "neutral", "continue"]
+				"failJump" : [ "greeting", "mood", "continue"]
 			},
 			"sbqCoreVaporeon" : {
 				"randomPortrait" : [
@@ -131,9 +128,9 @@
 					"range" : 8,
 					"speaker" : "sbqHubZevi",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi/portraits/ZUwU.png",
-						"/humanoid/sbqZevi/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi/portraits/ZBlep.png"
+						"/humanoid/sbqzevi/portraits/ZUwU.png",
+						"/humanoid/sbqzevi/portraits/ZNeutral.png",
+						"/humanoid/sbqzevi/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy UwU",
@@ -145,9 +142,9 @@
 						"Interesting.",
 						"God Damn It."
 					],
-					"jump" : [ "greeting", "neutral", "continue"]
+					"jump" : [ "greeting", "mood", "continue"]
 				},
-				"failJump" : [ "greeting", "neutral", "continue"]
+				"failJump" : [ "greeting", "mood", "continue"]
 			},
 
 			"sbqPotionAvian" : {
@@ -164,7 +161,7 @@
 					"I doubt the Stargazers would approve of this haha!",
 					"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 			"sbqCoreAvian" : {
 				"randomPortrait" : [
@@ -180,7 +177,7 @@
 					"I doubt the Stargazers would approve of this haha!",
 					"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 			"sbqPotionXeronious" : {
 				"randomPortrait" : [
@@ -193,7 +190,7 @@
 					"If I have to say the most difficult part making this, I think it'd probably be the grab system, which started here, had to redo how I handled the transformation groups to make it work.",
 					"The inhale that he can do is really fun to use"
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 			"sbqCoreXeronious" : {
 				"randomPortrait" : [
@@ -204,10 +201,10 @@
 					"Big fluffy kaiju belly, currently the one that holds the most prey.",
 					"Aside from the support for making all this stuff, Xeronious has been an excellent bug tester to help this project not come apart at the seams every update release."
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 
-			"sbqTransformationlime" : {
+			"sbqPotionSlime" : {
 				"randomPortrait" : [
 					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
 					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"
@@ -216,7 +213,7 @@
 					"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 					"Slime"
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 			"sbqCoreSlime" : {
 				"randomPortrait" : [
@@ -227,7 +224,7 @@
 					"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 					"Slime"
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 
 			"sbqCoreCharem" : {
@@ -235,16 +232,35 @@
 					"The second comm, just a static object here, based a bit on Vappy's lay state.",
 					"Lazy fluffy Shadox."
 				],
-				"jump" : [ "greeting", "neutral", "continue"]
+				"jump" : [ "greeting", "mood", "continue"]
 			},
 
-			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "neutral", "continue"] },
+			"sbqCoreZiellekDragon" : {
+				"randomDialogue" : [
+					"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
+					"Noodle."
+				],
+				"jump" : [ "greeting", "mood", "continue"]
+			},
+			"sbqConsumableZiellekPearl" : {
+				"randomDialogue" : [
+					"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
+					"Noodle."
+				],
+				"jump" : [ "greeting", "mood", "continue"]
+			},
 
-			"sbqModifierFatteningDonut" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "neutral", "continue"] },
+			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqModifierDietPill" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "neutral", "continue"] },
+			"sbqModifierFatteningDonut" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqModifierHealingPotion" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "neutral", "continue"] }
+			"sbqModifierDietPill" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqModifierHealingPotion" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqPlasticEgg" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqEggWand" : { "randomPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] }
 
 		}
 	}

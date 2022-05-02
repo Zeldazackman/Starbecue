@@ -77,15 +77,25 @@ function sbq.changeSize()
 end
 
 function analEscape(args)
-	return sbq.doEscape(args, {}, {} )
+	return sbq.doEscape(args, {}, {}, "analVore" )
 end
 
 function eatAnal(args)
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
 end
 
 function checkAnalVore()
 	return sbq.checkEatPosition(sbq.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
+end
+
+function sbq.extraBellyEffects(i, eid, health, bellyEffect)
+	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.bellyTF then
+		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
+			if not immune then
+				transformMessageHandler( eid , 3 )
+			end
+		end)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -97,12 +107,12 @@ end
 
 function state.stand.eat( args )
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow")
+	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
 
 function state.stand.letout( args )
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {} )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
 end
 
 function state.stand.vore()

@@ -6,7 +6,8 @@
 		"frame": "1",
 		"directives": "",
 		"smolpath": "",
-		"skin": "default"
+		"skin": "default",
+		"headSkin": "default"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -107,7 +108,7 @@
 			"body": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
+					"zLevel": 1,
 					"transformationGroups": [
 						"flip"
 					]
@@ -116,27 +117,27 @@
 					"bodyState": {
 						"idle": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.idle.<bodyStateFrame><directives>"
+								"image": "skins/<headSkin>/smol/smol_body.png:<cracks>.idle.<bodyStateFrame><directives>"
 							}
 						},
 						"s_back": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
+								"image": "skins/<headSkin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
 							}
 						},
 						"s_front": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
+								"image": "skins/<headSkin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
 							}
 						},
 						"s_up": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
+								"image": "skins/<headSkin>/smol/smol_body.png:<cracks>.left.<bodyStateFrame><directives>"
 							}
 						},
 						"s_down": {
 							"properties": {
-								"image": "skins/<skin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
+								"image": "skins/<headSkin>/smol/smol_body.png:<cracks>.right.<bodyStateFrame><directives>"
 							}
 						}
 					}
@@ -740,6 +741,7 @@
 	},
 	"sounds": {
 		"digest": ["/silent.wav"],
+		"struggle" : ["/silent.wav"],
 		"crack": [
 			"/sfx/objects/ice_break1.ogg",
 			"/sfx/objects/ice_break2.ogg",
