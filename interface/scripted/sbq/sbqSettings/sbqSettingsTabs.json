@@ -291,6 +291,15 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqOccupantHolder" : { "type" : "tab", "id" : "occupantHolderHelpTab", "title" : "", "icon" : "/items/active/sbqNominomicon/sbqNominomicon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "occupantHolderHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "occupantHolderGeneralHelpTab", "title" : "General", "icon" : "/items/active/sbqNominomicon/sbqNominomicon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you're into vore...^reset;\n \nYou'll be able to fit two prey within your ^yellow;belly^reset; or two in your ^yellow;womb^reset;\n \nIf you have the ^yellow;navel^reset; enabled, prey within the ^yellow;belly^reset; are able to struggle out of it.\n \nPrey within the ^yellow;womb^reset; will be healed, and you can also trap prey within eggs via the pred hud or an option, some species may create eggs with unique eggshells.\n \nYou can also stretch out your ^yellow;dick^reset; to fit one person inside it, and then one in each of your ^yellow;balls^reset;, if they're enabled, you can also transform prey within those locations into cum blobs via an option or the pred hud.\n \nYou can also stretch out your ^yellow;breasts^reset; to fit one person in each if they're enabled. ^#555;(Breast Vore currently does not have sprites drawn for any species, but the action still works)^reset;\n \nTo let prey back out, you have to click on the prey and select ^green;Let Out^reset; in the predator hud, or while holding a ^yellow;Vore Controller^reset; hold ^green;Shift+Up^reset; and select ^green;Let Out^reset; in the action wheel to release the most recent prey.\n \nYou can use the ^yellow;Oral Vore^reset; action to ^yellow;eat^reset; prey, sending them to your ^yellow;belly^reset;.\n \nIf your rear is exposed, you can use the ^yellow;Anal Vore^reset; action to squeeze prey up your ^yellow;butt^reset;, sending them to your ^yellow;belly^reset;.\n \nIf you have a ^yellow;pussy^reset;, and have it exposed, you can use the ^yellow;Unbirth^reset; action to send prey into your ^yellow;womb^reset;.\n \nIf you have a ^yellow;penis^reset;, and have it exposed, you can use the ^yellow;Cock Vore^reset; action to squeeze prey inside it, as well as force prey already inside deeper into your ^yellow;balls^reset;, if you have them.\n \nIf you have ^yellow;breasts^reset;, and have them exposed, you can use the ^yellow;Breast Vore^reset; action to squeeze prey inside them.\n \nIf you have a ^yellow;navel^reset;, you can use the ^yellow;Navel Vore^reset; action to squeeze prey into your ^yellow;belly^reset;." }
+					]}]}
+				]}
+			]}
 		]}
 	},
 	"speciesInfoTabs" : {
