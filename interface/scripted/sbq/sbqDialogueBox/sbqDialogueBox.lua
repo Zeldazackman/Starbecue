@@ -368,6 +368,9 @@ function checkEntitiesMatch(entities, find)
 	return found
 end
 
+function close:onClick()
+	pane.dismiss()
+end
 
 function oralVore:onClick()
 	sbq.voreButton("oralVore")

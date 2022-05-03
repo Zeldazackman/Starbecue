@@ -236,12 +236,22 @@ function sbq.assignTransformMenu()
 				end
 			end
 			world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "transformSelect" }, true )
+		else
+			noTFMenu = true
+			sbq.lastRadialSelection = "despawn"
+			sbq.radialSelectionType = "transformSelect"
 		end
+	end, function () -- the fail callback
+		noTFMenu = true
+		sbq.lastRadialSelection = "despawn"
+		sbq.radialSelectionType = "transformSelect"
 	end)
 end
 
+local noTFMenu
+
 function sbq.transformAction()
-	if sbq.heldControl(sbq.driverSeat, "special1", 0.2) and sbq.totalTimeAlive > 1 then
+	if sbq.heldControl(sbq.driverSeat, "special1", 0.2) and sbq.totalTimeAlive > 1 and not noTFMenu then
 		if not sbq.movement.transformActionRadial then
 			sbq.movement.transformActionRadial = true
 			sbq.assignTransformMenu()

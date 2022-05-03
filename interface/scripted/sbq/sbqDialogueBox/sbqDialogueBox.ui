@@ -15,6 +15,7 @@
 					{ "type" : "scrollArea", "children" : [{ "type" : "label", "id" : "dialogueLabel", "text": ""}]}
 				]},
 				[
+					{ "type" : "iconButton", "id" : "close", "image" : "/interface/x.png", "hoverImage" : "/interface/xhover.png", "pressImage" : "/interface/xpress.png" },
 					{ "type" : "button", "id" : "dialogueCont", "expandMode" : [1, 0], "caption" : "..." },
 					{ "type" : "iconButton", "visible" : false, "id" : "oralVore", "toolTip" : "Eat me!", "image" : "/items/active/sbqController/oralVore.png" },
 					{ "type" : "iconButton", "visible" : false, "id" : "tailVore", "tooltip" : "Have your tail eat me!", "image" : "/items/active/sbqController/tailVore.png" },
