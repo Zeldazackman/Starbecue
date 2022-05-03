@@ -111,9 +111,7 @@ function init()
 		return sbq.speciesConfig
 	end)
 	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location, settings, predator)
-		sb.logInfo("got the message")
 		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", "digestionImmunity"), function (immune)
-			sb.logInfo("got here")
 			sbq.getRandomDialogue({ "pred", "location", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.sbqSettings, {location = location, digestionImmunity = immune}))
 		end)
 	end)
@@ -201,9 +199,7 @@ function sbq.getOccupantArg(id, arg)
 end
 
 function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
-	sb.logInfo(sb.printJson(dialogueTreeLocation))
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, settings)
-	sb.logInfo(sb.printJson(dialogueTree))
 	if not dialogueTree then return false end
 	local randomRolls = {}
 	local randomDialogue = dialogueTree.randomDialogue

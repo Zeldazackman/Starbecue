@@ -103,10 +103,8 @@ message.setHandler( "fixWeirdSeatBehavior", function(_,_, eid)
 	sbq.weirdFixFrame = true
 end )
 
-message.setHandler( "addPrey", function (_,_, seatindex, data)
-	if seatindex > sbq.occupantSlots then return false end
-	sbq.occupant[seatindex] = data
-	sbq.refreshList = true
+message.setHandler( "addPrey", function (_,_, data)
+	table.insert(sbq.addPreyQueue, data)
 end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)

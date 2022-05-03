@@ -24,6 +24,11 @@ end
 function sbq.pathfinding(dt)
 end
 
+-- the function that gets called upon a prey inputting the escape combo (every direction + space)
+function sbq.escapeScript(i)
+	sbq.uneat(sbq.occupant[i].id)
+end
+
 -- for handling the grab action when clicked, some things may want to handle it differently
 function sbq.handleGrab()
 	local primary = (((sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor or {}).parameters or {}).scriptStorage or {}).clickAction

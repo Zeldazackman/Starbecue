@@ -141,7 +141,7 @@ function init()
 	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
 	sbq.driver = sbq.spawner
 	sbq.driving = world.entityType(sbq.spawner) == "player"
-	sbq.includeDriver = true
+	sbq.startSlot = 0
 
 	for i = 0, sbq.occupantSlots do
 		sbq.occupant[i] = sbq.clearOccupant(i)
@@ -259,6 +259,7 @@ function update(dt)
 	sbq.openPredHud(dt)
 
 	sbq.sendAllPrey()
+	sbq.recievePrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)
@@ -344,8 +345,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 			entity.id()
 		)
 
-		local nextSlot = 1
-		for i = 0, sbq.occupantSlots do
+		for i = sbq.startSlot, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
 				local location = sbq.occupant[i].location
 				local massMultiplier = 0
@@ -353,7 +353,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 				if location == "nested" then
 					location = sbq.occupant[i].nestedPreyData.ownerLocation
 				end
-				massMultiplier = sbq.sbqData.locations[location].mass or 0
+				massMultiplier = (sbq.sbqData.locations[location] or {}).mass or 0
 
 				if sbq.occupant[i].location == "nested" then
 					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
@@ -366,12 +366,11 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 						owner = sbq.driver,
 						location = sbq.occupant[i].location,
 						massMultiplier = massMultiplier,
-						digest = sbq.sbqData.locations[location].digest,
+						digest = (sbq.sbqData.locations[location] or {}).digest,
 						nestedPreyData = sbq.occupant[i].nestedPreyData
 					}
 				})
-				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
-				nextSlot = nextSlot+1
+				world.sendEntityMessage( source, "addPrey", occupantData)
 			end
 		end
 		return true

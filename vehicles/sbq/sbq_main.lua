@@ -207,6 +207,7 @@ function init()
 
 	sbq.driver = config.getParameter( "driver" )
 	if sbq.driver ~= nil then
+		sbq.startSlot = 1
 		sbq.occupant[0].id = sbq.driver
 		sbq.driverSeat = "occupant0"
 
@@ -225,7 +226,7 @@ function init()
 		sbq.seats.objectControls.seatname = "objectControls"
 		sbq.seats.objectControls.controls.powerMultiplier = sbq.objectPowerLevel()
 		sbq.driverSeat = "objectControls"
-		sbq.includeDriver = true
+		sbq.startSlot = 0
 		sbq.driving = false
 		sbq.isObject = true
 	end
@@ -234,10 +235,7 @@ function init()
 		sbq.warpInEffect()
 	end
 
-	sbq.occupants.maximum = 7
-	if sbq.includeDriver then
-		sbq.occupants.maximum = 8
-	end
+	sbq.occupants.maximum = 8 - sbq.startSlot
 
 	sbq.seats[sbq.driverSeat].smolPreyData = config.getParameter("layer") or {}
 	sbq.seats[sbq.driverSeat].species = sbq.seats[sbq.driverSeat].smolPreyData.species
@@ -285,6 +283,7 @@ function update(dt)
 	sbq.updateDriving(dt)
 
 	sbq.sendAllPrey()
+	sbq.recievePrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)

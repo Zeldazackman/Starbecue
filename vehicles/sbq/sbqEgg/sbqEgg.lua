@@ -17,9 +17,23 @@ function sbq.initAfterInit()
 	sbq.occupant[0].visible = true
 end
 
+_escapeScript = sbq.escapeScript
+
+function sbq.escapeScript(i)
+	if i == 0 then
+		sbq.settings.cracks = 1000
+		state.smol.crack({id = sbq.driver})
+	else
+		_escapeScript(i)
+	end
+end
+
 function sbq.init()
-	sbq.includeDriver = true
+	sbq.startSlot = 0
 	sbq.driving = false
+	sbq.seats.occupantD = sbq.clearOccupant("D")
+	sbq.driverSeat = "occupantD"
+
 	if not sbq.settings.cracks then
 		sbq.settings.cracks = 0
 	end
@@ -62,16 +76,6 @@ function sbq.warpInEffect() end
 function sbq.warpOutEffect() end
 
 function sbq.update(dt)
-	if sbq.heldControl(sbq.driverSeat, "up") and sbq.heldControl(sbq.driverSeat, "down")
-	and sbq.heldControl(sbq.driverSeat, "left") and sbq.heldControl(sbq.driverSeat, "right")
-	and sbq.pressControl(sbq.driverSeat, "jump") then
-		sbq.settings.cracks = 1000
-		state.smol.crack({id = sbq.driver})
-	end
-
-
-
-
 	if sbq.queueDeath and sbq.occupants.total == 0 then
 		local skinNames = sbq.settings.skinNames or {}
 		local skin = skinNames.head or "default"
