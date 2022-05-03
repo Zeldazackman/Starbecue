@@ -4,7 +4,6 @@ local rpcCallback
 local radialMenuOpen = false
 local settings
 local inited = false
-local radialSelectionData = {}
 local spawnCooldown = 1
 local spawnedVehicle = nil
 
@@ -37,12 +36,11 @@ function update(args)
 					if data.selection ~= nil and data.type == "sbqSelect" then
 						sbq.lastRadialSelection = data.selection
 						sbq.radialSelectionType = data.type
-						if data.selection == "cancel" then return end
-						if data.pressed and data.selection == "settings" and not sbq.click then
-							openSettingsMenu()
-							return
-						elseif data.pressed and not sbq.click then
+						if data.selection == "cancel" or data.selection == "settings" then return end
+						if data.pressed and not sbq.click then
+							world.sendEntityMessage(entity.id(), "sbqOpenInterface", "sbqClose")
 							spawnPredator(data.selection)
+							radialMenuOpen = nil
 							return
 						end
 						if data.button == 0 and not sbq.click then
@@ -58,12 +56,13 @@ function update(args)
 		if sbq.radialSelectionType == "sbqSelect" then
 			if sbq.lastRadialSelection == "settings" then
 				openSettingsMenu()
-				return
 			elseif sbq.lastRadialSelection ~= "cancel" then
 				spawnPredator(sbq.lastRadialSelection)
 			end
 		end
 		radialMenuOpen = nil
+	else
+		pressedTime = 0
 	end
 	spawnCooldown = math.max(0, spawnCooldown - args.dt)
 	pressed = args.moves["special1"]
@@ -78,7 +77,6 @@ function spawnPredator(pred)
 end
 
 function openRadialMenu()
-	radialSelectionData.selection = nil
 	local options = {{
 		name = "settings",
 		icon = "/interface/title/modsover.png"

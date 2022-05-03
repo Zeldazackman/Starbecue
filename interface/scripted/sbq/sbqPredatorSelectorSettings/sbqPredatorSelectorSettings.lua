@@ -72,7 +72,18 @@ function sbq.togglePred(name, checkBox)
 end
 
 function sbq.adjustPredPriority(name, label, inc)
-	sbq.sbqSettings.types[name].index = math.max(1, (sbq.sbqSettings.types[name].index or 1) + inc)
+	local prevIndex = sbq.sbqSettings.types[name].index
+	local newIndex = math.max(1, (sbq.sbqSettings.types[name].index or 1) + inc)
+
+	for sbqName, data in pairs(sbq.sbqSettings.types) do
+		if data.index == newIndex then
+			data.index = prevIndex
+			local label = _ENV[sbqName.."label"]
+			label:setText(tostring(sbq.sbqSettings.types[sbqName].index))
+		end
+	end
+
+	sbq.sbqSettings.types[name].index = newIndex
 	label:setText(tostring(sbq.sbqSettings.types[name].index))
 
 	player.setProperty("sbqSettings", sbq.sbqSettings)
