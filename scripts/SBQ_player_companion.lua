@@ -287,7 +287,7 @@ function update(dt)
 			preyWarpData.prey.id = player.id()
 			local players = world.players()
 			local gotPlayer
-			for i, eid in ipairs(players) do
+			for i, eid in ipairs(players or {}) do
 				if world.entityUniqueId(eid) == preyWarpData.uuid then
 					gotPlayer = eid
 					break
