@@ -32,6 +32,14 @@ function sbq.transform(id, i)
 	end)
 end
 
+function sbq.playerTransform(id, i)
+	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
+		if not immune then
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "playerTransform", id, 3 )
+		end
+	end)
+end
+
 function sbq.eggify(id, i)
 	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "eggImmunity"), function (immune)
 		if not immune then

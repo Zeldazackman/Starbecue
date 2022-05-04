@@ -270,5 +270,8 @@ function sbq.transformPrey(i)
 			end
 		end
 	end
+	if smolPreyData.species == "sbqEgg" then
+		sbq.occupant[i].progressBar = 0
+	end
 	sbq.refreshList = true
 end

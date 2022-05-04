@@ -25,9 +25,9 @@ function update(dt, fireMode, shiftHeld)
 			self = status.statusProperty("speciesAnimOverrideData") or {}
 			local originalGender = world.entityGender(entity.id())
 			self.gender = table[(self.gender or originalGender)]
-			local mysteriousPotionData = status.statusProperty("sbqMysteriousPotionData") or {}
+			local mysteriousPotionData = status.statusProperty("sbqMysteriousPotionTF") or {}
 			mysteriousPotionData.gender = self.gender
-			status.setStatusProperty("sbqMysteriousPotionData", mysteriousPotionData)
+			status.setStatusProperty("sbqMysteriousPotionTF", mysteriousPotionData)
 
 			status.setStatusProperty("speciesAnimOverrideData", self)
 

@@ -106,7 +106,7 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 					transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
 				end
 			end)
-		elseif sbq.settings.wombEggify and location == "womb" then
+		elseif sbq.settings.wombEggify and location == "womb" and sbq.occupant[i].species ~= "sbqEgg" then
 			local bellyEffect = "sbqHeal"
 			if sbq.settings.displayDigest then
 				if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then

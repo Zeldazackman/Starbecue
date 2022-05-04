@@ -39,7 +39,7 @@ end
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
 
 	if (sbq.occupant[i].progressBar <= 0) then
-		if sbq.settings.bellyEggify and location == "belly" then
+		if sbq.settings.bellyEggify and location == "belly" and sbq.occupant[i].species ~= "sbqEgg" then
 			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
 				if not immune then
 					transformMessageHandler( eid, 3, {

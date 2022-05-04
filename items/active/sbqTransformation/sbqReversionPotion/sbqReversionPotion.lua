@@ -20,7 +20,7 @@ function update(dt, fireMode, shiftHeld)
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
 			status.removeEphemeralEffect("sbqMysteriousPotionTF")
-			status.setStatusProperty("sbqMysteriousPotionData", nil)
+			status.setStatusProperty("sbqMysteriousPotionTF", nil)
 			status.clearPersistentEffects("speciesAnimOverride")
 			local old = status.statusProperty("oldSpeciesAnimOverrideData")
 			old.gender = nil
