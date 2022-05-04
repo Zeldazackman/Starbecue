@@ -5,8 +5,9 @@ end
 
 function update(dt, fireMode, shiftHeld)
 	if fireMode == "primary" then
-		self = status.statusProperty("speciesAnimOverrideData")
-		self.species = self.species or world.entitySpecies(entity.id())
+
+		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData")
+		self.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
 
 		player.giveItem({name = "sbqMysteriousPotion", parameters = self})
 		item.consume(1)
