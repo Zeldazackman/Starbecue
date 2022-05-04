@@ -22,7 +22,9 @@ function update(dt, fireMode, shiftHeld)
 			status.removeEphemeralEffect("sbqMysteriousPotionTF")
 			status.setStatusProperty("sbqMysteriousPotionData", nil)
 			status.clearPersistentEffects("speciesAnimOverride")
-			status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))
+			local old = status.statusProperty("oldSpeciesAnimOverrideData")
+			old.gender = nil
+			status.setStatusProperty("speciesAnimOverrideData", old)
 			status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
 			item.consume(1)
 		end

@@ -4,7 +4,7 @@
 	"price" : 10,
 	"maxStack" : 1,
 	"rarity" : "common",
-	"description" : "A potion to regain your previous form",
+	"description" : "A potion to regain your previous form...\nIs this just a bottle of milk?",
 	"shortdescription" : "Reversion Potion",
 	"tooltipKind" : "tool",
 	"category" : "Potion",

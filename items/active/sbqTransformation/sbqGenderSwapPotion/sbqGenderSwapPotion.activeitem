@@ -1,18 +1,15 @@
 {
-	"itemName" : "sbqPotionAvian",
+	"itemName" : "sbqGenderSwapPotion",
 	"level" : 1,
-	"price" : 500,
+	"price" : 100,
 	"maxStack" : 1,
-	"rarity" : "Legendary",
-	"description" : "A bottle of thick red liquid...",
-	"shortdescription" : "Giant Avian Potion",
+	"rarity" : "common",
+	"description" : "A potion that can swap your gender.",
+	"shortdescription" : "Gender Swap Potion",
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
 	"itemTags" : ["sbqTransformation"],
-
-	"vehicle" : "sbqAvian",
-	"transformationDescription" : "a giant Avian",
 
 	"inventoryIcon" : "sbqPotion.png",
 	"largeImage" : "sbqPotionLarge.png",
@@ -20,7 +17,7 @@
 	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformation/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqGenderSwapPotion/sbqGenderSwapPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

@@ -1,18 +1,15 @@
 {
-	"itemName" : "sbqPotionAvian",
+	"itemName" : "sbqDuplicatePotion",
 	"level" : 1,
-	"price" : 500,
+	"price" : 600,
 	"maxStack" : 1,
-	"rarity" : "Legendary",
-	"description" : "A bottle of thick red liquid...",
-	"shortdescription" : "Giant Avian Potion",
+	"rarity" : "common",
+	"description" : "A potion that can transform someone into your perfect copy, all it needs is one more ingredient... a bit of you.",
+	"shortdescription" : "Duplicate Potion",
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
 	"itemTags" : ["sbqTransformation"],
-
-	"vehicle" : "sbqAvian",
-	"transformationDescription" : "a giant Avian",
 
 	"inventoryIcon" : "sbqPotion.png",
 	"largeImage" : "sbqPotionLarge.png",
@@ -20,7 +17,7 @@
 	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformation/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqDuplicatePotion/sbqDuplicatePotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

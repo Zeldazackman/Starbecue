@@ -4,7 +4,7 @@
 	"price" : 500,
 	"maxStack" : 1,
 	"rarity" : "Rare",
-	"description" : "A bottle of mysterious liquid...",
+	"description" : "A bottle of mysterious liquid... The label says it lasts an hour.",
 	"shortdescription" : "Mysterious Potion",
 	"tooltipKind" : "tool",
 	"category" : "Potion",
@@ -15,6 +15,8 @@
 	"largeImage" : "sbqPotionLarge.png",
 
 	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
+
+	"builder" : "/items/active/sbqTransformation/sbqMysteriousPotion/sbqMysteriousPotionBuilder.lua",
 
 	"scripts" : [
 		"/items/active/sbqTransformation/sbqMysteriousPotion/sbqMysteriousPotion.lua",

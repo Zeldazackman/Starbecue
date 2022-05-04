@@ -1,18 +1,16 @@
+
 {
-	"itemName" : "sbqPotionAvian",
+	"itemName" : "sbqSpeciesPotion",
 	"level" : 1,
 	"price" : 500,
 	"maxStack" : 1,
-	"rarity" : "Legendary",
-	"description" : "A bottle of thick red liquid...",
-	"shortdescription" : "Giant Avian Potion",
+	"rarity" : "common",
+	"description" : "A potion that can transform someone into a member of your species, all it needs is one more ingredient... a bit of you.",
+	"shortdescription" : "Species Potion",
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
 	"itemTags" : ["sbqTransformation"],
-
-	"vehicle" : "sbqAvian",
-	"transformationDescription" : "a giant Avian",
 
 	"inventoryIcon" : "sbqPotion.png",
 	"largeImage" : "sbqPotionLarge.png",
@@ -20,7 +18,7 @@
 	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformation/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqSpeciesPotion/sbqSpeciesPotion.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }

@@ -4,11 +4,17 @@ function init()
 	storage.occupant = {}
 	animator.setGlobalTag("directives", config.getParameter("cauldronStatusDirectives")[storage.status])
 	storage.hue = 0
+	storage.time = 0
 end
 
 function update(dt)
-	if storage.status == "partytime" then
+	storage.time = storage.time + dt
+	if storage.time >= 600 then init() end
+	if storage.status == "partytime" or storage.status == "sbqMysteriousPotionTF" then
 		storage.hue = storage.hue + 1
+		if storage.hue >= 360 then
+			storage.hue = 0
+		end
 		animator.setGlobalTag("directives", "?hueshift="..storage.hue)
 	end
 	for i, occupantId in ipairs(storage.occupant) do
