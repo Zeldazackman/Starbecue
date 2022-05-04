@@ -1,0 +1,23 @@
+{
+	"itemName" : "sbqReversionPotion",
+	"level" : 1,
+	"price" : 10,
+	"maxStack" : 1,
+	"rarity" : "common",
+	"description" : "A potion to regain your previous form",
+	"shortdescription" : "Reversion Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
+
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
+
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformation/sbqReversionPotion/sbqReversionPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

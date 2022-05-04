@@ -1,0 +1,23 @@
+{
+	"itemName" : "sbqMysteriousPotion",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Rare",
+	"description" : "A bottle of mysterious liquid...",
+	"shortdescription" : "Mysterious Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
+
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
+
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformation/sbqMysteriousPotion/sbqMysteriousPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

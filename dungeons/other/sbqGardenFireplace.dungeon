@@ -9,7 +9,7 @@
 		"maxRadius" : 1000,
 		"maxParts" : 1,
 		"protected" : true,
-		"extendSurfaceFreeSpace" : 5
+		"extendSurfaceFreeSpace" : 50
 	},
 
 	"parts" : [
