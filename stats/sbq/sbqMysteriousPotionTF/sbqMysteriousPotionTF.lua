@@ -5,7 +5,6 @@ function init()
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		self.species = speciesList[math.random(#speciesList)]
 	end
-	sb.logInfo(sb.printJson(self))
 	local genders = {"male", "female"}
 	if not self.gender then
 		self.gender = genders[math.random(2)]
