@@ -302,7 +302,8 @@ function update(dt)
 					end
 				end)
 			else
-				if warpAttempts >= 5 then
+				local cooldown = preyWarpData.cooldown or 0
+				if warpAttempts >= 3 then
 					predNotFound = true
 					sbq.addRPC(player.confirm({
 						paneLayout = "/interface/windowconfig/waitForPred.config:paneLayout",
@@ -321,10 +322,14 @@ function update(dt)
 						player.setProperty("sbqPreyWarpData", nil)
 						predNotFound = nil
 					end)
-				else
+				elseif cooldown <= 0 then
 					player.warp("Player:" .. preyWarpData.uuid)
 					warpAttempts = warpAttempts + 1
+					cooldown = 5
+				else
+					preyWarpData.cooldown = math.max( 0, cooldown - dt )
 				end
+				player.setProperty("sbqPreyWarpData", preyWarpData)
 			end
 		end
 	end
