@@ -274,7 +274,7 @@ function update(dt)
 	sbq.checkRPCsFinished(dt)
 
 	local current = player.getProperty("sbqCurrentData") or {}
-	if current.id then
+	if current.id and initStage >= 2 then
 		for i, preyData in ipairs(prey) do
 			world.sendEntityMessage(current.id, "addPrey", preyData)
 		end
@@ -341,11 +341,11 @@ function update(dt)
 			settings = current.settings,
 		})
 	elseif current.type == "prey" then
-		player.setProperty("sbqCurrentData", {})
 		for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
 			status.removeEphemeralEffect(effect)
 		end
 	end
+	player.setProperty("sbqCurrentData", nil) -- after spawning the vehicle, clear it so it can set its own current data
 	initStage = 2 -- post-init finished
 end
 
