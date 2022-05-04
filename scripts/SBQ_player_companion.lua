@@ -1,6 +1,10 @@
 local initStage = 0
 local oldinit = init
 sbq = {}
+require("/scripts/SBQ_RPC_handling.lua")
+
+local prey = {}
+
 function init()
 	oldinit()
 
@@ -41,6 +45,13 @@ function init()
 		})
 	end
 
+	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
+		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})
+	end)
+
+	message.setHandler("addPrey", function( _, _, data)
+		table.insert(prey, data)
+	end )
 
 	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
 		local settings = player.getProperty( "sbqSettings" ) or {}
@@ -254,15 +265,72 @@ function init()
 	initStage = 1 -- init has run
 end
 
+local predNotFound
+local warpAttempts = 0
 local oldupdate = update
 function update(dt)
 	oldupdate(dt)
+	sbq.checkRPCsFinished(dt)
+
+	local current = player.getProperty("sbqCurrentData") or {}
+	if current.id then
+		for i, preyData in ipairs(prey) do
+			world.sendEntityMessage(current.id, "addPrey", preyData)
+		end
+		prey = {}
+	end
+
+	local preyWarpData = player.getProperty("sbqPreyWarpData")
+	if preyWarpData then
+		status.addEphemeralEffect("sbqInvisible")
+		if not predNotFound then
+			preyWarpData.prey.id = player.id()
+			local players = world.players()
+			local gotPlayer
+			for i, eid in ipairs(players) do
+				if world.entityUniqueId(eid) == preyWarpData.uuid then
+					gotPlayer = eid
+					break
+				end
+			end
+			if gotPlayer then
+				world.sendEntityMessage(gotPlayer, "addPrey", preyWarpData.prey)
+				player.setProperty("sbqPreyWarpData", nil)
+				predNotFound = nil
+			else
+				if warpAttempts >= 5 then
+					predNotFound = true
+					sbq.addRPC(player.confirm({
+						paneLayout = "/interface/windowconfig/waitForPred.config:paneLayout",
+						message = "Your Pred seems to have left, do you want to wait for them to come back?",
+						icon = "/interface/scripted/sbq/sbqSettings/preySettings.png",
+						title = "Predator Has Left",
+					}), function (choice)
+						if choice then
+							predNotFound = nil
+							warpAttempts = 0
+						else
+							player.setProperty("sbqPreyWarpData", nil)
+							predNotFound = nil
+						end
+					end, function ()
+						player.setProperty("sbqPreyWarpData", nil)
+						predNotFound = nil
+					end)
+				else
+					player.warp("Player:" .. preyWarpData.uuid)
+					warpAttempts = warpAttempts + 1
+				end
+			end
+		end
+	end
+
+
 	-- make sure init has happened
 	if initStage ~= 1 then return end
 	-- make sure the world is loaded
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	-- now we can actually do things
-	local current = player.getProperty("sbqCurrentData") or {}
 	if current.species then
 		world.spawnVehicle(current.species, entity.position(), {
 			driver = player.id(), layer = current.layer, startState = current.state,

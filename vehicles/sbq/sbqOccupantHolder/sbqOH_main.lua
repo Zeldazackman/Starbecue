@@ -286,16 +286,13 @@ function sbq.checkSpawnerExists()
 	if sbq.spawner and world.entityExists(sbq.spawner) then
 		mcontroller.setPosition(world.entityPosition(sbq.spawner))
 	elseif (sbq.spawnerUUID ~= nil) then
-		sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {},
-		function(data)
-			-- put function handling the data return for the preywarp request here to make the player prey warp to the pred's location and set themselves as prey again
-
-			sbq.spawnerUUID = nil
-		end,
-		function()
-			-- this function is for when the request fails, leave it unchanged
-			sbq.spawnerUUID = nil
-		end)
+		for i = sbq.startSlot, sbq.occupantSlots do
+			local id = sbq.occupant[i].id
+			if type(id) == "number" and world.entityExists(id) then
+				world.sendEntityMessage(id, "sbqPreyWarp", sbq.spawnerUUID, sbq.occupant[i])
+			end
+		end
+		sbq.spawnerUUID = nil
 	else
 		sbq.onDeath()
 	end
