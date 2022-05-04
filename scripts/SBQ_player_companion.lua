@@ -51,6 +51,7 @@ function init()
 
 	message.setHandler("addPrey", function( _, _, data)
 		table.insert(prey, data)
+		return true
 	end )
 
 	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
@@ -294,9 +295,12 @@ function update(dt)
 				end
 			end
 			if gotPlayer then
-				world.sendEntityMessage(gotPlayer, "addPrey", preyWarpData.prey)
-				player.setProperty("sbqPreyWarpData", nil)
-				predNotFound = nil
+				sbq.loopedMessage("sendPrey", gotPlayer, "addPrey", {preyWarpData.prey}, function (got)
+					if got then
+						player.setProperty("sbqPreyWarpData", nil)
+						predNotFound = nil
+					end
+				end)
 			else
 				if warpAttempts >= 5 then
 					predNotFound = true
