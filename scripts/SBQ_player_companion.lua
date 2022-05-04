@@ -322,7 +322,7 @@ function update(dt)
 						player.setProperty("sbqPreyWarpData", nil)
 						predNotFound = nil
 					end)
-				elseif cooldown <= 0 then
+				elseif cooldown <= 0 and #sbq.rpcList == 0 and #sbq.loopedMessages == 0 then
 					player.warp("Player:" .. preyWarpData.uuid)
 					warpAttempts = warpAttempts + 1
 					cooldown = 5
@@ -340,17 +340,19 @@ function update(dt)
 	-- make sure the world is loaded
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	-- now we can actually do things
-	if current.species then
-		world.spawnVehicle(current.species, entity.position(), {
-			driver = player.id(), layer = current.layer, startState = current.state,
-			settings = current.settings,
-		})
-	elseif current.type == "prey" then
-		for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
-			status.removeEphemeralEffect(effect)
+	if not preyWarpData then
+		if current.species then
+			world.spawnVehicle(current.species, entity.position(), {
+				driver = player.id(), layer = current.layer, startState = current.state,
+				settings = current.settings,
+			})
+		elseif current.type == "prey" then
+			for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+				status.removeEphemeralEffect(effect)
+			end
 		end
+		player.setProperty("sbqCurrentData", nil) -- after spawning the vehicle, clear it so it can set its own current data
 	end
-	player.setProperty("sbqCurrentData", nil) -- after spawning the vehicle, clear it so it can set its own current data
 	initStage = 2 -- post-init finished
 end
 
