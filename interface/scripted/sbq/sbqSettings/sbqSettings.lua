@@ -83,7 +83,6 @@ function init()
 			end
 			sbq.predatorConfig = finalConfig
 			sbq.predatorConfig.scripts = scripts
-
 		else
 			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		end
@@ -243,8 +242,6 @@ function init()
 		end
 	end
 
-	sbq.predator = sbq.sbqCurrentData.species or "sbqOccupantHolder"
-
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
@@ -289,7 +286,7 @@ function sbq.saveSettings()
 		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
 	end
 
-	sbq.sbqSettings[sbq.predator] = sbq.predatorSettings
+	sbq.sbqSettings[sbq.sbqCurrentData.species or "sbqOccupantHolder"] = sbq.predatorSettings
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
 	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
@@ -410,11 +407,18 @@ end
 function sbq.hammerspacePanel()
 	hammerspaceScrollArea:clearChildren()
 	if sbq.globalSettings.hammerspace then
+		for location, data in pairs(sbq.predatorConfig.locations) do
+			if sbq.predatorSettings.hammerspaceLimits[location] == nil then
+				sbq.predatorSettings.hammerspaceLimits[location] = data.max or 0
+				sbq.saveSettings()
+			end
+		end
 		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 			local data = sbq.predatorConfig.locations[location]
 			if data.hammerspace then
 				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
-					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
+					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visible = data.hammerspace or false, toolTip = "Enable Hammerspace for this location" },
+					{ type = "iconButton", id = location .. "Locked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = not data.hammerspace, toolTip = "Hammerspace can't fully be used here, but you can change the visual limit" },
 					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
 					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
 					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
@@ -455,9 +459,11 @@ function sbq.hammerspacePanel()
 end
 
 function sbq.changeHammerspaceLimit(location, inc, label)
-	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 1) + inc
-	if newValue < sbq.predatorConfig.locations[location].minVisual or 1 then return
-	elseif newValue > sbq.predatorConfig.locations[location].max then return end
+	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 0) + inc
+	if newValue < (sbq.predatorConfig.locations[location].minVisual or 0) then return
+
+	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return end
+
 	label:setText(newValue)
 	sbq.predatorSettings.hammerspaceLimits[location] = newValue
 	sbq.saveSettings()

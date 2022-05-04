@@ -310,7 +310,7 @@ function update(dt)
 				for _, _ in pairs(sbq.loopedMessages or {}) do
 					loopedMessages = loopedMessages + 1
 				end
-				if warpAttempts >= 3 then
+				if warpAttempts >= 2 then
 					predNotFound = true
 					sbq.addRPC(player.confirm({
 						paneLayout = "/interface/windowconfig/waitForPred.config:paneLayout",

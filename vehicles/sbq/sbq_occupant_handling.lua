@@ -468,8 +468,8 @@ function sbq.setOccupantTags()
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.hammerspace and sbq.settings.hammerspace and not sbq.settings.hammerspaceDisabled[location] then
-			if sbq.occupants[location] > (sbq.settings.hammerspaceLimits[location] or 1) then
-				sbq.occupants[location] = (sbq.settings.hammerspaceLimits[location] or 1)
+			if sbq.occupants[location] > (sbq.settings.hammerspaceLimits[location] or 0) then
+				sbq.occupants[location] = (sbq.settings.hammerspaceLimits[location] or 0)
 			end
 		end
 
