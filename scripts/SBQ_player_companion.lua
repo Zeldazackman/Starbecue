@@ -276,6 +276,8 @@ function update(dt)
 	local current = player.getProperty("sbqCurrentData") or {}
 	if current.id and initStage >= 2 then
 		for i, preyData in ipairs(prey) do
+			status.removeEphemeralEffect("sbqInvisible")
+			status.addEphemeralEffect("sbqInvisible")
 			world.sendEntityMessage(current.id, "addPrey", preyData)
 		end
 		prey = {}
@@ -283,6 +285,7 @@ function update(dt)
 
 	local preyWarpData = player.getProperty("sbqPreyWarpData")
 	if preyWarpData then
+		status.removeEphemeralEffect("sbqInvisible")
 		status.addEphemeralEffect("sbqInvisible")
 		if not predNotFound then
 			preyWarpData.prey.id = player.id()
