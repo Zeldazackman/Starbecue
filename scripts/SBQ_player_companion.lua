@@ -285,7 +285,7 @@ function update(dt)
 		status.addEphemeralEffect("sbqInvisible")
 		if not predNotFound then
 			preyWarpData.prey.id = player.id()
-			local players = world.players()
+			local players = world.playerQuery(world.entityPosition(player.id), 1000)
 			local gotPlayer
 			for i, eid in ipairs(players or {}) do
 				if world.entityUniqueId(eid) == preyWarpData.uuid then
