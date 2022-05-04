@@ -303,6 +303,10 @@ function update(dt)
 				end)
 			else
 				local cooldown = preyWarpData.cooldown or 0
+				local loopedMessages = 0
+				for _, _ in pairs(sbq.loopedMessages or {}) do
+					loopedMessages = loopedMessages + 1
+				end
 				if warpAttempts >= 3 then
 					predNotFound = true
 					sbq.addRPC(player.confirm({
@@ -322,10 +326,10 @@ function update(dt)
 						player.setProperty("sbqPreyWarpData", nil)
 						predNotFound = nil
 					end)
-				elseif cooldown <= 0 and #sbq.rpcList == 0 and #sbq.loopedMessages == 0 then
+				elseif cooldown <= 0 and #sbq.rpcList == 0 and loopedMessages == 0 then
 					player.warp("Player:" .. preyWarpData.uuid)
 					warpAttempts = warpAttempts + 1
-					cooldown = 5
+					preyWarpData.cooldown = 5
 				else
 					preyWarpData.cooldown = math.max( 0, cooldown - dt )
 				end
