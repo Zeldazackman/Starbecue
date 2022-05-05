@@ -1,6 +1,7 @@
 
 function init()
 	self = status.statusProperty("sbqMysteriousPotionTF") or {}
+	status.setStatusProperty("sbqMysteriousPotionTFDuration", effect.duration() )
 	if not self.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		self.species = speciesList[math.random(#speciesList)]
@@ -100,7 +101,12 @@ function init()
 	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
 end
 
+function update(dt)
+	status.setStatusProperty("sbqMysteriousPotionTFDuration", effect.duration() )
+end
+
 function uninit()
+	status.setStatusProperty("sbqMysteriousPotionTFDuration", effect.duration() )
 	if effect.duration() == 0 then
 		status.setStatusProperty("sbqMysteriousPotionTF", nil)
 		status.clearPersistentEffects("speciesAnimOverride")

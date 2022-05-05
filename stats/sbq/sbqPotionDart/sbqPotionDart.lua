@@ -35,7 +35,7 @@ end
 function sbq.transform(data)
 	status.setStatusProperty("sbqMysteriousPotionTF", data)
 	status.removeEphemeralEffect("sbqMysteriousPotionTF")
-	status.addEphemeralEffect("sbqMysteriousPotionTF")
+	status.addEphemeralEffect("sbqMysteriousPotionTF", (5 * 60))
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	animator.playSound("activate")
 end

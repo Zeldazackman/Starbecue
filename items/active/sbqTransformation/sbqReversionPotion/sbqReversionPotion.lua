@@ -1,4 +1,5 @@
 function init()
+	self.useTimer = nil
 	activeItem.setArmAngle(-math.pi/4)
 	animator.rotateTransformationGroup("potion", math.pi/4)
 end
@@ -26,8 +27,10 @@ function update(dt, fireMode, shiftHeld)
 			old.gender = nil
 			status.setStatusProperty("speciesAnimOverrideData", old)
 			status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+			status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
 			item.consume(1)
 			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+			init()
 		end
 	end
 end

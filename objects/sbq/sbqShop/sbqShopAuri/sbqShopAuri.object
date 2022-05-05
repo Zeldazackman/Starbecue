@@ -249,6 +249,27 @@
 				],
 				"jump" : [ "greeting", "mood", "continue"]
 			},
+			"sbqPotionDartGun" : {
+				"randomPortrait" : [
+					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png",
+					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
+					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png",
+					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png"
+				],
+				"randomDialogue" : [
+					"TF GUN!\nTF GUN!\nTF GUN!",
+					"Make sure to buy some potions too or this thing is useless.",
+					"This thing I like, made in a single day, in a frenzy of energy.",
+					"Do be aware that some people can be immune to TF."
+				],
+				"jump" : [ "greeting", "mood", "continue"]
+			},
+
+			"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "greeting", "mood", "continue"] },
 
 			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
 

@@ -2,7 +2,7 @@
 	"itemName" : "sbqReversionPotion",
 	"level" : 1,
 	"price" : 10,
-	"maxStack" : 1,
+	"maxStack" : 999,
 	"rarity" : "common",
 	"description" : "A potion to regain your previous form...\nIs this just a bottle of milk?",
 	"shortdescription" : "Reversion Potion",

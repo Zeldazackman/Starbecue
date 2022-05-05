@@ -263,6 +263,12 @@ function init()
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end
 
+	local potionTF = status.statusProperty("sbqMysteriousPotionTFDuration" ) or 0
+	if potionTF > 0 then
+		status.addEphemeralEffect("sbqMysteriousPotionTF", potionTF )
+	end
+
+
 	initStage = 1 -- init has run
 end
 
