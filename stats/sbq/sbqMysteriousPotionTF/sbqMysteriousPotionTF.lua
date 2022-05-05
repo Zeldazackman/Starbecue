@@ -9,6 +9,9 @@ function init()
 	if not self.gender then
 		self.gender = genders[math.random(2)]
 	end
+	if self.gender == "noChange" then
+		self.gender = world.entityGender(entity.id())
+	end
 
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..self.species..".species"))
 	if success and not self.identity then

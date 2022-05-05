@@ -5,7 +5,7 @@ end
 
 function update(dt, fireMode, shiftHeld)
 
-	if not self.useTimer and fireMode == "primary" and player then
+	if not self.useTimer and fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 	self.useTimer = 0
 	activeItem.setArmAngle(0)
 	animator.playSound("drink", 4)
@@ -27,6 +27,7 @@ function update(dt, fireMode, shiftHeld)
 			status.setStatusProperty("speciesAnimOverrideData", old)
 			status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
 			item.consume(1)
+			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 		end
 	end
 end

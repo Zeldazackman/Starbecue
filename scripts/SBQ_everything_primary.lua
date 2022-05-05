@@ -53,4 +53,8 @@ function sbq.everything_primary()
 		status.setStatusProperty("sbqSetVelocityAngle", data)
 		status.addEphemeralEffect("sbqSetVelocityAngle")
 	end)
+
+	message.setHandler("sbqProjectileSource", function (_,_, source)
+		status.setStatusProperty("sbqProjectileSource", source)
+	end)
 end

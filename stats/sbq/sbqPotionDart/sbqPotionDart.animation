@@ -1,0 +1,10 @@
+{
+	"sounds": {
+		"drink": [
+			"/sfx/humanoid/drink.ogg"
+		],
+		"activate": [
+			"/sfx/tech/mech_activate4.ogg"
+		]
+	}
+}

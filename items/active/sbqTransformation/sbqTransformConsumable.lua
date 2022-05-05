@@ -5,7 +5,7 @@ end
 
 function update(dt, fireMode, shiftHeld)
 
-	if not self.useTimer and fireMode == "primary" and player then
+	if not self.useTimer and fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 	self.useTimer = 0
 	activeItem.setArmAngle(0)
 	end

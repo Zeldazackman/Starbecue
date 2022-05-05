@@ -4,7 +4,7 @@ function init()
 end
 
 function update(dt, fireMode, shiftHeld)
-	if fireMode == "primary" then
+	if fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData")
 		self.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
@@ -12,4 +12,11 @@ function update(dt, fireMode, shiftHeld)
 		player.giveItem({name = "sbqMysteriousPotion", parameters = self})
 		item.consume(1)
 	end
+end
+
+function dartGunData()
+	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData")
+	self.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
+
+	return { funcName = "transform", data = self}
 end

@@ -4,7 +4,7 @@ function init()
 end
 
 function update(dt, fireMode, shiftHeld)
-	if not self.useTimer and fireMode == "primary" and player then
+	if not self.useTimer and fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 		self.useTimer = 0
 		activeItem.setArmAngle(0)
 		animator.playSound("drink", 4)
@@ -22,23 +22,29 @@ function update(dt, fireMode, shiftHeld)
 				male = "female",
 				female = "male"
 			}
-			self = status.statusProperty("speciesAnimOverrideData") or {}
+			data = status.statusProperty("speciesAnimOverrideData") or {}
 			local originalGender = world.entityGender(entity.id())
-			self.gender = table[(self.gender or originalGender)]
+			data.gender = table[(data.gender or originalGender)]
 			local mysteriousPotionData = status.statusProperty("sbqMysteriousPotionTF") or {}
-			mysteriousPotionData.gender = self.gender
+			mysteriousPotionData.gender = data.gender
 			status.setStatusProperty("sbqMysteriousPotionTF", mysteriousPotionData)
 
-			status.setStatusProperty("speciesAnimOverrideData", self)
+			status.setStatusProperty("speciesAnimOverrideData", data)
 
 			local category = status.getPersistentEffects("speciesAnimOverride")
 			status.clearPersistentEffects("speciesAnimOverride")
-			status.setPersistentEffects("speciesAnimOverride", category)
-
-			status.removeEphemeralEffect("speciesAnimOverride")
-			status.addEphemeralEffect("speciesAnimOverride", 3600)
+			if category[1] == nil then
+				category = {"speciesAnimOverride"}
+			end
+			status.setPersistentEffects("speciesAnimOverride", category )
 
 			item.consume(1)
+			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+			animator.playSound("activate")
 		end
 	end
+end
+
+function dartGunData()
+	return { funcName = "genderSwap" }
 end
