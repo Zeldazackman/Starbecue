@@ -1,0 +1,83 @@
+{
+	"itemName" : "sbqPotionDartGun",
+	"price" : 1500,
+	"inventoryIcon" : "/items/active/sbqPotionDartGun/sbqPotionDartGun.png",
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "Launches darts dipped in the potion held in the other hand.",
+	"shortdescription" : "TF Dart Gun",
+	"category" : "uniqueWeapon",
+	"itemTags" : ["weapon","ranged","rifle" ],
+	"twoHanded" : false,
+
+	"animation" : "/items/active/weapons/ranged/gun.animation",
+	"animationParts" : {
+		"butt" : "",
+		"middle" : "/items/active/sbqPotionDartGun/sbqPotionDartGun.png",
+		"barrel" : "",
+		"muzzleFlash" : ""
+	},
+	"animationCustom" : {
+		"sounds" : {
+			"fire" : [ "/sfx/gun/crossbow1.ogg" ]
+		}
+	},
+
+	"baseOffset" : [0.5, 0.0],
+	"muzzleOffset" : [1.875, 0.125],
+
+	"scripts" : ["/items/active/weapons/ranged/gun.lua", "/items/active/sbqPotionDartGun/sbqPotionDartGun.lua"],
+
+	"elementalType" : "physical",
+
+	"primaryAbility" : {
+		"scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
+		"class" : "GunFire",
+
+		"fireTime" : 1.0,
+		"baseDps" : 0,
+		"energyUsage" : 0,
+		"inaccuracy" : 0.008,
+
+		"projectileCount" : 1,
+		"fireType" : "auto",
+
+		"projectileType" : "sbqPotionDart",
+		"projectileParameters" : {
+			"power" : 0,
+			"damageTeam" : {
+				"type" : "indiscriminate"
+			}
+		},
+		"stances" : {
+			"idle" : {
+				"armRotation" : 0,
+				"weaponRotation" : 0,
+				"twoHanded" : true,
+
+				"allowRotate" : true,
+				"allowFlip" : true
+			},
+			"fire" : {
+				"duration" : 0,
+				"armRotation" : 5,
+				"weaponRotation" : 5,
+				"twoHanded" : true,
+
+				"allowRotate" : false,
+				"allowFlip" : false
+			},
+			"cooldown" : {
+				"duration" : 0.25,
+				"armRotation" : 5,
+				"weaponRotation" : 5,
+				"twoHanded" : true,
+
+				"allowRotate" : false,
+				"allowFlip" : false
+			}
+		}
+	},
+
+	"builder" : "/items/buildscripts/buildunrandweapon.lua"
+}

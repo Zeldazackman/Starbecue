@@ -1,0 +1,8 @@
+{
+	"name" : "sbqPotionDart",
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+	"scripts" : [
+		"sbqPotionDart.lua"
+	]
+}
