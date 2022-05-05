@@ -932,6 +932,7 @@
 						"body": "dummyEat",
 						"head": "AVlook"
 					},
+					"victimAnimation": "analVore",
 					"script": "analVore"
 				},
 				"digestbelly" : {
@@ -1188,6 +1189,7 @@
 						"body": "dummyEat",
 						"head": "AVlook"
 					},
+					"victimAnimation": "analVore",
 					"script": "analVore"
 				},
 				"digestbelly" : {
