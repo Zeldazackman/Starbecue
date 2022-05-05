@@ -99,6 +99,7 @@ function init()
 	status.clearPersistentEffects("speciesAnimOverride")
 	status.setStatusProperty("speciesAnimOverrideData", self)
 	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
+	refreshOccupantHolder()
 end
 
 function update(dt)
@@ -112,5 +113,13 @@ function uninit()
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))
 		status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+		refreshOccupantHolder()
+	end
+end
+
+function refreshOccupantHolder()
+	local currentData = status.statusProperty("sbqCurrentData") or {}
+	if currentData.species == "sbqOccupantHolder" and world.entityExists(currentData.id) then
+		world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = currentData.settings, retrievePrey = currentData.id, direction = mcontroller.facingDirection() } )
 	end
 end

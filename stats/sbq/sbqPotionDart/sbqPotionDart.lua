@@ -64,6 +64,27 @@ function sbq.genderSwap()
 	animator.playSound("activate")
 end
 
+function sbq.reversion()
+	status.removeEphemeralEffect("sbqMysteriousPotionTF")
+	status.setStatusProperty("sbqMysteriousPotionTF", nil)
+	status.clearPersistentEffects("speciesAnimOverride")
+	local old = status.statusProperty("oldSpeciesAnimOverrideData")
+	old.gender = nil
+	status.setStatusProperty("speciesAnimOverrideData", old)
+	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+	status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
+	item.consume(1)
+	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+	refreshOccupantHolder()
+end
+
+function refreshOccupantHolder()
+	local currentData = status.statusProperty("sbqCurrentData") or {}
+	if currentData.species == "sbqOccupantHolder" and world.entityExists(currentData.id) then
+		world.spawnVehicle("sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = currentData.settings, retrievePrey = currentData.id, direction = mcontroller.facingDirection() })
+	end
+end
+
 function sbq.vehiclePred(vehicle)
 	local currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.addRPC(world.sendEntityMessage(entity.id(), "sbqLoadSettings", vehicle), function (settings)

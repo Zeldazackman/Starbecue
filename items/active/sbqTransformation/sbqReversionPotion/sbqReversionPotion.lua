@@ -30,7 +30,19 @@ function update(dt, fireMode, shiftHeld)
 			status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
 			item.consume(1)
 			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+			refreshOccupantHolder()
 			init()
 		end
 	end
+end
+
+function refreshOccupantHolder()
+	local currentData = status.statusProperty("sbqCurrentData") or {}
+	if currentData.species == "sbqOccupantHolder" and world.entityExists(currentData.id) then
+		world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = currentData.settings, retrievePrey = currentData.id, direction = mcontroller.facingDirection() } )
+	end
+end
+
+function dartGunData()
+	return { funcName = "reversion" }
 end

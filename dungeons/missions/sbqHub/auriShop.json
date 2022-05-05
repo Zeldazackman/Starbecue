@@ -1215,22 +1215,6 @@
                  "width":8,
                  "x":32,
                  "y":280
-                }, 
-                {
-                 "gid":1347,
-                 "height":8,
-                 "id":136,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":8,
-                 "x":272,
-                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1534,7 +1518,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "width":95,
          "x":0,
          "y":0
