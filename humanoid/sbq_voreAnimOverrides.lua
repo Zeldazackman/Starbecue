@@ -130,8 +130,8 @@ end)
 
 message.setHandler("sbqUpdateAnimPartImage", function (_,_, partname, string)
 	local part = replaceSpeciesGenderTags(string)
-	local success, size = pcall(root.imageSize, (part))
-	if success and size[1] ~= 64 then
+	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and notEmpty ~= nil then
 		animator.setPartTag(partname, "partImage", part)
 		self.parts[partname] = part
 	end

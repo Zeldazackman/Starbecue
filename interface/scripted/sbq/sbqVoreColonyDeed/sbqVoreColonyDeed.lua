@@ -20,6 +20,25 @@ function init()
 
 	tenantText:setText((sbq.storage.occupier or {}).name or "")
 
+	sbq.validTenantCatalogueList = {}
+	for name, data in pairs(sbq.tenantCatalogue) do
+		local addToList = true
+		if addToList and data.checkItem then
+			addToList = root.itemConfig(data.checkItem)
+		end
+		if addToList and data.checkJson then
+			addToList, json = pcall(root.assetJson, data.checkJson)
+		end
+		if addToList and data.checkImage then
+			success, notEmpty = pcall(root.nonEmptyRegion, data.checkImage)
+			addToList = (success and notEmpty ~= nil)
+		end
+		if addToList then
+			table.insert(sbq.validTenantCatalogueList, name)
+		end
+	end
+	table.sort(sbq.validTenantCatalogueList)
+
 	for setting, value in pairs(sbq.settings) do
 		if (setting:sub(-6,-1) ~= "Locked") then
 			local button = _ENV[setting]
@@ -166,7 +185,7 @@ function summonTenant:onClick()
 	applyCount = applyCount + 1
 
 	if applyCount > 3 or sbq.storage.occupier == nil then
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", sbq.tenantCatalogue[tenantText.text] or tenantText.text)
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", (sbq.tenantCatalogue[tenantText.text] or {}).tenant or tenantText.text)
 		pane.dismiss()
 	end
 	summonTenant:setText(tostring(4 - applyCount))
@@ -175,11 +194,11 @@ end
 --------------------------------------------------------------------------------------------------
 
 function decTenant:onClick()
-	sbq.changeSelectedFromList(sbq.tenantCatalogue.list, tenantText, "tenantIndex", -1)
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantIndex", -1)
 end
 
 function incTenant:onClick()
-	sbq.changeSelectedFromList(sbq.tenantCatalogue.list, tenantText, "tenantIndex", 1)
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantIndex", 1)
 end
 
 --------------------------------------------------------------------------------------------------
