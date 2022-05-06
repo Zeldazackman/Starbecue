@@ -27,6 +27,30 @@ TODO:
 ]]--
 -------------------------------------------------------------------------------
 
+function sbq.init()
+	getColors()
+end
+
+function getColors()
+	if not sbq.settings.firstLoadDone then
+		for i, colors in ipairs(sbq.sbqData.replaceColors or {}) do
+			sbq.settings.replaceColors[i] = math.random( #colors - 1 )
+		end
+		for skin, data in pairs(sbq.sbqData.replaceSkin or {}) do
+			local result = data.skins[math.random(#data.skins)]
+			for i, partname in ipairs(data.parts) do
+				sbq.settings.skinNames[partname] = result
+			end
+		end
+
+		sbq.settings.firstLoadDone = true
+		sbq.setColorReplaceDirectives()
+		sbq.setSkinPartTags()
+		world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqXeronious")
+	end
+end
+
+
 function sbq.update(dt)
 	sbq.whenFalling()
 	sbq.armRotationUpdate()

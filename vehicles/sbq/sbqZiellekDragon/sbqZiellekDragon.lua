@@ -139,11 +139,10 @@ end
 
 function getColors()
 	if not sbq.settings.firstLoadDone then
-		-- get random directives for anyone thats not an avian
-		for i = 1, #sbq.sbqData.replaceColors do
-			sbq.settings.replaceColors[i] = math.random( #sbq.sbqData.replaceColors[i] - 1 )
+		for i, colors in ipairs(sbq.sbqData.replaceColors or {}) do
+			sbq.settings.replaceColors[i] = math.random( #colors - 1 )
 		end
-		for skin, data in pairs(sbq.sbqData.replaceSkin) do
+		for skin, data in pairs(sbq.sbqData.replaceSkin or {}) do
 			local result = data.skins[math.random(#data.skins)]
 			for i, partname in ipairs(data.parts) do
 				sbq.settings.skinNames[partname] = result

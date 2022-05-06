@@ -8,11 +8,11 @@
 	"tooltipKind" : "sbqSpawner",
 
 	"inventoryIcon": "/vehicles/sbq/sbqXeronious/skins/default/icon.png",
-	"shortdescription": "Xeronious",
-	"description" : "A fluffy Kaiju of your very own! Use on an empty spawner to place him inside.",
+	"shortdescription": "Kaiju",
+	"description" : "A fluffy Kaiju of your very own! Use on an empty spawner to place them inside.",
 
 	"tooltipFields" : {
-		"statusLabel": "A fluffy Kaiju of your very own! Use on an empty spawner to place him inside."
+		"statusLabel": "A fluffy Kaiju of your very own! Use on an empty spawner to place them inside."
 	},
 
 	"augment" : {
