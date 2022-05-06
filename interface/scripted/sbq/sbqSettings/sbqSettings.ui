@@ -84,7 +84,7 @@
 							[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : "Digestion Immunity" }]
 						],
 						[
-							[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to predator's transformation effects" }, { "type" : "label", "text" : "Transformation Immunity" }],
+							[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : "TF Immunity" }],
 							[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : "Egg Immunity" }]
 						]
 					]},

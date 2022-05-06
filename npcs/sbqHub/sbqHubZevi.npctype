@@ -388,7 +388,7 @@
 		},
 		"statusProperties" : {
 			"sbqPreyEnabled" : {
-				"enabled": true,
+				"preyEnabled": true,
 				"digestImmunity": true,
 				"transformImmunity": true,
 				"eggImmunity": false,

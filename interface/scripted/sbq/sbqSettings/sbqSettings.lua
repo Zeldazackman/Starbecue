@@ -586,11 +586,6 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 		end
 	end
 
-	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
-	function preyEnabled:onClick()
-		sbq.changePreySetting("enabled", preyEnabled.checked)
-	end
-
 	function digestImmunity:onClick()
 		sbq.changePreySetting("digestImmunity", digestImmunity.checked)
 		if digestImmunity.checked then

@@ -221,7 +221,7 @@
 		},
 		"statusProperties" : {
 			"sbqPreyEnabled" : {
-				"enabled" : true
+				"preyEnabled" : true
 			},
 			"speciesAnimOverrideData" : {
 				"species" : "sbqzevi",
