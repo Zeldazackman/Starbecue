@@ -34,12 +34,11 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
-					[[ // third quarter
+					[{ "size" : 75 },[ // third quarter
 						{ "expandMode" : [2, 2]},
 						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+							{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
 						]}
 					],[ // fourth quarter
 						{ "expandMode" : [2, 2]}

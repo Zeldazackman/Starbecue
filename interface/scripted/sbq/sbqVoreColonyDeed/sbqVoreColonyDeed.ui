@@ -86,6 +86,29 @@
 							[ { "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "iconButton", "id" : "hammerspaceLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
+					[{ "size" : 65 },[ // third quarter
+						{ "expandMode" : [2, 2]},
+						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
+							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+						]}
+					],[ // fourth quarter
+						{ "expandMode" : [2, 2]},
+						{ "id" : "voreTypePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Vore Prefrences", "inline" : true },
+							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								[{ "type" : "checkBox", "id" : "oralVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Oral Vore" },{ "type" : "iconButton", "id" : "oralVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "This NPC will perform Oral Vore" },{ "type" : "iconButton", "id" : "oralVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Oral Vore" } ],
+								[{ "type" : "checkBox", "id" : "tailVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Tail Vore" },{ "type" : "iconButton", "id" : "tailVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "This NPC will perform Tail Vore" },{ "type" : "iconButton", "id" : "tailVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Tail Vore" } ],
+								[{ "type" : "checkBox", "id" : "absorbVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Absorbtion" },{ "type" : "iconButton", "id" : "absorbVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "This NPC will perform Absorbtion" },{ "type" : "iconButton", "id" : "absorbVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Absorbtion" } ],
+								[{ "type" : "checkBox", "id" : "navelVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Navel Vore" },{ "type" : "iconButton", "id" : "navelVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "This NPC will perform Navel Vore" },{ "type" : "iconButton", "id" : "navelVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Navel Vore" } ],
+								[{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },{ "type" : "iconButton", "id" : "analVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" },{ "type" : "iconButton", "id" : "analVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Anal Vore" } ],
+								[{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },{ "type" : "iconButton", "id" : "cockVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" },{ "type" : "iconButton", "id" : "cockVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Cock Vore" } ],
+								[{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },{ "type" : "iconButton", "id" : "breastVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" },{ "type" : "iconButton", "id" : "breastVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Breast Vore" } ],
+								[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "iconButton", "id" : "unbirthPredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" },{ "type" : "iconButton", "id" : "unbirthPredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Unbirth" } ]
+							 ]}
+						]}
+					]],
 					{ "type" : "label", "text" : "Choose the properties of this NPC's stomach, and what properties they can decide themselves." }
 				]}
 			]},

@@ -3,6 +3,7 @@
 local inited
 
 sbq = {
+	config = root.assetJson("/sbqGeneral.config"),
 	data = {
 		settings = { personality = "default", mood = "default" },
 		defaultPortrait = "/empty_image.png",
@@ -24,7 +25,6 @@ require("/scripts/SBQ_RPC_handling.lua")
 require( "/lib/stardust/json.lua" )
 
 function init()
-	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
@@ -225,14 +225,13 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 end
 
 function sbq.checkVoreTypeActive(voreType)
-	local voreTypeData = ((sbq.data.settings or {}).voreTypes or {})[voreType]
-	if voreTypeData == nil then return "hidden" end
+	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnabled"]) then return "hidden" end
 
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (voreTypeData ~= nil) and voreTypeData.enabled and preyEnabled.enabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
-		if voreTypeData.feelingIt then
+	if (sbq.data.settings[voreType.."PredEnabled"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.enabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
+		if sbq.data.settings[voreType.."Pred"] then
 			if currentData.type == "driver" and ((not currentData.edible) or ( (sbq.occupants[voreTypeData.location] + 1 + currentData.totalOccupants) > sbq.data.sbqData.locations[voreTypeData.location].max)) then
 				return "tooBig"
 			elseif (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
@@ -249,7 +248,7 @@ function sbq.checkVoreTypeActive(voreType)
 end
 
 function sbq.checkVoreButtonsEnabled()
-	for voreType, data in pairs((sbq.data.settings or {}).voreTypes or {}) do
+	for voreType, data in pairs(sbq.data.icons or {}) do
 		local button = _ENV[voreType]
 		local active = sbq.checkVoreTypeActive(voreType)
 		button:setVisible(active ~= "hidden")
@@ -263,9 +262,8 @@ end
 
 function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
-	local voreTypeData = sbq.data.settings.voreTypes[voreType]
 
-	local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active })
+	local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active }) or {}
 	if active == "yes" then
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
 			sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "yes", "tease"})

@@ -43,9 +43,7 @@
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
-			"voreTypes" : {
-				"oralVore" : { "enabled" : true, "feelingIt" : true, "location" : "belly" }
-			}
+			"oralVorePred" : true
 		},
 
 		"dialogueTree" : {

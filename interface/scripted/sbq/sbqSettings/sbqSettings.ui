@@ -35,15 +35,27 @@
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
 						]}
 					]],
-					[[ // third quarter
+					[{ "size" : 75 },[ // third quarter
 						{ "expandMode" : [2, 2]},
 						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+							{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
 						]}
 					],[ // fourth quarter
-						{ "expandMode" : [2, 2]}
+						{ "expandMode" : [2, 2]},
+						{ "id" : "voreTypePanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Vore Prefrences", "inline" : true },
+							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								[{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "Prey NPCs will seek you out for Oral Vore" }, { "type" : "label", "text" : "Oral Vore" } ],
+								[{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "Prey NPCs will seek you out for Tail Vore" }, { "type" : "label", "text" : "Tail Vore" } ],
+								[{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "Prey NPCs will seek you out for Absorbtion" }, { "type" : "label", "text" : "Absorbtion" } ],
+								[{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "Prey NPCs will seek you out for Navel Vore" }, { "type" : "label", "text" : "Navel Vore" } ],
+								[{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "Prey NPCs will seek you out for Anal Vore" }, { "type" : "label", "text" : "Anal Vore" } ],
+								[{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "Prey NPCs will seek you out for Cock Vore" }, { "type" : "label", "text" : "Cock Vore" } ],
+								[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : "Breast Vore" } ],
+								[{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "Prey NPCs will seek you out for Unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
+							 ]}
+						]}
 					]],
 					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
 				]}
