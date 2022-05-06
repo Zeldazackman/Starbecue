@@ -37,7 +37,7 @@ function sbq.everything_primary()
 	end)
 
 	message.setHandler("sbqIsPreyEnabled", function(_,_, voreType)
-		if (status.statusProperty("sbqPreyEnabled") or {}).sbqPreyEnabled == false then return false end
+		if (status.statusProperty("sbqPreyEnabled") or {}).preyEnabled == false then return false end
 
 		if (status.statusProperty("sbqPreyEnabled") or {})[voreType] == nil then
 			local entityType = world.entityType(entity.id())
