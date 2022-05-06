@@ -86,6 +86,20 @@ message.setHandler( "despawn", function(_,_, eaten)
 	sbq.onDeath(eaten)
 end )
 
+message.setHandler( "reversion", function(_,_)
+	sbq.reversion()
+end)
+
+function sbq.reversion()
+	if sbq.occupants.total > 0 then
+		sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
+			world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+		end)
+	else
+		sbq.onDeath()
+	end
+end
+
 message.setHandler( "digest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		local location = sbq.lounging[eid].location

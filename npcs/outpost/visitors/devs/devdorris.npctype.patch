@@ -9,7 +9,8 @@
 			"op": "add",
 			"path": "/statusControllerSettings/statusProperties/sbqPreyEnabled",
 			"value": {
-				"enabled" : false
+				"enabled" : false,
+				"transformImmunity" : true
 			}
 		}
 	]

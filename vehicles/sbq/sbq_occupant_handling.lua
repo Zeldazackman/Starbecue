@@ -1,7 +1,6 @@
 function sbq.forceSeat( occupantId, seatindex )
 	if occupantId then
 		vehicle.setLoungeEnabled("occupant"..seatindex, true)
-		world.sendEntityMessage(occupantId, "sbqMakeNonHostile")
 		world.sendEntityMessage( occupantId, "sbqForceSit", {index=seatindex, source=entity.id()})
 	end
 end
@@ -32,6 +31,7 @@ function sbq.eat( occupantId, location, force )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			sbq.occupant[seatindex].id = occupantId
 			sbq.occupant[seatindex].location = location
+			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 			sbq.forceSeat( occupantId, seatindex)
 			sbq.refreshList = true
 			sbq.updateOccupants(0)
@@ -45,6 +45,7 @@ function sbq.eat( occupantId, location, force )
 	sbq.occupant[seatindex].id = occupantId
 	sbq.occupant[seatindex].species = species
 	sbq.occupant[seatindex].location = location
+	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 	sbq.forceSeat( occupantId, seatindex )
 	sbq.refreshList = true
 	sbq.updateOccupants(0)
@@ -76,6 +77,7 @@ function sbq.uneat( occupantId )
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", sbq.config.predStatusEffects)
 		world.sendEntityMessage( occupantId, "sbqPredatorDespawned", true ) -- to clear the current data for players
 	end
+	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
 
 	sbq.refreshList = true
 	sbq.lounging[occupantId] = nil
@@ -283,7 +285,6 @@ function sbq.applyStatusLists()
 			if not sbq.weirdFixFrame then
 				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
 			end
-			sbq.loopedMessage( sbq.occupant[i].seatname.."NonHostile", sbq.occupant[i].id, "sbqMakeNonHostile")
 			sbq.loopedMessage( sbq.occupant[i].seatname.."StatusEffects", sbq.occupant[i].id, "sbqApplyStatusEffects", {sbq.occupant[i].statList} )
 			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
 		else

@@ -263,14 +263,7 @@ function sbq.transformAction()
 					sbq.radialSelectionType = data.type
 					if data.selection == "cancel" then return end
 					if data.pressed and data.selection == "despawn" and not sbq.click then
-						if sbq.occupants.total > 0 then
-							sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
-								world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
-							end)
-						else
-							sbq.onDeath()
-						end
-						return
+						sbq.reversion()
 					elseif data.pressed and not sbq.click then
 						sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", data.selection ), function (settings)
 							world.spawnVehicle( data.selection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
@@ -288,13 +281,7 @@ function sbq.transformAction()
 		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
 		if sbq.radialSelectionType == "transformSelect" then
 			if sbq.lastRadialSelection == "despawn" then
-				if sbq.occupants.total > 0 then
-					sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
-						world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
-					end)
-				else
-					sbq.onDeath()
-				end
+				sbq.reversion()
 			elseif sbq.lastRadialSelection ~= "cancel" then
 				sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection ), function (settings)
 					world.spawnVehicle( sbq.lastRadialSelection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )

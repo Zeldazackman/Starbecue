@@ -86,7 +86,6 @@ function init()
 	end)
 	message.setHandler( "sbqPlayerInteract", function(_,_, data, id)
 		player.interact(data[1], data[2], id)
-
 	end)
 
 

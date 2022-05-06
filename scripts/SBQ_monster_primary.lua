@@ -7,5 +7,8 @@ function init()
 
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		status.setStatusProperty( "sbqCurrentData", current)
+		if current.type ~= "driver" then
+			status.setStatusProperty("sbqDontTouchDoors", true)
+		end
 	end)
 end

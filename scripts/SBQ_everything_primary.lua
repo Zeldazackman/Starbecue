@@ -21,8 +21,6 @@ function sbq.everything_primary()
 
 	message.setHandler("sbqForceSit", function(_,_, data)
 		status.setStatusProperty("sbqForceSitData", data)
-		status.setStatusProperty("sbqDontTouchDoors", true)
-
 		status.addEphemeralEffect("sbqForceSit", 1, data.source)
 	end)
 

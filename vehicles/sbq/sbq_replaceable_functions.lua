@@ -76,16 +76,20 @@ end
 
 -- for letting out prey, some predators might wand more specific logic regarding this
 function sbq.letout(id)
-	local id = id
+	local id = id or sbq.getRecentPrey()
+	if not id then return false end
+
+	return sbq.doTransition( "escape", {id = id} )
+end
+
+function sbq.getRecentPrey()
 	for i = sbq.occupantSlots, 0, -1 do
 		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
 		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
 		then
-			id = sbq.occupant[i].id
-			break
+			return sbq.occupant[i].id
 		end
 	end
-	return sbq.doTransition( "escape", {id = id} )
 end
 
 -- warp in/out effect should be replaceable if needed

@@ -99,10 +99,6 @@ function init()
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		npc.say(string, tags)
 	end)
-	message.setHandler( "sbqPredatorDespawned", function (_,_)
-		sbq.occupantHolder = nil
-		status.setStatusProperty( "sbqCurrentData", nil)
-	end)
 	message.setHandler("sbqSetInteracted", function (_,_, id)
 		self.interacted = true
 		self.board:setEntity("interactionSource", id)

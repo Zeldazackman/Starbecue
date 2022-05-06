@@ -5,18 +5,20 @@ function init()
 	oldinit()
 
 	message.setHandler("sbqMakeNonHostile", function(_,_)
+		local damageTeam = entity.damageTeam()
 		if (status.statusProperty("sbqOriginalDamageTeam") == nil)
-		or (entity.damageTeam().type ~= "ghostly")
+		or (damageTeam.type ~= "ghostly")
 		then
-			status.setStatusProperty("sbqOriginalDamageTeam", entity.damageTeam())
+			status.setStatusProperty("sbqOriginalDamageTeam", damageTeam)
 		end
-		monster.setDamageSources()
-		monster.setPhysicsForces({})
-		monster.setDamageTeam({ type = "ghostly", team = 1 })
+		monster.setDamageTeam({ type = "ghostly", team = damageTeam.team })
 	end)
 
 	message.setHandler("sbqRestoreDamageTeam", function(_,_)
-		monster.setDamageTeam(status.statusProperty("sbqOriginalDamageTeam"))
+		local sbqOriginalDamageTeam = status.statusProperty("sbqOriginalDamageTeam")
+		if sbqOriginalDamageTeam then
+			monster.setDamageTeam(sbqOriginalDamageTeam)
+		end
 	end)
 
 	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}

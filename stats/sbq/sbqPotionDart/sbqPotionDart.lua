@@ -68,20 +68,21 @@ function sbq.reversion()
 	status.removeEphemeralEffect("sbqMysteriousPotionTF")
 	status.setStatusProperty("sbqMysteriousPotionTF", nil)
 	status.clearPersistentEffects("speciesAnimOverride")
-	local old = status.statusProperty("oldSpeciesAnimOverrideData")
+	local old = status.statusProperty("oldSpeciesAnimOverrideData") or {}
 	old.gender = nil
 	status.setStatusProperty("speciesAnimOverrideData", old)
-	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory") or {})
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
-	item.consume(1)
-	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
-	refreshOccupantHolder()
-end
+	animator.playSound("activate")
 
-function refreshOccupantHolder()
 	local currentData = status.statusProperty("sbqCurrentData") or {}
-	if currentData.species == "sbqOccupantHolder" and world.entityExists(currentData.id) then
-		world.spawnVehicle("sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = currentData.settings, retrievePrey = currentData.id, direction = mcontroller.facingDirection() })
+	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+		world.sendEntityMessage(currentData.id, "reversion")
+		if currentData.species == "sbqOccupantHolder" then
+			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+		end
+	else
+		world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	end
 end
 
