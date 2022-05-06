@@ -23,8 +23,11 @@ function init()
 	sbq.validTenantCatalogueList = {}
 	for name, data in pairs(sbq.tenantCatalogue) do
 		local addToList = true
-		if addToList and data.checkItem then
-			addToList = root.itemConfig(data.checkItem)
+		if addToList and data.checkItems then
+			for i, item in ipairs(data.checkItems) do
+				addToList = root.itemConfig(item)
+				if not addToList then break end
+			end
 		end
 		if addToList and data.checkJson then
 			addToList, json = pcall(root.assetJson, data.checkJson)
