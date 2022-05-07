@@ -225,16 +225,22 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 end
 
 function sbq.checkVoreTypeActive(voreType)
-	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnabled"]) then return "hidden" end
 
+	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnabled"]) then return "hidden" end
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 
+	local locationName = sbq.data.sbqData.voreTypes[voreType]
+	if not locationName then return "hidden" end
+
+	local locationData = sbq.data.sbqData.locations[locationName]
+	if not locationData then return "hidden" end
+
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (sbq.data.settings[voreType.."PredEnabled"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.enabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
+	if (sbq.data.settings[voreType.."PredEnabled"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
-			if currentData.type == "driver" and ((not currentData.edible) or ( (sbq.occupants[voreTypeData.location] + 1 + currentData.totalOccupants) > sbq.data.sbqData.locations[voreTypeData.location].max)) then
+			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > locationData.max)) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
 				return "tooBig"
-			elseif (sbq.occupants[voreTypeData.location] >= sbq.data.sbqData.locations[voreTypeData.location].max ) then
+			elseif (sbq.occupants[locationName] >= locationData.max ) then
 				return "full"
 			else
 				return "yes"

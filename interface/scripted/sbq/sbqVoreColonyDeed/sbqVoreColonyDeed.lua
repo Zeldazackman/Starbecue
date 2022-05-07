@@ -18,7 +18,31 @@ function init()
 	personalityText:setText(sbq.settings.personality or "default")
 	moodText:setText(sbq.settings.mood or "default")
 
-	tenantText:setText((sbq.storage.occupier or {}).name or "")
+	local occupier = sbq.storage.occupier
+
+	if type(occupier) == "table" then
+		tenantText:setText( occupier.name or "")
+		local tags = sbq.storage.house.contents
+		local listed = { sbqVore = true }
+		for tag, value in pairs(occupier.tagCriteria or {}) do
+			if tag ~= "sbqVore" then
+				listed[tag] = true
+				local amount = tags[tag] or 0
+				local string = "^green;"..tag..": "..amount
+				if amount < value then
+					string = "^red;"..tag..": "..amount.." ^yellow;(Need "..value..")"
+				end
+				requiredTagsScrollArea:addChild({ type = "label", text = string })
+			end
+		end
+		for tag, value in pairs(tags or {}) do
+			if not listed[tag] then
+				requiredTagsScrollArea:addChild({ type = "label", text = tag..": "..value })
+			end
+		end
+	end
+
+
 
 	sbq.validTenantCatalogueList = {}
 	for name, tenant in pairs(sbq.tenantCatalogue) do
@@ -135,10 +159,16 @@ end
 
 function sbq.savePredSettings()
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.settings)
+	if sbq.storage.occupier then
+		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSaveSettings", sbq.settings)
+	end
 end
 
 function sbq.savePreySettings()
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings)
+	if sbq.storage.occupier then
+		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSavePreySettings", sbq.preySettings)
+	end
 end
 
 function sbq.changePredSetting(settingname, value)
@@ -189,7 +219,7 @@ function summonTenant:onClick()
 	applyCount = applyCount + 1
 
 	if applyCount > 3 or sbq.storage.occupier == nil then
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", (sbq.tenantCatalogue[tenantText.text] or {}).tenant or tenantText.text)
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", sbq.tenantCatalogue[tenantText.text] or tenantText.text)
 		pane.dismiss()
 	end
 	summonTenant:setText(tostring(4 - applyCount))

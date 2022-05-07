@@ -21,8 +21,7 @@
 						{ "mode" : "v" },
 						{ "type" : "label", "text" : "Tenant Behavior", "inline" : true },
 						[{ "type" : "checkBox", "id" : "allowHunting", "toolTip" : "NPC will actively seek out prey to vore" }, { "type" : "iconButton", "id" : "allowHuntingLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Allow Hunting", "inline" : true }, [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "huntPlayers", "toolTip" : "Players" },{ "type" : "iconButton", "id" : "huntPlayersLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "huntNPCs", "toolTip" : "NPCs" },{ "type" : "iconButton", "id" : "huntNPCsLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "huntMonsters", "toolTip" : "Monsters" },{ "type" : "iconButton", "id" : "huntMonstersLocked", "image" : "lockedDisabled.png", "visible" : false }]],
-						[{ "type" : "checkBox", "id" : "allowBaiting", "toolTip" : "NPC will actively seek out preds to vore them" }, { "type" : "iconButton", "id" : "allowBaitingLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Allow Baiting ", "inline" : true }, [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "baitPlayers", "toolTip" : "Players" },{ "type" : "iconButton", "id" : "baitPlayersLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "baitNPCs", "toolTip" : "NPCs" },{ "type" : "iconButton", "id" : "baitNPCsLocked", "image" : "lockedDisabled.png", "visible" : false }]],
-						{ "type" : "label", "text" : "^#555;These searching options currently do not function, but will become functional later.", "inline" : true }
+						[{ "type" : "checkBox", "id" : "allowBaiting", "toolTip" : "NPC will actively seek out preds to vore them" }, { "type" : "iconButton", "id" : "allowBaitingLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : "Allow Baiting ", "inline" : true }, [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "baitPlayers", "toolTip" : "Players" },{ "type" : "iconButton", "id" : "baitPlayersLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "baitNPCs", "toolTip" : "NPCs" },{ "type" : "iconButton", "id" : "baitNPCsLocked", "image" : "lockedDisabled.png", "visible" : false }]]
 					]}],
 					[]
 				],
@@ -41,6 +40,15 @@
 					{ "type" : "iconButton", "id" : "incMood", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 				]}
 				]]],
+				[{ "size" : 65 },[ // third quarter
+					{ "expandMode" : [2, 2]},
+					{ "id" : "requiredTagsPanel", "type" : "panel", "style" : "convex", "children" : [
+						{ "type" : "label", "text" : "Colony Tags", "inline" : true },
+						{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+					]}
+				],[ // fourth quarter
+					{ "expandMode" : [2, 2]}
+				]],
 				{ "type" : "button", "id" : "callTenant", "caption" : "Call Tenant", "expandMode" : [2, 0] }
 			]},
 			{ "type" : "tab", "id" : "npcPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -89,9 +97,8 @@
 					[{ "size" : 65 },[ // third quarter
 						{ "expandMode" : [2, 2]},
 						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+							{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
 						]}
 					],[ // fourth quarter
 						{ "expandMode" : [2, 2]},

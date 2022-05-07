@@ -120,6 +120,17 @@ function init()
 	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator)
 		sbq.getRandomDialogue({ "escape", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
 	end)
+	message.setHandler("sbqSaveSettings", function (_,_, settings)
+		storage.sbqSettings = settings
+	end)
+	message.setHandler("sbqSavePreySettings", function (_,_, settings)
+		status.setStatusProperty("sbqPreyEnabled", settings)
+		if sbqPreyEnabled.digestImmunity then
+			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+		else
+			status.clearPersistentEffects("digestImmunity")
+		end
+	end)
 
 
 end
