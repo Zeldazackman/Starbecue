@@ -21,7 +21,8 @@ function init()
 	tenantText:setText((sbq.storage.occupier or {}).name or "")
 
 	sbq.validTenantCatalogueList = {}
-	for name, data in pairs(sbq.tenantCatalogue) do
+	for name, tenant in pairs(sbq.tenantCatalogue) do
+		local data = root.tenantConfig(tenant).checkRequirements or {}
 		local addToList = true
 		if addToList and data.checkItems then
 			for i, item in ipairs(data.checkItems) do

@@ -1,19 +1,20 @@
 {
-  "name": "vore_villager_random",
-  "priority": 50,
+  "name": "vore_villager_eevee",
+  "priority": 51,
 
   "colonyTagCriteria": {
     "light": 1,
     "door": 1,
-    "sbqVore" : 1
+    "sbqVore" : 1,
+    "eevee" : 8
   },
 
-  "checkRequirements" : {},
+  "checkRequirements" : { "checkItems" : ["eeveeoutfitbasechest"] },
 
   "tenants": [
     {
       "spawn": "npc",
-      "species": ["human", "apex", "avian", "floran", "glitch", "hylotl"],
+      "species": ["eevee"],
       "type": "sbqVoreVillager",
       "overrides": {
        }
