@@ -14,9 +14,22 @@ sbq = {
 require("/scripts/SBQ_RPC_handling.lua")
 require( "/lib/stardust/json.lua" )
 
+local _npc_setItemSlot
+
+function new_npc_setItemSlot(slot, data)
+	storage.saveCosmeticSlots[slot] = data
+	_npc_setItemSlot(slot, data)
+	sbq.updateCosmeticSlots()
+end
+
 
 function init()
+	sbq.saveCosmeticSlots()
+	_npc_setItemSlot = npc.setItemSlot
+	npc.setItemSlot = new_npc_setItemSlot
+
 	oldinit()
+
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
 	sbq.dialogueTree = config.getParameter("dialogueTree")
@@ -77,15 +90,18 @@ function init()
 	end
 	sbq.speciesConfig.states = finalConfig
 
-	storage.sbqSettings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, storage.sbqSettings or {})))
+	if not storage.settings then
+		storage.settings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, config.getParameter("sbqSettings") or {})))
+	end
+	sbq.setRelevantPredSettings()
 
 	message.setHandler("sbqGetDialogueBoxData", function (_,_, id)
 		local location = sbq.getOccupantArg(id, "location")
 		local dialogueTreeStart
 		if location ~= nil then
-			dialogueTreeStart = { location, storage.sbqSettings.bellyEffect }
+			dialogueTreeStart = { location, storage.settings.bellyEffect }
 		end
-		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+		return { dialogueTreeStart = dialogueTreeStart, sbqData = sbq.speciesConfig.sbqData, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
@@ -94,7 +110,7 @@ function init()
 			self.board:setEntity("interactionSource", id)
 		end
 		sbq.dialogueBoxOpen = 0.5
-		return { settings = storage.sbqSettings, occupantHolder = sbq.occupantHolder }
+		return { settings = storage.settings, occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		npc.say(string, tags)
@@ -108,20 +124,22 @@ function init()
 	end)
 	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location, settings, predator)
 		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", "digestionImmunity"), function (immune)
-			sbq.getRandomDialogue({ "pred", "location", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.sbqSettings, {location = location, digestionImmunity = immune}))
+			sbq.getRandomDialogue({ "pred", "location", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.settings, {location = location, digestionImmunity = immune}))
 		end)
 	end)
 	message.setHandler("sbqStrugglerSpeak", function (_,_, entity, location, settings, predator)
-		sbq.getRandomDialogue({ "prey", "location", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {location = location, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+		sbq.getRandomDialogue({ "prey", "location", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {location = location, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood}))
 	end)
 	message.setHandler("sbqVoredSpeak", function (_,_, entity, voreType, settings, predator)
-		sbq.getRandomDialogue({ "vored", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+		sbq.getRandomDialogue({ "vored", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood}))
 	end)
 	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator)
-		sbq.getRandomDialogue({ "escape", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.sbqSettings.personality, mood = storage.sbqSettings.mood}))
+		sbq.getRandomDialogue({ "escape", "voreType", "predator", "personality", "mood", "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood}))
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings)
-		storage.sbqSettings = settings
+		storage.settings = settings
+		sbq.setRelevantPredSettings()
+		world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
@@ -131,8 +149,6 @@ function init()
 			status.clearPersistentEffects("digestImmunity")
 		end
 	end)
-
-
 end
 
 function update(dt)
@@ -144,7 +160,7 @@ function update(dt)
 			sbq.occupants = result.occupants
 			sbq.occupant = result.occupant
 		end
-	end )
+	end)
 
 
 	if (not sbq.occupantHolder) and (sbq.timeUntilNewHolder <= 0) then
@@ -168,7 +184,7 @@ function uninit()
 end
 
 function interact(args)
-	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.sbqSettings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	if sbq.currentData.type == "prey" then
 		if args.predData then
 			sbq.predData = args.predData
@@ -176,8 +192,8 @@ function interact(args)
 			settings.location = args.predData.location
 			settings.predator = args.predData.predator
 
-			settings.personality = storage.sbqSettings.personality
-			settings.mood = storage.sbqSettings.mood
+			settings.personality = storage.settings.personality
+			settings.mood = storage.settings.mood
 			settings.digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity or false
 
 			dialogueBoxData.settings = settings
@@ -252,6 +268,57 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings)
 		end
 	end
 	return dialogueTree
+end
+
+
+function sbq.saveCosmeticSlots()
+	if not storage.saveCosmeticSlots then
+		storage.saveCosmeticSlots = {}
+		local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
+		for i, slot in ipairs(slots) do
+			storage.saveCosmeticSlots[slot] = npc.getItemSlot(slot)
+		end
+	end
+end
+
+function sbq.setRelevantPredSettings()
+	if storage.settings.unbirthPred or storage.settings.unbirthPredEnable then
+		storage.settings.pussy = true
+	else
+		storage.settings.pussy = false
+	end
+	if storage.settings.cockVorePred or storage.settings.cockVorePredEnable then
+		storage.settings.penis = true
+		storage.settings.balls = true
+	else
+		storage.settings.penis = false
+		storage.settings.balls = false
+	end
+	if storage.settings.navelVorePred or storage.settings.navelVorePredEnable then
+		storage.settings.navel = true
+	else
+		storage.settings.navel = false
+	end
+	if storage.settings.breastVorePred or storage.settings.breastVorePredEnable then
+		storage.settings.breasts = true
+	else
+		storage.settings.breasts = false
+	end
+	sbq.updateCosmeticSlots()
+end
+
+function sbq.updateCosmeticSlots()
+	if storage.settings.breastVorePred then
+		_npc_setItemSlot("chestCosmetic", "sbq_nude_chest")
+	else
+		_npc_setItemSlot("chestCosmetic", storage.saveCosmeticSlots.chestCosmetic)
+	end
+
+	if storage.settings.unbirthPred or storage.settings.cockVorePred or storage.settings.analVorePred then
+		_npc_setItemSlot("legsCosmetic", "sbq_nude_legs")
+	else
+		_npc_setItemSlot("legsCosmetic", storage.saveCosmeticSlots.legsCosmetic)
+	end
 end
 
 function sbq.searchForValidPrey(voreType)

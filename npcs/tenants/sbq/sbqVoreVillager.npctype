@@ -42,6 +42,36 @@
 						}
 					}
 				},
+				"analVore" : {
+					"default" : {
+						"default" : {
+							"yes" : { "randomDialogue" : [ "Hehe, you like my ass?~" ],
+								"tease" : { "randomDialogue" : [ "Then why don't you take a closer look~" ] }
+							},
+							"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a nice toy~" ],
+								"tease" : { "randomDialogue" : [ "ahh~ right where you belong~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+						}
+					}
+				},
+				"navelVore" : {
+					"default" : {
+						"default" : {
+							"yes" : { "randomDialogue" : [ "Hehe, you like my belly?~" ],
+								"tease" : { "randomDialogue" : [ "Then why don't you take a closer look~" ] }
+							},
+							"unprompted" : { "randomDialogue" : [ "mmmm~ gonna be a tight squeeze, but I'll get you in~" ],
+								"tease" : { "randomDialogue" : [ "hehe~ right where you belong~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+						}
+					}
+				},
 				"cockVore" : {
 					"default" : {
 						"default" : {
@@ -56,8 +86,176 @@
 							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
 						}
 					}
+				},
+				"unbirth" : {
+					"default" : {
+						"default" : {
+							"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ],
+								"tease" : { "randomDialogue" : [ "ahh~ get slipped right up in there~", "ahh~ you're gonna get all wet heh~" ] }
+							},
+							"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere special~" ],
+								"tease" : { "randomDialogue" : [ "ahh~ get slipped right up in there~", "ahh~ you're gonna get all wet heh~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm full up down there already~" ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+						}
+					}
+				}
+
+			},
+			// when being a pred, responses to prey inside them
+			// path is: location -> personality -> mood -> bellyEffect -> digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself, digestionImmunity comes from the prey
+			"pred" : {
+				"belly" : {
+					"default" : {
+						"default" : {
+							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+							"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
+							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+						}
+					}
+				},
+				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+			},
+			// when being prey, responses to the pred that ate them
+			// path is: location -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from the pred, digestionImmunity comes from itself
+			"prey" : {
+				// lines at very top of each tree are for talking while inside and periodically while struggling but trees can go further past that
+				"default" : {
+					"default" : { "randomDialogue" : [ "Mmm I'm pretty stuck in here aren't I?" ] }
+				},
+				"belly" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
+								"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
+								"sbqSoftDigest" : {
+									"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+								},
+								"sbqDigest" : {
+									"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+								}
+							}
+						}
+					},
+					"sbqVaporeon" : {
+						"default" : {
+							"default" : {
+								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "gooey vappy belly." ]},
+								"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
+								"sbqSoftDigest" : {
+									"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+								},
+								"sbqDigest" : {
+									"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+								}
+							}
+						}
+					},
+					"sbqSlime" : {
+						"default" : {
+							"default" : {
+								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "This slime is so sticky." ]},
+								"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
+								"sbqSoftDigest" : {
+									"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+								},
+								"sbqDigest" : {
+									"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+								}
+							}
+						}
+					}
+				},
+				"balls" : {
+					"default" : { "randomDialogue" : [ "Theres so much cum in here~" ] }
+				},
+				"shaft" : {
+					"default" : { "randomDialogue" : [ "Ahh your dick is so hard its squeezing me!" ] }
+				},
+				"womb" : {
+					"default" : { "randomDialogue" : [ "Its so soft in here~" ] }
+				},
+				"breasts" : {
+					"default" : { "randomDialogue" : [ "Heh, surrounded by milk to drink~" ] }
+				}
+			},
+			// when being prey, responses to the pred thats eating them
+			// path is: voreType -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from the pred, digestionImmunity comes from itself
+			"vored" : {
+				"default" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"randomDialogue" : [ "Ah!" ]
+							}
+						}
+					}
+				},
+				"oralVore" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"randomDialogue" : [ "Ah!" ]
+							}
+						}
+					}
+				},
+				"cockVore" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"randomDialogue" : [ "UwU" ]
+							}
+						}
+					}
+				},
+				"unbirth" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"randomDialogue" : [ "UwU" ]
+							}
+						}
+					}
+				}
+			},
+			// when being prey, responses to the pred letting them out
+			// path is: voreType -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from the pred, digestionImmunity comes from itself
+			"escape" : {
+				"default" : {
+					"default" : {
+						"default" : {
+							"default" : {
+								"randomDialogue" : [ "Ah, back outside" ]
+							}
+						}
+					}
 				}
 			}
+		}
+	},
+	"statusControllerSettings" : {
+		"statusProperties" : {
+			"speciesAnimOverrideData" : {},
+			"sbqPreyEnabled" : {}
 		}
 	}
 }

@@ -1,0 +1,16 @@
+{
+	"itemName" : "sbq_nude_head",
+	"price" : 0,
+	"inventoryIcon" : "/empty_image.png",
+	"maxStack" : 1,
+	"rarity" : "Common",
+	"category" : "headarmour",
+	"description" : "",
+	"shortdescription" : "Hide Hat",
+	"tooltipKind" : "armor",
+
+	"maleFrames" : "head.png",
+	"femaleFrames" : "head.png",
+	"mask" : "mask.png"
+
+}

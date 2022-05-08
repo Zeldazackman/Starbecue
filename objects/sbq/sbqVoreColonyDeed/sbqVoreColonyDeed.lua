@@ -135,3 +135,58 @@ function checkHouseIntegrity()
 		end
 	end
 end
+
+function spawn(tenant)
+	local level = tenant.level or getRentLevel()
+	tenant.overrides = tenant.overrides or {}
+	local overrides = tenant.overrides
+
+	overrides.scriptConfig = overrides.scriptConfig or {}
+	overrides.scriptConfig.sbqSettings = tenant.settings or storage.settings
+
+	if not overrides.damageTeamType then
+		overrides.damageTeamType = "friendly"
+	end
+	if not overrides.damageTeam then
+		overrides.damageTeam = 0
+	end
+	overrides.persistent = true
+
+	local position = { self.position[1], self.position[2] }
+	for i, val in ipairs(self.positionVariance) do
+		if val ~= 0 then
+			position[i] = position[i] + math.random(val) - (val / 2)
+		end
+	end
+
+	local entityId = nil
+	if tenant.spawn == "npc" then
+		entityId = world.spawnNpc(position, tenant.species, tenant.type, level, tenant.seed, overrides)
+		if tenant.personality then
+			world.callScriptedEntity(entityId, "setPersonality", tenant.personality)
+		else
+			tenant.personality = world.callScriptedEntity(entityId, "personality")
+		end
+		if not tenant.overrides.identity then
+			tenant.overrides.identity = world.callScriptedEntity(entityId, "npc.humanoidIdentity")
+		end
+
+	elseif tenant.spawn == "monster" then
+		if not overrides.seed and tenant.seed then
+			overrides.seed = tenant.seed
+		end
+		if not overrides.level then
+			overrides.level = level
+		end
+		entityId = world.spawnMonster(tenant.type, position, overrides)
+
+	else
+		sb.logInfo("colonydeed can't be used to spawn entity type '" .. tenant.spawn .. "'")
+		return nil
+	end
+
+	if tenant.seed == nil then
+		tenant.seed = world.callScriptedEntity(entityId, "object.seed")
+	end
+	return entityId
+end

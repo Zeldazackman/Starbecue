@@ -1,0 +1,21 @@
+{
+	"itemName" : "sbq_nude_chest",
+	"price" : 0,
+	"inventoryIcon" : "/empty_image.png",
+	"maxStack" : 1,
+	"rarity" : "Common",
+	"category" : "chestwear",
+	"description" : "",
+	"shortdescription" : "Hide Shirt",
+	"tooltipKind" : "armor",
+	"maleFrames" : {
+		"body" : "chestm.png",
+		"backSleeve" : "bsleeve.png",
+		"frontSleeve" : "fsleeve.png"
+	},
+	"femaleFrames" : {
+		"body" : "chestf.png",
+		"backSleeve" : "bsleeve.png",
+		"frontSleeve" : "fsleeve.png"
+	}
+}
