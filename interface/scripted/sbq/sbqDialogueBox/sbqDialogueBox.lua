@@ -194,12 +194,12 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
-		local randomDialogue = sbq.generateKeysmashes(randomDialogue)
+		local randomDialogue = sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax)
 		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
 		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags)
 		finished = true
 	elseif dialogueTree.dialogue ~= nil then
-		local dialogue = sbq.generateKeysmashes(dialogueTree.dialogue[dialoguePos])
+		local dialogue = sbq.generateKeysmashes(dialogueTree.dialogue[dialoguePos], dialogueTree.keysmashMin, dialogueTree.keysmashMax)
 		dialogueLabel:setText(sb.replaceTags(dialogue, tags ))
 		world.sendEntityMessage(speaker, "sbqSay", dialogue, tags)
 		if dialoguePos >= #dialogueTree.dialogue then
@@ -225,12 +225,12 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	return dialogueTree, randomRolls
 end
 
-local keysmashchars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
-function sbq.generateKeysmashes(input)
+local keysmashchars = {"a","s","d","f","g","h","j","k","","l",";","\'"}
+function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 	local input = input or ""
 	return input:gsub("<keysmash>", function ()
 		local keysmash = ""
-		for i = 1, math.random(5, 15) do
+		for i = 1, math.random(lengthMin or 5, lengthMax or 15) do
 			keysmash = keysmash..keysmashchars[math.random(#keysmashchars)]
 		end
 		return keysmash
