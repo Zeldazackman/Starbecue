@@ -243,8 +243,20 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
-		npc.say( randomDialogue, tags )
+		npc.say( sbq.generateKeysmashes(randomDialogue), tags )
 	end
+end
+
+local keysmashchars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
+function sbq.generateKeysmashes(input)
+	local input = input or ""
+	return input:gsub("<keysmash>", function ()
+		local keysmash = ""
+		for i = 1, math.random(5, 15) do
+			keysmash = keysmash..keysmashchars[math.random(#keysmashchars)]
+		end
+		return keysmash
+	end)
 end
 
 function sbq.getDialogueBranch(dialogueTreeLocation, settings)

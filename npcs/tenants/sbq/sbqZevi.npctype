@@ -98,11 +98,13 @@
 				"oralVore" : {
 					"default" : {
 						"default" : {
-							"yes" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png",
-								"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
+							"request" : {
+								"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
+								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
 							},
-							"unprompted" : { "randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
-								"tease" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+							"unprompted" : {
+								"before" : {"randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
+								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
 							},
 							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
 							"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
@@ -113,11 +115,13 @@
 				"cockVore" : {
 					"default" : {
 						"default" : {
-							"yes" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
-								"tease" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
+							"request" : {
+								"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
+								"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
 							},
-							"unprompted" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png",
-								"tease" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
+							"unprompted" : {
+								"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
+								"after" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
 							},
 							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
 							"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },

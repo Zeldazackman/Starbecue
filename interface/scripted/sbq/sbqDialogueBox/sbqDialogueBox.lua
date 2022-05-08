@@ -194,13 +194,14 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
+		local randomDialogue = sbq.generateKeysmashes(randomDialogue)
 		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
 		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags)
 		finished = true
 	elseif dialogueTree.dialogue ~= nil then
-		dialogueLabel:setText(sb.replaceTags(dialogueTree.dialogue[dialoguePos], tags ))
-		world.sendEntityMessage(speaker, "sbqSay", dialogueTree.dialogue[dialoguePos], tags)
-
+		local dialogue = sbq.generateKeysmashes(dialogueTree.dialogue[dialoguePos])
+		dialogueLabel:setText(sb.replaceTags(dialogue, tags ))
+		world.sendEntityMessage(speaker, "sbqSay", dialogue, tags)
 		if dialoguePos >= #dialogueTree.dialogue then
 			finished = true
 			dialoguePos = 1
@@ -224,9 +225,21 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	return dialogueTree, randomRolls
 end
 
+local keysmashchars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
+function sbq.generateKeysmashes(input)
+	local input = input or ""
+	return input:gsub("<keysmash>", function ()
+		local keysmash = ""
+		for i = 1, math.random(5, 15) do
+			keysmash = keysmash..keysmashchars[math.random(#keysmashchars)]
+		end
+		return keysmash
+	end)
+end
+
 function sbq.checkVoreTypeActive(voreType)
 
-	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnabled"]) then return "hidden" end
+	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnable"]) then return "hidden" end
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 
 	local locationName = sbq.data.sbqData.voreTypes[voreType]
@@ -236,7 +249,7 @@ function sbq.checkVoreTypeActive(voreType)
 	if not locationData then return "hidden" end
 
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (sbq.data.settings[voreType.."PredEnabled"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
+	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
 			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > locationData.max)) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
 				return "tooBig"
@@ -268,13 +281,14 @@ end
 
 function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
-
-	local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active }) or {}
 	if active == "yes" then
+		local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "request", "before", "bellyEffect" }) or {}
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
-			sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "yes", "tease"})
+			sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", "request", "after", "bellyEffect"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
+	else
+		sbq.updateDialogueBox({ "vore", voreType, "personality", "mood", active, "bellyEffect" })
 	end
 end
 

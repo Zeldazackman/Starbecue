@@ -132,10 +132,12 @@
 			"oralVore" : {
 				"default" : {
 					"default": {
-						"yes" : { "randomDialogue" : [ "With pleasure~" ],
+						"request" : {
+							"before" : { "randomDialogue" : [ "With pleasure~" ] },
 							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
 						},
-						"unprompted" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ],
+						"unprompted" : {
+							"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
 							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
 						},
 						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
