@@ -1,4 +1,9 @@
 
+function sbq.update(dt)
+	sbq.detectShirt()
+	sbq.detectPants()
+end
+
 function state.stand.oralVore(args)
 	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
 end
@@ -8,22 +13,22 @@ function state.stand.oralEscape(args)
 end
 
 function state.stand.analVore(args)
-	if sbq.detectPants() then return false end
+	if sbq.settings.pants then return false end
 	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
 end
 
 function state.stand.analEscape(args)
-	if sbq.detectPants() then return false end
+	if sbq.settings.pants then return false end
 	return sbq.doEscape(args, {}, {}, "analVore" )
 end
 
 function state.stand.unbirth(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return false end
+	if sbq.settings.pants or not sbq.settings.pussy then return false end
 	return sbq.doVore(args, "womb", {}, "swallow", "unbirth")
 end
 
 function state.stand.unbirthEscape(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return false end
+	if sbq.settings.pants or not sbq.settings.pussy then return false end
 	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "unbirth" )
 end
 
@@ -32,7 +37,7 @@ function state.stand.cockVore(args)
 		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
 		return
 	end
-	if sbq.detectPants() or not sbq.settings.penis then return false end
+	if sbq.settings.pants or not sbq.settings.penis then return false end
 	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
 end
 
@@ -41,17 +46,17 @@ state.stand.shaftToBalls = sbq.shaftToBalls
 state.stand.switchBalls = sbq.switchBalls
 
 function state.stand.cockEscape(args)
-	if sbq.detectPants() or not sbq.settings.penis then return false end
+	if sbq.settings.pants or not sbq.settings.penis then return false end
 	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
 end
 
 function state.stand.breastVore(args)
-	if sbq.detectShirt() or not sbq.settings.breasts then return false end
+	if sbq.settings.shirt or not sbq.settings.breasts then return false end
 	return sbq.doVore(args, "breasts", {}, "swallow", "breastVore")
 end
 
 function state.stand.breastEscape(args)
-	if sbq.detectShirt() or not sbq.settings.breasts then return false end
+	if sbq.settings.shirt or not sbq.settings.breasts then return false end
 	return sbq.doEscape(args, {}, {}, "breastVore" )
 end
 
@@ -68,13 +73,15 @@ end
 function sbq.detectShirt()
 	if sbq.settings.bra then return true end
 	local shirt = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
-	return not sbq.config.chestVoreWhitelist[shirt.name or "none"]
+	local result = not sbq.config.chestVoreWhitelist[shirt.name or "none"]
+	sbq.settings.shirt = result
 end
 
 function sbq.detectPants()
 	if sbq.settings.underwear then return true end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
-	return not sbq.config.legsVoreWhitelist[pants.name or "none"]
+	local result = not sbq.config.legsVoreWhitelist[pants.name or "none"]
+	sbq.settings.pants = result
 end
 
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
