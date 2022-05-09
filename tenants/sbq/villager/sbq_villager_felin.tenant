@@ -1,0 +1,28 @@
+{
+  "name": "sbq_villager_felin",
+  "priority": 51,
+
+  "colonyTagCriteria": {
+    "light": 1,
+    "door": 1,
+    "sbqVore" : 1,
+    "felin" : 8
+  },
+
+  "checkRequirements" : { "checkItems" : ["felintier1chest"] },
+
+  "tenants": [
+    {
+      "spawn": "npc",
+      "species": ["felin"],
+      "type": "sbqVoreVillager",
+      "overrides": {
+       }
+     }
+   ],
+
+  "rent": {
+    "periodRange": [1200.0, 1800.0],
+    "pool": "villagerGift"
+  }
+}

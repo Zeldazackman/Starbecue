@@ -1,0 +1,30 @@
+{
+  "name": "sbq_guard_hylotl",
+  "priority": 52,
+
+  "colonyTagCriteria": {
+    "light": 1,
+    "combat" : 8,
+    "door": 1,
+    "sbqVore" : 1,
+    "hylotl" : 8
+  },
+
+  "checkRequirements" : {},
+
+  "tenants": [
+    {
+      "spawn": "npc",
+      "level" : 1,
+      "species": ["hylotl"],
+      "type": "sbqFriendlyVoreGuardTenant",
+      "overrides": {
+       }
+     }
+   ],
+
+  "rent": {
+    "periodRange": [1200.0, 1800.0],
+    "pool": "villagerGift"
+  }
+}

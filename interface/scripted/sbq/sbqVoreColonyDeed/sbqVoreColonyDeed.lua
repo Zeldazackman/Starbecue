@@ -42,10 +42,12 @@ function init()
 		end
 	end
 
-
-
 	sbq.validTenantCatalogueList = {}
 	for name, tenant in pairs(sbq.tenantCatalogue) do
+		local tenant = tenant
+		if type(tenant) == "table" then
+			tenant = tenant[1]
+		end
 		local data = root.tenantConfig(tenant).checkRequirements or {}
 		local addToList = true
 		if addToList and data.checkItems then
@@ -219,7 +221,26 @@ function summonTenant:onClick()
 	applyCount = applyCount + 1
 
 	if applyCount > 3 or sbq.storage.occupier == nil then
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", sbq.tenantCatalogue[tenantText.text] or tenantText.text)
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", function ()
+			local remap = (sbq.tenantCatalogue[tenantText.text])
+			if type(remap) == "table" then
+				local tags = sbq.storage.house.contents
+				local index = 1
+				if type(tags.tier2) == "number" and tags.tier2 >= 12 then
+					index = 2
+				end
+				if type(tags.tier3) == "number" and tags.tier3 >= 12 then
+					index = 3
+				end
+				if type(tags.tier4) == "number" and tags.tier4 >= 12 then
+					index = 3
+				end
+				return remap[index]
+			else
+				return remap
+			end
+
+		end or tenantText.text)
 		pane.dismiss()
 	end
 	summonTenant:setText(tostring(4 - applyCount))

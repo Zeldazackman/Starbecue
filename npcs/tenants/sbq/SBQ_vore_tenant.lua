@@ -338,27 +338,35 @@ function sbq.searchForValidPrey(voreType)
 	local npcs = world.npcQuery(mcontroller.position(), 50, { withoutEntityId = npc.id() })
 	local monsters = world.monsterQuery(mcontroller.position(), 50)
 
-	for i, entity in ipairs(players) do
-		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-			if enabled then
-				table.insert(sbq.targetedEntities, {entity, voreType})
-			end
-		end)
+	if storage.settings.huntFriendlyPlayers or storage.settings.huntHostilePlayers then
+		for i, entity in ipairs(players) do
+			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+				if enabled then
+					table.insert(sbq.targetedEntities, {entity, voreType})
+				end
+			end)
+		end
 	end
-	for i, entity in ipairs(npcs) do
-		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-			if enabled then
-				table.insert(sbq.targetedEntities, {entity, voreType})
-			end
-		end)
+	if storage.settings.huntHostileNPCs or storage.settings.huntFriendlyNPCs then
+		for i, entity in ipairs(npcs) do
+			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+				if enabled then
+					table.insert(sbq.targetedEntities, {entity, voreType})
+				end
+			end)
+		end
 	end
-	for i, entity in ipairs(monsters) do
-		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-			if enabled then
-				table.insert(sbq.targetedEntities, {entity, voreType})
-			end
-		end)
+	if storage.settings.huntHostileMonsters or storage.settings.huntFriendlyMonsters then
+		for i, entity in ipairs(monsters) do
+			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
+				if enabled then
+					table.insert(sbq.targetedEntities, {entity, voreType})
+				end
+			end)
+		end
 	end
+
+
 end
 
 function sbq.searchForValidPred(setting)
