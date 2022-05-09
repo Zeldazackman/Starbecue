@@ -56,7 +56,7 @@
                  "y":2152
                 }, 
                 {
-                 "gid":510,
+                 "gid":511,
                  "height":24,
                  "id":75,
                  "name":"",
@@ -72,7 +72,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":591,
+                 "gid":592,
                  "height":24,
                  "id":76,
                  "name":"",
@@ -88,7 +88,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":589,
+                 "gid":590,
                  "height":32,
                  "id":77,
                  "name":"",
@@ -104,7 +104,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":2147484152,
+                 "gid":2147484153,
                  "height":16,
                  "id":81,
                  "name":"",
@@ -120,7 +120,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":2147484239,
+                 "gid":2147484240,
                  "height":24,
                  "id":82,
                  "name":"",
@@ -136,7 +136,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":378,
+                 "gid":379,
                  "height":16,
                  "id":83,
                  "name":"",
@@ -152,7 +152,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":364,
+                 "gid":365,
                  "height":16,
                  "id":84,
                  "name":"",
@@ -168,7 +168,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":714,
+                 "gid":715,
                  "height":16,
                  "id":85,
                  "name":"",
@@ -184,7 +184,7 @@
                  "y":2088
                 }, 
                 {
-                 "gid":294,
+                 "gid":295,
                  "height":16,
                  "id":88,
                  "name":"",
@@ -200,7 +200,7 @@
                  "y":3952
                 }, 
                 {
-                 "gid":294,
+                 "gid":295,
                  "height":16,
                  "id":89,
                  "name":"",
@@ -216,7 +216,7 @@
                  "y":3952
                 }, 
                 {
-                 "gid":590,
+                 "gid":591,
                  "height":24,
                  "id":90,
                  "name":"",
@@ -230,6 +230,22 @@
                  "width":32,
                  "x":6848,
                  "y":3960
+                }, 
+                {
+                 "gid":289,
+                 "height":72,
+                 "id":91,
+                 "name":"fireplace",
+                 "properties":
+                    {
+                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"bookmarkName\" : \"Auri's Shop\",\n  \"includePartyMembers\" : true,\n  \"includePlayerBookmarks\" : true,\n  \"destinations\" : [\n    {\n      \"name\" : \"Beam to Ship\",\n      \"planetName\" : \"\",\n      \"warpAction\" : \"OwnShip\",\n      \"icon\" : \"beamup\"\n    }\n  ]\n}, \"uniqueId\" : \"auriShop\"}"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":56,
+                 "x":4216,
+                 "y":2152
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -238,7 +254,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":91,
+ "nextobjectid":92,
  "orientation":"orthogonal",
  "properties":
     {
@@ -268,15 +284,15 @@
          "source":"..\/..\/..\/tilesets\/dungeonPlacers.json"
         }, 
         {
-         "firstgid":288,
+         "firstgid":289,
          "source":"..\/..\/..\/tilesets\/auriShop\/auriShop.json"
         }, 
         {
-         "firstgid":305,
+         "firstgid":306,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/apex.json"
         }, 
         {
-         "firstgid":676,
+         "firstgid":677,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/hylotl.json"
         }],
  "tilewidth":8,
