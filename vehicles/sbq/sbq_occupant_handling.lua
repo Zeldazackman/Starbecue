@@ -308,6 +308,7 @@ end
 function sbq.resetOccupantCount()
 	sbq.occupantsPrev = sb.jsonMerge(sbq.occupants, {})
 	sbq.occupants.total = 0
+	sbq.occupants.totalSize = 0
 	for location, data in pairs(sbq.sbqData.locations) do
 		sbq.occupants[location] = 0
 	end
@@ -372,7 +373,8 @@ function sbq.updateOccupants(dt)
 					sbq.uneat(sbq.occupant[i].id)
 					return
 				else
-					sbq.occupants[location] = sbq.occupants[location] + 1
+					sbq.occupants[location] = sbq.occupants[location] + (sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier)
+					sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
 
 					massMultiplier = sbq.sbqData.locations[location].mass or 0
 
@@ -457,6 +459,10 @@ function sbq.updateOccupants(dt)
 	sbq.swapCooldown = math.max(0, sbq.swapCooldown - 1)
 
 	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})
+
+	for location, occupancy in pairs(sbq.occupants) do
+		occupancy = math.ceil(occupancy)
+	end
 
 	sbq.setOccupantTags()
 end
@@ -615,14 +621,7 @@ function sbq.doBellyEffects(dt)
 				end
 			elseif sbq.occupant[i].location == "digesting" or (sbq.sbqData.locations[sbq.occupant[i].location] or {}).digest then
 				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
-				local hunger_change = (hungereffect * powerMultiplier * dt)/100
-				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id() ) end
-				if (sbq.settings.bellyEffect == "sbqSoftDigest") and health[1] <= 1 then hunger_change = 0 end
-				if sbq.driver then
-					world.sendEntityMessage( sbq.driver, "sbqAddHungerHealth", hunger_change)
-				end
-				sbq.hunger = math.min(100, sbq.hunger + hunger_change)
-
+				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
 			end
 			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )

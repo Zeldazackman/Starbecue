@@ -42,6 +42,8 @@ function sbq.clearOccupant(i)
 		index = i,
 		id = nil,
 		statList = sbq.sbqData.occupantStatusEffects or {},
+		size = 1,
+		sizeMultiplier = 1,
 		visible = true,
 		emote = "idle",
 		dance = "idle",

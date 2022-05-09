@@ -16,6 +16,10 @@ function init()
 		self.turboDigest = true
 	end)
 
+	message.setHandler("sbqDigestResponse", function(time)
+		self.targetTime = time
+	end)
+
 end
 
 function update(dt)
@@ -25,8 +29,10 @@ function update(dt)
 		if self.turboDigest then
 			digestRate = 0.1
 		end
-		if health[1] > ( digestRate * dt * self.powerMultiplier) and not self.digested then
-			status.modifyResourcePercentage("health", -digestRate * dt * self.powerMultiplier)
+		local digestAmount = ( digestRate * dt * self.powerMultiplier)
+		if health[1] > digestAmount and not self.digested then
+			world.sendEntityMessage(effect.sourceEntity(), "sbqAddHungerHealth", digestAmount )
+			status.modifyResourcePercentage("health", -digestAmount)
 		elseif self.digested then
 			self.turboDigest = false
 			self.cdt = self.cdt + dt
@@ -36,25 +42,12 @@ function update(dt)
 			else
 				status.setResource("health", 1)
 			end
-		elseif self.rpc == nil then
+		elseif not self.digested then
 			self.cdt = 0
+			self.digested = true
+			self.targetTime = 2
 			status.setResource("health", 1)
-			self.rpc = world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
-		elseif self.rpc ~= nil and self.rpc:finished() and not self.digested then
-			if self.rpc:succeeded() then
-				local result = self.rpc:result()
-				if result.success == "success" then
-					self.digested = true
-					self.targetTime = result.timing
-				elseif result.success == "no data" then
-					self.digested = true
-				end
-			end
-			if self.rpcAttempts > 5 then
-				self.digested = true
-			end
-			self.rpc = nil
-			self.rpcAttempts = self.rpcAttempts + 1
+			world.sendEntityMessage(effect.sourceEntity(), "sbqDigest", entity.id())
 		end
 	else
 		effect.expire()

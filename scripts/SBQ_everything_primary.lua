@@ -55,4 +55,17 @@ function sbq.everything_primary()
 	message.setHandler("sbqProjectileSource", function (_,_, source)
 		status.setStatusProperty("sbqProjectileSource", source)
 	end)
+
+	message.setHandler("sbqDigest", function (_,_,id)
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "sbqDigest", id)
+		end
+	end)
+	message.setHandler("sbqSoftDigest", function (_,_,id)
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "sbqSoftDigest", id)
+		end
+	end)
 end

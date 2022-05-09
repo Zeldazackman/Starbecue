@@ -100,7 +100,7 @@ function sbq.reversion()
 	end
 end
 
-message.setHandler( "digest", function(_,_, eid)
+message.setHandler( "sbqDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
@@ -111,7 +111,15 @@ message.setHandler( "digest", function(_,_, eid)
 			end
 		end
 		sbq.lounging[eid].location = "digesting"
-		return {success=success, timing=timing}
+		world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+	end
+end )
+message.setHandler( "sbqSoftDigest", function(_,_, eid)
+	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
+		local location = sbq.lounging[eid].location
+		local success, timing = sbq.doTransition("digest"..location)
+		sbq.lounging[eid].sizeMultiplier = 0
+		world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 	end
 end )
 

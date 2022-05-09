@@ -90,7 +90,7 @@ function sbq.rotateArm(enabled, arm, LR)
 		local center = {(sbq.stateconfig[sbq.state].rotationCenters[arm][1] or 0) / 8, (sbq.stateconfig[sbq.state].rotationCenters[arm][2] or 0) / 8}
 		local handOffset = {(sbq.stateconfig[sbq.state].handOffsets[arm][1] or 0) / 8, (sbq.stateconfig[sbq.state].handOffsets[arm][2] or 0) / 8}
 
-		local target = sbq.armRotation["target"..LR]
+		local target = sbq.armRotation["target"..LR] or {}
 		if target ~= nil then
 			local angle = math.atan((target[2] - center[2]), (target[1] - center[1]))
 

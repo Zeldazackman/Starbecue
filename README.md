@@ -8,7 +8,7 @@ Alternatively, if you want the latest and greatest changes, download this repo a
 
 While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), if you're using Stardust Core then you should get [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2690363974) and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
 
-## Features
+# Features
 
 ![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
@@ -58,7 +58,7 @@ This mod includes no assets from the respective modded races, modified or not, m
 - Egg
 - Plastic Egg
 
-### Playable Predator Info
+# Playable Predator Info
 
 Special potions can be purchased from Auri's shop which can transform you into large predators, and grants you a head tech that allows you to choose which one you wish to transform into if you've unlocked multiple.
 
@@ -76,7 +76,7 @@ To let people out that you previously ate, simply press Tech Action 2 (G).
 
 In the bottom right you will have a HUD to show what occupants you've eaten, as well as your current belly effect, this can be used to quickly change the effect, as well as access the settings quickly, and peform actions on the prey by clicking on them, such as letting them out, turbo digesting them, or predator specific actions, like transforming them
 
-### Prey Info
+# Prey Info
 
 Whether you are being eaten by a object predator, or a player transformed into a predator, as prey you will have a HUD in the bottom right, this indicates which directions you can struggle to cause the predator to do something.
 
@@ -97,7 +97,7 @@ Indicates a direction that would move you to another location within the predato
 #### Yellow
 Indicates a direction that would cause you to get eaten, only appears if you're just being held or hugged.
 
-### Settings
+# Settings
 
 The settings menu can be accessed from the quickbar, or from the predator HUD.
 
