@@ -10,7 +10,7 @@ local buyRecipe
 function fixFilepath(string, item)
 	if type(string) == "string" then
 		if string == "" then return
-		elseif string:sub(1,1) == "?" then return
+		elseif string:find("^?") then return
 		elseif string:find("^/") then
 			return string
 		else

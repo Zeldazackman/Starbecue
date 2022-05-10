@@ -82,7 +82,6 @@ function init()
 			}
 			local npcType = vornyConvertTable[npc.npcType()]
 			if (math.random(8) == 8) and npcType ~= nil then
-				sb.logInfo("why")
 				tenant.setNpcType(npcType)
 			end
 		end

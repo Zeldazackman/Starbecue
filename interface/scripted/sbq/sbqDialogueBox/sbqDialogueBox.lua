@@ -75,23 +75,39 @@ function sbq.getDialogueData()
 end
 
 function sbq.getDialogueBranch(dialogueTreeLocation)
-	local dialogueTree = sbq.data.dialogueTree
+	local dialogueTree = sbq.getRedirectedDialogue(sbq.data.dialogueTree) or {}
+
 	for _, branch in ipairs(dialogueTreeLocation) do
 		if sbq.data.settings[branch] ~= nil then
 			dialogueTree =  dialogueTree[tostring(sbq.data.settings[branch])] or dialogueTree.default or dialogueTree
 		else
 			dialogueTree = dialogueTree[branch] or dialogueTree
 		end
-		-- for dialog in other files thats been pointed to
-		if type(dialogueTree) == "string" then
-			if dialogueTree[1] == "/" then
-				dialogueTree = root.assetJson(dialogueTree)
-			elseif dialogueTree[1] == "[" then
-				local decoded = json.decode(dialogueTree[1])
-				if type(decoded) == "table" then
-					dialogueTree = sbq.getDialogueBranch(decoded) -- I know, recursion is risky, but none of this stuff is randomly generated someone would have to intentionally make a loop to break it
-				end
+		dialogueTree = sbq.getRedirectedDialogue(dialogueTree)
+	end
+	return dialogueTree
+end
+
+local recursionCount = 0
+-- for dialog in other files thats been pointed to
+function sbq.getRedirectedDialogue(dialogueTree)
+	local dialogueTree = dialogueTree
+	if type(dialogueTree) == "string" then
+		local firstChar = dialogueTree:sub(1,1)
+		if firstChar == "/" then
+			dialogueTree = root.assetJson(dialogueTree)
+		else
+			local found1 = dialogueTree:find("%.")
+			local jump = {}
+			while found1 do
+				table.insert(jump, dialogueTree:sub(1,found1-1))
+				dialogueTree = dialogueTree:sub(found1+1,-1)
+				found1 = dialogueTree:find("%.")
 			end
+			table.insert(jump, dialogueTree)
+			if recursionCount > 10 then return {} end -- protection against possible infinite loops of recusion
+			recursionCount = recursionCount + 1
+			dialogueTree = sbq.getDialogueBranch(jump)
 		end
 	end
 	return dialogueTree
@@ -104,6 +120,7 @@ local dialoguePos = 1
 function sbq.updateDialogueBox(dialogueTreeLocation)
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation)
 	if not dialogueTree then return false end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
 
 	sbq.prevDialogueBranch = dialogueTree
 	sbq.dialogueTreeLocation = dialogueTreeLocation
