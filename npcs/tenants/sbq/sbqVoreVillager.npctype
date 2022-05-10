@@ -319,10 +319,78 @@
 					}
 				}
 			}
+		},
+		"sbqRandomizePreySettings" : {
+			"oralVore" : [true,false],
+			"tailVore" : [true,false],
+			"navelVore" : [true,false],
+			"absorbVore" : [true,false],
+
+			"cockVore" : [true,false],
+			"analVore" : [true,false],
+			"breastVore" : [true,false],
+			"unbirth" : [true,false],
+
+			"oralVoreEnable" : [true,false],
+			"tailVoreEnable" : [true,false],
+			"navelVoreEnable" : [true,false],
+			"absorbVoreEnable" : [true,false],
+
+			"cockVoreEnable" : [true,false],
+			"analVoreEnable" : [true,false],
+			"breastVoreEnable" : [true,false],
+			"unbirthEnable" : [true,false],
+
+			"digestImmunity" : [true,false],
+			"digestImmunityEnable" : [true,false],
+
+			"eggImmunity" : [true,false],
+			"eggImmunityEnable" : [true,false],
+
+			"transformImmunity" : [true,false],
+			"transformImmunityEnable" : [true,false]
+		},
+		"sbqRandomizeSettings" : {
+			"oralVorePred" : [true,false],
+			"tailVorePred" : [true,false],
+			"navelVorePred" : [true,false],
+			"absorbVorePred" : [true,false],
+
+			"oralVorePredEnable" : [true,false],
+			"tailVorePredEnable" : [true,false],
+			"navelVorePredEnable" : [true,false],
+			"absorbVorePredEnable" : [true,false],
+
+			// we shouldn't have the randomly generated preds generate with nsfw stuff
+			// not everyone wants to stumble across an NPC with their dick out
+
+			//"cockVorePred" : [true,false],
+			//"analVorePred" : [true,false],
+			//"breastVorePred" : [true,false],
+			//"unbirthPred" : [true,false],
+
+			//"cockVorePredEnable" : [true,false],
+			//"analVorePredEnable" : [true,false],
+			//"breastVorePredEnable" : [true,false],
+			//"unbirthPredEnable" : [true,false],
+
+			"bellyEffect" : [ "sbqRemoveBellyEffects", "sbqHeal", "sbqDigest", "sbqSoftDigest"],
+
+			"BENoneEnable" : [true,false],
+			"BEHealEnable" : [true,false],
+			"BEDigestEnable" : [true,false],
+			"BESoftDigestEnable" : [true,false],
+
+			"hammerspace" : [true,false],
+
+			"displayDigest" : [true,false],
+
+			"personality" : ["default", "flirty", "shy"]
 		}
 	},
 	"statusControllerSettings" : {
 		"statusProperties" : {
+			"sbqDidVornyConvertCheck" : true,
 			"speciesAnimOverrideData" : {},
 			"sbqPreyEnabled" : {}
 		}

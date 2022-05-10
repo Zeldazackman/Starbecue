@@ -15,7 +15,7 @@
     {
       "spawn": "npc",
       "species": ["Umbreon"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

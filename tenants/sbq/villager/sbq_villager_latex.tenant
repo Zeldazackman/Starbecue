@@ -16,7 +16,7 @@
     {
       "spawn": "npc",
       "species": ["myfirsttest"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

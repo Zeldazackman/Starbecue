@@ -17,7 +17,7 @@
       "spawn": "npc",
       "level" : 3,
       "species": ["human", "apex", "avian", "floran", "glitch", "hylotl"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

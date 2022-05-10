@@ -22,6 +22,17 @@ function new_npc_setItemSlot(slot, data)
 	sbq.updateCosmeticSlots()
 end
 
+local _tenant_setHome = tenant.setHome
+function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
+	if deedUniqueId then
+		local id = world.loadUniqueEntity(deedUniqueId)
+		if id and world.entityExists(id) then
+			world.sendEntityMessage(id, "sbqSaveSettings", storage.settings)
+			world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {})
+		end
+	end
+	_tenant_setHome(position, boundary, deedUniqueId, skipNotification)
+end
 
 function init()
 	sbq.saveCosmeticSlots()
@@ -92,6 +103,25 @@ function init()
 
 	if not storage.settings then
 		storage.settings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, config.getParameter("sbqSettings") or {})))
+	end
+	if not storage.settings.firstLoadDone then
+		storage.settings.firstLoadDone = true
+
+		local randomizeSettings = config.getParameter("sbqRandomizeSettings")
+		for setting, values in pairs(randomizeSettings) do
+			storage.settings[setting] = values[math.random(#values)]
+		end
+		local randomizePreySettings = config.getParameter("sbqRandomizePreySettings")
+		local preySettings = status.statusProperty("sbqPreyEnabled") or {}
+		for setting, values in pairs(randomizePreySettings) do
+			preySettings[setting] = values[math.random(#values)]
+		end
+		status.setStatusProperty("sbqPreyEnabled", preySettings)
+		if preySettings.digestImmunity then
+			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
+		else
+			status.clearPersistentEffects("digestImmunity")
+		end
 	end
 	sbq.setRelevantPredSettings()
 

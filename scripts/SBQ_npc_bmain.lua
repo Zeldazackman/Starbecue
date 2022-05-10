@@ -71,4 +71,20 @@ function init()
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	_init()
+
+	if not status.statusProperty("sbqDidVornyConvertCheck") then
+		status.setStatusProperty("sbqDidVornyConvertCheck", true)
+		if tenant ~= nil then
+			local vornyConvertTable = {
+				villager = "sbqVoreVillager",
+				villageguard = "sbqVoreVillageGuard",
+				villageguardcaptain = "sbqVoreVillageGuardCaptain"
+			}
+			local npcType = vornyConvertTable[npc.npcType()]
+			if (math.random(8) == 8) and npcType ~= nil then
+				sb.logInfo("why")
+				tenant.setNpcType(npcType)
+			end
+		end
+	end
 end

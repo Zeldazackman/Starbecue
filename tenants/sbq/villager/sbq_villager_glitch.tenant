@@ -15,7 +15,7 @@
     {
       "spawn": "npc",
       "species": ["glitch"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

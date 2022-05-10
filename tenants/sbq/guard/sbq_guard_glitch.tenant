@@ -17,7 +17,7 @@
       "spawn": "npc",
       "level" : 1,
       "species": ["glitch"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

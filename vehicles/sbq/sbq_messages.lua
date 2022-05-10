@@ -111,7 +111,9 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 			end
 		end
 		sbq.lounging[eid].location = "digesting"
-		world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		if success then
+			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		end
 	end
 end )
 message.setHandler( "sbqSoftDigest", function(_,_, eid)

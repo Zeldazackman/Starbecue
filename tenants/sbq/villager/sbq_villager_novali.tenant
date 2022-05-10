@@ -16,7 +16,7 @@
     {
       "spawn": "npc",
       "species": ["novali"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

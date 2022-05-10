@@ -18,7 +18,7 @@
       "spawn": "npc",
       "level" : 4,
       "species": ["hylotl"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

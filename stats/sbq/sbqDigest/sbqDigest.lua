@@ -17,6 +17,7 @@ function init()
 	end)
 
 	message.setHandler("sbqDigestResponse", function(time)
+		effect.modifyDuration(time+1)
 		self.targetTime = time
 	end)
 
@@ -46,6 +47,7 @@ function update(dt)
 			self.cdt = 0
 			self.digested = true
 			self.targetTime = 2
+			effect.modifyDuration(2+1)
 			status.setResource("health", 1)
 			world.sendEntityMessage(effect.sourceEntity(), "sbqDigest", entity.id())
 		end

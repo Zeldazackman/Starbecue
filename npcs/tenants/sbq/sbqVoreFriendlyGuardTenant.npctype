@@ -1,6 +1,6 @@
 {
-	"type": "sbqFriendlyVoreGuardTenant",
-	"baseType": "sbqFriendlyVoreGuard",
+	"type": "sbqVoreFriendlyGuardTenant",
+	"baseType": "sbqVoreFriendlyGuard",
 
 	"levelVariance": [0,0],
 	"dropPools": [],

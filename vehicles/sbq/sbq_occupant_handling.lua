@@ -474,9 +474,9 @@ function sbq.setOccupantTags()
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
-		if data.hammerspace and sbq.settings.hammerspace and not sbq.settings.hammerspaceDisabled[location] then
-			if sbq.occupants[location] > (sbq.settings.hammerspaceLimits[location] or 0) then
-				sbq.occupants[location] = (sbq.settings.hammerspaceLimits[location] or 0)
+		if data.hammerspace and sbq.settings.hammerspace and not sbq.settings.hammerspaceDisabled[location] and sbq.settings.hammerspaceLimits[location] ~= nil then
+			if sbq.occupants[location] > sbq.settings.hammerspaceLimits[location] then
+				sbq.occupants[location] = sbq.settings.hammerspaceLimits[location]
 			end
 		end
 

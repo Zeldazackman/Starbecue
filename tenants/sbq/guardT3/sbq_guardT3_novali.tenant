@@ -19,7 +19,7 @@
       "spawn": "npc",
       "level" : 3,
       "species": ["novali"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

@@ -18,7 +18,7 @@
       "spawn": "npc",
       "level" : 3,
       "species": ["crylan"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

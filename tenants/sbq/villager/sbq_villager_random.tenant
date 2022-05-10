@@ -14,7 +14,7 @@
     {
       "spawn": "npc",
       "species": ["human", "apex", "avian", "floran", "glitch", "hylotl"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

@@ -15,7 +15,7 @@
     {
       "spawn": "npc",
       "species": ["crylan"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }

@@ -25,6 +25,8 @@ function init()
 	end)
 
 	message.setHandler("sbqSummonNewTenant", function (_,_, newTenant)
+		storage.settings = nil
+		storage.preySettings = nil
 		evictTenants()
 		if not newTenant then return end
 		local success, occupier = pcall(root.tenantConfig,(newTenant))
@@ -51,6 +53,12 @@ function init()
 			tenant.seed = sb.makeRandomSource():randu64()
 		end
 		storage.occupier = occupier
+		if isOccupied() then
+			respawnTenants()
+			animator.setAnimationState("particles", "newArrival")
+			sendNewTenantNotification()
+			return
+		end
 	end)
 end
 

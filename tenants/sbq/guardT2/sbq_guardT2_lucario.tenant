@@ -18,7 +18,7 @@
       "spawn": "npc",
       "level" : 2,
       "species": ["lucario"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

@@ -18,7 +18,7 @@
       "spawn": "npc",
       "level" : 1,
       "species": ["myfirsttest"],
-      "type": "sbqFriendlyVoreGuardTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

@@ -15,7 +15,7 @@
     {
       "spawn": "npc",
       "species": ["fenerox"],
-      "type": "sbqVoreVillager",
+      "type": "sbqVoreTenant",
       "overrides": {
        }
      }
