@@ -2,6 +2,7 @@ local inited
 local updated
 function init()
 	inited = true
+	updated = false
 end
 function update()
 	if inited and updated and (world.regionActive(object.boundBox())) then
@@ -12,4 +13,9 @@ function update()
 	if inited then
 		updated = true
 	end
+end
+
+function uninit()
+	inited = false
+	updated = false
 end

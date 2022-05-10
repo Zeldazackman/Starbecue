@@ -25,18 +25,22 @@
 			"mood" : "default",
 			"personality" : "default"
 		},
+		"entityPortrait" : true,
+		"defaultPortrait" : "bust",
 
 		"dialogueTree" : {
-			// path is: personality -> mood
+			// path is: race -> personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"greeting" : {
 				"default" : {
 					"default" : {
-						"randomDialogue" : [
-							"Hi. I'm a builder."
-						],
-						"randomButtonText" : "Ok."
+						"default" : {
+							"randomDialogue" : [
+								"Hi. I'm a builder."
+							],
+							"randomButtonText" : "Ok."
+						}
 					}
 				}
 			}

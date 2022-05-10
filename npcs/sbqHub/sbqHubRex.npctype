@@ -45,29 +45,33 @@
 			"personality" : "default",
 			"oralVorePred" : true
 		},
+		"entityPortrait" : true,
+		"defaultPortrait" : "bust",
 
 		"dialogueTree" : {
-			// path is: personality -> mood
+			// path is: race -> personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"greeting" : {
 				"default" : {
 					"default" : {
-						"randomDialogue" : [
-							"Hi.",
-							"Hey there.",
-							"Greetings!"
-						],
-						"randomButtonText" : "Hi.",
-						"jump" : ["converse"]
-					},
-					"hungry" : {
-						"randomDialogue" : [
-							"Mmmm... feeling a bit hungry.",
-							"Hey <entityname>, I'm looking for some food, have any?",
-							"Oh huh, I probably need to find something to eat."
-						],
-						"jump" : ["converse"]
+						"default" : {
+							"randomDialogue" : [
+								"Hi.",
+								"Hey there.",
+								"Greetings!"
+							],
+							"randomButtonText" : "Hi.",
+							"jump" : ["converse"]
+						},
+						"hungry" : {
+							"randomDialogue" : [
+								"Mmmm... feeling a bit hungry.",
+								"Hey <entityname>, I'm looking for some food, have any?",
+								"Oh huh, I probably need to find something to eat."
+							],
+							"jump" : ["converse"]
+						}
 					}
 				}
 			},
@@ -129,24 +133,27 @@
 			},
 
 			//vore buttons
-			"oralVore" : {
-				"default" : {
-					"default": {
-						"request" : {
-							"before" : { "randomDialogue" : [ "With pleasure~" ] },
-							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-						},
-						"unprompted" : {
-							"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
-							"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-						},
-						"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-						"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-						"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+			"vore" : {
+				"oralVore" : {
+					"default" : {
+						"default" : {
+							"default": {
+								"request" : {
+									"before" : { "randomDialogue" : [ "With pleasure~" ] },
+									"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+								},
+								"unprompted" : {
+									"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
+									"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+								"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+							}
+						}
 					}
 				}
 			},
-
 			//talking while prey
 			"pred" : {
 				"belly" : {

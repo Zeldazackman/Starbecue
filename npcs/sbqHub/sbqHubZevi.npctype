@@ -28,59 +28,62 @@
 			"oralVorePred" : true
 		},
 
-		"defaultPortrait" : "/humanoid/sbqzevi/portraits/ZNeutral.png",
+		"defaultPortrait" : "Neutral.png",
+		"portraitPath" : "/humanoid/sbqzevi/portraits/Z",
 		"dialogueTree" : {
-			// path is: personality -> mood
+			// path is: race -> personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"greeting" : {
 				"default" : {
 					"default" : {
-						"randomDialogue" : [
-							"Hi.",
-							"Hey there.",
-							"Mrow."
-						],
-						"randomButtonText" : "Hi.",
-						"jump" : ["converse"]
-					},
-					"fearful" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZShocked.png",
-						"randomDialogue" : [
-							"AH!",
-							"I-I didn't see you there!",
-							"O-oh its you!"
-						],
-						"options" : [
-							["Hehe, did I scare you~?", {}],
-							["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
-						]
-					},
-					"horny" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZUwU.png",
-						"randomDialogue" : [
-							"UwU",
-							"Hehe, hey there~",
-							"Mrow~"
-						],
-						"jump" : ["converse"]
-					},
-					"friendly" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png",
-						"randomDialogue" : [
-							"Hi!",
-							"Hey <entityname>!",
-							"Nya!"
-						],
-						"jump" : ["converse"]
-					},
-					"hungry" : {
-						"randomDialogue" : [
-							"Mmmm... feeling a bit hungry.",
-							"Hey <entityname>, I'm looking for some food, have any?",
-							"Oh huh, I probably need to find something to eat."
-						],
-						"jump" : ["converse"]
+						"default" : {
+							"randomDialogue" : [
+								"Hi.",
+								"Hey there.",
+								"Mrow."
+							],
+							"randomButtonText" : "Hi.",
+							"jump" : ["converse"]
+						},
+						"fearful" : {
+							"randomPortrait" : "Shocked.png",
+							"randomDialogue" : [
+								"AH!",
+								"I-I didn't see you there!",
+								"O-oh its you!"
+							],
+							"options" : [
+								["Hehe, did I scare you~?", {}],
+								["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
+							]
+						},
+						"horny" : {
+							"randomPortrait" : "UwU.png",
+							"randomDialogue" : [
+								"UwU",
+								"Hehe, hey there~",
+								"Mrow~"
+							],
+							"jump" : ["converse"]
+						},
+						"friendly" : {
+							"randomPortrait" : "Happy.png",
+							"randomDialogue" : [
+								"Hi!",
+								"Hey <entityname>!",
+								"Nya!"
+							],
+							"jump" : ["converse"]
+						},
+						"hungry" : {
+							"randomDialogue" : [
+								"Mmmm... feeling a bit hungry.",
+								"Hey <entityname>, I'm looking for some food, have any?",
+								"Oh huh, I probably need to find something to eat."
+							],
+							"jump" : ["converse"]
+						}
 					}
 				}
 			},
@@ -126,69 +129,75 @@
 				]
 			},
 
-			// path is: voreType -> personality -> mood -> (vore type active) -> bellyEffect
+			// path is: voreType -> race -> personality -> mood -> (vore type active) -> bellyEffect
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"vore" : {
 				"oralVore" : {
 					"default" : {
 						"default" : {
-							"request" : {
-								"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
-								"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
-							},
-							"unprompted" : {
-								"before" : { "randomDialogue" : [ "I think you'll fill me up.", "I just need a bite to eat.", "You seem like you'd make a good meal.", "My belly's been grumbling..." ] },
-								"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
-							},
-							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
-							"full" : {
-								"default" : { "randomDialogue" : [ "I'm a bit too full...", "My belly can't stretch any further...", "I've eaten too much already...", "I would... but I'm too full..." ]},
-								"sbqDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]},
-								"sbqSoftDigest" : {"randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]}
-							},
-							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							"default" : {
+								"request" : {
+									"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
+									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+								},
+								"unprompted" : {
+									"before" : { "randomDialogue" : [ "I think you'll fill me up.", "I just need a bite to eat.", "You seem like you'd make a good meal.", "My belly's been grumbling..." ] },
+									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
+								"full" : {
+									"default" : { "randomDialogue" : [ "I'm a bit too full...", "My belly can't stretch any further...", "I've eaten too much already...", "I would... but I'm too full..." ]},
+									"sbqDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]},
+									"sbqSoftDigest" : {"randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]}
+								},
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							}
 						}
 					}
 				},
 				"cockVore" : {
 					"default" : {
 						"default" : {
-							"request" : {
-								"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
-								"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
-							},
-							"unprompted" : {
-								"before" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
-								"after" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
-							},
-							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
-							"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
-							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+							"default" : {
+								"request" : {
+									"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "Smug.png" },
+									"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "Smug.png" }
+								},
+								"unprompted" : {
+									"before" : { "randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "Smug.png" },
+									"after" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "Smug.png"}
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "Sad.png" },
+								"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "Blep.png" },
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "Tired.png" }
+							}
 						}
 					}
 				}
 			},
 
 			// when being a pred, responses to prey inside them
-			// path is: location -> personality -> mood -> bellyEffect -> digestionImmunity
+			// path is: location -> race -> personality -> mood -> bellyEffect -> digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself, digestionImmunity comes from the prey
 			"pred" : {
 				"belly" : {
 					"default" : {
 						"default" : {
-							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+							"default" : {
+								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "Happy.png" },
+								"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "Happy.png" },
+								"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "Happy.png" },
+								"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "Happy.png" }
+							}
 						}
 					}
 				},
-				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "Blep.png" }
 			},
 			// when being prey, responses to the pred that ate them
-			// path is: location -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// path is: location -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
 			"prey" : {
@@ -200,15 +209,17 @@
 					"default" : {
 						"default" : {
 							"default" : {
-								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
-								"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
-								"sbqSoftDigest" : {
-									"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
-								},
-								"sbqDigest" : {
-									"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+								"default" : {
+									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
+									"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
+									"sbqSoftDigest" : {
+										"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+									},
+									"sbqDigest" : {
+										"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
+									}
 								}
 							}
 						}
@@ -216,15 +227,17 @@
 					"sbqVaporeon" : {
 						"default" : {
 							"default" : {
-								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "gooey vappy belly." ]},
-								"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
-								"sbqSoftDigest" : {
-									"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
-								},
-								"sbqDigest" : {
-									"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+								"default" : {
+									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "gooey vappy belly." ]},
+									"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
+									"sbqSoftDigest" : {
+										"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+									},
+									"sbqDigest" : {
+										"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+									}
 								}
 							}
 						}
@@ -232,15 +245,17 @@
 					"sbqSlime" : {
 						"default" : {
 							"default" : {
-								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "This slime is so sticky." ]},
-								"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
-								"sbqSoftDigest" : {
-									"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
-								},
-								"sbqDigest" : {
-									"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
-									"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+								"default" : {
+									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "This slime is so sticky." ]},
+									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
+									"sbqSoftDigest" : {
+										"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+									},
+									"sbqDigest" : {
+										"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+									}
 								}
 							}
 						}
