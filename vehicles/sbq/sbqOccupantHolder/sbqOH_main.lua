@@ -267,6 +267,7 @@ function update(dt)
 	sbq.doBellyEffects(dt)
 	sbq.applyStatusLists()
 
+	sbq.update(dt)
 	sbq.applyTransformations()
 end
 

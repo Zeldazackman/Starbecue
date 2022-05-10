@@ -10,6 +10,8 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillageguard",
+		"entityPortrait" : true,
+		"defaultPortrait" : "bust",
 		"dialogueTree" : {
 			// path is: personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at

@@ -59,6 +59,9 @@ function sbq.doTransition( direction, scriptargs )
 	if sbq.transitionLock then return "locked" end
 	local tconfig = sbq.occupantArray( sbq.stateconfig[sbq.state].transitions[direction] )
 	if tconfig == nil then return "no data" end
+	if tconfig.settings then
+		if not sbq.checkSettings(tconfig.settings) then return "script fail" end
+	end
 	local id = sbq.getTransitionVictimId(scriptargs, tconfig)
 
 	if tconfig.voreType ~= nil and type(id) == "number" and world.entityExists(id) then

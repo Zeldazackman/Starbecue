@@ -37,6 +37,11 @@ function init()
 			require(script)
 		end
 	end
+	if sbq.data.entityPortrait then
+		dialoguePortraitCanvas:setVisible(true)
+	else
+		dialoguePortrait:setVisible(true)
+	end
 	sbq.updateDialogueBox(sbq.data.dialogueTreeStart or { "greeting", "personality", "mood" })
 end
 
@@ -149,17 +154,38 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	prevRandomRolls = randomRolls
 
 	local playerName = world.entityName(player.id())
+	local speaker = pane.sourceEntity()
+
+	if dialogueTree.speaker ~= nil then
+		speaker = dialogueTree.speaker
+		if type(speaker) == "string" then
+			speaker = world.loadUniqueEntity(speaker)
+		end
+	end
+	local tags = { entityname = playerName }
 
 	if type(randomPortrait) == "string" then
 		dialoguePortrait:setFile(randomPortrait)
 	elseif dialogueTree.portrait ~= nil then
 		if type(dialogueTree.portrait) == "table" then
-			dialoguePortrait:setFile(dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait)
+			if sbq.data.entityPortrait then
+				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait ), {32,8} )
+			else
+				dialoguePortrait:setFile(dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait)
+			end
 		else
-			dialoguePortrait:setFile(dialogueTree.portrait)
+			if sbq.data.entityPortrait then
+				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait or sbq.data.defaultPortrait ), {32,8} )
+			else
+				dialoguePortrait:setFile(dialogueTree.portrait or sbq.data.defaultPortrait)
+			end
 		end
 	else
-		dialoguePortrait:setFile(sbq.data.defaultPortrait)
+		if sbq.data.entityPortrait then
+			sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, sbq.data.defaultPortrait ), {32,8} )
+		else
+			dialoguePortrait:setFile(sbq.data.defaultPortrait)
+		end
 	end
 
 	if type(randomName) == "string" then
@@ -185,13 +211,6 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	else
 		dialogueCont:setText("...")
 	end
-
-	local speaker = pane.sourceEntity()
-
-	if dialogueTree.speaker ~= nil then
-		speaker = dialogueTree.speaker
-	end
-	local tags = { entityname = playerName }
 
 	if type(randomDialogue) == "string" then
 		local randomDialogue = sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax)
@@ -223,6 +242,15 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 	sbq.dismissAfterTimer(dialogueTree.dismissTime)
 
 	return dialogueTree, randomRolls
+end
+
+function sbq.setPortrait( canvasName, data, offset )
+	local canvas = widget.bindCanvas( canvasName.backingWidget )
+	canvas:clear()
+	for k,v in ipairs(data or {}) do
+		local pos = v.position or {0, 0}
+		canvas:drawImage(v.image, { pos[1]+offset[1], pos[2]+offset[2]}, 4, nil, true )
+	end
 end
 
 local keysmashchars = {"a","s","d","f","g","h","j","k","","l",";","\'"}

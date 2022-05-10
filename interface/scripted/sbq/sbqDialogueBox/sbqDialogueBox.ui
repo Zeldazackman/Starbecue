@@ -7,7 +7,10 @@
 	"children" : [
 		{ "type" : "layout", "id" : "dialogueLayout", "mode" : "horizontal", "expandMode" : [1, 1], "children" : [
 			{ "type" : "layout", "id" : "portraitLayout", "mode" : "vertical", "expandMode" : [0, 1], "children" : [
-				{ "type" : "image", "id": "dialoguePortrait", "file" : "/empty_image.png" },
+				[
+					{ "type" : "image", "id": "dialoguePortrait", "file" : "/empty_image.png", "visible" : false },
+					{ "type" : "canvas", "id": "dialoguePortraitCanvas", "size" : [64,64], "visible" : false }
+				],
 				{ "type" : "label", "id" : "nameLabel", "text": "", "inline" : true }
 			]},
 			{ "type" : "layout", "id" : "dialogueLayout", "mode" : "vertical", "expandMode" : [1, 1], "children" : [

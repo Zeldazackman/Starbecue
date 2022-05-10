@@ -774,6 +774,8 @@ function sbq.handleStruggles(dt)
 end
 
 function sbq.struggleChance(struggledata, struggler, movedir)
+	if not ((struggledata.directions[movedir].settings == nil) or sbq.checkSettings(struggledata.directions[movedir].settings) ) then return false end
+
 	local chances = struggledata.chances
 	if struggledata.directions[movedir].chances ~= nil then
 		chances = struggledata.directions[movedir].chances

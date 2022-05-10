@@ -214,7 +214,7 @@ function uninit()
 end
 
 function interact(args)
-	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), entityPortrait = config.getParameter("entityPortrait"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	if sbq.currentData.type == "prey" then
 		if args.predData then
 			sbq.predData = args.predData

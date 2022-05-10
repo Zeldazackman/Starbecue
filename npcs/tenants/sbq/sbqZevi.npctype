@@ -289,7 +289,6 @@
 			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
 			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb"
 		},
-
 		"dialog" : {
 			"greeting" : {
 				"default" : {

@@ -49,6 +49,7 @@ end
 
 function sbq.checkSettings(checkSettings)
 	for setting, value in pairs(checkSettings) do
+		sb.logInfo(setting..tostring(value))
 		if (sbq.settings[setting] or false) ~= value  then
 			return false
 		end
