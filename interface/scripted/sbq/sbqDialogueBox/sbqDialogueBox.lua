@@ -340,7 +340,7 @@ function sbq.voreButton(voreType)
 	local active = sbq.checkVoreTypeActive(voreType)
 	if active == "yes" then
 		local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", "request", "before", "bellyEffect" }) or {}
-		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
+		sbq.timer("eatMessage", dialogueTree.delay or 2, function ()
 			sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", "request", "after", "bellyEffect"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)

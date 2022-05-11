@@ -32,9 +32,9 @@
 			// settings come from itself
 			"vore" : {
 				"oralVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
 								"request" : {
 									"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
 									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
@@ -52,8 +52,8 @@
 								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
 							}
 						},
-						"flirty" : {
-							"default" : {
+						"flirty" : { // personality
+							"default" : { // mood
 								"request" : {
 									"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~", "You want to get in my belly~?", "I've seen you eyeing my belly up... Get in~", "A cute morsel like you, of course~?" ] },
 									"after" : { "randomDialogue" : [ "Mmm~ get comfortable in there~", "You better enjoy yourself~", "Such a preything~", "Maybe I'll keep you as a belly pet~" ] }
@@ -71,8 +71,8 @@
 								"tooBig" : { "randomDialogue" : [ "You're a bit too big sweetie~", "How cute~ you know you're too big to eat right?", "You just want to see me stretched out too much don't you~?", "If you were a bit smaller, I'd snap you up in an instant~" ]}
 							}
 						},
-						"shy" : {
-							"default" : {
+						"shy" : { // personality
+							"default" : { // mood
 								"request" : {
 									"before" : { "randomDialogue" : [ "O-oh... really? I guess I'll try", "Are you sure...?", "Uhm... you're asking... me?", "R-right... g-get in my belly then... did I say that right?" ] },
 									"after" : { "randomDialogue" : [ "Ah... w-wow you're really in there...", "I-I didn't think you were serious...", "Mmmm... is it actually good in there...?", "N-now you're where you belong... did I say it right?" ] }
@@ -94,62 +94,77 @@
 					}
 				},
 				"analVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
 								"request" : {
-									"before" : { "randomDialogue" : [ "Hehe, you like my ass?~" ] },
-									"after" : { "randomDialogue" : [ "Then why don't you take a closer look~" ] }
+									"before" : { "randomDialogue" : [ "You want to go up my butt?", "You know thats the wrong way right?", "That's going to be a tight fit.", "Thats an interesting request." ] },
+									"after" : { "randomDialogue" : [ "Ahhh~ Hope I'm not squeezing too much.", "Mmm~ This actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
 								},
 								"unprompted" : {
-									"before" : { "randomDialogue" : [ "mmmm~ you look like a nice toy~" ] },
-									"after" : { "randomDialogue" : [ "ahh~ right where you belong~" ] }
+									"before" : { "randomDialogue" : [ "Hey, I want to try something.", "Hey... what if I shoved you up my ass?", "For some reason... I keep imagining you as a dildo.", "You know, theres a reason I'm not wearing pants." ] },
+									"after" : { "randomDialogue" : [ "Ahhh~ hope I'm not squeezing too much.", "Mmm~ That actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
 								},
-								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-								"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
 							}
 						},
-						"flirty" : {
-							"default" : {
+						"flirty" : { // personality
+							"default" : { // mood
 								"request" : {
-									"before" : { "randomDialogue" : [ "Hehe, you like my ass?~" ] },
-									"after" : { "randomDialogue" : [ "Then why don't you take a closer look~" ] }
+									"before" : { "randomDialogue" : [ "Hehe, you like my ass?~", "You've been staring at my rear all day haven't you~", "Of course you'd want to be my little toy~", "Can't help but want to smush your face into me hmm~?" ] },
+									"after" : { "randomDialogue" : [ "Ahh~ So why don't you take a closer look~", "Mmm~ I'll make sure to clench extra tight, just for you~", "Heh~ You better squirm for me, toy~", "Oooh~ I think you make the perfect toy~" ] }
 								},
 								"unprompted" : {
-									"before" : {"randomDialogue" : [ "mmmm~ you look like a nice toy~" ] },
-									"after" : { "randomDialogue" : [ "ahh~ right where you belong~" ] }
+									"before" : {"randomDialogue" : [ "Hehe, there's my toy~", "You look like you can fit into tight places~", "You're exactly what I want right now~", "I'm gonna shove you up my ass, and you're gonna like it~" ] },
+									"after" : { "randomDialogue" : [ "Ahh~ Right where you belong~", "Mmm~ My perfect squirmy toy~", "Hehe~ You really do make an excellent dildo~", "Oohh~ You're squirming so much~" ] }
 								},
-								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-								"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
+							}
+						},
+						"shy" : { // personality
+							"default" : { // mood
+								"request" : {
+									"before" : { "randomDialogue" : [ "U-uhm y-you want... t-to go up my...?", "U-uhm y-you know thats... the wrong way... r-right?", ["*Flustered Noises*","<keysmash>"], "A-are y-you sure...?" ] },
+									"after" : { "randomDialogue" : [ "Ahhh~ H-hope I'm not squeezing too much...", ["Mmm~ This actually... feels... <keysmash>","Mmm~ This actually... feels... *Pleasured Noises*"], ["*Pleasured Noises*","<keysmash>"], "Oooh~ I-I can f-feel you squirming~" ] }
+								},
+								"unprompted" : {
+									"before" : { "randomDialogue" : [ "Uhm... e-excuse me... I-", "Hey... uhm... funny thing... I-", "Do you... uhm... do you mind if I-", "Hi... hey... hi... hi... hi-" ] },
+									"after" : { "randomDialogue" : [ "S-sorry I couldn't control myself!", "I was just... too excited!", "T-this is fine right?", "A-ahhh sorry I just panicked!" ] }
+								},
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
 							}
 						}
 					}
 				},
 				"navelVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
 								"request" : {
-									"before" : { "randomDialogue" : [ "Hehe, you like my belly?~" ] },
-									"after" : { "randomDialogue" : [ "Then why don't you take a closer look~" ] }
+									"before" : { "randomDialogue" : [ "You want to go in through my navel?", "That isn't the usual way to do things.", "I can try that.", "Thats my belly button right?" ] },
+									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "You really like bellies don't you.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
 								},
 								"unprompted" : {
-									"before" : {"randomDialogue" : [ "mmmm~ gonna be a tight squeeze, but I'll get you in~" ] },
-									"after" : { "randomDialogue" : [ "hehe~ right where you belong~" ] }
+									"before" : {"randomDialogue" : [ "This isn't the usual way to do things.", "I think we'll just skip right to your destination.", "Gonna do a bit more than just squish you against my belly here...", "Did you know theres more than just two ways into a belly?" ] },
+									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "Right into my belly.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
 								},
-								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-								"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
 							}
 						}
 					}
 				},
 				"cockVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
 								"request" : {
 									"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ] },
 									"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ] }
@@ -166,9 +181,9 @@
 					}
 				},
 				"unbirth" : {
-					"default" : {
-						"default" : {
-							"default" : {
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
 								"request" : {
 									"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ] },
 									"after" : { "randomDialogue" : [ "ahh~ get slipped right up in there~", "ahh~ you're gonna get all wet heh~" ] }
@@ -192,18 +207,18 @@
 			// settings come from itself, digestionImmunity comes from the prey
 			"pred" : {
 				"belly" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-								"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-								"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-								"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+					"default" : { // race
+						"default" : { // personality
+							"default" : { // mood
+								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] },
+								"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ] },
+								"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] },
+								"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] }
 							}
 						}
 					}
 				},
-				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] }
 			},
 			// when being prey, responses to the pred that ate them
 			// path is: location -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
