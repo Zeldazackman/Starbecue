@@ -59,6 +59,7 @@ function sbq.getOccupancy()
 		sbq.loopedMessage("getOccupancy", sbq.data.occupantHolder, "getOccupancyData", {}, function (occupancyData)
 			sbq.occupant = occupancyData.occupant
 			sbq.occupants = occupancyData.occupants
+			sbq.actualOccupants = occupancyData.actualOccupants
 			sbq.checkVoreButtonsEnabled()
 		end)
 	end
@@ -305,21 +306,32 @@ function sbq.checkVoreTypeActive(voreType)
 	local locationData = sbq.data.sbqData.locations[locationName]
 	if not locationData then return "hidden" end
 
+	local return2 = "default"
+
+	if locationData.digest then
+		return2 = "bellyEffect"
+	elseif sbq.data.settings[locationName.."Effect"] ~= nil then
+		return2 = locationName.."Effect"
+	end
+
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
 	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
 			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > locationData.max)) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
-				return "tooBig"
+				return "tooBig", return2
 			elseif (sbq.occupants[locationName] >= locationData.max ) then
-				return "full"
+				if sbq.actualOccupants == 0 then
+					return2 = "otherLocationFull"
+				end
+				return "full", return2
 			else
-				return "yes"
+				return "yes", return2
 			end
 		else
-			return "notFeelingIt"
+			return "notFeelingIt", return2
 		end
 	else
-		return "hidden"
+		return "hidden", return2
 	end
 end
 
@@ -337,15 +349,15 @@ function sbq.checkVoreButtonsEnabled()
 end
 
 function sbq.voreButton(voreType)
-	local active = sbq.checkVoreTypeActive(voreType)
+	local active, active2 = sbq.checkVoreTypeActive(voreType)
 	if active == "yes" then
-		local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", "request", "before", "bellyEffect" }) or {}
+		local dialogueTree = sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", "request", "before", active2 }) or {}
 		sbq.timer("eatMessage", dialogueTree.delay or 2, function ()
 			sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", "request", "after", "bellyEffect"})
 			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
 		end)
 	else
-		sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", active, "bellyEffect" })
+		sbq.updateDialogueBox({ "vore", voreType, "race", "personality", "mood", active, active2 })
 	end
 end
 

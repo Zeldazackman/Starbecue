@@ -462,6 +462,7 @@ function sbq.updateOccupants(dt)
 
 	for location, occupancy in pairs(sbq.occupants) do
 		occupancy = math.ceil(occupancy)
+		sbq.actualOccupants[location] = occupancy
 	end
 
 	sbq.setOccupantTags()

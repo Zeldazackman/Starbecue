@@ -83,7 +83,7 @@
 				"continue" : {
 					"useLastRandom" : true,
 					"nearEntitiesNamed" : ["Zevi"],
-					"speaker" : "sbqHubZevi",
+					"speaker" : "sbqZevi",
 					"range" : 8,
 					"randomName" : "Zevi",
 					"randomPortrait" : [
@@ -126,7 +126,7 @@
 					"nearEntitiesNamed" : ["Zevi"],
 					"randomName" : "Zevi",
 					"range" : 8,
-					"speaker" : "sbqHubZevi",
+					"speaker" : "sbqZevi",
 					"randomPortrait" : [
 						"/humanoid/sbqzevi/portraits/ZUwU.png",
 						"/humanoid/sbqzevi/portraits/ZNeutral.png",

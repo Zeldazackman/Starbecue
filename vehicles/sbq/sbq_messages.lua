@@ -172,7 +172,7 @@ message.setHandler( "requestUneat", function (_,_, prey, voreType)
 end)
 
 message.setHandler( "getOccupancyData", function ()
-	return {occupant = sbq.occupant, occupants = sbq.occupants}
+	return {occupant = sbq.occupant, occupants = sbq.occupants, actualOccupants = sbq.actualOccupants}
 end)
 
 message.setHandler( "requestTransition", function (_,_, transition, args)

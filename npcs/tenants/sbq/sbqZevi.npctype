@@ -21,7 +21,7 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
-		"uniqueId" : "sbqHubZevi",
+		"uniqueId" : "sbqZevi",
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
