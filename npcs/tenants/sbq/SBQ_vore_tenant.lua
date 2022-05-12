@@ -244,9 +244,52 @@ function sbq.getOccupantArg(id, arg)
 	end
 end
 
+function sbq.getDialogueBranch(dialogueTreeLocation, settings)
+	local dialogueTree = sbq.getRedirectedDialogue(sbq.dialogueTree) or {}
+
+	for _, branch in ipairs(dialogueTreeLocation) do
+		if settings[branch] ~= nil then
+			dialogueTree =  dialogueTree[tostring(settings[branch])] or dialogueTree.default or dialogueTree
+		else
+			dialogueTree = dialogueTree[branch] or dialogueTree
+		end
+		dialogueTree = sbq.getRedirectedDialogue(dialogueTree)
+	end
+	return dialogueTree
+end
+
+
+local recursionCount = 0
+-- for dialog in other files thats been pointed to
+function sbq.getRedirectedDialogue(dialogueTree)
+	local dialogueTree = dialogueTree
+	if type(dialogueTree) == "string" then
+		local firstChar = dialogueTree:sub(1,1)
+		if firstChar == "/" then
+			dialogueTree = root.assetJson(dialogueTree)
+		else
+			local found1 = dialogueTree:find("%.")
+			local jump = {}
+			while found1 do
+				table.insert(jump, dialogueTree:sub(1,found1-1))
+				dialogueTree = dialogueTree:sub(found1+1,-1)
+				found1 = dialogueTree:find("%.")
+			end
+			table.insert(jump, dialogueTree)
+			if recursionCount > 10 then return {} end -- protection against possible infinite loops of recusion
+			recursionCount = recursionCount + 1
+			dialogueTree = sbq.getDialogueBranch(jump)
+		end
+	end
+	return dialogueTree
+end
+
 function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
+	settings.race = npc.species()
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, settings)
 	if not dialogueTree then return false end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	local randomRolls = {}
 	local randomDialogue = dialogueTree.randomDialogue
 	local randomPortrait = dialogueTree.randomPortrait
@@ -258,24 +301,48 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 			table.insert(randomRolls, math.random(#randomDialogue))
 		end
 		randomDialogue = randomDialogue[randomRolls[i]]
+		if type(randomDialogue) == "string" then
+			local firstChars = randomDialogue:sub(1,2)
+			if firstChars == "&&" then
+				randomDialogue = sbq.getRedirectedDialogue(randomDialogue:sub(3,-1)).randomDialogue
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	i = 1
 	while type(randomPortrait) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomPortrait))
 		end
 		randomPortrait = randomPortrait[randomRolls[i]]
+		if type(randomPortrait) == "string" then
+			local firstChars = randomPortrait:sub(1,2)
+			if firstChars == "&&" then
+				randomPortrait = sbq.getRedirectedDialogue(randomPortrait:sub(3,-1)).randomPortrait
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	i = 1
 	while type(randomEmote) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomEmote))
 		end
 		randomEmote = randomEmote[randomRolls[i]]
+		if type(randomEmote) == "string" then
+			local firstChars = randomEmote:sub(1,2)
+			if firstChars == "&&" then
+				randomEmote = sbq.getRedirectedDialogue(randomEmote:sub(3,-1)).randomEmote
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 
 	local imagePortrait
 	if not config.getParameter("entityPortrait") then
@@ -319,46 +386,6 @@ function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 		return keysmash
 	end)
 end
-
-function sbq.getDialogueBranch(dialogueTreeLocation, settings)
-	local dialogueTree = sbq.getRedirectedDialogue(sbq.dialogueTree) or {}
-
-	for _, branch in ipairs(dialogueTreeLocation) do
-		if settings[branch] ~= nil then
-			dialogueTree =  dialogueTree[tostring(settings[branch])] or dialogueTree.default or dialogueTree
-		else
-			dialogueTree = dialogueTree[branch] or dialogueTree
-		end
-		dialogueTree = sbq.getRedirectedDialogue(dialogueTree)
-	end
-	return dialogueTree
-end
-
-local recursionCount = 0
--- for dialog in other files thats been pointed to
-function sbq.getRedirectedDialogue(dialogueTree)
-	local dialogueTree = dialogueTree
-	if type(dialogueTree) == "string" then
-		local firstChar = dialogueTree:sub(1,1)
-		if firstChar == "/" then
-			dialogueTree = root.assetJson(dialogueTree)
-		else
-			local found1 = dialogueTree:find("%.")
-			local jump = {}
-			while found1 do
-				table.insert(jump, dialogueTree:sub(1,found1-1))
-				dialogueTree = dialogueTree:sub(found1+1,-1)
-				found1 = dialogueTree:find("%.")
-			end
-			table.insert(jump, dialogueTree)
-			if recursionCount > 10 then return {} end -- protection against possible infinite loops of recusion
-			recursionCount = recursionCount + 1
-			dialogueTree = sbq.getDialogueBranch(jump)
-		end
-	end
-	return dialogueTree
-end
-
 
 function sbq.saveCosmeticSlots()
 	if not storage.saveCosmeticSlots then

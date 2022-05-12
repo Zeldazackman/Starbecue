@@ -139,39 +139,80 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 			table.insert(randomRolls, math.random(#randomDialogue))
 		end
 		randomDialogue = randomDialogue[randomRolls[i]]
+		if type(randomDialogue) == "string" then
+			local firstChars = randomDialogue:sub(1,2)
+			if firstChars == "&&" then
+				randomDialogue = sbq.getRedirectedDialogue(randomDialogue:sub(3,-1)).randomDialogue
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	i = 1
 	while type(randomPortrait) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomPortrait))
 		end
 		randomPortrait = randomPortrait[randomRolls[i]]
+		if type(randomPortrait) == "string" then
+			local firstChars = randomPortrait:sub(1,2)
+			if firstChars == "&&" then
+				randomPortrait = sbq.getRedirectedDialogue(randomPortrait:sub(3,-1)).randomPortrait
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	i = 1
 	while type(randomName) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomName))
 		end
 		randomName = randomName[randomRolls[i]]
+		if type(randomName) == "string" then
+			local firstChars = randomName:sub(1,2)
+			if firstChars == "&&" then
+				randomName = sbq.getRedirectedDialogue(randomName:sub(3,-1)).randomName
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	i = 1
 	while type(randomButtonText) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomButtonText))
 		end
 		randomButtonText = randomButtonText[randomRolls[i]]
+		if type(randomButtonText) == "string" then
+			local firstChars = randomButtonText:sub(1,2)
+			if firstChars == "&&" then
+				randomButtonText = sbq.getRedirectedDialogue(randomButtonText:sub(3,-1)).randomButtonText
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
+	i = 1
 	while type(randomEmote) == "table" do
 		if randomRolls[i] == nil then
 			table.insert(randomRolls, math.random(#randomEmote))
 		end
 		randomEmote = randomEmote[randomRolls[i]]
+		if type(randomEmote) == "string" then
+			local firstChars = randomEmote:sub(1,2)
+			if firstChars == "&&" then
+				randomEmote = sbq.getRedirectedDialogue(randomEmote:sub(3,-1)).randomEmote
+			end
+		end
 		i = i + 1
 	end
+	recursionCount = 0 -- since we successfully made it here, reset the recursion count
+
 	prevRandomRolls = randomRolls
 
 	local playerName = world.entityName(player.id())
@@ -296,7 +337,7 @@ function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 end
 
 function sbq.checkVoreTypeActive(voreType)
-
+	if not sbq.data.settings then return "hidden" end
 	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnable"]) then return "hidden" end
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 
@@ -399,7 +440,7 @@ function dialogueCont:onClick()
 	elseif sbq.prevDialogueBranch.options ~= nil then
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
-			if option[2].nearEntitiesNamed ~= nil and (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
+			if option[2].nearEntitiesNamed ~= nil and ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
 				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
 				if entities ~= nil then
 					if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
@@ -417,7 +458,7 @@ function dialogueCont:onClick()
 					end
 					table.insert(contextMenu, action)
 				end
-			elseif (option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" ) then
+			elseif ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
 				if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
 					action[2] = function ()
 						table.insert( sbq.dialogueTreeLocation, "options" )

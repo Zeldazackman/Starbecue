@@ -121,6 +121,7 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
 		sbq.lounging[eid].sizeMultiplier = 0
+		sbq.lounging[eid].digested = true
 		world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 	end
 end )

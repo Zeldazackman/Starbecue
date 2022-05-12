@@ -25,7 +25,21 @@
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
-			"oralVorePred" : true
+			"oralVorePred" : true,
+			"analVorePred" : true,
+			"cockVorePred" : true,
+			"unbirthPred" : true,
+			"absorbVorePred" : true,
+
+			"oralVorePredEnable" : true,
+			"analVorePredEnable" : true,
+			"cockVorePredEnable" : true,
+			"unbirthPredEnable" : true,
+			"absorbVorePredEnable" : true,
+
+			"navelVorePredLock" : true,
+			"breastVorePredLock" : true,
+			"tailVorePredLock" : true
 		},
 
 		"defaultPortrait" : "/humanoid/sbqzevi/portraits/ZNeutral.png",
@@ -130,7 +144,6 @@
 					}
 				}
 			},
-
 			// when being a pred, responses to prey inside them
 			// path is: location -> personality -> mood -> bellyEffect -> digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
@@ -148,6 +161,33 @@
 				},
 				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
 			},
+			// when being pred, responses to the prey escaping
+			// path is: voreType -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from the pred, digestionImmunity comes from itself
+			"letout" : {
+				"default" : { // voreType
+					"true" : { // prey struggling out
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
+									"randomDialogue" : [ "Ahh... ok you want out.", "Why leave?", "Mmm... fine you can come out.", "I actually liked having you in there..." ]
+								}
+							}
+						}
+					},
+					"false" : { // pred letting prey out
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
+									"randomDialogue" : [ "You can come out now.", "Time to come out.", "You can't stay in there forever.", "Time to get out." ]
+								}
+							}
+						}
+					}
+				}
+			},
+
 			// when being prey, responses to the pred that ate them
 			// path is: location -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
@@ -221,7 +261,6 @@
 				}
 
 			},
-
 			// when being prey, responses to the pred thats eating them
 			// path is: voreType -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
@@ -364,7 +403,9 @@
 				"analVore": true,
 				"unbirth": true,
 				"cockVore": true,
-				"breastVore": true
+				"breastVore": true,
+
+				"navelVoreLock" : true
 			},
 			"speciesAnimOverrideData" : {
 				"species" : "sbqzevi",

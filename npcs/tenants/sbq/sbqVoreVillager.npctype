@@ -56,7 +56,7 @@
 						"flirty" : { // personality
 							"default" : { // mood
 								"request" : {
-									"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~", "You want to get in my belly~?", "I've seen you eyeing my belly up... Get in~", "A cute morsel like you, of course~?" ] },
+									"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~", "You want to get in my belly~?", "I've seen you eyeing my belly up... Get in~", "A cute morsel like you, of course~?", "I can't wait to eat a scrumptious snack like you~" ] },
 									"after" : { "randomDialogue" : [ "Mmm~ get comfortable in there~", "You better enjoy yourself~", "Such a preything~", "Maybe I'll keep you as a belly pet~" ] }
 								},
 								"unprompted" : {
@@ -145,6 +145,8 @@
 						}
 					}
 				},
+
+				// my brain checked out for this one, someone who's actually into this one should be the one writing the dialogue - Raptor
 				"navelVore" : {
 					"default" : { // race
 						"default" : { // personality
@@ -282,7 +284,7 @@
 					"default" : { // race
 						"default" : { // personality
 							"default" : { // mood
-								"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] },
+								"default" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] },
 								"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ] },
 								"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] },
 								"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ] }
@@ -290,7 +292,10 @@
 						}
 					}
 				},
-				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] }
+				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] },
+				"balls" : { },
+				"ballsL" : "pred.balls",
+				"ballsR" : "pred.balls"
 			},
 			// when being pred, responses to the prey escaping
 			// path is: voreType -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
@@ -298,20 +303,58 @@
 			// settings come from the pred, digestionImmunity comes from itself
 			"letout" : {
 				"default" : { // voreType
-					"true" : { // struggle trigger
+					"true" : { // prey struggling out
 						"default" : { // race
 							"default" : { // personality
 								"default" : { // mood
-									"randomDialogue" : [ ]
+									"default" : { "randomDialogue" : [ "Ahh... ok you want out.", "Why leave?", "Mmm... fine you can come out.", "I actually liked having you in there..." ] },
+									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?", "Are you sure you're ready to come out?", "Maybe you should get back in... heal a little longer.", "You can come back to heal any time." ]},
+									"sbqDigest" : { "randomDialogue" : [ "Dang it... I was hungry.", "No hard feelings?", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "Darn it... I was hungry, you were gonna be fine anyway.", "No hard feelings? Its not like I was going to go all the way...", "Come on, you were almost done...", "If only you weren't such a fighter..." ] }
+								}
+							},
+							"flirty" : { // personality
+								"default" : { // mood
+									"default" : { "randomDialogue" : [ "I'd much rather you stay~", "Come back whenever you like~", "Afraid you'll want to stay forever~?", "You know you don't have to leave~" ] },
+									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?~", "Are you sure? I think you need some more time~", "I think you should get back in, you tooootally need more healing~", "You really should get back in to let me finish~" ]},
+									"sbqDigest" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You were so close to becoming a part of me~" ] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You were so close to becoming a part of me~" ] }
+								}
+							},
+							"shy" : { // personality
+								"default" : { // mood
+									"default" : { "randomDialogue" : [ "O-oh ok...", "M-maybe you'll come back later?", "Ah... I-I was rather enjoying that...", "M-maybe you can stay longer next time...", ["<keysmash>", "*Surprised Noises*"] ] },
+									"sbqHeal" : { "randomDialogue" : [ "U-uhm... i-it might be safer inside me...", "M-maybe getting out isn't the best idea...?", "I-I really think it'd be better if you stayed inside...", "W-wait what if you're not healed yet!" ]},
+									"sbqDigest" : { "randomDialogue" : [ "O-oh... s-sorry about that.", "I... I just really needed to eat...", "W-why couldn't you just finish melting...", "Y-you know I need food right?" ] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "O-oh... s-sorry about that.", "I... I just really needed to eat...", "W-why couldn't you just finish melting...", "Y-you know I need food right?" ] }
 								}
 							}
 						}
 					},
-					"false" : {
+					"false" : { // pred letting prey out
 						"default" : { // race
 							"default" : { // personality
 								"default" : { // mood
-									"randomDialogue" : [ ]
+									"default" : { "randomDialogue" : [ "You can come out now.", "Time to come out.", "You can't stay in there forever.", "Time to get out." ] },
+									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough.", "I think you've spent enough time healing.", "I think you should be feeling much better now.", "My stomach does wonders for healing doesn't it?"] },
+									"sbqDigest" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] }
+								}
+							},
+							"flirty" : { // personality
+								"default" : { // mood
+									"default" : { "randomDialogue" : [ "Mmm~ I think you've had enough time inside~", "You gotta come out, or else I won't be able to put you back in later~", "You can't stay in there forever... yet~", "I know you want to stay~ so I'll let you back in later~" ] },
+									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough~", "I think you've spent enough time healing~", "I think you should be feeling much better now~", "My stomach does wonders for healing doesn't it?~"] },
+									"sbqDigest" : { "randomDialogue" : [ "Mmm, I don't want to turn you into pudge... yet~", "My hunger is satiated... for now~", "Probably best to get you out of there...", "Hmm, I don't feel like melting you entirely... yet~"] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "Mmm, I don't want to turn you into pudge... yet~", "My hunger is satiated... for now~", "Probably best to get you out of there...", "Hmm, I don't feel like melting you entirely... yet~"] }
+								}
+							},
+							"shy" : { // personality
+								"default" : { // mood
+									"default" : { "randomDialogue" : [ "S-sorry I-I just want you out...", "I-it feels pretty weird having you in there...", "Uhm... lets continue another time...", "I uhm... uhm... yeah..." ] },
+									"sbqHeal" : { "randomDialogue" : [ "S-sorry I-I just want to check if it was working...", "I-I'm not sure I can keep you in there...", "W-what if my belly isn't healing you? I gotta get you out!", "I uhm... uhm... yeah..." ] },
+									"sbqDigest" : { "randomDialogue" : [ "A-actually... you've p-probably spent enough time in there.", "I-I'm not r-really hungry anymore.", "P-probably best to get you out of there...", "A-are you ok?"] },
+									"sbqSoftDigest" : { "randomDialogue" : [ "A-actually... you've p-probably spent enough time in there.", "I-I'm not r-really hungry anymore.", "P-probably best to get you out of there...", "A-are you ok?"] }
 								}
 							}
 						}
@@ -324,16 +367,23 @@
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
 			"prey" : {
-				// lines at very top of each tree are for talking while inside and periodically while struggling but trees can go further past that
-				"default" : {
-					"default" : { "randomDialogue" : [ "Mmm I'm pretty stuck in here aren't I?" ] }
+				"default" : { // location
+					"default" : { // predator
+						"default" : { // race
+							"default" : { // personality
+								"default" : {  // mood
+									"randomDialogue" : [ "I'm stuck here aren't I?", "Is there even a way out?", "Trapped..." ]
+								}
+							}
+						}
+					}
 				},
 				"belly" : {
 					"default" : {
 						"default" : {
 							"default" : {
 								"default" : {
-									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
+									"default" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
 									"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
 									"sbqSoftDigest" : {
 										"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
@@ -351,7 +401,7 @@
 						"default" : {
 							"default" : {
 								"default" : {
-									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "gooey vappy belly." ]},
+									"default" : { "randomDialogue" : [ "gooey vappy belly." ]},
 									"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
 									"sbqSoftDigest" : {
 										"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
@@ -369,7 +419,7 @@
 						"default" : {
 							"default" : {
 								"default" : {
-									"sbqRemoveBellyEffects" : { "randomDialogue" : [ "This slime is so sticky." ]},
+									"default" : { "randomDialogue" : [ "This slime is so sticky." ]},
 									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
 									"sbqSoftDigest" : {
 										"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
@@ -402,44 +452,44 @@
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
 			"vored" : {
-				"default" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"default" : {
+				"default" : { // voreType
+					"default" : { // predator
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
 									"randomDialogue" : [ "Ah!" ]
 								}
 							}
 						}
 					}
 				},
-				"oralVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"default" : {
+				"oralVore" : { // voreType
+					"default" : { // predator
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
 									"randomDialogue" : [ "Ah!" ]
 								}
 							}
 						}
 					}
 				},
-				"cockVore" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"default" : {
+				"cockVore" : { // voreType
+					"default" : { // predator
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
 									"randomDialogue" : [ "UwU" ]
 								}
 							}
 						}
 					}
 				},
-				"unbirth" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"default" : {
+				"unbirth" : { // voreType
+					"default" : { // predator
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
 									"randomDialogue" : [ "UwU" ]
 								}
 							}
