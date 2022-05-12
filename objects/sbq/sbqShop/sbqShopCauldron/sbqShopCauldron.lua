@@ -2,7 +2,7 @@ function init()
 	local statuses = config.getParameter("cauldronStatusEffects")
 	storage.status = statuses[math.random(#statuses)]
 	storage.occupant = {}
-	animator.setGlobalTag("directives", config.getParameter("cauldronStatusDirectives")[storage.status])
+	animator.setGlobalTag("directives", config.getParameter("cauldronStatusDirectives")[storage.status] or "")
 	storage.hue = 0
 	storage.time = 0
 end

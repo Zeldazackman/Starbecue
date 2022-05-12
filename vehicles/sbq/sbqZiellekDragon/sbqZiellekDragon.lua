@@ -179,24 +179,24 @@ end
 
 -------------------------------------------------------------------------------
 
-function oralVore(args)
+function oralVore(args, tconfig)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
 function checkOralVore()
 	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.oralVore.position ), 5, "belly", "oralVore")
 end
 
-function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function oralEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
 -------------------------------------------------------------------------------
 
-function cockVore(args)
+function cockVore(args, tconfig)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
+	return sbq.doVore(args, "shaft", {}, "swallow", tconfig.voreType)
 end
 
 function checkCockVore()
@@ -206,30 +206,30 @@ function checkCockVore()
 	end
 end
 
-function cockEscape(args)
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
+function cockEscape(args, tconfig)
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, tconfig.voreType )
 end
 
 -------------------------------------------------------------------------------
 
-function analVore(args)
+function analVore(args, tconfig)
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
 function checkAnalVore()
 	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.analVore.position ), 4, "belly", "analVore")
 end
 
-function analEscape(args)
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function analEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
 -------------------------------------------------------------------------------
 
-function unbirth(args)
+function unbirth(args, tconfig)
 	if not sbq.settings.pussy or not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "womb", {}, "swallow", "unbirth")
+	return sbq.doVore(args, "womb", {}, "swallow", tconfig.voreType)
 end
 
 function checkUnbirth()
@@ -237,9 +237,9 @@ function checkUnbirth()
 	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.unbirth.position ), 4, "womb", "unbirth")
 end
 
-function unbirthEscape(args)
+function unbirthEscape(args, tconfig)
 	if not sbq.settings.pussy then return false end
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "unbirth" )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
 -------------------------------------------------------------------------------

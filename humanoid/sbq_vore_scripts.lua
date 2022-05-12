@@ -4,60 +4,60 @@ function sbq.update(dt)
 	sbq.detectPants()
 end
 
-function state.stand.oralVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+function state.stand.oralVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function state.stand.oralEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function state.stand.analVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function state.stand.analVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.analEscape(args)
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function state.stand.analEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.stand.unbirth(args)
-	return sbq.doVore(args, "womb", {}, "swallow", "unbirth")
+function state.stand.unbirth(args, tconfig)
+	return sbq.doVore(args, "womb", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.unbirthEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "unbirth" )
+function state.stand.unbirthEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function state.stand.cockVore(args)
+function state.stand.cockVore(args, tconfig)
 	if not args.id then
 		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
 		return false
 	end
-	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
+	return sbq.doVore(args, "shaft", {}, "swallow", tconfig.voreType)
 end
 
 state.stand.ballsToShaft = sbq.ballsToShaft
 state.stand.shaftToBalls = sbq.shaftToBalls
 state.stand.switchBalls = sbq.switchBalls
 
-function state.stand.cockEscape(args)
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
+function state.stand.cockEscape(args, tconfig)
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function state.stand.breastVore(args)
-	return sbq.doVore(args, "breasts", {}, "swallow", "breastVore")
+function state.stand.breastVore(args, tconfig)
+	return sbq.doVore(args, "breasts", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.breastEscape(args)
-	return sbq.doEscape(args, {}, {}, "breastVore" )
+function state.stand.breastEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.stand.navelVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "navelVore")
+function state.stand.navelVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.navelEscape(args)
-	return sbq.doEscape(args, {}, {}, "navelVore" )
+function state.stand.navelEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
 function sbq.detectShirt()
@@ -150,6 +150,8 @@ function sbq.letout(id)
 		else
 			return sbq.doTransition("oralEscape", {id = id})
 		end
+	elseif location == "tail" then
+		return sbq.doTransition("tailEscape", {id = id})
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
 	elseif location == "ballsL" or location == "ballsR" then

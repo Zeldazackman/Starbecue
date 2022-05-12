@@ -50,18 +50,18 @@ function sbq.extraBellyEffects(i, eid, health, bellyEffect)
 	end
 end
 
-function state.smol.absorbVore( args )
-	return sbq.doVore(args, "belly", {}, "slurp", "absorbVore")
+function state.smol.absorbVore( args, tconfig )
+	return sbq.doVore(args, "belly", {}, "slurp", tconfig.voreType)
 end
 
-function state.smol.absorbEscape( args )
+function state.smol.absorbEscape( args, tconfig )
 	local replaceColors = sbq.sbqData.replaceColors[1][sbq.settings.replaceColors[1]+1]
 	if type(sbq.settings.replaceColorTable[1]) == "table" then
 		replaceColors = sbq.settings.replaceColorTable[1]
 	end
 	local sbqSlimeSlowColor = replaceColors[3]
 
-	return sbq.doEscape(args, { sbqSlimeSlow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id(), property = sbqSlimeSlowColor }}, {}, "absorbVore")
+	return sbq.doEscape(args, { sbqSlimeSlow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id(), property = sbqSlimeSlowColor }}, {}, tconfig.voreType)
 end
 
 function state.smol.checkAbsorbVore()

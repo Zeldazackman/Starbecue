@@ -242,21 +242,21 @@ function tailToBelly(args)
 	return sbq.moveOccupantLocation(args, "belly")
 end
 
-function grabOralEat(args)
+function grabOralEat(args, tconfig)
 	sbq.grabbing = args.id
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function oralEat(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+function oralEat(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function tailVore(args)
-	return sbq.doVore(args, "tail", {}, "swallow", "tailVore")
+function tailVore(args, tconfig)
+	return sbq.doVore(args, "tail", {}, "swallow", tconfig.voreType)
 end
 
-function analVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function analVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
 function sitAnalEat(args)
@@ -292,16 +292,16 @@ function sitCheckAnal()
 	end
 end
 
-function oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function oralEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function analEscape(args)
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function analEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function tailEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "tailVore" )
+function tailEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
 function checkVore()

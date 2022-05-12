@@ -7,20 +7,20 @@ state = {
 	hug = {}
 }
 
-function state.back.eat( args )
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+function state.back.eat( args, tconfig )
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.back.anal( args )
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function state.back.anal( args, tconfig )
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.back.analescape( args )
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function state.back.analescape( args, tconfig )
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.back.escape( args )
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function state.back.escape( args, tconfig )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
 function state.back.bed( args )
@@ -45,18 +45,18 @@ end
 
 ---------------------------------------------------------------------------
 
-function state.hug.eat( args )
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+function state.hug.eat( args, tconfig )
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.hug.anal( args )
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function state.hug.anal( args, tconfig )
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.hug.analescape( args )
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function state.hug.analescape( args, tconfig )
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.hug.escape( args )
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function state.hug.escape( args, tconfig )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end

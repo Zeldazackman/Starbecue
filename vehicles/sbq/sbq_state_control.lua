@@ -90,7 +90,7 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 		local statescript = state[sbq.state][tconfig.script]
 		local _continue, _tconfig
 		if statescript ~= nil then
-			_continue, after, _tconfig = statescript( scriptargs or {} )
+			_continue, after, _tconfig = statescript( scriptargs or {}, tconfig )
 			if _continue ~= nil then continue = _continue end
 			if _tconfig ~= nil then tconfig = _tconfig end
 		else

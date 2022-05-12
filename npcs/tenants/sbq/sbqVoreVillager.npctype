@@ -292,7 +292,34 @@
 				},
 				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ] }
 			},
-			// when being prey, responses to the pred that ate them
+			// when being pred, responses to the prey escaping
+			// path is: voreType -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from the pred, digestionImmunity comes from itself
+			"letout" : {
+				"default" : { // voreType
+					"true" : { // struggle trigger
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
+									"randomDialogue" : [ ]
+								}
+							}
+						}
+					},
+					"false" : {
+						"default" : { // race
+							"default" : { // personality
+								"default" : { // mood
+									"randomDialogue" : [ ]
+								}
+							}
+						}
+					}
+				}
+			},
+
+			// when being prey, responses to the pred that ate them as they struggle
 			// path is: location -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
@@ -421,16 +448,27 @@
 				}
 			},
 			// when being prey, responses to the pred letting them out
-			// path is: voreType -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
+			// path is: voreType -> predator -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
 			"escape" : {
-				"default" : {
-					"default" : {
-						"default" : {
-							"default" : {
-								"default" : {
-									"randomDialogue" : [ "Ah, back outside" ]
+				"default" : { // voreType
+					"default" : { // predator
+						"true" : { // struggle trigger
+							"default" :{ // race
+								"default" : { // personality
+									"default" : { // mood
+										"randomDialogue" : [ "I got out." ]
+									}
+								}
+							}
+						},
+						"false" : { // struggle trigger
+							"default" :{ // race
+								"default" : { // personality
+									"default" : { // mood
+										"randomDialogue" : [ "Ah, back outside" ]
+									}
 								}
 							}
 						}
