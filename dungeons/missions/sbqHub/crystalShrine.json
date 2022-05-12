@@ -272,21 +272,20 @@
                  "y":144
                 }, 
                 {
-                 "gid":794,
                  "height":8,
-                 "id":19,
+                 "id":20,
                  "name":"Cosmic",
                  "properties":
                     {
-                     "npc":"myfirsttest",
-                     "typeName":"sbqHubCosmic"
+                     "parameters":"{ \"npc\" : \"myfirsttest\", \"npcTypeName\" : \"sbqHubCosmic\" }",
+                     "stagehand":"sbqNPCSpawner"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
                  "x":520,
-                 "y":136
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -295,7 +294,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":20,
+ "nextobjectid":21,
  "orientation":"orthogonal",
  "properties":
     {
@@ -327,10 +326,6 @@
         {
          "firstgid":314,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-colonytag\/pretty.json"
-        }, 
-        {
-         "firstgid":793,
-         "source":"..\/..\/..\/tilesets\/dungeonPlacers.json"
         }],
  "tilewidth":8,
  "version":1,

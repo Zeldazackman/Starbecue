@@ -40,23 +40,7 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":287,
-                 "height":8,
-                 "id":1,
-                 "name":"Auri's Shop",
-                 "properties":
-                    {
-                     "parameters":"{ \"dungeon\" : \"sbqHub_auriShop\", \"dungeonId\" : 8, \"protect\" : true, \"placeOffset\" : [ 1, 35 ] }"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":8,
-                 "x":3920,
-                 "y":2152
-                }, 
-                {
-                 "gid":511,
+                 "gid":509,
                  "height":24,
                  "id":75,
                  "name":"",
@@ -72,7 +56,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":592,
+                 "gid":590,
                  "height":24,
                  "id":76,
                  "name":"",
@@ -88,7 +72,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":590,
+                 "gid":588,
                  "height":32,
                  "id":77,
                  "name":"",
@@ -104,7 +88,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":2147484153,
+                 "gid":2147484151,
                  "height":16,
                  "id":81,
                  "name":"",
@@ -120,7 +104,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":2147484240,
+                 "gid":2147484238,
                  "height":24,
                  "id":82,
                  "name":"",
@@ -136,7 +120,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":379,
+                 "gid":377,
                  "height":16,
                  "id":83,
                  "name":"",
@@ -152,7 +136,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":365,
+                 "gid":363,
                  "height":16,
                  "id":84,
                  "name":"",
@@ -168,7 +152,7 @@
                  "y":2144
                 }, 
                 {
-                 "gid":715,
+                 "gid":713,
                  "height":16,
                  "id":85,
                  "name":"",
@@ -184,7 +168,7 @@
                  "y":2088
                 }, 
                 {
-                 "gid":295,
+                 "gid":293,
                  "height":16,
                  "id":88,
                  "name":"",
@@ -200,7 +184,7 @@
                  "y":3952
                 }, 
                 {
-                 "gid":295,
+                 "gid":293,
                  "height":16,
                  "id":89,
                  "name":"",
@@ -216,7 +200,7 @@
                  "y":3952
                 }, 
                 {
-                 "gid":591,
+                 "gid":589,
                  "height":24,
                  "id":90,
                  "name":"",
@@ -232,7 +216,7 @@
                  "y":3960
                 }, 
                 {
-                 "gid":289,
+                 "gid":287,
                  "height":72,
                  "id":91,
                  "name":"fireplace",
@@ -246,6 +230,22 @@
                  "width":56,
                  "x":4216,
                  "y":2152
+                }, 
+                {
+                 "height":8,
+                 "id":92,
+                 "name":"Auri's Shop",
+                 "properties":
+                    {
+                     "parameters":"{ \"dungeon\" : \"sbqHub_auriShop\", \"dungeonId\" : 8, \"protect\" : true, \"placeOffset\" : [ 1, 35 ] }",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":3920,
+                 "y":2144
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -254,7 +254,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":92,
+ "nextobjectid":93,
  "orientation":"orthogonal",
  "properties":
     {
@@ -281,18 +281,14 @@
         }, 
         {
          "firstgid":287,
-         "source":"..\/..\/..\/tilesets\/dungeonPlacers.json"
-        }, 
-        {
-         "firstgid":289,
          "source":"..\/..\/..\/tilesets\/auriShop\/auriShop.json"
         }, 
         {
-         "firstgid":306,
+         "firstgid":304,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/apex.json"
         }, 
         {
-         "firstgid":677,
+         "firstgid":675,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/hylotl.json"
         }],
  "tilewidth":8,

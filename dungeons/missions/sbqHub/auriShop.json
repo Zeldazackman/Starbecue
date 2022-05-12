@@ -1184,37 +1184,36 @@
                  "y":280
                 }, 
                 {
-                 "gid":1348,
                  "height":8,
-                 "id":131,
+                 "id":137,
                  "name":"Rex",
                  "properties":
                     {
-                     "npc":"crylan",
-                     "typeName":"sbqHubRex"
+                     "parameters":"{ \"npc\" : \"crylan\", \"npcTypeName\" : \"sbqHubRex\" }",
+                     "stagehand":"sbqNPCSpawner"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
                  "x":272,
-                 "y":160
+                 "y":152
                 }, 
                 {
-                 "gid":1347,
                  "height":8,
-                 "id":132,
+                 "id":139,
                  "name":"crystalShrinePlacer",
                  "properties":
                     {
-                     "parameters":"{ \"dungeon\" : \"sbqHub_crystalShrine\", \"dungeonId\" : 8, \"protect\" : true, \"placeOffset\" : [ -95, 20 ] }"
+                     "parameters":"{ \"dungeon\" : \"sbqHub_crystalShrine\", \"dungeonId\" : 8, \"protect\" : true, \"placeOffset\" : [ -95, 20 ] }",
+                     "stagehand":"sbqDungeonPlacer"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
                  "x":32,
-                 "y":280
+                 "y":272
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1694,7 +1693,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":137,
+ "nextobjectid":141,
  "orientation":"orthogonal",
  "properties":
     {
@@ -1742,10 +1741,6 @@
         {
          "firstgid":1345,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/generic.json"
-        }, 
-        {
-         "firstgid":1347,
-         "source":"..\/..\/..\/tilesets\/dungeonPlacers.json"
         }],
  "tilewidth":8,
  "version":1,
