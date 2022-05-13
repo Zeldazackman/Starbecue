@@ -265,21 +265,16 @@ end
 function sbq.doEscape(args, statuses, afterstatuses, voreType )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
-	local location = sbq.lounging[victim].location
-	local effect = "default"
-	if sbq.sbqData.locations[location].digest then
-		effect = "bellyEffect"
-	elseif sbq.settings[location.."Effect"] ~= nil then
-		effect = location.."Effect"
-	end
-	world.sendEntityMessage( sbq.driver, "sbqLetoutSpeak", args.id, voreType or "default", effect, args.struggleTrigger )
+	local location, effect, immunity, extra = sbq.getLocationMessageValues(victim)
+
+	world.sendEntityMessage( sbq.driver, "sbqLetoutSpeak", args.id, voreType or "default", effect, args.struggleTrigger, immunity, extra )
 	sbq.lounging[victim].location = "escaping"
 
 	vehicle.setInteractive( false )
 	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
 	sbq.transitionLock = true
 	return true, function()
-		world.sendEntityMessage( args.id, "sbqEscapeSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species, effect, args.struggleTrigger )
+		world.sendEntityMessage( args.id, "sbqEscapeSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species, effect, args.struggleTrigger, immunity, extra )
 		sbq.transitionLock = false
 		sbq.checkDrivingInteract()
 		sbq.uneat( victim )
@@ -758,21 +753,8 @@ function sbq.handleStruggles(dt)
 		else
 			sbq.doAnims( struggledata.directions[movedir].animationWhenMoving or struggledata.animationWhenMoving )
 		end
-		local entityType = world.entityType(strugglerId)
-		if entityType == "npc" or entityType == "player" then
-			local location = sbq.occupant[struggler].location
-			local effect = "default"
-			if sbq.sbqData.locations[location].digest then
-				effect = "bellyEffect"
-			elseif sbq.settings[location.."Effect"] ~= nil then
-				effect = location.."Effect"
-			end
-			if math.random() >= 0.9 then
-				world.sendEntityMessage(sbq.driver, "sbqPredatorSpeak", strugglerId, location, effect )
-			elseif math.random() <= 0.1 then
-				world.sendEntityMessage(strugglerId, "sbqStrugglerSpeak", sbq.driver, location, sbq.settings, sbq.species, effect )
-			end
-		end
+
+		sbq.struggleMessages(strugglerId)
 
 		if struggledata.directions[movedir].victimAnimation then
 			local id = strugglerId

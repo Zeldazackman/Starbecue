@@ -498,8 +498,8 @@
 					"parts" : ["cock"],
 					"directions":{
 						"down": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
-						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
-						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
+						"front": {},
+						"back": {},
 						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
 					"chances": { "min": 5, "max": 10 },

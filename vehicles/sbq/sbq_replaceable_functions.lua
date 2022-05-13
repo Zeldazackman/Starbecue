@@ -29,6 +29,65 @@ function sbq.escapeScript(i)
 	sbq.uneat(sbq.occupant[i].id)
 end
 
+function sbq.struggleMessages(id)
+	local entityType = world.entityType(id)
+	if entityType == "npc" or entityType == "player" then
+		local location, effect, immunity, extra = sbq.getLocationMessageValues(id)
+		if math.random() >= 0.9 then
+			world.sendEntityMessage(sbq.driver, "sbqPredatorSpeak", id, location, effect, immunity, extra)
+		elseif math.random() <= 0.1 then
+			world.sendEntityMessage(id, "sbqStrugglerSpeak", sbq.driver, location, sbq.settings, sbq.species, effect, immunity, extra)
+		end
+	end
+end
+function sbq.getLocationMessageValues(id)
+	local location = sbq.lounging[id].location
+	local effect = "default"
+	local immunity
+	local extra
+	if sbq.sbqData.locations[location].digest then
+		effect = "bellyEffect"
+		immunity = "digestionImmunity"
+		if sbq.lounging[id].digested then
+			extra = "digested"
+			effect = "digested"
+		end
+	elseif sbq.settings[location .. "Effect"] ~= nil then
+		effect = location .. "Effect"
+	end
+
+	if (sbq.settings[location .. "TF"]
+	or ((location == "ballsL" or location == "ballsR" or location == "balls") and sbq.settings.ballsCumTF)
+	or ((location == "shaft" or location == "cock" or location == "penis") and sbq.settings.penisCumTF) )
+	and not extra
+	then
+		effect = "transform"
+		immunity = "transformImmunity"
+		if sbq.lounging[id].progressBar >= 100 then
+			extra = "transformed"
+		end
+	elseif sbq.settings[location .. "Eggify"] and not extra then
+		effect = "egg"
+		immunity = "eggImmunity"
+		if sbq.lounging[id].species == "sbqEgg" then
+			extra = "egged"
+		end
+	end
+	if (location == "ballsL" or location == "ballsR" or location == "balls" or location == "shaft" or location == "cock" or location == "penis")
+	and (sbq.settings.ballsCumTF or sbq.settings.penisCumTF)
+	and sbq.lounging[id].progressBar >= 100
+	then
+		effect = "transform"
+		immunity = "transformImmunity"
+		extra = "transformed"
+	end
+
+
+
+
+	return location, effect, immunity, extra
+end
+
 -- for handling the grab action when clicked, some things may want to handle it differently
 function sbq.handleGrab()
 	local primary = (((sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor or {}).parameters or {}).scriptStorage or {}).clickAction

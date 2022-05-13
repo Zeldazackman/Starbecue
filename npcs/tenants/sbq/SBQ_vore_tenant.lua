@@ -75,30 +75,32 @@ function init()
 		sbq.getSpeciesConfig()
 		return sbq.speciesConfig
 	end)
-	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location )
-		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", "digestionImmunity"), function (immune)
-			local effect = "default"
-			if sbq.speciesConfig.sbqData.locations[location].digest then
-				effect = "bellyEffect"
-			elseif storage.settings[location.."Effect"] ~= nil then
-				effect = location.."Effect"
-			end
-			sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect or "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.settings, {location = location, digestionImmunity = immune or false}))
-		end)
+	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location, immunity, extra )
+		if immunity then
+			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", immunity ), function (immune)
+				sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(storage.settings, {location = location, [immunity] = immune or false}))
+			end)
+		else
+			sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect, extra }, entity, sb.jsonMerge(storage.settings, { location = location }))
+		end
 	end)
-	message.setHandler("sbqStrugglerSpeak", function (_,_, entity, location, settings, predator, effect)
-		sbq.getRandomDialogue({ "prey", "location", "predator", "race", "personality", "mood", effect or "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {location = location, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood}))
+	message.setHandler("sbqStrugglerSpeak", function (_,_, entity, location, settings, predator, effect, immunity, extra)
+		sbq.getRandomDialogue({ "prey", "location", "predator", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({location = location, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
 	message.setHandler("sbqVoredSpeak", function (_,_, entity, voreType, settings, predator, effect)
-		sbq.getRandomDialogue({ "vored", "voreType", "predator", "race", "personality", "mood", effect or "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood}))
+		sbq.getRandomDialogue({ "vored", "voreType", "predator", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
-	message.setHandler("sbqLetoutSpeak", function (_,_, entity, voreType, effect, struggleTrigger)
-		sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", "digestionImmunity"), function (immune)
-			sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect or "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, digestionImmunity = immune or false, struggleTrigger = struggleTrigger or false}))
-		end)
+	message.setHandler("sbqLetoutSpeak", function (_,_, entity, voreType, effect, struggleTrigger, immunity, extra)
+		if immunity then
+			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", immunity ), function (immune)
+				sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, [immunity] = immune or false, struggleTrigger = struggleTrigger or false}))
+			end)
+		else
+			sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect, extra }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, struggleTrigger = struggleTrigger or false}))
+		end
 	end)
-	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator, effect, struggleTrigger)
-		sbq.getRandomDialogue({ "escape", "voreType", "predator", "struggleTrigger", "race", "personality", "mood", effect or "bellyEffect", "digestionImmunity" }, entity, sb.jsonMerge(settings, {voreType = voreType, predator = predator, digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity, personality = storage.settings.personality, mood = storage.settings.mood, struggleTrigger = struggleTrigger or false}))
+	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator, effect, struggleTrigger, immunity, extra)
+		sbq.getRandomDialogue({ "escape", "voreType", "predator", "struggleTrigger", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood, struggleTrigger = struggleTrigger or false}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings)
 		storage.settings = settings
@@ -363,7 +365,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 end
 
 function sbq.say(string, tags, imagePortrait, emote)
-	if type(string) == "string" then
+	if type(string) == "string" and string ~= "" then
 		if type(imagePortrait) == "string" and config.getParameter("sayPortrait") then
 			npc.sayPortrait(string, imagePortrait, tags)
 		else
