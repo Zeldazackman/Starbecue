@@ -62,7 +62,7 @@
 			"scripts" : [],
 			"tab": { "type" : "tab", "id" : "occupantHolderSettingsTab", "title" : "Config", "icon" : "/items/active/sbqController/unassigned.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
-				{ "type" : "panel", "style" : "convex", "children" : [
+				{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Body Parts", "inline" : true },
 					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore"}, { "type" : "label", "text" : "Bra" }],
 					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth"}, { "type" : "label", "text" : "Underwear" }],
@@ -80,7 +80,7 @@
 
 					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "label", "text" : "Pussy" }]
 				]},
-				{ "type" : "panel", "style" : "convex", "children" : [
+				{ "type" : "panel", "id" : "passiveEffectsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
 					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : "Penis Cum TF" }],
 					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : "Balls Cum TF" }],

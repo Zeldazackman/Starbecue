@@ -78,29 +78,29 @@ function init()
 	message.setHandler("sbqPredatorSpeak", function (_,_, entity, location, immunity, extra )
 		if immunity then
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", immunity ), function (immune)
-				sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(storage.settings, {location = location, [immunity] = immune or false}))
+				sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect or "default", immunity or "default", extra or "default" }, entity, sb.jsonMerge(storage.settings, {location = location, [immunity] = immune or false}))
 			end)
 		else
-			sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect, extra }, entity, sb.jsonMerge(storage.settings, { location = location }))
+			sbq.getRandomDialogue({ "pred", "location", "race", "personality", "mood", effect or "default", extra or "default" }, entity, sb.jsonMerge(storage.settings, { location = location }))
 		end
 	end)
 	message.setHandler("sbqStrugglerSpeak", function (_,_, entity, location, settings, predator, effect, immunity, extra)
-		sbq.getRandomDialogue({ "prey", "location", "predator", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({location = location, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
+		sbq.getRandomDialogue({ "prey", "location", "predator", "race", "personality", "mood", effect or "default", immunity or "default", extra or "default" }, entity, sb.jsonMerge(settings, sb.jsonMerge({location = location, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
 	message.setHandler("sbqVoredSpeak", function (_,_, entity, voreType, settings, predator, effect)
-		sbq.getRandomDialogue({ "vored", "voreType", "predator", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
+		sbq.getRandomDialogue({ "vored", "voreType", "predator", "race", "personality", "mood", effect or "default", immunity or "default", extra or "default" }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
 	message.setHandler("sbqLetoutSpeak", function (_,_, entity, voreType, effect, struggleTrigger, immunity, extra)
 		if immunity then
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", immunity ), function (immune)
-				sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, [immunity] = immune or false, struggleTrigger = struggleTrigger or false}))
+				sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect or "default", immunity or "default", extra or "default" }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, [immunity] = immune or false, struggleTrigger = struggleTrigger or false}))
 			end)
 		else
-			sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect, extra }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, struggleTrigger = struggleTrigger or false}))
+			sbq.getRandomDialogue({ "letout", "voreType", "struggleTrigger", "race", "personality", "mood", effect or "default", extra or "default" }, entity, sb.jsonMerge(storage.settings, {voreType = voreType, struggleTrigger = struggleTrigger or false}))
 		end
 	end)
 	message.setHandler("sbqEscapeSpeak", function (_,_, entity, voreType, settings, predator, effect, struggleTrigger, immunity, extra)
-		sbq.getRandomDialogue({ "escape", "voreType", "predator", "struggleTrigger", "race", "personality", "mood", effect, immunity, extra }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood, struggleTrigger = struggleTrigger or false}, status.statusProperty("sbqPreyEnabled") or {})))
+		sbq.getRandomDialogue({ "escape", "voreType", "predator", "struggleTrigger", "race", "personality", "mood", effect or "default", immunity or "default", extra or "default" }, entity, sb.jsonMerge(settings, sb.jsonMerge({voreType = voreType, predator = predator, personality = storage.settings.personality, mood = storage.settings.mood, struggleTrigger = struggleTrigger or false}, status.statusProperty("sbqPreyEnabled") or {})))
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings)
 		storage.settings = settings
@@ -247,15 +247,16 @@ function sbq.getOccupantArg(id, arg)
 end
 
 function sbq.getDialogueBranch(dialogueTreeLocation, settings)
-	local dialogueTree = sbq.getRedirectedDialogue(sbq.dialogueTree) or {}
+	local dialogueTree = sbq.getRedirectedDialogue(sbq.dialogueTree, settings) or {}
 
 	for _, branch in ipairs(dialogueTreeLocation) do
 		if settings[branch] ~= nil then
-			dialogueTree =  dialogueTree[tostring(settings[branch])] or dialogueTree.default or dialogueTree
+			dialogueTree =  dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default or dialogueTree
 		else
 			dialogueTree = dialogueTree[branch] or dialogueTree
 		end
-		dialogueTree = sbq.getRedirectedDialogue(dialogueTree)
+		dialogueTree = sbq.getRedirectedDialogue(dialogueTree, settings)
+
 	end
 	return dialogueTree
 end
@@ -263,7 +264,7 @@ end
 
 local recursionCount = 0
 -- for dialog in other files thats been pointed to
-function sbq.getRedirectedDialogue(dialogueTree)
+function sbq.getRedirectedDialogue(dialogueTree, settings)
 	local dialogueTree = dialogueTree
 	if type(dialogueTree) == "string" then
 		local firstChar = dialogueTree:sub(1,1)
@@ -280,7 +281,7 @@ function sbq.getRedirectedDialogue(dialogueTree)
 			table.insert(jump, dialogueTree)
 			if recursionCount > 10 then return {} end -- protection against possible infinite loops of recusion
 			recursionCount = recursionCount + 1
-			dialogueTree = sbq.getDialogueBranch(jump)
+			dialogueTree = sbq.getDialogueBranch(jump, settings)
 		end
 	end
 	return dialogueTree
@@ -306,7 +307,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 		if type(randomDialogue) == "string" then
 			local firstChars = randomDialogue:sub(1,2)
 			if firstChars == "&&" then
-				randomDialogue = sbq.getRedirectedDialogue(randomDialogue:sub(3,-1)).randomDialogue
+				randomDialogue = sbq.getRedirectedDialogue(randomDialogue:sub(3,-1), settings).randomDialogue
 			end
 		end
 		i = i + 1
@@ -322,7 +323,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 		if type(randomPortrait) == "string" then
 			local firstChars = randomPortrait:sub(1,2)
 			if firstChars == "&&" then
-				randomPortrait = sbq.getRedirectedDialogue(randomPortrait:sub(3,-1)).randomPortrait
+				randomPortrait = sbq.getRedirectedDialogue(randomPortrait:sub(3,-1), settings).randomPortrait
 			end
 		end
 		i = i + 1
@@ -338,7 +339,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 		if type(randomEmote) == "string" then
 			local firstChars = randomEmote:sub(1,2)
 			if firstChars == "&&" then
-				randomEmote = sbq.getRedirectedDialogue(randomEmote:sub(3,-1)).randomEmote
+				randomEmote = sbq.getRedirectedDialogue(randomEmote:sub(3,-1), settings).randomEmote
 			end
 		end
 		i = i + 1

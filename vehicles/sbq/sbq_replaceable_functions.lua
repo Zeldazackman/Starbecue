@@ -56,14 +56,10 @@ function sbq.getLocationMessageValues(id)
 		effect = location .. "Effect"
 	end
 
-	if (sbq.settings[location .. "TF"]
-	or ((location == "ballsL" or location == "ballsR" or location == "balls") and sbq.settings.ballsCumTF)
-	or ((location == "shaft" or location == "cock" or location == "penis") and sbq.settings.penisCumTF) )
-	and not extra
-	then
+	if sbq.settings[location .. "TF"] and not extra then
 		effect = "transform"
 		immunity = "transformImmunity"
-		if sbq.lounging[id].progressBar >= 100 then
+		if (sbq.lounging[id].progressBar >= 100) then
 			extra = "transformed"
 		end
 	elseif sbq.settings[location .. "Eggify"] and not extra then
@@ -74,16 +70,14 @@ function sbq.getLocationMessageValues(id)
 		end
 	end
 	if (location == "ballsL" or location == "ballsR" or location == "balls" or location == "shaft" or location == "cock" or location == "penis")
-	and (sbq.settings.ballsCumTF or sbq.settings.penisCumTF)
-	and sbq.lounging[id].progressBar >= 100
+	and (sbq.settings.ballsCumTF or sbq.settings.penisCumTF) and not extra
 	then
 		effect = "transform"
 		immunity = "transformImmunity"
-		extra = "transformed"
+		if (sbq.lounging[id].progressBar >= 100) then
+			extra = "transformed"
+		end
 	end
-
-
-
 
 	return location, effect, immunity, extra
 end

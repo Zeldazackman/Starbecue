@@ -75,7 +75,7 @@ function sbq.getDialogueBranch(dialogueTreeLocation)
 
 	for _, branch in ipairs(dialogueTreeLocation) do
 		if sbq.data.settings[branch] ~= nil then
-			dialogueTree =  dialogueTree[tostring(sbq.data.settings[branch])] or dialogueTree.default or dialogueTree
+			dialogueTree =  dialogueTree[tostring(sbq.data.settings[branch])] or dialogueTree[branch] or dialogueTree.default or dialogueTree
 		else
 			dialogueTree = dialogueTree[branch] or dialogueTree
 		end

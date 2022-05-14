@@ -1,7 +1,8 @@
 ---@diagnostic disable: undefined-global
 sbq = {
 	config = root.assetJson("/sbqGeneral.config"),
-	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json")
+	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json"),
+	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
@@ -39,6 +40,16 @@ function init()
 			if not listed[tag] then
 				requiredTagsScrollArea:addChild({ type = "label", text = tag..": "..value })
 			end
+		end
+
+		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[occupier.tenants[1].species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
+
+		mainTabField:newTab( speciesSettings.tab )
+		for i, script in ipairs( speciesSettings.scripts ) do
+			require(script)
+		end
+		if bodyPartsPanel ~= nil then
+			bodyPartsPanel:setVisible(false)
 		end
 	end
 
