@@ -46,6 +46,10 @@ function init()
 
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.dialogueTree = config.getParameter("dialogueTree")
+	sbq.dialogueBoxScripts = config.getParameter("dialogueBoxScripts")
+	for _, script in ipairs(sbq.dialogueBoxScripts or {}) do
+		require(script)
+	end
 
 	sbq.getSpeciesConfig()
 
@@ -198,7 +202,7 @@ function uninit()
 end
 
 function interact(args)
-	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), entityPortrait = config.getParameter("entityPortrait"), defaultPortrait = config.getParameter("defaultPortrait"), portraitPath = config.getParameter("portraitPath"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
+	local dialogueBoxData = { sbqData = sbq.speciesConfig.sbqData, dialogueBoxScripts = sbq.dialogueBoxScripts, settings = storage.settings, dialogueTree = sbq.dialogueTree, icons = config.getParameter("voreIcons"), entityPortrait = config.getParameter("entityPortrait"), defaultPortrait = config.getParameter("defaultPortrait"), portraitPath = config.getParameter("portraitPath"), defaultName = config.getParameter("defaultName"), occupantHolder = sbq.occupantHolder }
 	if sbq.currentData.type == "prey" then
 		if args.predData then
 			sbq.predData = args.predData

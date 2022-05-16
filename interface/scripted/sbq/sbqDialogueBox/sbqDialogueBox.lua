@@ -35,10 +35,8 @@ function init()
 		sbq.data.settings.digestionImmunity = (player.getProperty("sbqPreyEnabled") or {}).digestionImmunity or false
 	end
 	sbq.data.settings.race = world.entitySpecies(pane.sourceEntity())
-	if sbq.data.dialogueBoxScripts ~= nil then
-		for _, script in ipairs(sbq.data.dialogueBoxScripts) do
-			require(script)
-		end
+	for _, script in ipairs(sbq.data.dialogueBoxScripts or {}) do
+		require(script)
 	end
 	if sbq.data.entityPortrait then
 		dialoguePortraitCanvas:setVisible(true)
