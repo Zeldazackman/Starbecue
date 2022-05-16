@@ -42,6 +42,10 @@ function transformMessageHandler(eid, multiplier, data)
 
 	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
 	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
+	sbq.lounging[eid].progressBarType = "transforming"
+	if (data or {}).species == "sbqEgg" then
+		sbq.lounging[eid].progressBarType = "eggifying"
+	end
 end
 
 message.setHandler( "playerTransform", function(_,_, eid, multiplier, data )
@@ -57,10 +61,12 @@ function playerTransformMessageHandler(eid, multiplier, data)
 
 	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
 	sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
+	sbq.lounging[eid].progressBarType = "transforming"
 end
 function sbq.transformPlayer(i)
 	local id = sbq.occupant[i].id
 	local data = sbq.occupant[i].progressBarData
+	sbq.occupant[i].transformed = true
 	if type(id) == "number" and world.entityExists(id) then
 		world.sendEntityMessage(id, "sbqRemoveStatusEffect", "sbqMysteriousPotionTF")
 		world.sendEntityMessage(id, "sbqApplyStatusEffects", {sbqMysteriousPotionTF = { power = 3600, property = { species = data.species or sbq.species }}})

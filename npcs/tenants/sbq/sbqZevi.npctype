@@ -42,14 +42,17 @@
 			"tailVorePredLock" : true
 		},
 
-		"defaultPortrait" : "/humanoid/sbqzevi/portraits/ZNeutral.png",
+		"defaultPortrait" : "Neutral.png",
+		"portraitPath" : "/humanoid/sbqzevi/portraits/Z",
 		"dialogueTree" : {
 			// path is: personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"greeting" : {
-				"default" : {
-					"default" : {
+				"next" : "personality",
+				"default" : { // personality
+					"next" : "mood",
+					"default" : { // mood
 						"randomDialogue" : [
 							"Hi.",
 							"Hey there.",
@@ -58,8 +61,8 @@
 						"randomButtonText" : "Hi.",
 						"jump" : ["converse"]
 					},
-					"fearful" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZShocked.png",
+					"fearful" : { // mood
+						"randomPortrait" : "Shocked.png",
 						"randomDialogue" : [
 							"AH!",
 							"I-I didn't see you there!",
@@ -70,8 +73,8 @@
 							["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
 						]
 					},
-					"horny" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZUwU.png",
+					"horny" : { // mood
+						"randomPortrait" : "UwU.png",
 						"randomDialogue" : [
 							"UwU",
 							"Hehe, hey there~",
@@ -79,8 +82,8 @@
 						],
 						"jump" : ["converse"]
 					},
-					"friendly" : {
-						"randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png",
+					"friendly" : { // mood
+						"randomPortrait" : "Happy.png",
 						"randomDialogue" : [
 							"Hi!",
 							"Hey <entityname>!",
@@ -88,7 +91,7 @@
 						],
 						"jump" : ["converse"]
 					},
-					"hungry" : {
+					"hungry" : { // mood
 						"randomDialogue" : [
 							"Mmmm... feeling a bit hungry.",
 							"Hey <entityname>, I'm looking for some food, have any?",
@@ -105,67 +108,74 @@
 				"options" : []
 			},
 
-			// path is: voreType -> personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"vore" : {
+				"next" : "voreType",
 				"oralVore" : {
+					"next" : "personality",
 					"default" : {
+						"next" : "mood",
 						"default" : {
 							"request" : {
-								"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
-								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png"}
+								"before" : { "randomDialogue" : [ "Hehe, sure I'll eat you~" ], "randomPortrait" : "Blep.png" },
+								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "Happy.png"}
 							},
 							"unprompted" : {
-								"before" : {"randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
-								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+								"before" : {"randomDialogue" : [ "mmmm~ you look like a tasty meal~" ], "randomPortrait" : "Smug.png" },
+								"after" : { "randomDialogue" : [ "mmm~ get comfortable in there~" ], "randomPortrait" : "Happy.png" }
 							},
-							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
-							"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" },
-							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "Sad.png" },
+							"full" : { "randomDialogue" : [ "I'm a bit too full..." ], "randomPortrait" : "Tired.png" },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "Tired.png" }
 						}
 					}
 				},
 				"cockVore" : {
+					"next" : "personality",
 					"default" : {
+						"next" : "mood",
 						"default" : {
 							"request" : {
-								"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
-								"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" }
+								"before" : { "randomDialogue" : [ "Hah, you're horny, sure~" ], "randomPortrait" : "Smug.png" },
+								"after" : { "randomDialogue" : [ "ahh~ and now you're squeezed into my shaft~" ], "randomPortrait" : "Smug.png" }
 							},
 							"unprompted" : {
-								"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png" },
-								"after" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSmug.png"}
+								"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~" ], "randomPortrait" : "Smug.png" },
+								"after" : { "randomDialogue" : [ "ahh~ you're gonna get covered in cum heh~" ], "randomPortrait" : "Smug.png"}
 							},
-							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZSad.png" },
-							"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" },
-							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZTired.png" }
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ], "randomPortrait" : "Sad.png" },
+							"full" : { "randomDialogue" : [ "I'm plugged up down there already~" ], "randomPortrait" : "Blep.png" },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ], "randomPortrait" : "Tired.png" }
 						}
 					}
 				}
 			},
 			// when being a pred, responses to prey inside them
-			// path is: location -> personality -> mood -> bellyEffect -> digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself, digestionImmunity comes from the prey
-			"pred" : {
+			"struggle" : {
+				"next" : "location",
 				"belly" : {
+					"next" : "personality",
 					"default" : {
+						"next" : "mood",
 						"default" : {
-							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" },
-							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZHappy.png" }
+							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "Happy.png" },
+							"sbqHeal" : { "randomDialogue" : [ "Hope my belly is feels nice~" ], "randomPortrait" : "Happy.png" },
+							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "Happy.png" },
+							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~" ], "randomPortrait" : "Happy.png" }
 						}
 					}
 				},
-				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "/humanoid/sbqzevi/portraits/ZBlep.png" }
+				"shaft" : { "randomDialogue" : [ "Heh, having fun being stuck in there?~" ], "randomPortrait" : "Blep.png" }
 			},
 			// when being pred, responses to the prey escaping
 			// path is: voreType -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
 			"letout" : {
+				"next" : "voreType",
 				"default" : { // voreType
 					"true" : { // prey struggling out
 						"default" : { // race
@@ -192,7 +202,7 @@
 			// path is: location -> predator -> personality -> mood -> bellyEffect ->  digestionImmunity
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from the pred, digestionImmunity comes from itself
-			"prey" : {
+			"struggling" : {
 				// lines at very top of each tree are for talking while inside and periodically while struggling but trees can go further past that
 				"default" : {
 					"default" : { "randomDialogue" : [ "Mmm I'm pretty stuck in here aren't I?" ] }

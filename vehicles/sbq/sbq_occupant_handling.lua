@@ -249,7 +249,15 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 		sbq.showEmote("emotehappy")
 		sbq.transitionLock = true
 		world.sendEntityMessage( args.id, "sbqApplyStatusEffects", statuses )
-		world.sendEntityMessage( args.id, "sbqVoredSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species )
+
+		local settings = {
+			voreType = voreType or "default",
+			predator = sbq.species,
+			location = location,
+			locationDigest = sbq.sbqData.locations[location].digest
+		}
+
+		world.sendEntityMessage( args.id, "sbqSayRandomLine", sbq.driver, sb.jsonMerge(sbq.settings, settings), {"vored"}, true )
 
 		return true, function()
 			sbq.justAte = nil
@@ -265,16 +273,27 @@ end
 function sbq.doEscape(args, statuses, afterstatuses, voreType )
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
-	local location, effect, immunity, extra = sbq.getLocationMessageValues(victim)
+	local location = sbq.lounging[victim].location
 
-	world.sendEntityMessage( sbq.driver, "sbqLetoutSpeak", args.id, voreType or "default", effect, args.struggleTrigger, immunity, extra )
+	local settings = {
+		voreType = voreType or "default",
+		struggleTrigger = args.struggleTrigger,
+		location = location,
+		digested = sbq.lounging[victim].digested,
+		egged = sbq.lounging[victim].egged,
+		transformed = sbq.lounging[victim].transformed,
+		locationDigest = sbq.sbqData.locations[location].digest,
+		progressBarType = sbq.lounging[victim].progressBarType
+	}
+
+	world.sendEntityMessage( sbq.driver, "sbqSayRandomLine", args.id, settings, {"letout"}, true )
 	sbq.lounging[victim].location = "escaping"
 
 	vehicle.setInteractive( false )
 	world.sendEntityMessage( victim, "sbqApplyStatusEffects", statuses )
 	sbq.transitionLock = true
 	return true, function()
-		world.sendEntityMessage( args.id, "sbqEscapeSpeak", sbq.driver, voreType or "default", sbq.settings, sbq.species, effect, args.struggleTrigger, immunity, extra )
+		world.sendEntityMessage( args.id, "sbqSayRandomLine", sbq.driver, sb.jsonMerge(sbq.settings, settings), {"escape"}, false)
 		sbq.transitionLock = false
 		sbq.checkDrivingInteract()
 		sbq.uneat( victim )

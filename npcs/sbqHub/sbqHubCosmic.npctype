@@ -33,14 +33,14 @@
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
 			"greeting" : {
+				"next" : "personality",
 				"default" : {
+					"next" : "mood",
 					"default" : {
-						"default" : {
-							"randomDialogue" : [
-								"Hi. I'm a builder."
-							],
-							"randomButtonText" : "Ok."
-						}
+						"randomDialogue" : [
+							"Hi. I'm a builder."
+						],
+						"randomButtonText" : "Ok."
 					}
 				}
 			}

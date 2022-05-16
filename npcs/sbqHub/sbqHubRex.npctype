@@ -52,26 +52,26 @@
 			// path is: race -> personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
 			// settings come from itself
-			"greeting" : {
-				"default" : {
-					"default" : {
-						"default" : {
-							"randomDialogue" : [
-								"Hi.",
-								"Hey there.",
-								"Greetings!"
-							],
-							"randomButtonText" : "Hi.",
-							"jump" : ["converse"]
-						},
-						"hungry" : {
-							"randomDialogue" : [
-								"Mmmm... feeling a bit hungry.",
-								"Hey <entityname>, I'm looking for some food, have any?",
-								"Oh huh, I probably need to find something to eat."
-							],
-							"jump" : ["converse"]
-						}
+			"greeting": {
+				"next": "personality",
+				"default": {
+					"next": "mood",
+					"default": {
+						"randomDialogue": [
+							"Hi.",
+							"Hey there.",
+							"Greetings!"
+						],
+						"randomButtonText": "Hi.",
+						"jump": ["converse"]
+					},
+					"hungry": {
+						"randomDialogue": [
+							"Mmmm... feeling a bit hungry.",
+							"Hey <entityname>, I'm looking for some food, have any?",
+							"Oh huh, I probably need to find something to eat."
+						],
+						"jump": ["converse"]
 					}
 				}
 			},
@@ -81,7 +81,7 @@
 					"What's on your mind?",
 					"What can I do for you?"
 					],
-					"randomButtonText" : "[options]",
+				"randomButtonText" : "[options]",
 				"options" : [
 					["Can we talk about you?", {
 						"randomButtonText" : ["[options]"],
@@ -134,30 +134,34 @@
 
 			//vore buttons
 			"vore" : {
+				"next" : "voreType",
 				"oralVore" : {
+					"next" : "personality",
 					"default" : {
-						"default" : {
-							"default": {
-								"request" : {
-									"before" : { "randomDialogue" : [ "With pleasure~" ] },
-									"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-								},
-								"unprompted" : {
-									"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
-									"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
-								},
-								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
-								"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
-								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
-							}
+						"next" : "mood",
+						"default": {
+							"request" : {
+								"before" : { "randomDialogue" : [ "With pleasure~" ] },
+								"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+							},
+							"unprompted" : {
+								"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
+								"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+							},
+							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
+							"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
+							"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there..." ] }
 						}
 					}
 				}
 			},
-			//talking while prey
-			"pred" : {
+			//talking to prey
+			"struggle" : {
+				"next" : "location",
 				"belly" : {
+					"next" : "personality",
 					"default" : {
+						"next" : "mood",
 						"default" : {
 							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun in there?~","I do enjoy it when you wiggle around~","Mmh, quite filling!~","That hit the spot nicely!~" ]},
 							"sbqHeal" : { "randomDialogue" : [ "I will make you feel all better~","Not many know this, but I do also have dreamy liquids that heal~","Arhh, you feel so warm in there~" ]},

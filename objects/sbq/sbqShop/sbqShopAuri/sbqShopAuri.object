@@ -49,6 +49,7 @@
 	"defaultName" : "Auri",
 	"dialogueTree" : {
 		"greeting" : {
+			"next" : "mood",
 			"default" : {
 				"randomDialogue" : [ "Hello, welcome to my shop.", "Hey there.", "Gonna buy anything?" ],
 				"randomButtonText" : ["Hi.", "Hey.", "Possibly."],
