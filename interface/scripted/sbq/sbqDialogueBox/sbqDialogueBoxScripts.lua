@@ -136,12 +136,12 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 
 	if settings.transformed and dialogueTree.transformed then
 		table.insert(options, "transformed")
-	elseif settings.progressBarType == "transforming" and dialogueTree.transform then
+	elseif not settings.transformed and settings.progressBarType == "transforming" and dialogueTree.transform then
 		table.insert(options, "transform")
 	end
 	if settings.egged and dialogueTree.egged then
 		table.insert(options, "egged")
-	elseif settings.progressBarType == "eggifying" and dialogueTree.eggify then
+	elseif not settings.egged and settings.progressBarType == "eggifying" and dialogueTree.eggify then
 		table.insert(options, "eggify")
 	end
 

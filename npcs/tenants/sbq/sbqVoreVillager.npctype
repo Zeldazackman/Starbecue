@@ -441,7 +441,7 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~" ] },
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~", "Friends are stored in the balls~" ] },
 								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.default"} ] },
 								"transform" : {
 									"next" : "transformImmunity",
@@ -807,6 +807,7 @@
 									"default" : { "randomDialogue" : [ "Don't you know friends are supposed to be stored in the balls~", " Ahh~ Why'd you come out silly, it feels muuuch better to have you squirming in there~", "Mmm~ I thought you said you were comfortable~?", "Are you coming out just to squirm back in~?" ] },
 									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
 									"transform" : {
+										"next" : "transformImmunity",
 										"false" : {  "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
 										"true" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
 									}
@@ -843,13 +844,15 @@
 							"default" : { // personality
 								"next" : "mood",
 								"default" : {  // mood
-									"randomDialogue" : [ "I'm stuck here aren't I?", "Is there even a way out?", "Trapped..." ]
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ ["I'm stuck here aren't I?", "Is there even a way out?", "Trapped..."] ] }
 								}
 							},
 							"shy" : { // personality
 								"next" : "mood",
 								"default" : {  // mood
-									"randomDialogue" : [ "I-I'm stuck here aren't I?", "I-is there even a way out?", "T-trapped..." ]
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ ["I-I'm stuck here aren't I?", "I-is there even a way out?", "T-trapped..."] ] }
 								}
 							}
 						}
@@ -912,7 +915,7 @@
 										"true" : { "randomDialogue" : [["Heh trying to melt me into more slime?", "Heh trying to melt me into more slime?\nThats not gonna work."], "Sorry, I'm not soluble.", "You're gonna have to try harder to absorb me."]},
 										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime.", "Oh my... I'm dissolving.", "I'm gonna be absorbed..." ] }
 									},
-									"transformed" : { "randomDialogue" : ["I've been turned into a slime!", "Oh my... I'm a slime now", ""]},
+									"transformed" : { "randomDialogue" : ["I've been turned into a slime!", "Oh my... I'm a slime now", "I'm just a blob of slime now..."]},
 									"transform" : {
 										"next" : "transformImmunity",
 										"false" : { "randomDialogue" : ["Ahh... I'm being turned into slime...", "Its like my limbs are turning into jelly..."]},
@@ -923,18 +926,95 @@
 						}
 					}
 				},
+				"ballsR" : "struggling.balls",
+				"ballsL" : "struggling.balls",
 				"balls" : {
-					"default" : { "randomDialogue" : [ "Theres so much cum in here~" ] }
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "All this cum sloshing around me~", "Ahhh... I'm stored in the balls~", "Stuck down here in your balls~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ I'm sloshing around in here~", "Now I'm just a load of cum~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
 				},
+				"penis" : "struggling.shaft",
+				"cock" : "struggling.shaft",
 				"shaft" : {
-					"default" : { "randomDialogue" : [ "Ahh your dick is so hard its squeezing me!" ] }
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh~ your cock is squeezing tight around me~", "Ohhh~ Your shaft is squeezing so hard~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ Are you about to cum me out~?", "Now I'm just a load of cum~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
 				},
 				"womb" : {
-					"default" : { "randomDialogue" : [ "Its so soft in here~" ] }
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh~ Its so soft in here~", "Ohhh~ Your womb is so snug and soft~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [
+										["Ahhh~ My body is all different~", "Oooh~ I've been transformed~", "I got transformed by your womb~"],
+										{"check":{"egged":true},"add":["You used an egg to transform me~", "Can't wait to hatch and see my new body~"]} // oh wait
+									]},
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think changing?", "I think... I'm starting to feel goopy?"],
+											{"check":{"egged":true},"add":["I think this egg is doing something?", "Is this egg changing me?"]} // yeah fuck I just realized
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									},
+									"egged" : {}, // struggles can't trigger while egged and inside someone
+									"eggify" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "Is this... an egg?", "Are you making an egg around me?", "I'm gonna be trapped in an egg!" ] },
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
 				},
-				"breasts" : {
-					"default" : { "randomDialogue" : [ "Heh, surrounded by milk to drink~" ] }
-				}
+				"breastsR" : "struggling.breasts",
+				"breastsL" : "struggling.breasts",
+				"breasts" : {}
 			},
 			// when being prey, responses to the pred thats eating them
 			// settings come from the pred, prey settings comes from itself
