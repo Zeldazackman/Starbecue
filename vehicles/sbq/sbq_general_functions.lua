@@ -278,3 +278,13 @@ function sbq.transformPrey(i)
 	end
 	sbq.refreshList = true
 end
+
+function sbq.transformPlayer(i)
+	local id = sbq.occupant[i].id
+	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = "noChange"}
+	sbq.occupant[i].transformed = true
+	if type(id) == "number" and world.entityExists(id) then
+		world.sendEntityMessage(id, "sbqRemoveStatusEffect", "sbqMysteriousPotionTF")
+		world.sendEntityMessage(id, "sbqApplyStatusEffects", {sbqMysteriousPotionTF = { power = 3600, property = data}})
+	end
+end

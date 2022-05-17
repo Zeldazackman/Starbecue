@@ -39,7 +39,7 @@ function sbq.checkDialogueBranch(dialogueTree, settings, branch)
 	if type(dialogueBoxScripts[branch]) == "function" then
 		dialogueTree = dialogueBoxScripts[branch](dialogueTree, settings, branch)
 	elseif settings[branch] ~= nil then
-		dialogueTree = dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default or dialogueTree
+		dialogueTree = dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default
 	else
 		dialogueTree = dialogueTree[branch]
 	end
@@ -124,6 +124,11 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	local dialogueTree = dialogueTree
 	local options = {}
 	local effect = settings[(settings.location or "").."Effect"]
+
+	if settings.digested then
+		return dialogueTree.digested or dialogueTree.default
+	end
+
 	if settings.locationDigest then
 		effect = "bellyEffect"
 	end

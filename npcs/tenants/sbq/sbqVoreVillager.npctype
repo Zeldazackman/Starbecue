@@ -13,8 +13,13 @@
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
 		"dialogueTree" : {
-			// path is: race -> personality -> mood
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// after following a path, next steps will automatically advance you down the tree until there is a step that does not have a next
+			// a next can be a string or a table, if the next step is a string, it will just use that value, if it is a table, it will randomly select from it
+			// when defining a next step, it attemts to find and run dialogueBoxScript matching the name of the next step value to determine which step to take next
+			// if no script is found it checks if a setting matching the name step exists, if so it attempts to use its value for the next step, the setting's name, or default
+			// if no setting is found it only attempts to go down the branch with the matching name of the next step
+
+			// greeting is the default start of the tree
 			// settings come from itself
 			"greeting" : {
 				"next" : "race",
@@ -28,8 +33,8 @@
 					}
 				}
 			},
-			// path is: voreType -> race -> personality -> mood -> (steps here are handled by sbq.voreButton()) -> bellyEffect
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+
+			// lines for when a pred is eating prey, be it from hunting, or from it being requested
 			// settings come from itself
 			"vore" : {
 				"next" : "voreType",
@@ -342,10 +347,8 @@
 					}
 				}
 			},
-			// when being a pred, responses to prey inside them
-			// path is: location -> race -> personality -> mood -> bellyEffect -> digestionImmunity
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from itself, digestionImmunity comes from the prey
+			// when being pred, responses to the prey struggling inside
+			// settings come from itself, prey settings come from prey
 			"struggle" : {
 				"next" : "location",
 				"taurBelly" : "struggle.belly",
@@ -451,9 +454,7 @@
 				}
 			},
 			// when being pred, responses to the prey escaping
-			// path is: voreType -> struggleTrigger -> race -> personality -> mood -> bellyEffect -> digestionImmunity
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from the pred, digestionImmunity comes from itself
+			// settings come from itself, prey settings come from the prey
 			"letout" : {
 				"next" : "voreType",
 				"oralVore" : { // voreType
@@ -830,9 +831,7 @@
 			},
 
 			// when being prey, responses to the pred that ate them as they struggle
-			// path is: location -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from the pred, digestionImmunity comes from itself
+			// settings come from the pred, prey settings comes from itself
 			"struggling" : {
 				"next" : "location",
 				"default" : { // location
@@ -845,6 +844,12 @@
 								"next" : "mood",
 								"default" : {  // mood
 									"randomDialogue" : [ "I'm stuck here aren't I?", "Is there even a way out?", "Trapped..." ]
+								}
+							},
+							"shy" : { // personality
+								"next" : "mood",
+								"default" : {  // mood
+									"randomDialogue" : [ "I-I'm stuck here aren't I?", "I-is there even a way out?", "T-trapped..." ]
 								}
 							}
 						}
@@ -860,41 +865,32 @@
 								"next" : "mood",
 								"default" : { // mood
 									"next" : "getLocationEffect",
-									"default" : { "randomDialogue" : [ "Mm, pretty comfortable." ]},
-									"sbqHeal" : { "randomDialogue" : [ "Ah it feels so nice in here~" ] },
-									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
-									},
+									"default" : { "randomDialogue" : [
+										["Mmmm pretty comfortable.", "Ahh... your belly is so soft...", {"check":{"bellySounds":true},"add":["Your belly is so noisy.", "Mmm... I like the sounds your belly is making."]}],
+										{"check":{"predator":"sbqVaporeon"},"add":["Gooey Vappy belly.", "Its all gooey in here."]}
+									]},
+									"sbqHeal" : { "randomDialogue" : [
+										["Ahh... its so soothing.", "I can feel all my troubles melting away...", "Its so comfortable in here.", {"check":{"bellySounds":true},"add":["I really like the sounds your belly makes... very calming.", "I could just drift off to sleep listening to the sounds of your body..."]} ],
+										{"check":{"predator":"sbqVaporeon"},"add":["I always liked vappy goo."]}
+									]},
 									"sbqDigest" : {
 										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Trying to melt me down?" ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt." ] }
-									}
-								}
-							}
-						}
-					},
-					"sbqVaporeon" : { // predator
-						"next" : "race",
-						"default" : { // race
-							"next" : "personality",
-							"default" : { // personality
-								"next" : "mood",
-								"default" : { // mood
-									"next" : "getLocationEffect",
-									"default" : { "randomDialogue" : [ "gooey vappy belly." ]},
-									"sbqHeal" : { "randomDialogue" : [ "This goo feels pretty nice~" ] },
-									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+										"true" : { "randomDialogue" : [
+											[["Trying to melt me down?","Trying to melt me down?\nThats not gonna work."], "Heh, I can actually stay in here as long as I want.", "I'm invincible!", "You can't melt me!"]
+										]},
+										"false" : { "randomDialogue" : [
+											["Ahh... I'm starting to melt.", "Oh my... I'm just gonna be food.", {"check":{"bellySounds":true},"add":["Your belly is so noisy... I'm going to be gurgled up aren't I?", "All this grumbling... you must be pretty hungry."]} ],
+											{"check":{"predator":"sbqVaporeon"},"add":["Ahh... I'm starting to melt into goo..."]}
+										]}
 									},
-									"sbqDigest" : {
-										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Theres so much goo in here..." ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to get all gooey." ] }
+									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "It feels like... I'm changing?"],
+											{"check":{"predator":"sbqVaporeon"},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -908,17 +904,19 @@
 								"next" : "mood",
 								"default" : { // mood
 									"next" : "getLocationEffect",
-									"default" : { "randomDialogue" : [ "This slime is so sticky." ]},
-									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice~" ] },
-									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
-									},
+									"default" : { "randomDialogue" : [ "This slime is so sticky.", "Stuck suspended in slime...", "Suspended in sticky goo..." ]},
+									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice.", "Ahh... this is... oddly satisfying...", "I wouldn't mind staying suspended in here..." ] },
+									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
 									"sbqDigest" : {
 										"next" : "digestionImmunity",
-										"true" : { "randomDialogue" : [ "Heh trying to melt me into more slime..." ] },
-										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime." ] }
+										"true" : { "randomDialogue" : [["Heh trying to melt me into more slime?", "Heh trying to melt me into more slime?\nThats not gonna work."], "Sorry, I'm not soluble.", "You're gonna have to try harder to absorb me."]},
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime.", "Oh my... I'm dissolving.", "I'm gonna be absorbed..." ] }
+									},
+									"transformed" : { "randomDialogue" : ["I've been turned into a slime!", "Oh my... I'm a slime now", ""]},
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : ["Ahh... I'm being turned into slime...", "Its like my limbs are turning into jelly..."]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -939,9 +937,7 @@
 				}
 			},
 			// when being prey, responses to the pred thats eating them
-			// path is: voreType -> predator -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from the pred, digestionImmunity comes from itself
+			// settings come from the pred, prey settings comes from itself
 			"vored" : {
 				"next" : "voreType",
 				"default" : { // voreType
@@ -1006,9 +1002,7 @@
 				}
 			},
 			// when being prey, responses to the pred letting them out
-			// path is: voreType -> predator -> struggleTrigger -> race -> personality -> mood -> bellyEffect ->  digestionImmunity
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from the pred, digestionImmunity comes from itself
+			// settings come from the pred, prey settings comes from itself
 			"escape" : {
 				"next" : "voreType",
 				"default" : { // voreType
@@ -1043,6 +1037,25 @@
 				}
 			}
 		},
+		// when hunting for prey, a checklist to have them only seek out prey that match the settings
+		// any settings not defined in the checlkist for that vore type can be anything
+		// such as a digestion pred not wanting to eat prey with digestion immunity, or not want to eat other preds, etc.
+		"huntingChecklist" : {
+			"default" : {
+				"preySettings" : {},
+				"settings" : {}
+			}
+		},
+		// when baiting a pred, a checklist to have them only seek out preds with certain settings
+		// any settings not defined in the checlkist for that vore type can be anything
+		// such as a prey not wanting to seek out preds that will digest them, or not wanting to seek out preds that do vore types they don't like
+		"baitingChecklist" : {
+			"default" : {
+				"preySettings" : {},
+				"settings" : {}
+			}
+		},
+
 		"sbqRandomizePreySettings" : {
 			"oralVore" : [true,false],
 			"tailVore" : [true,false],

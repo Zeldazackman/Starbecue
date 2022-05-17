@@ -65,4 +65,9 @@ function sbq.everything_primary()
 			world.sendEntityMessage(currentData.id, "sbqSoftDigest", id)
 		end
 	end)
+
+	message.setHandler("sbqGetSpeciesOverrideData", function (_,_)
+		local data = { species = world.entitySpecies(entity.id()), gender = world.entityGender(entity.id())}
+		return sb.jsonMerge(data, status.statusProperty("speciesAnimOverrideData") or {})
+	end)
 end

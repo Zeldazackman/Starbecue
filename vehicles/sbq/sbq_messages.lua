@@ -53,26 +53,24 @@ message.setHandler( "playerTransform", function(_,_, eid, multiplier, data )
 end )
 
 function playerTransformMessageHandler(eid, multiplier, data)
-	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive  then return end
+	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive or sbq.lounging[eid].stopPlayerTransformMessage then return end
+	sbq.addRPC(world.sendEntityMessage(eid, "sbqGetSpeciesOverrideData"), function (overrideData)
+		if overrideData then
+			local species = (data or {}).species or sbq.species
+			if overrideData.species ~= species then
+				sbq.lounging[eid].progressBarActive = true
+				sbq.lounging[eid].progressBar = 0
+				sbq.lounging[eid].progressBarData = data
 
-	sbq.lounging[eid].progressBarActive = true
-	sbq.lounging[eid].progressBar = 0
-	sbq.lounging[eid].progressBarData = data or {}
-
-	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
-	sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
-	sbq.lounging[eid].progressBarType = "transforming"
+				sbq.lounging[eid].progressBarMultiplier = multiplier or 3
+				sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
+				sbq.lounging[eid].progressBarType = "transforming"
+			else
+				sbq.lounging[eid].stopPlayerTransformMessage = true
+			end
+		end
+	end)
 end
-function sbq.transformPlayer(i)
-	local id = sbq.occupant[i].id
-	local data = sbq.occupant[i].progressBarData
-	sbq.occupant[i].transformed = true
-	if type(id) == "number" and world.entityExists(id) then
-		world.sendEntityMessage(id, "sbqRemoveStatusEffect", "sbqMysteriousPotionTF")
-		world.sendEntityMessage(id, "sbqApplyStatusEffects", {sbqMysteriousPotionTF = { power = 3600, property = { species = data.species or sbq.species }}})
-	end
-end
-
 
 message.setHandler( "settingsMenuRefresh", function(_,_)
 	sbq.predHudOpen = 2
