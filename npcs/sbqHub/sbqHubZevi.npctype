@@ -25,32 +25,35 @@
 								"dismissTime" : -1,
 								"buttonText" : [
 									"Okay.",
-									"Got it.",
-									"Cool.",
-									"Thats nice.",
-									"Oh.",
-									"Makes sense.",
 									"Mhm.",
-									"Finally."
+									"Got it."
 								],
 								"dialogue" : [
-									"So, currently unfinished, I'm the only NPC with it and no tenants can be summoned yet. When its done vore NPCs will have dialogue trees like this to talk about stuff.",
-									"Talking could impact what types of vore they're in the mood to do. This could mean a pred seeking out prey, player or NPC, when they're hungry, or a prey seeking out a pred, etc.",
-									"NPCs in this system can do multiple kinds of vore rather than just one, and kinds will be able to be enabled and disabled from a settings menu.",
-									"And of course you'll only ever be able to be prey for what you have enabled, and dialogue options for stuff you don't just won't even show up.",
-									"In addition to talking to change mood an NPC's settings panel could be used to just lock them to always in the mood, this applies to both pred, and prey.",
-									"When its finished, rather than placing vore badges in the room, there will be a settings panel that goes under the colony deed. To be clear, this will not work for SSVM NPCs.",
-									"this will communicate with the deed and the NPC and will be used for selecting their vore prefs, OC NPCs might have certain ones locked and unchangable out of repect to the owner's prefs.",
-									"Thats about it for now, mainly the general concept aside from what you're seeing at work here."
+									"So, first of all, you can summon SBQ NPCs with the special colony deed you can buy from Auri. It has its own UI to help you choose the NPC you want.",
+									"For example, you could summon me by just placing some crystalline tagged objects in my room with the vore deed, or by typing my name into the textbox and summoning.",
+									"You'd still have to make me happy by getting some crystalline objects, but you'd see the requirements in the deed UI to make it easier."
 								],
 								"jump" : [ "converse", "options", 1, 2 ]
 							}],
 							[ "Thats all I wanted to know about you.", { "jump" : [ "converse" ] }]
 						]
 					}],
-					[ "Whats this whole dialogue box thingy?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "This is for the vore NPC system, its not finished yet, so I'm a bit of a demo" ], "jump" : [ "converse" ] }],
+					[ "Whats this whole dialogue box thingy?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "This is for the NPC system, I'm a bit of a demo." ], "jump" : [ "converse" ] }],
 					[ "What is this place?", { "randomButtonText" : ["Mhm."], "randomDialogue" : [ "A shop for vore stuff, you downloaded a vore mod after all."], "jump" : [ "converse" ]}]
 				]
+			}
+		}
+	},
+	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"digestImmunity": true,
+				"transformImmunity": true
 			}
 		}
 	}
