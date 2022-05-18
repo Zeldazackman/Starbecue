@@ -1533,6 +1533,7 @@
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornatetiles",
                      "mod":"snow"
                     },
@@ -1549,6 +1550,7 @@
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornatetiles",
                      "mod":"snow"
                     },
@@ -1565,6 +1567,7 @@
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornateroofing",
                      "mod":"snow"
                     },
@@ -1581,6 +1584,7 @@
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornateroofing",
                      "mod":"snow"
                     },
@@ -1593,26 +1597,11 @@
                 }, 
                 {
                  "height":8,
-                 "id":121,
-                 "name":"",
-                 "properties":
-                    {
-                     "material":"ornateroofing",
-                     "mod":"snow"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":8,
-                 "x":40,
-                 "y":56
-                }, 
-                {
-                 "height":8,
                  "id":122,
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornateroofing",
                      "mod":"snow"
                     },
@@ -1629,6 +1618,7 @@
                  "name":"",
                  "properties":
                     {
+                     "colorVariant":"2",
                      "material":"ornateroofing",
                      "mod":"snow"
                     },
@@ -1641,18 +1631,214 @@
                 }, 
                 {
                  "height":8,
-                 "id":124,
+                 "id":150,
                  "name":"",
                  "properties":
                     {
-                     "material":"ornateroofing",
+                     "back":"ornateroofing",
+                     "colorVariant":"2"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":56,
+                 "x":640,
+                 "y":32
+                }, 
+                {
+                 "height":8,
+                 "id":155,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornatetiles",
+                     "colorVariant":"2",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":56,
+                 "x":680,
+                 "y":64
+                }, 
+                {
+                 "height":8,
+                 "id":156,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornatetiles",
+                     "colorVariant":"2",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":56,
+                 "x":640,
+                 "y":24
+                }, 
+                {
+                 "height":32,
+                 "id":157,
+                 "name":"",
+                 "properties":
+                    {
+                     "colorVariant":"2",
+                     "material":"ornateroofing"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":576,
+                 "x":64,
+                 "y":32
+                }, 
+                {
+                 "height":8,
+                 "id":161,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornateroofing",
+                     "colorVariant":"2"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":648,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":162,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornateroofing",
+                     "colorVariant":"2"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":656,
+                 "y":48
+                }, 
+                {
+                 "height":8,
+                 "id":163,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornateroofing",
+                     "colorVariant":"2"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":56,
+                 "x":664,
+                 "y":56
+                }, 
+                {
+                 "height":8,
+                 "id":164,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornateroofing",
+                     "colorVariant":"2",
                      "mod":"snow"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
-                 "x":656,
+                 "x":696,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":165,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"ornateroofing",
+                     "colorVariant":"2",
+                     "mod":"snow"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":704,
+                 "y":48
+                }, 
+                {
+                 "height":16,
+                 "id":167,
+                 "name":"",
+                 "properties":
+                    {
+                     "colorVariant":"2",
+                     "material":"ornateroofing"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":640,
+                 "y":48
+                }, 
+                {
+                 "height":16,
+                 "id":168,
+                 "name":"",
+                 "properties":
+                    {
+                     "colorVariant":"2",
+                     "material":"ornateroofing"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":56,
+                 "y":48
+                }, 
+                {
+                 "height":8,
+                 "id":169,
+                 "name":"",
+                 "properties":
+                    {
+                     "colorVariant":"2",
+                     "material":"ornateroofing"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":40,
+                 "y":56
+                }, 
+                {
+                 "height":8,
+                 "id":170,
+                 "name":"",
+                 "properties":
+                    {
+                     "colorVariant":"2",
+                     "material":"ornateroofing"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":648,
                  "y":56
                 }],
          "opacity":1,
@@ -1693,7 +1879,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":142,
+ "nextobjectid":171,
  "orientation":"orthogonal",
  "properties":
     {

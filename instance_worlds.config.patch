@@ -14,7 +14,7 @@
 				"nonCombat" : true
 			},
 
-			"tempWorldDeleteTime" : 300000, // idfkn this value very much is not dt so I have no idea how many seconds it is, but now its longer than it was before
+			"tempWorldDeleteTime" : 3000000, // idfkn this value very much is not dt so I have no idea how many seconds it is, but now its longer than it was before
 			"useUniverseClock" : true,
 
 			"skyParameters" : {
@@ -38,7 +38,7 @@
 				"satellites" : [],
 				"horizonImages" : [ ],
 				"dayLength" : 1000,
-				"surfaceLevel" : 270,
+				"surfaceLevel" : 370,
 				"seed" : -1533
 			}
 		}
