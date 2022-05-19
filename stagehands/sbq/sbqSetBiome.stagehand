@@ -1,0 +1,8 @@
+{
+	"type": "sbqSetBiome",
+	"keepAlive" : true,
+	"scripts": [
+		"/stagehands/sbq/sbqSetBiome.lua"
+	],
+	"broadcastArea" : [-1, -1, 1, 1]
+}

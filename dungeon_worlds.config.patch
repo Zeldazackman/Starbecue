@@ -4,12 +4,18 @@
 		"path" : "/sbqHub",
 		"value" : {
 			"primaryDungeon" : "sbqHub",
-			"threatLevel" : 0,
+			"weatherPool" : [
+				[0.325, "clear"],
+				[0.4, "snow"],
+				[0.05, "snowstorm"],
+				[0.0125, "glowingrain"]
+			],
+			"threatLevel" : 1,
 			"gravity" : 100,
-			"worldSize" : [1000, 500],
+			"worldSize" : [1000, 600],
 			"ambientLightLevel" : [32, 32, 32],
-			"dungeonBaseHeight" : 500,
-			"dungeonSurfaceHeight" : 270,
+			"dungeonBaseHeight" : 600,
+			"dungeonSurfaceHeight" : 370,
 			"musicTrack" : "/music/forsaken-grotto.ogg", // placeholder
 			"biome": "sbqDreamerSnow"
 		}
