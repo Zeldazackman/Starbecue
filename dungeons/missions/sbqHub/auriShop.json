@@ -1927,6 +1927,10 @@
         {
          "firstgid":1345,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/generic.json"
+        }, 
+        {
+         "firstgid":1347,
+         "source":"..\/..\/..\/tilesets\/auriShop\/paintedBlocks.json"
         }],
  "tilewidth":8,
  "version":1,

@@ -1,0 +1,603 @@
+{
+   "columns": 0,
+   "margin": 0,
+   "name": "paintedBlocks",
+   "properties": {},
+   "spacing": 0,
+   "tilecount": 84,
+   "tileheight": 8,
+   "tileproperties": {
+      "0": {
+         "colorVariant": "1",
+         "material": "crystalblock"
+      },
+      "1": {
+         "colorVariant": "3",
+         "material": "crystalblock"
+      },
+      "2": {
+         "colorVariant": "4",
+         "material": "crystalblock"
+      },
+      "3": {
+         "colorVariant": "5",
+         "material": "crystalblock"
+      },
+      "4": {
+         "colorVariant": "6",
+         "material": "crystalblock"
+      },
+      "5": {
+         "colorVariant": "7",
+         "material": "crystalblock"
+      },
+      "6": {
+         "colorVariant": "8",
+         "material": "crystalblock"
+      },
+      "7": {
+         "colorVariant": "1",
+         "material": "candyblock"
+      },
+      "8": {
+         "colorVariant": "2",
+         "material": "candyblock"
+      },
+      "9": {
+         "colorVariant": "3",
+         "material": "candyblock"
+      },
+      "10": {
+         "colorVariant": "4",
+         "material": "candyblock"
+      },
+      "11": {
+         "colorVariant": "5",
+         "material": "candyblock"
+      },
+      "12": {
+         "colorVariant": "6",
+         "material": "candyblock"
+      },
+      "13": {
+         "colorVariant": "7",
+         "material": "candyblock"
+      },
+      "14": {
+         "colorVariant": "8",
+         "material": "candyblock"
+      },
+      "15": {
+         "colorVariant": "1",
+         "material": "supermatter"
+      },
+      "16": {
+         "colorVariant": "2",
+         "material": "supermatter"
+      },
+      "17": {
+         "colorVariant": "3",
+         "material": "supermatter"
+      },
+      "18": {
+         "colorVariant": "4",
+         "material": "supermatter"
+      },
+      "19": {
+         "colorVariant": "5",
+         "material": "supermatter"
+      },
+      "20": {
+         "colorVariant": "7",
+         "material": "supermatter"
+      },
+      "21": {
+         "colorVariant": "8",
+         "material": "supermatter"
+      },
+      "22": {
+         "colorVariant": "1",
+         "material": "heavypipe"
+      },
+      "23": {
+         "colorVariant": "2",
+         "material": "heavypipe"
+      },
+      "24": {
+         "colorVariant": "3",
+         "material": "heavypipe"
+      },
+      "25": {
+         "colorVariant": "4",
+         "material": "heavypipe"
+      },
+      "26": {
+         "colorVariant": "5",
+         "material": "heavypipe"
+      },
+      "27": {
+         "colorVariant": "6",
+         "material": "heavypipe"
+      },
+      "28": {
+         "colorVariant": "7",
+         "material": "heavypipe"
+      },
+      "29": {
+         "colorVariant": "8",
+         "material": "heavypipe"
+      },
+      "30": {
+         "colorVariant": "1",
+         "material": "geodeblock"
+      },
+      "31": {
+         "colorVariant": "2",
+         "material": "geodeblock"
+      },
+      "32": {
+         "colorVariant": "4",
+         "material": "geodeblock"
+      },
+      "33": {
+         "colorVariant": "5",
+         "material": "geodeblock"
+      },
+      "34": {
+         "colorVariant": "6",
+         "material": "geodeblock"
+      },
+      "35": {
+         "colorVariant": "7",
+         "material": "geodeblock"
+      },
+      "36": {
+         "colorVariant": "8",
+         "material": "geodeblock"
+      },
+      "37": {
+         "colorVariant": "1",
+         "material": "geodestone"
+      },
+      "38": {
+         "colorVariant": "2",
+         "material": "geodestone"
+      },
+      "39": {
+         "colorVariant": "3",
+         "material": "geodestone"
+      },
+      "40": {
+         "colorVariant": "4",
+         "material": "geodestone"
+      },
+      "41": {
+         "colorVariant": "5",
+         "material": "geodestone"
+      },
+      "42": {
+         "colorVariant": "6",
+         "material": "geodestone"
+      },
+      "43": {
+         "colorVariant": "7",
+         "material": "geodestone"
+      },
+      "44": {
+         "colorVariant": "8",
+         "material": "geodestone"
+      },
+      "45": {
+         "colorVariant": "1",
+         "material": "copperblock"
+      },
+      "46": {
+         "colorVariant": "2",
+         "material": "copperblock"
+      },
+      "47": {
+         "colorVariant": "3",
+         "material": "copperblock"
+      },
+      "48": {
+         "colorVariant": "4",
+         "material": "copperblock"
+      },
+      "49": {
+         "colorVariant": "5",
+         "material": "copperblock"
+      },
+      "50": {
+         "colorVariant": "6",
+         "material": "copperblock"
+      },
+      "51": {
+         "colorVariant": "7",
+         "material": "copperblock"
+      },
+      "52": {
+         "colorVariant": "8",
+         "material": "copperblock"
+      },
+      "53": {
+         "colorVariant": "1",
+         "material": "bookpiles"
+      },
+      "54": {
+         "colorVariant": "2",
+         "material": "bookpiles"
+      },
+      "55": {
+         "colorVariant": "3",
+         "material": "bookpiles"
+      },
+      "56": {
+         "colorVariant": "4",
+         "material": "bookpiles"
+      },
+      "57": {
+         "colorVariant": "5",
+         "material": "bookpiles"
+      },
+      "58": {
+         "colorVariant": "6",
+         "material": "bookpiles"
+      },
+      "59": {
+         "colorVariant": "7",
+         "material": "bookpiles"
+      },
+      "60": {
+         "colorVariant": "8",
+         "material": "bookpiles"
+      },
+      "61": {
+         "colorVariant": "1",
+         "material": "cloudblock"
+      },
+      "62": {
+         "colorVariant": "2",
+         "material": "cloudblock"
+      },
+      "63": {
+         "colorVariant": "3",
+         "material": "cloudblock"
+      },
+      "64": {
+         "colorVariant": "4",
+         "material": "cloudblock"
+      },
+      "65": {
+         "colorVariant": "5",
+         "material": "cloudblock"
+      },
+      "66": {
+         "colorVariant": "6",
+         "material": "cloudblock"
+      },
+      "67": {
+         "colorVariant": "7",
+         "material": "cloudblock"
+      },
+      "68": {
+         "colorVariant": "8",
+         "material": "cloudblock"
+      },
+      "69": {
+         "colorVariant": "1",
+         "material": "clay"
+      },
+      "70": {
+         "colorVariant": "2",
+         "material": "clay"
+      },
+      "71": {
+         "colorVariant": "3",
+         "material": "clay"
+      },
+      "72": {
+         "colorVariant": "4",
+         "material": "clay"
+      },
+      "73": {
+         "colorVariant": "5",
+         "material": "clay"
+      },
+      "74": {
+         "colorVariant": "6",
+         "material": "clay"
+      },
+      "75": {
+         "colorVariant": "7",
+         "material": "clay"
+      },
+      "76": {
+         "colorVariant": "8",
+         "material": "clay"
+      },
+      "77": {
+         "colorVariant": "1",
+         "material": "neonblock"
+      },
+      "78": {
+         "colorVariant": "2",
+         "material": "neonblock"
+      },
+      "79": {
+         "colorVariant": "3",
+         "material": "neonblock"
+      },
+      "80": {
+         "colorVariant": "4",
+         "material": "neonblock"
+      },
+      "81": {
+         "colorVariant": "5",
+         "material": "neonblock"
+      },
+      "82": {
+         "colorVariant": "6",
+         "material": "neonblock"
+      },
+      "83": {
+         "colorVariant": "7",
+         "material": "neonblock"
+      }
+   },
+   "tiles": {
+      "0": {
+         "image": "redcrystalblock.png"
+      },
+      "1": {
+         "image": "greencrystalblock.png"
+      },
+      "2": {
+         "image": "yellowcrystalblock.png"
+      },
+      "3": {
+         "image": "orangecrystalblock.png"
+      },
+      "4": {
+         "image": "magentacrystalblock.png"
+      },
+      "5": {
+         "image": "blackcrystalblock.png"
+      },
+      "6": {
+         "image": "whitecrystalblock.png"
+      },
+      "7": {
+         "image": "redcandyblock.png"
+      },
+      "8": {
+         "image": "bluecandyblock.png"
+      },
+      "9": {
+         "image": "greencandyblock.png"
+      },
+      "10": {
+         "image": "yellowcandyblock.png"
+      },
+      "11": {
+         "image": "orangecandyblock.png"
+      },
+      "12": {
+         "image": "magentacandyblock.png"
+      },
+      "13": {
+         "image": "blackcandyblock.png"
+      },
+      "14": {
+         "image": "whitecandyblock.png"
+      },
+      "15": {
+         "image": "redsupermatter.png"
+      },
+      "16": {
+         "image": "bluesupermatter.png"
+      },
+      "17": {
+         "image": "greensupermatter.png"
+      },
+      "18": {
+         "image": "yellowsupermatter.png"
+      },
+      "19": {
+         "image": "orangesupermatter.png"
+      },
+      "20": {
+         "image": "blacksupermatter.png"
+      },
+      "21": {
+         "image": "whitesupermatter.png"
+      },
+      "22": {
+         "image": "redheavypipe.png"
+      },
+      "23": {
+         "image": "blueheavypipe.png"
+      },
+      "24": {
+         "image": "greenheavypipe.png"
+      },
+      "25": {
+         "image": "yellowheavypipe.png"
+      },
+      "26": {
+         "image": "orangeheavypipe.png"
+      },
+      "27": {
+         "image": "magentaheavypipe.png"
+      },
+      "28": {
+         "image": "blackheavypipe.png"
+      },
+      "29": {
+         "image": "whiteheavypipe.png"
+      },
+      "30": {
+         "image": "redgeodeblock.png"
+      },
+      "31": {
+         "image": "bluegeodeblock.png"
+      },
+      "32": {
+         "image": "yellowgeodeblock.png"
+      },
+      "33": {
+         "image": "orangegeodeblock.png"
+      },
+      "34": {
+         "image": "magentageodeblock.png"
+      },
+      "35": {
+         "image": "blackgeodeblock.png"
+      },
+      "36": {
+         "image": "whitegeodeblock.png"
+      },
+      "37": {
+         "image": "redgeodestone.png"
+      },
+      "38": {
+         "image": "bluegeodestone.png"
+      },
+      "39": {
+         "image": "greengeodestone.png"
+      },
+      "40": {
+         "image": "yellowgeodestone.png"
+      },
+      "41": {
+         "image": "orangegeodestone.png"
+      },
+      "42": {
+         "image": "magentageodestone.png"
+      },
+      "43": {
+         "image": "blackgeodestone.png"
+      },
+      "44": {
+         "image": "whitegeodestone.png"
+      },
+      "45": {
+         "image": "redcopperblock.png"
+      },
+      "46": {
+         "image": "bluecopperblock.png"
+      },
+      "47": {
+         "image": "greencopperblock.png"
+      },
+      "48": {
+         "image": "yellowcopperblock.png"
+      },
+      "49": {
+         "image": "orangecopperblock.png"
+      },
+      "50": {
+         "image": "magentacopperblock.png"
+      },
+      "51": {
+         "image": "blackcopperblock.png"
+      },
+      "52": {
+         "image": "whitecopperblock.png"
+      },
+      "53": {
+         "image": "redbookpiles.png"
+      },
+      "54": {
+         "image": "bluebookpiles.png"
+      },
+      "55": {
+         "image": "greenbookpiles.png"
+      },
+      "56": {
+         "image": "yellowbookpiles.png"
+      },
+      "57": {
+         "image": "orangebookpiles.png"
+      },
+      "58": {
+         "image": "magentabookpiles.png"
+      },
+      "59": {
+         "image": "blackbookpiles.png"
+      },
+      "60": {
+         "image": "whitebookpiles.png"
+      },
+      "61": {
+         "image": "redcloudblock.png"
+      },
+      "62": {
+         "image": "bluecloudblock.png"
+      },
+      "63": {
+         "image": "greencloudblock.png"
+      },
+      "64": {
+         "image": "yellowcloudblock.png"
+      },
+      "65": {
+         "image": "orangecloudblock.png"
+      },
+      "66": {
+         "image": "magentacloudblock.png"
+      },
+      "67": {
+         "image": "blackcloudblock.png"
+      },
+      "68": {
+         "image": "whitecloudblock.png"
+      },
+      "69": {
+         "image": "redclay.png"
+      },
+      "70": {
+         "image": "blueclay.png"
+      },
+      "71": {
+         "image": "greenclay.png"
+      },
+      "72": {
+         "image": "yellowclay.png"
+      },
+      "73": {
+         "image": "orangeclay.png"
+      },
+      "74": {
+         "image": "magentaclay.png"
+      },
+      "75": {
+         "image": "blackclay.png"
+      },
+      "76": {
+         "image": "whiteclay.png"
+      },
+      "77": {
+         "image": "redneonblock.png"
+      },
+      "78": {
+         "image": "blueneonblock.png"
+      },
+      "79": {
+         "image": "greenneonblock.png"
+      },
+      "80": {
+         "image": "yellowneonblock.png"
+      },
+      "81": {
+         "image": "orangeneonblock.png"
+      },
+      "82": {
+         "image": "magentaneonblock.png"
+      },
+      "83": {
+         "image": "blackneonblock.png"
+      }
+
+   },
+   "tilewidth": 8
+}
