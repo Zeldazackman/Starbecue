@@ -58,7 +58,7 @@
                     },
                  "rotation":0,
                  "type":"",
-                 "visible":false,
+                 "visible":true,
                  "width":56,
                  "x":56,
                  "y":232
@@ -326,7 +326,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqCraftsmanOutfit\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -342,7 +342,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqMerchantOutfit\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -358,7 +358,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqLinkOutfit\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -374,7 +374,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqNobleOutfit\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -422,7 +422,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqKingOutfit\"]}"
                     },
                  "rotation":0,
                  "type":"",
