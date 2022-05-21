@@ -1,0 +1,19 @@
+{
+	"metadata" : {
+		"name" : "sbq_adMemeDungeon",
+		"species" : "generic",
+		"rules" : [],
+		"anchor" : [ "dungeon" ],
+		"maxParts" : 1
+	},
+
+	"parts" : [
+		{
+			"name" : "dungeon",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "adMemeDungeon.json" ]
+		}
+	]
+}
