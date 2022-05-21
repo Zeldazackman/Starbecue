@@ -1,8 +1,8 @@
 {
 	// built by Cosmic#9200
 	"metadata" : {
-		"name" : "sbqHub_humanHouse",
-		"species" : "human",
+		"name" : "sbqHub_glitchHouse",
+		"species" : "glitch",
 		"rules" : [],
 		"anchor" : [ "house" ],
 		"maxRadius" : 1000000,
@@ -16,7 +16,7 @@
 			"rules" : [
 				[ "maxSpawnCount", [1] ]
 			],
-			"def" : [ "tmx", "humanHouse.json" ]
+			"def" : [ "tmx", "glitchHouse.json" ]
 		}
 	]
 }
