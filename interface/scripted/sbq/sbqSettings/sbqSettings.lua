@@ -10,6 +10,7 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require("/scripts/speciesAnimOverride_player_species.lua")
 
 function sbq.getPatronsString()
 	local patronsString = ""
@@ -51,8 +52,7 @@ function init()
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
 			sbq.predatorConfig = root.assetJson("/humanoid/sbqData.config").sbqData
-			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-			local species = speciesAnimOverrideData.species or player.species()
+			local species = player.species()
 			local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
 			if success then
 				if type(data.sbqData) == "table" then

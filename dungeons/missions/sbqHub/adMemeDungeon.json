@@ -15,7 +15,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJxjYBgFo2DggRwNMbH2k+LWZ0TioWS\/KI3cSor9hNwgSgf7sbkDWZxW9lPbzOFqPy3AqP2j9o\/aP\/zsN8aD0e2\/TwNMbLtkMNhPbzwKRsEoGFgAAAX0RFc=",
+         "data":"eJxjYBgFo2DggRwNMbH2k+JWaqsdDPaLDgL7CblBlA72Y3MHsvhwjf+hYj8twKj9o\/aP2j\/87DfGg9Htv08DTGy7ZDDYT288CkbBKBhYAAAQhDJf",
          "encoding":"base64",
          "height":32,
          "name":"front",
@@ -1054,6 +1054,21 @@
                  "width":8,
                  "x":248,
                  "y":184
+                }, 
+                {
+                 "height":16,
+                 "id":145,
+                 "name":"",
+                 "properties":
+                    {
+                     "liquid":"water"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":80,
+                 "x":112,
+                 "y":48
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1170,7 +1185,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":145,
+ "nextobjectid":146,
  "orientation":"orthogonal",
  "properties":
     {

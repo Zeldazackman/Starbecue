@@ -6,7 +6,7 @@ end
 function sbq.npcInteract(id, i)
 	local predator = sbq.sbqCurrentData.species
 	if predator == "sbqOccupantHolder" then
-		predator = (status.statusProperty("speciesAnimOverrideData") or {}).species or player.species()
+		predator = player.species()
 	end
 	local predData = {
 		settings = sbq.sbqCurrentData.settings,

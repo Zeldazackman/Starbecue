@@ -196,7 +196,7 @@ function init()
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		local speciesConfig = root.assetJson("/humanoid/sbqData.config")
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-		local species = speciesAnimOverrideData.species or player.species()
+		local species = player.species()
 		local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
 		if success then
 			if type(data.sbqData) == "table" then

@@ -8,6 +8,10 @@ function init()
 
 	removeOtherBellyEffects("sbqHealDisplay")
 
+	animator.setParticleEmitterOffsetRegion("healing", mcontroller.boundBox())
+	animator.setParticleEmitterEmissionRate("healing", self.powerMultiplier * 3)
+	animator.setParticleEmitterActive("healing", true)
+
 end
 
 function update(dt)

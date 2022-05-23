@@ -1,6 +1,8 @@
 {
   "kind" : "sbqzevi",
 
+  "speciesAnimOverride" : "speciesAnimOverride.config",
+
   "charCreationTooltip" : {
       "title" : "Zevi",
       "subTitle" : "Goocat",

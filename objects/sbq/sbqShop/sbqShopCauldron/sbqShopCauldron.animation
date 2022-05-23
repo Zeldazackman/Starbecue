@@ -35,8 +35,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 3,
-					"transformationGroups": [],
-					"fullbright" : true
+					"transformationGroups": []
 				},
 				"partStates": {
 					"potionState" : {

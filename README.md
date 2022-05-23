@@ -34,6 +34,8 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Lycanroc
 - Eevee
 - Umbreon
+- Braixen
+- Delphox
 - Crylan
 - Rodent
 - Lyceen
@@ -44,6 +46,8 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Draconis
 - Draconis Full Dragon Reskin
 - Gnolls
+- Argonians
+- Sergals
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 

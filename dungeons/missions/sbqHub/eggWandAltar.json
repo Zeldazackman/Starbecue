@@ -1,0 +1,32 @@
+{ "height":32,
+ "layers":[
+        {
+         "compression":"zlib",
+         "data":"eJztwQENAAAAwqD3T20PBxQAAADwbhAAAAE=",
+         "encoding":"base64",
+         "height":32,
+         "name":"front",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":32,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "properties":
+    {
+
+    },
+ "renderorder":"right-down",
+ "tileheight":8,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/materials.json"
+        }],
+ "tilewidth":8,
+ "version":1,
+ "width":32
+}
