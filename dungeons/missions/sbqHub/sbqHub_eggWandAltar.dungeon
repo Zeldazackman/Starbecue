@@ -1,0 +1,19 @@
+{
+	"metadata" : {
+		"name" : "sbqHub_eggWandAltar",
+		"species" : "generic",
+		"rules" : [],
+		"anchor" : [ "eggWandAltar" ],
+		"maxParts" : 1
+	},
+
+	"parts" : [
+		{
+			"name" : "eggWandAltar",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "eggWandAltar.json" ]
+		}
+	]
+}

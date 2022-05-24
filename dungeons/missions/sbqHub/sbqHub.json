@@ -570,6 +570,22 @@
                  "width":8,
                  "x":5120,
                  "y":2160
+                }, 
+                {
+                 "height":8,
+                 "id":145,
+                 "name":"EggWandAltar",
+                 "properties":
+                    {
+                     "parameters":"{ \"dungeon\" : \"sbqHub_eggWandAltar\", \"dungeonId\" : 1, \"protect\" : false, \"placeOffset\" : [ 16, 0 ] }",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":504,
+                 "y":4512
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -578,7 +594,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":145,
+ "nextobjectid":146,
  "orientation":"orthogonal",
  "properties":
     {
