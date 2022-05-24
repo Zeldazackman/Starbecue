@@ -10,9 +10,16 @@ function sbq.locationPanel()
 			sbq.saveSettings()
 		end
 	end
+	local layout
+	if sbq.predatorSettings.hammerspace then
+		layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical", spacing = -1})
+	else
+		layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical" })
+	end
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
+
 		local data = sbq.predatorConfig.locations[location]
-		locationPanelScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
+		layout:addChild({ type = "layout", mode = "horizontal", children = {
 			{ type = "checkBox", id = location .. "hammerspaceDisabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visible = (data.hammerspace or false) and sbq.predatorSettings.hammerspace, toolTip = "Enable Hammerspace for the "..(data.name or location) },
 			{ type = "iconButton", id = location .. "Locked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = (not data.hammerspace) and sbq.predatorSettings.hammerspace, toolTip = "The "..(data.name or location).." Can't have hammerspace, but you can change the min and max size" },
 

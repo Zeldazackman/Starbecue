@@ -13,11 +13,12 @@
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
-							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
-							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
-							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
-							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
-						]}
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : " None" }],
+							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : " Heal" }],
+							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : " Digest" }],
+							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : " Soft Digest" }]
+					]}]}
 					],[// second quarter
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
@@ -30,10 +31,11 @@
 						]}]],
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
-							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
-							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ],
-							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
-						]}
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : " Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : " Belly Sounds" } ],
+							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
+						]}]}
 					]],
 					[{ "size" : 75 },[ // third quarter
 						{ "expandMode" : [2, 2]},
@@ -46,15 +48,16 @@
 						{ "id" : "voreTypePanel", "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Vore Prefrences", "inline" : true },
 							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
-								[{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "Prey NPCs will seek you out for Oral Vore" }, { "type" : "label", "text" : "Oral Vore" } ],
-								[{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "Prey NPCs will seek you out for Tail Vore" }, { "type" : "label", "text" : "Tail Vore" } ],
-								[{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "Prey NPCs will seek you out for Absorbtion" }, { "type" : "label", "text" : "Absorbtion" } ],
-								[{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "Prey NPCs will seek you out for Navel Vore" }, { "type" : "label", "text" : "Navel Vore" } ],
-								[{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "Prey NPCs will seek you out for Anal Vore" }, { "type" : "label", "text" : "Anal Vore" } ],
-								[{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "Prey NPCs will seek you out for Cock Vore" }, { "type" : "label", "text" : "Cock Vore" } ],
-								[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : "Breast Vore" } ],
-								[{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "Prey NPCs will seek you out for Unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
-							 ]}
+								{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "Prey NPCs will seek you out for Oral Vore" }, { "type" : "label", "text" : " Oral Vore" } ],
+								[{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "Prey NPCs will seek you out for Tail Vore" }, { "type" : "label", "text" : " Tail Vore" } ],
+								[{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "Prey NPCs will seek you out for Absorbtion" }, { "type" : "label", "text" : " Absorbtion" } ],
+								[{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "Prey NPCs will seek you out for Navel Vore" }, { "type" : "label", "text" : " Navel Vore" } ],
+								[{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "Prey NPCs will seek you out for Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
+								[{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "Prey NPCs will seek you out for Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
+								[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
+								[{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "Prey NPCs will seek you out for Unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
+							]}]}
 						]}
 					]],
 					{ "type" : "label", "text" : "Choose the properties of your stomach, these settings are ^yellow;global^reset; and effect all predator transformations." }
@@ -66,26 +69,29 @@
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Questionable", "inline" : true },
-							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : "Oral Vore" } ],
-							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : "Tail Vore" } ],
-							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : "Absorbtion" } ],
-							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : "Navel Vore" } ]
-						]},
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : " Oral Vore" } ],
+							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : " Tail Vore" } ],
+							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : " Absorbtion" } ],
+							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : " Navel Vore" } ]
+						]}]},
 						// second collumn
 						{ "expandMode" : [2, 2]}, { "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Sexual", "inline" : true },
-							[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : "Anal Vore" } ],
-							[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : "Cock Vore" } ],
-							[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : "Breast Vore" } ],
-							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : "Unbirth" } ]
-						]},
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : " Anal Vore" } ],
+							[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : " Cock Vore" } ],
+							[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : " Breast Vore" } ],
+							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
+						]}]},
 						// third collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
 							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : "Grabbed" } ]
-						]}
+							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : " Grabbed" } ]
+						]}]}
 					],
 					{"type" : "panel", "style" : "convex", "children" : [
 						{"mode" : "h"},

@@ -217,6 +217,7 @@ function sbq.savePredSettings()
 		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
 	end
 end
+sbq.saveSettings = sbq.savePredSettings
 
 function sbq.savePreySettings()
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings)
