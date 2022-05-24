@@ -1,0 +1,8 @@
+{
+	"type": "sbqDungeonPlacer",
+	"keepAlive" : true,
+	"scripts": [
+		"/stagehands/sbq/sbqDungeonPlacer.lua"
+	],
+	"broadcastArea" : [-1, -1, 1, 1]
+}

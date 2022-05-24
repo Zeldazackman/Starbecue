@@ -5,7 +5,7 @@
 	"rarity" : "Common",
 	"category" : "decorative",
 	"price" : 130,
-	"description" : "A bubbling cauldron, big enough that you could fit two people inside it.",
+	"description" : "A bubbling cauldron, big enough that you could fit three people inside it.",
 	"shortdescription" : "Auri's Cauldron",
 	"race" : "generic",
 
@@ -233,7 +233,7 @@
 			"imagePosition" : [-32, 0],
 			"direction" : "left",
 			"flipImages" : true,
-			"renderLayer" : "Object+3",
+			"renderLayer" : "Object+5",
 			"spaceScan" : 0.1,
 			"anchors" : [ "bottom" ]
 		},
@@ -241,7 +241,7 @@
 			"image" : "sbqShopCauldron.png",
 			"imagePosition" : [-32, 0],
 			"direction" : "right",
-			"renderLayer" : "Object+3",
+			"renderLayer" : "Object+5",
 			"spaceScan" : 0.1,
 			"anchors" : [ "bottom" ]
 		}
@@ -262,7 +262,6 @@
 		"coloryellow",
 		"glow",
 		"glueslow",
-		"heal",
 		"jumpboost",
 		"levitation",
 		"lowgrav",
@@ -281,17 +280,22 @@
 		"colorpurple" : "?hueshift=270",
 		"colorred" : "",
 		"coloryellow" : "?hueshift=57",
-		"glow" : "?replace;ff0000=fff57b;ff5454=fffcd1;ffa0a0=ffffff",
+		"glow" : "?replace;ff0000=fff57b;ff5454=fffcd1;ffa0a0=ffffff?multiply=FFFFFFfb",
 		"glueslow" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
-		"jumpboost" : "?hueshift=244",
-		"levitation" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
-		"lowgrav" : "?hueshift=270",
-		"nofalldamage" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff",
-		"partytime" : "",
-		"healingwater" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff",
-		"runboost" : "?hueshift=105",
+		"jumpboost" : "?hueshift=244?multiply=FFFFFFfb",
+		"levitation" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff?multiply=FFFFFFfb",
+		"lowgrav" : "?hueshift=270?multiply=FFFFFFfb",
+		"nofalldamage" : "?replace;ff0000=dbdbdb;ff5454=f5f5f5;ffa0a0=ffffff?multiply=FFFFFFfb",
+		"partytime" : "?multiply=FFFFFFfb",
+		"healingwater" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff?multiply=FFFFFFfb",
+		"runboost" : "?hueshift=105?multiply=FFFFFFfb",
 		"slimeslow" : "?replace;ff0000=43cc91;ff5454=44ffd5;ffa0a0=b5fff1",
 		"tarslow" : "?replace;ff0000=1d0040;ff5454=270066;ffa0a0=5e3193",
-		"wet" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff"
+		"wet" : "?replace;ff0000=00b7f6;ff5454=44d5ff;ffa0a0=b5efff",
+		"sbqMysteriousPotionTF" : "?multiply=FFFFFFfb"
+	},
+	"rainbowEffect" : {
+		"partytime" : true,
+		"sbqMysteriousPotionTF" : true
 	}
 }

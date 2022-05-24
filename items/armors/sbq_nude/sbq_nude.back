@@ -1,0 +1,13 @@
+{
+	"itemName" : "sbq_nude_back",
+	"price" : 0,
+	"inventoryIcon" : "/empty_image.png",
+	"rarity" : "Common",
+	"category" : "backwear",
+	"description" : "",
+	"shortdescription" : "Hide Back",
+	"tooltipKind" : "back",
+	"maleFrames" : "back.png",
+	"femaleFrames" : "back.png",
+	"maxStack" : 1
+}

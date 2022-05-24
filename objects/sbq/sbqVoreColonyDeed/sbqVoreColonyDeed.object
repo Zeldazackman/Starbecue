@@ -3,7 +3,7 @@
   "colonyTags" : [],
   "rarity" : "Common",
   "description" : "A special colony deed meant to summon people who might partake in vore, be it pred, or prey!",
-  "shortdescription" : "^purple; SBQ Colony Deed",
+  "shortdescription" : "SBQ Colony Deed",
   "race" : "generic",
   "printable" : false,
   "category" : "spawner",
@@ -45,8 +45,11 @@
   },
   "animationPosition" : [-8, -8],
 
+  "retainObjectParametersInItem" : true,
+	"builder" : "/objects/sbq/sbqVoreColonyDeed/sbqVoreColonyDeedBuilder.lua",
+
   "deed" : {
-    "debug" : true,
+    "debug" : false,
     "interactive" : true, //whether interaction (to trigger a scan / call home the NPC) is possible
     "requireFilledBackground" : true, //whether tenants require the background to be filled,
     "hashHouseAsSeed" : false, //whether the seed for tenants should be based on the precise layout of the house

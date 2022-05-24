@@ -19,6 +19,11 @@ function init()
 		self.turboDigest = true
 	end)
 
+	message.setHandler("sbqDigestResponse", function(time)
+		effect.modifyDuration((time or self.targetTime)+1)
+		self.targetTime = time or self.targetTime
+	end)
+
 end
 
 function update(dt)
@@ -38,6 +43,8 @@ function update(dt)
 
 			if damagecalc < 1 then return end -- wait until at least 1 damage will be dealt
 
+			world.sendEntityMessage(effect.sourceEntity(), "sbqAddHungerHealth", damagecalc )
+
 			self.cdt = 0
 			self.cdamage = damagecalc % 1
 			status.applySelfDamageRequest({
@@ -55,25 +62,12 @@ function update(dt)
 			else
 				status.setResource("health", 1)
 			end
-		elseif self.rpc == nil then
+		elseif not self.digested then
 			self.cdt = 0
+			self.digested = true
+			self.targetTime = 2
 			status.setResource("health", 1)
-			self.rpc = world.sendEntityMessage(effect.sourceEntity(), "digest", entity.id())
-		elseif self.rpc ~= nil and self.rpc:finished() and not self.digested then
-			if self.rpc:succeeded() then
-				local result = self.rpc:result()
-				if result.success == "success" then
-					self.digested = true
-					self.targetTime = result.timing
-				elseif result.success == "no data" then
-					self.digested = true
-				end
-			end
-			if self.rpcAttempts > 5 then
-				self.digested = true
-			end
-			self.rpc = nil
-			self.rpcAttempts = self.rpcAttempts + 1
+			world.sendEntityMessage(effect.sourceEntity(), "sbqDigest", entity.id())
 		end
 	else
 		effect.expire()

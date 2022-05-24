@@ -1,0 +1,21 @@
+{
+	"metadata" : {
+		"name" : "sbqHub_microDome",
+		"species" : "generic",
+		"rules" : [],
+		"anchor" : [ "dome" ],
+		"maxRadius" : 1000000,
+		"maxParts" : 1,
+		"extendSurfaceFreeSpace" : 100
+	},
+
+	"parts" : [
+		{
+			"name" : "dome",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "microDome.json" ]
+		}
+	]
+}

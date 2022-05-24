@@ -5,7 +5,7 @@ end
 
 function update(dt, fireMode, shiftHeld)
 
-	if not self.useTimer and fireMode == "primary" and player then
+	if not self.useTimer and fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 	self.useTimer = 0
 	activeItem.setArmAngle(0)
 	end
@@ -30,8 +30,15 @@ function update(dt, fireMode, shiftHeld)
 
 			settings.selected = self.vehicle
 			if settings.types == nil then settings.types = {} end
+
+			local priority = 0
+			for _, data in pairs(settings.types) do
+				if type(data.index) == "number" and data.index > priority then
+					priority = data.index
+				end
+			end
 			if not settings.types[self.vehicle] then
-				settings.types[self.vehicle] = { enable = true }
+				settings.types[self.vehicle] = { enable = true, index = priority + 1 }
 			end
 
 			player.setProperty("sbqSettings", settings)

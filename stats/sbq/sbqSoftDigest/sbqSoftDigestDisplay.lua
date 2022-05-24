@@ -28,18 +28,22 @@ function update(dt)
 
 		local damagecalc = status.resourceMax("health") * digestRate * self.powerMultiplier * self.cdt + self.cdamage
 
-		if health[1] <= 1 then
+		if health[1] <= 1 and not self.digested then
 			self.turboDigest = false
+			self.digested = true
 			status.setResource("health", 1)
+			world.sendEntityMessage(effect.sourceEntity(), "sbqSoftDigest", entity.id())
 			return
 		end
 
-		if health[1] > damagecalc then
+		if health[1] > damagecalc and not self.digested then
 
 			self.cdt = self.cdt + dt
 			--if self.cdt < self.tickTime then return end -- wait until at least 1 second has passed
 
 			if damagecalc < 1 then return end -- wait until at least 1 damage will be dealt
+
+			world.sendEntityMessage(effect.sourceEntity(), "sbqAddHungerHealth", damagecalc )
 
 			self.cdt = 0
 			self.cdamage = damagecalc % 1

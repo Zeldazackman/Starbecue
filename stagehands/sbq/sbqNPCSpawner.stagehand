@@ -1,0 +1,8 @@
+{
+	"type": "sbqNPCSpawner",
+	"keepAlive" : true,
+	"scripts": [
+		"/stagehands/sbq/sbqNPCSpawner.lua"
+	],
+	"broadcastArea" : [-1, -1, 1, 1]
+}

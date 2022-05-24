@@ -38,7 +38,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"includePartyMembers\" : false,\n  \"includePlayerBookmarks\" : false,\n  \"destinations\" : [\n    {\n      \"name\" : \"Somewhere else...\",\n      \"planetName\" : \"???\",\n      \"warpAction\" : \"instanceworld:sbqHub=auriShop\",\n      \"icon\" : \"default\"\n    }\n  ]\n} }"
+                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : false,\n  \"includePartyMembers\" : false,\n  \"includePlayerBookmarks\" : false,\n  \"destinations\" : [\n    {\n      \"name\" : \"Somewhere else...\",\n      \"planetName\" : \"???\",\n      \"warpAction\" : \"instanceworld:sbqHub=auriShop\",\n      \"icon\" : \"default\"\n    }\n  ]\n} }"
                     },
                  "rotation":0,
                  "type":"",

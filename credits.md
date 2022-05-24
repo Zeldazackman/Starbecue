@@ -12,6 +12,9 @@
 	Lakota Amitola
 	BRZYN-Z18
 
+# Builders
+	Cosmic
+
 # Playtesters / Bug Hunters
 	xeronious
 	Rex Anivius

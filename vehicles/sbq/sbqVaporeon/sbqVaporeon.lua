@@ -76,12 +76,12 @@ function sbq.changeSize()
 	end
 end
 
-function analEscape(args)
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function analEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function eatAnal(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function eatAnal(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
 function checkAnalVore()
@@ -105,14 +105,14 @@ function state.stand.begin()
 	sbq.resolvePosition(5)
 end
 
-function state.stand.eat( args )
+function state.stand.eat( args, tconfig )
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.letout( args )
+function state.stand.letout( args, tconfig )
 	if not mcontroller.onGround() or sbq.movement.falling then return false end
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
 function state.stand.vore()

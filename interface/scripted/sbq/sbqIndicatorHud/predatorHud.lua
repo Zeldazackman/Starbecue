@@ -17,6 +17,7 @@ local canvas = widget.bindCanvas(frame.backingWidget .. ".canvas")
 canvas:clear()
 
 require("/scripts/SBQ_RPC_handling.lua")
+require("/scripts/speciesAnimOverride_player_species.lua")
 
 function init()
 	local sbqData = player.getProperty("sbqSettings") or {}
@@ -92,8 +93,7 @@ function sbq.readOccupantData()
 		local playerSpecies = (sbq.sbqCurrentData or {}).species
 
 		if playerSpecies == "sbqOccupantHolder" then
-			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-			local maybeSpecies = (speciesAnimOverrideData.species or player.species())
+			local maybeSpecies = player.species()
 			if type(sbq.hudActions[maybeSpecies]) == "table" then
 				playerSpecies = maybeSpecies
 			end

@@ -1,6 +1,10 @@
 local initStage = 0
 local oldinit = init
 sbq = {}
+require("/scripts/SBQ_RPC_handling.lua")
+
+local prey = {}
+
 function init()
 	oldinit()
 
@@ -41,6 +45,14 @@ function init()
 		})
 	end
 
+	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
+		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})
+	end)
+
+	message.setHandler("addPrey", function( _, _, data)
+		table.insert(prey, data)
+		return true
+	end )
 
 	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
 		local settings = player.getProperty( "sbqSettings" ) or {}
@@ -74,7 +86,6 @@ function init()
 	end)
 	message.setHandler( "sbqPlayerInteract", function(_,_, data, id)
 		player.interact(data[1], data[2], id)
-
 	end)
 
 
@@ -185,16 +196,20 @@ function init()
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		local speciesConfig = root.assetJson("/humanoid/sbqData.config")
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-		local species = speciesAnimOverrideData.species or player.species()
-		local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
-		if success then
-			if type(data.sbqData) == "table" then
-				speciesConfig.sbqData = data.sbqData
-			end
-			if type(data.states) == "table" then
-				speciesConfig.states = data.states
-			end
+		local species = player.species()
+		local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+		local path = registry[species] or "/humanoid/sbqData.config"
+		if path:sub(1,1) ~= "/" then
+			path = "/humanoid/"..species.."/"..path
 		end
+		local maybeConfig = root.assetJson(path)
+		if type(maybeConfig.sbqData) == "table" then
+			speciesConfig.sbqData = maybeConfig.sbqData
+		end
+		if type(maybeConfig.states) == "table" then
+			speciesConfig.states = maybeConfig.states
+		end
+
 		speciesConfig.species = species
 		local mergeConfigs = speciesConfig.sbqData.merge or {}
 		local configs = { speciesConfig.sbqData }
@@ -251,28 +266,108 @@ function init()
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end
 
+	local potionTF = status.statusProperty("sbqMysteriousPotionTFDuration" ) or 0
+	if potionTF > 0 then
+		status.addEphemeralEffect("sbqMysteriousPotionTF", potionTF )
+	end
+
+
 	initStage = 1 -- init has run
 end
 
+local predNotFound
+local warpAttempts = 0
 local oldupdate = update
 function update(dt)
 	oldupdate(dt)
+	sbq.checkRPCsFinished(dt)
+
+	local current = player.getProperty("sbqCurrentData") or {}
+	if current.id and initStage >= 2 then
+		for i, preyData in ipairs(prey) do
+			status.removeEphemeralEffect("sbqInvisible")
+			status.addEphemeralEffect("sbqInvisible")
+			world.sendEntityMessage(current.id, "addPrey", preyData)
+		end
+		prey = {}
+	end
+
+	local preyWarpData = player.getProperty("sbqPreyWarpData")
+	if preyWarpData then
+		status.removeEphemeralEffect("sbqInvisible")
+		status.addEphemeralEffect("sbqInvisible")
+		if not predNotFound then
+			preyWarpData.prey.id = player.id()
+			local players = world.playerQuery(world.entityPosition(player.id()), 1000)
+			local gotPlayer
+			for i, eid in ipairs(players or {}) do
+				if world.entityUniqueId(eid) == preyWarpData.uuid then
+					gotPlayer = eid
+					break
+				end
+			end
+			if gotPlayer then
+				sbq.loopedMessage("sendPrey", gotPlayer, "addPrey", {preyWarpData.prey}, function (got)
+					if got then
+						player.setProperty("sbqPreyWarpData", nil)
+						predNotFound = nil
+					end
+				end)
+			else
+				local cooldown = preyWarpData.cooldown or 0
+				local loopedMessages = 0
+				for _, _ in pairs(sbq.loopedMessages or {}) do
+					loopedMessages = loopedMessages + 1
+				end
+				if warpAttempts >= 2 then
+					predNotFound = true
+					sbq.addRPC(player.confirm({
+						paneLayout = "/interface/windowconfig/waitForPred.config:paneLayout",
+						message = "Your Pred seems to have left, do you want to wait for them to come back?",
+						icon = "/interface/scripted/sbq/sbqSettings/preySettings.png",
+						title = "Predator Has Left",
+					}), function (choice)
+						if choice then
+							predNotFound = nil
+							warpAttempts = 0
+						else
+							player.setProperty("sbqPreyWarpData", nil)
+							predNotFound = nil
+						end
+					end, function ()
+						player.setProperty("sbqPreyWarpData", nil)
+						predNotFound = nil
+					end)
+				elseif cooldown <= 0 and #sbq.rpcList == 0 and loopedMessages == 0 then
+					player.warp("Player:" .. preyWarpData.uuid)
+					warpAttempts = warpAttempts + 1
+					preyWarpData.cooldown = 5
+				else
+					preyWarpData.cooldown = math.max( 0, cooldown - dt )
+				end
+				player.setProperty("sbqPreyWarpData", preyWarpData)
+			end
+		end
+	end
+
+
 	-- make sure init has happened
 	if initStage ~= 1 then return end
 	-- make sure the world is loaded
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	-- now we can actually do things
-	local current = player.getProperty("sbqCurrentData") or {}
-	if current.species then
-		world.spawnVehicle(current.species, entity.position(), {
-			driver = player.id(), layer = current.layer, startState = current.state,
-			settings = current.settings,
-		})
-	elseif current.type == "prey" then
-		player.setProperty("sbqCurrentData", {})
-		for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
-			status.removeEphemeralEffect(effect)
+	if not preyWarpData then
+		if current.species then
+			world.spawnVehicle(current.species, entity.position(), {
+				driver = player.id(), layer = current.layer, startState = current.state,
+				settings = current.settings,
+			})
+		elseif current.type == "prey" then
+			for i, effect in ipairs(root.assetJson("/sbqGeneral.config").predStatusEffects) do
+				status.removeEphemeralEffect(effect)
+			end
 		end
+		player.setProperty("sbqCurrentData", nil) -- after spawning the vehicle, clear it so it can set its own current data
 	end
 	initStage = 2 -- post-init finished
 end

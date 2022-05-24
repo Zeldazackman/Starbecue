@@ -73,6 +73,7 @@
 	},
 
 	"sbqData" : {
+		"displayName" : "Kaiju",
 		"victimAnimations": "/vehicles/sbq/sbqXeronious/victim_animations.config",
 		"movementSettings" : {
 			"default":{
@@ -163,31 +164,56 @@
 			"Body 1",
 			"Body 2",
 			"Horns",
-			"Eyes",
+			"Eyes/Flesh",
 			"Burp"
 		],
 		"replaceColors" : [ // I don't think having actual replacement colors here should be a thing since its someone's OC
 			[
 				["0e0e0e", "292929", "3f3f3f", "575757"], // Dark Grey body 1
-				["0e0e0e", "292929", "3f3f3f", "575757"]
+				["0e0e0f", "292928", "3f3f3e", "575758"], // Xero Dark Grey
+				["0e0e0f", "656566", "838384", "909091"], // Xero Light Grey
+				["340303", "550b0b", "781919", "a92727"], // red
+				["230f27", "3c1d42", "583060", "7e4788"], // purple
+				["0f1527", "1c2642", "303c60", "475688"] // blue
 			],
 			[
-				["656565", "838383", "a6a6a6"], // Light Grey body 2
-				["656565", "838383", "a6a6a6"]
+				["656565", "838383", "909090", "a6a6a6"], // Light Grey body 2
+				["656566", "838384", "909091", "a6a6a7"], // Xero Light Grey
+				["292928", "3f3f3e", "575758", "777778"], // Xero Dark Grey
+				["550b0b", "781919", "a92727", "d44949"], // red
+				["3c1d42", "583060", "7e4788", "9f63ab"], // purple
+				["1c2642", "303c60", "475688", "6373ab"] // blue
 			],
 			[
 				["969696", "b4b4b4", "d4d4d4", "efefef"], // horns
-				["969696", "b4b4b4", "d4d4d4", "efefef"]
+				["969697", "b4b4b5", "d4d4d5", "efefee"], // Xero White
+				["1e1e1e", "242424", "2a2a2a", "333333"], // black
+				["155241", "176D55", "178566", "179975"], // turquoise
+				["a97723", "d79d39", "edb246", "f8bd4b"] // brass
 			],
 			[
 				["4a2400", "cc711a", "ff962e" ], // eyes
-				["4a2400", "cc711a", "ff962e" ]
+				["4a2401", "cc711b", "ff962f" ], // Xero Orange
+				["002b55", "0069d1", "338ee5" ], // blue
+				["2d5500", "64d100", "93e532" ], // green
+				["55004a", "d100b8", "e531d1" ] // magenta
 			],
 			[
 				["19ce2c"], // burp
-				["19ce2c"]
+				["19ce2d"]
 			]
-		]
+		],
+		"presetList" : [
+			"Xeronious"
+		],
+		"customizePresets" : {
+			"Xeronious" : {
+				"replaceColors" : [1,1,1,1,1],
+				"fullbright" : [false,false,false,true,false],
+				"replaceColorTable" : {}
+			}
+		}
+
 	},
 
 
@@ -932,6 +958,7 @@
 						"body": "dummyEat",
 						"head": "AVlook"
 					},
+					"victimAnimation": "analVore",
 					"script": "analVore"
 				},
 				"digestbelly" : {
@@ -1188,6 +1215,7 @@
 						"body": "dummyEat",
 						"head": "AVlook"
 					},
+					"victimAnimation": "analVore",
 					"script": "analVore"
 				},
 				"digestbelly" : {

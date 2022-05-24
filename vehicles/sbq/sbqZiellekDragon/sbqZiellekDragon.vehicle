@@ -126,7 +126,7 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
-			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"fatten" : { "mass": 1 },
 
 			"shaft" : { "name" : "Shaft", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
@@ -498,8 +498,8 @@
 					"parts" : ["cock"],
 					"directions":{
 						"down": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
-						"front": { "transition": "cockEscape", "indicate": "red", "drivingEnabled": true },
-						"back": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } },
+						"front": {},
+						"back": {},
 						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
 					"chances": { "min": 5, "max": 10 },

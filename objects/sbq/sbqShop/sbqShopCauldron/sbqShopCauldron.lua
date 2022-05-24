@@ -2,14 +2,22 @@ function init()
 	local statuses = config.getParameter("cauldronStatusEffects")
 	storage.status = statuses[math.random(#statuses)]
 	storage.occupant = {}
-	animator.setGlobalTag("directives", config.getParameter("cauldronStatusDirectives")[storage.status])
+	storage.directives = config.getParameter("cauldronStatusDirectives")[storage.status] or ""
+	animator.setGlobalTag("directives", storage.directives )
 	storage.hue = 0
+	storage.time = 0
+	storage.rainbow = config.getParameter("rainbowEffect")[storage.status] or false
 end
 
 function update(dt)
-	if storage.status == "partytime" then
+	storage.time = storage.time + dt
+	if storage.time >= 600 then init() end
+	if storage.rainbow then
 		storage.hue = storage.hue + 1
-		animator.setGlobalTag("directives", "?hueshift="..storage.hue)
+		if storage.hue >= 360 then
+			storage.hue = 0
+		end
+		animator.setGlobalTag("directives", storage.directives.."?hueshift="..storage.hue)
 	end
 	for i, occupantId in ipairs(storage.occupant) do
 		if checkClose(occupantId) then

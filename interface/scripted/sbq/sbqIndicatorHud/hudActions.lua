@@ -6,7 +6,7 @@ end
 function sbq.npcInteract(id, i)
 	local predator = sbq.sbqCurrentData.species
 	if predator == "sbqOccupantHolder" then
-		predator = (status.statusProperty("speciesAnimOverrideData") or {}).species or player.species()
+		predator = player.species()
 	end
 	local predData = {
 		settings = sbq.sbqCurrentData.settings,
@@ -28,6 +28,14 @@ function sbq.transform(id, i)
 	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
 		if not immune then
 			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id, 3 )
+		end
+	end)
+end
+
+function sbq.playerTransform(id, i)
+	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
+		if not immune then
+			world.sendEntityMessage( sbq.sbqCurrentData.id, "playerTransform", id, 3 )
 		end
 	end)
 end

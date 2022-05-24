@@ -1,0 +1,23 @@
+{
+	"itemName" : "sbqGenderSwapPotion",
+	"level" : 1,
+	"price" : 100,
+	"maxStack" : 1,
+	"rarity" : "common",
+	"description" : "A potion that can swap your gender.",
+	"shortdescription" : "Gender Swap Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
+
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
+
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformation/sbqGenderSwapPotion/sbqGenderSwapPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

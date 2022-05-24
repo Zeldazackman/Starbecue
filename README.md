@@ -1,14 +1,30 @@
-# ZyganSSVMAddons
+# Starbecue
 
-To install simply visit the [releases page](https://github.com/Zygahedron/ZyganSSVMAddons/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
+To install simply visit the [releases page](https://github.com/Zygahedron/Starbecue/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
 
 This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/filedetails/?id=2512589532) or [Stardust Core](https://steamcommunity.com/sharedfiles/filedetails/?id=764887546)
 
-Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable.
+Alternatively, if you want the latest and greatest changes, download this repo as a zip and extract in your starbound mods folder, or better yet, use git to clone it there so that you can update it more easily. Just be warned that things won't always be perfectly stable. And likely will also require the library [Species Anim Overrides](https://github.com/WasabiRaptor/starboundSpeciesAnimOverrides) to be installed as well.
 
 While not required it is recommended you install the Monster Config Core Loader mods found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442860690) and [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2442873217), if you're using Stardust Core then you should get [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2690363974) and if you're using FU you'll also need [this](https://steamcommunity.com/sharedfiles/filedetails/?id=2442880727) because it should fix potential compatibility issues.
 
-## Features
+## Getting Started
+
+To get started with the mod, all you need to do is open your crafting interface, and craft a **Vore Controller** you can hold with it in hand, hold shift and up to see your avalable actions, click to select one and assign it to the controller or perform the action.
+
+After you have an assigned vore controller, you can click it to activate **Vore mode** and then click on things to vore them, you may notice your player character jitter slightly on activation, this is normal. While in vore mode you will have a hud in the bottom right to show you your prey and belly effects, if you click the gear you can get more settings to enable or diable other vore types as well as being prey, you can access the same menu via the quickbar as well even when not in vore mode.
+
+The settings panel also has ingame help information, click on any of the book tabs to get information about the mod.
+
+To exit **Vore More** one simply needs to release all their prey, at which point, the **Let Out** action will become an **X** which can de-activate vore mode.
+
+Races which are supported in **Vore Mode** are listed down below, unsupported races will still be able to use the controllers, but will not have any vore sprites, or they might not display at all.
+
+More content can be found via discovering **Auri's Shop** which you can get to via some mysterious fireplaces you might find on lush planets, they look like this:
+![](/fireplace.png)
+
+
+# Features
 
 ![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
@@ -34,6 +50,8 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Lycanroc
 - Eevee
 - Umbreon
+- Braixen
+- Delphox
 - Crylan
 - Rodent
 - Lyceen
@@ -44,6 +62,9 @@ While not required it is recommended you install the Monster Config Core Loader 
 - Draconis
 - Draconis Full Dragon Reskin
 - Gnolls
+- Argonians
+- Sergals
+- Familiars
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 
@@ -58,15 +79,13 @@ This mod includes no assets from the respective modded races, modified or not, m
 - Egg
 - Plastic Egg
 
-### Playable Predator Info
+# Playable Predator Info
 
 Special potions can be purchased from Auri's shop which can transform you into large predators, and grants you a head tech that allows you to choose which one you wish to transform into if you've unlocked multiple.
 
 Full use of this system requires you to bind Tech Action 2 and 3 in the options if they aren't already bound. We recommend the G and H keyes respectively, because they're right by F, and that's what they were back in really old versions of the game when they were actually used in vanilla.
 
 When turning into a predator you will be given a controller item, this is required for the predator transformation to detect some keys being pressed, such as Shift, as well as pass some more data to the vehicle that it cannot detect without it.
-
-You can also click with a controller when not transformed to activate "vore mode" where those actions can be used to eat other players in the base state, if the species you are has support, it will have visual effects on your player sprite, such as the belly expanding and struggles from the prey within, some items in hands may not animate correctly while in vore mode if you don't have certain techs equipped
 
 Holding Shift+Up with a controller allows you to bring up the action wheel, at the bottom you will be able to let out the most recently eaten prey, or despawn the predator transformation/occupant holder, choosing another action will attempt to perform that action, some of these will need to be aimed, so you might want to assign that action to a controller by clicking on it, if you have a controller in the hand of the click, it will assign it that action, if the hand was empty, it will spawn a new controller for you. Keep in mind a pred might have some actions that are available in some states but not others, clicking with a controller with an assigned action that the pred does not have will not result in anything.
 
@@ -76,7 +95,7 @@ To let people out that you previously ate, simply press Tech Action 2 (G).
 
 In the bottom right you will have a HUD to show what occupants you've eaten, as well as your current belly effect, this can be used to quickly change the effect, as well as access the settings quickly, and peform actions on the prey by clicking on them, such as letting them out, turbo digesting them, or predator specific actions, like transforming them
 
-### Prey Info
+# Prey Info
 
 Whether you are being eaten by a object predator, or a player transformed into a predator, as prey you will have a HUD in the bottom right, this indicates which directions you can struggle to cause the predator to do something.
 
@@ -97,7 +116,7 @@ Indicates a direction that would move you to another location within the predato
 #### Yellow
 Indicates a direction that would cause you to get eaten, only appears if you're just being held or hugged.
 
-### Settings
+# Settings
 
 The settings menu can be accessed from the quickbar, or from the predator HUD.
 

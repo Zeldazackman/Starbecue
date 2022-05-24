@@ -4,11 +4,13 @@
 		{ "op": "add", "path": "/statusControllerSettings/statusProperties", "value": {} }
 	],
 	[
+		{ "op": "add", "path": "/statusControllerSettings/statusProperties/sbqDidVornyConvertCheck", "value": true },
 		{
 			"op": "add",
 			"path": "/statusControllerSettings/statusProperties/sbqPreyEnabled",
 			"value": {
-				"enabled" : false
+				"preyEnabled" : false,
+				"transformImmunity" : true
 			}
 		}
 	]

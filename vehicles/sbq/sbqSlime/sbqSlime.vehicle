@@ -150,6 +150,13 @@
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},
+		"replaceSkin" : {
+			"head" : {
+				"skins" : ["default", "cube"],
+				"parts" : ["head", "body"],
+				"name" : "Type"
+			}
+		},
 		"replaceColorNames" : [
 			"Goo"
 		],

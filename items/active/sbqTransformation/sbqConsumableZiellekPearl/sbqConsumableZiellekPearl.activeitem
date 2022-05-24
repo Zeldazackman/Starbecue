@@ -3,7 +3,7 @@
 	"level" : 1,
 	"price" : 500,
 	"maxStack" : 1,
-	"rarity" : "Rare",
+	"rarity" : "Legendary",
 	"description" : "The pearl of a Ziellek Dragon...\nFor some reason you feel the urge to swallow it.",
 	"shortdescription" : "Ziellek Pearl",
 	"tooltipKind" : "tool",

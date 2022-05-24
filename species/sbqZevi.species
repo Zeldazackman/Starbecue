@@ -1,5 +1,7 @@
 {
-  "kind" : "sbqzevi",
+  "kind" : "sbqZevi",
+
+  "speciesAnimOverride" : "speciesAnimOverride.config",
 
   "charCreationTooltip" : {
       "title" : "Zevi",
@@ -12,7 +14,7 @@
   "nameGen" : [ "/species/novakidnamegen.config:names", "/species/novakidnamegen.config:names" ],
   "ouchNoises" : [ "/sfx/sbqZevi/zeviHurt.ogg", "/sfx/sbqZevi/zeviHurt.ogg" ],
   "charGenTextLabels" : [ "Gas colour", "Hair style", "Shirt", "Legwear", "", "Brand", "Shirt colour", "Legwear colour", "NOVAKID", "Personality" ],
-  "skull" : "/humanoid/sbqzevi/dead.png",
+  "skull" : "/humanoid/sbqZevi/dead.png",
   "effectDirectives" : "?replace=FEFFFFFF=FFFFFFFF?replace=9bd4ffFF=ff99e6FF?replace=31a6ffFF=e359b9FF",
   "defaultBlueprints" : {
     "tier1" : [

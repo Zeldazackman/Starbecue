@@ -1,0 +1,28 @@
+{
+  "name": "sbq_villager_crylan",
+  "priority": 51,
+
+  "colonyTagCriteria": {
+    "light": 1,
+    "door": 1,
+    "sbqVore" : 1,
+    "crylan" : 8
+  },
+
+  "checkRequirements" : { "checkItems" : ["crylanoutfit1chest"] },
+
+  "tenants": [
+    {
+      "spawn": "npc",
+      "species": ["crylan"],
+      "type": "sbqVoreTenant",
+      "overrides": {
+       }
+     }
+   ],
+
+  "rent": {
+    "periodRange": [1200.0, 1800.0],
+    "pool": "villagerGift"
+  }
+}

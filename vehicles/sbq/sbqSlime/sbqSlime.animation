@@ -15,18 +15,18 @@
 				"states": {
 					"idle": { "frames": 4, "cycle": 3, "mode": "loop", "priority": 0 },
 
-					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
-					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3 },
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
 
-					"walk": { "frames": 6, "cycle": 2, "mode": "loop", "priority": 0 },
-					"run": { "frames": 6, "cycle": 1.5, "mode": "loop", "priority": 0 },
+					"walk": { "frames": 6, "cycle": 2, "mode": "loop", "priority": 0, "baseAnim" : "idle" },
+					"run": { "frames": 6, "cycle": 1.5, "mode": "loop", "priority": 0, "baseAnim" : "idle", "animFrames" : "walk" },
 
-					"fall": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 2 },
+					"fall": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1 }
+					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" }
 				}
 			},
 			"occupant0State": {
@@ -96,20 +96,7 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.idle.<bodyStateFrame><directives>" } },
-
-						"eat": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.eat.<bodyStateFrame><directives>" } },
-						"escape": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.escape.<bodyStateFrame><directives>" } },
-
-						"walk": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<bodyStateFrame><directives>" } },
-						"run": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.walk.<bodyStateFrame><directives>" } },
-
-						"fall": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.fall.<bodyStateFrame><directives>" } },
-
-						"s_up": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_up.<bodyStateFrame><directives>" } },
-						"s_down": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_down.<bodyStateFrame><directives>" } },
-						"s_front": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_front.<bodyStateFrame><directives>" } },
-						"s_back": { "properties": {"image": "skins/<skin>/body.png:<bellyOccupants>.s_back.<bodyStateFrame><directives>" } }
+						"idle": { "properties": {"image": "skins/<headSkin>/body.png:<bellyOccupants>.<bodyStateAnim>.<bodyStateFrame><directives>" } }
 					}
 				}
 			},

@@ -37,17 +37,15 @@ function sbq.setState(state)
 end
 
 function sbq.checkDrivingInteract()
-	if sbq.driving and sbq.stateconfig[sbq.state].interact ~= nil then
-		if type(sbq.driver) == "number" and world.entityType(sbq.driver) == "npc" then
-			vehicle.setInteractive(true)
-		else
-			for _, interaction in pairs(sbq.stateconfig[sbq.state].interact) do
-				if interaction.drivingEnabled then
-					return vehicle.setInteractive(true)
-				end
+	if type(sbq.driver) == "number" and world.entityType(sbq.driver) == "npc" then
+		vehicle.setInteractive(true)
+	elseif sbq.driving and sbq.stateconfig[sbq.state].interact ~= nil then
+		for _, interaction in pairs(sbq.stateconfig[sbq.state].interact) do
+			if interaction.drivingEnabled then
+				return vehicle.setInteractive(true)
 			end
-			vehicle.setInteractive(false)
 		end
+		vehicle.setInteractive(false)
 	else
 		vehicle.setInteractive(sbq.stateconfig[sbq.state].interact ~= nil)
 	end
@@ -61,6 +59,9 @@ function sbq.doTransition( direction, scriptargs )
 	if sbq.transitionLock then return "locked" end
 	local tconfig = sbq.occupantArray( sbq.stateconfig[sbq.state].transitions[direction] )
 	if tconfig == nil then return "no data" end
+	if tconfig.settings then
+		if not sbq.checkSettings(tconfig.settings) then return "script fail" end
+	end
 	local id = sbq.getTransitionVictimId(scriptargs, tconfig)
 
 	if tconfig.voreType ~= nil and type(id) == "number" and world.entityExists(id) then
@@ -89,7 +90,7 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 		local statescript = state[sbq.state][tconfig.script]
 		local _continue, _tconfig
 		if statescript ~= nil then
-			_continue, after, _tconfig = statescript( scriptargs or {} )
+			_continue, after, _tconfig = statescript( scriptargs or {}, tconfig )
 			if _continue ~= nil then continue = _continue end
 			if _tconfig ~= nil then tconfig = _tconfig end
 		else

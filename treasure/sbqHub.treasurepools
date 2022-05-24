@@ -1,7 +1,47 @@
 {
-	"secretEggWand" : [
+	"sbqSecretEggWand" : [
 		[0, { "fill" : [
 			{"item" : "sbqEggWand"}
+		]}]
+	],
+	"sbqLinkOutfit" : [
+		[0, { "fill" : [
+			{"item" : "herocaphead"},
+			{"item" : {"name":"peasantchest", "parameters":{"colorIndex":7}}},
+			{"item" : {"name":"peasantlegs", "parameters":{"colorIndex":7}}},
+			{"item" : "sbq_nude_back"}
+		]}]
+	],
+	"sbqMerchantOutfit" : [
+		[0, { "fill" : [
+			{"item" : "sbq_nude_head"},
+			{"item" : "merchantchest"},
+			{"item" : "merchantlegs"},
+			{"item" : "sbq_nude_back"}
+		]}]
+	],
+	"sbqNobleOutfit" : [
+		[0, { "fill" : [
+			{"item" : "sbq_nude_head"},
+			{"item" : "noblechest"},
+			{"item" : "noblelegs"},
+			{"item" : "sbq_nude_back"}
+		]}]
+	],
+	"sbqCraftsmanOutfit" : [
+		[0, { "fill" : [
+			{"item" : "sbq_nude_head"},
+			{"item" : "craftsmenchest"},
+			{"item" : "craftsmenlegs"},
+			{"item" : "sbq_nude_back"}
+		]}]
+	],
+	"sbqKingOutfit" : [
+		[0, { "fill" : [
+			{"item" : "glitchroyalhead"},
+			{"item" : {"name":"firelordchest", "parameters":{"colorIndex":4}}},
+			{"item" : {"name":"firelordlegs", "parameters":{"colorIndex":4}}},
+			{"item" : {"name":"simplecapeback", "parameters":{"colorIndex":4}}}
 		]}]
 	]
 }

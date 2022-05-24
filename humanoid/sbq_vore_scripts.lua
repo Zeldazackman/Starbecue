@@ -1,80 +1,77 @@
 
-function state.stand.oralVore(args)
-	return sbq.doVore(args, "belly", {}, "swallow", "oralVore")
+function sbq.update(dt)
+	sbq.detectShirt()
+	sbq.detectPants()
 end
 
-function state.stand.oralEscape(args)
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "oralVore" )
+function state.stand.oralVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.analVore(args)
-	if sbq.detectPants() then return false end
-	return sbq.doVore(args, "belly", {}, "swallow", "analVore")
+function state.stand.oralEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function state.stand.analEscape(args)
-	if sbq.detectPants() then return false end
-	return sbq.doEscape(args, {}, {}, "analVore" )
+function state.stand.analVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.unbirth(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return false end
-	return sbq.doVore(args, "womb", {}, "swallow", "unbirth")
+function state.stand.analEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.stand.unbirthEscape(args)
-	if sbq.detectPants() or not sbq.settings.pussy then return false end
-	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, "unbirth" )
+function state.stand.unbirth(args, tconfig)
+	return sbq.doVore(args, "womb", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.cockVore(args)
+function state.stand.unbirthEscape(args, tconfig)
+	return sbq.doEscape(args, {wet = { power = 5, source = entity.id()}}, {}, tconfig.voreType )
+end
+
+function state.stand.cockVore(args, tconfig)
 	if not args.id then
 		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
-		return
+		return false
 	end
-	if sbq.detectPants() or not sbq.settings.penis then return false end
-	return sbq.doVore(args, "shaft", {}, "swallow", "cockVore")
+	return sbq.doVore(args, "shaft", {}, "swallow", tconfig.voreType)
 end
 
 state.stand.ballsToShaft = sbq.ballsToShaft
 state.stand.shaftToBalls = sbq.shaftToBalls
 state.stand.switchBalls = sbq.switchBalls
 
-function state.stand.cockEscape(args)
-	if sbq.detectPants() or not sbq.settings.penis then return false end
-	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, "cockVore" )
+function state.stand.cockEscape(args, tconfig)
+	return sbq.doEscape(args, {glueslow = { power = 5 + (sbq.lounging[args.id].progressBar), source = entity.id()}}, {}, tconfig.voreType )
 end
 
-function state.stand.breastVore(args)
-	if sbq.detectShirt() or not sbq.settings.breasts then return false end
-	return sbq.doVore(args, "breasts", {}, "swallow", "breastVore")
+function state.stand.breastVore(args, tconfig)
+	return sbq.doVore(args, "breasts", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.breastEscape(args)
-	if sbq.detectShirt() or not sbq.settings.breasts then return false end
-	return sbq.doEscape(args, {}, {}, "breastVore" )
+function state.stand.breastEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
-function state.stand.navelVore(args)
-	if not sbq.settings.navel then return false end
-	return sbq.doVore(args, "belly", {}, "swallow", "navelVore")
+function state.stand.navelVore(args, tconfig)
+	return sbq.doVore(args, "belly", {}, "swallow", tconfig.voreType)
 end
 
-function state.stand.navelEscape(args)
-	if not sbq.settings.navel then return false end
-	return sbq.doEscape(args, {}, {}, "navelVore" )
+function state.stand.navelEscape(args, tconfig)
+	return sbq.doEscape(args, {}, {}, tconfig.voreType )
 end
 
 function sbq.detectShirt()
 	if sbq.settings.bra then return true end
 	local shirt = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
-	return not sbq.config.chestVoreWhitelist[shirt.name or "none"]
+	local result = not sbq.config.chestVoreWhitelist[shirt.name or "none"]
+	sbq.settings.shirt = result
 end
 
 function sbq.detectPants()
 	if sbq.settings.underwear then return true end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
-	return not sbq.config.legsVoreWhitelist[pants.name or "none"]
+	local result = not sbq.config.legsVoreWhitelist[pants.name or "none"]
+	sbq.settings.pants = result
 end
 
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
@@ -95,53 +92,54 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 					transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
 				end
 			end)
-		elseif sbq.settings.wombEggify and location == "womb" then
-			local bellyEffect = "sbqHeal"
-			if sbq.settings.displayDigest then
-				if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
-					bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
+		elseif location == "womb" then
+			if sbq.settings.wombEggify and sbq.occupant[i].species ~= "sbqEgg" then
+				local bellyEffect = "sbqHeal"
+				if sbq.settings.displayDigest then
+					if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
+						bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
+					end
 				end
-			end
 
-			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
-				if not immune then
-					local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
-					local replaceColors = {
-					math.random(1, #eggData.sbqData.replaceColors[1] - 1),
-					math.random(1, #eggData.sbqData.replaceColors[2] - 1)
-					}
-					transformMessageHandler( eid, 3, {
-						barColor = eggData.sbqData.replaceColors[2][replaceColors[2]+1],
-						forceSettings = true,
-						layer = true,
-						state = "smol",
-						species = "sbqEgg",
-						layerLocation = "egg",
-						layerDigest = true,
-						settings = {
-							cracks = 0,
-							bellyEffect = bellyEffect,
-							escapeDifficulty = sbq.settings.escapeDifficulty,
-							replaceColors = replaceColors
+				sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
+					if not immune then
+						local eggData = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle")
+						local replaceColors = {
+						math.random(1, #eggData.sbqData.replaceColors[1] - 1),
+						math.random(1, #eggData.sbqData.replaceColors[2] - 1)
 						}
-					})
-				end
-			end)
+						transformMessageHandler( eid, 3, {
+							barColor = eggData.sbqData.replaceColors[2][replaceColors[2]+1],
+							forceSettings = true,
+							layer = true,
+							state = "smol",
+							species = "sbqEgg",
+							layerLocation = "egg",
+							layerDigest = true,
+							settings = {
+								cracks = 0,
+								bellyEffect = bellyEffect,
+								escapeDifficulty = sbq.settings.escapeDifficulty,
+								replaceColors = replaceColors
+							}
+						})
+					end
+				end)
+			elseif sbq.settings.wombTF then
+				sbq.loopedMessage("Transform"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
+					if not immune then
+						playerTransformMessageHandler( eid, 3 )
+					end
+				end)
+			end
 		end
 	end
 end
 
 function sbq.letout(id)
-	local id = id
-	for i = sbq.occupantSlots, 0, -1 do
-		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
-		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
-		then
-			id = sbq.occupant[i].id
-			break
-		end
-	end
-	if not id then return end
+	local id = id or sbq.getRecentPrey()
+	if not id then return false end
+
 	local location = sbq.lounging[id].location
 
 	if location == "belly" then
@@ -152,6 +150,8 @@ function sbq.letout(id)
 		else
 			return sbq.doTransition("oralEscape", {id = id})
 		end
+	elseif location == "tail" then
+		return sbq.doTransition("tailEscape", {id = id})
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
 	elseif location == "ballsL" or location == "ballsR" then
@@ -210,9 +210,6 @@ function sbq.settingsMenuUpdated()
 end
 
 function sbq.handleUnderwear()
-	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "frontlegs", "/humanoid/<species>/nude/<gender>body.png")
-	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "body", "/humanoid/<species>/nude/<gender>body.png")
-
 	world.sendEntityMessage(sbq.driver, "sbqEnableUnderwear", sbq.settings.underwear)
 	world.sendEntityMessage(sbq.driver, "sbqEnableBra", sbq.settings.bra)
 end

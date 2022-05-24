@@ -42,6 +42,34 @@ function transformMessageHandler(eid, multiplier, data)
 
 	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
 	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
+	sbq.lounging[eid].progressBarType = "transforming"
+	if (data or {}).species == "sbqEgg" then
+		sbq.lounging[eid].progressBarType = "eggifying"
+	end
+end
+
+message.setHandler( "playerTransform", function(_,_, eid, multiplier, data )
+	playerTransformMessageHandler(eid, multiplier, data)
+end )
+
+function playerTransformMessageHandler(eid, multiplier, data)
+	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive or sbq.lounging[eid].stopPlayerTransformMessage then return end
+	sbq.addRPC(world.sendEntityMessage(eid, "sbqGetSpeciesOverrideData"), function (overrideData)
+		if overrideData then
+			local species = (data or {}).species or sbq.species
+			if overrideData.species ~= species then
+				sbq.lounging[eid].progressBarActive = true
+				sbq.lounging[eid].progressBar = 0
+				sbq.lounging[eid].progressBarData = data
+
+				sbq.lounging[eid].progressBarMultiplier = multiplier or 3
+				sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
+				sbq.lounging[eid].progressBarType = "transforming"
+			else
+				sbq.lounging[eid].stopPlayerTransformMessage = true
+			end
+		end
+	end)
 end
 
 message.setHandler( "settingsMenuRefresh", function(_,_)
@@ -62,7 +90,21 @@ message.setHandler( "despawn", function(_,_, eaten)
 	sbq.onDeath(eaten)
 end )
 
-message.setHandler( "digest", function(_,_, eid)
+message.setHandler( "reversion", function(_,_)
+	sbq.reversion()
+end)
+
+function sbq.reversion()
+	if sbq.occupants.total > 0 then
+		sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", "sbqOccupantHolder" ), function (settings)
+			world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+		end)
+	else
+		sbq.onDeath()
+	end
+end
+
+message.setHandler( "sbqDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
@@ -73,7 +115,21 @@ message.setHandler( "digest", function(_,_, eid)
 			end
 		end
 		sbq.lounging[eid].location = "digesting"
-		return {success=success, timing=timing}
+		if success and type(timing) == "number" then
+			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		end
+	end
+end )
+message.setHandler( "sbqSoftDigest", function(_,_, eid)
+	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
+		local location = sbq.lounging[eid].location
+		local success, timing = sbq.doTransition("digest"..location)
+		sbq.lounging[eid].sizeMultiplier = 0
+		sbq.lounging[eid].digested = true
+		sbq.lounging[eid].visible = false
+		if success and type(timing) == "number" then
+			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		end
 	end
 end )
 
@@ -103,10 +159,8 @@ message.setHandler( "fixWeirdSeatBehavior", function(_,_, eid)
 	sbq.weirdFixFrame = true
 end )
 
-message.setHandler( "addPrey", function (_,_, seatindex, data)
-	if seatindex > sbq.occupantSlots then return false end
-	sbq.occupant[seatindex] = data
-	sbq.refreshList = true
+message.setHandler( "addPrey", function (_,_, data)
+	table.insert(sbq.addPreyQueue, data)
 end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)
@@ -126,7 +180,7 @@ message.setHandler( "requestUneat", function (_,_, prey, voreType)
 end)
 
 message.setHandler( "getOccupancyData", function ()
-	return {occupant = sbq.occupant, occupants = sbq.occupants}
+	return {occupant = sbq.occupant, occupants = sbq.occupants, actualOccupants = sbq.actualOccupants}
 end)
 
 message.setHandler( "requestTransition", function (_,_, transition, args)

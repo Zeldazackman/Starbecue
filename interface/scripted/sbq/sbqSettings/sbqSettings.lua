@@ -10,6 +10,8 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require("/scripts/speciesAnimOverride_player_species.lua")
+require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 
 function sbq.getPatronsString()
 	local patronsString = ""
@@ -50,15 +52,14 @@ function init()
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
-			sbq.predatorConfig = root.assetJson("/humanoid/sbqData.config").sbqData
-			local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-			local species = speciesAnimOverrideData.species or player.species()
-			local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
-			if success then
-				if type(data.sbqData) == "table" then
-					sbq.predatorConfig = data.sbqData
-				end
+			local species = player.species()
+			local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+			local path = registry[species] or "/humanoid/sbqData.config"
+			if path:sub(1,1) ~= "/" then
+				path = "/humanoid/"..species.."/"..path
 			end
+			sbq.predatorConfig = root.assetJson(path).sbqData
+
 
 			local mergeConfigs = sbq.predatorConfig.merge or {}
 			local configs = { sbq.predatorConfig }
@@ -83,7 +84,6 @@ function init()
 			end
 			sbq.predatorConfig = finalConfig
 			sbq.predatorConfig.scripts = scripts
-
 		else
 			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		end
@@ -93,7 +93,7 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	sbq.hammerspacePanel()
+	sbq.locationPanel()
 
 	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
@@ -243,8 +243,6 @@ function init()
 		end
 	end
 
-	sbq.predator = sbq.sbqCurrentData.species or "sbqOccupantHolder"
-
 	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
@@ -269,7 +267,7 @@ function init()
 
 	function hammerspace:onClick() -- only one that has unique logic
 		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-		sbq.hammerspacePanel()
+		sbq.locationPanel()
 	end
 
 end
@@ -289,7 +287,7 @@ function sbq.saveSettings()
 		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
 	end
 
-	sbq.sbqSettings[sbq.predator] = sbq.predatorSettings
+	sbq.sbqSettings[sbq.sbqCurrentData.species or "sbqOccupantHolder"] = sbq.predatorSettings
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
 	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
@@ -407,61 +405,6 @@ function sbq.changePreset(inc)
 	presetText:setText(sbq.predatorConfig.presetList[sbq.preset])
 end
 
-function sbq.hammerspacePanel()
-	hammerspaceScrollArea:clearChildren()
-	if sbq.globalSettings.hammerspace then
-		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
-			local data = sbq.predatorConfig.locations[location]
-			if data.hammerspace then
-				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
-					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], toolTip = "Enable Hammerspace for this location" },
-					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
-					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
-					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
-					{ type = "label", text = (data.name or location), inline = true}
-				}})
-				local enable = _ENV[location.."HammerspaceEnabled"]
-				local prev = _ENV[location.."Prev"]
-				local label = _ENV[location.."Value"]
-				local next = _ENV[location.."Next"]
-				function enable:onClick()
-					if data.sided then
-						sbq.predatorSettings.hammerspaceDisabled[location.."L"] = not enable.checked
-						sbq.predatorSettings.hammerspaceDisabled[location.."R"] = not enable.checked
-					end
-					sbq.predatorSettings.hammerspaceDisabled[location] = not enable.checked
-					sbq.saveSettings()
-				end
-				function prev:onClick()
-					if data.sided then
-						sbq.changeHammerspaceLimit(location.."L", -1, label)
-						sbq.changeHammerspaceLimit(location.."R", -1, label)
-					end
-					sbq.changeHammerspaceLimit(location, -1, label)
-				end
-				function next:onClick()
-					if data.sided then
-						sbq.changeHammerspaceLimit(location.."L", 1, label)
-						sbq.changeHammerspaceLimit(location.."R", 1, label)
-					end
-					sbq.changeHammerspaceLimit(location, 1, label)
-				end
-			end
-		end
-		hammerspacePanel:setVisible(true)
-	else
-		hammerspacePanel:setVisible(false)
-	end
-end
-
-function sbq.changeHammerspaceLimit(location, inc, label)
-	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 1) + inc
-	if newValue < sbq.predatorConfig.locations[location].minVisual or 1 then return
-	elseif newValue > sbq.predatorConfig.locations[location].max then return end
-	label:setText(newValue)
-	sbq.predatorSettings.hammerspaceLimits[location] = newValue
-	sbq.saveSettings()
-end
 
 sbq.speciesOverrideIndex = 1
 function sbq.changeSpecies(inc)
@@ -578,11 +521,6 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 				sbq.changePreySetting(setting, button.checked)
 			end
 		end
-	end
-
-	preyEnabled:setChecked(sbq.sbqPreyEnabled.enabled)
-	function preyEnabled:onClick()
-		sbq.changePreySetting("enabled", preyEnabled.checked)
 	end
 
 	function digestImmunity:onClick()

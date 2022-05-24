@@ -1,0 +1,86 @@
+{
+	"type" : "sbqHubCosmic",
+	"baseType" : "villager",
+
+	"keepAlive" : true,
+
+	"npcname" : "Cosmic",
+	"identity" : {
+	},
+
+	"persistent" : true,
+
+	"dropPools" : [],
+
+	"scripts" : [
+		"/npcs/bmain.lua",
+		"/scripts/SBQ_npc_bmain.lua",
+		"/scripts/speciesAnimOverride_npc_bmain.lua",
+		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
+	],
+	"scriptConfig" : {
+		"behavior" : "sbqvorevillager",
+		"uniqueId" : "sbqHubCosmic",
+		"sbqDefaultSettings" : {
+			"mood" : "default",
+			"personality" : "default"
+		},
+		"entityPortrait" : true,
+		"defaultPortrait" : "bust",
+
+		"dialogueTree" : {
+			// path is: race -> personality -> mood
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself
+			"greeting" : {
+				"next" : "personality",
+				"default" : {
+					"next" : "mood",
+					"default" : {
+						"randomDialogue" : [
+							"Hi. I'm a builder."
+						],
+						"randomButtonText" : "Ok."
+					}
+				}
+			}
+		}
+	},
+
+	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
+		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"preyEnabled": false,
+				"digestImmunity": true,
+				"transformImmunity": true,
+				"eggImmunity": false,
+				"held": false,
+				"oralVore": true,
+				"tailVore": true,
+				"absorbVore": false,
+
+				"navelVore": false,
+				"analVore": true,
+				"unbirth": true,
+				"cockVore": true,
+				"breastVore": false
+			},
+			"speciesAnimOverrideData" : {}
+		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+					}
+				]
+			]
+		]
+	}
+}

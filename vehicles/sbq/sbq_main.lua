@@ -42,6 +42,8 @@ function sbq.clearOccupant(i)
 		index = i,
 		id = nil,
 		statList = sbq.sbqData.occupantStatusEffects or {},
+		size = 1,
+		sizeMultiplier = 1,
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -138,7 +140,7 @@ function init()
 	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.transformGroups = root.assetJson( sbq.cfgAnimationFile ).transformationGroups
 
-	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
+	sbq.settings = sb.jsonMerge(sbq.config.defaultSettings, sb.jsonMerge( sbq.sbqData.defaultSettings or {}, config.getParameter( "settings" ) or {}))
 
 	sbq.spawner = config.getParameter("spawner")
 	sbq.settings.directives = sbq.sbqData.defaultDirectives or ""
@@ -207,6 +209,7 @@ function init()
 
 	sbq.driver = config.getParameter( "driver" )
 	if sbq.driver ~= nil then
+		sbq.startSlot = 1
 		sbq.occupant[0].id = sbq.driver
 		sbq.driverSeat = "occupant0"
 
@@ -225,7 +228,7 @@ function init()
 		sbq.seats.objectControls.seatname = "objectControls"
 		sbq.seats.objectControls.controls.powerMultiplier = sbq.objectPowerLevel()
 		sbq.driverSeat = "objectControls"
-		sbq.includeDriver = true
+		sbq.startSlot = 0
 		sbq.driving = false
 		sbq.isObject = true
 	end
@@ -234,10 +237,7 @@ function init()
 		sbq.warpInEffect()
 	end
 
-	sbq.occupants.maximum = 7
-	if sbq.includeDriver then
-		sbq.occupants.maximum = 8
-	end
+	sbq.occupants.maximum = 8 - sbq.startSlot
 
 	sbq.seats[sbq.driverSeat].smolPreyData = config.getParameter("layer") or {}
 	sbq.seats[sbq.driverSeat].species = sbq.seats[sbq.driverSeat].smolPreyData.species
@@ -285,6 +285,7 @@ function update(dt)
 	sbq.updateDriving(dt)
 
 	sbq.sendAllPrey()
+	sbq.recievePrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)
@@ -488,16 +489,12 @@ end
 function sbq.checkSpawnerExists()
 	if sbq.spawner ~= nil and world.entityExists(sbq.spawner) then
 	elseif (sbq.spawnerUUID ~= nil) then
-		--[[sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {}, -- this is now how any of that works, you have to be in the same world for a message
-		function(data)
-			-- put function handling the data return for the preywarp request here to make the player prey warp to the pred's location and set themselves as prey again
-
-			sbq.spawnerUUID = nil
-		end,
-		function()
-			-- this function is for when the request fails, leave it unchanged
-			sbq.spawnerUUID = nil
-		end)]]
+		for i = sbq.startSlot, sbq.occupantSlots do
+			local id = sbq.occupant[i].id
+			if type(id) == "number" and world.entityExists(id) then
+				world.sendEntityMessage(id, "sbqPreyWarp", sbq.spawnerUUID, sbq.occupant[i])
+			end
+		end
 		sbq.spawnerUUID = nil
 	else
 		sbq.onDeath()

@@ -47,6 +47,8 @@ function sbq.clearOccupant(i)
 		index = i,
 		id = nil,
 		statList = (sbq.sbqData or {}).occupantStatusEffects or {},
+		size = 1,
+		sizeMultiplier = 1,
 		visible = true,
 		emote = "idle",
 		dance = "idle",
@@ -141,7 +143,7 @@ function init()
 	sbq.spawner = config.getParameter("spawner") or config.getParameter("driver")
 	sbq.driver = sbq.spawner
 	sbq.driving = world.entityType(sbq.spawner) == "player"
-	sbq.includeDriver = true
+	sbq.startSlot = 0
 
 	for i = 0, sbq.occupantSlots do
 		sbq.occupant[i] = sbq.clearOccupant(i)
@@ -259,11 +261,13 @@ function update(dt)
 	sbq.openPredHud(dt)
 
 	sbq.sendAllPrey()
+	sbq.recievePrey()
 	sbq.updateOccupants(dt)
 	sbq.handleStruggles(dt)
 	sbq.doBellyEffects(dt)
 	sbq.applyStatusLists()
 
+	sbq.update(dt)
 	sbq.applyTransformations()
 end
 
@@ -285,16 +289,13 @@ function sbq.checkSpawnerExists()
 	if sbq.spawner and world.entityExists(sbq.spawner) then
 		mcontroller.setPosition(world.entityPosition(sbq.spawner))
 	elseif (sbq.spawnerUUID ~= nil) then
-		sbq.loopedMessage("preyWarpDespawn", sbq.spawnerUUID, "sbqPreyWarpRequest", {},
-		function(data)
-			-- put function handling the data return for the preywarp request here to make the player prey warp to the pred's location and set themselves as prey again
-
-			sbq.spawnerUUID = nil
-		end,
-		function()
-			-- this function is for when the request fails, leave it unchanged
-			sbq.spawnerUUID = nil
-		end)
+		for i = sbq.startSlot, sbq.occupantSlots do
+			local id = sbq.occupant[i].id
+			if type(id) == "number" and world.entityExists(id) then
+				world.sendEntityMessage(id, "sbqPreyWarp", sbq.spawnerUUID, sbq.occupant[i])
+			end
+		end
+		sbq.spawnerUUID = nil
 	else
 		sbq.onDeath()
 	end
@@ -327,11 +328,14 @@ function sbq.entityLounging( entity )
 	return false
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total
 	total = total + 1
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
+
+	if total > emptyslots then return false end
+	if locationslots ~= -1 and total > locationslots then return false end
+
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(
@@ -344,8 +348,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 			entity.id()
 		)
 
-		local nextSlot = 1
-		for i = 0, sbq.occupantSlots do
+		for i = sbq.startSlot, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
 				local location = sbq.occupant[i].location
 				local massMultiplier = 0
@@ -353,7 +356,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 				if location == "nested" then
 					location = sbq.occupant[i].nestedPreyData.ownerLocation
 				end
-				massMultiplier = sbq.sbqData.locations[location].mass or 0
+				massMultiplier = (sbq.sbqData.locations[location] or {}).mass or 0
 
 				if sbq.occupant[i].location == "nested" then
 					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
@@ -366,12 +369,11 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, h
 						owner = sbq.driver,
 						location = sbq.occupant[i].location,
 						massMultiplier = massMultiplier,
-						digest = sbq.sbqData.locations[location].digest,
+						digest = (sbq.sbqData.locations[location] or {}).digest,
 						nestedPreyData = sbq.occupant[i].nestedPreyData
 					}
 				})
-				world.sendEntityMessage( source, "addPrey", seatindex + nextSlot, occupantData)
-				nextSlot = nextSlot+1
+				world.sendEntityMessage( source, "addPrey", occupantData)
 			end
 		end
 		return true

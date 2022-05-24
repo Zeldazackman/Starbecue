@@ -21,8 +21,6 @@ function sbq.everything_primary()
 
 	message.setHandler("sbqForceSit", function(_,_, data)
 		status.setStatusProperty("sbqForceSitData", data)
-		status.setStatusProperty("sbqDontTouchDoors", true)
-
 		status.addEphemeralEffect("sbqForceSit", 1, data.source)
 	end)
 
@@ -39,18 +37,37 @@ function sbq.everything_primary()
 	end)
 
 	message.setHandler("sbqIsPreyEnabled", function(_,_, voreType)
-		if (status.statusProperty("sbqPreyEnabled") or {}).enabled == false then return false end
-
-		if (status.statusProperty("sbqPreyEnabled") or {})[voreType] == nil then
-			local entityType = world.entityType(entity.id())
-			local defaults = root.assetJson("/sbqGeneral.config:defaultPreyEnabled")
-			return defaults[entityType][voreType]
-		end
-		return (status.statusProperty("sbqPreyEnabled") or {})[voreType]
+		if (status.statusProperty("sbqPreyEnabled") or {}).preyEnabled == false then return false end
+		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {}))[voreType]
+	end)
+	message.setHandler("sbqGetPreyEnabled", function(_,_)
+		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {}))
 	end)
 
 	message.setHandler("sbqSetVelocityAngle", function(_,_, data)
 		status.setStatusProperty("sbqSetVelocityAngle", data)
 		status.addEphemeralEffect("sbqSetVelocityAngle")
+	end)
+
+	message.setHandler("sbqProjectileSource", function (_,_, source)
+		status.setStatusProperty("sbqProjectileSource", source)
+	end)
+
+	message.setHandler("sbqDigest", function (_,_,id)
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "sbqDigest", id)
+		end
+	end)
+	message.setHandler("sbqSoftDigest", function (_,_,id)
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "sbqSoftDigest", id)
+		end
+	end)
+
+	message.setHandler("sbqGetSpeciesOverrideData", function (_,_)
+		local data = { species = world.entitySpecies(entity.id()), gender = world.entityGender(entity.id())}
+		return sb.jsonMerge(data, status.statusProperty("speciesAnimOverrideData") or {})
 	end)
 end

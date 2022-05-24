@@ -1,0 +1,14 @@
+[
+	[
+		{
+			"op": "add",
+			"path": "/partTagDefaults/cock",
+			"value": { "bodyDirectives" : "?hueshift=180" }
+		},
+		{
+			"op": "add",
+			"path": "/partTagDefaults/pussy",
+			"value": { "bodyDirectives" : "?hueshift=180" }
+		}
+	]
+]

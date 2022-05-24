@@ -1,0 +1,30 @@
+{
+  "name": "sbq_guard_umbreon",
+  "priority": 52,
+
+  "colonyTagCriteria": {
+    "light": 1,
+    "combat" : 8,
+    "door": 1,
+    "sbqVore" : 1,
+    "bioluminescence" : 8
+  },
+
+  "checkRequirements" : { "checkImage" : "/humanoid/Umbreon/malebody.png" },
+
+  "tenants": [
+    {
+      "spawn": "npc",
+      "level" : 1,
+      "species": ["Umbreon"],
+      "type": "sbqVoreFriendlyGuardTenant",
+      "overrides": {
+       }
+     }
+   ],
+
+  "rent": {
+    "periodRange": [1200.0, 1800.0],
+    "pool": "villagerGift"
+  }
+}

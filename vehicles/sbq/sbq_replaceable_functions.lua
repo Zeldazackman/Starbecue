@@ -24,6 +24,33 @@ end
 function sbq.pathfinding(dt)
 end
 
+-- the function that gets called upon a prey inputting the escape combo (every direction + space)
+function sbq.escapeScript(i)
+	sbq.uneat(sbq.occupant[i].id)
+end
+
+function sbq.struggleMessages(id)
+	local entityType = world.entityType(id)
+	if entityType == "npc" or entityType == "player" then
+		local location = sbq.lounging[id].location
+		local settings = {
+			predator = sbq.species,
+			location = location,
+			digested = sbq.lounging[id].digested,
+			egged = sbq.lounging[id].egged,
+			transformed = sbq.lounging[id].transformed,
+			locationDigest = sbq.sbqData.locations[location].digest,
+			progressBarType = sbq.lounging[id].progressBarType
+		}
+
+		if math.random() >= 0.9 then
+			world.sendEntityMessage(sbq.driver, "sbqSayRandomLine", id, settings, {"struggle"}, true )
+		elseif math.random() <= 0.1 then
+			world.sendEntityMessage(id, "sbqSayRandomLine", sbq.driver, sb.jsonMerge(sbq.settings, settings), {"struggling"}, false )
+		end
+	end
+end
+
 -- for handling the grab action when clicked, some things may want to handle it differently
 function sbq.handleGrab()
 	local primary = (((sbq.seats[sbq.driverSeat].controls.primaryHandItemDescriptor or {}).parameters or {}).scriptStorage or {}).clickAction
@@ -71,16 +98,20 @@ end
 
 -- for letting out prey, some predators might wand more specific logic regarding this
 function sbq.letout(id)
-	local id = id
+	local id = id or sbq.getRecentPrey()
+	if not id then return false end
+
+	return sbq.doTransition( "escape", {id = id} )
+end
+
+function sbq.getRecentPrey()
 	for i = sbq.occupantSlots, 0, -1 do
 		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
 		and sbq.occupant[i].location ~= "nested" and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
 		then
-			id = sbq.occupant[i].id
-			break
+			return sbq.occupant[i].id
 		end
 	end
-	return sbq.doTransition( "escape", {id = id} )
 end
 
 -- warp in/out effect should be replaceable if needed

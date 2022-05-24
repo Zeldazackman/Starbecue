@@ -1,0 +1,12 @@
+{
+	"name" : "sbqMysteriousPotionTF",
+	"effectConfig" : {},
+	"defaultDuration" : 3600,
+
+	"scripts" : [
+		"sbqMysteriousPotionTF.lua"
+	],
+
+	"label" : "Transformed",
+	"icon" : "/items/active/sbqTransformation/sbqMysteriousPotion/sbqPotion.png"
+}

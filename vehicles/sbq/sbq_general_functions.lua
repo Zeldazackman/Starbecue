@@ -270,5 +270,21 @@ function sbq.transformPrey(i)
 			end
 		end
 	end
+	if smolPreyData.species == "sbqEgg" then
+		sbq.occupant[i].progressBar = 0
+		sbq.occupant[i].egged = true
+	else
+		sbq.occupant[i].transformed = true
+	end
 	sbq.refreshList = true
+end
+
+function sbq.transformPlayer(i)
+	local id = sbq.occupant[i].id
+	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = "noChange"}
+	sbq.occupant[i].transformed = true
+	if type(id) == "number" and world.entityExists(id) then
+		world.sendEntityMessage(id, "sbqRemoveStatusEffect", "sbqMysteriousPotionTF")
+		world.sendEntityMessage(id, "sbqApplyStatusEffects", {sbqMysteriousPotionTF = { power = 3600, property = data}})
+	end
 end

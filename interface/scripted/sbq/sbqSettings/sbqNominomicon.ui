@@ -13,11 +13,12 @@
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
-							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : "None" }],
-							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : "Heal" }],
-							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : "Digest" }],
-							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : "Soft Digest" }]
-						]}
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : " None" }],
+							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : " Heal" }],
+							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : " Digest" }],
+							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : " Soft Digest" }]
+						]}]}
 					],[// second collumn
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
@@ -29,17 +30,17 @@
 						]}]],
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
-							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : "Display DoT Effects" } ],
-							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : "Belly Sounds" } ],
-							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : "Hammerspace" } ]
-						]}
+							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : " Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : " Belly Sounds" } ],
+							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
+						]}]}
 					]],
-					[[ // third quarter
+					[{ "size" : 75 },[ // third quarter
 						{ "expandMode" : [2, 2]},
-						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-							[{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}]
+						{ "id" : "locationPanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Occupancy Options", "inline" : true },
+							{ "type" : "scrollArea", "id" : "locationPanelScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
 						]}
 					],[ // fourth quarter
 						{ "expandMode" : [2, 2]}
