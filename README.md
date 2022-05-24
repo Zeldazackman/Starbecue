@@ -1,6 +1,6 @@
-# ZyganSSVMAddons
+# Starbecue
 
-To install simply visit the [releases page](https://github.com/Zygahedron/ZyganSSVMAddons/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
+To install simply visit the [releases page](https://github.com/Zygahedron/Starbecue/releases), download the latest one (the .pak file), and put it in your Starbound mods folder.
 
 This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/filedetails/?id=2512589532) or [Stardust Core](https://steamcommunity.com/sharedfiles/filedetails/?id=764887546)
 
