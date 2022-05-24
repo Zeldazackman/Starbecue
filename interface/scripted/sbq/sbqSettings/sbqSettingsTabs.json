@@ -52,7 +52,7 @@
 	],
 	"speciesPresets" : {
 		"Zevi" : {
-			"species" : "sbqzevi",
+			"species" : "sbqZevi",
 			"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
 		}
 	},

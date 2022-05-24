@@ -88,9 +88,9 @@
 					"range" : 8,
 					"randomName" : "Zevi",
 					"randomPortrait" : [
-						"/humanoid/sbqzevi/portraits/ZUwU.png",
-						"/humanoid/sbqzevi/portraits/ZNeutral.png",
-						"/humanoid/sbqzevi/portraits/ZBlep.png"
+						"/humanoid/sbqZevi/portraits/ZUwU.png",
+						"/humanoid/sbqZevi/portraits/ZNeutral.png",
+						"/humanoid/sbqZevi/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy TF UwU",
@@ -129,9 +129,9 @@
 					"range" : 8,
 					"speaker" : "sbqZevi",
 					"randomPortrait" : [
-						"/humanoid/sbqzevi/portraits/ZUwU.png",
-						"/humanoid/sbqzevi/portraits/ZNeutral.png",
-						"/humanoid/sbqzevi/portraits/ZBlep.png"
+						"/humanoid/sbqZevi/portraits/ZUwU.png",
+						"/humanoid/sbqZevi/portraits/ZNeutral.png",
+						"/humanoid/sbqZevi/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy UwU",

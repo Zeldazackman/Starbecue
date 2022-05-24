@@ -1,0 +1,1 @@
+I'm not too pleased with these sprites, which is why I didn't proceed to do the recoloring to port them to every other species we have support for, later down the line I'll make new ones, or someone else can make them, and then I'll happily port it all to the others

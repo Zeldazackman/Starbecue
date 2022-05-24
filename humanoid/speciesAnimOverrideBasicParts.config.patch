@@ -1,8 +1,6 @@
 [
 	{ "op": "add", "path": "/scripts/-", "value": "/humanoid/sbq_voreAnimOverrides.lua" },
 
-	{ "op": "add", "path": "/partImages/breastsCover", "value": "/humanoid/<species><reskin>/nude/<gender>BreastsCover.png" },
-
 	{ "op": "add", "path": "/animations/idle/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/sit/belly", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/belly", "value": "idle" },
@@ -99,6 +97,23 @@
 	{ "op": "add", "path": "/animations/swimIdle/breastsBack", "value": "idle" },
 
 	{ "op": "add", "path": "/partImages/breastsBack", "value": "/humanoid/<species><reskin>/breastsBack.png" },
-	{ "op": "add", "path": "/globalTagDefaults/breastsBackMask", "value": "/humanoid/<species><reskin>/breastsBack.png" }
+	{ "op": "add", "path": "/globalTagDefaults/breastsBackMask", "value": "/humanoid/<species><reskin>/breastsBack.png" },
 
+	{ "op": "add", "path": "/nudePartImages", "value": {} },
+	{ "op": "add", "path": "/nudeChestPartImages", "value": {} },
+	{ "op": "add", "path": "/underwearPartImages", "value": {} },
+	{ "op": "add", "path": "/braPartImages", "value": {} },
+
+	{ "op": "add", "path": "/nudePartImages/body", "value": "/humanoid/<species><reskin>/nude/<gender>body.png" },
+	{ "op": "add", "path": "/nudePartImages/frontlegs", "value": "/humanoid/<species><reskin>/nude/<gender>body.png" },
+
+	{ "op": "add", "path": "/nudeChestPartImages/breastsCover", "value": "/humanoid/<species><reskin>/nude/<gender>BreastsCover.png" },
+
+	{ "op": "add", "path": "/underwearPartImages/crotch_underwear", "value": "/humanoid/any/underwear/malebody.png" },
+	{ "op": "add", "path": "/underwearPartImages/crotch_underwear_frontlegs", "value": "/humanoid/any/underwear/malebody.png" },
+	{ "op": "add", "path": "/underwearPartImages/bulge", "value": "/humanoid/any/underwear/bulge.png" },
+
+	{ "op": "add", "path": "/braPartImages/breastsCover_underwear", "value": "/humanoid/any/underwear/<gender>BreastsCover.png" },
+	{ "op": "add", "path": "/braPartImages/breastsFront_underwear", "value": "/humanoid/any/underwear/breastsFront.png" },
+	{ "op": "add", "path": "/braPartImages/breastsBack_underwear", "value": "/humanoid/any/underwear/breastsBack.png" }
 ]

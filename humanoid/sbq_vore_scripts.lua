@@ -210,9 +210,6 @@ function sbq.settingsMenuUpdated()
 end
 
 function sbq.handleUnderwear()
-	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "frontlegs", "/humanoid/<species>/nude/<gender>body.png")
-	world.sendEntityMessage(sbq.driver, "sbqUpdateAnimPartImage", "body", "/humanoid/<species>/nude/<gender>body.png")
-
 	world.sendEntityMessage(sbq.driver, "sbqEnableUnderwear", sbq.settings.underwear)
 	world.sendEntityMessage(sbq.driver, "sbqEnableBra", sbq.settings.bra)
 end

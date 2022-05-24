@@ -24,108 +24,60 @@ end)
 
 
 message.setHandler("sbqEnableUnderwear", function (_,_, enable)
-	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/malebody.png")
-	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
-	if success and enable and notEmpty ~= nil then
-		local partname = "crotch_underwear"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-
-		partname = "crotch_underwear_frontlegs"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	elseif enable then
-		part = replaceSpeciesGenderTags("/humanoid/any/underwear/malebody.png")
-
-		local partname = "crotch_underwear"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-
-		partname = "crotch_underwear_frontlegs"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	else
-		part = ""
-		local partname = "crotch_underwear"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-
-		partname = "crotch_underwear_frontlegs"
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
+	if self.speciesFile.hasUnderwear and not enable then
+		sb.logInfo("hmm")
+		for partname, string in pairs(self.speciesData.nudePartImages or {}) do
+			local part = replaceSpeciesGenderTags(string)
+			local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+			if success and notEmpty ~= nil then
+				animator.setPartTag(partname, "partImage", part)
+				self.parts[partname] = part
+			end
+		end
 	end
 
-	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/bulge.png")
-	partname = "bulge"
-
-	success, notEmpty = pcall(root.nonEmptyRegion, (part))
-	if success and enable and notEmpty ~= nil then
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	elseif enable then
-		part = replaceSpeciesGenderTags("/humanoid/any/underwear/bulge.png")
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	else
-		part = ""
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
+	for partname, string in pairs(self.speciesData.underwearPartImages or {}) do
+		if enable then
+			local part = replaceSpeciesGenderTags(string)
+			local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+			if success and notEmpty ~= nil then
+				animator.setPartTag(partname, "partImage", part)
+				self.parts[partname] = part
+			end
+		else
+			local part = ""
+			animator.setPartTag(partname, "partImage", part)
+			self.parts[partname] = part
+		end
 	end
 end)
 
 message.setHandler("sbqEnableBra", function (_,_, enable)
-
-	local part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/<gender>BreastsCover.png")
-	local partname = "breastsCover_underwear"
-
-	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
-	if success and enable and notEmpty ~= nil then
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	elseif enable then
-		part = replaceSpeciesGenderTags("/humanoid/any/underwear/<gender>BreastsCover.png")
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	else
-		part = ""
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
+	if self.speciesFile.hasBra and not enable then
+		for partname, string in pairs(self.speciesData.nudeChestPartImages or {}) do
+			local part = replaceSpeciesGenderTags(string)
+			local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+			if success and notEmpty ~= nil then
+				animator.setPartTag(partname, "partImage", part)
+				self.parts[partname] = part
+			end
+		end
 	end
 
-	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsFront.png")
-	partname = "breastsFront_underwear"
-
-	success, notEmpty = pcall(root.nonEmptyRegion, (part))
-	if success and enable and notEmpty ~= nil then
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	elseif enable then
-		part = replaceSpeciesGenderTags("/humanoid/any/underwear/breastsFront.png")
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	else
-		part = ""
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
+	for partname, string in pairs(self.speciesData.braPartImages or {}) do
+		if enable then
+			local part = replaceSpeciesGenderTags(string)
+			local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+			if success and notEmpty ~= nil then
+				animator.setPartTag(partname, "partImage", part)
+				self.parts[partname] = part
+			end
+		else
+			local part = ""
+			animator.setPartTag(partname, "partImage", part)
+			self.parts[partname] = part
+		end
 	end
-
-	part = replaceSpeciesGenderTags("/humanoid/<species>/underwear/breastsBack.png")
-	partname = "breastsBack_underwear"
-
-	success, notEmpty = pcall(root.nonEmptyRegion, (part))
-	if success and enable and notEmpty ~= nil then
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	elseif enable then
-		part = replaceSpeciesGenderTags("/humanoid/any/underwear/breastsBack.png")
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	else
-		part = ""
-		animator.setPartTag(partname, "partImage", part)
-		self.parts[partname] = part
-	end
-
 end)
 
 message.setHandler("sbqUpdateAnimPartImage", function (_,_, partname, string)

@@ -111,17 +111,21 @@ end
 function sbq.getSpeciesConfig()
 	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
 
-	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-	local species = speciesAnimOverrideData.species or npc.species()
-	local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
-	if success then
-		if type(data.sbqData) == "table" then
-			sbq.speciesConfig.sbqData = data.sbqData
-		end
-		if type(data.states) == "table" then
-			sbq.speciesConfig.states = data.states
-		end
+	local species = npc.species()
+	local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+	local path = registry[species] or "/humanoid/sbqData.config"
+	if path:sub(1,1) ~= "/" then
+		path = "/humanoid/"..species.."/"..path
 	end
+	local speciesConfig = root.assetJson(path)
+	if type(speciesConfig.sbqData) == "table" then
+		sbq.speciesConfig.sbqData = speciesConfig.sbqData
+	end
+	if type(speciesConfig.states) == "table" then
+		sbq.speciesConfig.states = speciesConfig.states
+	end
+
+
 	sbq.speciesConfig.species = species
 	local mergeConfigs = sbq.speciesConfig.sbqData.merge or {}
 	local configs = { sbq.speciesConfig.sbqData }

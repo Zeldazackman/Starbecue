@@ -8,15 +8,29 @@ function capture_npc_setInteractive(bool)
 	interactive = bool
 	_npc_setInteractive(bool)
 end
+local _npc_setDamageTeam
+function capture_npc_setDamageTeam(data)
+	status.setStatusProperty("sbqOriginalDamageTeam", data)
+	if status.statusProperty( "sbqCurrentData" ).type ~= "prey" then
+		_npc_setDamageTeam(data)
+	end
+end
 
 function init()
-	_npc_setInteractive = npc.setInteractive
-	npc.setInteractive = capture_npc_setInteractive
+	if type(_npc_setInteractive) ~= "function" then
+		_npc_setInteractive = npc.setInteractive
+		npc.setInteractive = capture_npc_setInteractive
+
+		_npc_setDamageTeam = npc.setDamageTeam
+		npc.setDamageTeam = capture_npc_setDamageTeam
+	end
 
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		status.setStatusProperty( "sbqCurrentData", current)
-		if current.type ~= "driver" then
+		if current.type == "prey" then
 			status.setStatusProperty("sbqDontTouchDoors", true)
+		else
+			status.setStatusProperty("sbqDontTouchDoors", false)
 		end
 		if current.species ~= "sbqOccupantHolder" then
 			_npc_setInteractive(false)
@@ -49,18 +63,16 @@ function init()
 
 	message.setHandler("sbqMakeNonHostile", function(_,_)
 		local damageTeam = entity.damageTeam()
-		if (status.statusProperty("sbqOriginalDamageTeam") == nil)
-		or (damageTeam.type ~= "ghostly")
-		then
+		if (status.statusProperty("sbqOriginalDamageTeam") == nil) then
 			status.setStatusProperty("sbqOriginalDamageTeam", damageTeam)
 		end
-		npc.setDamageTeam({ type = "ghostly", team = damageTeam.team })
+		_npc_setDamageTeam({ type = "ghostly", team = damageTeam.team })
 	end)
 
 	message.setHandler("sbqRestoreDamageTeam", function(_,_)
 		local sbqOriginalDamageTeam = status.statusProperty("sbqOriginalDamageTeam")
 		if sbqOriginalDamageTeam then
-			npc.setDamageTeam(sbqOriginalDamageTeam)
+			_npc_setDamageTeam(sbqOriginalDamageTeam)
 		end
 	end)
 

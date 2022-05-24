@@ -197,15 +197,19 @@ function init()
 		local speciesConfig = root.assetJson("/humanoid/sbqData.config")
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 		local species = player.species()
-		local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
-		if success then
-			if type(data.sbqData) == "table" then
-				speciesConfig.sbqData = data.sbqData
-			end
-			if type(data.states) == "table" then
-				speciesConfig.states = data.states
-			end
+		local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+		local path = registry[species] or "/humanoid/sbqData.config"
+		if path:sub(1,1) ~= "/" then
+			path = "/humanoid/"..species.."/"..path
 		end
+		local maybeConfig = root.assetJson(path)
+		if type(maybeConfig.sbqData) == "table" then
+			speciesConfig.sbqData = maybeConfig.sbqData
+		end
+		if type(maybeConfig.states) == "table" then
+			speciesConfig.states = maybeConfig.states
+		end
+
 		speciesConfig.species = species
 		local mergeConfigs = speciesConfig.sbqData.merge or {}
 		local configs = { speciesConfig.sbqData }

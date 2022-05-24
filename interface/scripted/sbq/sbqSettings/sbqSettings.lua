@@ -51,14 +51,14 @@ function init()
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
-			sbq.predatorConfig = root.assetJson("/humanoid/sbqData.config").sbqData
 			local species = player.species()
-			local success, data = pcall(root.assetJson, "/humanoid/"..species.."/sbqData.config")
-			if success then
-				if type(data.sbqData) == "table" then
-					sbq.predatorConfig = data.sbqData
-				end
+			local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+			local path = registry[species] or "/humanoid/sbqData.config"
+			if path:sub(1,1) ~= "/" then
+				path = "/humanoid/"..species.."/"..path
 			end
+			sbq.predatorConfig = root.assetJson(path).sbqData
+
 
 			local mergeConfigs = sbq.predatorConfig.merge or {}
 			local configs = { sbq.predatorConfig }
