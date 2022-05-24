@@ -239,9 +239,9 @@ function sbq.checkVoreTypeActive(voreType)
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
 	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
-			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > locationData.max)) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
+			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings.visualMax[locationName] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
 				return "tooBig", locationName, locationData
-			elseif (sbq.occupants[locationName] >= locationData.max ) then
+			elseif (sbq.occupants[locationName] >= (sbq.data.settings.visualMax[locationName] or locationData.max) ) then
 				if sbq.actualOccupants == 0 then
 					return "otherLocationFull", locationName, locationData
 				else

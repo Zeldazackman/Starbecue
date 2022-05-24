@@ -328,11 +328,14 @@ function sbq.entityLounging( entity )
 	return false
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total
 	total = total + 1
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
+
+	if total > emptyslots then return false end
+	if locationslots ~= -1 and total > locationslots then return false end
+
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(

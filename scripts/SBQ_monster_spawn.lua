@@ -13,7 +13,7 @@ end
 function init()
 
 	if type(_monster_setDamageTeam) ~= "function" then
-		_monster_setDamageTeam = npc.setDamageTeam
+		_monster_setDamageTeam = monster.setDamageTeam
 		monster.setDamageTeam = capture_monster_setDamageTeam
 	end
 

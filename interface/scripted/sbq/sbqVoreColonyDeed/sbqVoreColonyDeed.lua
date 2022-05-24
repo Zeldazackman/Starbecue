@@ -6,18 +6,19 @@ sbq = {
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
+require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 
 function init()
-	sbq.settings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), metagui.inputData.settings or {} )
+	sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), metagui.inputData.settings or {} )
 	sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, (metagui.inputData.preySettings or {}) )
 	sbq.storage = metagui.inputData
-	BENone:selectValue(sbq.settings.bellyEffect or "sbqRemoveBellyEffects")
-	escapeValue:setText(tostring(sbq.settings.escapeDifficulty or 0))
-	escapeValueMin:setText(tostring(sbq.settings.escapeDifficultyMin or 0))
-	escapeValueMax:setText(tostring(sbq.settings.escapeDifficultyMax or 0))
+	BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
+	escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
+	escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
+	escapeValueMax:setText(tostring(sbq.predatorSettings.escapeDifficultyMax or 0))
 
-	personalityText:setText(sbq.settings.personality or "default")
-	moodText:setText(sbq.settings.mood or "default")
+	personalityText:setText(sbq.predatorSettings.personality or "default")
+	moodText:setText(sbq.predatorSettings.mood or "default")
 
 	local occupier = sbq.storage.occupier
 
@@ -42,15 +43,50 @@ function init()
 			end
 		end
 
-		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[occupier.tenants[1].species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
+		local species = occupier.tenants[1].species
+		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
+		if speciesSettings.tab then
+			mainTabField:newTab( speciesSettings.tab )
+			for i, script in ipairs( speciesSettings.scripts ) do
+				require(script)
+			end
+			if bodyPartsPanel ~= nil then
+				bodyPartsPanel:setVisible(false)
+			end
+		end
 
-		mainTabField:newTab( speciesSettings.tab )
-		for i, script in ipairs( speciesSettings.scripts ) do
-			require(script)
+		local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+		local path = registry[species] or "/humanoid/sbqData.config"
+		if path:sub(1,1) ~= "/" then
+			path = "/humanoid/"..species.."/"..path
 		end
-		if bodyPartsPanel ~= nil then
-			bodyPartsPanel:setVisible(false)
+		sbq.predatorConfig = root.assetJson(path).sbqData
+
+		local mergeConfigs = sbq.predatorConfig.merge or {}
+		local configs = { sbq.predatorConfig }
+		while type(mergeConfigs[#mergeConfigs]) == "string" do
+			local insertPos = #mergeConfigs
+			local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+			for i = #(newConfig.merge or {}), 1, -1 do
+				table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+			end
+
+			table.insert(configs, 1, newConfig)
+
+			table.remove(mergeConfigs, #mergeConfigs)
 		end
+		local scripts = {}
+		local finalConfig = {}
+		for i, config in ipairs(configs) do
+			finalConfig = sb.jsonMerge(finalConfig, config)
+			for j, script in ipairs(config.scripts or {}) do
+				table.insert(scripts, script)
+			end
+		end
+		sbq.predatorConfig = finalConfig
+		sbq.predatorConfig.scripts = scripts
+
+		sbq.locationPanel()
 	end
 
 	sbq.validTenantCatalogueList = {}
@@ -80,7 +116,7 @@ function init()
 	end
 	table.sort(sbq.validTenantCatalogueList)
 
-	for setting, value in pairs(sbq.settings) do
+	for setting, value in pairs(sbq.predatorSettings) do
 		if (setting:sub(-6,-1) ~= "Locked") then
 			local button = _ENV[setting]
 			if button ~= nil and type(value) == "boolean" then
@@ -89,7 +125,7 @@ function init()
 					sbq.changePredSetting(setting, button.checked)
 				end
 
-				if sbq.settings[setting.."Locked"] then
+				if sbq.predatorSettings[setting.."Locked"] then
 					button:setVisible(false)
 					local locked = _ENV[setting.."Locked"]
 					if locked ~= nil then
@@ -104,6 +140,11 @@ function init()
 			end
 		end
 	end
+	function hammerspace:onClick() -- only one that has unique logic
+		sbq.changePredSetting("hammerspace", hammerspace.checked)
+		sbq.locationPanel()
+	end
+
 
 	for setting, value in pairs(sbq.config.defaultPreyEnabled.npc) do
 		if (setting:sub(-6,-1) ~= "Locked") and (setting:sub(-6,-1) ~= "Enable") and type(value) == "boolean" then
@@ -171,9 +212,9 @@ function update()
 end
 
 function sbq.savePredSettings()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.settings)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSaveSettings", sbq.settings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
 	end
 end
 
@@ -185,7 +226,7 @@ function sbq.savePreySettings()
 end
 
 function sbq.changePredSetting(settingname, value)
-	sbq.settings[settingname] = value
+	sbq.predatorSettings[settingname] = value
 	sbq.savePredSettings()
 end
 
@@ -195,16 +236,16 @@ function sbq.changePreySetting(settingname, value)
 end
 
 function sbq.setBellyEffect()
-	if not sbq.settings.BELock then
+	if not sbq.predatorSettings.BELock then
 		sbq.changePredSetting("bellyEffect", BENone:getGroupValue())
 	else
-		BENone:selectValue(sbq.settings.bellyEffect or "sbqRemoveBellyEffects")
+		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
 	end
 end
 
 function sbq.changeEscapeModifier( settingname, label, inc )
-	sbq.changePredSetting(settingname, (sbq.settings[settingname] or 0) + inc)
-	label:setText(tostring(sbq.settings[settingname] or 0))
+	sbq.changePredSetting(settingname, (sbq.predatorSettings[settingname] or 0) + inc)
+	label:setText(tostring(sbq.predatorSettings[settingname] or 0))
 end
 
 indexes = {

@@ -11,6 +11,7 @@ sbq = {
 
 require("/scripts/SBQ_RPC_handling.lua")
 require("/scripts/speciesAnimOverride_player_species.lua")
+require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 
 function sbq.getPatronsString()
 	local patronsString = ""
@@ -92,7 +93,7 @@ function init()
 		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
 	end
 
-	sbq.hammerspacePanel()
+	sbq.locationPanel()
 
 	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
@@ -266,7 +267,7 @@ function init()
 
 	function hammerspace:onClick() -- only one that has unique logic
 		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-		sbq.hammerspacePanel()
+		sbq.locationPanel()
 	end
 
 end
@@ -404,70 +405,6 @@ function sbq.changePreset(inc)
 	presetText:setText(sbq.predatorConfig.presetList[sbq.preset])
 end
 
-function sbq.hammerspacePanel()
-	hammerspaceScrollArea:clearChildren()
-	if sbq.globalSettings.hammerspace then
-		for location, data in pairs(sbq.predatorConfig.locations) do
-			if sbq.predatorSettings.hammerspaceLimits[location] == nil then
-				sbq.predatorSettings.hammerspaceLimits[location] = data.max or 0
-				sbq.saveSettings()
-			end
-		end
-		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
-			local data = sbq.predatorConfig.locations[location]
-			if data.hammerspace then
-				hammerspaceScrollArea:addChild({ type = "layout", mode = "horizontal", children = {
-					{ type = "checkBox", id = location.."HammerspaceEnabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visible = data.hammerspace or false, toolTip = "Enable Hammerspace for this location" },
-					{ type = "iconButton", id = location .. "Locked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = not data.hammerspace, toolTip = "Hammerspace can't fully be used here, but you can change the visual limit" },
-					{ type = "iconButton", id = location.."Prev", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png"},
-					{ type = "label", id = location.."Value", text = (sbq.predatorSettings.hammerspaceLimits or {})[location] or 1, inline = true },
-					{ type = "iconButton", id = location.."Next", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png"},
-					{ type = "label", text = (data.name or location), inline = true}
-				}})
-				local enable = _ENV[location.."HammerspaceEnabled"]
-				local prev = _ENV[location.."Prev"]
-				local label = _ENV[location.."Value"]
-				local next = _ENV[location.."Next"]
-				function enable:onClick()
-					if data.sided then
-						sbq.predatorSettings.hammerspaceDisabled[location.."L"] = not enable.checked
-						sbq.predatorSettings.hammerspaceDisabled[location.."R"] = not enable.checked
-					end
-					sbq.predatorSettings.hammerspaceDisabled[location] = not enable.checked
-					sbq.saveSettings()
-				end
-				function prev:onClick()
-					if data.sided then
-						sbq.changeHammerspaceLimit(location.."L", -1, label)
-						sbq.changeHammerspaceLimit(location.."R", -1, label)
-					end
-					sbq.changeHammerspaceLimit(location, -1, label)
-				end
-				function next:onClick()
-					if data.sided then
-						sbq.changeHammerspaceLimit(location.."L", 1, label)
-						sbq.changeHammerspaceLimit(location.."R", 1, label)
-					end
-					sbq.changeHammerspaceLimit(location, 1, label)
-				end
-			end
-		end
-		hammerspacePanel:setVisible(true)
-	else
-		hammerspacePanel:setVisible(false)
-	end
-end
-
-function sbq.changeHammerspaceLimit(location, inc, label)
-	local newValue = (sbq.predatorSettings.hammerspaceLimits[location] or 0) + inc
-	if newValue < (sbq.predatorConfig.locations[location].minVisual or 0) then return
-
-	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return end
-
-	label:setText(newValue)
-	sbq.predatorSettings.hammerspaceLimits[location] = newValue
-	sbq.saveSettings()
-end
 
 sbq.speciesOverrideIndex = 1
 function sbq.changeSpecies(inc)

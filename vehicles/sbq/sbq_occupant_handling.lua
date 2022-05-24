@@ -15,8 +15,9 @@ function sbq.eat( occupantId, location, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
+	local full, locationslots = sbq.locationFull(location)
 
-	if not force and (occupantId == nil or sbq.entityLounging(occupantId) or sbq.inedible(occupantId) or sbq.locationFull(location)) then return false end -- don't eat self
+	if not force and (occupantId == nil or full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
@@ -25,7 +26,7 @@ function sbq.eat( occupantId, location, force )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or sbq.sbqData.locations[location].max or 0, (sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location]) }
+		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or locationslots}
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
@@ -86,11 +87,13 @@ function sbq.uneat( occupantId )
 	return true
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots, hammerspace )
+function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if sbq.driver ~= occupantId then return false end
 	local total = sbq.occupants.total + sbq.startSlot
 
-	if total > emptyslots or (locationslots and total > locationslots and locationslots ~= -1 and not hammerspace) then return false end
+	if total > emptyslots then return false end
+	if locationslots ~= -1 and total > locationslots then return false end
+
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
 			sbq.getSmolPreyData(
@@ -182,15 +185,16 @@ function sbq.firstNotLounging(entityaimed)
 end
 
 function sbq.moveOccupantLocation(args, location)
-	if not args.id or sbq.locationFull(location) then return false end
-	local maxNested = sbq.sbqData.locations[location].maxNested or ( sbq.sbqData.locations[location].max - 1 )
+	local full, locationslots = sbq.locationFull(location)
+	if not args.id or full then return false end
+	local maxNested = sbq.sbqData.locations[location].maxNested or ( locationslots - 1 )
 	local nestCount = 0
 	for i = 0, sbq.occupantSlots do
 		if sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == args.id then
 			nestCount = nestCount + 1
 		end
 	end
-	if (nestCount > maxNested and (not maxNested == -1)) and not (sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location]) then return false end
+	if (nestCount > maxNested) then return false end
 	sbq.lounging[args.id].location = location
 	return true
 end
@@ -205,12 +209,19 @@ end
 
 
 function sbq.locationFull(location)
-	if sbq.occupants.total == sbq.occupants.maximum then
-		return true
+	if sbq.occupants.total >= sbq.occupants.maximum then
+		return true, 0
 	else
-		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location] then return false end
+		local emptyslots = sbq.occupants.maximum - sbq.occupants.total
 
-		return sbq.occupants[location] >= sbq.sbqData.locations[location].max
+		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location] then
+			return false, emptyslots
+		end
+		if (sbq.sbqData.locations[location].combined or sbq.sbqData.locations[location].combine) and ((sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)) < (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max)) then
+			return false, math.min(emptyslots,(sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max) - (sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)))
+		end
+
+		return (sbq.occupants[location] >= (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max)), math.min(emptyslots,(sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max) - (sbq.occupants[location]))
 	end
 end
 
@@ -332,7 +343,7 @@ function sbq.resetOccupantCount()
 	sbq.occupants.total = 0
 	sbq.occupants.totalSize = 0
 	for location, data in pairs(sbq.sbqData.locations) do
-		sbq.occupants[location] = 0
+		sbq.occupants[location] = sbq.settings.visualMin[location] or 0
 	end
 	sbq.occupants.fatten = sbq.settings.fatten or 0
 	sbq.occupants.mass = 0
@@ -401,9 +412,7 @@ function sbq.updateOccupants(dt)
 
 					massMultiplier = sbq.sbqData.locations[location].mass or 0
 
-					if not sbq.settings.hammerspace then
-						sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
-					end
+					sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
 
 					if sbq.sbqData.locations[location].transformGroups ~= nil then
 						sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname.."Position")
@@ -498,12 +507,15 @@ function sbq.setOccupantTags()
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
-		if data.hammerspace and sbq.settings.hammerspace and not sbq.settings.hammerspaceDisabled[location] and sbq.settings.hammerspaceLimits[location] ~= nil then
-			if sbq.occupants[location] > sbq.settings.hammerspaceLimits[location] then
-				sbq.occupants[location] = sbq.settings.hammerspaceLimits[location]
-			end
+		local max = sbq.settings.visualMax[location] or data.max
+		local min = sbq.settings.visualMin[location] or data.minVisual
+		if type(max) == "number" and sbq.occupants[location] > max then
+			sbq.occupants[location] = max
+		elseif type(min) == "number" and sbq.occupants[location] < min then
+			sbq.occupants[location] = min
 		end
-
+	end
+	for location, data in pairs(sbq.sbqData.locations) do
 		if data.combine then
 			for _, combine in ipairs(data.combine) do
 				sbq.occupants[location] = sbq.occupants[location] + sbq.occupants[combine]
@@ -521,10 +533,6 @@ function sbq.setOccupantTags()
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do
-		if data.max ~= nil and sbq.occupants[location] > data.max then
-			sbq.occupants[location] = data.max
-		end
-
 		if data.sided then
 			local amount = math.min(data.max, math.max(sbq.occupants[location.."R"], sbq.occupants[location.."L"]))
 			sbq.occupants[location] = amount

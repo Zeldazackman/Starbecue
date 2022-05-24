@@ -36,9 +36,9 @@
 					]],
 					[{ "size" : 75 },[ // third quarter
 						{ "expandMode" : [2, 2]},
-						{ "id" : "hammerspacePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Hammerspace Options", "inline" : true },
-							{ "type" : "scrollArea", "id" : "hammerspaceScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
+						{ "id" : "locationPanel", "type" : "panel", "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Occupancy Options", "inline" : true },
+							{ "type" : "scrollArea", "id" : "locationPanelScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
 						]}
 					],[ // fourth quarter
 						{ "expandMode" : [2, 2]}
