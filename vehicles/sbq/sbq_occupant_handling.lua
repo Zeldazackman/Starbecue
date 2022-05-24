@@ -214,10 +214,14 @@ function sbq.locationFull(location)
 	else
 		local emptyslots = sbq.occupants.maximum - sbq.occupants.total
 
-		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace and not sbq.settings.hammerspaceDisabled[location] then
+		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
+		and not sbq.settings.hammerspaceDisabled[location] then
 			return false, emptyslots
 		end
-		if (sbq.sbqData.locations[location].combined or sbq.sbqData.locations[location].combine) and ((sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)) < (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max)) then
+		if (sbq.sbqData.locations[location].combined or sbq.sbqData.locations[location].combine)
+		and ((sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)) < (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max))
+		and (sbq.occupants[location] < sbq.sbqData.locations[location].max)
+		then
 			return false, math.min(emptyslots,(sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max) - (sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)))
 		end
 
