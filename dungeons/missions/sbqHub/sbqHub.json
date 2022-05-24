@@ -577,7 +577,7 @@
                  "name":"EggWandAltar",
                  "properties":
                     {
-                     "parameters":"{ \"dungeon\" : \"sbqHub_eggWandAltar\", \"dungeonId\" : 1, \"protect\" : false, \"placeOffset\" : [ 16, 0 ] }",
+                     "parameters":"{ \"dungeon\" : \"sbqHub_eggWandAltar\", \"dungeonId\" : 1, \"protect\" : false, \"placeOffset\" : [ -16, 0 ] }",
                      "stagehand":"sbqDungeonPlacer"
                     },
                  "rotation":0,
