@@ -20,7 +20,8 @@ function init()
 	end)
 
 	message.setHandler("sbqDigestResponse", function(time)
-		self.targetTime = time
+		effect.modifyDuration((time or self.targetTime)+1)
+		self.targetTime = time or self.targetTime
 	end)
 
 end

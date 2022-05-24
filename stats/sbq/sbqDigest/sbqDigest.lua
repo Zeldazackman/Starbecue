@@ -17,8 +17,8 @@ function init()
 	end)
 
 	message.setHandler("sbqDigestResponse", function(time)
-		effect.modifyDuration(time+1)
-		self.targetTime = time
+		effect.modifyDuration((time or self.targetTime)+1)
+		self.targetTime = time or self.targetTime
 	end)
 
 end
@@ -38,7 +38,7 @@ function update(dt)
 			self.turboDigest = false
 			self.cdt = self.cdt + dt
 			if self.cdt >= self.targetTime then
-				--world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
+				mcontroller.resetAnchorState()
 				status.modifyResourcePercentage("health", -1)
 			else
 				status.setResource("health", 1)

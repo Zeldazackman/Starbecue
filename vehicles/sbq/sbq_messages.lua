@@ -115,7 +115,7 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 			end
 		end
 		sbq.lounging[eid].location = "digesting"
-		if success then
+		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 		end
 	end
@@ -126,7 +126,10 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 		local success, timing = sbq.doTransition("digest"..location)
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].digested = true
-		world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		sbq.lounging[eid].visible = false
+		if success and type(timing) == "number" then
+			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+		end
 	end
 end )
 
