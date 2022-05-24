@@ -23,6 +23,11 @@
 	"novali": "sbq_villager_novali",
 	"rodent": "sbq_villager_rodent",
 	"umbreon": "sbq_villager_umbreon",
+	"argonian": "sbq_villager_argonian",
+	"sergal": "sbq_villager_sergal",
+	"familiar": "sbq_villager_familiar",
+	"braixen": "sbq_villager_braixen",
+	"delphox": "sbq_villager_delphox",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -48,6 +53,11 @@
 	"guard_novali": [ "sbq_guard_novali", "sbq_guardT2_novali", "sbq_guardT3_novali", "sbq_guardT4_novali" ],
 	"guard_rodent": [ "sbq_guard_rodent", "sbq_guardT2_rodent", "sbq_guardT3_rodent", "sbq_guardT4_rodent" ],
 	"guard_umbreon": [ "sbq_guard_umbreon", "sbq_guardT2_umbreon", "sbq_guardT3_umbreon", "sbq_guardT4_umbreon" ],
+	"guard_sergal": [ "sbq_guard_sergal", "sbq_guardT2_sergal", "sbq_guardT3_sergal", "sbq_guardT4_sergal" ],
+	"guard_argonian": [ "sbq_guard_argonian", "sbq_guardT2_argonian", "sbq_guardT3_argonian", "sbq_guardT4_argonian" ],
+	"guard_familiar": [ "sbq_guard_familiar", "sbq_guardT2_familiar", "sbq_guardT3_familiar", "sbq_guardT4_familiar" ],
+	"guard_braixen": [ "sbq_guard_braixen", "sbq_guardT2_braixen", "sbq_guardT3_braixen", "sbq_guardT4_braixen" ],
+	"guard_delphox": [ "sbq_guard_delphox", "sbq_guardT2_delphox", "sbq_guardT3_delphox", "sbq_guardT4_delphox" ],
 
 	"Zevi": "sbq_tenant_zevi"
 }
