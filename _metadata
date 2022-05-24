@@ -8,7 +8,7 @@
 	"friendlyName" : "Starbecue",
 	"includes" : [
 		"starboundSpeciesAnimOverrides",
-		"Umbreon Race Mod", "Avali", "novalirace", "Gnolls", "lucario", "The Crylik Race [BETA]", "Lyceen  Race", "ssvm", "Draconis Race(Humanoid Dragon Race)",
+		"Umbreon Race Mod", "Avali", "novalirace", "Gnolls", "lucario", "The Crylik Race [BETA]", "Lyceen  Race", "ssvm", "Draconis Race(Humanoid Dragon Race)", "Familiars",
 
 		"Braixen Race Fired Up", "Braixen Race", // so they don't take damage from being wet because thats dumb
 		"StarboundSimpleVoreModVSO", "ssvm", "Starbound Simple Vore Mod", "SSVMVSOchars", "SSVMSPOVZovoroth", "SSVMSPOVLekrashar", "SSVMSPOVHappers", "SSVMSPOVelric", "SSVMSPOV_TEMPLATE", // to make sure we overwrite anything from SSVM that we need to
