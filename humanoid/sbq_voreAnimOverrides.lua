@@ -25,7 +25,6 @@ end)
 
 message.setHandler("sbqEnableUnderwear", function (_,_, enable)
 	if self.speciesFile.hasUnderwear and not enable then
-		sb.logInfo("hmm")
 		for partname, string in pairs(self.speciesData.nudePartImages or {}) do
 			local part = replaceSpeciesGenderTags(string)
 			local success, notEmpty = pcall(root.nonEmptyRegion, (part))

@@ -10,7 +10,7 @@ While not required it is recommended you install the Monster Config Core Loader 
 
 ## Getting Started
 
-To get started with the mod, all you need to do is open your crafting interface, and craft a **Vore Controller** you can hold with it in hand, hold shift and up to see your avalable actions, click to select one and assign it to the controller or perform the action.
+To get started with the mod, all you need to do is open your crafting interface, and craft a **Vore Controller**. When holding it in hand, hold shift and up to see your avalable actions, click to select one and assign it to the controller perform the action.
 
 After you have an assigned vore controller, you can click it to activate **Vore mode** and then click on things to vore them, you may notice your player character jitter slightly on activation, this is normal. While in vore mode you will have a hud in the bottom right to show you your prey and belly effects, if you click the gear you can get more settings to enable or diable other vore types as well as being prey, you can access the same menu via the quickbar as well even when not in vore mode.
 

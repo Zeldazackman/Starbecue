@@ -4,6 +4,12 @@
 			{"item" : "sbqEggWand"}
 		]}]
 	],
+	"sbqSecretSlimePotion" : [
+		[0, { "fill" : [
+			{"item" : "sbqPotionSlime"},
+			{"item" : "slimebed-recipe"}
+		]}]
+	],
 	"sbqLinkOutfit" : [
 		[0, { "fill" : [
 			{"item" : "herocaphead"},
