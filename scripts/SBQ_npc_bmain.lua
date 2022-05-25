@@ -11,7 +11,7 @@ end
 local _npc_setDamageTeam
 function capture_npc_setDamageTeam(data)
 	status.setStatusProperty("sbqOriginalDamageTeam", data)
-	if status.statusProperty( "sbqCurrentData" ).type ~= "prey" then
+	if (status.statusProperty( "sbqCurrentData" ) or {}).type ~= "prey" then
 		_npc_setDamageTeam(data)
 	end
 end
