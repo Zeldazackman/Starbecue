@@ -1,0 +1,18 @@
+{
+	"metadata" : {
+		"name" : "sbqHub_avianPotionRoom",
+		"species" : "avian",
+		"rules" : [],
+		"anchor" : [ "avianPotionRoom" ]
+	},
+
+	"parts" : [
+		{
+			"name" : "avianPotionRoom",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "avianPotionRoom.json" ]
+		}
+	]
+}

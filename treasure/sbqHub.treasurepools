@@ -10,6 +10,11 @@
 			{"item" : "slimebed-recipe"}
 		]}]
 	],
+	"sbqSecretAvianPotion" : [
+		[0, { "fill" : [
+			{"item" : "sbqPotionAvian"}
+		]}]
+	],
 	"sbqLinkOutfit" : [
 		[0, { "fill" : [
 			{"item" : "herocaphead"},

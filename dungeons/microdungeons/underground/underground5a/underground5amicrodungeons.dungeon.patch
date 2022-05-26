@@ -1,0 +1,26 @@
+[
+	/*[
+		{"op" : "add","path" : "/metadata/anchor/-","value" : "sbqAdMemeDungeon"},
+		{"op" : "add","path" : "/parts/-","value" :
+			{
+				"name" : "sbqAdMemeDungeon",
+				"rules" : [
+					[ "maxSpawnCount", [1] ]
+				],
+				"def" : [ "tmx", "/dungeons/missions/sbqHub/adMemeDungeon.json" ]
+			}
+		}
+	],
+	[
+		{"op" : "add","path" : "/metadata/anchor/-","value" : "sbqAvianPotionRoom"},
+		{"op" : "add","path" : "/parts/-","value" :
+			{
+				"name" : "sbqAvianPotionRoom",
+				"rules" : [
+					[ "maxSpawnCount", [1] ]
+				],
+				"def" : [ "tmx", "/dungeons/missions/sbqHub/avianPotionRoom.json" ]
+			}
+		}
+	]*/
+]
