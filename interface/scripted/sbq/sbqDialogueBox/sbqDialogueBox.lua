@@ -326,15 +326,12 @@ function dialogueCont:onClick()
 			if option[2].nearEntitiesNamed ~= nil and ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
 				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
 				if entities ~= nil then
-					if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
+					if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil or option[2].next then
 						action[2] = function ()
-							table.insert( sbq.dialogueTreeLocation, "options" )
-							table.insert( sbq.dialogueTreeLocation, i )
-							table.insert( sbq.dialogueTreeLocation, 2 )
 							for _, entity in ipairs(entities) do
 								world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
 							end
-							sbq.updateDialogueBox( sbq.dialogueTreeLocation )
+							sbq.updateDialogueBox( {}, option[2] )
 						end
 					elseif option[2].jump ~= nil then
 						action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
