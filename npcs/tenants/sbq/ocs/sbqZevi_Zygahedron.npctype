@@ -1,0 +1,910 @@
+{
+	"type" : "sbqZevi_Zygahedron",
+	"baseType" : "villager",
+
+	"npcname" : "Zevi",
+	"identity" : {
+		"gender" : "male"
+	},
+
+	"persistent" : true,
+
+	"dropPools" : [],
+
+	"scripts" : [
+		"/npcs/bmain.lua",
+		"/scripts/SBQ_npc_bmain.lua",
+		"/scripts/speciesAnimOverride_npc_bmain.lua",
+		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
+	],
+	"scriptConfig" : {
+		"behavior" : "sbqvorevillager",
+		"uniqueId" : "sbqZevi_Zygahedron",
+		"sbqDefaultSettings" : {
+			"mood" : "default",
+			"personality" : "default",
+			"oralVorePred" : true,
+			"analVorePred" : true,
+			"cockVorePred" : true,
+			"unbirthPred" : true,
+			"absorbVorePred" : true,
+
+			"oralVorePredEnable" : true,
+			"analVorePredEnable" : true,
+			"cockVorePredEnable" : true,
+			"unbirthPredEnable" : true,
+			"absorbVorePredEnable" : true,
+
+			"navelVorePredLock" : true,
+			"breastVorePredLock" : true,
+			"tailVorePredLock" : true
+		},
+
+		"defaultPortrait" : "Neutral.png",
+		"portraitPath" : "/humanoid/sbqZevi_Zygahedron/portraits/Z",
+		"dialogueTree" : {
+			// path is: personality -> mood
+			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
+			// settings come from itself
+			"greeting" : {
+				"next" : "personality",
+				"default" : { // personality
+					"next" : "mood",
+					"default" : { // mood
+						"randomDialogue" : [
+							"Hi.",
+							"Hey there.",
+							"Mrow."
+						],
+						"randomButtonText" : "Hi.",
+						"jump" : ["converse"]
+					},
+					"fearful" : { // mood
+						"randomPortrait" : "Shocked.png",
+						"randomDialogue" : [
+							"AH!",
+							"I-I didn't see you there!",
+							"O-oh its you!"
+						],
+						"options" : [
+							["Hehe, did I scare you~?", {}],
+							["Sorry, didn't mean to scare you", { "randomDialogue" : ["Oh... ok, its fine"], "jump" : ["converse"] }]
+						]
+					},
+					"horny" : { // mood
+						"randomPortrait" : "UwU.png",
+						"randomDialogue" : [
+							"UwU",
+							"Hehe, hey there~",
+							"Mrow~"
+						],
+						"jump" : ["converse"]
+					},
+					"friendly" : { // mood
+						"randomPortrait" : "Happy.png",
+						"randomDialogue" : [
+							"Hi!",
+							"Hey <entityname>!",
+							"Nya!"
+						],
+						"jump" : ["converse"]
+					},
+					"hungry" : { // mood
+						"randomDialogue" : [
+							"Mmmm... feeling a bit hungry.",
+							"Hey <entityname>, I'm looking for some food, have any?",
+							"Oh huh, I probably need to find something to eat."
+						],
+						"jump" : ["converse"]
+					}
+				}
+			},
+
+			"converse" : {
+				"randomDialogue" : ["So what did you want to talk about?"],
+				"randomButtonText" : "[options]",
+				"options" : []
+			},
+
+			// lines for when a pred is eating prey, be it from hunting, or from it being requested
+			// settings come from itself
+			"vore" : {
+				"next" : "voreType",
+				"oralVore" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
+									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "I think you'll fill me up.", "I just need a bite to eat.", "You seem like you'd make a good meal.", "My belly's been grumbling..." ] },
+									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "I'm a bit too full...", "My belly can't stretch any further...", "I've eaten too much already...", "I would... but I'm too full..." ]},
+									"sbqDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "I'm a bit too full...", "My body can't stretch any further...", "I've been filled too much already...", "I would... but I'm too full..." ]},
+
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							}
+						}
+					}
+				},
+				"analVore" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "You want to go up my butt?", "You know thats the wrong way right?", "That's going to be a tight fit.", "Thats an interesting request." ] },
+									"after" : { "randomDialogue" : [ "Ahhh~ Hope I'm not squeezing too much.", "Mmm~ This actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Hey, I want to try something.", "Hey... what if I shoved you up my ass?", "For some reason... I keep imagining you as a dildo.", "You know, theres a reason I'm not wearing pants." ] },
+									"after" : { "randomDialogue" : [ "Ahhh~ hope I'm not squeezing too much.", "Mmm~ That actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
+								},
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
+							}
+						}
+					}
+				},
+
+				// my brain checked out for this one, someone who's actually into this one should be the one writing the dialogue - Raptor
+				"navelVore" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "You want to go in through my navel?", "That isn't the usual way to do things.", "I can try that.", "Thats my belly button right?" ] },
+									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "You really like bellies don't you.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : {"randomDialogue" : [ "This isn't the usual way to do things.", "I think we'll just skip right to your destination.", "Gonna do a bit more than just squish you against my belly here...", "Did you know theres more than just two ways into a belly?" ] },
+									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "Right into my belly.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
+								},
+								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
+								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
+								"full" : "vore.oralVore.race.personality.mood.full",
+								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
+							}
+						}
+					}
+				},
+
+				"cockVore" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Hah, you're horny.", "You want to get squeezed into my dick?", "You know things aren't supposed to go in there right?", "Thats going to be a real tight fit." ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me all excited~", "Ffff~ Now I'm all hard~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~", "Mmm~ hey, want to try something?", "I got a bit excited thinking about this, so now I have to do it~", "I'm gonna need you to pleasure me, but not the normal way~" ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me even more excited~", "Ffff~ Now I'm all hard~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
+								"full" : { "randomDialogue" : [ "Already got someone plugging my shaft~", "Mmm maybe if someone squirmed a little further in, I might have space for you.", "Hehe, I would if someone wasn't already squeezed in there~", "Maybe after I cum heh~" ] },
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							}
+						}
+					}
+				},
+				"unbirth" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Hah, you're horny.", "You want to get squeezed into my pussy?", "You know thats where dicks are supposed to go right?", "Thats going to be a real tight fit." ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me excited~", "Ffff~ Now I'm all wet~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~", "Mmm~ hey, want to try something?", "I got a bit excited thinking about this, so now I have to do it~", "I'm gonna need you to pleasure me, but not the normal way~" ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me even more excited~", "Ffff~ Now I'm all wet~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
+								"otherLocationFull" : "vore.oralVore.race.personality.mood.full.otherLocationFull",
+								"full" : { "randomDialogue" : [ "My womb is already occupied~", "Maybe after I'm done carrying my current occupants around~", "Hehe, I would if I wasn't already full down there~", "Maybe after I climax heh~" ] },
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							}
+						}
+					}
+				}
+			},
+			// when being pred, responses to the prey struggling inside
+			// settings come from itself, prey settings come from prey
+			"struggle" : {
+				"next" : "location",
+				"taurBelly" : "struggle.belly",
+				"belly" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
+								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
+								"sbqDigest" : {
+									"next" : "digestionImmunity",
+									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
+								},
+								"sbqSoftDigest" : "struggle.location.race.personality.mood.sbqDigest",
+
+								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+								"transform" : {
+									"next" : "transformImmunity",
+									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+								},
+
+								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
+								"eggify" : {
+									"next" : "eggImmunity",
+									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+								}
+							}
+						}
+					}
+				},
+				"womb" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
+								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.default"} ] },
+								"transform" : {
+									"next" : "transformImmunity",
+									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.default"} ] },
+									"true" : { "randomDialogue" : [ ["You don't want to change?", "Come on, don't you want to be different?"], {"add":"struggle.location.race.personality.mood.default"} ] }
+								},
+								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
+								"eggify" : {
+									"next" : "eggImmunity",
+									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.default"} ] },
+									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								}
+							}
+						}
+					}
+				},
+				"cock" : "struggle.shaft", // these are just in case someone names something different
+				"shaft" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
+								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.default"} ] },
+								"transform" : {
+									"next" : "transformImmunity",
+									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
+									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								}
+							}
+						}
+					}
+				},
+				"ballsL" : "struggle.balls",
+				"ballsR" : "struggle.balls",
+				"balls" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~", "Friends are stored in the balls~" ] },
+								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.default"} ] },
+								"transform" : {
+									"next" : "transformImmunity",
+									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
+									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+								}
+							}
+						}
+					}
+				}
+			},
+			// when being pred, responses to the prey escaping
+			// settings come from itself, prey settings come from the prey
+			"letout" : {
+				"next" : "voreType",
+				"oralVore" : { // voreType
+					"next" : "struggleTrigger",
+					"true" : { // prey struggling out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh... ok you want out.", "Why leave?", "Mmm... fine you can come out.", "I actually liked having you in there..." ] },
+									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?", "Are you sure you're ready to come out?", "Maybe you should get back in... heal a little longer.", "You can come back to heal any time." ]},
+									"sbqDigest" : {
+										"next" : "digestionImmunity",
+										"false" : { "randomDialogue" : [ "Dang it... I was hungry.", "No hard feelings?", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
+										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
+									},
+									"sbqSoftDigest" : {
+										"next" : "digestionImmunity",
+										"false" : { "randomDialogue" : [ "Darn it... I was hungry, you were gonna be fine anyway.", "No hard feelings? Its not like I was going to go all the way...", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
+										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
+									},
+									"transformed" : { "randomDialogue" : [ "Now you can see the new you.", "You might look a bit different now." ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "Didn't want to become something like me?", "Didn't like the changes I was making?" ] },
+										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+									},
+									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
+									"eggify" : {
+										"next" : "eggImmunity",
+										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
+										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+									},
+									"digested" : { "randomDialogue" : ["Ah... you want out... just a moment to reform.", "Ah ok, I'll reform you now.", "Fine, I'll reform you now.", "Alright, I'll reform you."]}
+								}
+							}
+						}
+					},
+					"false" : { // pred letting prey out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "You can come out now.", "Time to come out.", "You can't stay in there forever.", "Time to get out." ] },
+									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough.", "I think you've spent enough time healing.", "I think you should be feeling much better now.", "My stomach does wonders for healing doesn't it?"] },
+									"sbqDigest" : {
+										"next" : "digestionImmunity",
+										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
+										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
+									},
+									"sbqSoftDigest" : {
+										"next" : "digestionImmunity",
+										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
+										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
+									},
+									"transformed" : { "randomDialogue" : [ "Now you can see the new you.", "You might look a bit different now." ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "Maybe I shouldn't change you.", "Maybe I should stop this." ] },
+										"true" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
+									},
+									"egged" : { "randomDialogue" : "Mmm time to get this egg out." },
+									"digested" : { "randomDialogue" : ["Here, let me reform you real quick.", "You got digested so I gotta reform you.", "Ah, guess its time to reform you.", "Time to reform you I guess."]}
+								}
+							}
+						}
+					}
+				},
+				"analVore" : "letout.oralVore", // don't need to write unique lines for it yet
+				"navelVore" : "letout.oralVore", // don't need to write unique lines for it yet
+
+				"unbirth" : { // voreType
+					"next" : "struggleTrigger",
+					"true" : { // prey struggling out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Happy birthday.", "Ah~ Why'd you come out?", "Mmm~ I thought you were pretty comfortable.", "I thought you liked it in there.", "Oh... alright." ] },
+									"transformed" : "letout.oralVore.struggleTrigger.race.personality.mood.transformed",
+									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
+									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
+									"eggify" : {
+										"next" : "eggImmunity",
+										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
+										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					},
+					"false" : { // pred letting prey out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Happy birthday.", "I think you've had enough fun in there.", "Maybe its time for you to come out." ] },
+									"transformed" : "letout.oralVore.struggleTrigger.race.personality.mood.transformed",
+									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
+									"egged" : { "randomDialogue" : ["Well, time to lay an egg."] }
+								}
+							}
+						}
+					}
+				},
+				"cockVore" : { // voreType
+					"next" : "struggleTrigger",
+					"true" : { // prey struggling out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh~ ahh that felt so good~", "Could you get back in and squirm some more?", "Mmm~ I thought you were pretty comfortable.", "I thought you liked it in there.", "Oh... alright." ] },
+									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "If only you stayed a bit longer...", "Ahh~ you didn't stay in long enough.", "Maybe you should stay in a little longer." ] },
+										"true" : { "randomDialogue" : [ "Hmmm why aren't you turning?", "Come on, don't you want to see what happens?" ] }
+									}
+								}
+							}
+						}
+					},
+					"false" : { // pred letting prey out
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Hhhhhh I'm gonna cum...", "C-can't hold back much longer~", "Gonna blast you out with a load~", "Ahhhh feeels soooo goood~" ] },
+									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
+										"true" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+
+			// when being prey, responses to the pred that ate them as they struggle
+			// settings come from the pred, prey settings comes from itself
+			"struggling" : {
+				"next" : "location",
+				"default" : { // location
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : {  // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ ["I'm stuck here aren't I?", "Is there even a way out?", "Trapped..."] ] }
+								}
+							},
+							"shy" : { // personality
+								"next" : "mood",
+								"default" : {  // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ ["I-I'm stuck here aren't I?", "I-is there even a way out?", "T-trapped..."] ] }
+								}
+							}
+						}
+					}
+				},
+				"belly" : { // location
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [
+										["Mmmm pretty comfortable.", "Ahh... your belly is so soft...", {"check":{"bellySounds":true},"add":["Your belly is so noisy.", "Mmm... I like the sounds your belly is making."]}],
+										{"check":{"predator":"sbqVaporeon"},"add":["Gooey Vappy belly.", "Its all gooey in here."]}
+									]},
+									"sbqHeal" : { "randomDialogue" : [
+										["Ahh... its so soothing.", "I can feel all my troubles melting away...", "Its so comfortable in here.", {"check":{"bellySounds":true},"add":["I really like the sounds your belly makes... very calming.", "I could just drift off to sleep listening to the sounds of your body..."]} ],
+										{"check":{"predator":"sbqVaporeon"},"add":["I always liked vappy goo."]}
+									]},
+									"sbqDigest" : {
+										"next" : "digestionImmunity",
+										"true" : { "randomDialogue" : [
+											[["Trying to melt me down?","Trying to melt me down?\nThats not gonna work."], "Heh, I can actually stay in here as long as I want.", "I'm invincible!", "You can't melt me!"]
+										]},
+										"false" : { "randomDialogue" : [
+											["Ahh... I'm starting to melt.", "Oh my... I'm just gonna be food.", {"check":{"bellySounds":true},"add":["Your belly is so noisy... I'm going to be gurgled up aren't I?", "All this grumbling... you must be pretty hungry."]} ],
+											{"check":{"predator":"sbqVaporeon"},"add":["Ahh... I'm starting to melt into goo..."]}
+										]}
+									},
+									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "It feels like... I'm changing?"],
+											{"check":{"predator":"sbqVaporeon"},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					},
+					"sbqSlime" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "This slime is so sticky.", "Stuck suspended in slime...", "Suspended in sticky goo..." ]},
+									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice.", "Ahh... this is... oddly satisfying...", "I wouldn't mind staying suspended in here..." ] },
+									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
+									"sbqDigest" : {
+										"next" : "digestionImmunity",
+										"true" : { "randomDialogue" : [["Heh trying to melt me into more slime?", "Heh trying to melt me into more slime?\nThats not gonna work."], "Sorry, I'm not soluble.", "You're gonna have to try harder to absorb me."]},
+										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime.", "Oh my... I'm dissolving.", "I'm gonna be absorbed..." ] }
+									},
+									"transformed" : { "randomDialogue" : ["I've been turned into a slime!", "Oh my... I'm a slime now", "I'm just a blob of slime now..."]},
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : ["Ahh... I'm being turned into slime...", "Its like my limbs are turning into jelly..."]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
+				},
+				"ballsR" : "struggling.balls",
+				"ballsL" : "struggling.balls",
+				"balls" : {
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "All this cum sloshing around me~", "Ahhh... I'm stored in the balls~", "Stuck down here in your balls~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ I'm sloshing around in here~", "Now I'm just a load of cum~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
+				},
+				"penis" : "struggling.shaft",
+				"cock" : "struggling.shaft",
+				"shaft" : {
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh~ your cock is squeezing tight around me~", "Ohhh~ Your shaft is squeezing so hard~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ Are you about to cum me out~?", "Now I'm just a load of cum~" ] },
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
+				},
+				"womb" : {
+					"next" : "predator",
+					"default" : {
+						"next" : "race",
+						"default" : {
+							"next" : "personality",
+							"default" : {
+								"next" : "mood",
+								"default" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Ahh~ Its so soft in here~", "Ohhh~ Your womb is so snug and soft~", "This is so hot~" ] },
+									"transformed" : { "randomDialogue" : [
+										["Ahhh~ My body is all different~", "Oooh~ I've been transformed~", "I got transformed by your womb~"],
+										{"check":{"egged":true},"add":["You used an egg to transform me~", "Can't wait to hatch and see my new body~"]} // oh wait
+									]},
+									"transform" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [
+											["It feels kinda weird in here?", "I think... I think changing?", "I think... I'm starting to feel goopy?"],
+											{"check":{"egged":true},"add":["I think this egg is doing something?", "Is this egg changing me?"]} // yeah fuck I just realized
+										]},
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									},
+									"egged" : {}, // struggles can't trigger while egged and inside someone
+									"eggify" : {
+										"next" : "transformImmunity",
+										"false" : { "randomDialogue" : [ "Is this... an egg?", "Are you making an egg around me?", "I'm gonna be trapped in an egg!" ] },
+										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+									}
+								}
+							}
+						}
+					}
+				},
+				"breastsR" : "struggling.breasts",
+				"breastsL" : "struggling.breasts",
+				"breasts" : {}
+			},
+			// when being prey, responses to the pred thats eating them
+			// settings come from the pred, prey settings comes from itself
+			"vored" : {
+				"next" : "voreType",
+				"default" : { // voreType
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"randomDialogue" : [ "Ah!" ]
+								}
+							}
+						}
+					}
+				},
+				"oralVore" : { // voreType
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"randomDialogue" : [ "Ah!" ]
+								}
+							}
+						}
+					}
+				},
+				"cockVore" : { // voreType
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"randomDialogue" : [ "UwU" ]
+								}
+							}
+						}
+					}
+				},
+				"unbirth" : { // voreType
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "race",
+						"default" : { // race
+							"next" : "personality",
+							"default" : { // personality
+								"next" : "mood",
+								"default" : { // mood
+									"randomDialogue" : [ "UwU" ]
+								}
+							}
+						}
+					}
+				}
+			},
+			// when being prey, responses to the pred letting them out
+			// settings come from the pred, prey settings comes from itself
+			"escape" : {
+				"next" : "voreType",
+				"default" : { // voreType
+					"next" : "predator",
+					"default" : { // predator
+						"next" : "struggleTrigger",
+						"true" : { // struggle trigger
+							"next" : "race",
+							"default" :{ // race
+								"next" : "personality",
+								"default" : { // personality
+									"next" : "mood",
+									"default" : { // mood
+										"randomDialogue" : [ "I got out." ]
+									}
+								}
+							}
+						},
+						"false" : { // struggle trigger
+							"next" : "race",
+							"default" :{ // race
+								"next" : "personality",
+								"default" : { // personality
+									"next" : "mood",
+									"default" : { // mood
+										"randomDialogue" : [ "Ah, back outside" ]
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		},
+		"voreIcons" : {
+			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"absorbVore" : "/items/active/sbqController/absorbVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+
+			"analVore" : "/items/active/sbqController/analVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb"
+		},
+		"dialog" : {
+			"greeting" : {
+				"default" : {
+					"default" : [
+						"Mrow.",
+						"Nya!",
+						"Meow.",
+						"UwU"
+					]
+				}
+			},
+			"flee" : {
+				"helpme" : {
+					"default" : {
+						"default" : [
+							"Oh no!"
+						]
+					}
+				},
+				"helpthem" : {
+					"default" : {
+						"default" : [
+							"Oh no help them!"
+						]
+					}
+				},
+				"encourage" : {
+					"default" : {
+						"default" : [
+							"Yeah, get em!"
+						]
+					}
+				},
+				"safe" : {
+					"default" : {
+						"default" : [
+							"I'm safe."
+						]
+					}
+				}
+			},
+
+			"converse" : {
+				"default" : {
+					"default" : [
+						"Mrow.",
+						"Nya!",
+						"Meow.",
+						"UwU",
+						"Hey guys, did you know that in terms of male human and female Pokémon breeding, Vaporeon is the most compatible Pokémon for humans? Not only are they in the field egg group, which is mostly comprised of mammals, Vaporeon are an average of 3”03’ tall and 63.9 pounds, this means they’re large enough to be able handle human dicks, and with their impressive Base Stats for HP and access to Acid Armor, you can be rough with one. Due to their mostly water based biology, there’s no doubt in my mind that an aroused Vaporeon would be incredibly wet, so wet that you could easily have sex with one for hours without getting sore. They can also learn the moves Attract, Baby-Doll Eyes, Captivate, Charm, and Tail Whip, along with not having fur to hide nipples, so it’d be incredibly easy for one to get you in the mood. With their abilities Water Absorb and Hydration, they can easily recover from fatigue with enough water. No other Pokémon comes close to this level of compatibility. Also, fun fact, if you pull out enough, you can make your Vaporeon turn white. Vaporeon is literally built for human dick. Ungodly defense stat+high HP pool+Acid Armor means it can take cock all day, all shapes and sizes and still come for more",
+						"Well, well, well. It appears that <entityname> is a fellow Vappy fuck connoisseur. However, screw the female version. You get those same ol' two holes in literally everything else. The male Vappy is the real star of the show. Those long slippery dicks. They have full mobility control with like a tentacle are the perfect ass filler for the ultimate in deep reaching experience nothing else could possibly provide. Naturally lubed at all times due to their aquatic hydrodynamic nature, you can pull off anywhere to the side of the road, or go into a public restroom at the beach. Get each other aroused, and have the fuck of a lifetime. The extraordinary squishyness of the Vappy alone rubbing against you would be enough to lose yourself in pleasure as it simply mounts you. Let alone with that perfect tool of pleasure slips into you, it's ability to snake around your bends and its perfect length make it seem that a Vappy dick was made specifically for your booty. Enjoy the feeling of being completely filled while also being able to see it if you have a tight tummy. And hat's only the dick. Due to having internal balls, they're much bigger and pack a lot more cream to load you up with, along with having muscles around them to make sure every drop comes out while also being a lot more powerful than any external balls could ever hope to achieve, giving you a deep, complete filling to rock your world to your literal core, and beyond. There's still more though. Due to having a thick, powerful tail connected from their back and front, that means all their fun stuff is on the front and easy to access. Meaning, if you were even comfortable with having your dick point backwards (takes some training), you can be fucked, while also fucking your Vappy at the same time! Me-owth, that's fucking right! But, but, but! There's still fucking more! Like, holy shit, male Vaps are the gods of fuck. While you're fucking your male Vappy, possibly while also being fucked by him, their booty is on their tail, at the base, which is the thickest part, because that's where the biggest muscles are. This means that while your dick is in there, it's being fucking massaged, better than even a vag could achieve! Agh! It should be fucking illegal because how amazing male Vaps are for fuck!Well, guess what? That only covered you being a softy, wholesome fucker like me. That's right. There's. Even. F*cking. More! Say you like to be a little restrained. You don't need a Sylveon's feelers for that, or an Umbreon/Espeon's psychic powers, or Leafeon's vines. Vappies got that shit covered too! Did you even see that tail?! It's basically a boa constrictor. In a non sexual sense, it's my favorite part of a Vappy. It's basically their main part about them. But, if you want them to, it can be a super useful tool to enhance your knotty experience with them. Despite the slippyness, you won't be going anywhere if the Vappy wraps you up in that thing.Are you a super kinkster? Do you like pure fantasy fetishes that aren't possible IRL? Such as, soft vore? Well guess fucking what. It just became possible! They can be solid as they pass your lips (passed where your eyes can see them) and turn into water as they enter you, allowing them to fit perfectly, cuz nothing fits into any spot more perfectly than water, except air, like a ghost type. But, who wants to do knotty shit with air? You can't feel it unless it's moving. You can always feel liquids. Speaking of liquids, even if you're a weirdo who likes digestion, don't worry about killing them with absorption. Eventually, they'll come back out and be able to reform like nothing happened. Speaking of hurting them, if you get too rough, or you're a horrible abusive asshole to them on purpose for your own pleasure (QnQ), they can just turn to water and reform back to their completely unscathed body, making scars or missing pieces a thing of the past!I would love to say there's even more you can do with them, but the possibilities are damn near endless. Use your imagination. But if you get one, you better show this god of fuck the respect it deserves. Umbreons may be my favorite. But, damn, Vappies really want to get that top spot from me. It's a really close call."
+					]
+				}
+			}
+		}
+	},
+
+	"statusControllerSettings" : {
+		"statusProperties" : {
+			"sbqPreyEnabled" : {
+				"preyEnabled": true,
+				"digestImmunity": true,
+				"transformImmunity": true,
+				"eggImmunity": false,
+
+				"held": true,
+
+				"oralVore": true,
+				"tailVore": true,
+				"absorbVore": true,
+				"navelVore": false,
+
+				"analVore": true,
+				"unbirth": true,
+				"cockVore": true,
+				"breastVore": true,
+
+				"navelVoreLock" : true
+			},
+			"speciesAnimOverrideData" : {
+				"species" : "sbqZevi_Zygahedron",
+				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb"
+			}
+		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+					}
+				]
+			]
+		]
+	}
+}

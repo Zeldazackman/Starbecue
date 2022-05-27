@@ -49,9 +49,6 @@
 		"defaultPortrait" : "bust",
 
 		"dialogueTree" : {
-			// path is: race -> personality -> mood
-			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
-			// settings come from itself
 			"greeting": {
 				"next": "personality",
 				"default": {
@@ -94,7 +91,7 @@
 									"Okay.",
 									"Got it.",
 									"Cool.",
-									"What minigames are there at the moment?",
+									"What minigames are there?",
 									"Sounds interesting, what else?",
 									"Ooh!",
 									"Alright.",
@@ -140,13 +137,16 @@
 					"default" : {
 						"next" : "mood",
 						"default": {
+							"next" : "getVoreButtonAction",
 							"request" : {
+								"next" : "doingVore",
 								"before" : { "randomDialogue" : [ "With pleasure~" ] },
-								"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+								"after" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
 							},
 							"unprompted" : {
+								"next" : "doingVore",
 								"before" : { "randomDialogue" : [ "Mmmm~ you look like a tasty meal~" ] },
-								"tease" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
+								"after" : { "randomDialogue" : [ "Mmm~ get comfortable in there~" ] }
 							},
 							"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now." ] },
 							"full" : { "randomDialogue" : [ "I'm a bit too full..." ] },
@@ -163,7 +163,8 @@
 					"default" : {
 						"next" : "mood",
 						"default" : {
-							"sbqRemoveBellyEffects" : { "randomDialogue" : [ "Heh, having fun in there?~","I do enjoy it when you wiggle around~","Mmh, quite filling!~","That hit the spot nicely!~" ]},
+							"next" : "getLocationEffect",
+							"default" : { "randomDialogue" : [ "Heh, having fun in there?~","I do enjoy it when you wiggle around~","Mmh, quite filling!~","That hit the spot nicely!~" ]},
 							"sbqHeal" : { "randomDialogue" : [ "I will make you feel all better~","Not many know this, but I do also have dreamy liquids that heal~","Arhh, you feel so warm in there~" ]},
 							"sbqSoftDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I can feel you getting weaker in there~","I wonder how many feathers you will grow on me~","I got a place for you among the stars~" ] },
 							"sbqDigest" : { "randomDialogue" : [ "Heh, having fun melting down in there?~","I'm sure you will look even better on my feathers once you're gone~","Going to be part of this crylan very soon!~","Enjoy your last squirms before you're gone~" ] }

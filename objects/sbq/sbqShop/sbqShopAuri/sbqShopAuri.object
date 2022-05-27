@@ -84,13 +84,13 @@
 				"continue" : {
 					"useLastRandom" : true,
 					"nearEntitiesNamed" : ["Zevi"],
-					"speaker" : "sbqZevi",
+					"speaker" : "sbqZevi_Zygahedron",
 					"range" : 8,
 					"randomName" : "Zevi",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi/portraits/ZUwU.png",
-						"/humanoid/sbqZevi/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi/portraits/ZBlep.png"
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZUwU.png",
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZNeutral.png",
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy TF UwU",
@@ -104,7 +104,7 @@
 					],
 					"jump" : [ "greeting", "mood", "continue"]
 				},
-				"failJump" : [ "greeting", "mood", "continue"]
+				"fail" : "greeting.mood.continue"
 			},
 			"sbqCoreVaporeon" : {
 				"randomPortrait" : [
@@ -127,11 +127,11 @@
 					"nearEntitiesNamed" : ["Zevi"],
 					"randomName" : "Zevi",
 					"range" : 8,
-					"speaker" : "sbqZevi",
+					"speaker" : "sbqZevi_Zygahedron",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi/portraits/ZUwU.png",
-						"/humanoid/sbqZevi/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi/portraits/ZBlep.png"
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZUwU.png",
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZNeutral.png",
+						"/humanoid/sbqZevi_Zygahedron/portraits/ZBlep.png"
 					],
 					"randomDialogue" : [
 						"Vappy UwU",
@@ -145,7 +145,7 @@
 					],
 					"jump" : [ "greeting", "mood", "continue"]
 				},
-				"failJump" : [ "greeting", "mood", "continue"]
+				"fail" : "greeting.mood.continue"
 			},
 
 			"sbqPotionAvian" : {

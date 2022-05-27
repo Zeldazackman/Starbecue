@@ -76,8 +76,8 @@ local prevRandomRolls = {}
 local finished = false
 local dialoguePos = 1
 
-function sbq.updateDialogueBox(dialogueTreeLocation)
-	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, sbq.data.settings)
+function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
+	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, sbq.data.settings, dialogueTree)
 	if not dialogueTree then return false end
 	recursionCount = 0 -- since we successfully made it here, reset the recursion count
 
@@ -191,14 +191,6 @@ function sbq.updateDialogueBox(dialogueTreeLocation)
 		end
 	end
 
-	if finished then
-		if dialogueTree.callFunctions ~= nil then
-			for funcName, args in pairs(dialogueTree.callFunctions) do
-				sbq[funcName](table.unpack(args))
-			end
-		end
-	end
-
 	sbq.dismissAfterTimer(dialogueTree.dismissTime)
 
 	return dialogueTree, randomRolls
@@ -308,21 +300,23 @@ function dialogueCont:onClick()
 	else
 		finished = false
 	end
-
-	if sbq.prevDialogueBranch.continue ~= nil then
-		table.insert(sbq.dialogueTreeLocation, "continue")
+	if type(sbq.prevDialogueBranch.callScript) == "string" then
+		if type(dialogueBoxScripts[sbq.prevDialogueBranch.callScript]) == "function" then
+			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, table.unpack(sbq.prevDialogueBranch.scriptArgs)))
+		end
+	elseif sbq.prevDialogueBranch.continue ~= nil then
 		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
 			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
 			if entities ~= nil then
 				for _, entity in ipairs(entities) do
 					world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
 				end
-				sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+				sbq.updateDialogueBox({}, sbq.prevDialogueBranch.continue)
 			else
-				sbq.updateDialogueBox(sbq.prevDialogueBranch.failJump)
+				sbq.updateDialogueBox({}, sbq.prevDialogueBranch.fail)
 			end
 		else
-			sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+			sbq.updateDialogueBox({}, sbq.prevDialogueBranch.continue)
 		end
 	elseif sbq.prevDialogueBranch.jump ~= nil then
 		sbq.updateDialogueBox(sbq.prevDialogueBranch.jump)
@@ -361,9 +355,6 @@ function dialogueCont:onClick()
 				table.insert(contextMenu, action)
 			end
 		end
-	end
-	if sbq.prevDialogueBranch.buttonFunc ~= nil and sbq[sbq.prevDialogueBranch.buttonFunc] ~= nil then
-		sbq[sbq.prevDialogueBranch.buttonFunc]()
 	end
 	if #contextMenu > 0 then
 		metagui.contextMenu(contextMenu)

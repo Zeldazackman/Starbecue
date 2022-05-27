@@ -49,8 +49,14 @@ end
 
 function sbq.checkSettings(checkSettings)
 	for setting, value in pairs(checkSettings) do
-		if (sbq.settings[setting] or false) ~= value  then
-			return false
+		if type(value) == "table" then
+			local match = false
+			for i, value in ipairs(value) do if (sbq.settings[setting] or false) == value then
+				match = true
+				break
+			end end
+			if not match then return false end
+		elseif (sbq.settings[setting] or false) ~= value then return false
 		end
 	end
 	return true

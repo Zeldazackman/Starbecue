@@ -1302,6 +1302,70 @@
                  "width":0,
                  "x":560,
                  "y":416
+                }, 
+                {
+                 "gid":231,
+                 "height":8,
+                 "id":196,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":32,
+                 "y":288
+                }, 
+                {
+                 "gid":230,
+                 "height":8,
+                 "id":198,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":32,
+                 "y":280
+                }, 
+                {
+                 "gid":230,
+                 "height":8,
+                 "id":199,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":664,
+                 "y":280
+                }, 
+                {
+                 "gid":231,
+                 "height":8,
+                 "id":200,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":664,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1971,19 +2035,81 @@
                  "name":"Zevi",
                  "properties":
                     {
-                     "npc":"sbqZevi",
+                     "npc":"sbqZevi_Zygahedron",
                      "parameters":"{}",
-                     "typeName":"sbqHubZevi"
+                     "typeName":"sbqHubZevi_Zygahedron"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
-                 "x":208,
-                 "y":208
+                 "x":160,
+                 "y":224
+                }, 
+                {
+                 "height":8,
+                 "id":191,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubRandomNpcList.config\" }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":128,
+                 "y":152
+                }, 
+                {
+                 "height":8,
+                 "id":192,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubRandomNpcList.config\" }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":184,
+                 "y":400
+                }, 
+                {
+                 "height":8,
+                 "id":193,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubRandomNpcList.config\" }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":472,
+                 "y":152
+                }, 
+                {
+                 "height":8,
+                 "id":194,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubRandomNpcList.config\" }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":376,
+                 "y":152
                 }],
-         "offsetx":-48,
-         "offsety":16,
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -1991,7 +2117,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":191,
+ "nextobjectid":201,
  "orientation":"orthogonal",
  "properties":
     {

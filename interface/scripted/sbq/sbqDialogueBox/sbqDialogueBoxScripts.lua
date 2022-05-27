@@ -11,8 +11,8 @@ function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 	end)
 end
 
-function sbq.getDialogueBranch(dialogueTreeLocation, settings)
-	local dialogueTree = sbq.getRedirectedDialogue(sbq.dialogueTree, settings) or {}
+function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
+	local dialogueTree = sbq.getRedirectedDialogue(dialogueTree or sbq.dialogueTree, settings) or {}
 
 	for _, branch in ipairs(dialogueTreeLocation) do
 		dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, branch)
@@ -112,8 +112,14 @@ end
 
 function sbq.checkSettings(checkSettings, settings)
 	for setting, value in pairs(checkSettings) do
-		if (settings[setting] or false) ~= value  then
-			return false
+		if type(value) == "table" then
+			local match = false
+			for i, value in ipairs(value) do if (settings[setting] or false) == value then
+				match = true
+				break
+			end end
+			if not match then return false end
+		elseif (settings[setting] or false) ~= value then return false
 		end
 	end
 	return true

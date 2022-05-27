@@ -1,5 +1,5 @@
 {
-  "name": "sbq_tenant_zevi",
+  "name": "sbq_tenant_zevi_zygahedron",
   "priority": 60,
 
   "colonyTagCriteria": {
@@ -14,8 +14,8 @@
   "tenants": [
     {
       "spawn": "npc",
-      "species": ["sbqZevi"],
-      "type": "sbqZevi",
+      "species": ["sbqZevi_Zygahedron"],
+      "type": "sbqZevi_Zygahedron",
       "overrides": {
        }
      }

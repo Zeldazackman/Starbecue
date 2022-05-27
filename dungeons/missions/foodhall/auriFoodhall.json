@@ -209,9 +209,9 @@
                  "name":"Zevi",
                  "properties":
                     {
-                     "npc":"sbqZevi",
+                     "npc":"sbqZevi_Zygahedron",
                      "parameters":"{}",
-                     "typeName":"sbqHubZevi"
+                     "typeName":"sbqHubZevi_Zygahedron"
                     },
                  "rotation":0,
                  "type":"",

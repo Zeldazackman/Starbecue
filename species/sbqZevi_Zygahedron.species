@@ -1,5 +1,5 @@
 {
-  "kind" : "sbqZevi",
+  "kind" : "sbqZevi_Zygahedron",
 
   "speciesAnimOverride" : "speciesAnimOverride.config",
 
@@ -12,9 +12,9 @@
   "statusEffects" : [ "novakidglow" ],
 
   "nameGen" : [ "/species/novakidnamegen.config:names", "/species/novakidnamegen.config:names" ],
-  "ouchNoises" : [ "/sfx/sbqZevi/zeviHurt.ogg", "/sfx/sbqZevi/zeviHurt.ogg" ],
+  "ouchNoises" : [ "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg", "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg" ],
   "charGenTextLabels" : [ "Gas colour", "Hair style", "Shirt", "Legwear", "", "Brand", "Shirt colour", "Legwear colour", "NOVAKID", "Personality" ],
-  "skull" : "/humanoid/sbqZevi/dead.png",
+  "skull" : "/humanoid/sbqZevi_Zygahedron/dead.png",
   "effectDirectives" : "?replace=FEFFFFFF=FFFFFFFF?replace=9bd4ffFF=ff99e6FF?replace=31a6ffFF=e359b9FF",
   "defaultBlueprints" : {
     "tier1" : [
