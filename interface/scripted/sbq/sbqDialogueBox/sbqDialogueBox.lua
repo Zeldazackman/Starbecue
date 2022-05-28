@@ -82,7 +82,6 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 	recursionCount = 0 -- since we successfully made it here, reset the recursion count
 
 	sbq.prevDialogueBranch = dialogueTree
-	sbq.dialogueTreeLocation = dialogueTreeLocation
 
 	local randomDialogue = dialogueTree.randomDialogue
 	local randomPortrait = dialogueTree.randomPortrait
@@ -120,7 +119,7 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 		nameLabel:setText(randomName)
 	elseif dialogueTree.name ~= nil then
 		if type(dialogueTree.name) == "table" then
-			nameLable:setText(dialogueTree.name[dialoguePos] or sbq.data.defaultName or world.entityName(pane.sourceEntity()))
+			nameLable:setText(dialogueTree.name[dialoguePos] or dialogueTree.name[#dialogueTree.name] or sbq.data.defaultName or world.entityName(pane.sourceEntity()))
 		else
 			nameLable:setText(dialogueTree.name)
 		end
@@ -132,31 +131,12 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 		dialogueCont:setText(randomButtonText)
 	elseif dialogueTree.buttonText ~= nil then
 		if type(dialogueTree.buttonText) == "table" then
-			dialogueCont:setText(dialogueTree.buttonText[dialoguePos] or "...")
+			dialogueCont:setText(dialogueTree.buttonText[dialoguePos] or dialogueTree.buttonText[#dialogueTree.buttonText] or "...")
 		else
 			dialogueCont:setText(dialogueTree.buttonText)
 		end
 	else
 		dialogueCont:setText("...")
-	end
-
-	if type(randomDialogue) == "string" then
-		local randomDialogue = sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax)
-		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
-		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags, imagePortrait, randomEmote)
-		finished = true
-	elseif dialogueTree.dialogue ~= nil then
-		local dialogue = sbq.generateKeysmashes(dialogueTree.dialogue[dialoguePos], dialogueTree.keysmashMin, dialogueTree.keysmashMax)
-		dialogueLabel:setText(sb.replaceTags(dialogue, tags ))
-		world.sendEntityMessage(speaker, "sbqSay", dialogue, tags, imagePortrait, (dialogueTree.emote or {})[dialoguePos])
-		if dialoguePos >= #dialogueTree.dialogue then
-			finished = true
-			dialoguePos = 1
-		else
-			dialoguePos = dialoguePos + 1
-		end
-	else
-		dialogueLabel:setText("")
 	end
 
 	if type(randomPortrait) == "string" then
@@ -169,9 +149,9 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 	elseif dialogueTree.portrait ~= nil then
 		if type(dialogueTree.portrait) == "table" then
 			if sbq.data.entityPortrait then
-				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait ), {32,8} )
+				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait[dialoguePos] or dialogueTree.portrait[#dialogueTree.portrait] or sbq.data.defaultPortrait ), {32,8} )
 			else
-				imagePortrait = ((sbq.data.portraitPath or "")..(dialogueTree.portrait[dialoguePos] or sbq.data.defaultPortrait))
+				imagePortrait = ((sbq.data.portraitPath or "")..(dialogueTree.portrait[dialoguePos] or dialogueTree.portrait[#dialogueTree.portrait] or sbq.data.defaultPortrait))
 				dialoguePortrait:setFile(imagePortrait)
 			end
 		else
@@ -189,6 +169,25 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 			imagePortrait = ((sbq.data.portraitPath or "")..(sbq.data.defaultPortrait))
 			dialoguePortrait:setFile(imagePortrait)
 		end
+	end
+
+	if type(randomDialogue) == "string" then
+		local randomDialogue = sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax)
+		dialogueLabel:setText(sb.replaceTags(randomDialogue, tags))
+		world.sendEntityMessage(speaker, "sbqSay", randomDialogue, tags, imagePortrait, randomEmote)
+		finished = true
+	elseif dialogueTree.dialogue ~= nil then
+		local dialogue = sbq.generateKeysmashes(dialogueTree.dialogue[dialoguePos] or dialogueTree.dialogue[#dialogueTree.dialogue], dialogueTree.keysmashMin, dialogueTree.keysmashMax)
+		dialogueLabel:setText(sb.replaceTags(dialogue, tags ))
+		world.sendEntityMessage(speaker, "sbqSay", dialogue, tags, imagePortrait, (dialogueTree.emote or {})[dialoguePos])
+		if dialoguePos >= #dialogueTree.dialogue then
+			finished = true
+			dialoguePos = 1
+		else
+			dialoguePos = dialoguePos + 1
+		end
+	else
+		dialogueLabel:setText("")
 	end
 
 	sbq.dismissAfterTimer(dialogueTree.dismissTime)
@@ -296,7 +295,7 @@ end
 function dialogueCont:onClick()
 	local contextMenu = {}
 	if not finished then
-		return sbq.updateDialogueBox(sbq.dialogueTreeLocation)
+		return sbq.updateDialogueBox({}, sbq.prevDialogueBranch)
 	else
 		finished = false
 	end
@@ -323,28 +322,30 @@ function dialogueCont:onClick()
 	elseif sbq.prevDialogueBranch.options ~= nil then
 		for i, option in ipairs(sbq.prevDialogueBranch.options) do
 			local action = {option[1]}
-			if option[2].nearEntitiesNamed ~= nil and ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
-				local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
-				if entities ~= nil then
-					if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil or option[2].next then
-						action[2] = function ()
-							for _, entity in ipairs(entities) do
-								world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
-							end
-							sbq.updateDialogueBox( {}, option[2] )
-						end
-					elseif option[2].jump ~= nil then
-						action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
-					end
-					table.insert(contextMenu, action)
+			local continue = true
+			local entities = {}
+			if option[2].nearEntitiesNamed ~= nil then
+				continue = false
+				local found = checkEntityName( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
+				for _, id in ipairs(found) do
+					continue = true
+					table.insert(entities, id)
 				end
-			elseif ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
-				if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil then
+			end
+			if option[2].nearUniqueId ~= nil then
+				local found = checkEntityUniqueId( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearUniqueId)
+				for _, id in ipairs(found) do
+					continue = true
+					table.insert(entities, id)
+				end
+			end
+			if continue and ((option[2].voreType == nil) or ( sbq.checkVoreTypeActive(option[2].voreType) ~= "hidden" )) then
+				if option[2].dialogue ~= nil or option[2].randomDialogue ~= nil or option[2].next then
 					action[2] = function ()
-						table.insert( sbq.dialogueTreeLocation, "options" )
-						table.insert( sbq.dialogueTreeLocation, i )
-						table.insert( sbq.dialogueTreeLocation, 2 )
-						sbq.updateDialogueBox( sbq.dialogueTreeLocation )
+						for _, entity in ipairs(entities) do
+							world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
+						end
+						sbq.updateDialogueBox( {}, option[2] )
 					end
 				elseif option[2].jump ~= nil then
 					action[2] = function () sbq.updateDialogueBox( option[2].jump ) end
@@ -358,7 +359,7 @@ function dialogueCont:onClick()
 	end
 end
 
-function checkEntitiesMatch(entities, find)
+function checkEntityName(entities, find)
 	local found = {}
 	local continue
 	for _, name in ipairs(find) do
@@ -368,7 +369,22 @@ function checkEntitiesMatch(entities, find)
 				continue = true
 			end
 		end
-		if not continue then return end
+		if not continue then return {} end
+	end
+	return found
+end
+
+function checkEntityUniqueId(entities, find)
+	local found = {}
+	local continue
+	for _, name in ipairs(find) do
+		for _, entity in ipairs(entities) do
+			if name == world.entityUniqueId(entity) then
+				table.insert(found, entity)
+				continue = true
+			end
+		end
+		if not continue then return {} end
 	end
 	return found
 end

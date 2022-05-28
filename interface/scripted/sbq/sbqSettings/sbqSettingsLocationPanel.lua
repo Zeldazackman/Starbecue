@@ -2,7 +2,7 @@
 
 function sbq.locationPanel()
 	locationPanelScrollArea:clearChildren()
-	if not sbq.predatorConfig then return end
+	if not sbq.predatorConfig or not sbq.predatorConfig.locations then return end
 	if sbq.predatorSettings.lockLocationPanel then return end
 	for location, data in pairs(sbq.predatorConfig.locations) do
 		if sbq.predatorSettings.visualMax[location] == nil then
