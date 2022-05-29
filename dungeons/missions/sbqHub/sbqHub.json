@@ -1322,6 +1322,54 @@
                  "width":8,
                  "x":504,
                  "y":4512
+                }, 
+                {
+                 "height":8,
+                 "id":202,
+                 "name":"House4",
+                 "properties":
+                    {
+                     "parameters":"{\"randomSelection\":\"\/dungeons\/missions\/sbqHub\/sbqHubVillageHouseList.config\"}",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":7152,
+                 "y":2136
+                }, 
+                {
+                 "height":8,
+                 "id":203,
+                 "name":"House5",
+                 "properties":
+                    {
+                     "parameters":"{\"randomSelection\":\"\/dungeons\/missions\/sbqHub\/sbqHubVillageHouseList.config\"}",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":624,
+                 "y":2112
+                }, 
+                {
+                 "height":8,
+                 "id":204,
+                 "name":"House6",
+                 "properties":
+                    {
+                     "parameters":"{\"randomSelection\":\"\/dungeons\/missions\/sbqHub\/sbqHubVillageHouseList.config\"}",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":1672,
+                 "y":2104
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1330,7 +1378,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":202,
+ "nextobjectid":205,
  "orientation":"orthogonal",
  "properties":
     {

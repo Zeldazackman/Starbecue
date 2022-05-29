@@ -1,0 +1,22 @@
+{
+	// built by Cosmic#9200
+	"metadata" : {
+		"name" : "sbqHub_floranHouse",
+		"species" : "floran",
+		"rules" : [],
+		"anchor" : [ "house" ],
+		"maxRadius" : 1000000,
+		"maxParts" : 1,
+		"extendSurfaceFreeSpace" : 100
+	},
+
+	"parts" : [
+		{
+			"name" : "house",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "floranHouse.json" ]
+		}
+	]
+}
