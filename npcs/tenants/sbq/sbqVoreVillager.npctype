@@ -1207,7 +1207,6 @@
 	"statusControllerSettings" : {
 		"statusProperties" : {
 			"sbqDidVornyConvertCheck" : true,
-			"speciesAnimOverrideData" : {},
 			"sbqPreyEnabled" : {}
 		}
 	}

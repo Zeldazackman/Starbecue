@@ -61,9 +61,9 @@ function sbq.getOccupancy()
 			sbq.occupant = occupancyData.occupant
 			sbq.occupants = occupancyData.occupants
 			sbq.actualOccupants = occupancyData.actualOccupants
-			sbq.checkVoreButtonsEnabled()
 		end)
 	end
+	sbq.checkVoreButtonsEnabled()
 end
 function sbq.refreshData()
 	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", { player.id(), (player.getProperty("sbqCurrentData") or {}).type }, function (dialogueBoxData)
@@ -230,13 +230,17 @@ function sbq.checkVoreTypeActive(voreType)
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
 	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
-			if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings.visualMax[locationName] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
-				return "tooBig", locationName, locationData
-			elseif (sbq.occupants[locationName] >= (sbq.data.settings.visualMax[locationName] or locationData.max) ) then
-				if sbq.actualOccupants == 0 then
-					return "otherLocationFull", locationName, locationData
+			if type(sbq.data.occupantHolder) ~= "nil" then
+				if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings.visualMax[locationName] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
+					return "tooBig", locationName, locationData
+				elseif (sbq.occupants[locationName] >= (sbq.data.settings.visualMax[locationName] or locationData.max) ) then
+					if sbq.actualOccupants == 0 then
+						return "otherLocationFull", locationName, locationData
+					else
+						return "full", locationName, locationData
+					end
 				else
-					return "full", locationName, locationData
+					return "request", locationName, locationData
 				end
 			else
 				return "request", locationName, locationData
@@ -275,7 +279,7 @@ function sbq.voreButton(voreType)
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
 			sbq.data.settings.doingVore = "after"
 			sbq.updateDialogueBox({ "vore" })
-			world.sendEntityMessage( sbq.data.occupantHolder, "requestTransition", voreType, { id =  player.id() } )
+			world.sendEntityMessage( sbq.data.occupantHolder or pane.sourceEntity(), "requestTransition", voreType, { id =  player.id() } )
 		end)
 	else
 		sbq.updateDialogueBox({ "vore" })

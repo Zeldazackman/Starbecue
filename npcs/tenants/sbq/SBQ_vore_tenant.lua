@@ -6,9 +6,9 @@ local olduninit = uninit
 
 sbq = {
 	currentData = {},
-	timeUntilNewHolder = 1,
 	dialogueBoxOpen = 0,
-	targetedEntities = {}
+	targetedEntities = {},
+	queuedTransitions = {}
 }
 
 dialogueBoxScripts = {}
@@ -95,8 +95,6 @@ function init()
 			status.clearPersistentEffects("digestImmunity")
 		end
 	end)
-
-
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
 		if getVictimPreySettings then
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqGetPreyEnabled" ), function (sbqPreyEnabled)
@@ -105,6 +103,12 @@ function init()
 		else
 			sbq.getRandomDialogue( treestart, entity, sb.jsonMerge(settings, sb.jsonMerge({personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 		end
+	end)
+	message.setHandler("requestTransition", function ( _,_, transition, args)
+		if not sbq.occupantHolder then
+			sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = storage.settings, doExpandAnim = true } )
+		end
+		table.insert(sbq.queuedTransitions, {transition, args})
 	end)
 end
 
@@ -124,7 +128,6 @@ function sbq.getSpeciesConfig()
 	if type(speciesConfig.states) == "table" then
 		sbq.speciesConfig.states = speciesConfig.states
 	end
-
 
 	sbq.speciesConfig.species = species
 	local mergeConfigs = sbq.speciesConfig.sbqData.merge or {}
@@ -171,11 +174,20 @@ function sbq.getSpeciesConfig()
 	sbq.speciesConfig.states = finalConfig
 
 	sbq.sbqData = sbq.speciesConfig.sbqData
+
+	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+
+	local effects = status.getPersistentEffects("speciesAnimOverride")
+	if not effects[1] then
+		status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
+	end
 end
 
 function update(dt)
 	sbq.currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
+
 	sbq.occupantHolder = sbq.currentData.id
 	sbq.loopedMessage("checkRefresh", sbq.occupantHolder, "settingsMenuRefresh", {}, function (result)
 		if result ~= nil then
@@ -184,16 +196,11 @@ function update(dt)
 		end
 	end)
 
-
-	if (not sbq.occupantHolder) and (sbq.timeUntilNewHolder <= 0) then
-		sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = storage.settings } )
-		sbq.timeUntilNewHolder = 5
-	end
-
-	if sbq.currentData.type == nil then
-		sbq.timeUntilNewHolder = math.max(0, sbq.timeUntilNewHolder - dt)
-	else
-		sbq.timeUntilNewHolder = 5
+	if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
+		for _, transition in ipairs(sbq.queuedTransitions) do
+			world.sendEntityMessage(sbq.occupantHolder, "requestTransition", transition[1], transition[2])
+		end
+		sbq.queuedTransitions = {}
 	end
 
 	sbq.dialogueBoxOpen = math.max(0, sbq.dialogueBoxOpen - dt)
@@ -318,6 +325,8 @@ function sbq.randomizeTenantSettings()
 end
 
 function sbq.setRelevantPredSettings()
+	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
+
 	if storage.settings.unbirthPred or storage.settings.unbirthPredEnable then
 		storage.settings.pussy = true
 	else
@@ -340,7 +349,57 @@ function sbq.setRelevantPredSettings()
 	else
 		storage.settings.breasts = false
 	end
+	if storage.settings.breasts or storage.settings.penis or storage.settings.balls or storage.settings.pussy
+	or storage.settings.bra or storage.settings.underwear
+	then
+		local effects = status.getPersistentEffects("speciesAnimOverride")
+		if not effects[1] then
+			status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
+		end
+		sbq.timer("setOverrideSettings", 0.5, function ()
+			if storage.settings.penis then
+				if storage.settings.underwear then
+					sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
+				else
+					sbq.setStatusValue( "cockVisible", "")
+				end
+			else
+				sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
+			end
+			if storage.settings.balls then
+				if storage.settings.underwear then
+					sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
+				else
+					sbq.setStatusValue( "ballsVisible", "")
+				end
+			else
+				sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
+			end
+			if storage.settings.breasts then
+				sbq.setStatusValue( "breastsVisible", "")
+			else
+				sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
+			end
+			if storage.settings.pussy then
+				sbq.setStatusValue( "pussyVisible", "")
+			else
+				sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
+			end
+			sbq.handleUnderwear()
+		end)
+	elseif not sbq.occupantHolder and not speciesAnimOverrideData.permanent then
+		status.clearPersistentEffects("speciesAnimOverride")
+	end
 	sbq.updateCosmeticSlots()
+end
+
+function sbq.handleUnderwear()
+	world.sendEntityMessage(entity.id(), "sbqEnableUnderwear", storage.settings.underwear)
+	world.sendEntityMessage(entity.id(), "sbqEnableBra", storage.settings.bra)
+end
+
+function sbq.setStatusValue(name, value)
+	world.sendEntityMessage(entity.id(), "sbqSetStatusValue", name, value)
 end
 
 function sbq.updateCosmeticSlots()

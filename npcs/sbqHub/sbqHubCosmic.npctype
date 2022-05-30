@@ -23,7 +23,17 @@
 		"uniqueId" : "sbqHubCosmic",
 		"sbqDefaultSettings" : {
 			"mood" : "default",
-			"personality" : "default"
+			"personality" : "default",
+
+			"analVorePred" : false,
+			"cockVorePred" : false,
+			"breastVorePred" : false,
+			"unbirthPred" : false,
+
+			"analVorePredEnable" : false,
+			"cockVorePredEnable" : false,
+			"breastVorePredEnable" : false,
+			"unbirthPredEnable" : false
 		},
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",

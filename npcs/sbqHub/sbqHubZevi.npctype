@@ -6,9 +6,17 @@
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
-			"oralVorePred" : true,
+
 			"analVorePred" : false,
-			"cockVorePred" : false
+			"cockVorePred" : false,
+			"breastVorePred" : false,
+			"unbirthPred" : false,
+
+			"analVorePredEnable" : false,
+			"cockVorePredEnable" : false,
+			"breastVorePredEnable" : false,
+			"unbirthPredEnable" : false
+
 		},
 
 		"dialogueTree" : {

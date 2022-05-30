@@ -11,6 +11,8 @@
 
   "statusEffects" : [ "novakidglow" ],
 
+  "humanoidConfig" : "/species/sbqZevi_Zygahedron.config",
+
   "nameGen" : [ "/species/novakidnamegen.config:names", "/species/novakidnamegen.config:names" ],
   "ouchNoises" : [ "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg", "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg" ],
   "charGenTextLabels" : [ "Gas colour", "Hair style", "Shirt", "Legwear", "", "Brand", "Shirt colour", "Legwear colour", "NOVAKID", "Personality" ],
