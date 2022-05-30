@@ -4,7 +4,7 @@
    "name": "paintedBlocks",
    "properties": {},
    "spacing": 0,
-   "tilecount": 84,
+   "tilecount": 137,
    "tileheight": 8,
    "tileproperties": {
       "0": {
@@ -342,6 +342,218 @@
       "83": {
          "colorVariant": "7",
          "material": "neonblock"
+      },
+      "84": {
+         "colorVariant": "1",
+         "material": "slopedpolygon"
+      },
+      "85": {
+         "colorVariant": "3",
+         "material": "slopedpolygon"
+      },
+      "86": {
+         "colorVariant": "4",
+         "material": "slopedpolygon"
+      },
+      "87": {
+         "colorVariant": "5",
+         "material": "slopedpolygon"
+      },
+      "88": {
+         "colorVariant": "6",
+         "material": "slopedpolygon"
+      },
+      "89": {
+         "colorVariant": "7",
+         "material": "slopedpolygon"
+      },
+      "90": {
+         "colorVariant": "8",
+         "material": "slopedpolygon"
+      },
+      "91": {
+         "colorVariant": "1",
+         "material": "ironblock"
+      },
+      "92": {
+         "colorVariant": "2",
+         "material": "ironblock"
+      },
+      "93": {
+         "colorVariant": "3",
+         "material": "ironblock"
+      },
+      "94": {
+         "colorVariant": "4",
+         "material": "ironblock"
+      },
+      "95": {
+         "colorVariant": "5",
+         "material": "ironblock"
+      },
+      "96": {
+         "colorVariant": "6",
+         "material": "ironblock"
+      },
+      "97": {
+         "colorVariant": "7",
+         "material": "ironblock"
+      },
+      "98": {
+         "colorVariant": "8",
+         "material": "ironblock"
+      },
+      "99": {
+         "colorVariant": "1",
+         "material": "slime"
+      },
+      "100": {
+         "colorVariant": "2",
+         "material": "slime"
+      },
+      "101": {
+         "colorVariant": "4",
+         "material": "slime"
+      },
+      "102": {
+         "colorVariant": "5",
+         "material": "slime"
+      },
+      "103": {
+         "colorVariant": "6",
+         "material": "slime"
+      },
+      "104": {
+         "colorVariant": "7",
+         "material": "slime"
+      },
+      "105": {
+         "colorVariant": "8",
+         "material": "slime"
+      },
+      "106": {
+         "colorVariant": "1",
+         "material": "silverblock"
+      },
+      "107": {
+         "colorVariant": "2",
+         "material": "silverblock"
+      },
+      "108": {
+         "colorVariant": "3",
+         "material": "silverblock"
+      },
+      "109": {
+         "colorVariant": "4",
+         "material": "silverblock"
+      },
+      "110": {
+         "colorVariant": "5",
+         "material": "silverblock"
+      },
+      "111": {
+         "colorVariant": "6",
+         "material": "silverblock"
+      },
+      "112": {
+         "colorVariant": "7",
+         "material": "silverblock"
+      },
+      "113": {
+         "colorVariant": "8",
+         "material": "silverblock"
+      },
+      "114": {
+         "colorVariant": "1",
+         "material": "jellyblock"
+      },
+      "115": {
+         "colorVariant": "2",
+         "material": "jellyblock"
+      },
+      "116": {
+         "colorVariant": "3",
+         "material": "jellyblock"
+      },
+      "117": {
+         "colorVariant": "4",
+         "material": "jellyblock"
+      },
+      "118": {
+         "colorVariant": "5",
+         "material": "jellyblock"
+      },
+      "119": {
+         "colorVariant": "6",
+         "material": "jellyblock"
+      },
+      "120": {
+         "colorVariant": "7",
+         "material": "jellyblock"
+      },
+      "121": {
+         "colorVariant": "8",
+         "material": "jellyblock"
+      },
+      "122": {
+         "colorVariant": "1",
+         "material": "goldblock"
+      },
+      "123": {
+         "colorVariant": "2",
+         "material": "goldblock"
+      },
+      "124": {
+         "colorVariant": "3",
+         "material": "goldblock"
+      },
+      "125": {
+         "colorVariant": "5",
+         "material": "goldblock"
+      },
+      "126": {
+         "colorVariant": "6",
+         "material": "goldblock"
+      },
+      "127": {
+         "colorVariant": "7",
+         "material": "goldblock"
+      },
+      "128": {
+         "colorVariant": "8",
+         "material": "goldblock"
+      },
+      "129": {
+         "colorVariant": "1",
+         "material": "silverscrew"
+      },
+      "130": {
+         "colorVariant": "2",
+         "material": "silverscrew"
+      },
+      "131": {
+         "colorVariant": "3",
+         "material": "silverscrew"
+      },
+      "132": {
+         "colorVariant": "4",
+         "material": "silverscrew"
+      },
+      "133": {
+         "colorVariant": "5",
+         "material": "silverscrew"
+      },
+      "134": {
+         "colorVariant": "6",
+         "material": "silverscrew"
+      },
+      "135": {
+         "colorVariant": "7",
+         "material": "silverscrew"
+      },
+      "136": {
+         "colorVariant": "8",
+         "material": "silverscrew"
       }
    },
    "tiles": {
@@ -596,6 +808,165 @@
       },
       "83": {
          "image": "blackneonblock.png"
+      },
+      "84": {
+         "image": "redslopedpolygon.png"
+      },
+      "85": {
+         "image": "greenslopedpolygon.png"
+      },
+      "86": {
+         "image": "yellowslopedpolygon.png"
+      },
+      "87": {
+         "image": "orangeslopedpolygon.png"
+      },
+      "88": {
+         "image": "magentaslopedpolygon.png"
+      },
+      "89": {
+         "image": "blackslopedpolygon.png"
+      },
+      "90": {
+         "image": "whiteslopedpolygon.png"
+      },
+      "91": {
+         "image": "redironblock.png"
+      },
+      "92": {
+         "image": "blueironblock.png"
+      },
+      "93": {
+         "image": "greenironblock.png"
+      },
+      "94": {
+         "image": "yellowironblock.png"
+      },
+      "95": {
+         "image": "orangeironblock.png"
+      },
+      "96": {
+         "image": "magentaironblock.png"
+      },
+      "97": {
+         "image": "blackironblock.png"
+      },
+      "98": {
+         "image": "whiteironblock.png"
+      },
+      "99": {
+         "image": "redslime.png"
+      },
+      "100": {
+         "image": "blueslime.png"
+      },
+      "101": {
+         "image": "yellowslime.png"
+      },
+      "102": {
+         "image": "orangeslime.png"
+      },
+      "103": {
+         "image": "magentaslime.png"
+      },
+      "104": {
+         "image": "blackslime.png"
+      },
+      "105": {
+         "image": "whiteslime.png"
+      },
+      "106": {
+         "image": "redsilverblock.png"
+      },
+      "107": {
+         "image": "bluesilverblock.png"
+      },
+      "108": {
+         "image": "greensilverblock.png"
+      },
+      "109": {
+         "image": "yellowsilverblock.png"
+      },
+      "110": {
+         "image": "orangesilverblock.png"
+      },
+      "111": {
+         "image": "magentasilverblock.png"
+      },
+      "112": {
+         "image": "blacksilverblock.png"
+      },
+      "113": {
+         "image": "whitesilverblock.png"
+      },
+      "114": {
+         "image": "redjellyblock.png"
+      },
+      "115": {
+         "image": "bluejellyblock.png"
+      },
+      "116": {
+         "image": "greenjellyblock.png"
+      },
+      "117": {
+         "image": "yellowjellyblock.png"
+      },
+      "118": {
+         "image": "orangejellyblock.png"
+      },
+      "119": {
+         "image": "magentajellyblock.png"
+      },
+      "120": {
+         "image": "blackjellyblock.png"
+      },
+      "121": {
+         "image": "whitejellyblock.png"
+      },
+      "122": {
+         "image": "redgoldblock.png"
+      },
+      "123": {
+         "image": "bluegoldblock.png"
+      },
+      "124": {
+         "image": "greengoldblock.png"
+      },
+      "125": {
+         "image": "orangegoldblock.png"
+      },
+      "126": {
+         "image": "magentagoldblock.png"
+      },
+      "127": {
+         "image": "blackgoldblock.png"
+      },
+      "128": {
+         "image": "whitegoldblock.png"
+      },
+      "129": {
+         "image": "redsilverscrew.png"
+      },
+      "130": {
+         "image": "bluesilverscrew.png"
+      },
+      "131": {
+         "image": "greensilverscrew.png"
+      },
+      "132": {
+         "image": "yellowsilverscrew.png"
+      },
+      "133": {
+         "image": "orangesilverscrew.png"
+      },
+      "134": {
+         "image": "magentasilverscrew.png"
+      },
+      "135": {
+         "image": "blacksilverscrew.png"
+      },
+      "136": {
+         "image": "whitesilverscrew.png"
       }
 
    },

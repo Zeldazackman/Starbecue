@@ -12,7 +12,7 @@
          "width":64,
          "x":0,
          "y":0
-        }, 
+        },
         {
          "compression":"zlib",
          "data":"eJzt1sENgCAMhWEW0h0c0d0YSA4elKQkkpZi+Zu8kwfzlWckJeZYNPjf\/v1O\/Tz64MePHz9+\/Pjj+Ve\/\/+Bv+\/Djx49\/db\/0f\/j7zOTPJaeQbPTOWfr9tG9VLHcwg7917tY98PZ\/sVvswNPf6rwU7R14+XvO3aIHHn4Nu9YORvt7Om\/5LYz0a567Vg967z\/Rg5+5AF\/wu58=",
@@ -25,7 +25,7 @@
          "width":64,
          "x":0,
          "y":0
-        }, 
+        },
         {
          "draworder":"topdown",
          "height":32,
@@ -46,7 +46,7 @@
                  "width":48,
                  "x":8,
                  "y":232
-                }, 
+                },
                 {
                  "gid":319,
                  "height":64,
@@ -62,7 +62,7 @@
                  "width":48,
                  "x":456,
                  "y":88
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -78,7 +78,7 @@
                  "width":8,
                  "x":504,
                  "y":32
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -94,7 +94,7 @@
                  "width":8,
                  "x":504,
                  "y":88
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -110,7 +110,7 @@
                  "width":8,
                  "x":504,
                  "y":40
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -126,7 +126,7 @@
                  "width":8,
                  "x":504,
                  "y":48
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -142,7 +142,7 @@
                  "width":8,
                  "x":504,
                  "y":56
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -158,7 +158,7 @@
                  "width":8,
                  "x":504,
                  "y":64
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -174,7 +174,7 @@
                  "width":8,
                  "x":504,
                  "y":72
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -190,7 +190,7 @@
                  "width":8,
                  "x":504,
                  "y":80
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -206,7 +206,7 @@
                  "width":8,
                  "x":0,
                  "y":176
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -222,7 +222,7 @@
                  "width":8,
                  "x":0,
                  "y":184
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -238,7 +238,7 @@
                  "width":8,
                  "x":0,
                  "y":192
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -254,7 +254,7 @@
                  "width":8,
                  "x":0,
                  "y":200
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -270,7 +270,7 @@
                  "width":8,
                  "x":0,
                  "y":208
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -286,7 +286,7 @@
                  "width":8,
                  "x":0,
                  "y":216
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -302,7 +302,7 @@
                  "width":8,
                  "x":0,
                  "y":216
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -318,7 +318,7 @@
                  "width":8,
                  "x":0,
                  "y":224
-                }, 
+                },
                 {
                  "gid":327,
                  "height":8,
@@ -334,7 +334,7 @@
                  "width":8,
                  "x":0,
                  "y":232
-                }, 
+                },
                 {
                  "gid":369,
                  "height":32,
@@ -350,7 +350,7 @@
                  "width":32,
                  "x":360,
                  "y":232
-                }, 
+                },
                 {
                  "gid":2147484017,
                  "height":32,
@@ -366,7 +366,7 @@
                  "width":32,
                  "x":120,
                  "y":232
-                }, 
+                },
                 {
                  "gid":422,
                  "height":64,
@@ -382,7 +382,7 @@
                  "width":96,
                  "x":208,
                  "y":120
-                }, 
+                },
                 {
                  "gid":452,
                  "height":32,
@@ -398,7 +398,7 @@
                  "width":32,
                  "x":120,
                  "y":128
-                }, 
+                },
                 {
                  "gid":2147484100,
                  "height":32,
@@ -414,7 +414,7 @@
                  "width":32,
                  "x":360,
                  "y":128
-                }, 
+                },
                 {
                  "gid":543,
                  "height":32,
@@ -430,7 +430,7 @@
                  "width":24,
                  "x":200,
                  "y":160
-                }, 
+                },
                 {
                  "gid":543,
                  "height":32,
@@ -446,7 +446,7 @@
                  "width":24,
                  "x":288,
                  "y":160
-                }, 
+                },
                 {
                  "gid":434,
                  "height":16,
@@ -482,23 +482,23 @@
         {
          "firstgid":1,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/materials.json"
-        }, 
+        },
         {
          "firstgid":198,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/supports.json"
-        }, 
+        },
         {
          "firstgid":235,
-         "source":"..\/..\/..\/tilesets\/auriShop\/paintedBlocks.json"
-        }, 
+         "source":"..\/..\/..\/tilesets\/wasabiRaptor\/paintedBlocks\/paintedBlocks.json"
+        },
         {
          "firstgid":319,
          "source":"..\/..\/..\/tilesets\/wasabiRaptor\/metroidDoors.json"
-        }, 
+        },
         {
          "firstgid":323,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/miscellaneous.json"
-        }, 
+        },
         {
          "firstgid":347,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/avian.json"
