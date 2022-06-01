@@ -31,7 +31,7 @@ end
 
 function sbq.struggleMessages(id)
 	local entityType = world.entityType(id)
-	if entityType == "npc" or entityType == "player" then
+	if entityType == "npc" or entityType == "player" and type(sbq.driver) == "number" and world.entityExists(sbq.driver) then
 		local location = sbq.lounging[id].location
 		local settings = {
 			predator = sbq.species,
