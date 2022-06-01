@@ -6,6 +6,24 @@
 
 	"npcname" : "Cosmic",
 	"identity" : {
+		"facialHairType" : "",
+		"facialHairGroup" : "",
+		"personalityArmOffset" : [0, 0],
+		"hairType" : "eye3",
+		"bodyDirectives" : "?replace;c7815b=020202;ffe2c5=111111;ffc181=111111;d39c6c=0b0b0b?replace;dc1f00=111111;951500=020202;be1b00=0b0b0b",
+		"personalityArmIdle" : "idle.2",
+		//"gender" : "male",
+		"color" : [51, 117, 237],
+		"personalityHeadOffset" : [0, 0],
+		"hairGroup" : "hair",
+		"facialMaskDirectives" : "",
+		"species" : "myfirsttest",
+		"personalityIdle" : "idle.5",
+		"facialMaskGroup" : "",
+		"facialHairDirectives" : "",
+		"emoteDirectives" : "?replace;c7815b=020202;ffe2c5=111111;ffc181=111111;d39c6c=0b0b0b?replace;dc1f00=111111;951500=020202;be1b00=0b0b0b",
+		"hairDirectives" : "?replace;735e3a=89334d;a38d59=a54669;d9c189=d26ba4?replace;dc1f00=111111;951500=020202;be1b00=0b0b0b",
+		"facialMaskType" : ""
 	},
 
 	"persistent" : true,
@@ -44,10 +62,11 @@
 				"default" : {
 					"next" : "mood",
 					"default" : {
-						"randomDialogue" : [
-							"Hi. I'm a builder."
+						"dialogue" : [
+							"Hi. I'm a builder. I Built a bunch of the buildings here!",
+							"The prefab house for Humans, the Hylotl hot springs, the Glitch tailor, the Avian observatory, the Floran treehouse, the Apex rebel base, and the Novakid clockmaster."
 						],
-						"randomButtonText" : "Ok."
+						"buttonText" : ["Which ones?", "Cool!"]
 					}
 				}
 			}
@@ -76,8 +95,7 @@
 				"unbirth": true,
 				"cockVore": true,
 				"breastVore": false
-			},
-			"speciesAnimOverrideData" : {}
+			}
 		}
 	},
 	"items" : {
@@ -85,6 +103,30 @@
 			[0,
 				[
 					{
+						"chest" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "wizardchest",
+							"count" : 1
+						}],
+						"back" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "lanternstickback",
+							"count" : 1
+						}],
+						"legs" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "wizardlegs",
+							"count" : 1
+						}]
 					}
 				]
 			]
