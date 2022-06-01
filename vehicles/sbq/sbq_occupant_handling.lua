@@ -193,7 +193,7 @@ function sbq.moveOccupantLocation(args, location)
 			nestCount = nestCount + 1
 		end
 	end
-	if (nestCount > maxNested) then return false end
+	if maxNested ~= -1 and (nestCount > maxNested) then return false end
 	sbq.lounging[args.id].location = location
 	return true
 end
