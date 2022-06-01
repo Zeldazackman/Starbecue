@@ -85,7 +85,9 @@ function init()
 	message.setHandler("sbqSaveSettings", function (_,_, settings)
 		storage.settings = settings
 		sbq.setRelevantPredSettings()
-		world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
+		if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
+			world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
+		end
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
