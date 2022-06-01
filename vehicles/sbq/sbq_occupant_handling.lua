@@ -78,11 +78,10 @@ function sbq.uneat( occupantId )
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", sbq.config.predStatusEffects)
 		world.sendEntityMessage( occupantId, "sbqPredatorDespawned", true ) -- to clear the current data for players
 	end
-	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
-
 	sbq.refreshList = true
 	sbq.lounging[occupantId] = nil
 	sbq.occupant[seatindex] = sbq.clearOccupant(seatindex)
+	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
 	sbq.updateOccupants(0)
 	return true
 end

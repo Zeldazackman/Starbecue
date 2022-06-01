@@ -1398,6 +1398,22 @@
                  "width":8,
                  "x":1448,
                  "y":2104
+                }, 
+                {
+                 "height":8,
+                 "id":212,
+                 "name":"House8",
+                 "properties":
+                    {
+                     "parameters":"{\"randomSelection\":\"\/dungeons\/missions\/sbqHub\/sbqHubVillageHouseList.config\"}",
+                     "stagehand":"sbqDungeonPlacer"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":2056,
+                 "y":2096
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1406,7 +1422,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":212,
+ "nextobjectid":213,
  "orientation":"orthogonal",
  "properties":
     {

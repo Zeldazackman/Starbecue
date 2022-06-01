@@ -1,0 +1,518 @@
+{
+   "columns": 0,
+   "margin": 0,
+   "name": "avaliPaintedBlocks",
+   "properties": {},
+   "spacing": 0,
+   "tilecount": 72,
+   "tileheight": 8,
+   "tileproperties": {
+      "0": {
+         "colorVariant": "1",
+         "material": "camptapestry2"
+      },
+      "1": {
+         "colorVariant": "2",
+         "material": "camptapestry2"
+      },
+      "2": {
+         "colorVariant": "3",
+         "material": "camptapestry2"
+      },
+      "3": {
+         "colorVariant": "4",
+         "material": "camptapestry2"
+      },
+      "4": {
+         "colorVariant": "5",
+         "material": "camptapestry2"
+      },
+      "5": {
+         "colorVariant": "6",
+         "material": "camptapestry2"
+      },
+      "6": {
+         "colorVariant": "7",
+         "material": "camptapestry2"
+      },
+      "7": {
+         "colorVariant": "8",
+         "material": "camptapestry2"
+      },
+      "8": {
+         "colorVariant": "1",
+         "material": "camptapestry1"
+      },
+      "9": {
+         "colorVariant": "2",
+         "material": "camptapestry1"
+      },
+      "10": {
+         "colorVariant": "3",
+         "material": "camptapestry1"
+      },
+      "11": {
+         "colorVariant": "4",
+         "material": "camptapestry1"
+      },
+      "12": {
+         "colorVariant": "6",
+         "material": "camptapestry1"
+      },
+      "13": {
+         "colorVariant": "7",
+         "material": "camptapestry1"
+      },
+      "14": {
+         "colorVariant": "8",
+         "material": "camptapestry1"
+      },
+      "15": {
+         "colorVariant": "1",
+         "material": "avaliaeroponics"
+      },
+      "16": {
+         "colorVariant": "2",
+         "material": "avaliaeroponics"
+      },
+      "17": {
+         "colorVariant": "3",
+         "material": "avaliaeroponics"
+      },
+      "18": {
+         "colorVariant": "4",
+         "material": "avaliaeroponics"
+      },
+      "19": {
+         "colorVariant": "5",
+         "material": "avaliaeroponics"
+      },
+      "20": {
+         "colorVariant": "6",
+         "material": "avaliaeroponics"
+      },
+      "21": {
+         "colorVariant": "7",
+         "material": "avaliaeroponics"
+      },
+      "22": {
+         "colorVariant": "8",
+         "material": "avaliaeroponics"
+      },
+      "23": {
+         "colorVariant": "1",
+         "material": "avalichits"
+      },
+      "24": {
+         "colorVariant": "2",
+         "material": "avalichits"
+      },
+      "25": {
+         "colorVariant": "3",
+         "material": "avalichits"
+      },
+      "26": {
+         "colorVariant": "4",
+         "material": "avalichits"
+      },
+      "27": {
+         "colorVariant": "6",
+         "material": "avalichits"
+      },
+      "28": {
+         "colorVariant": "7",
+         "material": "avalichits"
+      },
+      "29": {
+         "colorVariant": "8",
+         "material": "avalichits"
+      },
+      "30": {
+         "colorVariant": "1",
+         "material": "avalidisplay"
+      },
+      "31": {
+         "colorVariant": "2",
+         "material": "avalidisplay"
+      },
+      "32": {
+         "colorVariant": "3",
+         "material": "avalidisplay"
+      },
+      "33": {
+         "colorVariant": "4",
+         "material": "avalidisplay"
+      },
+      "34": {
+         "colorVariant": "6",
+         "material": "avalidisplay"
+      },
+      "35": {
+         "colorVariant": "7",
+         "material": "avalidisplay"
+      },
+      "36": {
+         "colorVariant": "8",
+         "material": "avalidisplay"
+      },
+      "37": {
+         "colorVariant": "1",
+         "material": "avaliglass"
+      },
+      "38": {
+         "colorVariant": "2",
+         "material": "avaliglass"
+      },
+      "39": {
+         "colorVariant": "3",
+         "material": "avaliglass"
+      },
+      "40": {
+         "colorVariant": "4",
+         "material": "avaliglass"
+      },
+      "41": {
+         "colorVariant": "6",
+         "material": "avaliglass"
+      },
+      "42": {
+         "colorVariant": "7",
+         "material": "avaliglass"
+      },
+      "43": {
+         "colorVariant": "8",
+         "material": "avaliglass"
+      },
+      "44": {
+         "colorVariant": "1",
+         "material": "campbigpole"
+      },
+      "45": {
+         "colorVariant": "2",
+         "material": "campbigpole"
+      },
+      "46": {
+         "colorVariant": "3",
+         "material": "campbigpole"
+      },
+      "47": {
+         "colorVariant": "4",
+         "material": "campbigpole"
+      },
+      "48": {
+         "colorVariant": "6",
+         "material": "campbigpole"
+      },
+      "49": {
+         "colorVariant": "7",
+         "material": "campbigpole"
+      },
+      "50": {
+         "colorVariant": "8",
+         "material": "campbigpole"
+      },
+      "51": {
+         "colorVariant": "1",
+         "material": "avaliplatform"
+      },
+      "52": {
+         "colorVariant": "2",
+         "material": "avaliplatform"
+      },
+      "53": {
+         "colorVariant": "3",
+         "material": "avaliplatform"
+      },
+      "54": {
+         "colorVariant": "4",
+         "material": "avaliplatform"
+      },
+      "55": {
+         "colorVariant": "6",
+         "material": "avaliplatform"
+      },
+      "56": {
+         "colorVariant": "7",
+         "material": "avaliplatform"
+      },
+      "57": {
+         "colorVariant": "8",
+         "material": "avaliplatform"
+      },
+      "58": {
+         "colorVariant": "1",
+         "material": "avalislopedaerogelglass"
+      },
+      "59": {
+         "colorVariant": "2",
+         "material": "avalislopedaerogelglass"
+      },
+      "60": {
+         "colorVariant": "3",
+         "material": "avalislopedaerogelglass"
+      },
+      "61": {
+         "colorVariant": "4",
+         "material": "avalislopedaerogelglass"
+      },
+      "62": {
+         "colorVariant": "6",
+         "material": "avalislopedaerogelglass"
+      },
+      "63": {
+         "colorVariant": "7",
+         "material": "avalislopedaerogelglass"
+      },
+      "64": {
+         "colorVariant": "8",
+         "material": "avalislopedaerogelglass"
+      },
+      "65": {
+         "colorVariant": "1",
+         "material": "avalistairs"
+      },
+      "66": {
+         "colorVariant": "2",
+         "material": "avalistairs"
+      },
+      "67": {
+         "colorVariant": "3",
+         "material": "avalistairs"
+      },
+      "68": {
+         "colorVariant": "4",
+         "material": "avalistairs"
+      },
+      "69": {
+         "colorVariant": "6",
+         "material": "avalistairs"
+      },
+      "70": {
+         "colorVariant": "7",
+         "material": "avalistairs"
+      },
+      "71": {
+         "colorVariant": "8",
+         "material": "avalistairs"
+      }
+   },
+   "tiles": {
+      "0": {
+         "image": "redcamptapestry2.png"
+      },
+      "1": {
+         "image": "bluecamptapestry2.png"
+      },
+      "2": {
+         "image": "greencamptapestry2.png"
+      },
+      "3": {
+         "image": "yellowcamptapestry2.png"
+      },
+      "4": {
+         "image": "orangecamptapestry2.png"
+      },
+      "5": {
+         "image": "magentacamptapestry2.png"
+      },
+      "6": {
+         "image": "blackcamptapestry2.png"
+      },
+      "7": {
+         "image": "whitecamptapestry2.png"
+      },
+      "8": {
+         "image": "redcamptapestry1.png"
+      },
+      "9": {
+         "image": "bluecamptapestry1.png"
+      },
+      "10": {
+         "image": "greencamptapestry1.png"
+      },
+      "11": {
+         "image": "yellowcamptapestry1.png"
+      },
+      "12": {
+         "image": "magentacamptapestry1.png"
+      },
+      "13": {
+         "image": "blackcamptapestry1.png"
+      },
+      "14": {
+         "image": "whitecamptapestry1.png"
+      },
+      "15": {
+         "image": "redavaliaeroponics.png"
+      },
+      "16": {
+         "image": "blueavaliaeroponics.png"
+      },
+      "17": {
+         "image": "greenavaliaeroponics.png"
+      },
+      "18": {
+         "image": "yellowavaliaeroponics.png"
+      },
+      "19": {
+         "image": "orangeavaliaeroponics.png"
+      },
+      "20": {
+         "image": "magentaavaliaeroponics.png"
+      },
+      "21": {
+         "image": "blackavaliaeroponics.png"
+      },
+      "22": {
+         "image": "whiteavaliaeroponics.png"
+      },
+      "23": {
+         "image": "redavalichits.png"
+      },
+      "24": {
+         "image": "blueavalichits.png"
+      },
+      "25": {
+         "image": "greenavalichits.png"
+      },
+      "26": {
+         "image": "yellowavalichits.png"
+      },
+      "27": {
+         "image": "magentaavalichits.png"
+      },
+      "28": {
+         "image": "blackavalichits.png"
+      },
+      "29": {
+         "image": "whiteavalichits.png"
+      },
+      "30": {
+         "image": "redavalidisplay.png"
+      },
+      "31": {
+         "image": "blueavalidisplay.png"
+      },
+      "32": {
+         "image": "greenavalidisplay.png"
+      },
+      "33": {
+         "image": "yellowavalidisplay.png"
+      },
+      "34": {
+         "image": "magentaavalidisplay.png"
+      },
+      "35": {
+         "image": "blackavalidisplay.png"
+      },
+      "36": {
+         "image": "whiteavalidisplay.png"
+      },
+      "37": {
+         "image": "redavaliglass.png"
+      },
+      "38": {
+         "image": "blueavaliglass.png"
+      },
+      "39": {
+         "image": "greenavaliglass.png"
+      },
+      "40": {
+         "image": "yellowavaliglass.png"
+      },
+      "41": {
+         "image": "magentaavaliglass.png"
+      },
+      "42": {
+         "image": "blackavaliglass.png"
+      },
+      "43": {
+         "image": "whiteavaliglass.png"
+      },
+      "44": {
+         "image": "redcampbigpole.png"
+      },
+      "45": {
+         "image": "bluecampbigpole.png"
+      },
+      "46": {
+         "image": "greencampbigpole.png"
+      },
+      "47": {
+         "image": "yellowcampbigpole.png"
+      },
+      "48": {
+         "image": "magentacampbigpole.png"
+      },
+      "49": {
+         "image": "blackcampbigpole.png"
+      },
+      "50": {
+         "image": "whitecampbigpole.png"
+      },
+      "51": {
+         "image": "redavaliplatform.png"
+      },
+      "52": {
+         "image": "blueavaliplatform.png"
+      },
+      "53": {
+         "image": "greenavaliplatform.png"
+      },
+      "54": {
+         "image": "yellowavaliplatform.png"
+      },
+      "55": {
+         "image": "magentaavaliplatform.png"
+      },
+      "56": {
+         "image": "blackavaliplatform.png"
+      },
+      "57": {
+         "image": "whiteavaliplatform.png"
+      },
+      "58": {
+         "image": "redavaliglass.png"
+      },
+      "59": {
+         "image": "blueavaliglass.png"
+      },
+      "60": {
+         "image": "greenavaliglass.png"
+      },
+      "61": {
+         "image": "yellowavaliglass.png"
+      },
+      "62": {
+         "image": "magentaavaliglass.png"
+      },
+      "63": {
+         "image": "blackavaliglass.png"
+      },
+      "64": {
+         "image": "whiteavaliglass.png"
+      },
+      "65": {
+         "image": "redavaliplatform.png"
+      },
+      "66": {
+         "image": "blueavaliplatform.png"
+      },
+      "67": {
+         "image": "greenavaliplatform.png"
+      },
+      "68": {
+         "image": "yellowavaliplatform.png"
+      },
+      "69": {
+         "image": "magentaavaliplatform.png"
+      },
+      "70": {
+         "image": "blackavaliplatform.png"
+      },
+      "71": {
+         "image": "whiteavaliplatform.png"
+      }
+   },
+   "tilewidth": 8
+}

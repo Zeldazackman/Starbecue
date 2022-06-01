@@ -11,7 +11,7 @@ function update()
 		if data[1] == nil then
 			gotData = true
 		end
-		while not gotData do
+		while not gotData and data[1] ~= nil do
 			local i = math.random(#data)
 			if (data[i].spawnOnce and world.getProperty(data[i].dungeon.."Placed")) or (not checkRequirements(data[i].checkRequirements or {})) then
 				table.remove(data,i)
@@ -23,10 +23,13 @@ function update()
 
 		if not checkRequirements(config.getParameter("checkRequirements") or {}) then return stagehand.die() end
 
-		local offset = data.placeOffset or config.getParameter("placeOffset") or {0,0}
-		world.setTileProtection( data.dungeonId or config.getParameter("dungeonId") or 0, data.protect or config.getParameter("protect") or false )
-		world.placeDungeon( data.dungeon or config.getParameter("dungeon"), {position[1]+offset[1],position[2]+offset[2]}, data.dungeonId or config.getParameter("dungeonId") or 0 )
-		world.setProperty( (data.dungeon or config.getParameter("dungeon")).."Placed", true)
+		local dungeon = data.dungeon or config.getParameter("dungeon")
+		if type(dungeon) == "string" then
+			local offset = data.placeOffset or config.getParameter("placeOffset") or {0,0}
+			world.setTileProtection( data.dungeonId or config.getParameter("dungeonId") or 0, data.protect or config.getParameter("protect") or false )
+			world.placeDungeon( dungeon, {position[1]+offset[1],position[2]+offset[2]}, data.dungeonId or config.getParameter("dungeonId") or 0 )
+			world.setProperty( dungeon.."Placed", true)
+		end
 		stagehand.die()
 	end
 end

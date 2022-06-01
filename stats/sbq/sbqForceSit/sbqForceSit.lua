@@ -24,4 +24,5 @@ end
 function uninit()
 	mcontroller.resetAnchorState()
 	status.setStatusProperty("sbqDontTouchDoors", false)
+	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
 end
