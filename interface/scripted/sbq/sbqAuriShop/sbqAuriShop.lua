@@ -7,6 +7,8 @@ local catagoryLabels = root.assetJson("/items/categories.config").labels
 
 local buyRecipe
 
+require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBox.lua")
+
 function fixFilepath(string, item)
 	if type(string) == "string" then
 		if string == "" then return
@@ -82,21 +84,17 @@ for tab, recipes in pairs(shopRecipes) do
 			if sbq.data.dialogueTree.itemSelection[recipe.result] ~= nil then
 				sbq.updateDialogueBox({ "itemSelection",recipe.result })
 			else
-				sbq.updateDialogueBox({ "greeting", "neutral", "continue" })
+				sbq.updateDialogueBox({ "greeting" })
 			end
 		end
 	end
 end
 
+function update(dt)
+
+end
 
 function sbq.dismissAfterTimer(time)
-	if time == -1 then
-		sbq.timerList.dismissAfterTime = nil
-	else
-		sbq.forceTimer("dismissAfterTime", time or 10, function ()
-
-		end)
-	end
 end
 
 function decAmount:onClick()

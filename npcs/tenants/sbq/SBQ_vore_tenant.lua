@@ -69,7 +69,7 @@ function init()
 			self.board:setEntity("interactionSource", id)
 		end
 		sbq.dialogueBoxOpen = 0.5
-		return { settings = storage.settings, occupantHolder = sbq.occupantHolder }
+		return { occupantHolder = sbq.occupantHolder }
 	end)
 	message.setHandler("sbqSay", function (_,_, string, tags, imagePortrait, emote)
 		sbq.say(string, tags, imagePortrait, emote)

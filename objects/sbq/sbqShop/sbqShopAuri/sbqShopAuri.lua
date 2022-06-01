@@ -23,7 +23,7 @@ function init()
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		talkingWithPrey = (isPrey == "prey")
 		dialogueBoxOpen = 0.5
-		return { settings = storage.sbqSettings, occupantHolder = occupantHolder }
+		return { occupantHolder = occupantHolder }
 	end)
 	message.setHandler("sbqSay", function (_,_, string, tags)
 		object.say(string, tags)
@@ -45,8 +45,6 @@ end
 function die()
 end
 
---function onInteraction()
---end
 
 function doIdleAnims()
 	randomTimer("blink", 10, 15, function() doAnim("emoteState", "blink") end)
