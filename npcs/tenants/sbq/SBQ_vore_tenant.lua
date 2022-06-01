@@ -28,11 +28,13 @@ end
 local _tenant_setHome = tenant.setHome
 function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
 	if deedUniqueId and not storage.settings.dontSaveToDeed then
-		local id = world.loadUniqueEntity(deedUniqueId)
-		if id and world.entityExists(id) then
-			world.sendEntityMessage(id, "sbqSaveSettings", storage.settings)
-			world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {})
-		end
+		sbq.timer("setHome", 0.5, function ()
+			local id = world.loadUniqueEntity(deedUniqueId)
+			if id and world.entityExists(id) then
+				world.sendEntityMessage(id, "sbqSaveSettings", storage.settings)
+				world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {})
+			end
+		end)
 	end
 	_tenant_setHome(position, boundary, deedUniqueId, skipNotification)
 end
