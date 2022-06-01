@@ -217,7 +217,7 @@ function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 end
 
 function sbq.checkVoreTypeActive(voreType)
-	if not sbq.data.settings then return "hidden" end
+	if (not sbq.data.settings) or sbq.data.settings.isPrey then return "hidden" end
 	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnable"]) then return "hidden" end
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 

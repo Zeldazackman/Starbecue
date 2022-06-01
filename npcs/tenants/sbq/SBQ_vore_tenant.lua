@@ -220,6 +220,7 @@ function interact(args)
 			local settings = args.predData.settings
 			settings.location = args.predData.location
 			settings.predator = args.predData.predator
+			settings.isPrey = true
 
 			settings.personality = storage.settings.personality
 			settings.mood = storage.settings.mood
