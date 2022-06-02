@@ -55,7 +55,7 @@ sbq.transitionLock = false
 sbq.movementLock = false
 
 function sbq.doTransition( direction, scriptargs )
-	if (not sbq.stateconfig[sbq.state].transitions[direction]) then return "no data" end
+	if (not sbq.stateconfig or not sbq.stateconfig[sbq.state].transitions[direction]) then return "no data" end
 	if sbq.transitionLock then return "locked" end
 	local tconfig = sbq.occupantArray( sbq.stateconfig[sbq.state].transitions[direction] )
 	if tconfig == nil then return "no data" end

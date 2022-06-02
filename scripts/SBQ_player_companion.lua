@@ -293,7 +293,7 @@ function update(dt)
 	end
 
 	local preyWarpData = player.getProperty("sbqPreyWarpData")
-	if preyWarpData and not preyWarpData.uuid or #preyWarpData.uuid ~= 32 then
+	if preyWarpData and (not preyWarpData.uuid or #preyWarpData.uuid ~= 32) then
 		preyWarpData = nil
 		player.setProperty("sbqPreyWarpData", nil)
 	end
