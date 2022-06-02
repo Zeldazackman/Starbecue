@@ -34,6 +34,7 @@
     "/objects/spawner/colonydeed/scanning.lua",
     "/objects/spawner/colonydeed/timer.lua",
     "/scripts/util.lua",
+    "/objects/spawner/colonydeed/sbqColonyDeedDetection.lua",
     "/objects/sbq/sbqVoreColonyDeed/sbqVoreColonyDeed.lua"
   ],
   "scriptDelta" : 10,
