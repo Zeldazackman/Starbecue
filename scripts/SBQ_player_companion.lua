@@ -267,12 +267,6 @@ function init()
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end
 
-	local potionTF = status.statusProperty("sbqMysteriousPotionTFDuration" ) or 0
-	if potionTF > 0 then
-		status.addEphemeralEffect("sbqMysteriousPotionTF", potionTF )
-	end
-
-
 	initStage = 1 -- init has run
 end
 
@@ -374,6 +368,12 @@ function update(dt)
 		end
 		player.setProperty("sbqCurrentData", nil) -- after spawning the vehicle, clear it so it can set its own current data
 	end
+
+	local potionTF = status.statusProperty("sbqMysteriousPotionTFDuration" ) or 0
+	if potionTF > 0 then
+		status.addEphemeralEffect("sbqMysteriousPotionTF", potionTF )
+	end
+
 	initStage = 2 -- post-init finished
 end
 
