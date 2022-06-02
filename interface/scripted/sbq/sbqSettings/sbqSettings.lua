@@ -205,11 +205,16 @@ function init()
 		sbq.speciesSettingsTab:setVisible(false)
 		sbq.speciesSettingsTab = nil
 	end
-	if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].tab )
+	local species = sbq.sbqCurrentData.species
+	local playerSpecies = player.species()
+	if species == "sbqOccupantHolder" and sbq.extraTabs.speciesSettingsTabs[playerSpecies] ~= nil then
+		species = playerSpecies
+	end
+	if sbq.extraTabs.speciesSettingsTabs[species] ~= nil then
+		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[species].tab )
 		sbq.setIconDirectives()
-		if sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts ~= nil then
-			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[sbq.sbqCurrentData.species].scripts) do
+		if sbq.extraTabs.speciesSettingsTabs[species].scripts ~= nil then
+			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[species].scripts) do
 				require(script)
 			end
 		end
