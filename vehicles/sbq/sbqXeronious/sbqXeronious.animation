@@ -43,7 +43,7 @@
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
 
-					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0, "baseAnim": "walk" },
+					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0, "baseAnim": "walk", "animFrames" : "crawl" },
 					"crawl": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
@@ -85,7 +85,7 @@
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
 
-					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0, "baseAnim": "walk" },
+					"crouch": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0, "baseAnim": "walk", "animFrames" : "crawl" },
 					"crawl": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
