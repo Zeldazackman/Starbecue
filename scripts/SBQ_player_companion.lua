@@ -85,6 +85,7 @@ function init()
 		player.interact("ScriptPane", pane, sourceEntity or entity.id())
 	end)
 	message.setHandler( "sbqPlayerInteract", function(_,_, data, id)
+		if not data then return end
 		player.interact(data[1], data[2], id)
 	end)
 

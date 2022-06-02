@@ -93,7 +93,7 @@ function init()
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
-		if sbqPreyEnabled.digestImmunity then
+		if settings.digestImmunity then
 			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 		else
 			status.clearPersistentEffects("digestImmunity")
