@@ -262,7 +262,7 @@ function sbq.victimAnimUpdate(eid)
 	end
 	local statename = victimAnim.statename
 	local ended, times, time = sbq.hasAnimEnded(statename)
-	local anim = sbq.victimAnimations[victimAnim.anim]
+	local anim = sbq.victimAnimations[victimAnim.anim] or {}
 	if ended and not anim.loop then
 		victimAnim.enabled = false
 		time = sbq.animStateData[statename].animationState.cycle

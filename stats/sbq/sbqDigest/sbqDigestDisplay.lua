@@ -19,7 +19,7 @@ function init()
 		self.turboDigest = true
 	end)
 
-	message.setHandler("sbqDigestResponse", function(time)
+	message.setHandler("sbqDigestResponse", function(_,_, time)
 		effect.modifyDuration((time or self.targetTime)+1)
 		self.targetTime = time or self.targetTime
 	end)

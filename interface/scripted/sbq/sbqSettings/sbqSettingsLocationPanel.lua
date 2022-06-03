@@ -18,13 +18,13 @@ function sbq.locationPanel()
 	end
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 
-		local data = sbq.predatorConfig.locations[location]
+		local data = sbq.predatorConfig.locations[location] or {}
 		layout:addChild({ type = "layout", mode = "horizontal", children = {
 			{ type = "checkBox", id = location .. "hammerspaceDisabled", checked = not (sbq.predatorSettings.hammerspaceDisabled or {})[location], visible = (data.hammerspace or false) and sbq.predatorSettings.hammerspace, toolTip = "Enable Hammerspace for the "..(data.name or location) },
 			{ type = "iconButton", id = location .. "Locked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = (not data.hammerspace) and sbq.predatorSettings.hammerspace, toolTip = "The "..(data.name or location).." Can't have hammerspace, but you can change the min and max size" },
 
 			{ type = "iconButton", id = location .. "PrevMin", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the min size of the "..(data.name or location) },
-			{ type = "label", id = location .. "ValueMin", text = (sbq.predatorSettings.visualMin or {})[location] or sbq.predatorConfig.locations[location].minVisual or 0, inline = true },
+			{ type = "label", id = location .. "ValueMin", text = (sbq.predatorSettings.visualMin or {})[location] or data.minVisual or 0, inline = true },
 			{ type = "iconButton", id = location .. "NextMin", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the min size of the "..(data.name or location) },
 
 			{ type = "iconButton", id = location .. "PrevMax", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the max size of the "..(data.name or location) },
