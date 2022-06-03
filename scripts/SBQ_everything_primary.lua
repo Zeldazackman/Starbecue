@@ -74,6 +74,6 @@ end
 
 local olduninit = uninit
 function uninit()
-	olduninit()
+	if olduninit ~= nil then olduninit() end
 	status.removeEphemeralEffect("sbqMysteriousPotionTF")
 end
