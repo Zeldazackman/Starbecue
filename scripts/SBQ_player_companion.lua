@@ -371,10 +371,17 @@ function update(dt)
 
 	local potionTF = status.statusProperty("sbqMysteriousPotionTFDuration" ) or 0
 	if potionTF > 0 then
+		status.removeEphemeralEffect("sbqMysteriousPotionTF")
 		status.addEphemeralEffect("sbqMysteriousPotionTF", potionTF )
 	end
 
 	initStage = 2 -- post-init finished
+end
+
+local olduninit = uninit
+function uninit()
+	olduninit()
+	status.removeEphemeralEffect("sbqMysteriousPotionTF")
 end
 
 local essentialItems = {"beamaxe", "wiretool", "painttool", "inspectiontool"}
