@@ -1,5 +1,12 @@
+local inited
 
 function init()
+	doInit()
+end
+
+function doInit()
+	if world.pointTileCollision(entity.position(), {"Null"}) then return end
+
 	self = status.statusProperty("sbqMysteriousPotionTF") or {}
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", effect.duration() )
 	if not self.species then
@@ -100,9 +107,12 @@ function init()
 	status.setStatusProperty("speciesAnimOverrideData", self)
 	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
 	refreshOccupantHolder()
+
+	inited = true
 end
 
 function update(dt)
+	if not inited then doInit() end
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", effect.duration() )
 end
 
