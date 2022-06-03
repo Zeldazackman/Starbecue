@@ -1,3 +1,5 @@
+local mysteriousTFDuration
+
 function sbq.everything_primary()
 	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
 		for statusEffect, data in pairs(statlist) do
@@ -70,10 +72,151 @@ function sbq.everything_primary()
 		local data = { species = world.entitySpecies(entity.id()), gender = world.entityGender(entity.id())}
 		return sb.jsonMerge(data, status.statusProperty("speciesAnimOverrideData") or {})
 	end)
+
+	message.setHandler("sbqMysteriousPotionTF", function (_,_, data, duration)
+		status.setStatusProperty("sbqMysteriousPotionTFDuration", duration )
+		mysteriousTFDuration = duration
+		sbq.doMysteriousTF(data)
+	end)
+	message.setHandler("sbqEndMysteriousPotionTF", function (_,_)
+		sbq.endMysteriousTF()
+	end)
+	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
 end
 
-local olduninit = uninit
-function uninit()
-	if olduninit ~= nil then olduninit() end
-	status.removeEphemeralEffect("sbqMysteriousPotionTF")
+local oldupdate = update
+function update(dt)
+	if oldupdate ~= nil then oldupdate(dt) end
+
+	if type(mysteriousTFDuration) == "number" then
+		mysteriousTFDuration = math.max(mysteriousTFDuration - dt, 0)
+		if mysteriousTFDuration == 0 then
+			sbq.endMysteriousTF()
+		end
+	end
+end
+
+function sbq.doMysteriousTF(data)
+	if world.pointTileCollision(entity.position(), {"Null"}) then return end
+	local self = data
+
+	if not self.species then
+		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
+		self.species = speciesList[math.random(#speciesList)]
+	end
+	local genders = {"male", "female"}
+	if not self.gender then
+		self.gender = genders[math.random(2)]
+	end
+	if self.gender == "noChange" then
+		self.gender = world.entityGender(entity.id())
+	end
+
+	local success, speciesFile = pcall(root.assetJson, ("/species/"..self.species..".species"))
+	if success and not self.identity then
+		self.identity = {}
+		for i, data in ipairs(speciesFile.genders or {}) do
+			if data.name == self.gender then
+				self.identity.hairGroup = data.hairGroup or "hair"
+				self.identity.facialHairGroup = data.facialHairGroup or "facialHair"
+				self.identity.facialMaskGroup = data.facialMaskGroup or "facialMask"
+
+				if data.hair[1] ~= nil then
+					self.identity.hairType = data.hair[math.random(#data.hair)]
+				end
+				if data.facialHair[1] ~= nil then
+					self.identity.facialHairType = data.facialHair[math.random(#data.facialHair)]
+				end
+				if data.facialMask[1] ~= nil then
+					self.identity.facialMaskType = data.facialMask[math.random(#data.facialMask)]
+				end
+			end
+		end
+	end
+	local undyColor
+	if success and not self.directives then
+		local directives = ""
+		local colorTable = (speciesFile.bodyColor or {})[math.random(#speciesFile.bodyColor)]
+		if type(colorTable) == "table" then
+			directives = "?replace"
+			for color, replace in pairs(colorTable) do
+				directives = directives..";"..color.."="..replace
+			end
+		end
+		local directives2 = ""
+		colorTable = (speciesFile.undyColor or {})[math.random(#speciesFile.undyColor)]
+		if type(colorTable) == "table" then
+			directives2 = "?replace"
+			for color, replace in pairs(colorTable) do
+				directives2 = directives2..";"..color.."="..replace
+			end
+		end
+		undyColor = directives2
+		self.directives = directives..directives2
+	end
+	if success and not self.hairDirectives then
+		local directives = ""
+		local colorTable = (speciesFile.hairColor or {})[math.random(#speciesFile.hairColor)]
+
+		if type(colorTable) == "table" then
+			directives = "?replace"
+			for color, replace in pairs(colorTable) do
+				directives = directives..";"..color.."="..replace
+			end
+		end
+
+		if speciesFile.headOptionAsHairColor then
+			self.hairDirectives = directives
+		else
+			self.hairDirectives = self.directives
+		end
+		if speciesFile.hairColorAsBodySubColor then
+			self.directives = self.directives..self.hairDirectives
+			self.hairDirectives = self.directives
+		end
+		if speciesFile.altOptionAsHairColor then
+			self.hairDirectives = self.hairDirectives..(undyColor or "")
+		end
+	end
+
+	local specialStatus
+	if success then
+		specialStatus = speciesFile.customAnimStatus
+	end
+
+	self.mysteriousPotion = true
+	self.permanent = true
+
+	local statusProperty = status.statusProperty("speciesAnimOverrideData") or {}
+	if not statusProperty.mysteriousPotion then
+		status.setStatusProperty("oldSpeciesAnimOverrideData", statusProperty)
+		status.setStatusProperty("oldSpeciesAnimOverrideCategory", status.getPersistentEffects("speciesAnimOverride"))
+	end
+
+	status.setStatusProperty("sbqMysteriousPotionTF", self)
+	status.clearPersistentEffects("speciesAnimOverride")
+	status.setStatusProperty("speciesAnimOverrideData", self)
+	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
+	refreshOccupantHolder()
+end
+
+function refreshOccupantHolder()
+	local currentData = status.statusProperty("sbqCurrentData") or {}
+	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+		world.sendEntityMessage(currentData.id, "reversion")
+		if currentData.species == "sbqOccupantHolder" then
+			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+		end
+	else
+		world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+	end
+end
+
+function sbq.endMysteriousTF()
+	status.setStatusProperty("sbqMysteriousPotionTFDuration", nil )
+	status.setStatusProperty("sbqMysteriousPotionTF", nil)
+	status.clearPersistentEffects("speciesAnimOverride")
+	status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))
+	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+	refreshOccupantHolder()
 end

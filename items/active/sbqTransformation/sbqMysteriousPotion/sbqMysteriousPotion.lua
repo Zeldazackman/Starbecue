@@ -25,9 +25,7 @@ function update(dt, fireMode, shiftHeld)
 		elseif self.useTimer < 5.5 then
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
-			status.setStatusProperty("sbqMysteriousPotionTF", data)
-			status.removeEphemeralEffect("sbqMysteriousPotionTF")
-			status.addEphemeralEffect("sbqMysteriousPotionTF")
+			world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, 3600)
 			item.consume(1)
 			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 			animator.playSound("activate")

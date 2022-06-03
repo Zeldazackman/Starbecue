@@ -33,9 +33,7 @@ function uninit()
 end
 
 function sbq.transform(data)
-	status.setStatusProperty("sbqMysteriousPotionTF", data)
-	status.removeEphemeralEffect("sbqMysteriousPotionTF")
-	status.addEphemeralEffect("sbqMysteriousPotionTF", (5 * 60))
+	world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, 5*60)
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	animator.playSound("activate")
 end
@@ -51,7 +49,9 @@ function sbq.genderSwap()
 	local mysteriousPotionData = status.statusProperty("sbqMysteriousPotionTF") or {}
 	mysteriousPotionData.gender = data.gender
 	status.setStatusProperty("sbqMysteriousPotionTF", mysteriousPotionData)
-
+	if data.gender == originalGender then
+		data.gender = nil
+	end
 	status.setStatusProperty("speciesAnimOverrideData", data)
 
 	local category = status.getPersistentEffects("speciesAnimOverride")
@@ -65,25 +65,8 @@ function sbq.genderSwap()
 end
 
 function sbq.reversion()
-	status.removeEphemeralEffect("sbqMysteriousPotionTF")
-	status.setStatusProperty("sbqMysteriousPotionTF", nil)
-	status.clearPersistentEffects("speciesAnimOverride")
-	local old = status.statusProperty("oldSpeciesAnimOverrideData") or {}
-	old.gender = nil
-	status.setStatusProperty("speciesAnimOverrideData", old)
-	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory") or {})
-	status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
+	world.sendEntityMessage(entity.id(), "sbqEndMysteriousPotionTF")
 	animator.playSound("activate")
-
-	local currentData = status.statusProperty("sbqCurrentData") or {}
-	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-		world.sendEntityMessage(currentData.id, "reversion")
-		if currentData.species == "sbqOccupantHolder" then
-			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
-		end
-	else
-		world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
-	end
 end
 
 function sbq.vehiclePred(vehicle)

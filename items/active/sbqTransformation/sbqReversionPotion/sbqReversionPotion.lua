@@ -20,31 +20,11 @@ function update(dt, fireMode, shiftHeld)
 		elseif self.useTimer < 5.5 then
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
-			status.removeEphemeralEffect("sbqMysteriousPotionTF")
-			status.setStatusProperty("sbqMysteriousPotionTF", nil)
-			status.clearPersistentEffects("speciesAnimOverride")
-			local old = status.statusProperty("oldSpeciesAnimOverrideData") or {}
-			old.gender = nil
-			status.setStatusProperty("speciesAnimOverrideData", old)
-			status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory") or {})
-			status.setStatusProperty("sbqMysteriousPotionTFDuration", 0 )
+			world.sendEntityMessage(entity.id(), "sbqEndMysteriousPotionTF")
 			item.consume(1)
 			animator.playSound("activate")
-			refreshOccupantHolder()
 			init()
 		end
-	end
-end
-
-function refreshOccupantHolder()
-	local currentData = status.statusProperty("sbqCurrentData") or {}
-	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-		world.sendEntityMessage(currentData.id, "reversion")
-		if currentData.species == "sbqOccupantHolder" then
-			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
-		end
-	else
-		world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	end
 end
 

@@ -28,7 +28,9 @@ function update(dt, fireMode, shiftHeld)
 			local mysteriousPotionData = status.statusProperty("sbqMysteriousPotionTF") or {}
 			mysteriousPotionData.gender = data.gender
 			status.setStatusProperty("sbqMysteriousPotionTF", mysteriousPotionData)
-
+			if data.gender == originalGender then
+				data.gender = nil
+			end
 			status.setStatusProperty("speciesAnimOverrideData", data)
 
 			local category = status.getPersistentEffects("speciesAnimOverride")
