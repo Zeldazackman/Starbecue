@@ -71,3 +71,9 @@ function sbq.everything_primary()
 		return sb.jsonMerge(data, status.statusProperty("speciesAnimOverrideData") or {})
 	end)
 end
+
+local olduninit = uninit
+function uninit()
+	olduninit()
+	status.removeEphemeralEffect("sbqMysteriousPotionTF")
+end
