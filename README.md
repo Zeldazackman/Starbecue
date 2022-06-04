@@ -49,6 +49,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - Lucario
 - Lycanroc
 - Eevee (GalaxyFoxes)
+- Eevee (Remade)
 - Umbreon
 - Braixen
 - Delphox
@@ -60,7 +61,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - Fennix
 - Felin
 - Draconis
-- Draconis Full Dragon Reskin
+- Draconis (Full Dragon Reskin)
 - Gnolls
 - Argonians
 - Sergals
