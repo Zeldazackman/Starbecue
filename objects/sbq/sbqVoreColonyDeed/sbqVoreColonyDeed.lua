@@ -27,6 +27,8 @@ function init()
 	message.setHandler("sbqSummonNewTenant", function (_,_, newTenant)
 		storage.settings = nil
 		storage.preySettings = nil
+		if not storage.house then return end
+
 		evictTenants()
 		if not newTenant then return end
 		local success, occupier = pcall(root.tenantConfig,(newTenant))
