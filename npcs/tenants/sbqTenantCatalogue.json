@@ -6,6 +6,7 @@
 	"crylan": "sbq_villager_crylan",
 	"dragon": "sbq_villager_dragon",
 	"eevee": "sbq_villager_eevee",
+	"eeveetwo": "sbq_villager_eeveetwo",
 	"elysian": "sbq_villager_elysian",
 	"felin": "sbq_villager_felin",
 	"fenerox": "sbq_villager_fenerox",
@@ -28,6 +29,7 @@
 	"familiar": "sbq_villager_familiar",
 	"braixen": "sbq_villager_braixen",
 	"delphox": "sbq_villager_delphox",
+	"synth": "sbq_villager_synth",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -36,6 +38,7 @@
 	"guard_crylan": [ "sbq_guard_crylan", "sbq_guardT2_crylan", "sbq_guardT3_crylan", "sbq_guardT4_crylan" ],
 	"guard_dragon": [ "sbq_guard_dragon", "sbq_guardT2_dragon", "sbq_guardT3_dragon", "sbq_guardT4_dragon" ],
 	"guard_eevee": [ "sbq_guard_eevee", "sbq_guardT2_eevee", "sbq_guardT3_eevee", "sbq_guardT4_eevee" ],
+	"guard_eeveetwo": [ "sbq_guard_eeveetwo", "sbq_guardT2_eeveetwo", "sbq_guardT3_eeveetwo", "sbq_guardT4_eeveetwo" ],
 	"guard_elysian": [ "sbq_guard_elysian", "sbq_guardT2_elysian", "sbq_guardT3_elysian", "sbq_guardT4_elysian" ],
 	"guard_felin": [ "sbq_guard_felin", "sbq_guardT2_felin", "sbq_guardT3_felin", "sbq_guardT4_felin" ],
 	"guard_fenerox": [ "sbq_guard_fenerox", "sbq_guardT2_fenerox", "sbq_guardT3_fenerox", "sbq_guardT4_fenerox" ],
@@ -58,6 +61,7 @@
 	"guard_familiar": [ "sbq_guard_familiar", "sbq_guardT2_familiar", "sbq_guardT3_familiar", "sbq_guardT4_familiar" ],
 	"guard_braixen": [ "sbq_guard_braixen", "sbq_guardT2_braixen", "sbq_guardT3_braixen", "sbq_guardT4_braixen" ],
 	"guard_delphox": [ "sbq_guard_delphox", "sbq_guardT2_delphox", "sbq_guardT3_delphox", "sbq_guardT4_delphox" ],
+	"guard_synth": [ "sbq_guard_synth", "sbq_guardT2_synth", "sbq_guardT3_synth", "sbq_guardT4_synth" ],
 
 	"Zevi": "sbq_tenant_zevi_zygahedron"
 }
