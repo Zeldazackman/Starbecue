@@ -40,17 +40,9 @@ function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
 end
 
 function init()
-	sbq.saveCosmeticSlots()
-	_npc_setItemSlot = npc.setItemSlot
-	npc.setItemSlot = new_npc_setItemSlot
-
-	oldinit()
-
-	sbq.config = root.assetJson("/sbqGeneral.config")
-	sbq.dialogueTree = config.getParameter("dialogueTree")
-	sbq.dialogueBoxScripts = config.getParameter("dialogueBoxScripts")
-	for _, script in ipairs(sbq.dialogueBoxScripts or {}) do
-		require(script)
+	if type(_npc_setItemSlot) ~= "function" then
+		_npc_setItemSlot = npc.setItemSlot
+		npc.setItemSlot = new_npc_setItemSlot
 	end
 
 	sbq.getSpeciesConfig()
@@ -62,7 +54,19 @@ function init()
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()
 	end
+	sbq.saveCosmeticSlots()
+
 	sbq.setRelevantPredSettings()
+
+
+	oldinit()
+
+	sbq.config = root.assetJson("/sbqGeneral.config")
+	sbq.dialogueTree = config.getParameter("dialogueTree")
+	sbq.dialogueBoxScripts = config.getParameter("dialogueBoxScripts")
+	for _, script in ipairs(sbq.dialogueBoxScripts or {}) do
+		require(script)
+	end
 
 	message.setHandler("sbqRefreshDialogueBoxData", function (_,_, id, isPrey)
 		sbq.talkingWithPrey = (isPrey == "prey")
@@ -408,16 +412,18 @@ function sbq.setStatusValue(name, value)
 end
 
 function sbq.updateCosmeticSlots()
-	if storage.settings.breastVorePred then
-		_npc_setItemSlot("chestCosmetic", "sbq_nude_chest")
-	else
-		_npc_setItemSlot("chestCosmetic", storage.saveCosmeticSlots.chestCosmetic)
-	end
+	if type(storage.settings) == "table" then
+		if storage.settings.breastVorePred then
+			_npc_setItemSlot("chestCosmetic", "sbq_nude_chest")
+		else
+			_npc_setItemSlot("chestCosmetic", storage.saveCosmeticSlots.chestCosmetic)
+		end
 
-	if storage.settings.unbirthPred or storage.settings.cockVorePred or storage.settings.analVorePred then
-		_npc_setItemSlot("legsCosmetic", "sbq_nude_legs")
-	else
-		_npc_setItemSlot("legsCosmetic", storage.saveCosmeticSlots.legsCosmetic)
+		if storage.settings.unbirthPred or storage.settings.cockVorePred or storage.settings.analVorePred then
+			_npc_setItemSlot("legsCosmetic", "sbq_nude_legs")
+		else
+			_npc_setItemSlot("legsCosmetic", storage.saveCosmeticSlots.legsCosmetic)
+		end
 	end
 end
 
