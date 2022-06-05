@@ -38,7 +38,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"teleporterConfig\": {\n  \"canBookmark\" : true,\n  \"bookmarkName\" : \"Auri's Shop\",\n  \"includePartyMembers\" : true,\n  \"includePlayerBookmarks\" : true,\n  \"destinations\" : [\n    {\n      \"name\" : \"Beam to Ship\",\n      \"planetName\" : \"\",\n      \"warpAction\" : \"OwnShip\",\n      \"icon\" : \"beamup\"\n    }\n  ]\n}, \"uniqueId\" : \"auriShop\"}"
+                     "parameters":"{\"teleporterConfig\":\"\/interface\/warping\/auriFireplace.config\", \"uniqueId\" : \"auriShop\"}"
                     },
                  "rotation":0,
                  "type":"",
@@ -1248,7 +1248,7 @@
                  "y":104
                 }, 
                 {
-                 "gid":1629,
+                 "gid":1682,
                  "height":16,
                  "id":174,
                  "name":"",
@@ -1264,7 +1264,7 @@
                  "y":360
                 }, 
                 {
-                 "gid":1613,
+                 "gid":1666,
                  "height":16,
                  "id":189,
                  "name":"",
@@ -2171,7 +2171,7 @@
          "source":"..\/..\/..\/tilesets\/wasabiRaptor\/paintedBlocks\/paintedBlocks.json"
         }, 
         {
-         "firstgid":1431,
+         "firstgid":1484,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/wire.json"
         }],
  "tilewidth":8,
