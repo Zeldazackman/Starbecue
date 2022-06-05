@@ -229,9 +229,9 @@
 			},
 
 			"sbqCoreCharem" : {
-				"randomDialogue" : [
-					"The second comm, just a static object here, based a bit on Vappy's lay state.",
-					"Lazy fluffy Shadox."
+				"portrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AMad.png"],
+				"dialogue" : [
+					"So, someone edited the shop recipes to make this purchasble again? This person expliclty allowed minors into vore spaces, I don't want to associate with them."
 				],
 				"jump" : [ "greeting", "mood", "continue"]
 			},

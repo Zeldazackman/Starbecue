@@ -8,7 +8,6 @@
 
 # Commissioners
 	xeronious
-	Charem
 	Lakota Amitola
 	BRZYN-Z18
 

@@ -26,7 +26,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 
 # Features
 
-![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqCharem/sbqCharem.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
+![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
 ### Playable Predator transformation
 - Vaporeon
@@ -72,9 +72,6 @@ This mod includes no assets from the respective modded races, modified or not, m
 
 ### NPC Vore Tenants
 - Zevi (Pred/Prey)
-
-### Object Predators
-- Charem
 
 ### Other Things
 - Egg
