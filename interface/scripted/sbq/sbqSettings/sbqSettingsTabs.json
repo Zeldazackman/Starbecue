@@ -384,20 +384,6 @@
 				]}
 			]}
 		]},
-		"sbqCharem" : { "type" : "tab", "id" : "charemHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "charemHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
-				{ "type" : "tab", "id" : "charemGeneralHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;So you've met a lazy hadox...^reset;\n \nCharem can fit one prey within his ^yellow;belly^reset;.\n \nThis predator was comissioned by Charem and belongs to him." }
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "backHelpTab", "title" : "Back", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCharemCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
-						{ "type" : "label", "text" : "^cyan;Back State^reset;\n \nIf you ^green;interact^reset; with his head while standing in front of him, he will attempt to ^yellow;eat^reset; you.\n \nIf you ^green;interact^reset; on their belly, he'll let you climb on and lay on it like a bed, he can then ^orange;hug^reset; you.\n \nIf you ^green;interact^reset; towards his rear, you'll be able to squirm up inside to their belly!\n \nIf you're in Charem's belly, you'll be able to struggle out his rear, or out his mouth, but thats more difficult.\n \nIf you've been ^orange;hugged^reset; you can ^orange;struggle^reset; out of the ^orange;hug^reset;." }
-					]}]}
-				]}
-			]}
-		]},
 		"sbqAvian" : { "type" : "tab", "id" : "avianHelpTab", "title" : "", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
 			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "avianHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
 				{ "type" : "tab", "id" : "avianGeneralHelpTab", "title" : "General", "icon" : "/codex/avian/aviancover7.png", "visible" : true, "color" : "ff00ff", "contents" : [
