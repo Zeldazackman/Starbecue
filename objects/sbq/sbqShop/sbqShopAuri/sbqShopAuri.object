@@ -231,7 +231,7 @@
 			"sbqCoreCharem" : {
 				"portrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AMad.png"],
 				"dialogue" : [
-					"So, someone edited the shop recipes to make this purchasble again? This person expliclty allowed minors into vore spaces, I don't want to associate with them."
+					"So, someone edited the shop recipes and also added this back into the game, fucking disgusting. This person expliclty allowed minors into vore spaces, I don't want to associate with them."
 				],
 				"jump" : [ "greeting", "mood", "continue"]
 			},

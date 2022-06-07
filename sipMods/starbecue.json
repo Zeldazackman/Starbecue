@@ -8,7 +8,6 @@
 	{"path":"/items/active/sbqPotionXeronious/","fileName":"sbqPotionXeronious.activeitem","name":"sbqPotionXeronious","shortdescription":"Xeronious Potion","category":"Potion","icon":"sbqPotionXeronious.png","rarity":"legendary"},
 
 	{"path":"/items/sbq/","fileName":"sbqCoreAvian.augment","name":"sbqCoreAvian","shortdescription":"Avian","category":"Vore","icon":"/vehicles/sbq/sbqAvian/skins/default/icon.png?replace;ffca8a=f0608b;e0975c=cd5061;a85636=95484c;6f2919=6a3836;f32200=f6fbfb;dc1f00=d7e8e8;be1b00=8fa7a3;951500=5d6d69;d9c189=eacf60;a38d59=c1a24e;735e3a=977841","rarity":"rare"},
-	{"path":"/items/sbq/","fileName":"sbqCoreCharem.augment","name":"sbqCoreCharem","shortdescription":"Charem","category":"Vore","icon":"/vehicles/sbq/sbqCharem/skins/default/icon.png","rarity":"rare"},
 	{"path":"/items/sbq/","fileName":"sbqCoreSlime.augment","name":"sbqCoreSlime","shortdescription":"Slime","category":"Vore","icon":"/vehicles/sbq/sbqSlime/skins/default/icon.png?replace;A1A1A1=2D53968c;DCDCDC=4188FA8c;EFEFEF=4C9FFF8c;FFFFFF=7DBCFF8c","rarity":"rare"},
 	{"path":"/items/sbq/","fileName":"sbqCoreVaporeon.augment","name":"sbqCoreVaporeon","shortdescription":"Vaporeon","category":"Vore","icon":"/vehicles/sbq/sbqVaporeon/skins/default/icon.png?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff","rarity":"rare"},
 	{"path":"/items/sbq/","fileName":"sbqCoreXeronious.augment","name":"sbqCoreXeronious","shortdescription":"Xeronious","category":"Vore","icon":"/vehicles/sbq/sbqXeronious/skins/default/icon.png","rarity":"rare"},
