@@ -740,6 +740,7 @@
 		}
 	},
 	"sounds": {
+		"error" : ["/sfx/interface/clickon_error.ogg"],
 		"digest": ["/silent.wav"],
 		"struggle" : ["/silent.wav"],
 		"crack": [

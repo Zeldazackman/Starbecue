@@ -68,6 +68,8 @@ function sbq.doTransition( direction, scriptargs )
 		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
 			if enabled then
 				sbq.doingTransition(tconfig, direction, scriptargs)
+			else
+				animator.playSound("error")
 			end
 		end)
 	else

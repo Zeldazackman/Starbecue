@@ -40,6 +40,7 @@ function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
 end
 
 function init()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 	if type(_npc_setItemSlot) ~= "function" then
 		_npc_setItemSlot = npc.setItemSlot
 		npc.setItemSlot = new_npc_setItemSlot
@@ -58,10 +59,8 @@ function init()
 
 	sbq.setRelevantPredSettings()
 
-
 	oldinit()
 
-	sbq.config = root.assetJson("/sbqGeneral.config")
 	sbq.dialogueTree = config.getParameter("dialogueTree")
 	sbq.dialogueBoxScripts = config.getParameter("dialogueBoxScripts")
 	for _, script in ipairs(sbq.dialogueBoxScripts or {}) do

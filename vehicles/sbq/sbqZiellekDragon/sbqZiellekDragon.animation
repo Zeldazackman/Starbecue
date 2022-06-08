@@ -996,6 +996,7 @@
 
 	},
 	"sounds": {
+		"error" : ["/sfx/interface/clickon_error.ogg"],
 		"fireStart" : [ "/sfx/gun/flamethrower_start.ogg" ],
 		"fireLoop" : [ "/sfx/gun/flamethrower_loop.ogg" ],
 		"fireEnd" : [ "/sfx/gun/flamethrower_stop.ogg" ],
