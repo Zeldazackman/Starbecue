@@ -217,6 +217,6 @@ function sbq.endMysteriousTF()
 	status.setStatusProperty("sbqMysteriousPotionTF", nil)
 	status.clearPersistentEffects("speciesAnimOverride")
 	status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))
-	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory"))
+	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory") or {})
 	refreshOccupantHolder()
 end
