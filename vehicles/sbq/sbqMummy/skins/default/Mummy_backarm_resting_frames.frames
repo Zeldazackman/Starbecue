@@ -1,0 +1,16 @@
+{
+	"frameGrid" : {
+		"size" : [68, 30],
+		"dimensions" : [34, 30],
+		"names" : [
+			[ "rest.1", "rest.2"],
+		]
+	},
+	"aliases" : {
+		"rest.default" : "rest.1",
+
+		
+
+
+	}
+}
