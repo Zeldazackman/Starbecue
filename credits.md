@@ -21,6 +21,7 @@
 # Patrons
 ## Special Thanks
 	David stat man
+	Darling Devil
 ## Thank you all for your support!
 	xeronious
 	BRZYN-Z18
@@ -43,7 +44,18 @@
 	LefTonbo
 	Koole
 	Vargo_Bargo
-	LP
 	assasin604
-	Brandon Proctor
-	Dragon_hero76
+	Sony Antoing
+	LP
+	Arden Umbraheart
+	Dirty Kitty
+	Signum
+	Knochen
+	Fevix
+	Pascal Gailloud
+	BilboDrawings
+	Ias Delino Iney
+	Mojmír Závada
+	Selicia
+	Timothy D.
+	潘禹全
