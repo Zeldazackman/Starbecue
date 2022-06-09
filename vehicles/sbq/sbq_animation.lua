@@ -266,7 +266,7 @@ function sbq.victimAnimUpdate(eid)
 	if ended and not anim.loop then
 		victimAnim.enabled = false
 		time = sbq.animStateData[statename].animationState.cycle
-		victimAnim.inside = sbq.victimAnimations[victimAnim.anim].endInside
+		victimAnim.inside = anim.endInside
 	end
 
 	local seatname = sbq.lounging[eid].seatname
@@ -357,14 +357,14 @@ function sbq.getVictimAnimInterpolatedValue(victimAnim, valName, progress)
 end
 
 function sbq.getPrevVictimAnimValue(victimAnim, valName)
-	if sbq.victimAnimations[victimAnim.anim][valName] ~= nil and sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
+	if sbq.victimAnimations[victimAnim.anim] ~= nil and sbq.victimAnimations[victimAnim.anim][valName] ~= nil and sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil then
 		victimAnim.last[valName] = sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] or 0
 	end
 	return victimAnim.last[valName] or 0
 end
 
 function sbq.getNextVictimAnimValue(victimAnim, valName)
-	if sbq.victimAnimations[victimAnim.anim][valName] ~= nil and sbq.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
+	if sbq.victimAnimations[victimAnim.anim] ~= nil and sbq.victimAnimations[victimAnim.anim][valName] ~= nil and sbq.victimAnimations[victimAnim.anim][valName][victimAnim.index] ~= nil then
 		return sbq.victimAnimations[victimAnim.anim][valName][victimAnim.index] or 0
 	end
 	return victimAnim.last[valName] or 0
@@ -385,7 +385,7 @@ function sbq.doVictimAnim( occupantId, anim, statename )
 	if not sbq.lounging[occupantId] then return end
 	local last = sbq.lounging[occupantId].victimAnim.last or {}
 
-	local victimAnim = sbq.victimAnimations[anim]
+	local victimAnim = sbq.victimAnimations[anim] or {}
 
 	sbq.lounging[occupantId].victimAnim = {
 		enabled = true,
@@ -400,7 +400,7 @@ function sbq.doVictimAnim( occupantId, anim, statename )
 	}
 	if not last.inside then
 		for arg, default in pairs(victimAnimArgs) do
-			if sbq.victimAnimations[anim][arg] ~= nil then
+			if sbq.victimAnimations[anim] ~= nil and sbq.victimAnimations[anim][arg] ~= nil then
 				sbq.lounging[occupantId].victimAnim.last[arg] = sbq.victimAnimations[anim][arg][1]
 			else
 				sbq.lounging[occupantId].victimAnim.last[arg] = default
