@@ -66,6 +66,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - Argonians
 - Sergals
 - Familiars
+- Vulpes
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 
