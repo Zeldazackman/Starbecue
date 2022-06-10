@@ -66,7 +66,56 @@
 								"otherLocationFull" : { "randomDialogue" : [ "I'm a bit too full...", "My body can't stretch any further...", "I've been filled too much already...", "I would... but I'm too full..." ]},
 
 								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							},
+
+							"hungry" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Didn't know the food here came to you!", "Oh yes, I'm famished.", "Free food? Why of course!" ] },
+									"after" : { "randomDialogue" : [ "Oh yeah, that hit the spot.", "Mmmmmh, nothing like a good meal.", "Urrrhp!" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "I'm famished, come here.", "Sorry but... Not sorry.", "Mind helping me out? I'm starved.", "Food shouldn't be walking around, let me fix that." ] },
+									"after" : { "randomDialogue" : [ "Oh yeah, that hit the spot.", "Mmmmmh, nothing like a good meal.", "Urrrhp!" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "I'm not that kind of hungry right now.", "I'm not sure you'd fill me." ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "I wish I could but- Bwuuurph!\n...too full...", "I've already had my fill." ]},
+									"sbqDigest" : { "randomDialogue" : [ "Give it a few minutes.\nThen we'll see if I'm still hungry.", "Bwuuuurp!\nSoon...", "Check in when this meal's finished." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "Give it a few minutes.\nThen we'll see if I'm still hungry.", "Bwuuuurp!\nSoon...", "Check in when this meal's finished." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "I wish I could but...\nI'm already too full.", "Can't fit any more..." ]},
+
+								"tooBig" : { "randomDialogue" : [ "That's too big even for me!", "I may be hungry but...\nWow, you're way too big." ]}
+							},
+
+							"friendly" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Oh, of course!", "I'm sure you'll fill me just right." ] },
+									"after" : { "randomDialogue" : [ "That was good...", "You taste SO good!" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Sorry about this!", "Don't worry, I won't hurt you." ] },
+									"after" : { "randomDialogue" : [ "That was good...", "You taste SO good!" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Sorry, I'm not feeling it right now.", "I'm not hungry, maybe later though?" ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Oh sorry, I've already got a pal with me.", "Sorry, I'm already full.\nI'm sure I'll be free soon though!" ]},
+									"sbqDigest" : { "randomDialogue" : [ "Can you give me a few minutes?\nI need to tuck a friend away first.", "Gotta tuck this cutie onto my hips.\nThen you can be next." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "Can you give me a few minutes?\nI need to tuck a friend away first.", "Gotta tuck this cutie onto my hips.\nThen you can be next." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "Oh sorry, I've already got a pal with me.", "Sorry, I'm already full.\nI'm sure I'll be free soon though!" ]},
+
+								"tooBig" : { "randomDialogue" : [ "Oh wow, you're big!", "I couldn't even hope to fit you!" ]}
 							}
+							
 						},
 						"flirty" : { // personality
 							"next" : "mood",
@@ -106,7 +155,7 @@
 								"unprompted" : {
 									"next" : "doingVore",
 									"before" : { "randomDialogue" : [ "Uhm... e-excuse me... I-", "Hey... uhm... funny thing... I-", "Do you... uhm... do you mind if I-", "Hi... hey... hi... hi... hi-" ] },
-									"after" : { "randomDialogue" : [ "S-sorry I couldn't control myself!", "I was just... too hungry!", "T-this is fine right?", "A-ahhh sorry I just panicked!" ] }
+									"after" : { "randomDialogue" : [ "S-sorry I couldn't control myself!", "Th-this is fine right?", "A-ahhh sorry I just panicked!" ] }
 								},
 								"notFeelingIt" : { "randomDialogue" : [ "Uhm... I uhm... uhm...", "Y-you really t-think I can be a pred?", "M-me? I can't...", ["*Incomprehensible Noises*", "<keysmash>"] ] },
 								"full" : {
@@ -116,6 +165,30 @@
 									"sbqSoftDigest" : { "randomDialogue" : [ "A-are y-you sure? m-my prey is melting in there...", "Uhm... a-after my last meal is more manageable...", "Y-you want to be p-pudge too?", "I-Uhm... uhm... uhm... s-soon yeah... soon..." ]}
 								},
 								"otherLocationFull": { "randomDialogue" : [ "O-oh uhm... uh... I don't think I can fit more...", ["*Flustered Noise* t-too many others wanted in already!", "<keysmash> t-too many others wanted in already!"], ["*Incomprehensible Noises*", "aaaaaaa<keysmash><keysmash>"], "I-I'm too full!" ]},
+
+								"tooBig" : { "randomDialogue" : [ "A-ah y-you w-wouldn't fit if I tried", "I-Oh w-wow y-you really think I could do t-that?", ["Thats... you're too... *Incomprehensible Noises*", "Thats... you're too... <keysmash>"], "T-thats crazy..." ]}
+							},
+
+							"hungry" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "O-oh gosh, you would do that?", "Y-you...\nReally?", "You... don't have to but...\nOkay...", "F-for me..?", "You really think...\nI g-gues I could try..." ] },
+									"after" : { "randomDialogue" : [ "Oh g-gosh...\nThat really... H-hit the spot...", "Y-you really... \n<keysmash>", "You didn't have to..." ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Would you, uhm-\nMind if I..?\n...Yeah...", "Hey, uhm... I'm-\nYeah I'm... H-hungry.\nC-could you... yeah...", "Uuuhm....\nS-Sorry about this!" ] },
+									"after" : { "randomDialogue" : [ "I was just... too hungry!", "You're okay with this. Right?\nRight..?", "P-please don't squirm too much..." ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "I couldn't...", "W-wow, okay, uhm...\nI'm not... that hungry?", "<keysmash>" ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "<keysmash>\nI already ate enough...", "ohgoshohgoshohgosh-", "Too...\nUuuurhp!\nFull...", "Bwuuuuurph!\nI- uh... <keysmash>" ]},
+									"sbqDigest" : { "randomDialogue" : [ "T-too... Soon...", "A-already..?", "<keysmash>", "The last ones are still...\nM-Melting...", "I-I don't think you'd wa-AUUUUURP-\n...To join them...", "I-I'm already going to be fat..." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "T-too... Soon...", "A-already..?", "<keysmash>", "The last ones are still...\nM-Melting...", "I-I don't think you'd wa-AUUUUURP-\n...To join them...", "I-I'm already going to be fat..." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "<keysmash>\nI'm already full enough...", "ohgoshohgoshohgosh-", "Too... Full...", "I- uh... <keysmash>" ]},
 
 								"tooBig" : { "randomDialogue" : [ "A-ah y-you w-wouldn't fit if I tried", "I-Oh w-wow y-you really think I could do t-that?", ["Thats... you're too... *Incomprehensible Noises*", "Thats... you're too... <keysmash>"], "T-thats crazy..." ]}
 							}
