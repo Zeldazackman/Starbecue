@@ -30,6 +30,10 @@
 	"braixen": "sbq_villager_braixen",
 	"delphox": "sbq_villager_delphox",
 	"synth": "sbq_villager_synth",
+	"kazdra": "sbq_villager_kazdra",
+	"vulpes": "sbq_villager_vulpes",
+	"elduukhar": "sbq_villager_elduukhar",
+	"attarran": "sbq_villager_attarran",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -62,6 +66,10 @@
 	"guard_braixen": [ "sbq_guard_braixen", "sbq_guardT2_braixen", "sbq_guardT3_braixen", "sbq_guardT4_braixen" ],
 	"guard_delphox": [ "sbq_guard_delphox", "sbq_guardT2_delphox", "sbq_guardT3_delphox", "sbq_guardT4_delphox" ],
 	"guard_synth": [ "sbq_guard_synth", "sbq_guardT2_synth", "sbq_guardT3_synth", "sbq_guardT4_synth" ],
+	"guard_vulpes": [ "sbq_guard_vulpes", "sbq_guardT2_vulpes", "sbq_guardT3_vulpes", "sbq_guardT4_vulpes" ],
+	"guard_kazdra": [ "sbq_guard_kazdra", "sbq_guardT2_kazdra", "sbq_guardT3_kazdra", "sbq_guardT4_kazdra" ],
+	"guard_elduukhar": [ "sbq_guard_elduukhar", "sbq_guardT2_elduukhar", "sbq_guardT3_elduukhar", "sbq_guardT4_elduukhar" ],
+	"guard_attarran": [ "sbq_guard_attarran", "sbq_guardT2_attarran", "sbq_guardT3_attarran", "sbq_guardT4_attarran" ],
 
 	"Zevi": "sbq_tenant_zevi_zygahedron"
 }
