@@ -27,7 +27,7 @@ end
 function sbq.cumDigest(id, i)
     sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "cumDigestionImmunity"), function (immune)
         if not immune then
-            world.sendEntityMessage( sbq.sbqCurrentData.id, "cumDigest", id )
+            world.sendEntityMessage( sbq.sbqCurrentData.id, "sbqCumDigest", id )
         end
     end)
 end

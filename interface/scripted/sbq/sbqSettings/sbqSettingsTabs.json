@@ -232,7 +232,8 @@
 					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Penis Cum Digestion" }],
 					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : " Balls Cum TF" }],
 					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Balls Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : " Womb Eggify" }]
+					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : " Womb Eggify" }],
+					[{ "type" : "checkBox", "id" : "wombDigestion",  "toolTip" : "People in the womb will automatically start digesting into cum (fatal)" }, { "type" : "label", "text" : " Womb Digestion" }]
 				]}]}
 			]}
 		}
