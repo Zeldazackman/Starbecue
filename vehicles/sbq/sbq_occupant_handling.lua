@@ -633,7 +633,7 @@ function sbq.doBellyEffects(dt)
 	local powerMultiplier = math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1
 
 	for i = sbq.startSlot, sbq.occupantSlots do
-		local locationEffect = sbq.settings[sbq.occupant[i].location.."Effect"] or "sbqRemoveBellyEffects"
+		local locationEffect = sbq.settings[(sbq.occupant[i].location or "").."Effect"] or "sbqRemoveBellyEffects"
 
 		local eid = sbq.occupant[i].id
 		if type(eid) == "number" and world.entityExists(eid) then
