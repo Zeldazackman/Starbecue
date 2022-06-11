@@ -479,6 +479,11 @@
 									"next" : "eggImmunity",
 									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestionImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
@@ -499,6 +504,11 @@
 									"next" : "transformImmunity",
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestionImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
@@ -520,6 +530,11 @@
 									"next" : "transformImmunity",
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestionImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}

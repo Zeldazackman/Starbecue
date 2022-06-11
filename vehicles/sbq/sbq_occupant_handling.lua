@@ -663,6 +663,9 @@ function sbq.doBellyEffects(dt)
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
 			end
+			if sbq.occupant[i].cumDigesting or sbq.settings.cumDigest then
+				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, owner)
+			end
 			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 		end
 	end
