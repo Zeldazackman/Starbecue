@@ -115,7 +115,7 @@
 
 								"tooBig" : { "randomDialogue" : [ "Oh wow, you're big!", "I couldn't even hope to fit you!" ]}
 							}
-							
+
 						},
 						"flirty" : { // personality
 							"next" : "mood",
@@ -1247,6 +1247,9 @@
 
 			"digestImmunity" : [true,false],
 			"digestImmunityEnable" : [true,false],
+
+			"cumDigestImmunity" : [true,false],
+			"cumDigestImmunityEnable" : [true,false],
 
 			"eggImmunity" : [true,false],
 			"eggImmunityEnable" : [true,false],

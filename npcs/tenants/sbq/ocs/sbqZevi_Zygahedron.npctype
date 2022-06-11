@@ -874,6 +874,10 @@
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,
 				"digestImmunity": true,
+
+				"cumDigestImmunity" : true,
+				"cumDigestImmunityLock" : true,
+
 				"transformImmunity": true,
 				"eggImmunity": false,
 
