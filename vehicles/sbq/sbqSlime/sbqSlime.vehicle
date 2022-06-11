@@ -123,6 +123,7 @@
 		},
 		"occupantStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 },
 			"sbqEggMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqSlime/mask.png" }
 		},
 

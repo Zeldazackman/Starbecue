@@ -75,16 +75,6 @@ function sbq.detectPants()
 end
 
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
-	if location == "womb" then
-		local bellyEffect = "sbqHeal"
-		if sbq.settings.displayDigest then
-			if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
-				bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
-			end
-		end
-		world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, entity.id())
-	end
-
 	if (sbq.occupant[i].progressBar <= 0) then
 		if (sbq.settings.penisCumTF and location == "shaft") or (sbq.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" )) then
 			sbq.loopedMessage("CumTF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)

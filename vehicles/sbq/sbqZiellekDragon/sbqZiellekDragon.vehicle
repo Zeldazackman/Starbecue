@@ -75,10 +75,10 @@
 		"displayName" : "Ziellek Dragon",
 		"victimAnimations": "/vehicles/sbq/sbqZiellekDragon/victim_animations.config",
 		"driverStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
 		},
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 }
+			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 }
 		},
 		"movementSettings" : {
 			"default":{

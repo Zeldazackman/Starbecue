@@ -89,6 +89,7 @@
 		},
 		"occupantStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 },
 			"sbqEggMask" : { "power" : 1 }
 		},
 

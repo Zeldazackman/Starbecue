@@ -39,7 +39,7 @@ function sbq.clearOccupant(i)
 		seatname = "occupant"..i,
 		index = i,
 		id = nil,
-		statList = sbq.sbqData.occupantStatusEffects or {},
+		statList = sb.jsonMerge(sbq.sbqData.occupantStatusEffects or {}, {}),
 		size = 1,
 		sizeMultiplier = 1,
 		visible = true,

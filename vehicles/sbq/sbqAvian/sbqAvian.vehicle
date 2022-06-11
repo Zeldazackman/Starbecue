@@ -105,6 +105,10 @@
 				"ignorePlatformCollision" : false
 			}
 		},
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 }
+		},
 
 		"lights" : {
 			"driver" : {
