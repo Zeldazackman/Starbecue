@@ -663,8 +663,8 @@ function sbq.doBellyEffects(dt)
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
 			end
-			if sbq.occupant[i].cumDigesting or sbq.settings.cumDigest then
-				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, owner)
+			if sbq.occupant[i].cumDigesting or ((sbq.occupant[i].location == "ballsL" or sbq.occupant[i].location == "ballsR" or sbq.occupant[i].location == "balls") and sbq.settings.ballsCumDigestion) or (sbq.occupant[i].location == "shaft" and sbq.settings.penisCumDigestion) or (sbq.occupant[i].location == "womb" and sbq.settings.wombCumDigestion) then
+				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, sbq.driver or entity.id())
 			end
 			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 		end
