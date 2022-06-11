@@ -22,7 +22,9 @@ function init()
 
 	local occupier = sbq.storage.occupier
 
-	if type(occupier) == "table" then
+	local tenantIndex = 1
+
+	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[tenantIndex]) == "table" and type(occupier.tenants[tenantIndex].species) == "string" then
 		tenantText:setText( occupier.name or "")
 		local tags = sbq.storage.house.contents
 		local listed = { sbqVore = true }
@@ -43,7 +45,7 @@ function init()
 			end
 		end
 
-		local species = occupier.tenants[1].species
+		local species = occupier.tenants[tenantIndex].species
 		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
 		if speciesSettings.tab then
 			mainTabField:newTab( speciesSettings.tab )
