@@ -96,11 +96,7 @@ function init()
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
-		if settings.digestImmunity then
-			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-		else
-			status.clearPersistentEffects("digestImmunity")
-		end
+		sbq.handleDigestImmunity()
 	end)
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
 		if getVictimPreySettings then
@@ -325,10 +321,20 @@ function sbq.randomizeTenantSettings()
 		preySettings[setting] = values[math.random(#values)]
 	end
 	status.setStatusProperty("sbqPreyEnabled", preySettings)
-	if preySettings.digestImmunity then
-		status.setPersistentEffects("digestImmunity", { "sbqDigestImmunity" })
+	sbq.handleDigestImmunity()
+end
+
+function sbq.handleDigestImmunity()
+	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
+	if sbqPreyEnabled.digestImmunity then
+		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	else
 		status.clearPersistentEffects("digestImmunity")
+	end
+	if sbqPreyEnabled.cumDigestImmunity then
+		status.setPersistentEffects("cumDigestImmunity", {"sbqCumDigestImmunity"})
+	else
+		status.clearPersistentEffects("cumDigestImmunity")
 	end
 end
 

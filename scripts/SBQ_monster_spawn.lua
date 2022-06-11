@@ -32,10 +32,5 @@ function init()
 		end
 	end)
 
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	end
-
 	oldinit()
 end
