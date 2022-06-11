@@ -120,6 +120,13 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 		end
 	end
 end )
+
+message.setHandler( "sbqCumDigest", function(_,_, eid)
+  if eid ~= nil and type(sbq.lounging[eid]) == "table" then
+    sbq.lounging[eid].cumDigesting = true
+  end
+end )
+
 message.setHandler( "sbqSoftDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		local location = sbq.lounging[eid].location

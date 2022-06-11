@@ -1,0 +1,10 @@
+{
+	"name" : "sbqCumDigestImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqCumDigestImmunity.lua"
+	]
+}

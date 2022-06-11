@@ -536,5 +536,14 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 			status.clearPersistentEffects("digestImmunity")
 		end
 	end
+
+	function cumDigestImmunity:onClick()
+		sbq.changePreySetting("cumDigestImmunity", cumDigestImmunity.checked)
+		if cumDigestImmunity.checked then
+			status.setPersistentEffects("cumDigestImmunity", {"sbqCumDigestImmunity"})
+		else
+			status.clearPersistentEffects("cumDigestImmunity")
+		end
+	end
 end
 --------------------------------------------------------------------------------------------------

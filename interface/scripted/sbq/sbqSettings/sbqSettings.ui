@@ -99,7 +99,8 @@
 							[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : "Prey Enabled" }]
 						],
 						[
-							[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : "Digestion Immunity" }]
+							[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : "Digest Immunity" }],
+							[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to predator's cum digestion effects" }, { "type" : "label", "text" : "Cumgest Immunity" }]
 						],
 						[
 							[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : "TF Immunity" }],
