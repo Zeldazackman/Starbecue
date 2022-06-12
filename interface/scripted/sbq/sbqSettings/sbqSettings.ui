@@ -93,20 +93,26 @@
 							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : " Grabbed" } ]
 						]}]}
 					],
-					{"type" : "panel", "style" : "convex", "children" : [
-						{"mode" : "h"},
-						[
-							[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : "Prey Enabled" }]
-						],
-						[
-							[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : "Digest Immunity" }],
-							[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to predator's cum digestion effects" }, { "type" : "label", "text" : "Cumgest Immunity" }]
-						],
-						[
-							[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : "TF Immunity" }],
-							[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : "Egg Immunity" }]
-						]
-					]},
+					[
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "General", "inline" : true },
+							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : " Prey Enabled" }]
+							]}
+						]},
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Immunities", "inline" : true },
+							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : " Digestion" }],
+								[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to predator's cum digestion effects" }, { "type" : "label", "text" : " Cumgestion" }],
+								[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : " Transformation" }],
+								[{ "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "Become immune to genderswap effects" }, { "type" : "label", "text" : " Genderswap" }],
+								[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : " Egg Entrapment" }]
+							]}
+						]}
+					],
 					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
 				]}
 			]},

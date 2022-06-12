@@ -138,7 +138,8 @@
 			]},
 			{ "type" : "tab", "id" : "npcPreySettings", "title" : "Prey", "icon" : "/interface/scripted/sbq/sbqSettings/preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
-					[//first collumn
+					[
+						//first collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Questionable", "inline" : true },
@@ -166,21 +167,26 @@
 							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "heldEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "heldEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "held", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "heldLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Grabbed" } ]
 						]}]}
 					],
-					{"type" : "panel", "style" : "convex", "children" : [
-						{"mode" : "h"},
-						[
-							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "preyEnabledEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" }, { "type" : "iconButton", "id" : "preyEnabledLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : "Prey Enabled" }]
-						],
-						[
-							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" }, { "type" : "iconButton", "id" : "digestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" }, { "type" : "iconButton", "id" : "digestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : "Digest Immunity" }],
-							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" }, { "type" : "iconButton", "id" : "cumDigestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" }, { "type" : "iconButton", "id" : "cumDigestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : "Cumgest Immunity" }]
-
-						],
-						[
-							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" }, { "type" : "iconButton", "id" : "transformImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" }, { "type" : "iconButton", "id" : "transformImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : "TF Immunity" }],
-							[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "eggImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" }, { "type" : "iconButton", "id" : "eggImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : "Egg Immunity" }]
-						]
-					]},
+					[
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "General", "inline" : true },
+							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "preyEnabledEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" }, { "type" : "iconButton", "id" : "preyEnabledLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Prey Enabled" }]
+							]}
+						]},
+						{ "type" : "panel", "style" : "convex", "children" : [
+							{ "mode" : "v", "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Immunities", "inline" : true },
+							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" }, { "type" : "iconButton", "id" : "digestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" }, { "type" : "iconButton", "id" : "digestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Digestion" }],
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" }, { "type" : "iconButton", "id" : "cumDigestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" }, { "type" : "iconButton", "id" : "cumDigestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Cumgestion" }],
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" }, { "type" : "iconButton", "id" : "transformImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" }, { "type" : "iconButton", "id" : "transformImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Transformation" }],
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "genderswapImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be genderswapped or not" }, { "type" : "iconButton", "id" : "genderswapImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "If this NPC is currently immune to genderswap effects" }, { "type" : "iconButton", "id" : "genderswapImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Genderswap" }],
+								[ [{"mode" : "h", "spacing" : 0, "expandMode" : [0,0]},{ "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "eggImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" }, { "type" : "iconButton", "id" : "eggImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }], { "type" : "label", "text" : " Egg Entrapment" }]
+							]}
+						]}
+					],
 					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on this NPC, and what they can decide themselves." }
 				]}
 			]},

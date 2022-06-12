@@ -1,10 +1,7 @@
 sbq = {}
 require("/scripts/SBQ_RPC_handling.lua")
 function init()
-
-	local config = root.assetJson("/sbqGeneral.config")
-	local immune = (status.statusProperty("sbqPreyEnabled") or {}).transformImmunity or config.defaultPreyEnabled[world.entityType(entity.id())].transformImmunity
-	if immune then return effect.expire() end
+	sbq.config = root.assetJson("/sbqGeneral.config")
 end
 local inited
 local source
@@ -33,12 +30,18 @@ function uninit()
 end
 
 function sbq.transform(data)
+	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	if immune then return effect.expire() end
+
 	world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, 5*60)
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	animator.playSound("activate")
 end
 
 function sbq.genderSwap()
+	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).genderswapImmunity
+	if immune then return effect.expire() end
+
 	local table = {
 		male = "female",
 		female = "male"
@@ -65,11 +68,17 @@ function sbq.genderSwap()
 end
 
 function sbq.reversion()
+	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	if immune then return effect.expire() end
+
 	world.sendEntityMessage(entity.id(), "sbqEndMysteriousPotionTF")
 	animator.playSound("activate")
 end
 
 function sbq.vehiclePred(vehicle)
+	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	if immune then return effect.expire() end
+
 	local currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.addRPC(world.sendEntityMessage(entity.id(), "sbqLoadSettings", vehicle), function (settings)
 		world.spawnVehicle( vehicle, mcontroller.position(), { driver = entity.id(), settings = settings, retrievePrey = currentData.id } )

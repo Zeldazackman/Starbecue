@@ -1255,7 +1255,11 @@
 			"eggImmunityEnable" : [true,false],
 
 			"transformImmunity" : [true,false],
-			"transformImmunityEnable" : [true,false]
+			"transformImmunityEnable" : [true,false],
+
+			"genderswapImmunity" : [true,false],
+			"genderswapImmunityEnable" : [true,false]
+
 		},
 		"sbqRandomizeSettings" : {
 			"oralVorePred" : [true,false],
