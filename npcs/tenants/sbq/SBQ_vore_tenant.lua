@@ -16,6 +16,7 @@ dialogueBoxScripts = {}
 require("/scripts/SBQ_RPC_handling.lua")
 require("/lib/stardust/json.lua")
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBoxScripts.lua")
+require("/scripts/SBQ_immunities.lua")
 
 local _npc_setItemSlot
 
@@ -321,21 +322,7 @@ function sbq.randomizeTenantSettings()
 		preySettings[setting] = values[math.random(#values)]
 	end
 	status.setStatusProperty("sbqPreyEnabled", preySettings)
-	sbq.handleDigestImmunity()
-end
-
-function sbq.handleDigestImmunity()
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	else
-		status.clearPersistentEffects("digestImmunity")
-	end
-	if sbqPreyEnabled.cumDigestImmunity then
-		status.setPersistentEffects("cumDigestImmunity", {"sbqCumDigestImmunity"})
-	else
-		status.clearPersistentEffects("cumDigestImmunity")
-	end
+	sbq.handleImmunities()
 end
 
 function sbq.setRelevantPredSettings()

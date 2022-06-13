@@ -82,14 +82,6 @@ function sbq.everything_primary()
 		sbq.endMysteriousTF()
 	end)
 
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	end
-	if sbqPreyEnabled.cumDigestImmunity then
-		status.setPersistentEffects("cumDigestImmunity", {"sbqCumDigestImmunity"})
-	end
-
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
 end
 

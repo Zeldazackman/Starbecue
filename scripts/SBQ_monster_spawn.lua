@@ -9,6 +9,7 @@ function capture_monster_setDamageTeam(data)
 	end
 end
 
+require("/scripts/SBQ_immunities.lua")
 
 function init()
 
@@ -31,6 +32,8 @@ function init()
 			_monster_setDamageTeam(sbqOriginalDamageTeam)
 		end
 	end)
+
+	sbq.handleImmunities()
 
 	oldinit()
 end

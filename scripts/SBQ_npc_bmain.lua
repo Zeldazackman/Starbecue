@@ -15,6 +15,8 @@ function capture_npc_setDamageTeam(data)
 		_npc_setDamageTeam(data)
 	end
 end
+require("/scripts/SBQ_immunities.lua")
+
 
 function init()
 	if type(_npc_setInteractive) ~= "function" then
@@ -79,6 +81,8 @@ function init()
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	_init()
+
+	sbq.handleImmunities()
 
 	if not status.statusProperty("sbqDidVornyConvertCheck") then
 		status.setStatusProperty("sbqDidVornyConvertCheck", true)
