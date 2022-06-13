@@ -296,6 +296,7 @@ function sbq.doEscape(args, statuses, afterstatuses, voreType )
 		struggleTrigger = args.struggleTrigger,
 		location = location,
 		digested = sbq.lounging[victim].digested,
+		cumDigesting = sbq.lounging[victim].cumDigesting,
 		egged = sbq.lounging[victim].egged,
 		transformed = sbq.lounging[victim].transformed,
 		locationDigest = sbq.sbqData.locations[location].digest,
@@ -661,7 +662,11 @@ function sbq.doBellyEffects(dt)
 				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
-			elseif sbq.occupant[i].cumDigesting or ((sbq.occupant[i].location == "ballsL" or sbq.occupant[i].location == "ballsR" or sbq.occupant[i].location == "balls") and sbq.settings.ballsCumDigestion) or (sbq.occupant[i].location == "shaft" and sbq.settings.penisCumDigestion) or (sbq.occupant[i].location == "womb" and sbq.settings.wombCumDigestion) then
+			elseif sbq.occupant[i].cumDigesting
+			or ((sbq.occupant[i].location == "ballsL" or sbq.occupant[i].location == "ballsR" or sbq.occupant[i].location == "balls") and sbq.settings.ballsCumDigestion)
+			or (sbq.occupant[i].location == "shaft" and sbq.settings.penisCumDigestion)
+			or (sbq.occupant[i].location == "womb" and sbq.settings.wombCumDigestion)
+			then
 				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, sbq.driver or entity.id())
 			else
 				if sbq.settings.displayDigest then
