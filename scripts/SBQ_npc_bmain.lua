@@ -1,4 +1,3 @@
-sbq = {}
 local _init = init
 local _update = update
 
@@ -15,8 +14,8 @@ function capture_npc_setDamageTeam(data)
 		_npc_setDamageTeam(data)
 	end
 end
-require("/scripts/SBQ_immunities.lua")
 
+sbq = {}
 
 function init()
 	if type(_npc_setInteractive) ~= "function" then
@@ -82,6 +81,7 @@ function init()
 
 	_init()
 
+	require("/scripts/SBQ_immunities.lua")
 	sbq.handleImmunities()
 
 	if not status.statusProperty("sbqDidVornyConvertCheck") then
