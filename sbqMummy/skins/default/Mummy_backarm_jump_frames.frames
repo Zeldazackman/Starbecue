@@ -1,0 +1,16 @@
+{
+	"frameGrid" : {
+		"size" : [34, 30],
+		"dimensions" : [5, 1],
+		"names" : [
+			[ "jump.1", "jump.2", "jump.3", "fall.1", "fall.2"]
+		]
+	},
+	"aliases" : {
+		"jump.default" : "jump.1",
+		"fall.default" : "fall.1"
+		
+
+
+	}
+}

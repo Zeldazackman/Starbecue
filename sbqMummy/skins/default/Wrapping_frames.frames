@@ -1,0 +1,16 @@
+{
+	"frameGrid" : {
+		"size" : [36, 30],
+		"dimensions" : [9, 1],
+		"names" : [
+			[ "wrapping.1", "wrapping.2", "wrapping.3", "wrapping.4", "wrapping.5", "wrapping.6", "wrapping.7", "wrapping.8", "wrapping.9"]
+		]
+	},
+	"aliases" : {
+		"wrapping.default" : "wrapping.1"
+
+		
+
+
+	}
+}

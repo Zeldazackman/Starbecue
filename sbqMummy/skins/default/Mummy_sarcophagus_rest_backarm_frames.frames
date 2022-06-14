@@ -1,0 +1,16 @@
+{
+	"frameGrid" : {
+		"size" : [34, 32],
+		"dimensions" : [1, 1],
+		"names" : [
+			[ "sarcorest.1"]
+		]
+	},
+	"aliases" : {
+		"sarcorest.default" : "sarcorest.1"
+
+		
+
+
+	}
+}
