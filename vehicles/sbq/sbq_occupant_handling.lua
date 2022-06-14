@@ -816,7 +816,9 @@ function sbq.handleStruggles(dt)
 		if struggledata.directions[movedir].sound ~= nil then
 			sound = struggledata.directions[movedir].sound
 		end
-		animator.playSound( sound or "struggle" )
+		if sound ~= false then
+			animator.playSound( sound or "struggle" )
+		end
 	end
 end
 
