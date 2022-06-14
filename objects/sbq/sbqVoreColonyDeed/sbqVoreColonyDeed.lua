@@ -138,7 +138,7 @@ function checkHouseIntegrity()
 	storage.grumbles = scanHouseIntegrity()
 
 	for _, tenant in ipairs(storage.occupier.tenants) do
-		if tenant.uniqueId and world.findUniqueEntity(tenant.uniqueId):result() then
+		if tenant.uniqueId and world.findUniqueEntity(tenant.uniqueId):result() and storage.grumbles ~= nil then
 			local entityId = world.loadUniqueEntity(tenant.uniqueId)
 
 			world.callScriptedEntity(entityId, "tenant.setGrumbles", storage.grumbles)
