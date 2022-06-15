@@ -3,7 +3,6 @@ function init()
 	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultPreyEnabled[world.entityType(entity.id())], status.statusProperty("sbqPreyEnabled") or {})
 	local currentData = status.statusProperty("sbqCurrentData") or {}
 	if (not preyEnabled.preyEnabled) or (preyEnabled.eggImmunity) or currentData.type == "prey" then
-		effect.expire()
 		return
 	end
 
@@ -15,6 +14,4 @@ function init()
 
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	eggSpawned = world.spawnVehicle("sbqEgg", mcontroller.position(), { driver = entity.id(), direction = mcontroller.facingDirection(), settings = { replaceColors = replaceColors, escapeDifficulty = -2 } })
-
-	effect.expire()
 end

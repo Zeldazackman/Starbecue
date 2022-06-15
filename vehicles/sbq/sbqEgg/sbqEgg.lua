@@ -11,7 +11,9 @@ local _initAfterInit = sbq.initAfterInit
 function sbq.initAfterInit()
 	_initAfterInit()
 	sbq.occupants.total = 0
-	sbq.eat(sbq.driver, "egg", true)
+	if not sbq.eat(sbq.driver, "egg", true) then
+		vehicle.destroy()
+	end
 	sbq.occupant[0].visible = true
 end
 
