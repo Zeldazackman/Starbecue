@@ -14,7 +14,9 @@ function sbq.initAfterInit()
 	if not sbq.eat(sbq.driver, "egg", true) then
 		vehicle.destroy()
 	end
-	sbq.occupant[0].visible = true
+	if sbq.settings.skinNames.head == "plastic" then
+		sbq.occupant[0].visible = true
+	end
 end
 
 _escapeScript = sbq.escapeScript
