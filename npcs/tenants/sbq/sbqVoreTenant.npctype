@@ -5,19 +5,17 @@
 	"dropPools" : [],
 
 	"scriptConfig" : {
-	  "behaviorConfig" : {
-		"greetingChance" : 0
-	  }
-	  /*
-	  "questGenerator" : {
-		"pools" : ["common", "tenant", "hats"],
-		"enableParticipation" : true,
+		"behaviorConfig" : {
+			"greetingChance" : 0
+		},
+		"questGenerator" : {
+			"pools" : ["common", "tenant", "hats"],
+			"enableParticipation" : true,
 
-		"timeLimit" : 30,
-		"nearbyQuestLimit" : 2,
-		"nearbyQuestRange" : 50,
-		"chance" : 0.02
-	  }
-	  */
+			"timeLimit" : 30,
+			"nearbyQuestLimit" : 2,
+			"nearbyQuestRange" : 50,
+			"chance" : 0.02
+		}
 	}
 }

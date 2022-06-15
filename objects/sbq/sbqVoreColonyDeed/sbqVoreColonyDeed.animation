@@ -151,7 +151,9 @@
     }
   },
 
-  "sounds" : {},
+  "sounds" : {
+    "error" : ["/sfx/interface/clickon_error.ogg"]
+  },
 
   "particleEmitters" : {
     "confetti" : {

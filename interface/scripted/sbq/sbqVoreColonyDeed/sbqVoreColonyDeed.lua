@@ -2,29 +2,28 @@
 sbq = {
 	config = root.assetJson("/sbqGeneral.config"),
 	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json"),
-	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json")
+	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
+	tenantIndex = 1
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 
 function init()
-	sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), metagui.inputData.settings or {} )
-	sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, (metagui.inputData.preySettings or {}) )
-	sbq.storage = metagui.inputData
-	BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
-	escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
-	escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
-	escapeValueMax:setText(tostring(sbq.predatorSettings.escapeDifficultyMax or 0))
-
-	personalityText:setText(sbq.predatorSettings.personality or "default")
-	moodText:setText(sbq.predatorSettings.mood or "default")
-
 	local occupier = sbq.storage.occupier
 
-	local tenantIndex = 1
+	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[sbq.tenantIndex]) == "table" and type(occupier.tenants[sbq.tenantIndex].species) == "string" then
+		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqDefaultSettings or occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqSettings or {} )
+		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, (metagui.inputData.preySettings or {}) )
+		sbq.storage = metagui.inputData
+		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
+		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
+		escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
+		escapeValueMax:setText(tostring(sbq.predatorSettings.escapeDifficultyMax or 0))
 
-	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[tenantIndex]) == "table" and type(occupier.tenants[tenantIndex].species) == "string" then
+		personalityText:setText(sbq.predatorSettings.personality or "default")
+		moodText:setText(sbq.predatorSettings.mood or "default")
+
 		tenantText:setText( occupier.name or "")
 		local tags = sbq.storage.house.contents
 		local listed = { sbqVore = true }
@@ -45,7 +44,7 @@ function init()
 			end
 		end
 
-		local species = occupier.tenants[tenantIndex].species
+		local species = occupier.tenants[sbq.tenantIndex].species
 		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
 		if speciesSettings.tab then
 			mainTabField:newTab( speciesSettings.tab )
@@ -89,6 +88,94 @@ function init()
 		sbq.predatorConfig.scripts = scripts
 
 		sbq.locationPanel()
+
+		for setting, value in pairs(sbq.predatorSettings) do
+			if (setting:sub(-6,-1) ~= "Locked") then
+				local button = _ENV[setting]
+				if button ~= nil and type(value) == "boolean" then
+					button:setChecked(value)
+					function button:onClick()
+						sbq.changePredSetting(setting, button.checked)
+					end
+
+					if sbq.predatorSettings[setting.."Locked"] then
+						button:setVisible(false)
+						local locked = _ENV[setting.."Locked"]
+						if locked ~= nil then
+							locked:setVisible(true)
+							if value then
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+							else
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+							end
+						end
+					end
+				end
+			end
+		end
+		function hammerspace:onClick() -- only one that has unique logic
+			sbq.changePredSetting("hammerspace", hammerspace.checked)
+			sbq.locationPanel()
+		end
+
+
+		for setting, value in pairs(sbq.config.defaultPreyEnabled.npc) do
+			if (setting:sub(-6,-1) ~= "Locked") and (setting:sub(-6,-1) ~= "Enable") and type(value) == "boolean" then
+				if sbq.preySettings[setting.."Enable"] == nil then
+					sbq.preySettings[setting.."Enable"] = sbq.preySettings[setting]
+				end
+				if sbq.preySettings[setting.."Locked"] then
+					sbq.preySettings[setting.."EnableLocked"] = true
+				end
+			end
+		end
+
+		for setting, value in pairs(sbq.preySettings) do
+			if (setting:sub(-6,-1) ~= "Locked") and (setting:sub(-6,-1) ~= "Enable") then
+				local button = _ENV[setting]
+				if button ~= nil and type(value) == "boolean" then
+					button:setChecked(value)
+					function button:onClick()
+						sbq.changePreySetting(setting, button.checked)
+					end
+					if sbq.preySettings[setting.."Locked"] then
+						button:setVisible(false)
+						local locked = _ENV[setting.."Locked"]
+						if locked ~= nil then
+							locked:setVisible(true)
+							if value then
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+								locked.toolTip = "This setting is locked as enabled for this NPC"
+							else
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+								locked.toolTip = "This setting is locked as disabled for this NPC"
+							end
+						end
+					end
+					local enable = _ENV[setting.."Enable"]
+					if enable ~= nil then
+						enable:setChecked(sbq.preySettings[setting.."Enable"])
+						function enable:onClick()
+							sbq.changePreySetting(setting.."Enable", enable.checked)
+						end
+						if sbq.preySettings[setting.."EnableLocked"] then
+							enable:setVisible(false)
+							local locked = _ENV[setting.."EnableLocked"]
+							if locked ~= nil then
+								locked:setVisible(true)
+								if value then
+									locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+									locked.toolTip = "This setting is locked as enabled for this NPC"
+								else
+									locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+									locked.toolTip = "This setting is locked as disabled for this NPC"
+								end
+							end
+						end
+					end
+				end
+			end
+		end
 	end
 
 	sbq.validTenantCatalogueList = {}
@@ -117,94 +204,6 @@ function init()
 		end
 	end
 	table.sort(sbq.validTenantCatalogueList)
-
-	for setting, value in pairs(sbq.predatorSettings) do
-		if (setting:sub(-6,-1) ~= "Locked") then
-			local button = _ENV[setting]
-			if button ~= nil and type(value) == "boolean" then
-				button:setChecked(value)
-				function button:onClick()
-					sbq.changePredSetting(setting, button.checked)
-				end
-
-				if sbq.predatorSettings[setting.."Locked"] then
-					button:setVisible(false)
-					local locked = _ENV[setting.."Locked"]
-					if locked ~= nil then
-						locked:setVisible(true)
-						if value then
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-						else
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-						end
-					end
-				end
-			end
-		end
-	end
-	function hammerspace:onClick() -- only one that has unique logic
-		sbq.changePredSetting("hammerspace", hammerspace.checked)
-		sbq.locationPanel()
-	end
-
-
-	for setting, value in pairs(sbq.config.defaultPreyEnabled.npc) do
-		if (setting:sub(-6,-1) ~= "Locked") and (setting:sub(-6,-1) ~= "Enable") and type(value) == "boolean" then
-			if sbq.preySettings[setting.."Enable"] == nil then
-				sbq.preySettings[setting.."Enable"] = sbq.preySettings[setting]
-			end
-			if sbq.preySettings[setting.."Locked"] then
-				sbq.preySettings[setting.."EnableLocked"] = true
-			end
-		end
-	end
-
-	for setting, value in pairs(sbq.preySettings) do
-		if (setting:sub(-6,-1) ~= "Locked") and (setting:sub(-6,-1) ~= "Enable") then
-			local button = _ENV[setting]
-			if button ~= nil and type(value) == "boolean" then
-				button:setChecked(value)
-				function button:onClick()
-					sbq.changePreySetting(setting, button.checked)
-				end
-				if sbq.preySettings[setting.."Locked"] then
-					button:setVisible(false)
-					local locked = _ENV[setting.."Locked"]
-					if locked ~= nil then
-						locked:setVisible(true)
-						if value then
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-							locked.toolTip = "This setting is locked as enabled for this NPC"
-						else
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-							locked.toolTip = "This setting is locked as disabled for this NPC"
-						end
-					end
-				end
-				local enable = _ENV[setting.."Enable"]
-				if enable ~= nil then
-					enable:setChecked(sbq.preySettings[setting.."Enable"])
-					function enable:onClick()
-						sbq.changePreySetting(setting.."Enable", enable.checked)
-					end
-					if sbq.preySettings[setting.."EnableLocked"] then
-						enable:setVisible(false)
-						local locked = _ENV[setting.."EnableLocked"]
-						if locked ~= nil then
-							locked:setVisible(true)
-							if value then
-								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-								locked.toolTip = "This setting is locked as enabled for this NPC"
-							else
-								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-								locked.toolTip = "This setting is locked as disabled for this NPC"
-							end
-						end
-					end
-				end
-			end
-		end
-	end
 end
 
 function update()
@@ -214,17 +213,17 @@ function update()
 end
 
 function sbq.savePredSettings()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings, sbq.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
 	end
 end
 sbq.saveSettings = sbq.savePredSettings
 
 function sbq.savePreySettings()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings, sbq.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[1].uniqueId, "sbqSavePreySettings", sbq.preySettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSavePreySettings", sbq.preySettings)
 	end
 end
 
@@ -305,11 +304,11 @@ end
 --------------------------------------------------------------------------------------------------
 
 function decTenant:onClick()
-	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantIndex", -1)
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", -1)
 end
 
 function incTenant:onClick()
-	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantIndex", 1)
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", 1)
 end
 
 --------------------------------------------------------------------------------------------------

@@ -17,6 +17,8 @@
   "hylotlDescription" : "If hung in an enclosed building with a door and a light, someone will move in and make it their home.",
   "novakidDescription" : "With a colony deed someone'll move into the building. Just make sure the building has a door an' a light source.",
 
+  "npcArgs" :  {}, // just to make the tenantator unable to modify these deeds
+
   "inventoryIcon" : "sbqVoreColonyDeedIcon.png",
   "orientations" : [
     {
