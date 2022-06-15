@@ -137,9 +137,9 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	if settings.locationDigest then
 		effect = "bellyEffect"
 	elseif settings.cumDigesting
-	or ((settings.location == "ballsL" or settings.location == "ballsR" or settings.location == "balls") and sbq.settings.ballsCumDigestion)
-	or (settings.location == "shaft" and sbq.settings.penisCumDigestion)
-	or (settings.location == "womb" and sbq.settings.wombCumDigestion)
+	or ((settings.location == "ballsL" or settings.location == "ballsR" or settings.location == "balls") and settings.ballsCumDigestion)
+	or (settings.location == "shaft" and settings.penisCumDigestion)
+	or (settings.location == "womb" and settings.wombCumDigestion)
 	then
 		effect = "sbqCumDigest"
 	else
@@ -170,9 +170,9 @@ function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
 	if settings.locationDigest then
 		effect = "bellyEffect"
 	elseif settings.cumDigesting
-	or ((settings.location == "ballsL" or settings.location == "ballsR" or settings.location == "balls") and sbq.settings.ballsCumDigestion)
-	or (settings.location == "shaft" and sbq.settings.penisCumDigestion)
-	or (settings.location == "womb" and sbq.settings.wombCumDigestion)
+	or ((settings.location == "ballsL" or settings.location == "ballsR" or settings.location == "balls") and settings.ballsCumDigestion)
+	or (settings.location == "shaft" and settings.penisCumDigestion)
+	or (settings.location == "womb" and settings.wombCumDigestion)
 	then
 		effect = "sbqCumDigest"
 	else
