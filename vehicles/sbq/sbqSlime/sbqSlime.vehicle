@@ -189,7 +189,7 @@
 		"smol": {
 			"edible": true,
 			"edibleAnims": {
-				"body": "fall"
+				"body": "prey"
 			},
 			"transitions": {
 				// directional = occupant0 can press that direction to transition
