@@ -17,8 +17,8 @@
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
-            "wrappingState": {
-				"default": "idle",
+			"wrappingState": {
+				"default": "none",
 				"states": {
 					"wrapping": { "frames": 9, "cycle": 3, "mode": "end", "priority": 0 },
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
@@ -35,7 +35,7 @@
 
 					"jump": { "frames": 3, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"fall": { "frames": 2, "cycle": 0.25, "mode": "end", "priority": 2 },
-                    
+
 					"wrap": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 					"unwrap": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
 
