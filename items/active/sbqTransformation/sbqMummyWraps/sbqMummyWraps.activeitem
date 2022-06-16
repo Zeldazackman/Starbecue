@@ -16,10 +16,10 @@
 	"inventoryIcon" : "sbqMummyWraps.png",
 	"largeImage" : "sbqMummyWrapsLarge.png",
 
-	"animation" : "/items/active/sbqTransformation/sbqMummyWraps.animation",
+	"animation" : "/items/active/sbqTransformation/sbqMummyWraps/sbqMummyWraps.animation",
 
 	"scripts" : [
-		"/items/active/sbqTransformation/sbqTransformPotion.lua",
+		"/items/active/sbqTransformation/sbqMummyWraps/sbqMummyWraps.lua",
 		"/items/active/activeitemOverrides.lua"
 	]
 }
