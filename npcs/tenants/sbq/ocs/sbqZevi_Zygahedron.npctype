@@ -20,6 +20,12 @@
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
 		"uniqueId" : "sbqZevi_Zygahedron",
+		"questGenerator" : {
+			"graduation" : {
+				"nextNpcType" : []
+			}
+		},
+
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
@@ -870,6 +876,11 @@
 	},
 
 	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
 		"statusProperties" : {
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,

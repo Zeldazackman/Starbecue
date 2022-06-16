@@ -16,7 +16,7 @@ function init()
 
 	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[sbq.tenantIndex]) == "table" and type(occupier.tenants[sbq.tenantIndex].species) == "string" then
 		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqDefaultSettings or occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqSettings or {} )
-		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, (metagui.inputData.preySettings or {}) )
+		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, occupier.tenants[sbq.tenantIndex].overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {} )
 		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
 		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
 		escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
@@ -176,6 +176,28 @@ function init()
 					end
 				end
 			end
+		end
+
+
+		function questParticipation:onClick()
+			sbq.changePredSetting("questParticipation", questParticipation.checked)
+
+			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "enableParticipation", questParticipation.checked, sbq.tenantIndex)
+		end
+		function crewmateGraduation:onClick()
+			sbq.changePredSetting("crewmateGraduation", crewmateGraduation.checked)
+			local npcConfig = root.npcConfig(occupier.tenants[sbq.tenantIndex].type)
+
+			local graduation = {
+				["true"] = {
+					nextNpcType = npcConfig.scriptConfig.questGenerator.graduation.nextNpcType
+				},
+				["false"] = {
+					nextNpcType = {nil}
+				}
+			}
+
+			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "graduation", graduation[tostring(crewmateGraduation.checked or false)], sbq.tenantIndex)
 		end
 	end
 
