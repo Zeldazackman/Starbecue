@@ -43,6 +43,8 @@ function sbq.checkDialogueBranch(dialogueTree, settings, branch)
 	else
 		dialogueTree = dialogueTree[branch]
 	end
+	sb.logInfo(tostring(branch))
+	sb.logInfo(sb.printJson(dialogueTree))
 	return sbq.getRedirectedDialogue(dialogueTree, settings)
 end
 
@@ -142,8 +144,11 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	or (settings.location == "womb" and settings.wombCumDigestion)
 	then
 		effect = "sbqCumDigest"
-	else
-		effect = settings[(settings.location or "").."Effect"]
+	elseif settings[settings.location.."Effect"] ~= nil then
+		effect = settings.location.."Effect"
+	end
+	if settings[effect] ~= nil then
+		effect = settings[effect]
 	end
 	table.insert(options, effect or "default")
 
@@ -158,7 +163,7 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 		table.insert(options, "eggify")
 	end
 
-	return dialogueTree[options[math.random(#options)]]
+	return dialogueTree[options[math.random(#options)]] or dialogueTree.default
 end
 
 function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
@@ -175,8 +180,12 @@ function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
 	or (settings.location == "womb" and settings.wombCumDigestion)
 	then
 		effect = "sbqCumDigest"
-	else
-		effect = settings[(settings.location or "").."Effect"]
+	elseif settings[settings.location.."Effect"] ~= nil then
+		effect = settings.location.."Effect"
 	end
-	return dialogueTree[effect or "default"]
+	if settings[effect] ~= nil then
+		effect = settings[effect]
+	end
+
+	return dialogueTree[effect] or dialogueTree.default
 end

@@ -1,6 +1,6 @@
 {
 	"name" : "sbqCumDigest",
-	"blockingStat" : "cumDigestionImmunity",
+	"blockingStat" : "cumDigestImmunity",
 
 	"effectConfig" : {},
 	"defaultDuration" : 5,

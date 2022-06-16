@@ -1,6 +1,6 @@
 
 function init()
-	effect.addStatModifierGroup({{stat = "cumDigestionImmunity", amount = 1}})
+	effect.addStatModifierGroup({{stat = "cumDigestImmunity", amount = 1}})
 	script.setUpdateDelta(0)
 end
 
