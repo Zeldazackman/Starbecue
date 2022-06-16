@@ -150,7 +150,8 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.2,
-					"transformationGroups": ["flip", "bodybob"]
+					"transformationGroups": ["flip", "bodybob"],
+					"offset" : [2.125,0]
 				},
 				"partStates": {
 					"bodyState": {
@@ -165,7 +166,8 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.2,
-					"transformationGroups": ["flip", "bodybob"]
+					"transformationGroups": ["flip", "bodybob"],
+					"offset" : [2.125,0]
 				},
 				"partStates": {
 					"bodyState": {
@@ -181,7 +183,8 @@
 					"centered": true,
 					"zLevel": 4,
 					"transformationGroups": ["flip", "armsbob"],
-					"armVisible" : ""
+					"armVisible" : "",
+					"offset" : [2.125,0]
 				},
 				"partStates": {
 					"armsState": {
@@ -211,7 +214,8 @@
 					"centered": true,
 					"zLevel": 4,
 					"transformationGroups": ["flip", "frontarmsrotation", "armsbob"],
-					"armVisible" : "?multiply=FFFFFF00"
+					"armVisible" : "?multiply=FFFFFF00",
+                    "offset" : [2.125,0]
 				},
 				"partStates":{
 					"backarms_rotationState": {
@@ -225,7 +229,8 @@
 					"centered": true,
 					"zLevel": -3,
 					"transformationGroups": ["flip", "armsbob"],
-					"armVisible" : ""
+					"armVisible" : "",
+                    "offset" : [2.125,0]
 				},
 				"partStates": {
 					"armsState": {
@@ -254,7 +259,8 @@
 					"centered": true,
 					"zLevel": -3,
 					"transformationGroups": ["flip", "backarmsrotation", "armsbob"],
-					"armVisible" : "?multiply=FFFFFF00"
+					"armVisible" : "?multiply=FFFFFF00",
+                    "offset" : [2.125,0]
 				},
 				"partStates":{
 					"backarms_rotationState": {
@@ -266,7 +272,8 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -2,
-					"transformationGroups": ["flip", "legsbob"]
+					"transformationGroups": ["flip", "legsbob"],
+                    "offset" : [2.125,0]
 				},
 				"partStates": {
 					"legsState": {
@@ -286,11 +293,12 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.3,
-					"transformationGroups": ["flip", "headbob"]
+					"transformationGroups": ["flip", "headbob"],
+                    "offset" : [2.125,0]
 				},
 				"partStates": {
 					"headState": {
-						"idle": { "properties": { "image": "skins/default/Mummy_head.png:idle.<headStateFrame><partVisible><directives><statusDirectives>" } },
+						"idle": { "properties": { "image": "skins/default/Mummy_head.png<directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

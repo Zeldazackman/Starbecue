@@ -218,24 +218,12 @@
 					"jump": {
 						"legs": "jump",
 						"arms": "jump",
-						"offset": {
-							"timing": "legs",
-							"loop": true,
-							"parts" : [
-								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
-							]
-						}
+						"offset": {}
 					},
 					"fall": {
 						"legs": "fall",
 						"arms": "fall",
-						"offset": {
-							"timing": "legs",
-							"loop": true,
-							"parts" : [
-								{"y": [2], "groups": ["headbob", "bodybob", "armsbob"]}
-							]
-						}
+						"offset": {}
 					}
 				}
 			}
