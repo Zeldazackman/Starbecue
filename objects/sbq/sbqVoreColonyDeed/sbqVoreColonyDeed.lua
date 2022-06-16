@@ -183,6 +183,10 @@ function scanHouseIntegrity()
 	if scanResults.otherDeed then
 		table.insert( grumbles, { "otherDeed" } )
 	end
+	if scanResults.bannedObject then
+		table.insert( grumbles, { "enclosedArea" })
+		possibleTortureRoom = true
+	end
 
 	local objects = countObjects(scanResults.objects, house.doors or {})
 	storage.house.objects = storage.house.objects or {}
@@ -214,36 +218,47 @@ end
 function scanVacantArea()
 	local house = findHouseBoundary(self.position, self.maxPerimeter)
 
-	if house.poly and world.regionActive(polyBoundBox(house.poly)) and not world.liquidAt(util.boundBox(house.poly)) then
-	  local scanResults = scanHouseContents(house.poly)
-	  if scanResults.otherDeed then
-		util.debugLog("Colony deed is already present")
-	  elseif scanResults.objects then
-		local tags = countTags(scanResults.objects, house.doors)
-		storage.house = {
-			boundary = house.poly,
-			contents = tags,
-			seed = scanResults.hash,
-			floorPosition = house.floor,
-			objects = countObjects(scanResults.objects, house.doors)
-		  }
-		local seed = nil
-		if self.hashHouseAsSeed then
-		  seed = scanResults.hash
-		end
-		chooseTenants(seed, tags)
+	local housePolyActive = house.poly and world.regionActive(polyBoundBox(house.poly))
 
-		if isOccupied() then
-		  respawnTenants()
-		  animator.setAnimationState("particles", "newArrival")
-		  sendNewTenantNotification()
-		  return
+	if housePolyActive and world.liquidAt(util.boundBox(house.poly)) ~= nil then
+		util.debugLog("Liquid is within house bound box")
+		animator.setAnimationState("deedState", "error")
+	elseif housePolyActive then
+		local scanResults = scanHouseContents(house.poly)
+		if scanResults.otherDeed then
+			util.debugLog("Colony deed is already present")
+		elseif scanResults.objects then
+			if scanResults.bannedObject then
+				util.debugLog("House contains dangerous objects")
+				animator.setAnimationState("deedState", "error")
+				return
+			end
+
+			local tags = countTags(scanResults.objects, house.doors)
+			storage.house = {
+				boundary = house.poly,
+				contents = tags,
+				seed = scanResults.hash,
+				floorPosition = house.floor,
+				objects = countObjects(scanResults.objects, house.doors)
+			}
+			local seed = nil
+			if self.hashHouseAsSeed then
+				seed = scanResults.hash
+			end
+			chooseTenants(seed, tags)
+
+			if isOccupied() then
+				respawnTenants()
+				animator.setAnimationState("particles", "newArrival")
+				sendNewTenantNotification()
+				return
+			end
 		end
-	  end
 	elseif not house.poly then
-	  util.debugLog("Scan failed")
-	  animator.setAnimationState("deedState", "error")
+		util.debugLog("Scan failed")
+		animator.setAnimationState("deedState", "error")
 	else
-	  util.debugLog("Parts of the house are unloaded - skipping scan")
+		util.debugLog("Parts of the house are unloaded - skipping scan")
 	end
-  end
+end
