@@ -1,6 +1,6 @@
 {
 	"frameGrid" : {
-		"size" : [34, 30],
+		"size" : [53, 30],
 		"dimensions" : [4, 1],
 		"names" : [
 			[ "walk.1", "walk.2", "walk.3", "walk.4"]
