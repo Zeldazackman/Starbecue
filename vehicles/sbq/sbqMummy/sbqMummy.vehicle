@@ -76,9 +76,9 @@
 			"default":{
 				"collisionPoly" : [
 					[-0.5,-2], [0.5, -2],
-					[1,-1], [1, 0.5],
-					[0.5, 1], [-0.5, 1],
-					[-1, 0.5], [-1, -2]
+					[1,-1], [1, 1],
+					[0.5, 2], [-0.5, 2],
+					[-1, 1], [-1, -1]
 				],
 				"walkSpeed": 10,
 				"runSpeed": 10,
@@ -188,6 +188,15 @@
 					},
 					"chances": { "min": 5, "max": 10 }
 				}
+			},
+			"rotationArmState" : "rotation",
+			"rotationCenters" : {
+				"frontarms" : [-4, 4],
+				"backarms" : [2, 4]
+			},
+			"handOffsets" : {
+				"frontarms" : [8, 4],
+				"backarms" : [12, 4]
 			},
 			"control": {
 				"animations": {
