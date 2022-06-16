@@ -30,6 +30,7 @@
 				"default": "none",
 				"states": {
 					"wrapping": { "frames": 9, "cycle": 3, "mode": "end", "priority": 0 },
+					"unwrapping": { "frames": 9, "cycle": 3, "mode": "end", "priority": 0, "baseAnim" : "wrapping" },
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
@@ -168,8 +169,8 @@
 					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
-					"bodyState": {
-						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<bodyStateAnim>.<bodyStateFrame><partVisible><directives><statusDirectives>" } },
+					"wrappingState": {
+						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<wrappingStateAnim>.<bodyStateFrame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

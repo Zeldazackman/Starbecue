@@ -137,26 +137,18 @@
 			"transitions": {
 				// directional = driver can press that direction to transition
 				// non directional = not accessible via controls, except from script
-				"grab" : {
-					"script" : "grab",
-					"location" : "grab",
-					"voreType" : "held",
-					"failOnFull" : true,
-					"timing" : "wrap",
-					"animation" : {
-						"wrap" : "wrap"
-					}
-				},
 				"escape" : {
 					"script" : "escape",
 					"location" : "grab",
 					"voreType" : "held",
-					"timing" : "unwrap",
+					"timing" : "wrapping", // timing here is the name of the partState your animation is timed on
 					"animation" : {
-						"wrap" : "unwrap"
+						"wrapping" : "unwrapping" // and it will get the timing from this anim
+						// only whatever the "wrapping" state is is controling the timing here, also we need to make the actual part for that
 					}
-				}
-			},
+				} //And when it times to unwrap, it is affecting just the arms, right? Or should I be calling wrapping's animation? (namely the one for wrapping around player?)
+			},//Don't I have the part be... oh wait, yeah, I get it. The part needs to be above too for that to work.
+			 // yeah we'll get that in a moment
 			"idle": {
 				"body" : "idle",
 				"arms" : "idle",

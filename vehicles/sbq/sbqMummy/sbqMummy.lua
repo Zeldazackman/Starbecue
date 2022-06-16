@@ -4,32 +4,26 @@ state = {
 	stand = {}
 }
 
+function sbq.update(dt)
+	sbq.armRotationUpdate()
+	sbq.setGrabTarget()
+end
+
 function state.stand.grab(args, tconfig)
-	return true, function ()
-		sbq.grab("hug")
-		sb.logInfo("*grabbed*")
-		sbq.doAnim("wrap", "wrap", true)
-
-		sbq.eat( args.id, tconfig.location )
-
-		sbq.timer("Wrap", 2, function()
-		sb.logInfo("*wrapping*")
-		end)
+	if sbq.grab("grab") then -- this function has all the stuff for aiming at a player already and such, so its the only thing that needs to be called, only input arg is the location the victim goes
+		sbq.doAnim("wrappingState", "wrapping")
 	end
 end
 
-function state.stand.escape(args, tconfig)
+function state.stand.escape(args, tconfig) -- and this is just for struggling to escape, the animation is handled by the struggle transition, only running if its a success
 	return true, function ()
-		sbq.doAnim("wrap", "unwrap", true)
-
-		sbq.uneat( args.id )
-
-		sbq.timer("unwrap", 2, function()
-		sb.logInfo("*escaped*")
-		end)
+		sbq.letGrabGo("grab") -- grab and eating use the same functions but handle a bit differently, and have some other stuff surrounding them
+		sbq.doAnim("wrappingState", "none")
 	end
 end
-
+-- the mummy is only ever going to be controlled by a player (though when we add AI to the others at some point we may come back around)
+-- you will want that eventually maybe, but for now, we just, want it to work  without the complexities that I don't understand yet
+--That makes sense, should leave those comments on this one so I can look back at them later if needed.
 _onDeath = sbq.onDeath
 function sbq.onDeath(eaten)
 	if not eaten then
