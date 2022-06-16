@@ -10,6 +10,11 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
+		"questGenerator" : {
+			"graduation" : {
+				"nextNpcType" : []
+			}
+		},
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
 		"dialogueTree" : {
@@ -66,7 +71,56 @@
 								"otherLocationFull" : { "randomDialogue" : [ "I'm a bit too full...", "My body can't stretch any further...", "I've been filled too much already...", "I would... but I'm too full..." ]},
 
 								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							},
+
+							"hungry" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Didn't know the food here came to you!", "Oh yes, I'm famished.", "Free food? Why of course!" ] },
+									"after" : { "randomDialogue" : [ "Oh yeah, that hit the spot.", "Mmmmmh, nothing like a good meal.", "Urrrhp!" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "I'm famished, come here.", "Sorry but... Not sorry.", "Mind helping me out? I'm starved.", "Food shouldn't be walking around, let me fix that." ] },
+									"after" : { "randomDialogue" : [ "Oh yeah, that hit the spot.", "Mmmmmh, nothing like a good meal.", "Urrrhp!" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "I'm not that kind of hungry right now.", "I'm not sure you'd fill me." ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "I wish I could but- Bwuuurph!\n...too full...", "I've already had my fill." ]},
+									"sbqDigest" : { "randomDialogue" : [ "Give it a few minutes.\nThen we'll see if I'm still hungry.", "Bwuuuurp!\nSoon...", "Check in when this meal's finished." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "Give it a few minutes.\nThen we'll see if I'm still hungry.", "Bwuuuurp!\nSoon...", "Check in when this meal's finished." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "I wish I could but...\nI'm already too full.", "Can't fit any more..." ]},
+
+								"tooBig" : { "randomDialogue" : [ "That's too big even for me!", "I may be hungry but...\nWow, you're way too big." ]}
+							},
+
+							"friendly" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Oh, of course!", "I'm sure you'll fill me just right." ] },
+									"after" : { "randomDialogue" : [ "That was good...", "You taste SO good!" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Sorry about this!", "Don't worry, I won't hurt you." ] },
+									"after" : { "randomDialogue" : [ "That was good...", "You taste SO good!" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Sorry, I'm not feeling it right now.", "I'm not hungry, maybe later though?" ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "Oh sorry, I've already got a pal with me.", "Sorry, I'm already full.\nI'm sure I'll be free soon though!" ]},
+									"sbqDigest" : { "randomDialogue" : [ "Can you give me a few minutes?\nI need to tuck a friend away first.", "Gotta tuck this cutie onto my hips.\nThen you can be next." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "Can you give me a few minutes?\nI need to tuck a friend away first.", "Gotta tuck this cutie onto my hips.\nThen you can be next." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "Oh sorry, I've already got a pal with me.", "Sorry, I'm already full.\nI'm sure I'll be free soon though!" ]},
+
+								"tooBig" : { "randomDialogue" : [ "Oh wow, you're big!", "I couldn't even hope to fit you!" ]}
 							}
+
 						},
 						"flirty" : { // personality
 							"next" : "mood",
@@ -106,7 +160,7 @@
 								"unprompted" : {
 									"next" : "doingVore",
 									"before" : { "randomDialogue" : [ "Uhm... e-excuse me... I-", "Hey... uhm... funny thing... I-", "Do you... uhm... do you mind if I-", "Hi... hey... hi... hi... hi-" ] },
-									"after" : { "randomDialogue" : [ "S-sorry I couldn't control myself!", "I was just... too hungry!", "T-this is fine right?", "A-ahhh sorry I just panicked!" ] }
+									"after" : { "randomDialogue" : [ "S-sorry I couldn't control myself!", "Th-this is fine right?", "A-ahhh sorry I just panicked!" ] }
 								},
 								"notFeelingIt" : { "randomDialogue" : [ "Uhm... I uhm... uhm...", "Y-you really t-think I can be a pred?", "M-me? I can't...", ["*Incomprehensible Noises*", "<keysmash>"] ] },
 								"full" : {
@@ -116,6 +170,30 @@
 									"sbqSoftDigest" : { "randomDialogue" : [ "A-are y-you sure? m-my prey is melting in there...", "Uhm... a-after my last meal is more manageable...", "Y-you want to be p-pudge too?", "I-Uhm... uhm... uhm... s-soon yeah... soon..." ]}
 								},
 								"otherLocationFull": { "randomDialogue" : [ "O-oh uhm... uh... I don't think I can fit more...", ["*Flustered Noise* t-too many others wanted in already!", "<keysmash> t-too many others wanted in already!"], ["*Incomprehensible Noises*", "aaaaaaa<keysmash><keysmash>"], "I-I'm too full!" ]},
+
+								"tooBig" : { "randomDialogue" : [ "A-ah y-you w-wouldn't fit if I tried", "I-Oh w-wow y-you really think I could do t-that?", ["Thats... you're too... *Incomprehensible Noises*", "Thats... you're too... <keysmash>"], "T-thats crazy..." ]}
+							},
+
+							"hungry" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "O-oh gosh, you would do that?", "Y-you...\nReally?", "You... don't have to but...\nOkay...", "F-for me..?", "You really think...\nI g-gues I could try..." ] },
+									"after" : { "randomDialogue" : [ "Oh g-gosh...\nThat really... H-hit the spot...", "Y-you really... \n<keysmash>", "You didn't have to..." ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Would you, uhm-\nMind if I..?\n...Yeah...", "Hey, uhm... I'm-\nYeah I'm... H-hungry.\nC-could you... yeah...", "Uuuhm....\nS-Sorry about this!" ] },
+									"after" : { "randomDialogue" : [ "I was just... too hungry!", "You're okay with this. Right?\nRight..?", "P-please don't squirm too much..." ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "I couldn't...", "W-wow, okay, uhm...\nI'm not... that hungry?", "<keysmash>" ] },
+								"full" : {
+									"next" : "getLocationEffect",
+									"default" : { "randomDialogue" : [ "<keysmash>\nI already ate enough...", "ohgoshohgoshohgosh-", "Too...\nUuuurhp!\nFull...", "Bwuuuuurph!\nI- uh... <keysmash>" ]},
+									"sbqDigest" : { "randomDialogue" : [ "T-too... Soon...", "A-already..?", "<keysmash>", "The last ones are still...\nM-Melting...", "I-I don't think you'd wa-AUUUUURP-\n...To join them...", "I-I'm already going to be fat..." ]},
+									"sbqSoftDigest" : { "randomDialogue" : [ "T-too... Soon...", "A-already..?", "<keysmash>", "The last ones are still...\nM-Melting...", "I-I don't think you'd wa-AUUUUURP-\n...To join them...", "I-I'm already going to be fat..." ]}
+								},
+								"otherLocationFull" : { "randomDialogue" : [ "<keysmash>\nI'm already full enough...", "ohgoshohgoshohgosh-", "Too... Full...", "I- uh... <keysmash>" ]},
 
 								"tooBig" : { "randomDialogue" : [ "A-ah y-you w-wouldn't fit if I tried", "I-Oh w-wow y-you really think I could do t-that?", ["Thats... you're too... *Incomprehensible Noises*", "Thats... you're too... <keysmash>"], "T-thats crazy..." ]}
 							}
@@ -363,7 +441,7 @@
 								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
 								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
 								"sbqDigest" : {
-									"next" : "digestionImmunity",
+									"next" : "digestImmunity",
 									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
 									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								},
@@ -406,6 +484,11 @@
 									"next" : "eggImmunity",
 									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
@@ -426,6 +509,11 @@
 									"next" : "transformImmunity",
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.default"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
@@ -447,6 +535,11 @@
 									"next" : "transformImmunity",
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.default"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+								},
+								"sbqCumDigest" : {
+									"next" : "cumDigestImmunity",
+									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
+									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
@@ -470,12 +563,12 @@
 									"default" : { "randomDialogue" : [ "Ahh... ok you want out.", "Why leave?", "Mmm... fine you can come out.", "I actually liked having you in there..." ] },
 									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?", "Are you sure you're ready to come out?", "Maybe you should get back in... heal a little longer.", "You can come back to heal any time." ]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Dang it... I was hungry.", "No hard feelings?", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
 										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Darn it... I was hungry, you were gonna be fine anyway.", "No hard feelings? Its not like I was going to go all the way...", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
 										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
 									},
@@ -501,12 +594,12 @@
 									"default" : { "randomDialogue" : [ "I'd much rather you stay~", "Come back whenever you like~", "Afraid you'll want to stay forever~?", "You know you don't have to leave~" ] },
 									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?~", "Are you sure? I think you need some more time~", "I think you should get back in, you tooootally need more healing~", "You really should get back in to let me finish~" ]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You were so close to becoming a part of me~" ] },
 										"true" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You just need to let yourself melt down for me~" ] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You were so close to becoming a part of me~" ] },
 										"true" : { "randomDialogue" : [ "You've escaped... for now~", "What, don't want to be pudge~?", "I think you'd really enjoy it if you just let yourself melt away~", "Awww~ You just need to let yourself melt down for me~" ] }
 									},
@@ -532,12 +625,12 @@
 									"default" : { "randomDialogue" : [ "O-oh ok...", "M-maybe you'll come back later?", "Ah... I-I was rather enjoying that...", "M-maybe you can stay longer next time...", ["<keysmash>", "*Surprised Noises*"] ] },
 									"sbqHeal" : { "randomDialogue" : [ "U-uhm... i-it might be safer inside me...", "M-maybe getting out isn't the best idea...?", "I-I really think it'd be better if you stayed inside...", "W-wait what if you're not healed yet!" ]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "O-oh... s-sorry about that.", "I... I just really needed to eat...", "W-why couldn't you just finish melting...", "Y-you know I need food right?" ] },
 										"true" : { "randomDialogue" : [ "O-oh... s-sorry about that... you seem to be fine though.", "I... I just really needed to eat... but you just weren't melting...", "W-why couldn't you just let yourself melt...", "Y-you know I need food right?" ] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "O-oh... s-sorry about that.", "I... I just really needed to eat...", "W-why couldn't you just finish melting...", "Y-you know I need food right?" ] },
 										"true" : { "randomDialogue" : [ "O-oh... s-sorry about that... you seem to be fine though.", "I... I just really needed to eat... but you just weren't melting...", "W-why couldn't you just let yourself melt...", "Y-you know I need food right?" ] }
 									},
@@ -569,12 +662,12 @@
 									"default" : { "randomDialogue" : [ "You can come out now.", "Time to come out.", "You can't stay in there forever.", "Time to get out." ] },
 									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough.", "I think you've spent enough time healing.", "I think you should be feeling much better now.", "My stomach does wonders for healing doesn't it?"] },
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
 										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
 										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
 									},
@@ -595,12 +688,12 @@
 									"default" : { "randomDialogue" : [ "Mmm~ I think you've had enough time inside~", "You gotta come out, or else I won't be able to put you back in later~", "You can't stay in there forever... yet~", "I know you want to stay~ so I'll let you back in later~" ] },
 									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough~", "I think you've spent enough time healing~", "I think you should be feeling much better now~", "My stomach does wonders for healing doesn't it?~"] },
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Mmm, I don't want to turn you into pudge... yet~", "My hunger is satiated... for now~", "Probably best to get you out of there...", "Hmm, I don't feel like melting you entirely... yet~"] },
 										"true" : { "randomDialogue" : [ "Mmm, seems like I can't turn you into pudge~", "Maybe next time you'll let yourself become a part of me~", "Probably best to get you out of there...", "Hmm, seems like I can't melt you down."] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Mmm, I don't want to turn you into pudge... yet~", "My hunger is satiated... for now~", "Probably best to get you out of there...", "Hmm, I don't feel like melting you entirely... yet~"] },
 										"true" : { "randomDialogue" : [ "Mmm, seems like I can't turn you into pudge~", "Maybe next time you'll let yourself become a part of me~", "Probably best to get you out of there...", "Hmm, seems like I can't melt you down."] }
 									},
@@ -621,12 +714,12 @@
 									"default" : { "randomDialogue" : [ "S-sorry I-I just want you out...", "I-it feels pretty weird having you in there...", "Uhm... lets continue another time...", "I uhm... uhm... yeah..." ] },
 									"sbqHeal" : { "randomDialogue" : [ "S-sorry I-I just want to check if it was working...", "I-I'm not sure I can keep you in there...", "W-what if my belly isn't healing you? I gotta get you out!", "I uhm... uhm... yeah..." ] },
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "A-actually... you've p-probably spent enough time in there.", "I-I'm not r-really hungry anymore.", "P-probably best to get you out of there...", "A-are you ok?"] },
 										"true" : { "randomDialogue" : [ "I-its like you're not melting at all...", "I-I'm still hungry... but you're not really helping with that.", "P-probably best to get you out of there...", "Y-you seem entirely untouched... how?"] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "A-actually... you've p-probably spent enough time in there.", "I-I'm not r-really hungry anymore.", "P-probably best to get you out of there...", "A-are you ok?"] },
 										"true" : { "randomDialogue" : [ "I-its like you're not melting at all...", "I-I'm still hungry... but you're not really helping with that.", "P-probably best to get you out of there...", "Y-you seem entirely untouched... how?"] }
 									},
@@ -877,7 +970,7 @@
 										{"check":{"predator":"sbqVaporeon"},"add":["I always liked vappy goo."]}
 									]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"true" : { "randomDialogue" : [
 											[["Trying to melt me down?","Trying to melt me down?\nThats not gonna work."], "Heh, I can actually stay in here as long as I want.", "I'm invincible!", "You can't melt me!"]
 										]},
@@ -911,7 +1004,7 @@
 									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice.", "Ahh... this is... oddly satisfying...", "I wouldn't mind staying suspended in here..." ] },
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"true" : { "randomDialogue" : [["Heh trying to melt me into more slime?", "Heh trying to melt me into more slime?\nThats not gonna work."], "Sorry, I'm not soluble.", "You're gonna have to try harder to absorb me."]},
 										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime.", "Oh my... I'm dissolving.", "I'm gonna be absorbed..." ] }
 									},
@@ -1160,11 +1253,18 @@
 			"digestImmunity" : [true,false],
 			"digestImmunityEnable" : [true,false],
 
+			"cumDigestImmunity" : [true,false],
+			"cumDigestImmunityEnable" : [true,false],
+
 			"eggImmunity" : [true,false],
 			"eggImmunityEnable" : [true,false],
 
 			"transformImmunity" : [true,false],
-			"transformImmunityEnable" : [true,false]
+			"transformImmunityEnable" : [true,false],
+
+			"genderswapImmunity" : [true,false],
+			"genderswapImmunityEnable" : [true,false]
+
 		},
 		"sbqRandomizeSettings" : {
 			"oralVorePred" : [true,false],

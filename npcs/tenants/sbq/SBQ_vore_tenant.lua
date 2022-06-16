@@ -16,6 +16,7 @@ dialogueBoxScripts = {}
 require("/scripts/SBQ_RPC_handling.lua")
 require("/lib/stardust/json.lua")
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBoxScripts.lua")
+require("/scripts/SBQ_immunities.lua")
 
 local _npc_setItemSlot
 
@@ -96,11 +97,7 @@ function init()
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
-		if settings.digestImmunity then
-			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-		else
-			status.clearPersistentEffects("digestImmunity")
-		end
+		sbq.handleImmunities()
 	end)
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
 		if getVictimPreySettings then
@@ -231,9 +228,8 @@ function interact(args)
 
 			settings.personality = storage.settings.personality
 			settings.mood = storage.settings.mood
-			settings.digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity or false
 
-			dialogueBoxData.settings = settings
+			dialogueBoxData.settings = sb.jsonMerge(settings,  sb.jsonMerge(sbq.config.defaultPreyEnabled.npc, status.statusProperty("sbqPreyEnabled") or {}))
 			dialogueBoxData.dialogueTreeStart = { "struggling" }
 			return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:dialogueBox" }}
 		else
@@ -325,11 +321,7 @@ function sbq.randomizeTenantSettings()
 		preySettings[setting] = values[math.random(#values)]
 	end
 	status.setStatusProperty("sbqPreyEnabled", preySettings)
-	if preySettings.digestImmunity then
-		status.setPersistentEffects("digestImmunity", { "sbqDigestImmunity" })
-	else
-		status.clearPersistentEffects("digestImmunity")
-	end
+	sbq.handleImmunities()
 end
 
 function sbq.setRelevantPredSettings()

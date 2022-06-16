@@ -9,6 +9,7 @@ function capture_monster_setDamageTeam(data)
 	end
 end
 
+require("/scripts/SBQ_immunities.lua")
 
 function init()
 
@@ -32,10 +33,7 @@ function init()
 		end
 	end)
 
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	end
+	sbq.handleImmunities()
 
 	oldinit()
 end

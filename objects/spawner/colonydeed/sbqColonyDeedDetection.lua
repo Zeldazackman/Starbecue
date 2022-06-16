@@ -9,6 +9,11 @@ function scanHouseContents(boundary)
 			returnValues.otherDeed = true
 			returnValues.objects[object] = nil
 		end
+		local bannedObjects = config.getParameter("deedBannedObjects") or {}
+		if bannedObjects[name] then
+			returnValues.bannedObject = true
+			returnValues.objects[object] = nil
+		end
 	end
 
 	return returnValues

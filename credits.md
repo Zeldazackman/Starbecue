@@ -14,6 +14,9 @@
 # Builders
 	Cosmic
 
+# Writers
+	radiantAurora
+
 # Playtesters / Bug Hunters
 	xeronious
 	Rex Anivius

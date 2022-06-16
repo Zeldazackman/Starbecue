@@ -10,6 +10,12 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvoreguard",
+		"questGenerator" : {
+			"graduation" : {
+				"nextNpcType" : []
+			}
+		},
+
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
 		"dialogueTree" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree",

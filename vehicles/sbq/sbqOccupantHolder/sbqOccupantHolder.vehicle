@@ -74,6 +74,8 @@
 	"sbqData" : {
 		"animation" : "/stats/speciesAnimOverride/speciesAnimOverride.animation",
 		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 }
 		},
 
 		"lights" : {

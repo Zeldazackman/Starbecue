@@ -2,6 +2,7 @@ local initStage = 0
 local oldinit = init
 sbq = {}
 require("/scripts/SBQ_RPC_handling.lua")
+require("/scripts/SBQ_immunities.lua")
 
 local prey = {}
 
@@ -262,10 +263,7 @@ function init()
 		return speciesConfig
 	end)
 
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	end
+	sbq.handleImmunities()
 
 	initStage = 1 -- init has run
 end

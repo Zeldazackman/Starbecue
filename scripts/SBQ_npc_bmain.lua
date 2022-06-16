@@ -1,4 +1,3 @@
-sbq = {}
 local _init = init
 local _update = update
 
@@ -15,6 +14,8 @@ function capture_npc_setDamageTeam(data)
 		_npc_setDamageTeam(data)
 	end
 end
+
+sbq = {}
 
 function init()
 	if type(_npc_setInteractive) ~= "function" then
@@ -76,13 +77,12 @@ function init()
 		end
 	end)
 
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
-	if sbqPreyEnabled.digestImmunity then
-		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-	end
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	_init()
+
+	require("/scripts/SBQ_immunities.lua")
+	sbq.handleImmunities()
 
 	if not status.statusProperty("sbqDidVornyConvertCheck") then
 		status.setStatusProperty("sbqDidVornyConvertCheck", true)

@@ -1,5 +1,3 @@
---This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
---https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 require("/vehicles/sbq/sbq_main.lua")
 
@@ -126,8 +124,8 @@ function state.sit.pin( args )
 	-- if not interact target or target isn't in front
 	if args.id == nil or sbq.globalToLocal( world.entityPosition( args.id ) )[1] < 3 then
 		local pinbounds = {
-			sbq.localToGlobal({2.75, -4}),
-			sbq.localToGlobal({3.5, -3.5})
+			sbq.localToGlobal({2, -4}),
+			sbq.localToGlobal({4, -2})
 		}
 		pinnable = world.playerQuery( pinbounds[1], pinbounds[2] )
 		if #pinnable == 0 and sbq.driving then

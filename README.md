@@ -26,7 +26,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 
 # Features
 
-![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqEgg/sbqEggXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
+![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
 
 ### Playable Predator transformation
 - Vaporeon
@@ -66,6 +66,11 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - Argonians
 - Sergals
 - Familiars
+- Vulpes
+- Kazdra
+- Elduukhar
+- Attarran
+- Neki
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 

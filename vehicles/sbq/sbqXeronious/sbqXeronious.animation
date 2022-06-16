@@ -50,10 +50,10 @@
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 					"fly": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "idle" },
 
-					"s_back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" }, // temporary dummy ones
-					"s_front": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
-					"s_up": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
-					"s_down": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "hug" }, // temporary dummy ones
+					"s_front": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "hug" },
+					"s_up": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "hug" },
+					"s_down": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "hug" },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 				}
@@ -91,10 +91,10 @@
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 
-					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
-					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
-					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
-					"s_down": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_back": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "sit" },
+					"s_front": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "sit" },
+					"s_up": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "sit" },
+					"s_down": { "frames": 1, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle", "animFrames" : "sit" },
 
 					"none": { "frames": 1, "cycle": 1, "mode": "end", "priority": -1 }
 

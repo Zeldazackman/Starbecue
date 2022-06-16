@@ -72,6 +72,11 @@
 	},
 
 	"sbqData" : {
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 }
+		},
+
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [

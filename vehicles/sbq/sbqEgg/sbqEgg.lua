@@ -1,5 +1,3 @@
---This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/2.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
---https://creativecommons.org/licenses/by-nc-sa/2.0/  @
 
 require("/vehicles/sbq/sbq_main.lua")
 
@@ -13,8 +11,12 @@ local _initAfterInit = sbq.initAfterInit
 function sbq.initAfterInit()
 	_initAfterInit()
 	sbq.occupants.total = 0
-	sbq.eat(sbq.driver, "egg", true)
-	sbq.occupant[0].visible = true
+	if not sbq.eat(sbq.driver, "egg", true) then
+		vehicle.destroy()
+	end
+	if sbq.settings.skinNames.head == "plastic" then
+		sbq.occupant[0].visible = true
+	end
 end
 
 _escapeScript = sbq.escapeScript

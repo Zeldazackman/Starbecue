@@ -37,6 +37,7 @@ function sbq.struggleMessages(id)
 			predator = sbq.species,
 			location = location,
 			digested = sbq.lounging[id].digested,
+			cumDigesting = sbq.lounging[id].cumDigesting,
 			egged = sbq.lounging[id].egged,
 			transformed = sbq.lounging[id].transformed,
 			locationDigest = sbq.sbqData.locations[location].digest,

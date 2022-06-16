@@ -20,6 +20,12 @@
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
 		"uniqueId" : "sbqZevi_Zygahedron",
+		"questGenerator" : {
+			"graduation" : {
+				"nextNpcType" : []
+			}
+		},
+
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
@@ -265,7 +271,7 @@
 								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
 								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
 								"sbqDigest" : {
-									"next" : "digestionImmunity",
+									"next" : "digestImmunity",
 									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
 									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								},
@@ -372,12 +378,12 @@
 									"default" : { "randomDialogue" : [ "Ahh... ok you want out.", "Why leave?", "Mmm... fine you can come out.", "I actually liked having you in there..." ] },
 									"sbqHeal" : { "randomDialogue" : [ "You do know its safer inside me right?", "Are you sure you're ready to come out?", "Maybe you should get back in... heal a little longer.", "You can come back to heal any time." ]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Dang it... I was hungry.", "No hard feelings?", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
 										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Darn it... I was hungry, you were gonna be fine anyway.", "No hard feelings? Its not like I was going to go all the way...", "Come on, you were almost done...", "If only you weren't such a fighter..." ] },
 										"true" : { "randomDialogue" : [ "Dang it... I was hungry... and you didn't even melt at all.", "No hard feelings? Its not like my acid even managed to do anything.", "Come on, my acid didn't even do anything to you...", "If only you actually started to melt..." ] }
 									},
@@ -409,12 +415,12 @@
 									"default" : { "randomDialogue" : [ "You can come out now.", "Time to come out.", "You can't stay in there forever.", "Time to get out." ] },
 									"sbqHeal" : { "randomDialogue" : [ "You're probably patched up enough.", "I think you've spent enough time healing.", "I think you should be feeling much better now.", "My stomach does wonders for healing doesn't it?"] },
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
 										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
 									},
 									"sbqSoftDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"false" : { "randomDialogue" : [ "Actually... you've probably spent enough time in there.", "My hunger is satiated enough for now.", "Probably best to get you out of there...", "Didn't feel like melting you entirely."] },
 										"true" : { "randomDialogue" : [ "I can't even melt you down at all...", "My hunger isn't going to be satiated with you in there.", "Probably best to get you out of there so I can eat something else.", "Can't even melt you down the tiniest bit."] }
 									},
@@ -563,7 +569,7 @@
 										{"check":{"predator":"sbqVaporeon"},"add":["I always liked vappy goo."]}
 									]},
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"true" : { "randomDialogue" : [
 											[["Trying to melt me down?","Trying to melt me down?\nThats not gonna work."], "Heh, I can actually stay in here as long as I want.", "I'm invincible!", "You can't melt me!"]
 										]},
@@ -597,7 +603,7 @@
 									"sbqHeal" : { "randomDialogue" : [ "This slime feels pretty nice.", "Ahh... this is... oddly satisfying...", "I wouldn't mind staying suspended in here..." ] },
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
 									"sbqDigest" : {
-										"next" : "digestionImmunity",
+										"next" : "digestImmunity",
 										"true" : { "randomDialogue" : [["Heh trying to melt me into more slime?", "Heh trying to melt me into more slime?\nThats not gonna work."], "Sorry, I'm not soluble.", "You're gonna have to try harder to absorb me."]},
 										"false" : { "randomDialogue" : [ "Ahh... I'm starting to melt into slime.", "Oh my... I'm dissolving.", "I'm gonna be absorbed..." ] }
 									},
@@ -870,10 +876,19 @@
 	},
 
 	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		},
 		"statusProperties" : {
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,
 				"digestImmunity": true,
+
+				"cumDigestImmunity" : true,
+				"cumDigestImmunityLock" : true,
+
 				"transformImmunity": true,
 				"eggImmunity": false,
 

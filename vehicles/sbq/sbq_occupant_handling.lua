@@ -296,6 +296,7 @@ function sbq.doEscape(args, statuses, afterstatuses, voreType )
 		struggleTrigger = args.struggleTrigger,
 		location = location,
 		digested = sbq.lounging[victim].digested,
+		cumDigesting = sbq.lounging[victim].cumDigesting,
 		egged = sbq.lounging[victim].egged,
 		transformed = sbq.lounging[victim].transformed,
 		locationDigest = sbq.sbqData.locations[location].digest,
@@ -623,10 +624,7 @@ function sbq.doBellyEffects(dt)
 	if sbq.occupants.total <= 0 then return end
 
 	local bellyEffect = sbq.settings.bellyEffect or "sbqRemoveBellyEffects"
-	local hungereffect = 0
-	if (bellyEffect == "sbqDigest") or (bellyEffect == "sbqSoftDigest") then
-		hungereffect = 1
-	end
+
 	if sbq.settings.displayDigest then
 		if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
 			bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
@@ -636,6 +634,8 @@ function sbq.doBellyEffects(dt)
 	local powerMultiplier = math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1
 
 	for i = sbq.startSlot, sbq.occupantSlots do
+		local locationEffect = sbq.settings[(sbq.occupant[i].location or "").."Effect"] or "sbqRemoveBellyEffects"
+
 		local eid = sbq.occupant[i].id
 		if type(eid) == "number" and world.entityExists(eid) then
 			local health = world.entityHealth(eid)
@@ -662,7 +662,21 @@ function sbq.doBellyEffects(dt)
 				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
 				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
 				sbq.extraBellyEffects(i, eid, health, bellyEffect)
+			elseif sbq.occupant[i].cumDigesting
+			or ((sbq.occupant[i].location == "ballsL" or sbq.occupant[i].location == "ballsR" or sbq.occupant[i].location == "balls") and sbq.settings.ballsCumDigestion)
+			or (sbq.occupant[i].location == "shaft" and sbq.settings.penisCumDigestion)
+			or (sbq.occupant[i].location == "womb" and sbq.settings.wombCumDigestion)
+			then
+				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, sbq.driver or entity.id())
+			else
+				if sbq.settings.displayDigest then
+					if sbq.config.bellyDisplayStatusEffects[locationEffect] ~= nil then
+						locationEffect = sbq.config.bellyDisplayStatusEffects[locationEffect]
+					end
+				end
+				world.sendEntityMessage( eid, "applyStatusEffect", locationEffect, powerMultiplier, sbq.driver or entity.id())
 			end
+
 			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
 		end
 	end
@@ -802,7 +816,9 @@ function sbq.handleStruggles(dt)
 		if struggledata.directions[movedir].sound ~= nil then
 			sound = struggledata.directions[movedir].sound
 		end
-		animator.playSound( sound or "struggle" )
+		if sound ~= false then
+			animator.playSound( sound or "struggle" )
+		end
 	end
 end
 

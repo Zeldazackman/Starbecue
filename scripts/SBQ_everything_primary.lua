@@ -81,6 +81,7 @@ function sbq.everything_primary()
 	message.setHandler("sbqEndMysteriousPotionTF", function (_,_)
 		sbq.endMysteriousTF()
 	end)
+
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
 end
 
@@ -214,6 +215,7 @@ end
 
 function sbq.endMysteriousTF()
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", nil )
+	mysteriousTFDuration = nil
 	status.setStatusProperty("sbqMysteriousPotionTF", nil)
 	status.clearPersistentEffects("speciesAnimOverride")
 	status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))

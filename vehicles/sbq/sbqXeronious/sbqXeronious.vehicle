@@ -75,6 +75,11 @@
 	"sbqData" : {
 		"displayName" : "Kaiju",
 		"victimAnimations": "/vehicles/sbq/sbqXeronious/victim_animations.config",
+		"occupantStatusEffects": {
+			"breathprotectionvehicle" : { "power" : 1 },
+			"dontstarve" : { "power" : 1 }
+		},
+
 		"movementSettings" : {
 			"default":{
 				"collisionPoly" : [
