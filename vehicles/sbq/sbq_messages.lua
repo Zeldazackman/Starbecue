@@ -30,7 +30,7 @@ function transformMessageHandler(eid, multiplier, data)
 
 	if type(sbq.lounging[eid].progressBarData.barColor) == "table" then
 		sbq.lounging[eid].progressBarColor = data.barColor
-	else
+	elseif sbq.sbqData.replaceColors ~= nil then
 		sbq.lounging[eid].progressBarColor = (sbq.settings.replaceColorTable[1] or (sbq.sbqData.replaceColors[1][(sbq.settings.replaceColors[1] or sbq.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
 		-- p.lounging[eid].progressBarColor = root.assetJson("something about data:sbqData.replaceColors.0.1")
 		-- or maybe define it some other way, I dunno

@@ -129,10 +129,10 @@
 		"stand": {
 			"edible": true,
 			"edibleAnims": {
-				"head" : "",
-				"body" : "",
-				"legs" : "",
-				"arms" : "skins/default/Mummy_sarcophagus_rest_backarm_frames.png"
+				"head" : "idle",
+				"body" : "idle",
+				"legs" : "idle",
+				"arms" : "idle"
 			},
 			"transitions": {
 				// directional = driver can press that direction to transition
@@ -187,8 +187,8 @@
 				"backarms" : [2, 4]
 			},
 			"handOffsets" : {
-				"frontarms" : [8, 4],
-				"backarms" : [12, 4]
+				"frontarms" : [16, 4],
+				"backarms" : [20, 4]
 			},
 			"control": {
 				"animations": {

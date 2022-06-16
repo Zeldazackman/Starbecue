@@ -97,9 +97,9 @@ function sbq.getSmolPreyData(settings, species, state, tags, layer)
 		recieved = true,
 		update = true,
 		layer = layer,
-		settings = settings,
+		settings = settings or {},
 		state = state,
-		images = sbq.smolPreyAnimationPaths(settings, species, state, tags)
+		images = sbq.smolPreyAnimationPaths(settings or {}, species, state, tags)
 	}
 end
 
@@ -171,6 +171,7 @@ function sbq.smolPreyAnimationPaths(settings, species, state, newTags)
 end
 
 function sbq.fixSmolPreyPathTags(directory, animatedParts, partname, statename, animname, settings, tags)
+	if not animatedParts.parts[partname] then return end
 	local path = (
 		((((animatedParts.parts[partname].partStates[statename.."State"] or {})[animname] or {}).properties or {}).image)
 		or ((((animatedParts.parts[partname].partStates[statename.."State"] or {})[((animatedParts.stateTypes[statename.."State"] or {}).states[animname] or {}).baseAnim or ""] or {}).properties or {}).image)
@@ -258,7 +259,7 @@ function sbq.transformPrey(i)
 
 		if world.entityType(sbq.occupant[i].id) == "player" then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
-				smolPreyData = sbq.getSmolPreyData(settings, smolPreyData.species, "smol")
+				smolPreyData = sbq.getSmolPreyData(settings, smolPreyData.species, smolPreyData.state or "smol")
 				if sbq.occupant[i].species == "sbqEgg" then
 					sbq.occupant[i].smolPreyData.layer = smolPreyData
 				else
@@ -267,7 +268,7 @@ function sbq.transformPrey(i)
 				end
 			end)
 		else
-			smolPreyData = sbq.getSmolPreyData(sbq.settings, smolPreyData.species, "smol")
+			smolPreyData = sbq.getSmolPreyData(sbq.settings, smolPreyData.species, smolPreyData.state or "smol")
 			if sbq.occupant[i].species == "sbqEgg" then
 				sbq.occupant[i].smolPreyData.layer = smolPreyData
 			else

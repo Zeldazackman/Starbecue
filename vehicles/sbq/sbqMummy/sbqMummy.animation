@@ -165,12 +165,12 @@
             "wrapping": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.2,
-					"transformationGroups": ["flip", "bodybob"]
+					"zLevel": 5,
+					"transformationGroups": ["flip", "frontarmsrotation", "armsbob"]
 				},
 				"partStates": {
 					"wrappingState": {
-						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<wrappingStateAnim>.<bodyStateFrame><partVisible><directives><statusDirectives>" } },
+						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<wrappingStateAnim>.<wrappingStateFrame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

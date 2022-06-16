@@ -8,6 +8,7 @@
 	},
 	"aliases" : {
 		"wrap.default" : "wrap.1",
+		"rotation.1" : "wrap.1",
 		"unwrap.1" : "wrap.4",
 		"unwrap.2" : "wrap.3",
 		"unwrap.3" : "wrap.2",

@@ -18,7 +18,6 @@ end
 function state.stand.escape(args, tconfig) -- and this is just for struggling to escape, the animation is handled by the struggle transition, only running if its a success
 	return true, function ()
 		sbq.letGrabGo("grab") -- grab and eating use the same functions but handle a bit differently, and have some other stuff surrounding them
-		sbq.doAnim("wrappingState", "none")
 	end
 end
 -- the mummy is only ever going to be controlled by a player (though when we add AI to the others at some point we may come back around)
@@ -32,11 +31,18 @@ function sbq.onDeath(eaten)
 	_onDeath(eaten)
 end
 
+_letGrabGo = sbq.letGrabGo
+function sbq.letGrabGo(location)
+	_letGrabGo(location)
+	sbq.doAnim("wrappingState", "none")
+end
+
+
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.trappedTF then
 		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
 			if not immune then
-				transformMessageHandler( eid , 3, { species = "sbqMummy" } )
+				transformMessageHandler( eid , 3, { species = "sbqMummy", state = "stand" } )
 			end
 		end)
 	end
