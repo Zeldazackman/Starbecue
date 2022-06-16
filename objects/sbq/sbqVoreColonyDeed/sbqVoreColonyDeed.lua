@@ -13,11 +13,17 @@ function init()
 	_init()
 
 	message.setHandler("sbqSaveSettings", function (_,_, settings, index)
-		storage.occupier.tenants[index].overrides.scriptConfig.sbqSettings = settings
+		local scriptConfig = storage.occupier.tenants[index or 1].overrides.scriptConfig or {}
+		scriptConfig.sbqSettings = settings
+		storage.occupier.tenants[index or 1].overrides.scriptConfig = scriptConfig
 	end)
 
 	message.setHandler("sbqSavePreySettings", function (_,_, settings, index)
-		storage.occupier.tenants[index].overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = settings
+
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
+			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
+			{statusProperties = { sbqPreyEnabled = settings}}
+		)
 	end)
 
 	message.setHandler("sbqDeedInteract", function (_,_, args)
@@ -139,7 +145,7 @@ function die() -- replace the old function so the tenant isn't evicted upon brea
 end
 
 function checkHouseIntegrity()
-	storage.grumbles, possibleTortureRoom = scanHouseIntegrity()
+	storage.grumbles, storage.possibleTortureRoom = scanHouseIntegrity()
 
 	for _, tenant in ipairs(storage.occupier.tenants) do
 		if tenant.uniqueId and world.findUniqueEntity(tenant.uniqueId):result() then
@@ -149,7 +155,7 @@ function checkHouseIntegrity()
 		end
 	end
 
-	if possibleTortureRoom and isGrumbling() and self.grumbleTimer:complete() then
+	if  #storage.grumbles > 0 and isGrumbling() and self.grumbleTimer:complete() and storage.possibleTortureRoom then
 		evictTenants()
 	end
 end
@@ -157,7 +163,7 @@ end
 function scanHouseIntegrity()
 	if not world.regionActive(polyBoundBox(storage.house.boundary)) then
 		util.debugLog("Parts of the house are unloaded - skipping integrity check")
-		return storage.grumbles or {}
+		return storage.grumbles or {}, storage.possibleTortureRoom
 	end
 
 	local possibleTortureRoom
@@ -166,7 +172,7 @@ function scanHouseIntegrity()
 	local house = findHouseBoundary(self.position, self.maxPerimeter)
 
 	if not house.poly then
-		table.insert(grumbles, { "enclosedArea" })
+		grumbles[#grumbles + 1] = { "enclosedArea" }
 		possibleTortureRoom = true
 	else
 		storage.house.floorPosition = house.floor
@@ -174,17 +180,17 @@ function scanHouseIntegrity()
 
 		local liquid = world.liquidAt(util.boundBox(house.poly))
 		if liquid then
-			table.insert( grumbles, { "enclosedArea" })
+			grumbles[#grumbles + 1] = { "enclosedArea" }
 			possibleTortureRoom = true
 		end
 	end
 
 	local scanResults = scanHouseContents(storage.house.boundary)
 	if scanResults.otherDeed then
-		table.insert( grumbles, { "otherDeed" } )
+		grumbles[#grumbles + 1] = { "otherDeed" }
 	end
 	if scanResults.bannedObject then
-		table.insert( grumbles, { "enclosedArea" })
+		grumbles[#grumbles + 1] = { "tagCriteria" }
 		possibleTortureRoom = true
 	end
 

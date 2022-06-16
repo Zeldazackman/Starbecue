@@ -10,12 +10,13 @@ require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 
 function init()
+	sbq.storage = metagui.inputData
+
 	local occupier = sbq.storage.occupier
 
 	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[sbq.tenantIndex]) == "table" and type(occupier.tenants[sbq.tenantIndex].species) == "string" then
 		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings), occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqDefaultSettings or occupier.tenants[sbq.tenantIndex].overrides.scriptConfig.sbqSettings or {} )
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.npc, (metagui.inputData.preySettings or {}) )
-		sbq.storage = metagui.inputData
 		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
 		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
 		escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))

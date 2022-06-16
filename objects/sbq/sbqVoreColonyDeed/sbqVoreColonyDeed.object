@@ -244,7 +244,7 @@
     "maxPerimeter" : 500, //scan limit
     "healthCheckFrequency" : [1.0, 2.0], //cooldown time between checking if tenants need respawning
     "healingStateDuration": [5.0, 10.0], //length of time before tenants are respawned
-    "repairTimeRange" : [180.0, 180.0], //seconds before tenants move out when the house loses integrity
+    "repairTimeRange" : [10.0, 10.0], //seconds before tenants move out when the house loses integrity
 
     // If haveVacatedState is true, once a tenant is chosen, the deed will only ever
     // spawn that tenant. Otherwise, if a tenant moves out, it can spawn a different
@@ -252,7 +252,7 @@
     // If it is true, and the requirements for that tenant are not met, the deed goes
     // into a 'house vacated' state until they are met, rather than going back into the
     // scanning state.
-    "haveVacatedState" : false,
+    "haveVacatedState" : true,
 
     // Distance to search for 'nearby' deeds. Used to produce a count of nearby
     // deeds for an achievement-related event.
