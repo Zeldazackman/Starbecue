@@ -19,6 +19,13 @@
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
+			"headState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
+					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
+				}
+			},
 			"wrappingState": {
 				"default": "none",
 				"states": {
@@ -147,7 +154,7 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "skins/default/Mummy_body.png:<bodyStateAnim>.<bodyStateFrame><partVisible><directives><statusDirectives>" } },
+						"idle": { "properties": { "image": "skins/default/Mummy_body.png<partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -178,7 +185,7 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "skins/default/Mummy_frontarm_stand.png:<armsStateAnim>.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
+						"idle": { "properties": { "image": "skins/default/Mummy_frontarm_stand.png<partVisible><directives><statusDirectives><armVisible>" } },
 
 						"walk": { "properties": { "image": "skins/default/Mummy_frontarm_walk_frames.png:walk.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
 
@@ -222,7 +229,7 @@
 				},
 				"partStates": {
 					"armsState": {
-						"idle": { "properties": { "image": "skins/default/Mummy_backarm_stand.png:idle.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
+						"idle": { "properties": { "image": "skins/default/Mummy_backarm_stand.png<directives><statusDirectives><armVisible>" } },
 
 						"walk": { "properties": { "image": "skins/default/Mummy_backarm_walk_frames.png:walk.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
 						
@@ -263,7 +270,7 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "skins/default/Mummy_Legs_stand.png:idle.<legsStateFrame><partVisible><directives><statusDirectives>" } },
+						"idle": { "properties": { "image": "skins/default/Mummy_Legs_stand.png<directives><statusDirectives>" } },
 
 						"walk": { "properties": { "image": "skins/default/Mummy_Legs_walk.png:walk.<legsStateFrame><partVisible><directives><statusDirectives>" } },
 						
