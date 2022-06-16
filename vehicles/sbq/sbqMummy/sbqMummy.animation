@@ -150,8 +150,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.2,
-					"transformationGroups": ["flip", "bodybob"],
-					"offset" : [2.125,0]
+					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -166,8 +165,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.2,
-					"transformationGroups": ["flip", "bodybob"],
-					"offset" : [2.125,0]
+					"transformationGroups": ["flip", "bodybob"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -183,8 +181,7 @@
 					"centered": true,
 					"zLevel": 4,
 					"transformationGroups": ["flip", "armsbob"],
-					"armVisible" : "",
-					"offset" : [2.125,0]
+					"armVisible" : ""
 				},
 				"partStates": {
 					"armsState": {
@@ -214,8 +211,7 @@
 					"centered": true,
 					"zLevel": 4,
 					"transformationGroups": ["flip", "frontarmsrotation", "armsbob"],
-					"armVisible" : "?multiply=FFFFFF00",
-                    "offset" : [2.125,0]
+					"armVisible" : "?multiply=FFFFFF00"
 				},
 				"partStates":{
 					"backarms_rotationState": {
@@ -229,8 +225,7 @@
 					"centered": true,
 					"zLevel": -3,
 					"transformationGroups": ["flip", "armsbob"],
-					"armVisible" : "",
-                    "offset" : [2.125,0]
+					"armVisible" : ""
 				},
 				"partStates": {
 					"armsState": {
@@ -259,8 +254,7 @@
 					"centered": true,
 					"zLevel": -3,
 					"transformationGroups": ["flip", "backarmsrotation", "armsbob"],
-					"armVisible" : "?multiply=FFFFFF00",
-                    "offset" : [2.125,0]
+					"armVisible" : "?multiply=FFFFFF00"
 				},
 				"partStates":{
 					"backarms_rotationState": {
@@ -272,8 +266,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -2,
-					"transformationGroups": ["flip", "legsbob"],
-                    "offset" : [2.125,0]
+					"transformationGroups": ["flip", "legsbob"]
 				},
 				"partStates": {
 					"legsState": {
@@ -293,8 +286,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": -1.3,
-					"transformationGroups": ["flip", "headbob"],
-                    "offset" : [2.125,0]
+					"transformationGroups": ["flip", "headbob"]
 				},
 				"partStates": {
 					"headState": {
