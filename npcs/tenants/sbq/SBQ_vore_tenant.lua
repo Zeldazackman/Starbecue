@@ -228,9 +228,8 @@ function interact(args)
 
 			settings.personality = storage.settings.personality
 			settings.mood = storage.settings.mood
-			settings.digestionImmunity = status.statusProperty("sbqPreyEnabled").digestionImmunity or false
 
-			dialogueBoxData.settings = settings
+			dialogueBoxData.settings = sb.jsonMerge(settings,  sb.jsonMerge(sbq.config.defaultPreyEnabled.npc, status.statusProperty("sbqPreyEnabled") or {}))
 			dialogueBoxData.dialogueTreeStart = { "struggling" }
 			return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:dialogueBox" }}
 		else
