@@ -3,7 +3,7 @@
 		"size" : [96, 32],
 		"dimensions" : [32, 32],
 		"names" : [
-			[ "open.1", "open.2", "open.3"],
+			[ "open.1", "open.2", "open.3"]
 		]
 	},
 	"aliases" : {
@@ -11,10 +11,7 @@
 
 		"close.1" : "open.3",
 		"close.2" : "open.2",
-		"close.3" : "open.1",
-
-		
-
+		"close.3" : "open.1"
 
 	}
 }

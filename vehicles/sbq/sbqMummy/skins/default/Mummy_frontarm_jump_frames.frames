@@ -3,14 +3,10 @@
 		"size" : [170, 30],
 		"dimensions" : [34, 30],
 		"names" : [
-			[ "jump.1", "jump.2", "jump.3", "jump.4", "jump.5"],
+			[ "jump.1", "jump.2", "jump.3", "jump.4", "jump.5"]
 		]
 	},
 	"aliases" : {
-		"jump.default" : "jump.1",
-
-		
-
-
+		"jump.default" : "jump.1"
 	}
 }
