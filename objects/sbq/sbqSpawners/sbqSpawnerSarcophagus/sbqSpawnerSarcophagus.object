@@ -1,5 +1,5 @@
 {
-	"objectName": "sbqSpawnerInvisible",
+	"objectName": "sbqSpawnerSarcophagus",
 	"colonyTags": ["vore"],
 	"rarity": "Uncommon",
 	"race": "generic",
@@ -10,17 +10,17 @@
 
 	"tooltipKind" : "sbqSpawner",
 
-	"inventoryIcon": "sbqSpawnerInvisible.png",
-	"shortdescription": "Invisible Spawner",
-	"description": "For a more discrete predator spawn location.",
+	"inventoryIcon": "sbqSpawnerSarcophagus.png",
+	"shortdescription": "Cursed Sarcophagus",
+	"description": "A Cursed Sarcophagus.",
 
 	"tooltipFields" : {
-		"statusLabel": "For a more discrete predator spawn location."
+		"statusLabel": "A Cursed Sarcophagus."
 	},
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imageLayers" : [ { "image" : "sbqSpawnerSarcophagus.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "left",
 			"flipImages": true,
@@ -28,7 +28,7 @@
 			"anchors": ["bottom"]
 		},
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imageLayers" : [ { "image" : "sbqSpawnerSarcophagus.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "right",
 			"spaceScan": 0.1,
@@ -36,7 +36,11 @@
 		}
 	],
 
-	"acceptsAugmentType" : "sbqCore",
+	"scriptStorage" : {
+		"vehicle" : {
+			"type" : "sbqSarcophagus"
+		}
+	},
 
 	"retainObjectParametersInItem" : true,
 	"isWired" : false,
