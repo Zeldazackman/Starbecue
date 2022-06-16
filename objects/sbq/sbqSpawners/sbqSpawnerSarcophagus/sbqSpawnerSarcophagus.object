@@ -10,7 +10,7 @@
 
 	"tooltipKind" : "sbqSpawner",
 
-	"inventoryIcon": "sbqSpawnerSarcophagus.png",
+	"inventoryIcon": "/objects/sbq/sbqSpawners/sbqSpawnerSarcophagus/sbqSpawnerSarcohpagus.png",
 	"shortdescription": "Cursed Sarcophagus",
 	"description": "A Cursed Sarcophagus.",
 
@@ -20,7 +20,7 @@
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerSarcophagus.png" } ],
+			"imageLayers" : [ { "image" : "/objects/sbq/sbqSpawners/sbqSpawnerSarcophagus/sbqSpawnerSarcohpagus.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "left",
 			"flipImages": true,
@@ -28,7 +28,7 @@
 			"anchors": ["bottom"]
 		},
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerSarcophagus.png" } ],
+			"imageLayers" : [ { "image" : "/objects/sbq/sbqSpawners/sbqSpawnerSarcophagus/sbqSpawnerSarcohpagus.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "right",
 			"spaceScan": 0.1,

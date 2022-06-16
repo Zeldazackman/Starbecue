@@ -10,7 +10,7 @@
 
 	"tooltipKind" : "sbqSpawner",
 
-	"inventoryIcon": "sbqSpawnerInvisible.png",
+	"inventoryIcon": "/objects/sbq/sbqSpawners/sbqSpawnerInvisible/sbqSpawnerInvisible.png",
 	"shortdescription": "Invisible Spawner",
 	"description": "For a more discrete predator spawn location.",
 
@@ -20,7 +20,7 @@
 
 	"orientations": [
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imageLayers" : [ { "image" : "/objects/sbq/sbqSpawners/sbqSpawnerInvisible/sbqSpawnerInvisible.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "left",
 			"flipImages": true,
@@ -28,7 +28,7 @@
 			"anchors": ["bottom"]
 		},
 		{
-			"imageLayers" : [ { "image" : "sbqSpawnerInvisible.png" } ],
+			"imageLayers" : [ { "image" : "/objects/sbq/sbqSpawners/sbqSpawnerInvisible/sbqSpawnerInvisible.png" } ],
 			"imagePosition": [0, 0],
 			"direction": "right",
 			"spaceScan": 0.1,
