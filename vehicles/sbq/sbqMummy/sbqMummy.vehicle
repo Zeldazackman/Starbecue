@@ -81,6 +81,7 @@
 					[-1, 0.5], [-1, -2]
 				],
 				"walkSpeed": 10,
+				"runSpeed": 10,
 				"jumpCount" : 1,
 				"airJumpProfile" : {
 					"jumpSpeed" : 23.0
@@ -186,6 +187,18 @@
 			"control": {
 				"animations": {
 					"walk": {
+						"arms": "walk",
+						"legs": "walk",
+						"offset": {
+							"reversible" : true,
+							"timing": "legs",
+							"loop": true,
+							"parts" : [
+								{"y": [-1, -2, -1, 0, -1, -2, -1, 0], "groups": ["headbob", "bodybob", "armsbob"]}
+							]
+						}
+					},
+					"run": {
 						"arms": "walk",
 						"legs": "walk",
 						"offset": {
