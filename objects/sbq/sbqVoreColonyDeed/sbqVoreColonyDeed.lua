@@ -224,8 +224,7 @@ function scanHouseIntegrity()
 		storage.house.floorPosition = house.floor
 		storage.house.boundary = house.poly
 
-		local liquid = world.liquidAt(util.boundBox(house.poly))
-		if liquid then
+		if liquidInHouseBounds(house.poly) then
 			grumbles[#grumbles + 1] = { "enclosedArea" }
 			possibleTortureRoom = true
 		end
@@ -267,12 +266,17 @@ function scanHouseIntegrity()
 	return grumbles, possibleTortureRoom
 end
 
+function liquidInHouseBounds(poly)
+	local box = util.boundBox(poly)
+	return world.liquidAt({box[1]+1, box[2]+1, box[3]-1, box[4]-1})
+end
+
 function scanVacantArea()
 	local house = findHouseBoundary(self.position, self.maxPerimeter)
 
 	local housePolyActive = house.poly and world.regionActive(polyBoundBox(house.poly))
 
-	if housePolyActive and world.liquidAt(util.boundBox(house.poly)) ~= nil then
+	if housePolyActive and liquidInHouseBounds(house.poly) then
 		util.debugLog("Liquid is within house bound box")
 		animator.setAnimationState("deedState", "error")
 	elseif housePolyActive then
