@@ -271,10 +271,12 @@ function liquidInHouseBounds(poly)
 	local liquidFill = world.liquidAt({box[1]+1, box[2]+1, box[3]-1, box[4]-1})
 	if liquidFill[2] > 0.5 then return true end -- Room is over halfway full of liquid
 	if self.position ~= nil then
-		return world.liquidAt({self.position[1]-3, self.position[2]+0, self.position[1]+3, self.position[2]+5})
-	else
-		return true
+		local position = findFloor(self.position, 10)
+		if not position then return true end
+
+		return world.liquidAt({position[1]-3, position[2]+0, position[1]+3, position[2]+5})
 	end
+	return true
 end
 
 function scanVacantArea()
