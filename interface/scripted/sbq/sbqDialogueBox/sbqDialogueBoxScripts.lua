@@ -43,8 +43,6 @@ function sbq.checkDialogueBranch(dialogueTree, settings, branch)
 	else
 		dialogueTree = dialogueTree[branch]
 	end
-	sb.logInfo(tostring(branch))
-	sb.logInfo(sb.printJson(dialogueTree))
 	return sbq.getRedirectedDialogue(dialogueTree, settings)
 end
 

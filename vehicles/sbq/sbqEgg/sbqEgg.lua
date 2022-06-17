@@ -16,6 +16,8 @@ function sbq.initAfterInit()
 	end
 	if sbq.settings.skinNames.head == "plastic" then
 		sbq.occupant[0].visible = true
+	else
+		sbq.occupant[0].visible = false
 	end
 end
 
