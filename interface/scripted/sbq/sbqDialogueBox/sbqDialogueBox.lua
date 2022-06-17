@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-field
 
 local inited
 
@@ -31,7 +32,7 @@ function init()
 	nameLabel:setText(sbq.name)
 
 	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
-	if sbq.data.settings.preyEnabled == nil then
+	if not sbq.data.settings.isPrey then
 		sbq.data.settings = sb.jsonMerge(sbq.data.settings, sb.jsonMerge( sbq.config.defaultPreyEnabled.player, player.getProperty("sbqPreyEnabled") or {}))
 	end
 	sbq.data.settings.race = world.entitySpecies(pane.sourceEntity())

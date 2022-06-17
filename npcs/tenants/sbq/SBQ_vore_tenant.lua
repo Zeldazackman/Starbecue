@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-field
 
 local oldinit = init
 local oldupdate = update
