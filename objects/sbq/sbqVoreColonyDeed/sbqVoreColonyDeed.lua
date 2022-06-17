@@ -225,7 +225,7 @@ function scanHouseIntegrity()
 		storage.house.boundary = house.poly
 
 		if liquidInHouseBounds(house.poly) then
-			grumbles[#grumbles + 1] = { "enclosedArea" }
+			grumbles[#grumbles + 1] = { "tagCriteria" }
 			possibleTortureRoom = true
 		end
 	end
@@ -268,7 +268,13 @@ end
 
 function liquidInHouseBounds(poly)
 	local box = util.boundBox(poly)
-	return world.liquidAt({box[1]+1, box[2]+1, box[3]-1, box[4]-1})
+	local liquidFill = world.liquidAt({box[1]+1, box[2]+1, box[3]-1, box[4]-1})
+	if liquidFill[2] > 0.5 then return true end -- Room is over halfway full of liquid
+	if self.position ~= nil then
+		return world.liquidAt({self.position[1]-3, self.position[2]+0, self.position[1]+3, self.position[2]+5})
+	else
+		return true
+	end
 end
 
 function scanVacantArea()
@@ -277,7 +283,7 @@ function scanVacantArea()
 	local housePolyActive = house.poly and world.regionActive(polyBoundBox(house.poly))
 
 	if housePolyActive and liquidInHouseBounds(house.poly) then
-		util.debugLog("Liquid is within house bound box")
+		util.debugLog("Liquid at NPC spawn position")
 		animator.setAnimationState("deedState", "error")
 	elseif housePolyActive then
 		local scanResults = scanHouseContents(house.poly)
