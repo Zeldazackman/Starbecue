@@ -282,7 +282,9 @@
 
 			"sbqPlasticEgg" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqEggWand" : { "randomPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] }
+			"sbqEggWand" : { "randomPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqBallsPoster" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "greeting", "mood", "continue"] }
 
 		}
 	}

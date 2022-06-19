@@ -6,7 +6,7 @@
 
     },
  "spacing":0,
- "tilecount":17,
+ "tilecount":18,
  "tileheight":88,
  "tileproperties":
     {
@@ -72,6 +72,13 @@
          "imagePositionY":"0",
          "object":"sbqLargeWoodenArmchair",
          "tilesetDirection":"left"
+        },
+     "17":
+        {
+         "imagePositionX":"-16",
+         "imagePositionY":"-16",
+         "object":"sbqBallsPoster",
+         "tilesetDirection":"right"
         },
      "2":
         {
@@ -167,6 +174,10 @@
      "16":
         {
          "image":"..\/..\/objects\/sbq\/sbqLargeWoodenArmchair\/sbqLargewoodenarmchair.png"
+        },
+     "17":
+        {
+         "image":"..\/..\/objects\/sbq\/sbqBallsPoster\/poster.png"
         },
      "2":
         {

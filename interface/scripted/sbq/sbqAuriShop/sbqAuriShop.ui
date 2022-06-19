@@ -13,9 +13,9 @@
 						{ "type" : "layout","id" : "predScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
 					]}]}
 				]},
-				{ "type" : "tab", "id" : "spawnerShopTab", "toolTip" : "Predator Spawners", "title" : "", "icon" : "/objects/sbq/sbqSpawners/sbqSpawnerVappyBed/sbqSpawnerVappyBedIcon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "tab", "id" : "furnitureShopTab", "toolTip" : "Furniture", "title" : "", "icon" : "/objects/sbq/sbqSpawners/sbqSpawnerVappyBed/sbqSpawnerVappyBedIcon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "spawnerScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
+						{ "type" : "layout","id" : "furnitureScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
 					]}]}
 				]},
 				{ "type" : "tab", "id" : "modifierShopTab", "toolTip" : "Predator Modifiers", "title" : "", "icon" : "/items/sbq/modifiers/sbqModifierFatteningDonut.png", "visible" : true, "color" : "ff00ff", "contents" : [
