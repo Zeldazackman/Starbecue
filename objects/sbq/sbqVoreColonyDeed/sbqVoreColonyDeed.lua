@@ -269,7 +269,7 @@ end
 function liquidInHouseBounds(poly)
 	local box = util.boundBox(poly)
 	local liquidFill = world.liquidAt({box[1]+1, box[2]+1, box[3]-1, box[4]-1})
-	if liquidFill[2] > 0.5 then return true end -- Room is over halfway full of liquid
+	if liquidFill and liquidFill[2] > 0.5 then return true end -- Room is over halfway full of liquid
 	if self.position ~= nil then
 		local position = findFloor(self.position, 10)
 		if not position then return true end
