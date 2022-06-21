@@ -1,6 +1,7 @@
 
-function sbq.handleImmunities()
-	local sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
+function sbq.handleImmunities(type)
+	local defaults = root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[type] or {}
+	local sbqPreyEnabled = sb.jsonMerge( defaults, status.statusProperty("sbqPreyEnabled") or {})
 	if sbqPreyEnabled.digestImmunity then
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	else

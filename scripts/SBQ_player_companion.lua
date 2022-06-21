@@ -263,7 +263,7 @@ function init()
 		return speciesConfig
 	end)
 
-	sbq.handleImmunities()
+	sbq.handleImmunities("player")
 
 	initStage = 1 -- init has run
 end

@@ -110,7 +110,7 @@ function init()
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
 		status.setStatusProperty("sbqPreyEnabled", settings)
-		sbq.handleImmunities()
+		sbq.handleImmunities("player")
 	end)
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
 		if getVictimPreySettings then
@@ -334,7 +334,7 @@ function sbq.randomizeTenantSettings()
 		preySettings[setting] = values[math.random(#values)]
 	end
 	status.setStatusProperty("sbqPreyEnabled", preySettings)
-	sbq.handleImmunities()
+	sbq.handleImmunities("player")
 end
 
 function sbq.setRelevantPredSettings()

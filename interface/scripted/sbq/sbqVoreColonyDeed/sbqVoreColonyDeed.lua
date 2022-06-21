@@ -18,8 +18,8 @@ function init()
 		sbq.tenant = occupier.tenants[sbq.tenantIndex]
 
 		sbq.npcConfig = root.npcConfig(sbq.tenant.type)
-		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings
-		sbq.overridePreySettings = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled
+		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings or {}
+		sbq.overridePreySettings = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {}
 
 		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings),
 			sb.jsonMerge( sbq.npcConfig.scriptConfig.sbqDefaultSettings or {},

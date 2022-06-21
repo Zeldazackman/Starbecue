@@ -39,7 +39,7 @@ function init()
 		end
 	end)
 
-	sbq.handleImmunities()
+	sbq.handleImmunities("monster")
 
 	oldinit()
 end
