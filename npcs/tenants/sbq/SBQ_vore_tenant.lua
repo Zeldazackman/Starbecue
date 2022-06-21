@@ -51,8 +51,20 @@ function init()
 	sbq.getSpeciesConfig()
 
 	if not storage.settings then
-		storage.settings = sb.jsonMerge( sbq.config.defaultSettings, sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {}, sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, config.getParameter("sbqSettings") or {})))
+		storage.settings = sb.jsonMerge( sbq.config.defaultSettings,
+			sb.jsonMerge(sbq.speciesConfig.sbqData.defaultSettings or {},
+				sb.jsonMerge( config.getParameter("sbqDefaultSettings") or {}, config.getParameter("sbqSettings") or {})
+			)
+		)
 	end
+	local preySettings = status.statusProperty("sbqPreyEnabled")
+	status.setStatusProperty("sbqPreyEnabled",
+		sb.jsonMerge(sbq.config.defaultPreyEnabled.player,
+			sb.jsonMerge(preySettings, config.getParameter("sbqOverridePreyEnabled") or {})
+		)
+	)
+	storage.settings = sb.jsonMerge(storage.settings or {}, config.getParameter("sbqOverrideSettings") or {})
+
 	if not storage.settings.firstLoadDone then
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()

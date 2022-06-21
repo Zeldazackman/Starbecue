@@ -40,11 +40,16 @@
 			"analVorePredEnable" : true,
 			"cockVorePredEnable" : true,
 			"unbirthPredEnable" : true,
-			"absorbVorePredEnable" : true,
-
-			"navelVorePredLock" : true,
-			"breastVorePredLock" : true,
-			"tailVorePredLock" : true
+			"absorbVorePredEnable" : true
+		},
+		"sbqOverrideSettings" : {
+			"navelVorePred" : false,
+			"breastVorePred" : false,
+			"tailVorePred" : false
+		},
+		"sbqOverridePreyEnabled" : {
+			"cumDigestImmunity" : true,
+			"navelVore" : false
 		},
 
 		"defaultPortrait" : "Neutral.png",
@@ -888,7 +893,6 @@
 				"digestImmunity": true,
 
 				"cumDigestImmunity" : true,
-				"cumDigestImmunityLock" : true,
 
 				"transformImmunity": true,
 				"eggImmunity": false,
@@ -903,9 +907,7 @@
 				"analVore": true,
 				"unbirth": true,
 				"cockVore": true,
-				"breastVore": true,
-
-				"navelVoreLock" : true
+				"breastVore": true
 			},
 			"speciesAnimOverrideData" : {
 				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb",
