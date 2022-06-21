@@ -31,6 +31,7 @@ function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMu
 						layerLocation = "egg",
 						layerDigest = true,
 						settings = {
+							occupantVisible = true,
 							cracks = 0,
 							bellyEffect = bellyEffect,
 							escapeDifficulty = sbq.settings.escapeDifficulty,
