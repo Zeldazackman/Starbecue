@@ -687,8 +687,7 @@ function sbq.validStruggle(struggler, dt)
 	if (sbq.occupant[struggler].seatname == sbq.driverSeat) then return end
 
 
-	if sbq.heldControl(sbq.occupant[struggler].seatname, "up") and sbq.heldControl(sbq.occupant[struggler].seatname, "down")
-	and sbq.heldControl(sbq.occupant[struggler].seatname, "left") and sbq.heldControl(sbq.occupant[struggler].seatname, "right")
+	if sbq.heldControl(sbq.occupant[struggler].seatname, "left") and sbq.heldControl(sbq.occupant[struggler].seatname, "right")
 	and sbq.pressControl(sbq.occupant[struggler].seatname, "jump") then
 		sbq.escapeScript(struggler)
 		return
