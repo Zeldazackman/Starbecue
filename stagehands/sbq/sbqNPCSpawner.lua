@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 
 function update()
 	local position = stagehand.position()

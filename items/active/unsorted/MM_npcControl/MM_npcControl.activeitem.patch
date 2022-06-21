@@ -1,0 +1,7 @@
+[
+	{
+		"op": "add",
+		"path": "/scripts/-",
+		"value": "/items/active/unsorted/MM_npcControl/SBQ_dont_control_OCs.lua"
+	}
+]

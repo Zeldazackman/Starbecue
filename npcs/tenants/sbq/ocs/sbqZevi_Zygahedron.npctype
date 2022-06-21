@@ -18,6 +18,7 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
+		"isOC" : true,
 		"behavior" : "sbqvorevillager",
 		"uniqueId" : "sbqZevi_Zygahedron",
 		"questGenerator" : {

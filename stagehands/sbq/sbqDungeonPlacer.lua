@@ -1,4 +1,4 @@
-
+---@diagnostic disable: undefined-field
 function update()
 	local position = stagehand.position()
 	if world.regionActive({position[1]-1,position[2]-1,position[1]+1,position[2]+1}) then
