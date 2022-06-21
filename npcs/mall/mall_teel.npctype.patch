@@ -33,6 +33,9 @@
 			"op": "add",
 			"path": "/statusControllerSettings/statusProperties/sbqPreyEnabled",
 			"value": {
+				"preyEnabled" : true,
+				"transformImmunity" : true,
+				"genderswapImmunity" : true
 			}
 		}
 	]
