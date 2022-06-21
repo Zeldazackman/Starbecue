@@ -45,7 +45,14 @@
 		"sbqOverrideSettings" : {
 			"navelVorePred" : false,
 			"breastVorePred" : false,
-			"tailVorePred" : false
+			"tailVorePred" : false,
+
+			"penisCumTF" : false,
+			"wombTF" : false,
+
+			"penisCumDigestion" : false,
+			"ballsCumDigestion" : false,
+			"wombCumDigestion" : false
 		},
 		"sbqOverridePreyEnabled" : {
 			"cumDigestImmunity" : true,
