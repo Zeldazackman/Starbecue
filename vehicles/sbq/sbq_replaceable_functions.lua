@@ -193,7 +193,7 @@ function sbq.setItemActionColorReplaceDirectives()
 			color = replacePalette[j]
 			if color then
 				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
-					color = color.."fb"
+					color = color.."fe"
 				end
 				colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
 

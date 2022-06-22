@@ -824,12 +824,12 @@
 
 		},
 		"voreIcons" : {
-			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
-			"absorbVore" : "/items/active/sbqController/absorbVore.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
+			"oralVore" : "/items/active/sbqController/oralVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fe;7a334d=57a3b9fe;9d4165=70b9cffe",
+			"absorbVore" : "/items/active/sbqController/absorbVore.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fe;7a334d=57a3b9fe;9d4165=70b9cffe",
 
-			"analVore" : "/items/active/sbqController/analVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
-			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb",
-			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fb;7a334d=57a3b9fb;9d4165=70b9cffb"
+			"analVore" : "/items/active/sbqController/analVore.png?replace;154247=6c6c6c;23646a=8c8c8c;39979e=bfbfbf;4cc1c9=e3e3e3;63263d=418093fe;7a334d=57a3b9fe;9d4165=70b9cffe",
+			"cockVore" : "/items/active/sbqController/cockVore.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fe;7a334d=57a3b9fe;9d4165=70b9cffe",
+			"unbirth" : "/items/active/sbqController/unbirth.png?replace;154247=7b6398;23646a=8b72a9;39979e=a38cbe;4cc1c9=c3aae2;63263d=418093fe;7a334d=57a3b9fe;9d4165=70b9cffe"
 		},
 		"dialog" : {
 			"greeting" : {
@@ -917,7 +917,7 @@
 				"breastVore": true
 			},
 			"speciesAnimOverrideData" : {
-				"directives" : "?replace;418093=418093fb;57a3b9=57a3b9fb;70b9cf=70b9cffb",
+				"directives" : "?replace;418093=418093fe;57a3b9=57a3b9fe;70b9cf=70b9cffe",
 				"permanent" : true
 			}
 		}
