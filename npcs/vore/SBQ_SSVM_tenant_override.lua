@@ -7,11 +7,6 @@ sbq = {}
 
 require("/scripts/SBQ_RPC_handling.lua")
 
-function init()
-	oldInit()
-	sbqPredType = config.getParameter("sbqPredType")
-end
-
 function update(dt)
 	sbq.checkRPCsFinished(dt)
 	oldUpdate(dt)
@@ -72,7 +67,7 @@ function feed() -- function copied from SSVM mostly because it gets its target w
 	end
 
 	-- [SBQ] taking off the bottom of feed() now that we have the target to get SBQ's prey enabling options
-	sbq.addRPC(world.sendEntityMessage(tempTarget, "sbqIsPreyEnabled", sbqPredType), function(enabled)
+	sbq.addRPC(world.sendEntityMessage(tempTarget, "sbqIsPreyEnabled", config.getParameter("sbqPredType")), function(enabled)
 		if enabled then
 			doFeed(tempTarget)
 		end
