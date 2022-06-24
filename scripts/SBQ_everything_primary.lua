@@ -99,43 +99,52 @@ end
 
 function sbq.doMysteriousTF(data)
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
-	local self = data
+	local overrideData = data or {}
+	local currentData = status.statusProperty("speciesAnimOverrideData")
 
-	if not self.species then
+
+	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
-		self.species = speciesList[math.random(#speciesList)]
+		overrideData.species = speciesList[math.random(#speciesList)]
 	end
 	local genders = {"male", "female"}
-	if not self.gender then
-		self.gender = genders[math.random(2)]
-	end
-	if self.gender == "noChange" then
-		self.gender = world.entityGender(entity.id())
+
+	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {})).genderswapImmunity
+	if genderswapImmunity then
+		overrideData.gender = currentData.gender or world.entityGender(entity.id())
+	else
+		if not overrideData.gender then
+			overrideData.gender = genders[math.random(2)]
+		end
+		if overrideData.gender == "noChange" then
+			overrideData.gender = currentData.gender or world.entityGender(entity.id())
+		end
 	end
 
-	local success, speciesFile = pcall(root.assetJson, ("/species/"..self.species..".species"))
-	if success and not self.identity then
-		self.identity = {}
+
+	local success, speciesFile = pcall(root.assetJson, ("/species/"..overrideData.species..".species"))
+	if success and not overrideData.identity then
+		overrideData.identity = {}
 		for i, data in ipairs(speciesFile.genders or {}) do
-			if data.name == self.gender then
-				self.identity.hairGroup = data.hairGroup or "hair"
-				self.identity.facialHairGroup = data.facialHairGroup or "facialHair"
-				self.identity.facialMaskGroup = data.facialMaskGroup or "facialMask"
+			if data.name == overrideData.gender then
+				overrideData.identity.hairGroup = data.hairGroup or "hair"
+				overrideData.identity.facialHairGroup = data.facialHairGroup or "facialHair"
+				overrideData.identity.facialMaskGroup = data.facialMaskGroup or "facialMask"
 
 				if data.hair[1] ~= nil then
-					self.identity.hairType = data.hair[math.random(#data.hair)]
+					overrideData.identity.hairType = data.hair[math.random(#data.hair)]
 				end
 				if data.facialHair[1] ~= nil then
-					self.identity.facialHairType = data.facialHair[math.random(#data.facialHair)]
+					overrideData.identity.facialHairType = data.facialHair[math.random(#data.facialHair)]
 				end
 				if data.facialMask[1] ~= nil then
-					self.identity.facialMaskType = data.facialMask[math.random(#data.facialMask)]
+					overrideData.identity.facialMaskType = data.facialMask[math.random(#data.facialMask)]
 				end
 			end
 		end
 	end
 	local undyColor
-	if success and not self.directives then
+	if success and not overrideData.directives then
 		local directives = ""
 		local colorTable = (speciesFile.bodyColor or {})[math.random(#speciesFile.bodyColor)]
 		if type(colorTable) == "table" then
@@ -153,9 +162,9 @@ function sbq.doMysteriousTF(data)
 			end
 		end
 		undyColor = directives2
-		self.directives = directives..directives2
+		overrideData.directives = directives..directives2
 	end
-	if success and not self.hairDirectives then
+	if success and not overrideData.hairDirectives then
 		local directives = ""
 		local colorTable = (speciesFile.hairColor or {})[math.random(#speciesFile.hairColor)]
 
@@ -167,16 +176,16 @@ function sbq.doMysteriousTF(data)
 		end
 
 		if speciesFile.headOptionAsHairColor then
-			self.hairDirectives = directives
+			overrideData.hairDirectives = directives
 		else
-			self.hairDirectives = self.directives
+			overrideData.hairDirectives = overrideData.directives
 		end
 		if speciesFile.hairColorAsBodySubColor then
-			self.directives = self.directives..self.hairDirectives
-			self.hairDirectives = self.directives
+			overrideData.directives = overrideData.directives..overrideData.hairDirectives
+			overrideData.hairDirectives = overrideData.directives
 		end
 		if speciesFile.altOptionAsHairColor then
-			self.hairDirectives = self.hairDirectives..(undyColor or "")
+			overrideData.hairDirectives = overrideData.hairDirectives..(undyColor or "")
 		end
 	end
 
@@ -185,8 +194,8 @@ function sbq.doMysteriousTF(data)
 		specialStatus = speciesFile.customAnimStatus
 	end
 
-	self.mysteriousPotion = true
-	self.permanent = true
+	overrideData.mysteriousPotion = true
+	overrideData.permanent = true
 
 	local statusProperty = status.statusProperty("speciesAnimOverrideData") or {}
 	if not statusProperty.mysteriousPotion then
@@ -194,9 +203,9 @@ function sbq.doMysteriousTF(data)
 		status.setStatusProperty("oldSpeciesAnimOverrideCategory", status.getPersistentEffects("speciesAnimOverride"))
 	end
 
-	status.setStatusProperty("sbqMysteriousPotionTF", self)
+	status.setStatusProperty("sbqMysteriousPotionTF", overrideData)
 	status.clearPersistentEffects("speciesAnimOverride")
-	status.setStatusProperty("speciesAnimOverrideData", self)
+	status.setStatusProperty("speciesAnimOverrideData", overrideData)
 	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
 	refreshOccupantHolder()
 end
