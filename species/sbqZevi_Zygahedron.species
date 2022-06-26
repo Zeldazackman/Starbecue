@@ -11,7 +11,7 @@
 
   "statusEffects" : [ "novakidglow" ],
 
-  "humanoidConfig" : "/species/sbqZevi_Zygahedron.config",
+  "humanoidConfig" : "/species/sbqQuadruped.config",
 
   "nameGen" : [ "/species/novakidnamegen.config:names", "/species/novakidnamegen.config:names" ],
   "ouchNoises" : [ "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg", "/sfx/sbqZevi_Zygahedron/zeviHurt.ogg" ],

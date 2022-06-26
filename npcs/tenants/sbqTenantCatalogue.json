@@ -73,5 +73,7 @@
 	"guard_attarran": [ "sbq_guard_attarran", "sbq_guardT2_attarran", "sbq_guardT3_attarran", "sbq_guardT4_attarran" ],
 	"guard_neki": [ "sbq_guard_neki", "sbq_guardT2_neki", "sbq_guardT3_neki", "sbq_guardT4_neki" ],
 
-	"Zevi": "sbq_tenant_zevi_zygahedron"
+	"Zevi": "sbq_tenant_zevi_zygahedron",
+	"Socks": "sbq_tenant_socks_lokivulpix"
+
 }
