@@ -48,6 +48,7 @@
 	"scripts" : [
 		"sbqController.lua",
 		"sbqControllerData.lua",
-		"/items/active/activeitemOverrides.lua"
+		"/items/active/activeitemOverrides.lua",
+		"/scripts/speciesAnimOverride_player_species.lua"
 	]
 }

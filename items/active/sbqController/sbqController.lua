@@ -13,10 +13,10 @@ function init()
 	setIconAndDescription()
 
 	message.setHandler( hand.."ItemData", function(_,_, data)
-		storage.directives = data.directives or ""
+		storage.directives = data.directives or storage.directives or ""
+		storage.icon = data.icon
 		if data.assignClickAction ~= nil then
 			storage.clickAction = data.assignClickAction
-			storage.icon = data.icon
 			setIconAndDescription()
 		elseif ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
 			activeItem.setInventoryIcon((data.defaultIcon or ("/items/active/sbqController/"..data.defaultClickAction..".png"))..(storage.directives or ""))
@@ -58,11 +58,11 @@ function update(dt, fireMode, shiftHeld, controls)
 					},
 					{
 						name = "oralVore",
-						icon = "/items/active/sbqController/oralVore.png"
+						icon = returnVoreIcon("oralVore") or "/items/active/sbqController/oralVore.png"
 					},
 					{
 						name = "analVore",
-						icon = "/items/active/sbqController/analVore.png"
+						icon = returnVoreIcon("analVore") or "/items/active/sbqController/analVore.png"
 					}
 				}
 				occpantsWhenAssigned = currentData.totalOccupants or 0
@@ -72,31 +72,31 @@ function update(dt, fireMode, shiftHeld, controls)
 				if settings.tailMaw then
 					table.insert(options, 3, {
 						name = "tailVore",
-						icon = "/items/active/sbqController/tailVore.png"
+						icon = returnVoreIcon("tailVore") or "/items/active/sbqController/tailVore.png"
 					} )
 				end
 				if settings.navel then
 					table.insert(options, {
 						name = "navelVore",
-						icon = "/items/active/sbqController/navelVore.png"
+						icon = returnVoreIcon("navelVore") or "/items/active/sbqController/navelVore.png"
 					} )
 				end
 				if settings.breasts then
 					table.insert(options, {
 						name = "breastVore",
-						icon = "/items/active/sbqController/breastVore.png"
+						icon = returnVoreIcon("breastVore") or "/items/active/sbqController/breastVore.png"
 					} )
 				end
 				if settings.pussy then
 					table.insert(options, {
 						name = "unbirth",
-						icon = "/items/active/sbqController/unbirth.png"
+						icon = returnVoreIcon("unbirth") or "/items/active/sbqController/unbirth.png"
 					} )
 				end
 				if settings.penis then
 					table.insert(options, {
 						name = "cockVore",
-						icon = "/items/active/sbqController/cockVore.png"
+						icon = returnVoreIcon("cockVore") or "/items/active/sbqController/cockVore.png"
 					} )
 				end
 
@@ -183,5 +183,28 @@ end
 
 
 function setIconAndDescription()
+	storage.icon = returnVoreIcon(storage.clickAction) or storage.icon
+	getDirectives()
 	activeItem.setInventoryIcon((storage.icon or ("/items/active/sbqController/"..storage.clickAction..".png"))..(storage.directives or ""))
+end
+
+function returnVoreIcon(action)
+	local icon
+	currentData = player.getProperty( "sbqCurrentData") or {}
+	if currentData.species == "sbqOccupantHolder" or not currentData.species then
+		local species = player.species()
+		local success, notEmpty = pcall(root.nonEmptyRegion, ("/humanoid/"..species.."/voreControllerIcons/"..action..".png"))
+		if success and notEmpty ~= nil then
+			icon = "/humanoid/"..species.."/voreControllerIcons/"..action..".png"
+		end
+	end
+	return icon
+end
+
+function getDirectives()
+	currentData = player.getProperty( "sbqCurrentData") or {}
+	if currentData.species == "sbqOccupantHolder" or not currentData.species then
+		local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
+		storage.directives = overrideData.directives
+	end
 end
