@@ -293,3 +293,40 @@ function sbq.transformPlayer(i)
 		world.sendEntityMessage(id, "sbqMysteriousPotionTF", data )
 	end
 end
+
+function sbq.initLocationEffects()
+	for location, data in pairs(sbq.sbqData.locations) do
+		local value = sbq.settings[location.."EffectSlot"]
+		if value then
+			local effect = (data[value] or {}).effect or (sbq.sbqData.effectDefaults or {})[value] or (sbq.config.effectDefaults or {})[value] or "sbqRemoveBellyEffects"
+			sbq.settings[location.."Effect"] = effect
+			if data.sided then
+				local left =  sbq.sbqData.locations[location.."L"]
+				local right =  sbq.sbqData.locations[location.."R"]
+				if not right.selectEffect then
+					sbq.settings[location.."REffect"] = effect
+				end
+				if not left.selectEffect then
+					sbq.settings[location.."LEffect"] = effect
+				end
+			end
+		end
+		if data.sided then
+			local left =  sbq.sbqData.locations[location.."L"]
+			local right =  sbq.sbqData.locations[location.."R"]
+			if not right.TF then
+				right.TF = data.TF
+			end
+			if not left.TF then
+				left.TF = data.TF
+			end
+			if not right.eggify then
+				right.eggify = data.eggify
+			end
+			if not left.eggify then
+				left.eggify = data.eggify
+			end
+		end
+
+	end
+end

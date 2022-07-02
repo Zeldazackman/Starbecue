@@ -180,7 +180,9 @@
 			"belly"
 		],
 		"locations" :{
-			"belly" : { "name" : "Slime", "max": 1, "digest" : true, "transformGroups" : ["preybob"] } // this looks odd but its just mostly so people can make it set the heal effect or not
+			"belly" : { "name" : "Slime", "max": 1, "selectEffect" : true, "transformGroups" : ["preybob"],
+				"TF" : {}
+			}
 		},
 		"victimAnimations": "/vehicles/sbq/sbqSlime/victim_animations.config"
 	},

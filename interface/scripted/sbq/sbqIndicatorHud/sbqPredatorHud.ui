@@ -18,9 +18,23 @@
 
 				{ "type" : "image", "file" : "predHudBottom.png", "noAutoCrop" : true },
 
-				{ "type" : "iconButton", "id" : "prevBellyEffect", "position" : [3, 13], "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-				{ "type" : "iconButton", "id" : "bellyEffectIcon", "image" : "/stats/sbq/sbqRemoveBellyEffects/sbqRemoveBellyEffects.png", "noAutoCrop" : true, "position" : [15,9], "size" : [16,16], "toolTip" : "None" },
-				{ "type" : "iconButton", "id" : "nextBellyEffect", "position" : [35, 13], "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+				{ "type" : "panel", "style" : "concave", "size" : [38,26], "position" : [4,4], "children" : [
+					{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+						[
+							{ "type" : "checkBox", "id" : "noneButton", "value" : "none", "radioGroup" : "effectsGroup"},
+							{ "type" : "checkBox", "id" : "healButton", "value" : "heal",  "radioGroup" : "effectsGroup"},
+							{ "type" : "checkBox", "id" : "transformButton" }
+						],
+						[
+							{ "type" : "checkBox", "id" : "softDigestButton", "value" : "softDigest", "radioGroup" : "effectsGroup"},
+							{ "type" : "checkBox", "id" : "digestButton", "value" : "digest",  "radioGroup" : "effectsGroup"},
+							{ "type" : "checkBox", "id" : "eggifyButton" }
+						]
+					]}
+				]},
+				{ "type" : "iconButton", "id" : "prevLocation", "position" : [3, 13], "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+				{ "type" : "iconButton", "id" : "nextLocation", "position" : [35, 13], "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+
 
 				{ "type" : "panel", "style" : "concave", "size" : [48,24], "position" : [45,5], "children" : [
 					{ "type" : "label", "text" : "  Escape" },

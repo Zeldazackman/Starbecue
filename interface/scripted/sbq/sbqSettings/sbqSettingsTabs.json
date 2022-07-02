@@ -82,13 +82,6 @@
 				]}]},
 				{ "type" : "panel", "id" : "passiveEffectsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "iconButton", "id" : "penisCumTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "iconButton", "id" : "penisCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "iconButton", "id" : "ballsCumTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "iconButton", "id" : "ballsCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "iconButton", "id" : "wombEggifyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb Eggify" }],
-					[{ "type" : "checkBox", "id" : "wombTF",  "toolTip" : "People in the womb will be transformed into your species" }, { "type" : "iconButton", "id" : "wombTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb TF" }],
-					[{ "type" : "checkBox", "id" : "wombCumDigestion",  "toolTip" : "People in the womb will automatically start digesting into cum (fatal)" }, { "type" : "iconButton", "id" : "wombCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb Digestion" }]
 				]}]}
 			]}
 		},
@@ -116,14 +109,6 @@
 				]}]},
 				{ "type" : "panel", "id" : "passiveEffectsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bellyTF",  "toolTip" : "People in the belly will be transformed into your species" }, { "type" : "iconButton", "id" : "bellyTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Belly TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "iconButton", "id" : "penisCumTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "iconButton", "id" : "penisCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "iconButton", "id" : "ballsCumTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "iconButton", "id" : "ballsCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "iconButton", "id" : "wombEggifyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb Eggify" }],
-					[{ "type" : "checkBox", "id" : "wombTF",  "toolTip" : "People in the womb will be transformed into your species" }, { "type" : "iconButton", "id" : "wombTFLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb TF" }],
-					[{ "type" : "checkBox", "id" : "wombCumDigestion",  "toolTip" : "People in the womb will automatically start digesting into cum (fatal)" }, { "type" : "iconButton", "id" : "wombCumDigestionLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Womb Digestion" }]
 				]}]}
 			]}
 		},
@@ -137,7 +122,6 @@
 				]}]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bellyTF", "toolTip" : "People in the belly will be transformed into more vappies!"}, { "type" : "label", "text" : " Belly TF" }]
 				]}]}
 			]}
 		},
@@ -150,7 +134,6 @@
 				]}]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bellyEggify", "toolTip" : "People in the belly will be trapped within an Egg"}, { "type" : "label", "text" : " Belly Eggify" }]
 				]}]}
 			]}
 		},
@@ -169,10 +152,6 @@
 				]}]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : " Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Penis Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : " Balls Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Balls Cum Digestion" }]
 				]}]}
 			]}
 		},
@@ -194,22 +173,15 @@
 				]}]},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : " Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Penis Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : " Balls Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Balls Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : " Womb Eggify" }],
-					[{ "type" : "checkBox", "id" : "wombCumDigestion",  "toolTip" : "People in the womb will automatically start digesting into cum (fatal)" }, { "type" : "label", "text" : " Womb Digestion" }]
 				]}]}
 			]}
 		},
 		"sbqSlime" : {
 			"scripts" : [],
-			"tab": { "type" : "tab", "id" : "avianSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			"tab": { "type" : "tab", "id" : "slimeSettingsTab", "title" : "Config", "icon" : "/vehicles/sbq/sbqAvian/skins/default/icon.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bellyTF", "toolTip" : "People trapped inside will be transformed into more slimes"}, { "type" : "label", "text" : " Slime TF" }]
 				]}]}
 			]}
 		},
@@ -226,14 +198,8 @@
 					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "label", "text" : " Pussy" }]
 
 				]}]},
-				{ "type" : "panel", "style" : "convex", "children" : [{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					{ "type" : "label", "text" : "Passive Effects", "inline" : true },
-					[{ "type" : "checkBox", "id" : "penisCumTF", "toolTip" : "People in the penis automatically start turning into cum"}, { "type" : "label", "text" : " Penis Cum TF" }],
-					[{ "type" : "checkBox", "id" : "penisCumDigestion", "toolTip" : "People in the penis automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Penis Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "ballsCumTF",  "toolTip" : "People in the balls automatically start turning into cum" }, { "type" : "label", "text" : " Balls Cum TF" }],
-					[{ "type" : "checkBox", "id" : "ballsCumDigestion", "toolTip" : "People in the balls automatically start digesting into cum (fatal)"}, { "type" : "label", "text" : " Balls Cum Digestion" }],
-					[{ "type" : "checkBox", "id" : "wombEggify",  "toolTip" : "People in the womb will be trapped within an egg" }, { "type" : "label", "text" : " Womb Eggify" }],
-					[{ "type" : "checkBox", "id" : "wombCumDigestion",  "toolTip" : "People in the womb will automatically start digesting into cum (fatal)" }, { "type" : "label", "text" : " Womb Digestion" }]
+				{ "type" : "panel", "style" : "convex", "children" : [
+					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
 				]}]}
 			]}
 		}

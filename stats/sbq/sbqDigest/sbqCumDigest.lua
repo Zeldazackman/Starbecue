@@ -48,7 +48,7 @@ function update(dt)
 			self.targetTime = 2
 			effect.modifyDuration(2+1)
 			status.setResource("health", 1)
-			world.sendEntityMessage(effect.sourceEntity(), "sbqCumDigest", entity.id())
+			world.sendEntityMessage(effect.sourceEntity(), "sbqDigest", entity.id())
 		end
 	else
 		effect.expire()

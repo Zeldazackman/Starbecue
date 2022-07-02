@@ -125,12 +125,21 @@
 			"balls"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
-			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"womb" : { "name" : "Womb", "max": 2, "selectEffect" : true, "eggify" : {}, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true
+			},
 			"fatten" : { "mass": 1 },
 
-			"shaft" : { "name" : "Shaft", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
-			"balls" : { "name" : "Balls", "sided" : true, "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
+				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
+				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
+				"TF" : { "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
+			},
+			"balls" : { "name" : "Balls", "selectEffect" : true, "sided" : true, "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true,
+				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
+				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
+				"TF" : { "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
+			},
 			"ballsL" : { "name" : "Left Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
 			"ballsR" : { "name" : "Right Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true }
 		},

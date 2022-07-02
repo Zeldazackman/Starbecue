@@ -1292,11 +1292,6 @@
 
 			"bellyEffect" : [ "sbqRemoveBellyEffects", "sbqHeal", "sbqDigest", "sbqSoftDigest"],
 
-			"BENoneEnable" : [true,false],
-			"BEHealEnable" : [true,false],
-			"BEDigestEnable" : [true,false],
-			"BESoftDigestEnable" : [true,false],
-
 			"hammerspace" : [true,false],
 
 			"displayDigest" : [true,false],

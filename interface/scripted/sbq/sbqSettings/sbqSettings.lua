@@ -5,13 +5,14 @@ require( "/lib/stardust/json.lua" )
 
 sbq = {
 	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
-	config = root.assetJson( "/sbqGeneral.config" )
-
+	config = root.assetJson( "/sbqGeneral.config" ),
+	overrideSettings = {}
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
 require("/scripts/speciesAnimOverride_player_species.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
+require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 
 function sbq.getPatronsString()
 	local patronsString = ""
@@ -29,19 +30,48 @@ function sbq.getInitialData()
 	sbq.lastSpecies = sbq.sbqCurrentData.species
 	sbq.lastType = sbq.sbqCurrentData.type
 
-	if sbq.sbqCurrentData.type == "prey" then
-		mainTabField.tabs.globalPredSettings:setVisible(false)
-	else
-		mainTabField.tabs.globalPredSettings:setVisible(true)
-	end
-
-	sbq.predatorEntity = player.loungingIn() or sbq.sbqCurrentData.id
+	sbq.predatorEntity = sbq.sbqCurrentData.id
 end
 
 function sbq.getHelpTab()
 	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
 		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
 	end
+end
+
+function sbq.getPlayerOccupantHolderData()
+	local species = player.species()
+	local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
+	local path = registry[species] or "/humanoid/sbqData.config"
+	if path:sub(1,1) ~= "/" then
+		path = "/humanoid/"..species.."/"..path
+	end
+	sbq.predatorConfig = root.assetJson(path).sbqData
+
+
+	local mergeConfigs = sbq.predatorConfig.merge or {}
+	local configs = { sbq.predatorConfig }
+	while type(mergeConfigs[#mergeConfigs]) == "string" do
+		local insertPos = #mergeConfigs
+		local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
+		for i = #(newConfig.merge or {}), 1, -1 do
+			table.insert(mergeConfigs, insertPos, newConfig.merge[i])
+		end
+
+		table.insert(configs, 1, newConfig)
+
+		table.remove(mergeConfigs, #mergeConfigs)
+	end
+	local scripts = {}
+	local finalConfig = {}
+	for i, config in ipairs(configs) do
+		finalConfig = sb.jsonMerge(finalConfig, config)
+		for j, script in ipairs(config.scripts or {}) do
+			table.insert(scripts, script)
+		end
+	end
+	sbq.predatorConfig = finalConfig
+	sbq.predatorConfig.scripts = scripts
 end
 
 function init()
@@ -52,48 +82,18 @@ function init()
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
-			local species = player.species()
-			local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
-			local path = registry[species] or "/humanoid/sbqData.config"
-			if path:sub(1,1) ~= "/" then
-				path = "/humanoid/"..species.."/"..path
-			end
-			sbq.predatorConfig = root.assetJson(path).sbqData
-
-
-			local mergeConfigs = sbq.predatorConfig.merge or {}
-			local configs = { sbq.predatorConfig }
-			while type(mergeConfigs[#mergeConfigs]) == "string" do
-				local insertPos = #mergeConfigs
-				local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
-				for i = #(newConfig.merge or {}), 1, -1 do
-					table.insert(mergeConfigs, insertPos, newConfig.merge[i])
-				end
-
-				table.insert(configs, 1, newConfig)
-
-				table.remove(mergeConfigs, #mergeConfigs)
-			end
-			local scripts = {}
-			local finalConfig = {}
-			for i, config in ipairs(configs) do
-				finalConfig = sb.jsonMerge(finalConfig, config)
-				for j, script in ipairs(config.scripts or {}) do
-					table.insert(scripts, script)
-				end
-			end
-			sbq.predatorConfig = finalConfig
-			sbq.predatorConfig.scripts = scripts
+			sbq.getPlayerOccupantHolderData()
 		else
 			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 		end
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
-		sbq.predatorConfig = {}
-		sbq.predatorSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.globalSettings)
+		sbq.getPlayerOccupantHolderData()
+		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings.sbqOccupantHolder or {}), sbq.globalSettings)
 	end
 
 	sbq.locationPanel()
+	sbq.effectsPanel()
 
 	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
 		mainTabField.tabs.customizeTab:setVisible(true)
@@ -207,7 +207,7 @@ function init()
 	end
 	local species = sbq.sbqCurrentData.species
 	local playerSpecies = player.species()
-	if species == "sbqOccupantHolder" and sbq.extraTabs.speciesSettingsTabs[playerSpecies] ~= nil then
+	if (species == "sbqOccupantHolder" or species == nil) and sbq.extraTabs.speciesSettingsTabs[playerSpecies] ~= nil then
 		species = playerSpecies
 	end
 	if sbq.extraTabs.speciesSettingsTabs[species] ~= nil then
@@ -248,7 +248,6 @@ function init()
 		end
 	end
 
-	BENone:selectValue(sbq.globalSettings.bellyEffect or "sbqRemoveBellyEffects")
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
 	for setting, value in pairs(sbq.predatorSettings) do
@@ -280,7 +279,7 @@ local init = init
 
 function update()
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
-	if sbq.sbqCurrentData.species ~= sbq.lastSpecies or sbq.sbqCurrentData.type ~= sbq.lastType then
+	if sbq.sbqCurrentData.id ~= sbq.predatorEntity then
 		init()
 	end
 end
@@ -288,8 +287,8 @@ end
 --------------------------------------------------------------------------------------------------
 
 function sbq.saveSettings()
-	if sbq.predatorEntity ~= nil and sbq.sbqCurrentData.type == "driver" then
-		world.sendEntityMessage( sbq.predatorEntity, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
+	if type(sbq.sbqCurrentData.id) == "number" and sbq.sbqCurrentData.type == "driver" and world.entityExists(sbq.sbqCurrentData.id) then
+		world.sendEntityMessage( sbq.sbqCurrentData.id, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
 	end
 
 	sbq.sbqSettings[sbq.sbqCurrentData.species or "sbqOccupantHolder"] = sbq.predatorSettings
@@ -309,10 +308,6 @@ function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 
 	sbq.saveSettings()
-end
-
-function sbq.setBellyEffect()
-	sbq.changeGlobalSetting("bellyEffect", BENone:getGroupValue())
 end
 
 function sbq.changeEscapeModifier(inc)
@@ -421,24 +416,6 @@ function sbq.changeSpecies(inc)
 	end
 	sbq.speciesOverrideIndex = speciesIndex
 	speciesText:setText(sbq.extraTabs.speciesPresetList[sbq.speciesOverrideIndex])
-end
-
---------------------------------------------------------------------------------------------------
-
-function BENone:onClick()
-	sbq.setBellyEffect()
-end
-
-function BEHeal:onClick()
-	sbq.setBellyEffect()
-end
-
-function BEDigest:onClick()
-	sbq.setBellyEffect()
-end
-
-function BESoftDigest:onClick()
-	sbq.setBellyEffect()
 end
 
 --------------------------------------------------------------------------------------------------

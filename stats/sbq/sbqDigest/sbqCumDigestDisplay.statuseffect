@@ -1,0 +1,14 @@
+{
+	"name" : "sbqCumDigestDisplay",
+	"blockingStat" : "cumDigestImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqCumDigestDisplay.lua"
+	],
+
+	"label" : "Converting Into Cum",
+	"icon" : "/stats/sbq/sbqDigest/sbqCumDigest.png"
+}

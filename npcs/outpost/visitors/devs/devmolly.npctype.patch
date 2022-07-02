@@ -12,6 +12,7 @@
 			"value": {
 				"preyEnabled" : false,
 				"transformImmunity" : true,
+				"cumTFImmunity" : true,
 				"genderswapImmunity" : true
 			}
 		}

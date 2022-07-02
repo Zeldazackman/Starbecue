@@ -9,16 +9,15 @@
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
-					[[//first collumn
+					[{ "size" : 78 },[//first collumn
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : " None" }],
-							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : " Heal" }],
-							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : " Digest" }],
-							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : " Soft Digest" }]
-						]}]}
+							{ "type" : "label", "text" : "Effects", "inline" : true },
+							{ "type" : "scrollArea", "id" : "effectsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								{"type" : "layout", "id": "effectsLayout", "mode" : "vertical", "spacing" : -1, "children" : [
+								]}
+							]}
+						]}
 					],[// second collumn
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [

@@ -53,6 +53,8 @@ function init()
 	else
 		ownerBar:setVisible(false)
 	end
+
+	sbq.globalSettings = sbq.predatorSettings
 end
 
 function update()

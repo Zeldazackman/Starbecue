@@ -9,8 +9,6 @@
 	"sbqSoftDigest.lua"
 	],
 
-	"animationConfig" : "sbqSoftDigest.animation",
-
 	"label" : "Being Soft Digested",
 	"icon" : "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png"
 }

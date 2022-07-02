@@ -155,7 +155,9 @@
 			"belly"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "digest" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true,
+				"TF" : {}
+			},
 			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 },
 			"fatten" : { "mass": 1 }
 		},

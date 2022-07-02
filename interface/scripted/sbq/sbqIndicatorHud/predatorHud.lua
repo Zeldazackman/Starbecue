@@ -50,11 +50,11 @@ function update()
 	sbq.checkRPCsFinished(dt)
 	sbq.checkTimers(dt)
 	sbq.updateBars()
-	sbq.updateBellyEffectIcon()
 end
 
 function sbq.checkRefresh(dt)
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
 	if sbq.sbqCurrentData.type == "driver" then
 		sbq.loopedMessage("checkRefresh", sbq.sbqCurrentData.id, "settingsMenuRefresh", {}, function (result)
 			if result ~= nil then
@@ -228,48 +228,6 @@ function sbq.setPortrait( canvasName, data, offset )
 	end
 end
 
-local bellyEffectIconsTooltips = {
-	sbqRemoveBellyEffects = { icon = "/stats/sbq/sbqRemoveBellyEffects/sbqRemoveBellyEffects.png", toolTip = "None", prev = "sbqSoftDigest", next = "sbqHeal" },
-	sbqHeal = { icon = "/stats/sbq/sbqHeal/sbqHeal.png", toolTip = "Heal", prev = "sbqRemoveBellyEffects", next = "sbqDigest", display = true },
-	sbqDigest = { icon = "/stats/sbq/sbqDigest/sbqDigest.png", toolTip = "Digest", prev = "sbqHeal", next = "sbqSoftDigest", display = true },
-	sbqSoftDigest = { icon = "/stats/sbq/sbqSoftDigest/sbqSoftDigest.png", toolTip = "Soft Digest", prev = "sbqDigest", next = "sbqRemoveBellyEffects", display = true }
-}
-
-function sbq.adjustBellyEffect(direction)
-	local newBellyEffect = bellyEffectIconsTooltips[(sbq.sbqSettings.global or {}).bellyEffect or "sbqRemoveBellyEffects" ][direction]
-	if sbq.sbqSettings.global ~= nil then
-		sbq.sbqSettings.global.bellyEffect = newBellyEffect
-	else
-		sbq.sbqSettings.global = {bellyEffect = newBellyEffect}
-	end
-
-	sbq.saveSettings()
-
-	sbq.updateBellyEffectIcon()
-end
-
-function sbq.updateBellyEffectIcon()
-	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
-
-	if (sbq.sbqSettings.global or {}).bellyEffect ~= nil then
-
-		local effect = bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect]
-
-		local appendTooltip = ""
-		if sbq.sbqSettings.global.displayDigest and effect.display then
-			appendTooltip = "Display "
-		end
-
-		bellyEffectIcon.toolTip = appendTooltip..effect.toolTip
-		prevBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].prev].toolTip
-		nextBellyEffect.toolTip = bellyEffectIconsTooltips[bellyEffectIconsTooltips[sbq.sbqSettings.global.bellyEffect].next].toolTip
-		bellyEffectIcon:setImage(effect.icon)
-
-		escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
-		impossibleEscape:setChecked(sbq.sbqSettings.global.impossibleEscape)
-	end
-end
-
 function sbq.changeEscapeModifier(inc)
 	sbq.sbqSettings.global.escapeDifficulty = (sbq.sbqSettings.global.escapeDifficulty or 0) + inc
 	escapeValue:setText(tostring(sbq.sbqSettings.global.escapeDifficulty or 0))
@@ -290,22 +248,6 @@ end
 
 function settings:onClick()
 	player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:settings" })
-end
-
-function prevBellyEffect:onClick()
-	sbq.adjustBellyEffect("prev")
-end
-
-function bellyEffectIcon:onClick()
-	local displayDigest = not sbq.sbqSettings.global.displayDigest
-	sbq.sbqSettings.global.displayDigest = displayDigest
-
-	sbq.saveSettings()
-	sbq.updateBellyEffectIcon()
-end
-
-function nextBellyEffect:onClick()
-	sbq.adjustBellyEffect("next")
 end
 
 function decEscape:onClick()

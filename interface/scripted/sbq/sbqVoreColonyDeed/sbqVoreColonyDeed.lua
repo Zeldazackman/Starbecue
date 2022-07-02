@@ -3,11 +3,13 @@ sbq = {
 	config = root.assetJson("/sbqGeneral.config"),
 	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json"),
 	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
-	tenantIndex = 1
+	tenantIndex = 1,
+	deedUI = true
 }
 
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
+require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 
 function init()
 	sbq.storage = metagui.inputData
@@ -29,7 +31,7 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreySettings or {})
 		)
-		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
+		sbq.globalSettings = sbq.predatorSettings
 		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
 		escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
 		escapeValueMax:setText(tostring(sbq.predatorSettings.escapeDifficultyMax or 0))
@@ -101,6 +103,7 @@ function init()
 		sbq.predatorConfig.scripts = scripts
 
 		sbq.locationPanel()
+		sbq.effectsPanel()
 
 		for setting, value in pairs(sbq.predatorSettings) do
 			if setting:sub(-6,-1) ~= "Locked" then
@@ -287,14 +290,6 @@ function sbq.changePreySetting(settingname, value)
 	sbq.savePreySettings()
 end
 
-function sbq.setBellyEffect()
-	if not sbq.predatorSettings.BELock then
-		sbq.changePredSetting("bellyEffect", BENone:getGroupValue())
-	else
-		BENone:selectValue(sbq.predatorSettings.bellyEffect or "sbqRemoveBellyEffects")
-	end
-end
-
 function sbq.changeEscapeModifier( settingname, label, inc )
 	sbq.changePredSetting(settingname, (sbq.predatorSettings[settingname] or 0) + inc)
 	label:setText(tostring(sbq.predatorSettings[settingname] or 0))
@@ -379,24 +374,6 @@ end
 
 function incMood:onClick()
 	sbq.changePredSetting("mood", sbq.changeSelectedFromList(sbq.config.npcMoods, moodText, "moodIndex", 1))
-end
-
---------------------------------------------------------------------------------------------------
-
-function BENone:onClick()
-	sbq.setBellyEffect()
-end
-
-function BEHeal:onClick()
-	sbq.setBellyEffect()
-end
-
-function BEDigest:onClick()
-	sbq.setBellyEffect()
-end
-
-function BESoftDigest:onClick()
-	sbq.setBellyEffect()
 end
 
 --------------------------------------------------------------------------------------------------

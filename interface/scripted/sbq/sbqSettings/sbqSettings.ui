@@ -9,16 +9,15 @@
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "vertical", "children" : [
-					[[//first quarter
+					[{ "size" : 78 },[//first quarter
 						{ "expandMode" : [2, 2]},
 						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Belly Effect", "inline" : true },
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[{ "type" : "checkBox", "id" : "BENone", "value" : "sbqRemoveBellyEffects", "radioGroup" : "bellyEffect"}, { "type" : "label", "text" : " None" }],
-							[{ "type" : "checkBox", "id" : "BEHeal", "value" : "sbqHeal", "radioGroup" : "bellyEffect", "toolTip" : "Heal rate increases with attack power"}, { "type" : "label", "text" : " Heal" }],
-							[{ "type" : "checkBox", "id" : "BEDigest", "value" : "sbqDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power"}, { "type" : "label", "text" : " Digest" }],
-							[{ "type" : "checkBox", "id" : "BESoftDigest", "value" : "sbqSoftDigest", "radioGroup" : "bellyEffect", "toolTip" : "Digest rate increases with attack power, stops at 1 HP"}, { "type" : "label", "text" : " Soft Digest" }]
-					]}]}
+							{ "type" : "label", "text" : "Effects", "inline" : true },
+							{ "type" : "scrollArea", "id" : "effectsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								{"type" : "layout", "id": "effectsLayout", "mode" : "vertical", "spacing" : -1, "children" : [
+								]}
+							]}
+						]}
 					],[// second quarter
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
@@ -105,8 +104,9 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Immunities", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to predator's digestion effects" }, { "type" : "label", "text" : " Digestion" }],
-								[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to predator's cum digestion effects" }, { "type" : "label", "text" : " Cumgestion" }],
+								[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to digestion" }, { "type" : "label", "text" : " Digestion" }],
+								[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to cum digestion" }, { "type" : "label", "text" : " Cumgestion" }],
+								[{ "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "Become immune to cum transformation" }, { "type" : "label", "text" : " Cum TF" }],
 								[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : " Transformation" }],
 								[{ "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "Become immune to genderswap effects" }, { "type" : "label", "text" : " Genderswap" }],
 								[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : " Egg Entrapment" }]

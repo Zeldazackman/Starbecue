@@ -252,6 +252,7 @@ function init()
 	for _, script in ipairs(sbq.config.scripts) do
 		require(script)
 	end
+	sbq.initLocationEffects()
 	sbq.init()
 end
 

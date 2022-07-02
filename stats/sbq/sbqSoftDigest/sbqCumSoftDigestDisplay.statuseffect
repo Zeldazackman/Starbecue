@@ -1,0 +1,14 @@
+{
+	"name" : "sbqCumSoftDigestDisplay",
+	"blockingStat" : "cumDigestImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"sbqCumSoftDigestDisplay.lua"
+	],
+
+	"label" : "Soft Converting Into Cum",
+	"icon" : "/stats/sbq/sbqSoftDigest/sbqCumSoftDigest.png"
+}

@@ -223,6 +223,7 @@ function initAfterInit(data)
 			require(script)
 		end
 	end
+	sbq.initLocationEffects()
 
 	local retrievePrey = config.getParameter("retrievePrey")
 	if type(retrievePrey) == "number" and world.entityExists(retrievePrey) then

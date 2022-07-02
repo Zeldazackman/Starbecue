@@ -66,7 +66,7 @@ function sbq.eggify(id, i)
 				layerLocation = "egg",
 				settings = {
 					cracks = 0,
-					bellyEffect = "sbqHeal",
+					eggEffect = "sbqHeal",
 					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
 					replaceColors = replaceColors
 				}
@@ -87,7 +87,7 @@ function sbq.xeroEggify(id, i)
 				layerLocation = "egg",
 				settings = {
 					cracks = 0,
-					bellyEffect = "sbqHeal",
+					eggEffect = "sbqHeal",
 					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
 					replaceColorTable = {
 						{"aa720a", "e4a126", "ffb62e", "ffca69"},
@@ -124,7 +124,7 @@ function sbq.plasticEggify(id, i)
 				layerLocation = "egg",
 				settings = {
 					cracks = 0,
-					bellyEffect = "sbqHeal",
+					eggEffect = "sbqHeal",
 					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
 					replaceColorTable = replaceColorTable,
 					skinNames = { head = "plastic" },
@@ -152,7 +152,7 @@ function sbq.glassEggify(id, i)
 				layerLocation = "egg",
 				settings = {
 					cracks = 0,
-					bellyEffect = "sbqHeal",
+					eggEffect = "sbqHeal",
 					escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
 					replaceColorTable = replaceColorTable
 				}
