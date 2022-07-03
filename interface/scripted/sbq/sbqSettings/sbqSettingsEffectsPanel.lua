@@ -52,18 +52,19 @@ function sbq.effectsPanel()
 						radioGroup = location.."EffectGroup", value = "digest",
 						visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.digest or {}).effect or (sbq.predatorConfig.effectDefaults or {}).digest or "sbqDigest")) or (sbq.overrideSettings[location.."DigestEnable"] == false))) or false,
 						toolTip = ((locationData.digest or {}).toolTip or "Prey within will be digested, boosted by your attack power.")
-					},{
-						type = "checkBox", id = location.."Eggify", checked = sbq.predatorSettings[location.."Eggify"],
-						visible = (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
-						toolTip = ((locationData.eggify or {}).toolTip or "Prey within will be trapped in an egg.")
 					},
-					{ type = "iconButton", id = location.."EggifyLocked", visible = false, image = "lockedDisabled.png"},
 					{
 						type = "checkBox", id = location.."TF", checked = sbq.predatorSettings[location.."TF"],
 						visible = (locationData.TF and not (sbq.overrideSettings[location.."TF"] ~= nil)) or false,
 						toolTip = ((locationData.TF or {}).toolTip or "Prey within will be transformed.")
 					},
 					{ type = "iconButton", id = location.."TFLocked", visible = false, image = "lockedDisabled.png"},
+					{
+						type = "checkBox", id = location.."Eggify", checked = sbq.predatorSettings[location.."Eggify"],
+						visible = (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
+						toolTip = ((locationData.eggify or {}).toolTip or "Prey within will be trapped in an egg.")
+					},
+					{ type = "iconButton", id = location.."EggifyLocked", visible = false, image = "lockedDisabled.png"},
 					{type = "spacer", size = 1}
 				},
 				{
@@ -88,15 +89,15 @@ function sbq.effectsPanel()
 					},
 					{ type = "iconButton", id = location.."DigestEnableLocked", visible = false, image = "lockedDisabled.png"},
 					{
-						type = "checkBox", id = location.."EggifyEnable", toolTip = "Allows the NPC to choose trap others in eggs.",
-						visible = sbq.deedUI and (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
-					},
-					{ type = "iconButton", id = location.."EggifyEnableLocked", visible = false, image = "lockedDisabled.png"},
-					{
 						type = "checkBox", id = location.."TFEnable", toolTip = "Allows the NPC to choose to transform others.",
 						visible = sbq.deedUI and (locationData.TF and not (sbq.overrideSettings[location.."TF"] ~= nil)) or false,
 					},
 					{ type = "iconButton", id = location.."TFEnableLocked", visible = false, image = "lockedDisabled.png"},
+					{
+						type = "checkBox", id = location.."EggifyEnable", toolTip = "Allows the NPC to choose trap others in eggs.",
+						visible = sbq.deedUI and (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
+					},
+					{ type = "iconButton", id = location.."EggifyEnableLocked", visible = false, image = "lockedDisabled.png"},
 					{type = "spacer", size = 1}
 				}},
 				{ type = "label", text = " "..(locationData.name or location) }
@@ -144,10 +145,10 @@ function sbq.locationEffectButton(button, location, locationData)
 		local left =  sbq.predatorConfig.locations[location.."L"]
 		local right =  sbq.predatorConfig.locations[location.."R"]
 		if not right.selectEffect then
-			sbq.predatorSettings[location.."REffect"] = effect
+			sbq.globalSettings[location.."REffect"] = effect
 		end
 		if not left.selectEffect then
-			sbq.predatorSettings[location.."LEffect"] = effect
+			sbq.globalSettings[location.."LEffect"] = effect
 		end
 	end
 	sbq.saveSettings()

@@ -78,7 +78,7 @@ function init()
 
 	sbq.getInitialData()
 
-	sbq.globalSettings = sbq.sbqSettings.global or sbq.config.defaultSettings
+	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global)
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
@@ -279,6 +279,9 @@ local init = init
 
 function update()
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
+	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
+	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global or {})
+
 	if sbq.sbqCurrentData.id ~= sbq.predatorEntity then
 		init()
 	end
@@ -295,6 +298,7 @@ function sbq.saveSettings()
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
 	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
+	world.sendEntityMessage( player.id(), "sbqClosePredHud")
 end
 
 function sbq.changeGlobalSetting(settingname, settingvalue)
