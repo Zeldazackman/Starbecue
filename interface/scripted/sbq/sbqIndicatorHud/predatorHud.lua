@@ -22,7 +22,7 @@ require("/scripts/speciesAnimOverride_player_species.lua")
 
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
-	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global or {})
+	sbq.globalSettings = sb.jsonMerge(sbq.config.globalSettings, sbq.sbqSettings.global or {})
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
@@ -121,7 +121,7 @@ end
 
 function sbq.checkRefresh(dt)
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
-	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global or {})
+	sbq.globalSettings = sb.jsonMerge(sbq.config.globalSettings, sbq.sbqSettings.global or {})
 
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
 	if sbq.sbqCurrentData.type == "driver" then
@@ -313,7 +313,6 @@ function sbq.saveSettings()
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
 	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
-	world.sendEntityMessage( player.id(), "sbqCloseSettingsMenu")
 end
 
 ----------------------------------------------------------------------------------------------------------------

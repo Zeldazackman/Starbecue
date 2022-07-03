@@ -78,7 +78,7 @@ function init()
 
 	sbq.getInitialData()
 
-	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global)
+	sbq.globalSettings = sb.jsonMerge(sbq.config.globalSettings, sbq.sbqSettings.global)
 
 	if sbq.sbqCurrentData.species ~= nil then
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
@@ -274,13 +274,14 @@ function init()
 		sbq.locationPanel()
 	end
 
+	require("/interface/scripted/sbq/sbqSettings/sbqResetSettings.lua")
 end
 local init = init
 
 function update()
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
-	sbq.globalSettings = sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqSettings.global or {})
+	sbq.globalSettings = sb.jsonMerge(sbq.config.globalSettings, sbq.sbqSettings.global or {})
 
 	if sbq.sbqCurrentData.id ~= sbq.predatorEntity then
 		init()
@@ -298,7 +299,6 @@ function sbq.saveSettings()
 	sbq.sbqSettings.global = sbq.globalSettings
 	player.setProperty( "sbqSettings", sbq.sbqSettings )
 	world.sendEntityMessage( player.id(), "sbqRefreshSettings", sbq.sbqSettings )
-	world.sendEntityMessage( player.id(), "sbqClosePredHud")
 end
 
 function sbq.changeGlobalSetting(settingname, settingvalue)

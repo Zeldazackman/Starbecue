@@ -27,6 +27,15 @@
 					{ "type" : "label", "id" : "patronsLabel", "text" : "" },
 					{ "type" : "label", "text" : " \nThank you to everyone who has supported the project! I wouldn't have had the time or funds to do this without you!" }
 				]}]}
+			]},
+			{ "type" : "tab", "id" : "resetHelpTab", "title" : "Reset", "icon" : "/interface/scripted/sbq/sbqSettings/sbqReset.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+					{ "type" : "label", "text" : "^cyan;Reset Settings^reset;\n \nSometimes through the updates, things might get changed around, and sometimes things might get messed up, values set in the settings in older versions may cause problems in newer ones. Therefore you may need to reset your settings to the default values to clear these errors. Or you just want to reset back to the defaults in general. This page allows you to do so."},
+					{"type" : "button", "id" : "resetGlobalSettings", "caption" : "Reset Global Settings", "color" : "red", "toolTip" : "Resets your Global Settings to the default values"},
+					{"type" : "button", "id" : "resetAllPredSettings", "caption" : "Reset All Predator Settings", "color" : "red", "toolTip" : "Resets all Predator Transformation settings to the default values."},
+					{"type" : "button", "id" : "resetCurPredSettings", "caption" : "Reset Current Predator Settings", "color" : "red", "toolTip" : "Resets the current Predator Transformation settings to the default values."}
+
+				]}]}
 			]}
 		]}
 	]},

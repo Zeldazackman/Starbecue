@@ -327,6 +327,5 @@ function sbq.initLocationEffects()
 				left.eggify = data.eggify
 			end
 		end
-
 	end
 end
