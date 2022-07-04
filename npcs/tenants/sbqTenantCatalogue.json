@@ -35,6 +35,7 @@
 	"elduukhar": "sbq_villager_elduukhar",
 	"attarran": "sbq_villager_attarran",
 	"neki": "sbq_villager_neki",
+	"lastree": "sbq_villager_lastree",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -72,6 +73,7 @@
 	"guard_elduukhar": [ "sbq_guard_elduukhar", "sbq_guardT2_elduukhar", "sbq_guardT3_elduukhar", "sbq_guardT4_elduukhar" ],
 	"guard_attarran": [ "sbq_guard_attarran", "sbq_guardT2_attarran", "sbq_guardT3_attarran", "sbq_guardT4_attarran" ],
 	"guard_neki": [ "sbq_guard_neki", "sbq_guardT2_neki", "sbq_guardT3_neki", "sbq_guardT4_neki" ],
+	"guard_lastree": [ "sbq_guard_lastree", "sbq_guardT2_lastree", "sbq_guardT3_lastree", "sbq_guardT4_lastree" ],
 
 	"Zevi": "sbq_tenant_zevi_zygahedron",
 	"Socks": "sbq_tenant_socks_lokivulpix"
