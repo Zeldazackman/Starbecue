@@ -35,7 +35,9 @@ function update(dt, fireMode, shiftHeld)
 					priority = data.index
 				end
 			end
+			local newUnlock
 			if not settings.types[self.vehicle] then
+				newUnlock = true
 				settings.types[self.vehicle] = { enable = true, index = priority + 1 }
 			end
 			player.setProperty("sbqSettings", settings)
@@ -48,14 +50,16 @@ function update(dt, fireMode, shiftHeld)
 
 			world.spawnVehicle( self.vehicle, { position[1], position[2] + 1.5 }, { driver = entity.id(), settings = sbqSettings, retrievePrey = currentData.id } )
 
-			player.radioMessage({
-				messageId = self.vehicle.."1", unique = false,
-				text = "It seems that the potion you just drank transformed you into "..config.getParameter("transformationDescription")..".\nScans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons may be helpful in this form."
-			}, 1)
-			player.radioMessage({
-				messageId = self.vehicle.."2", unique = false,
-				text = "I suggest reading the included guide for more information about how to control your new form.\n^#555;(Information on your transformation can be found in the ^#711;Starbecue Settings^#555; menu from the ^#711;Quickbar^#555;."
-			}, 5)
+			if newUnlock then
+				player.radioMessage({
+					messageId = self.vehicle.."1", unique = false,
+					text = "It seems that the potion you just drank transformed you into "..config.getParameter("transformationDescription")..".\nScans indicate that the ^green;[F]^reset;, ^green;[G]^reset;, and ^green;[H]^reset; buttons may be helpful in this form."
+				}, 1)
+				player.radioMessage({
+					messageId = self.vehicle.."2", unique = false,
+					text = "I suggest reading the included guide for more information about how to control your new form.\n^#555;(Information on your transformation can be found in the ^#711;Starbecue Settings^#555; menu from the ^#711;Quickbar^#555;.)"
+				}, 5)
+			end
 
 			item.consume(1)
 		end

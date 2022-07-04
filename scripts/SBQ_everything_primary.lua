@@ -101,11 +101,14 @@ function sbq.doMysteriousTF(data)
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	local overrideData = data or {}
 	local currentData = status.statusProperty("speciesAnimOverrideData")
+	local customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
 
 	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		overrideData.species = speciesList[math.random(#speciesList)]
 	end
+	local customData = customizedSpecies[overrideData.species]
+	overrideData = sb.jsonMerge(customData or {}, overrideData)
 
 	local genders = {"male", "female"}
 
@@ -203,6 +206,12 @@ function sbq.doMysteriousTF(data)
 
 	overrideData.mysteriousPotion = true
 	overrideData.permanent = true
+
+	if overrideData.unlockSpecies and not customData then
+		overrideData.unlockSpecies = nil
+		customizedSpecies[overrideData.species] = overrideData
+		status.setStatusProperty("sbqCustomizedSpecies", customizedSpecies)
+	end
 
 	local statusProperty = status.statusProperty("speciesAnimOverrideData") or {}
 	if not statusProperty.mysteriousPotion then

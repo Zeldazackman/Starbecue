@@ -17,6 +17,10 @@
 	"inventoryIcon" : "sbqPotion.png",
 	"largeImage" : "sbqPotionLarge.png",
 
+	"animationParts" : {
+		"potion" : "sbqPotion.png"
+	},
+
 	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
 
 	"scripts" : [

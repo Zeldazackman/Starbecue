@@ -38,7 +38,7 @@ function getIdentity()
 		for _, part in ipairs(portrait) do
 			local imageString = part.image
 			--get personality values
-			if not overrideData.identity.imagePath and not overrideData.overrideData.species then
+			if not overrideData.identity.imagePath and not overrideData.species then
 				local found1, found2 = imageString:find("humanoid/")
 				if found1 then
 					local found3, found4 = imageString:find("/"..status.statusProperty("animOverridesStoredGender") or world.entityGender(entity.id()).."body")
@@ -119,7 +119,9 @@ end
 
 function update(dt, fireMode, shiftHeld)
 	if fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
-		player.giveItem({name = "sbqMysteriousPotion", parameters = getIdentity()})
+		local parameters = getIdentity()
+		parameters.potionPath = "/items/active/sbqTransformation/sbqDuplicatePotion/"
+		player.giveItem({name = "sbqMysteriousPotion", parameters = parameters})
 		item.consume(1)
 	end
 end
