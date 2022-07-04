@@ -102,10 +102,14 @@ function sbq.doMysteriousTF(data)
 	local overrideData = data or {}
 	local currentData = status.statusProperty("speciesAnimOverrideData")
 	local customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
+	local originalSpecies = world.entitySpecies(entity.id())
 
 	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		overrideData.species = speciesList[math.random(#speciesList)]
+	end
+	if overrideData.species == originalSpecies and ((not overrideData.identity) or data.unlockSpecies) then
+		return sbq.endMysteriousTF()
 	end
 	local customData = customizedSpecies[overrideData.species]
 	overrideData = sb.jsonMerge(customData or {}, overrideData)
@@ -146,26 +150,31 @@ function sbq.doMysteriousTF(data)
 			end
 		end
 	end
-	local undyColor = ""
-	if success then
-		colorTable = (speciesFile.undyColor or {})[math.random(#speciesFile.undyColor)]
+	local undyColor = overrideData.identity.undyColor or ""
+	if success and not overrideData.identity.undyColor then
+		local index = math.random(#speciesFile.undyColor)
+		local colorTable = (speciesFile.undyColor or {})[index]
 		if type(colorTable) == "table" then
 			undyColor = "?replace"
 			for color, replace in pairs(colorTable) do
 				undyColor = undyColor..";"..color.."="..replace
 			end
 		end
+		overrideData.identity.undyColor = undyColor
+		overrideData.identity.undyColorIndex = index
 	end
 
 	local bodyColor = overrideData.identity.bodyDirectives or ""
 	if success and not overrideData.identity.bodyDirectives then
-		local colorTable = (speciesFile.bodyColor or {})[math.random(#speciesFile.bodyColor)]
+		local index = math.random(#speciesFile.bodyColor)
+		local colorTable = (speciesFile.bodyColor or {})[index]
 		if type(colorTable) == "table" then
 			bodyColor = "?replace"
 			for color, replace in pairs(colorTable) do
 				bodyColor = bodyColor..";"..color.."="..replace
 			end
 		end
+		overrideData.identity.bodyColorIndex = index
 		overrideData.identity.bodyDirectives = bodyColor
 
 		if speciesFile.altOptionAsUndyColor then
@@ -173,31 +182,48 @@ function sbq.doMysteriousTF(data)
 		end
 	end
 
-	local hairDirectives = overrideData.identity.hairDirectives or ""
+	local hairColor = overrideData.identity.hairDirectives or ""
 	if success and not overrideData.identity.hairDirectives then
-		local colorTable = (speciesFile.hairColor or {})[math.random(#speciesFile.hairColor)]
+		local index = math.random(#speciesFile.hairColor)
+		local colorTable = (speciesFile.hairColor or {})[index]
 		if type(colorTable) == "table" then
-			hairDirectives = "?replace"
+			hairColor = "?replace"
 			for color, replace in pairs(colorTable) do
-				hairDirectives = hairDirectives..";"..color.."="..replace
+				hairColor = hairColor..";"..color.."="..replace
 			end
 		end
+		overrideData.identity.hairColorIndex = index
 		if speciesFile.headOptionAsHairColor then
-			overrideData.identity.hairDirectives = hairDirectives
+			overrideData.identity.hairDirectives = hairColor
+		elseif speciesFile.altOptionAsHairColor then
+			overrideData.identity.hairDirectives = undyColor
 		else
-			overrideData.identity.hairDirectives = bodyColor
-		end
-		if speciesFile.altOptionAsHairColor then
-			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..undyColor
-		end
-		if speciesFile.hairColorAsBodySubColor then
-			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..overrideData.identity.hairDirectives
 			overrideData.identity.hairDirectives = overrideData.identity.bodyDirectives
 		end
+		if speciesFile.hairColorAsBodySubColor then
+			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..hairColor
+		end
+		if speciesFile.bodyColorAsHairSubColor then
+			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..overrideData.identity.bodyDirectives
+		end
 	end
-	overrideData.identity.facialHairDirectives = overrideData.identity.facialHairDirectives or overrideData.identity.hairDirectives
-	overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives or overrideData.identity.hairDirectives
-	overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or overrideData.identity.bodyDirectives..overrideData.identity.hairDirectives
+
+	if not overrideData.identity.facialHairDirectives then
+		overrideData.identity.facialHairDirectives = overrideData.identity.facialHairDirectives or overrideData.identity.hairDirectives
+		if speciesFile.bodyColorAsFacialHairSubColor then
+			overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives..overrideData.identity.bodyDirectives
+		end
+	end
+	if not overrideData.identity.facialMaskDirectives then
+		overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives or overrideData.identity.hairDirectives
+		if speciesFile.bodyColorAsFacialMaskSubColor then
+			overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives..overrideData.identity.bodyDirectives
+		end
+	end
+
+	overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or overrideData.identity.bodyDirectives
+
+
 
 	local specialStatus
 	if success then
@@ -206,6 +232,7 @@ function sbq.doMysteriousTF(data)
 
 	overrideData.mysteriousPotion = true
 	overrideData.permanent = true
+	overrideData.customAnimStatus = specialStatus
 
 	if overrideData.unlockSpecies and not customData then
 		overrideData.unlockSpecies = nil

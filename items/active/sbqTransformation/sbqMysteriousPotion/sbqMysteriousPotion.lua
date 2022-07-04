@@ -12,9 +12,9 @@ end
 function update(dt, fireMode, shiftHeld)
 
 	if not self.useTimer and fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
-	self.useTimer = 0
-	activeItem.setArmAngle(0)
-	animator.playSound("drink", 4)
+		self.useTimer = 0
+		activeItem.setArmAngle(0)
+		animator.playSound("drink", 4)
 	end
 
 	if self.useTimer then
@@ -26,7 +26,7 @@ function update(dt, fireMode, shiftHeld)
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
 			local duration = 3600
-			if config.getParameter("unlockSpecies") then
+			if config.getParameter("unlockSpecies") and world.entitySpecies(entity.id()) ~= data.species then
 				data.unlockSpecies = true
 				---@diagnostic disable-next-line: cast-local-type
 				duration = nil

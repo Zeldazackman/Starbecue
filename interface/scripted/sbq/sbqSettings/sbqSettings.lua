@@ -409,19 +409,6 @@ function sbq.changePreset(inc)
 	presetText:setText(sbq.predatorConfig.presetList[sbq.preset])
 end
 
-
-sbq.speciesOverrideIndex = 1
-function sbq.changeSpecies(inc)
-	local speciesIndex = (sbq.speciesOverrideIndex or 1) + inc
-	if speciesIndex > #sbq.extraTabs.speciesPresetList then
-		speciesIndex = 1
-	elseif speciesIndex < 1 then
-		speciesIndex = #sbq.extraTabs.speciesPresetList
-	end
-	sbq.speciesOverrideIndex = speciesIndex
-	speciesText:setText(sbq.extraTabs.speciesPresetList[sbq.speciesOverrideIndex])
-end
-
 --------------------------------------------------------------------------------------------------
 
 function decEscape:onClick()
@@ -461,7 +448,7 @@ function presetText:onEnter()
 end
 
 --------------------------------------------------------------------------------------------------
-if speciesPanel ~= nil then
+if speciesLayout ~= nil then
 	function decSpecies:onClick()
 		sbq.changeSpecies(-1)
 	end
@@ -471,26 +458,265 @@ if speciesPanel ~= nil then
 	end
 
 	function applySpecies:onClick()
-		if speciesText.text ~= "" then
-			local table = { species = speciesText.text }
-			if type(sbq.extraTabs.speciesPresets[speciesText.text]) == "table" then
-				table = sbq.extraTabs.speciesPresets[speciesText.text]
-			end
-			local success, table2 = pcall(json.decode, speciesText.text )
-			if success and type(table2) == "table" then
-				table = table2
-			end
+		if speciesText.text ~= "" and type(sbq.customizedSpecies[speciesText.text]) == "table" then
 			status.clearPersistentEffects("speciesAnimOverride")
-			status.setStatusProperty("speciesAnimOverrideData", table)
-			status.setPersistentEffects("speciesAnimOverride", { table.customAnimStatus or "speciesAnimOverride"})
+			status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
+			status.setPersistentEffects("speciesAnimOverride", {  sbq.currentCustomSpecies.customAnimStatus or "speciesAnimOverride"})
 		else
 			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", nil)
+			status.setStatusProperty("oldSpeciesAnimOverrideData", nil)
+			status.setStatusProperty("sbqMysteriousPotionTF", nil)
+			status.setStatusProperty("sbqMysteriousPotionTFDuration", nil)
 		end
 	end
-	function speciesText:onEnter()
+	function speciesText:onEnter() applySpecies:onClick() end
+	function speciesBodyColorText:onEnter() sbq.saveSpeciesCustomize() end
+	function speciesHairColorText:onEnter() sbq.saveSpeciesCustomize() end
+	function speciesFacialHairColorText:onEnter() sbq.saveSpeciesCustomize() end
+	function speciesFacialMaskColorText:onEnter() sbq.saveSpeciesCustomize() end
+	function speciesEmoteColorText:onEnter() sbq.saveSpeciesCustomize() end
+
+	sbq.unlockedSpeciesList = {}
+	sbq.customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
+	sbq.currentCustomSpecies = {}
+	local originalSpecies = world.entitySpecies(player.id())
+	for species, data in pairs(sbq.customizedSpecies) do
+		if species ~= originalSpecies then
+			table.insert(sbq.unlockedSpeciesList, species)
+		end
+	end
+	table.sort(sbq.unlockedSpeciesList)
+	sbq.currentPlayerSpecies = player.species()
+	for i, species in ipairs(sbq.unlockedSpeciesList) do
+		if species == player.species then
+			sbq.speciesOverrideIndex = i
+		end
+	end
+	function sbq.changeSpecies(inc)
+		local index = (sbq.speciesOverrideIndex or 1) + inc
+		local list = sbq.unlockedSpeciesList
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.speciesOverrideIndex = index
+		local selectedSpecies = sbq.unlockedSpeciesList[sbq.speciesOverrideIndex]
+		sbq.currentCustomSpecies = sbq.customizedSpecies[selectedSpecies]
+
+		local success, speciesFile = pcall(root.assetJson, ("/species/"..selectedSpecies..".species"))
+		if success then
+			sbq.speciesFile = speciesFile
+			speciesText:setText(selectedSpecies)
+			speciesCustomColorText:setText(sbq.currentCustomSpecies.directives)
+			speciesBodyColorText:setText(sbq.currentCustomSpecies.identity.bodyDirectives)
+			speciesHairColorText:setText(sbq.currentCustomSpecies.identity.hairDirectives)
+			speciesFacialHairColorText:setText(sbq.currentCustomSpecies.identity.facialHairDirectives)
+			speciesFacialMaskColorText:setText(sbq.currentCustomSpecies.identity.facialMaskDirectives)
+			speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.EmoteDirectives)
+
+			speciesHairTypeLabel:setText(sbq.currentCustomSpecies.identity.hairType)
+			speciesFacialHairTypeLabel:setText(sbq.currentCustomSpecies.identity.facialHairType)
+			speciesFacialMaskTypeLabel:setText(sbq.currentCustomSpecies.identity.facialMaskType)
+			for i, data in ipairs(speciesFile.genders or {}) do
+				if data.name == sbq.currentCustomSpecies.gender then
+					sbq.genderTable = data
+					for i, type in ipairs(data.hair) do
+						if sbq.currentCustomSpecies.identity.hairType == type then
+							sbq.hairTypeIndex = i
+						end
+					end
+					for i, type in ipairs(data.facialHair) do
+						if sbq.currentCustomSpecies.identity.facialHairType == type then
+							sbq.facialHairTypeIndex = i
+						end
+					end
+					for i, type in ipairs(data.facialMask) do
+						if sbq.currentCustomSpecies.identity.facialMaskType == type then
+							sbq.facialMaskTypeIndex = i
+						end
+					end
+				end
+			end
+			speciesBodyColorLabel:setText(sbq.currentCustomSpecies.identity.bodyColorIndex or 1)
+			speciesUndyColorLabel:setText(sbq.currentCustomSpecies.identity.undyColorIndex or 1)
+			speciesHairColorLabel:setText(sbq.currentCustomSpecies.identity.hairColorIndex or 1)
+		end
+	end
+
+	function sbq.changeHairType(inc)
+		local index = (sbq.hairTypeIndex or 1) + inc
+		local list = sbq.genderTable.hair
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.hairTypeIndex = index
+		sbq.currentCustomSpecies.identity.hairType = list[index]
+		speciesHairTypeLabel:setText(list[index])
+		sbq.saveSpeciesCustomize()
+	end
+	function decSpeciesHairType:onClick() sbq.changeHairType(-1) end
+	function incSpeciesHairType:onClick() sbq.changeHairType(1) end
+
+	function sbq.changeFacialHairType(inc)
+		local index = (sbq.facialHairTypeIndex or 1) + inc
+		local list = sbq.genderTable.facialHair
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.facialHairTypeIndex = index
+		sbq.currentCustomSpecies.identity.facialHairType = list[index]
+		speciesFacialHairTypeLabel:setText(list[index])
+		sbq.saveSpeciesCustomize()
+	end
+	function decSpeciesFacialHairType:onClick() sbq.changeFacialHairType(-1) end
+	function incSpeciesFacialHairType:onClick() sbq.changeFacialHairType(1) end
+
+	function sbq.changeFacialMaskType(inc)
+		local index = (sbq.facialMaskTypeIndex or 1) + inc
+		local list = sbq.genderTable.facialMask
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.facialMaskTypeIndex = index
+		sbq.currentCustomSpecies.identity.facialMaskType = list[index]
+		speciesFacialMaskTypeLabel:setText(list[index])
+		sbq.saveSpeciesCustomize()
+	end
+	function decSpeciesFacialMaskType:onClick() sbq.changeFacialMaskType(-1) end
+	function incSpeciesFacialMaskType:onClick() sbq.changeFacialMaskType(1) end
+
+	function sbq.applySpeciesColors()
+		local bodyColor = ""
+		local undyColor = ""
+		local hairColor = ""
+		local overrideData = sbq.currentCustomSpecies
+		local speciesFile = sbq.speciesFile
+
+		local index = overrideData.identity.undyColorIndex
+		local colorTable = (speciesFile.undyColor or {})[index]
+		if type(colorTable) == "table" then
+			undyColor = "?replace"
+			for color, replace in pairs(colorTable) do
+				undyColor = undyColor..";"..color.."="..replace
+			end
+		end
+		overrideData.identity.undyColor = undyColor
+
+		local index = overrideData.identity.bodyColorIndex
+		local colorTable = (speciesFile.bodyColor or {})[index]
+		if type(colorTable) == "table" then
+			bodyColor = "?replace"
+			for color, replace in pairs(colorTable) do
+				bodyColor = bodyColor..";"..color.."="..replace
+			end
+		end
+		overrideData.identity.bodyDirectives = bodyColor
+
+		if speciesFile.altOptionAsUndyColor then
+			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..undyColor
+		end
+
+		local index = overrideData.identity.hairColorIndex
+		local colorTable = (speciesFile.hairColor or {})[index]
+		if type(colorTable) == "table" then
+			hairColor = "?replace"
+			for color, replace in pairs(colorTable) do
+				hairColor = hairColor..";"..color.."="..replace
+			end
+		end
+		if speciesFile.headOptionAsHairColor then
+			overrideData.identity.hairDirectives = hairColor
+		elseif speciesFile.altOptionAsHairColor then
+			overrideData.identity.hairDirectives = undyColor
+		else
+			overrideData.identity.hairDirectives = overrideData.identity.bodyDirectives
+		end
+		if speciesFile.hairColorAsBodySubColor then
+			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..hairColor
+		end
+		if speciesFile.bodyColorAsHairSubColor then
+			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..overrideData.identity.bodyDirectives
+		end
+
+		overrideData.identity.facialHairDirectives = overrideData.identity.hairDirectives
+		if speciesFile.bodyColorAsFacialHairSubColor then
+			overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives..overrideData.identity.bodyDirectives
+		end
+
+		overrideData.identity.facialMaskDirectives = overrideData.identity.hairDirectives
+		if speciesFile.bodyColorAsFacialMaskSubColor then
+			overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives..overrideData.identity.bodyDirectives
+		end
+
+		speciesBodyColorText:setText(sbq.currentCustomSpecies.identity.bodyDirectives)
+		speciesHairColorText:setText(sbq.currentCustomSpecies.identity.hairDirectives)
+		speciesFacialHairColorText:setText(sbq.currentCustomSpecies.identity.facialHairDirectives)
+		speciesFacialMaskColorText:setText(sbq.currentCustomSpecies.identity.facialMaskDirectives)
+		speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.EmoteDirectives)
+
+		sbq.saveSpeciesCustomize()
+	end
+
+	function sbq.changeSpeciesBodyColor(inc)
+		local index = (sbq.currentCustomSpecies.identity.bodyColorIndex or 1) + inc
+		local list = sbq.speciesFile.bodyColor
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.currentCustomSpecies.identity.bodyColorIndex = index
+		speciesBodyColorLabel:setText(index)
+		sbq.applySpeciesColors()
+	end
+	function decSpeciesBodyColor:onClick() sbq.changeSpeciesBodyColor(-1) end
+	function incSpeciesBodyColor:onClick() sbq.changeSpeciesBodyColor(1) end
+
+	function sbq.changeSpeciesUndyColor(inc)
+		local index = (sbq.currentCustomSpecies.identity.undyColorIndex or 1) + inc
+		local list = sbq.speciesFile.undyColor
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.currentCustomSpecies.identity.undyColorIndex = index
+		speciesUndyColorLabel:setText(index)
+		sbq.applySpeciesColors()
+	end
+	function decSpeciesUndyColor:onClick() sbq.changeSpeciesUndyColor(-1) end
+	function incSpeciesUndyColor:onClick() sbq.changeSpeciesUndyColor(1) end
+
+	function sbq.changeSpeciesHairColor(inc)
+		local index = (sbq.currentCustomSpecies.identity.hairColorIndex or 1) + inc
+		local list = sbq.speciesFile.hairColor
+		if index > #list then
+			index = 1
+		elseif index < 1 then
+			index = #list
+		end
+		sbq.currentCustomSpecies.identity.hairColorIndex = index
+		speciesHairColorLabel:setText(index)
+		sbq.applySpeciesColors()
+	end
+	function decSpeciesHairColor:onClick() sbq.changeSpeciesHairColor(-1) end
+	function incSpeciesHairColor:onClick() sbq.changeSpeciesHairColor(1) end
+
+
+	function sbq.saveSpeciesCustomize()
+		status.setStatusProperty("sbqCustomizedSpecies", sbq.customizedSpecies )
 		applySpecies:onClick()
 	end
+
+	sbq.changeSpecies(0)
 end
 
 --------------------------------------------------------------------------------------------------

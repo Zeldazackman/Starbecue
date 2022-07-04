@@ -117,17 +117,73 @@
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				{ "type" : "layout", "id" : "speciesLayout", "style" : "convex", "children" : [
+				{ "type" : "panel", "id" : "speciesLayout", "style" : "concave", "children" : [
 					[[{ "type" : "panel", "id" : "speciesPanel", "style" : "convex", "children" : [
 						{ "mode" : "h" },
 						{ "type" : "label", "text" : " Species", "inline" : true },
 						{ "type" : "iconButton", "id" : "decSpecies", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 						{ "type" : "textBox", "id" : "speciesText", "expandMode" : [1, 0] },
 						{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-						{ "type" : "button", "id" : "applySpecies", "caption" : "Apply", "expandMode" : [0, 0] }
-					]}]]
+						{ "type" : "button", "id" : "applySpecies", "caption" : "Transform", "expandMode" : [0, 0] }
+					]}]],
+					[[[
+						{ "type" : "panel", "id" : "speciesColorPanel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Color Pickers", "inline" : true },
+							[
+								{ "type" : "label", "text" : "Body Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesBodyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesBodyColorLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesBodyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							],
+							[
+								{ "type" : "label", "text" : "Undy Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesUndyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesUndyColorLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesUndyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							],
+							[
+								{ "type" : "label", "text" : "Hair Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesHairColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesHairColorLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesHairColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							]
+						]},
+						{ "type" : "panel", "id" : "speciesStylePanel", "style" : "convex", "children" : [
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Style Pickers", "inline" : true },
+							[
+								{ "type" : "label", "text" : "Hair Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesHairTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							],
+							[
+								{ "type" : "label", "text" : "Facial Hair Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesFacialHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesFacialHairTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesFacialHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							],
+							[
+								{ "type" : "label", "text" : "Facial Mask Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "iconButton", "id" : "decSpeciesFacialMaskType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+								{ "type" : "label", "id" : "speciesFacialMaskTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "iconButton", "id" : "incSpeciesFacialMaskType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+							]
+						]}
+					]]],
+					[[{ "type" : "panel", "id" : "speciesManualColorPanel", "style" : "convex", "children" : [{ "type" : "scrollArea", "id" : "speciesManualColorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+						{ "mode" : "v" },
+						{ "type" : "label", "text" : "Manual Color Entry", "inline" : true },
+						[{ "type" : "label", "text" : "Custom Colors", "inline" : true },{ "type" : "textBox", "id" : "speciesCustomColorText", "expandMode" : [1, 0] }],
+						[{ "type" : "label", "text" : "Body Color", "inline" : true },{ "type" : "textBox", "id" : "speciesBodyColorText", "expandMode" : [1, 0] }],
+						[{ "type" : "label", "text" : "Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesHairColorText", "expandMode" : [1, 0] }],
+						[{ "type" : "label", "text" : "Facial Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialHairColorText", "expandMode" : [1, 0] }],
+						[{ "type" : "label", "text" : "Facial Mask Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialMaskColorText", "expandMode" : [1, 0] }],
+						[{ "type" : "label", "text" : "Emotes Color", "inline" : true },{ "type" : "textBox", "id" : "speciesEmoteColorText", "expandMode" : [1, 0] }]
+					]}]}]]
 				]},
-				[
+				[[[
 					{ "expandMode" : [2, 2]},
 					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
 						{ "expandMode" : [2, 2]},
@@ -139,7 +195,7 @@
 						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
 						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 					]}
-				],
+				]]],
 				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
 					{ "mode" : "h" },
 					{ "type" : "label", "text" : " Customize Preset", "inline" : true },
