@@ -263,12 +263,12 @@
 				},
 				"partStates": {
 					"bellyState": {
-						"idle": { "properties": { "image": "<partImage>:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame><customizeDirectives>?addmask=<bellyMask>:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>?addmask=<bellyMask>:<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame><customizeDirectives>?addmask=<bellyMask>:<direction>.<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>?addmask=<bellyMask>:<direction>.<bellyOccupants>.<bellyStateAnim>.<bellyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame><customizeDirectives>?addmask=<bellyMask>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame>;0;0<bodyDirectives><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.idle.1<customizeDirectives>?addmask=<bellyMask>:<bellyOccupants>.<state>.idle.1;0;0<bodyDirectives><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame>?addmask=<bellyMask>:<bellyOccupants>.<state>.<bellyStateAnim>.<bellyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<bellyOccupants>.<state>.idle.1?addmask=<bellyMask>:<bellyOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -314,17 +314,17 @@
 		{ "op" : "add", "path" : "/animatedParts/stateTypes/tailState/states/s_up", "value" : { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" } },
 		{ "op" : "add", "path" : "/animatedParts/stateTypes/tailState/states/s_down", "value" : { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "eat" } },
 
-		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/idle/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<bodyPersonality><customizeDirectives>?addmask=<tailMask>:<tailOccupants>.<tailStateAnim>.<bodyPersonality>;0;0<bodyDirectives><directives>" },
-		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/duck/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<tailStateFrame><customizeDirectives>?addmask=<tailMask>:<tailOccupants>.<tailStateAnim>.<tailStateFrame>;0;0<bodyDirectives><directives>" },
-		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/walk/properties/image", "value" : "<partImage>:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame><customizeDirectives>?addmask=<tailMask>:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame>;0;0<bodyDirectives><directives>" },
+		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/idle/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<bodyPersonality>?addmask=<tailMask>:<tailOccupants>.<tailStateAnim>.<bodyPersonality>;0;0<customDirectives><bodyDirectives><directives>" },
+		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/duck/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<tailStateFrame>?addmask=<tailMask>:<tailOccupants>.<tailStateAnim>.<tailStateFrame>;0;0<customDirectives><bodyDirectives><directives>" },
+		{ "op" : "replace", "path" : "/animatedParts/parts/tail/partStates/tailState/walk/properties/image", "value" : "<partImage>:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame>?addmask=<tailMask>:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame>;0;0<customDirectives><bodyDirectives><directives>" },
 
 		{ "op" : "replace", "path" : "/animatedParts/parts/tail_cosmetic/partStates/tailState/idle/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<bodyPersonality><cosmeticDirectives><directives>" },
 		{ "op" : "replace", "path" : "/animatedParts/parts/tail_cosmetic/partStates/tailState/duck/properties/image", "value" : "<partImage>:<tailOccupants>.<tailStateAnim>.<tailStateFrame><cosmeticDirectives><directives>" },
 		{ "op" : "replace", "path" : "/animatedParts/parts/tail_cosmetic/partStates/tailState/walk/properties/image", "value" : "<partImage>:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame><cosmeticDirectives><directives>" },
 
-		{ "op" : "add", "path" : "/animatedParts/parts/tail/partStates/tailState/eat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.<tailStateAnim>.<tailStateFrame><customizeDirectives>?addmask=<tailMask>:<tailOccupants>.<state>.<tailStateAnim>.<tailStateFrame>;0;0<bodyDirectives><directives>"}} },
+		{ "op" : "add", "path" : "/animatedParts/parts/tail/partStates/tailState/eat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.<tailStateAnim>.<tailStateFrame>?addmask=<tailMask>:<tailOccupants>.<state>.<tailStateAnim>.<tailStateFrame>;0;0<customDirectives><bodyDirectives><directives>"}} },
 		{ "op" : "add", "path" : "/animatedParts/parts/tail_cosmetic/partStates/tailState/eat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.<tailStateAnim>.<tailStateFrame><cosmeticDirectives><directives>"}} },
-		{ "op" : "add", "path" : "/animatedParts/parts/tail/partStates/tailState/dummyEat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.idle.1<customizeDirectives>?addmask=<tailMask>:<tailOccupants>.<state>.idle.1;0;0<bodyDirectives><directives>"}} },
+		{ "op" : "add", "path" : "/animatedParts/parts/tail/partStates/tailState/dummyEat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.idle.1?addmask=<tailMask>:<tailOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><directives>"}} },
 		{ "op" : "add", "path" : "/animatedParts/parts/tail_cosmetic/partStates/tailState/dummyEat", "value" : { "properties" : { "image" : "<partImage>:<tailOccupants>.<state>.idle.1<cosmeticDirectives><directives>"}} }
 
 
@@ -376,12 +376,12 @@
 				},
 				"partStates": {
 					"cockState": {
-						"idle": { "properties": { "image": "<partImage>:<shaftOccupants>.<cockStateAnim>.<cockStateFrame><customizeDirectives>?addmask=<cockMask>:<shaftOccupants>.<cockStateAnim>.<cockStateFrame>;0;0<bodyDirectives><cockVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<shaftOccupants>.<cockStateAnim>.<cockStateFrame>?addmask=<cockMask>:<shaftOccupants>.<cockStateAnim>.<cockStateFrame>;0;0<customDirectives><bodyDirectives><cockVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<shaftOccupants>.<cockStateAnim>.<cockStateFrame><customizeDirectives>?addmask=<cockMask>:<direction>.<shaftOccupants>.<cockStateAnim>.<cockStateFrame>;0;0<bodyDirectives><cockVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<shaftOccupants>.<cockStateAnim>.<cockStateFrame>?addmask=<cockMask>:<direction>.<shaftOccupants>.<cockStateAnim>.<cockStateFrame>;0;0<customDirectives><bodyDirectives><cockVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<shaftOccupants>.<state>.<cockStateAnim>.<cockStateFrame><customizeDirectives>?addmask=<cockMask>:<shaftOccupants>.<state>.<cockStateAnim>.<cockStateFrame>;0;0<bodyDirectives><cockVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<shaftOccupants>.<state>.idle.1<customizeDirectives>?addmask=<cockMask>:<shaftOccupants>.<state>.idle.1;0;0<bodyDirectives><cockVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<shaftOccupants>.<state>.<cockStateAnim>.<cockStateFrame>?addmask=<cockMask>:<shaftOccupants>.<state>.<cockStateAnim>.<cockStateFrame>;0;0<customDirectives><bodyDirectives><cockVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<shaftOccupants>.<state>.idle.1?addmask=<cockMask>:<shaftOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><cockVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -460,12 +460,12 @@
 				},
 				"partStates": {
 					"ballsFrontState": {
-						"idle": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame><customizeDirectives>?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame><customizeDirectives>?addmask=<ballsFrontMask>:<direction>.<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>?addmask=<ballsFrontMask>:<direction>.<ballsFrontOccupants>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<state>.<ballsFrontStateAnim>.<ballsFrontStateFrame><customizeDirectives>?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<state>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<state>.idle.1<customizeDirectives>?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<state>.idle.1;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<state>.<ballsFrontStateAnim>.<ballsFrontStateFrame>?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<state>.<ballsFrontStateAnim>.<ballsFrontStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<ballsFrontOccupants>.<state>.idle.1?addmask=<ballsFrontMask>:<ballsFrontOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -544,12 +544,12 @@
 				},
 				"partStates": {
 					"ballsBackState": {
-						"idle": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame><customizeDirectives>?addmask=<ballsBackMask>:<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>?addmask=<ballsBackMask>:<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame><customizeDirectives>?addmask=<ballsBackMask>:<direction>.<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>?addmask=<ballsBackMask>:<direction>.<ballsBackOccupants>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<state>.<ballsBackStateAnim>.<ballsBackStateFrame><customizeDirectives>?addmask=<ballsBackMask>:<ballsBackOccupants>.<state>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<bodyDirectives><ballsVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<state>.idle.1<customizeDirectives>?addmask=<ballsBackMask>:<ballsBackOccupants>.<state>.idle.1;0;0<bodyDirectives><ballsVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<state>.<ballsBackStateAnim>.<ballsBackStateFrame>?addmask=<ballsBackMask>:<ballsBackOccupants>.<state>.<ballsBackStateAnim>.<ballsBackStateFrame>;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<ballsBackOccupants>.<state>.idle.1?addmask=<ballsBackMask>:<ballsBackOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><ballsVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -629,12 +629,12 @@
 				},
 				"partStates": {
 					"pussyState": {
-						"idle": { "properties": { "image": "<partImage>:<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame><customizeDirectives>?addmask=<pussyMask>:<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>;0;0<bodyDirectives><pussyVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>?addmask=<pussyMask>:<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>;0;0<customDirectives><bodyDirectives><pussyVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame><customizeDirectives>?addmask=<pussyMask>:<direction>.<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>;0;0<bodyDirectives><pussyVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>?addmask=<pussyMask>:<direction>.<pussyOccupants>.<pussyStateAnim>.<pussyStateFrame>;0;0<customDirectives><bodyDirectives><pussyVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<pussyOccupants>.<state>.<pussyStateAnim>.<pussyStateFrame><customizeDirectives>?addmask=<pussyMask>:<pussyOccupants>.<state>.<pussyStateAnim>.<pussyStateFrame>;0;0<bodyDirectives><pussyVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<pussyOccupants>.<state>.idle.1<customizeDirectives>?addmask=<pussyMask>:<pussyOccupants>.<state>.idle.1;0;0<bodyDirectives><pussyVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<pussyOccupants>.<state>.<pussyStateAnim>.<pussyStateFrame>?addmask=<pussyMask>:<pussyOccupants>.<state>.<pussyStateAnim>.<pussyStateFrame>;0;0<customDirectives><bodyDirectives><pussyVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<pussyOccupants>.<state>.idle.1?addmask=<pussyMask>:<pussyOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><pussyVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -690,12 +690,12 @@
 				},
 				"partStates": {
 					"breastsFrontState": {
-						"idle": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame><customizeDirectives>?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame><customizeDirectives>?addmask=<breastsFrontMask>:<direction>.<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>?addmask=<breastsFrontMask>:<direction>.<breastsFrontOccupants>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<state>.<breastsFrontStateAnim>.<breastsFrontStateFrame><customizeDirectives>?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<state>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<state>.idle.1<customizeDirectives>?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<state>.idle.1;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<state>.<breastsFrontStateAnim>.<breastsFrontStateFrame>?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<state>.<breastsFrontStateAnim>.<breastsFrontStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<breastsFrontOccupants>.<state>.idle.1?addmask=<breastsFrontMask>:<breastsFrontOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -798,12 +798,12 @@
 				},
 				"partStates": {
 					"breastsBackState": {
-						"idle": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame><customizeDirectives>?addmask=<breastsBackMask>:<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>?addmask=<breastsBackMask>:<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame><customizeDirectives>?addmask=<breastsBackMask>:<direction>.<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>?addmask=<breastsBackMask>:<direction>.<breastsBackOccupants>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"eat": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<state>.<breastsBackStateAnim>.<breastsBackStateFrame><customizeDirectives>?addmask=<breastsBackMask>:<breastsBackOccupants>.<state>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
-						"dummyEat": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<state>.idle.1<customizeDirectives>?addmask=<breastsBackMask>:<breastsBackOccupants>.<state>.idle.1;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"eat": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<state>.<breastsBackStateAnim>.<breastsBackStateFrame>?addmask=<breastsBackMask>:<breastsBackOccupants>.<state>.<breastsBackStateAnim>.<breastsBackStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
+						"dummyEat": { "properties": { "image": "<partImage>:<breastsBackOccupants>.<state>.idle.1?addmask=<breastsBackMask>:<breastsBackOccupants>.<state>.idle.1;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -906,7 +906,7 @@
 				},
 				"partStates": {
 					"bulgeState": {
-						"idle": { "properties": { "image": "<partImage>:<bulgeOccupants>.<bulgeStateAnim>.<bulgeStateFrame><cosmeticDirectives><bodyDirectives><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<bulgeOccupants>.<bulgeStateAnim>.<bulgeStateFrame><cosmeticDirectives><customDirectives><bodyDirectives><directives>" } },
 
 						"walk": { "properties": { "image": "<partImage>:<direction>.<bulgeOccupants>.<bulgeStateAnim>.<bulgeStateFrame><cosmeticDirectives><directives>" } },
 
@@ -933,11 +933,11 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality><customizeDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame><customizeDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame><customizeDirectives>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><breastsVisible><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><breastsVisible><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -955,11 +955,11 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<bodyDirectives><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -977,11 +977,11 @@
 				},
 				"partStates": {
 					"bodyState": {
-						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<bodyDirectives><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyPersonality>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"duck": { "properties": { "image": "<partImage>:<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<bodyDirectives><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<bodyStateAnim>.<bodyStateFrame><cosmeticDirectives>?addmask=<bodyMask>:<direction>.<bodyStateAnim>.<bodyStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -999,11 +999,11 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "<partImage>:<legsStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<frontlegsMask1>:<legsStateAnim>.<bodyPersonality>;0;0?addmask=<frontlegsMask>:<legsStateAnim>.<bodyPersonality>;0;0<bodyDirectives><directives>" } },
+						"idle": { "properties": { "image": "<partImage>:<legsStateAnim>.<bodyPersonality><cosmeticDirectives>?addmask=<frontlegsMask1>:<legsStateAnim>.<bodyPersonality>;0;0?addmask=<frontlegsMask>:<legsStateAnim>.<bodyPersonality>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"duck": { "properties": { "image": "<partImage>:<legsStateAnim>.<legsStateFrame><cosmeticDirectives>?addmask=<frontlegsMask1>:<legsStateAnim>.<legsStateFrame>;0;0?addmask=<frontlegsMask>:<legsStateAnim>.<legsStateFrame>;0;0<bodyDirectives><directives>" } },
+						"duck": { "properties": { "image": "<partImage>:<legsStateAnim>.<legsStateFrame><cosmeticDirectives>?addmask=<frontlegsMask1>:<legsStateAnim>.<legsStateFrame>;0;0?addmask=<frontlegsMask>:<legsStateAnim>.<legsStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
-						"walk": { "properties": { "image": "<partImage>:<direction>.<legsStateAnim>.<legsStateFrame><cosmeticDirectives>?addmask=<frontlegsMask1>:<direction>.<legsStateAnim>.<legsStateFrame>;0;0?addmask=<frontlegsMask>:<direction>.<legsStateAnim>.<legsStateFrame>;0;0<bodyDirectives><directives>" } },
+						"walk": { "properties": { "image": "<partImage>:<direction>.<legsStateAnim>.<legsStateFrame><cosmeticDirectives>?addmask=<frontlegsMask1>:<direction>.<legsStateAnim>.<legsStateFrame>;0;0?addmask=<frontlegsMask>:<direction>.<legsStateAnim>.<legsStateFrame>;0;0<customDirectives><bodyDirectives><directives>" } },
 
 						"none": { "properties": {} }
 					}

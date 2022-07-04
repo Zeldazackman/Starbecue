@@ -102,11 +102,11 @@ function sbq.doMysteriousTF(data)
 	local overrideData = data or {}
 	local currentData = status.statusProperty("speciesAnimOverrideData")
 
-
 	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		overrideData.species = speciesList[math.random(#speciesList)]
 	end
+
 	local genders = {"male", "female"}
 
 	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {})).genderswapImmunity
@@ -143,51 +143,58 @@ function sbq.doMysteriousTF(data)
 			end
 		end
 	end
-	local undyColor
-	if success and not overrideData.directives then
-		local directives = ""
-		local colorTable = (speciesFile.bodyColor or {})[math.random(#speciesFile.bodyColor)]
-		if type(colorTable) == "table" then
-			directives = "?replace"
-			for color, replace in pairs(colorTable) do
-				directives = directives..";"..color.."="..replace
-			end
-		end
-		local directives2 = ""
+	local undyColor = ""
+	if success then
 		colorTable = (speciesFile.undyColor or {})[math.random(#speciesFile.undyColor)]
 		if type(colorTable) == "table" then
-			directives2 = "?replace"
+			undyColor = "?replace"
 			for color, replace in pairs(colorTable) do
-				directives2 = directives2..";"..color.."="..replace
+				undyColor = undyColor..";"..color.."="..replace
 			end
 		end
-		undyColor = directives2
-		overrideData.directives = directives..directives2
 	end
-	if success and not overrideData.hairDirectives then
-		local directives = ""
-		local colorTable = (speciesFile.hairColor or {})[math.random(#speciesFile.hairColor)]
 
+	local bodyColor = overrideData.identity.bodyDirectives or ""
+	if success and not overrideData.identity.bodyDirectives then
+		local colorTable = (speciesFile.bodyColor or {})[math.random(#speciesFile.bodyColor)]
 		if type(colorTable) == "table" then
-			directives = "?replace"
+			bodyColor = "?replace"
 			for color, replace in pairs(colorTable) do
-				directives = directives..";"..color.."="..replace
+				bodyColor = bodyColor..";"..color.."="..replace
 			end
 		end
+		overrideData.identity.bodyDirectives = bodyColor
 
-		if speciesFile.headOptionAsHairColor then
-			overrideData.hairDirectives = directives
-		else
-			overrideData.hairDirectives = overrideData.directives
+		if speciesFile.altOptionAsUndyColor then
+			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..undyColor
 		end
-		if speciesFile.hairColorAsBodySubColor then
-			overrideData.directives = overrideData.directives..overrideData.hairDirectives
-			overrideData.hairDirectives = overrideData.directives
+	end
+
+	local hairDirectives = overrideData.identity.hairDirectives or ""
+	if success and not overrideData.identity.hairDirectives then
+		local colorTable = (speciesFile.hairColor or {})[math.random(#speciesFile.hairColor)]
+		if type(colorTable) == "table" then
+			hairDirectives = "?replace"
+			for color, replace in pairs(colorTable) do
+				hairDirectives = hairDirectives..";"..color.."="..replace
+			end
+		end
+		if speciesFile.headOptionAsHairColor then
+			overrideData.identity.hairDirectives = hairDirectives
+		else
+			overrideData.identity.hairDirectives = bodyColor
 		end
 		if speciesFile.altOptionAsHairColor then
-			overrideData.hairDirectives = overrideData.hairDirectives..(undyColor or "")
+			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..undyColor
+		end
+		if speciesFile.hairColorAsBodySubColor then
+			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..overrideData.identity.hairDirectives
+			overrideData.identity.hairDirectives = overrideData.identity.bodyDirectives
 		end
 	end
+	overrideData.identity.facialHairDirectives = overrideData.identity.facialHairDirectives or overrideData.identity.hairDirectives
+	overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives or overrideData.identity.hairDirectives
+	overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or overrideData.identity.bodyDirectives..overrideData.identity.hairDirectives
 
 	local specialStatus
 	if success then

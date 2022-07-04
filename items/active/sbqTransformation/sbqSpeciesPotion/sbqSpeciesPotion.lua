@@ -8,6 +8,7 @@ function update(dt, fireMode, shiftHeld)
 		local data = {}
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 		data.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
+		data.unlockSpecies = true
 
 		player.giveItem({name = "sbqMysteriousPotion", parameters = data})
 		item.consume(1)
