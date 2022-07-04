@@ -126,7 +126,7 @@
 						{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 						{ "type" : "button", "id" : "applySpecies", "caption" : "Transform", "expandMode" : [0, 0] }
 					]}]],
-					[[[
+					[
 						{ "type" : "panel", "id" : "speciesColorPanel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Color Pickers", "inline" : true },
@@ -171,17 +171,21 @@
 								{ "type" : "iconButton", "id" : "incSpeciesFacialMaskType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							]
 						]}
-					]]],
-					[[{ "type" : "panel", "id" : "speciesManualColorPanel", "style" : "convex", "children" : [{ "type" : "scrollArea", "id" : "speciesManualColorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+					],
+					[{ "size" : 95 },[{ "type" : "panel", "id" : "speciesManualColorPanel",  "style" : "convex", "children" : [
 						{ "mode" : "v" },
 						{ "type" : "label", "text" : "Manual Color Entry", "inline" : true },
-						[{ "type" : "label", "text" : "Custom Colors", "inline" : true },{ "type" : "textBox", "id" : "speciesCustomColorText", "expandMode" : [1, 0] }],
-						[{ "type" : "label", "text" : "Body Color", "inline" : true },{ "type" : "textBox", "id" : "speciesBodyColorText", "expandMode" : [1, 0] }],
-						[{ "type" : "label", "text" : "Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesHairColorText", "expandMode" : [1, 0] }],
-						[{ "type" : "label", "text" : "Facial Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialHairColorText", "expandMode" : [1, 0] }],
-						[{ "type" : "label", "text" : "Facial Mask Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialMaskColorText", "expandMode" : [1, 0] }],
-						[{ "type" : "label", "text" : "Emotes Color", "inline" : true },{ "type" : "textBox", "id" : "speciesEmoteColorText", "expandMode" : [1, 0] }]
-					]}]}]]
+						{ "type" : "scrollArea", "id" : "speciesManualColorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+							{"type" : "layout", "mode" : "vertical", "children" : [
+								[{ "type" : "label", "text" : "Custom Colors", "inline" : true },{ "type" : "textBox", "id" : "speciesCustomColorText", "expandMode" : [1, 0] }],
+								[{ "type" : "label", "text" : "Body Color", "inline" : true },{ "type" : "textBox", "id" : "speciesBodyColorText", "expandMode" : [1, 0] }],
+								[{ "type" : "label", "text" : "Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesHairColorText", "expandMode" : [1, 0] }],
+								[{ "type" : "label", "text" : "Facial Hair Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialHairColorText", "expandMode" : [1, 0] }],
+								[{ "type" : "label", "text" : "Facial Mask Color", "inline" : true },{ "type" : "textBox", "id" : "speciesFacialMaskColorText", "expandMode" : [1, 0] }],
+								[{ "type" : "label", "text" : "Emotes Color", "inline" : true },{ "type" : "textBox", "id" : "speciesEmoteColorText", "expandMode" : [1, 0] }]
+							]}
+						]}
+					]}]]
 				]},
 				[[[
 					{ "expandMode" : [2, 2]},

@@ -106,7 +106,7 @@ function init()
 			presetsPanel:setVisible(false)
 		end
 		if not player.loungingIn() and sbq.sbqCurrentData.type ~= "object" and (sbq.sbqCurrentData.species == nil or sbq.sbqCurrentData.species == "sbqOccupantHolder") then
-			speciesLayout:setVisible(true)
+			speciesLayout:setVisible( not sbq.hideSpeciesPanel )
 		elseif sbq.sbqCurrentData.type ~= "object" then
 			speciesLayout:setVisible(false)
 		end
@@ -504,6 +504,10 @@ if speciesLayout ~= nil then
 		sbq.speciesOverrideIndex = index
 		local selectedSpecies = sbq.unlockedSpeciesList[sbq.speciesOverrideIndex]
 		sbq.currentCustomSpecies = sbq.customizedSpecies[selectedSpecies]
+		if not selectedSpecies then
+			sbq.hideSpeciesPanel = true
+			return
+		end
 
 		local success, speciesFile = pcall(root.assetJson, ("/species/"..selectedSpecies..".species"))
 		if success then

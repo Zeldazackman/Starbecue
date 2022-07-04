@@ -100,7 +100,7 @@ end
 function sbq.doMysteriousTF(data)
 	if world.pointTileCollision(entity.position(), {"Null"}) then return end
 	local overrideData = data or {}
-	local currentData = status.statusProperty("speciesAnimOverrideData")
+	local currentData = status.statusProperty("speciesAnimOverrideData") or {}
 	local customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
 	local originalSpecies = world.entitySpecies(entity.id())
 
