@@ -18,18 +18,6 @@ function sbq.update(dt)
 	sbq.setGrabTarget()
 end
 
-function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
-	if (sbq.settings.penisCumTF and location == "shaft" and (sbq.occupant[i].progressBar <= 0))
-	or (sbq.settings.ballsCumTF and ( location == "balls" or location == "ballsR" or location == "ballsL" ) and (sbq.occupant[i].progressBar <= 0))
-	then
-		sbq.loopedMessage("CumTF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
-			if not immune then
-				transformMessageHandler( eid , 3, sbq.config.victimTransformPresets.cumBlob )
-			end
-		end)
-	end
-end
-
 function sbq.changeSize()
 	if sbq.tapControl( sbq.driverSeat, "special1" ) and sbq.totalTimeAlive > 0.5 and not sbq.transitionLock then
 		local changeSize = "smol"

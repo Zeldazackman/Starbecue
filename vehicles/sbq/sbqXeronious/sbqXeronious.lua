@@ -58,36 +58,6 @@ function sbq.update(dt)
 	end
 end
 
-function sbq.otherLocationEffects(i, eid, health, bellyEffect, location, powerMultiplier )
-
-	if (sbq.occupant[i].progressBar <= 0) then
-		if sbq.settings.bellyEggify and location == "belly" and sbq.occupant[i].species ~= "sbqEgg" then
-			sbq.loopedMessage("Eggify"..eid, eid, "sbqIsPreyEnabled", {"eggImmunity"}, function (immune)
-				if not immune then
-					transformMessageHandler( eid, 3, {
-						barColor = {"aa720a", "e4a126", "ffb62e", "ffca69"},
-						forceSettings = true,
-						layer = true,
-						state = "smol",
-						species = "sbqEgg",
-						layerLocation = "egg",
-						settings = {
-							cracks = 0,
-							bellyEffect = "sbqHeal",
-							escapeDifficulty = sbq.sbqSettings.global.escapeDifficulty,
-							replaceColorTable = {
-								{"aa720a", "e4a126", "ffb62e", "ffca69"},
-								{"aa720a", "e4a126", "ffb62e", "ffca69"}
-							},
-						}
-					})
-				end
-			end)
-		end
-	end
-end
-
-
 -------------------------------------------------------------------------------
 
 function sbq.whenFalling()

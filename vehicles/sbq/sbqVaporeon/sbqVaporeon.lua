@@ -86,16 +86,6 @@ function checkAnalVore()
 	return sbq.checkEatPosition(sbq.localToGlobal({-5, -3}), 3, "belly", "eatAnal")
 end
 
-function sbq.extraBellyEffects(i, eid, health, bellyEffect)
-	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.bellyTF then
-		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
-			if not immune then
-				transformMessageHandler( eid , 3 )
-			end
-		end)
-	end
-end
-
 -------------------------------------------------------------------------------
 
 function state.stand.begin()

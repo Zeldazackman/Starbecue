@@ -133,12 +133,12 @@
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
-				"TF" : { "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
+				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
 			"balls" : { "name" : "Balls", "selectEffect" : true, "sided" : true, "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true,
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
-				"TF" : { "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
+				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
 			"ballsL" : { "name" : "Left Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
 			"ballsR" : { "name" : "Right Ball", "max": 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true }

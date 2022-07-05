@@ -218,7 +218,7 @@ end
 
 
 function sbq.transformPrey(i)
-	local smolPreyData = sbq.occupant[i].progressBarData
+	local smolPreyData = sbq.occupant[i].progressBarData or {}
 	if smolPreyData.layer == true then
 		smolPreyData.layer = sbq.occupant[i].smolPreyData
 		for j = 0, sbq.occupantSlots do
@@ -229,60 +229,37 @@ function sbq.transformPrey(i)
 					location = "nested",
 					owner = sbq.occupant[i].id,
 					massMultiplier = smolPreyData.layerMass or 1,
-					digest = false
+					locationEffect = nestedPreyData.locationEffect
 				}
 			end
 		end
 	end
 	if type(smolPreyData.species) == "string" then
-		if world.entityType(sbq.occupant[i].id) == "player" and not smolPreyData.forceSettings then
+		local entityType = world.entityType(sbq.occupant[i].id)
+		if entityType == "player" or entityType == "NPC" and not smolPreyData.forceSettings then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
-				smolPreyData.settings = settings
-				if sbq.occupant[i].species == "sbqEgg" then
-					sbq.occupant[i].smolPreyData.layer = smolPreyData
-				else
-					sbq.occupant[i].smolPreyData = smolPreyData
-					sbq.occupant[i].species = smolPreyData.species
-				end
+				sbq.doTransformPrey(i, sb.jsonMerge(smolPreyData.settings, settings or {}), smolPreyData)
 			end)
 		else
-			if sbq.occupant[i].species == "sbqEgg" then
-				sbq.occupant[i].smolPreyData.layer = smolPreyData
-			else
-				sbq.occupant[i].smolPreyData = smolPreyData
-				sbq.occupant[i].species = smolPreyData.species
-			end
-		end
-	else
-		smolPreyData.species = world.entityName( entity.id() )
-
-		if world.entityType(sbq.occupant[i].id) == "player" then
-			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
-				smolPreyData = sbq.getSmolPreyData(settings, smolPreyData.species, "smol")
-				if sbq.occupant[i].species == "sbqEgg" then
-					sbq.occupant[i].smolPreyData.layer = smolPreyData
-				else
-					sbq.occupant[i].smolPreyData = smolPreyData
-					sbq.occupant[i].species = smolPreyData.species
-				end
-			end)
-		else
-			smolPreyData = sbq.getSmolPreyData(sbq.settings, smolPreyData.species, "smol")
-			if sbq.occupant[i].species == "sbqEgg" then
-				sbq.occupant[i].smolPreyData.layer = smolPreyData
-			else
-				sbq.occupant[i].smolPreyData = smolPreyData
-				sbq.occupant[i].species = smolPreyData.species
-			end
+			sbq.doTransformPrey(i, smolPreyData.settings or {}, smolPreyData)
 		end
 	end
-	if smolPreyData.species == "sbqEgg" then
-		sbq.occupant[i].progressBar = 0
+	if sbq.occupant[i].progressBarType == "eggifying" then
 		sbq.occupant[i].egged = true
 	else
 		sbq.occupant[i].transformed = true
 	end
 	sbq.refreshList = true
+end
+
+function sbq.doTransformPrey(i, settings, smolPreyData)
+	smolPreyData = sb.jsonMerge(smolPreyData, sbq.getSmolPreyData(settings, smolPreyData.species, "smol"))
+	if sbq.occupant[i].species == "sbqEgg" then
+		sbq.occupant[i].smolPreyData.layer = smolPreyData
+	else
+		sbq.occupant[i].smolPreyData = smolPreyData
+		sbq.occupant[i].species = smolPreyData.species
+	end
 end
 
 function sbq.transformPlayer(i)

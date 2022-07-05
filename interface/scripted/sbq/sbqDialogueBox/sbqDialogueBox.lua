@@ -272,7 +272,6 @@ function sbq.voreButton(voreType)
 	sbq.data.settings.voreType = voreType
 	sbq.data.settings.getVoreButtonAction = active
 	sbq.data.settings.location = locationName
-	sbq.data.settings.locationDigest = locationData.digest
 
 	if active == "request" then
 		sbq.data.settings.doingVore = "before"

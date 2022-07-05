@@ -638,10 +638,11 @@ if speciesLayout ~= nil then
 		end
 		if speciesFile.headOptionAsHairColor then
 			overrideData.identity.hairDirectives = hairColor
-		elseif speciesFile.altOptionAsHairColor then
-			overrideData.identity.hairDirectives = undyColor
 		else
 			overrideData.identity.hairDirectives = overrideData.identity.bodyDirectives
+		end
+		if speciesFile.altOptionAsHairColor then
+			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..undyColor
 		end
 		if speciesFile.hairColorAsBodySubColor then
 			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..hairColor

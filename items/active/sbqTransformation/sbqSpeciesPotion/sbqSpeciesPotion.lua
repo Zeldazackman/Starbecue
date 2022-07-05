@@ -8,7 +8,6 @@ function update(dt, fireMode, shiftHeld)
 		local data = {}
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 		data.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
-		data.unlockSpecies = true
 		data.potionPath = "/items/active/sbqTransformation/sbqSpeciesPotion/"
 		data.potionDirectives = (speciesAnimOverrideData.directives or "")..(((speciesAnimOverrideData.identity or {})).bodyDirectives or "")
 		player.giveItem({name = "sbqMysteriousPotion", parameters = data})

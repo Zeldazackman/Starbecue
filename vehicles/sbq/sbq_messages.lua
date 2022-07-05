@@ -9,67 +9,70 @@ message.setHandler( "letout", function(_,_, id )
 	sbq.letout(id)
 end )
 
-message.setHandler( "transform", function(_,_, eid, multiplier, data )
-	transformMessageHandler(eid, multiplier, data)
+message.setHandler( "transform", function(_,_, eid, data)
+	sbq.transformMessageHandler(eid, data)
 end )
 
-function transformMessageHandler(eid, multiplier, data)
-	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive  then return end
-
-	if data then
-		if data.species ~= sbq.lounging[eid].species and data.species ~= nil then
-			data = sb.jsonMerge(data, sbq.getSmolPreyData(data.settings, data.species, data.state))
-		else return end
-	else
-		if sbq.lounging[eid].species == world.entityName( entity.id() ) then return end
+function sbq.transformMessageHandler(eid, TF, TFType)
+	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive then return end
+	local location = sbq.lounging[eid].location
+	local TF = sb.jsonMerge(TF or sbq.sbqData.locations[location][TFType or "TF"] or {}, {})
+	if TF.preset then
+		TF.data =  sb.jsonMerge(sbq.config.victimTransformPresets[TF.preset] or {}, {})
 	end
+	if TF.data.randomSpecies then
+		TF.data.species = TF.data.randomSpecies[math.random(#TF.data.randomSpecies)]
+	end
+	for setting, values in pairs(TF.data.randomSettings or {}) do
+		TF.data.settings[setting] = values[math.random(#values)]
+	end
+	for i, setting in ipairs(TF.data.inheritSettings) do
+		TF.data.settings[setting] = sbq.settings[setting]
+	end
+	if TF.data.randomColors then
+		local predatorConfig = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle").sbqData
+		local replaceColors =  TF.data.replaceColors or "replaceColors"
+		local offset = (TF.data.replaceColors ~= nil) and 1 or 0
+		local replaceColorTable = {}
+		for i, colorTable in ipairs(predatorConfig[replaceColors] or {}) do
+			replaceColorTable[i] = colorTable[math.random(#colorTable-offset)+offset]
+		end
+		TF.data.settings.replaceColorTable = replaceColorTable
+	end
+	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and not ((TF.data or {}).species))
+	TF.data = data.data or { species = sbq.species }
+	TF.locations = data.locations or { [location] = true }
 
+	sbq.lounging[eid].progressBarLocations = TF.locations
 	sbq.lounging[eid].progressBarActive = true
 	sbq.lounging[eid].progressBar = 0
-	sbq.lounging[eid].progressBarData = data or {}
+	sbq.lounging[eid].progressBarData = sb.jsonMerge(TF.data or {}, {})
+	sbq.lounging[eid].progressBarMultiplier = TF.multiplier or 3
 
-	if type(sbq.lounging[eid].progressBarData.barColor) == "table" then
-		sbq.lounging[eid].progressBarColor = data.barColor
+	if type(TF.barColor) == "table" then
+		sbq.lounging[eid].progressBarColor = TF.barColor
 	else
-		sbq.lounging[eid].progressBarColor = (sbq.settings.replaceColorTable[1] or (sbq.sbqData.replaceColors[1][(sbq.settings.replaceColors[1] or sbq.sbqData.defaultSettings.replaceColors[1] or 1) + 1])) -- pred body color
-		-- p.lounging[eid].progressBarColor = root.assetJson("something about data:sbqData.replaceColors.0.1")
-		-- or maybe define it some other way, I dunno
+		sbq.lounging[eid].progressBarColor = (
+			(((TF.data.settings or {}).replaceColorTable or {})[1])
+			or (sbq.settings.replaceColorTable[TF.data.replaceColorIndex or 1])
+			or (sbq.sbqData.replaceColors[TF.data.replaceColorIndex or 1][(sbq.settings.replaceColors[TF.data.replaceColorIndex or 1] or sbq.sbqData.defaultSettings.replaceColors[TF.data.replaceColorIndex or 1] or 1) + 1]) -- pred body color
+		)
 	end
 
 	if sbq.lounging[eid].species == "sbqOccupantHolder" then
 		sbq.lounging[eid].progressBarData.layer = true
 	end
 
-	sbq.lounging[eid].progressBarMultiplier = multiplier or 3
-	sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
-	sbq.lounging[eid].progressBarType = "transforming"
-	if (data or {}).species == "sbqEgg" then
-		sbq.lounging[eid].progressBarType = "eggifying"
+	if isOccupantHolderDefault or TF.data.playerSpeciesTF then
+		sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
+	else
+		sbq.lounging[eid].progressBarFinishFuncName = "transformPrey"
 	end
-end
 
-message.setHandler( "playerTransform", function(_,_, eid, multiplier, data )
-	playerTransformMessageHandler(eid, multiplier, data)
-end )
-
-function playerTransformMessageHandler(eid, multiplier, data)
-	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive or sbq.lounging[eid].stopPlayerTransformMessage then return end
-	sbq.addRPC(world.sendEntityMessage(eid, "sbqGetSpeciesOverrideData"), function (overrideData)
-		if overrideData then
-			local species = (data or {}).species or sbq.species
-			if overrideData.species ~= species then
-				sbq.lounging[eid].progressBarActive = true
-				sbq.lounging[eid].progressBar = 0
-				sbq.lounging[eid].progressBarData = data
-
-				sbq.lounging[eid].progressBarMultiplier = multiplier or 3
-				sbq.lounging[eid].progressBarFinishFuncName = "transformPlayer"
-				sbq.lounging[eid].progressBarType = "transforming"
-			else
-				sbq.lounging[eid].stopPlayerTransformMessage = true
-			end
-		end
-	end)
+	sbq.lounging[eid].progressBarType = "transforming"
+	if TFType then
+		sbq.lounging[eid].progressBarType = TFType.."ing"
+	end
 end
 
 message.setHandler( "settingsMenuRefresh", function(_,_)

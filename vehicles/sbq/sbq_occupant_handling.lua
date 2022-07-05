@@ -267,8 +267,7 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 		local settings = {
 			voreType = voreType or "default",
 			predator = sbq.species,
-			location = location,
-			locationDigest = sbq.sbqData.locations[location].digest
+			location = location
 		}
 		local entityType = world.entityType(args.id)
 		local sayLine = entityType == "npc" or entityType == "player" and type(sbq.driver) == "number" and world.entityExists(sbq.driver)
@@ -295,11 +294,11 @@ function sbq.doEscape(args, statuses, afterstatuses, voreType )
 		voreType = voreType or "default",
 		struggleTrigger = args.struggleTrigger,
 		location = location,
+		digesting = sbq.lounging[victim].digesting,
 		digested = sbq.lounging[victim].digested,
 		cumDigesting = sbq.lounging[victim].cumDigesting,
 		egged = sbq.lounging[victim].egged,
 		transformed = sbq.lounging[victim].transformed,
-		locationDigest = sbq.sbqData.locations[location].digest,
 		progressBarType = sbq.lounging[victim].progressBarType
 	}
 	local entityType = world.entityType(args.id)
@@ -425,65 +424,6 @@ function sbq.updateOccupants(dt)
 					if sbq.sbqData.locations[location].transformGroups ~= nil then
 						sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname.."Position")
 					end
-				end
-
-				if sbq.occupant[i].progressBarActive == true then
-					sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + dt*((math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier)
-
-					if sbq.occupant[i].progressBarMultiplier > 0 then
-						sbq.occupant[i].progressBar = math.min(100, sbq.occupant[i].progressBar)
-						if sbq.occupant[i].progressBar >= 100 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
-							sbq[sbq.occupant[i].progressBarFinishFuncName](i)
-							sbq.occupant[i].progressBarActive = false
-						end
-					else
-						sbq.occupant[i].progressBar = math.max(0, sbq.occupant[i].progressBar)
-						if sbq.occupant[i].progressBar <= 0 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
-							sbq[sbq.occupant[i].progressBarFinishFuncName](i)
-							sbq.occupant[i].progressBarActive = false
-						end
-					end
-				end
-
-				sbq.occupant[i].indicatorCooldown = sbq.occupant[i].indicatorCooldown - dt
-
-				if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
-					-- p.occupant[i].indicatorCooldown = 0.5
-					local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
-					local directions = {}
-					if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" and sbq.occupant[i].location ~= "nested" then
-						for dir, data in pairs(struggledata.directions or {}) do
-							if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
-								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
-								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
-								directions[dir] = data.indicate or "default"
-							elseif data then
-								if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
-								if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
-								directions[dir] = "default"
-							end
-						end
-					end
-					local nested
-					if sbq.occupant[i].location == "nested" then
-						nested = "Nested"
-					end
-
-					sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
-						"sbqOpenInterface", {"sbqIndicatorHud",
-						{
-							owner = entity.id(),
-							directions = directions,
-							progress = {
-								active = sbq.occupant[i].progressBarActive,
-								color = sbq.occupant[i].progressBarColor,
-								percent = sbq.occupant[i].progressBar,
-								dx = (math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier)+1) * sbq.occupant[i].progressBarMultiplier,
-							},
-							time = sbq.occupant[i].occupantTime,
-							location = (sbq.sbqData.locations[location] or {}).name or nested or ""
-						}
-					})
 				end
 
 				lastFilled = true
@@ -623,21 +563,14 @@ end
 function sbq.doBellyEffects(dt)
 	if sbq.occupants.total <= 0 then return end
 
-	local bellyEffect = sbq.settings.bellyEffect or "sbqRemoveBellyEffects"
-
-	if sbq.settings.displayDigest then
-		if sbq.config.bellyDisplayStatusEffects[bellyEffect] ~= nil then
-			bellyEffect = sbq.config.bellyDisplayStatusEffects[bellyEffect]
-		end
-	end
-
 	local powerMultiplier = math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1
 
 	for i = sbq.startSlot, sbq.occupantSlots do
-		local locationEffect = sbq.settings[(sbq.occupant[i].location or "").."Effect"] or "sbqRemoveBellyEffects"
 
 		local eid = sbq.occupant[i].id
 		if type(eid) == "number" and world.entityExists(eid) then
+			local location = sbq.occupant[i].location
+			local locationEffect = sbq.settings[(location or "").."Effect"] or "sbqRemoveBellyEffects"
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey
 			if light ~= nil then
@@ -650,34 +583,111 @@ function sbq.doBellyEffects(dt)
 				world.sendEntityMessage( eid, "sbqLight", sb.jsonMerge(light, {position = lightPosition}) )
 			end
 
-			if sbq.occupant[i].location == "nested" then -- to make nested prey use the belly effect of the one they're in
-				local owner = sbq.occupant[i].nestedPreyData.owner
-				local settings = sbq.lounging[owner].smolPreyData.settings or {}
-				local status = settings.bellyEffect or "sbqRemoveBellyEffects"
-				local powerMultiplier = math.log(sbq.lounging[owner].controls.powerMultiplier) + 1
-				if sbq.occupant[i].nestedPreyData.digest then
-					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
-				end
-			elseif sbq.occupant[i].location == "digesting" or (sbq.sbqData.locations[sbq.occupant[i].location] or {}).digest then
-				if (sbq.settings.bellySounds == true) then sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end ) end
-				if bellyEffect ~= nil and bellyEffect ~= "" then world.sendEntityMessage( eid, "applyStatusEffect", bellyEffect, powerMultiplier, sbq.driver or entity.id() ) end
-				sbq.extraBellyEffects(i, eid, health, bellyEffect)
-			elseif sbq.occupant[i].cumDigesting
-			or ((sbq.occupant[i].location == "ballsL" or sbq.occupant[i].location == "ballsR" or sbq.occupant[i].location == "balls") and sbq.settings.ballsCumDigestion)
-			or (sbq.occupant[i].location == "shaft" and sbq.settings.penisCumDigestion)
-			or (sbq.occupant[i].location == "womb" and sbq.settings.wombCumDigestion)
-			then
-				world.sendEntityMessage( eid, "applyStatusEffect", "sbqCumDigest", powerMultiplier, sbq.driver or entity.id())
-			else
-				if sbq.settings.displayDigest then
-					if sbq.config.bellyDisplayStatusEffects[locationEffect] ~= nil then
-						locationEffect = sbq.config.bellyDisplayStatusEffects[locationEffect]
-					end
-				end
-				world.sendEntityMessage( eid, "applyStatusEffect", locationEffect, powerMultiplier, sbq.driver or entity.id())
+			if location == "digesting" then
+				locationEffect = "sbqDigest"
+			end
+			if sbq.occupant[i].cumDigesting then
+				locationEffect = "sbqCumDigest"
 			end
 
-			sbq.otherLocationEffects(i, eid, health, bellyEffect, sbq.occupant[i].location, powerMultiplier )
+			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
+			local nested
+
+			if location == "nested" then -- to make nested prey use the belly effect of the one they're in
+				nested = "Nested"
+				local owner = sbq.occupant[i].nestedPreyData.owner
+				local settings = sbq.lounging[owner].smolPreyData.settings or {}
+				local powerMultiplier = math.max(1, math.log(sbq.lounging[owner].controls.powerMultiplier) + 1)
+				local locationEffect = sbq.occupant[i].nestedPreyData.locationEffect or "sbqRemoveBellyEffects"
+				if locationEffect then
+					local status = (settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
+					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
+				end
+			else
+				if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) and sbq.config.bellyGurgleEffects[locationEffect] then
+					sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
+				end
+				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, sbq.driver or entity.id())
+			end
+
+			local progressbarDx = 0
+			if sbq.occupant[i].progressBarActive == true then
+				progressbarDx = (sbq.occupant[i].progressBarLocations[location] and (powerMultiplier * sbq.occupant[i].progressBarMultiplier)) or (-(powerMultiplier * sbq.occupant[i].progressBarMultiplier))
+				sbq.occupant[i].progressBar = sbq.occupant[i].progressBar + dt * progressbarDx
+
+				if sbq.occupant[i].progressBarMultiplier > 0 then
+					sbq.occupant[i].progressBar = math.min(100, sbq.occupant[i].progressBar)
+					if sbq.occupant[i].progressBar >= 100 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
+						sbq[sbq.occupant[i].progressBarFinishFuncName](i)
+						sbq.occupant[i].progressBarActive = false
+					end
+				else
+					sbq.occupant[i].progressBar = math.max(0, sbq.occupant[i].progressBar)
+					if sbq.occupant[i].progressBar <= 0 and sbq.occupant[i].progressBarFinishFuncName ~= nil then
+						sbq[sbq.occupant[i].progressBarFinishFuncName](i)
+						sbq.occupant[i].progressBarActive = false
+					end
+				end
+			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."EggifyImmune"]) then
+				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (immune)
+					if not immune then
+						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")
+					else
+						sbq.occupant[i][location.."EggifyImmune"] = true
+					end
+				end, function ()
+					sbq.occupant[i][location.."EggifyImmune"] = true
+				end)
+			elseif sbq.settings[location.."TF"] and sbq.sbqData.locations[location].TF and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."TFImmune"]) then
+				sbq.loopedMessage(location.."TF"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].TF.immunity or "transformImmunity"}, function (immune)
+					if not immune then
+						sbq.transformMessageHandler(eid)
+					else
+						sbq.occupant[i][location.."TFImmune"] = true
+					end
+				end, function ()
+					sbq.occupant[i][location.."TFImmune"] = true
+				end)
+			end
+
+			sbq.occupant[i].indicatorCooldown = sbq.occupant[i].indicatorCooldown - dt
+
+			if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
+				-- p.occupant[i].indicatorCooldown = 0.5
+				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
+				local directions = {}
+				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" and sbq.occupant[i].location ~= "nested" then
+					for dir, data in pairs(struggledata.directions or {}) do
+						if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
+							if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
+							if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
+							directions[dir] = data.indicate or "default"
+						elseif data then
+							if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
+							if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
+							directions[dir] = "default"
+						end
+					end
+				end
+				sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
+					"sbqOpenInterface", {"sbqIndicatorHud",
+					{
+						owner = entity.id(),
+						directions = directions,
+						progress = {
+							active = sbq.occupant[i].progressBarActive,
+							color = sbq.occupant[i].progressBarColor,
+							percent = sbq.occupant[i].progressBar,
+							dx = progressbarDx
+						},
+						time = sbq.occupant[i].occupantTime,
+						location = (sbq.sbqData.locations[location] or {}).name or nested or ""
+					}
+				})
+			end
+
+			sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier )
+
 		end
 	end
 end
@@ -742,7 +752,7 @@ function sbq.handleStruggles(dt)
 		movedir, struggledata = sbq.validStruggle(struggler, dt)
 	end
 
-	if movedir == nil then return end -- invalid struggle
+	if movedir == nil or struggledata == nil then return end -- invalid struggle
 
 	local strugglerId = sbq.occupant[struggler].id
 

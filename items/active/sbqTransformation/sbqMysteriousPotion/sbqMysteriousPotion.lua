@@ -26,18 +26,6 @@ function update(dt, fireMode, shiftHeld)
 			activeItem.setArmAngle(math.max(3.1/5 - (self.useTimer-3.1)*3, -math.pi/3))
 		else
 			local duration = 3600
-			if config.getParameter("unlockSpecies") and world.entitySpecies(entity.id()) ~= data.species then
-				data.unlockSpecies = true
-				---@diagnostic disable-next-line: cast-local-type
-				duration = nil
-				local customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
-				if not customizedSpecies[data.species] then
-					player.radioMessage({
-						messageId = "transformPotionUnlock", unique = false,
-						text = "It seems that the potion you just drank may have caused some lasting alterations to your DNA, future transformations into this species should be more stable. ^#555;(Head to the ^#711;Starbecue Settings^#555; menu from the ^#711;Quickbar^#555; to customize your appearance.)"
-					}, 1)
-				end
-			end
 			world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, duration )
 			item.consume(1)
 			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)

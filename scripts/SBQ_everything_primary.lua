@@ -108,7 +108,7 @@ function sbq.doMysteriousTF(data)
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		overrideData.species = speciesList[math.random(#speciesList)]
 	end
-	if overrideData.species == originalSpecies and ((not overrideData.identity) or data.unlockSpecies) then
+	if overrideData.species == originalSpecies and (not overrideData.identity) then
 		return sbq.endMysteriousTF()
 	end
 	local customData = customizedSpecies[overrideData.species]
@@ -127,7 +127,6 @@ function sbq.doMysteriousTF(data)
 			overrideData.gender = currentData.gender or world.entityGender(entity.id())
 		end
 	end
-
 
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..overrideData.species..".species"))
 	if success and not overrideData.identity then
@@ -195,10 +194,11 @@ function sbq.doMysteriousTF(data)
 		overrideData.identity.hairColorIndex = index
 		if speciesFile.headOptionAsHairColor then
 			overrideData.identity.hairDirectives = hairColor
-		elseif speciesFile.altOptionAsHairColor then
-			overrideData.identity.hairDirectives = undyColor
 		else
 			overrideData.identity.hairDirectives = overrideData.identity.bodyDirectives
+		end
+		if speciesFile.altOptionAsHairColor then
+			overrideData.identity.hairDirectives = overrideData.identity.hairDirectives..undyColor
 		end
 		if speciesFile.hairColorAsBodySubColor then
 			overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives..hairColor
@@ -234,10 +234,11 @@ function sbq.doMysteriousTF(data)
 	overrideData.permanent = true
 	overrideData.customAnimStatus = specialStatus
 
-	if overrideData.unlockSpecies and not customData then
+	if (overrideData.species ~= originalSpecies and not customData) and not speciesFile.noUnlock then
 		overrideData.unlockSpecies = nil
 		customizedSpecies[overrideData.species] = overrideData
 		status.setStatusProperty("sbqCustomizedSpecies", customizedSpecies)
+		world.sendEntityMessage(entity.id(), "sbqUnlockedSpecies")
 	end
 
 	local statusProperty = status.statusProperty("speciesAnimOverrideData") or {}

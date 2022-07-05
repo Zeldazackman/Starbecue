@@ -37,10 +37,10 @@ function sbq.struggleMessages(id)
 			predator = sbq.species,
 			location = location,
 			digested = sbq.lounging[id].digested,
+			digesting = sbq.lounging[id].digesting,
 			cumDigesting = sbq.lounging[id].cumDigesting,
 			egged = sbq.lounging[id].egged,
 			transformed = sbq.lounging[id].transformed,
-			locationDigest = sbq.sbqData.locations[location].digest,
 			progressBarType = sbq.lounging[id].progressBarType
 		}
 
@@ -165,12 +165,8 @@ end
 --[[these are called when handling the effects applied to the occupants, called for each one and give the occupant index,
 the entity id, health, and the status checked in the options]]
 
--- to have any extra effects applied to those in digest locations
-function sbq.extraBellyEffects(i, eid, health, status)
-end
-
--- to have effects applied to other locations, for example, womb if the predator does unbirth
-function sbq.otherLocationEffects(i, eid, health, status, location)
+-- to have other effects applied in the effect application loop
+function sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier)
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------

@@ -40,23 +40,16 @@ function sbq.transformPlayer(i)
 				for _, part in ipairs(portrait) do
 					local imageString = part.image
 					--get personality values
-					if not overrideData.identity.body then
+					if not overrideData.identity.body or not overrideData.identity.bodyDirectives then
 						local found1, found2 = imageString:find("body.png:idle.")
 						if found1 ~= nil then
 							overrideData.identity.body = imageString:sub(found2+1, found2+1)
 
 							local directives = imageString:sub(found2+2)
-							overrideData.directives = overrideData.directives or directives
+							overrideData.identity.bodyDirectives = overrideData.identity.bodyDirectives or directives
 						end
 					end
-					if not overrideData.identity.arm then
-						local found1, found2 = imageString:find("backarm.png:idle.")
-						if found1 ~= nil then
-							overrideData.identity.arm = imageString:sub(found2+1, found2+1)
-						end
-					end
-
-					if not overrideData.identity.hairType then
+					if not overrideData.identity.hairType or not overrideData.identity.hairDirectives then
 						local found1, found2 = imageString:find("/"..(overrideData.identity.hairGroup or "hair").."/")
 						if found1 ~= nil then
 							local found3, found4 = imageString:find(".png:normal")
@@ -65,10 +58,9 @@ function sbq.transformPlayer(i)
 							local found5, found6 = imageString:find("?addmask=")
 							local hairDirectives = imageString:sub(found4+1, (found5 or 0)-1) -- this is really elegant haha
 
-							overrideData.hairDirectives = overrideData.hairDirectives or hairDirectives
+							overrideData.identity.hairDirectives = overrideData.identity.hairDirectives or hairDirectives
 						end
 					end
-
 					if not overrideData.identity.facialHairType then
 						local found1, found2 = imageString:find("/"..(overrideData.identity.facialHairGroup or "facialHair").."/")
 						if found1 ~= nil then
@@ -105,8 +97,11 @@ function sbq.transformPlayer(i)
 				if overrideData.identity.facialHairType ~= "20" then
 					data.identity.facialHairType = overrideData.identity.facialHairType
 				end
-				data.directives = overrideData.directives
-				data.hairDirectives = overrideData.hairDirectives
+				data.identity.directives = overrideData.identity.directives
+				data.identity.hairDirectives = overrideData.identity.hairDirectives
+			end
+			if world.entitySpecies(id) == data.species then
+				data.identity = nil
 			end
 
 			sbq.occupant[i].progressBarData = data
