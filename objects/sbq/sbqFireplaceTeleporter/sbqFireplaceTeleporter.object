@@ -1,6 +1,6 @@
 {
 	"objectName" : "sbqFireplaceTeleporter",
-	"colonyTags" : ["glitch","glitchcastle","light"],
+	"colonyTags" : ["drimyr","drimyrcastle","light","glitch","glitchcastle"],
 	"objectType" : "teleporter",
 	"rarity" : "Rare",
 	"category" : "teleporter",

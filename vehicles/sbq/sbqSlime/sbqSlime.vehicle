@@ -146,7 +146,7 @@
 		},
 		"allowedModifiers": {
 			"escapeDifficulty": {"min": -100, "max": 100},
-			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyEffectSlot": {"none":true, "heal":true, "digest":true, "softDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},

@@ -140,9 +140,9 @@
 		},
 
 		"allowedModifiers": {
-			"fatten": {"min": 0, "max": 1},
+			"bellyVisualMin": {"min": 0, "max": 1},
 			"escapeDifficulty": {"min": -100, "max": 100},
-			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyEffectSlot": {"none":true, "heal":true, "digest":true, "softDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},
@@ -281,9 +281,8 @@
 			"breasts"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine":["fatten", "womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine":["womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
-			"fatten" : { "mass": 1 },
 
 			"tail" : { "name" : "Tail", "max": 1,  "transformGroups" : ["tailbob"] },
 

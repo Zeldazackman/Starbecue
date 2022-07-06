@@ -155,11 +155,10 @@
 			"belly"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine":["fatten"], "mass" : 1, "hammerspace" : true,
+			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "mass" : 1, "hammerspace" : true,
 				"TF" : {}
 			},
-			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 },
-			"fatten" : { "mass": 1 }
+			"hug" : { "name" : "Held", "max": 1, "maxNested": 2 }
 		},
 		"defaultSettings" : {
 			"replaceColors" : [6,6,9,3,9,1,1],
@@ -167,9 +166,9 @@
 			"directives" : "?replace;a34c9a=545455;cc72c3=8a8a8b;ef99e7=b3b3b4;ffcfe9=e0e0e1;fae2ef=fefeff" // a default value to make sure the neck fins don't show up as pink
 		},
 		"allowedModifiers": {
-			"fatten": {"min": 0, "max": 2},
+			"bellyVisualMin": {"min": 0, "max": 2},
 			"escapeDifficulty": {"min": -100, "max": 100},
-			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyEffectSlot": {"none":true, "heal":true, "digest":true, "softDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},

@@ -117,7 +117,7 @@
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				{ "type" : "panel", "id" : "speciesLayout", "style" : "concave", "children" : [
+				{ "type" : "panel", "id" : "speciesLayout", "style" : "flat", "children" : [
 					[[{ "type" : "panel", "id" : "speciesPanel", "style" : "convex", "children" : [
 						{ "mode" : "h" },
 						{ "type" : "label", "text" : " Species", "inline" : true },

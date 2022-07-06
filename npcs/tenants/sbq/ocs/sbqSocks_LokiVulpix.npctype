@@ -868,21 +868,7 @@
 			"escapeDifficultyMax": 0,
 
 			"impossibleEscape": false,
-			"visualMax" : {
-				// "belly" : 1 // per location size defining, say a species can have at max 2 people in belly, but you'd prefer your OC only have one slot
-			},
-			"visualMin" : {
-				// "belly" : 1 // per location size defining, makes it so your pred will visualy always have this number of occupants, even if they haven't eaten anyone
-			},
-			"visualLock" : {
-				// "belly" : true // prevents the player from modifying the visual values for that location in the deed
-			},
-			"hammerspaceDisabled" : {
-				// "belly" : true // disables hammerspace for the specific location
-			},
-			"hammerspaceDisabledLock" : {
-				// "belly" : true // locks the value of hammerspace for the specific location
-			},
+
 			"hammerspace" : true,
 
 			// predator prefrences

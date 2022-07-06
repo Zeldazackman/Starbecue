@@ -22,14 +22,16 @@ function init()
 	sbq.name = world.entityName(pane.sourceEntity())
 	nameLabel:setText(sbq.name)
 
-	local species = metagui.inputData.settings.race or world.entitySpecies(pane.sourceEntity())
-	for i, voreType in ipairs(sbq.config.voreTypes) do
-		local icon =  "/items/active/sbqController/"..voreType..".png".. (metagui.inputData.iconDirectives or "")
-		local success, notEmpty = pcall(root.nonEmptyRegion, ("/humanoid/" .. species .. "/voreControllerIcons/" .. voreType .. ".png"))
-		if success and notEmpty ~= nil then
-			icon = "/humanoid/" .. species .. "/voreControllerIcons/" .. voreType .. ".png" ..  (metagui.inputData.iconDirectives or "")
+	local species = (metagui.inputData.settings or {}).race or world.entitySpecies(pane.sourceEntity())
+	if species then
+		for i, voreType in ipairs(sbq.config.voreTypes) do
+			local icon =  "/items/active/sbqController/"..voreType..".png".. (metagui.inputData.iconDirectives or "")
+			local success, notEmpty = pcall(root.nonEmptyRegion, ("/humanoid/" .. species .. "/voreControllerIcons/" .. voreType .. ".png"))
+			if success and notEmpty ~= nil then
+				icon = "/humanoid/" .. species .. "/voreControllerIcons/" .. voreType .. ".png" ..  (metagui.inputData.iconDirectives or "")
+			end
+			sbq.data.icons[voreType] = icon
 		end
-		sbq.data.icons[voreType] = icon
 	end
 
 	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
@@ -232,9 +234,9 @@ function sbq.checkVoreTypeActive(voreType)
 	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
 			if type(sbq.data.occupantHolder) ~= "nil" and type(sbq.occupants) == "table" then
-				if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings.visualMax[locationName] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings.hammerspaceDisabled[locationName]) ) then
+				if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings[locationName.."VisualMax"] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings[locationName.."HammerspaceDisabled"]) ) then
 					return "tooBig", locationName, locationData
-				elseif (sbq.occupants[locationName] >= (sbq.data.settings.visualMax[locationName] or locationData.max) ) then
+				elseif (sbq.occupants[locationName] >= (sbq.data.settings[locationName.."VisualMax"] or locationData.max) ) then
 					if sbq.actualOccupants == 0 then
 						return "otherLocationFull", locationName, locationData
 					else
@@ -412,7 +414,6 @@ end
 function navelVore:onClick()
 	sbq.voreButton("navelVore")
 end
-
 
 function analVore:onClick()
 	sbq.voreButton("analVore")

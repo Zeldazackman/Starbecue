@@ -2,7 +2,7 @@
 
 local buyAmount = 1
 
-local shopRecipes = root.assetJson("/recipes/auriShop/auriShopRecipes.config")
+local shopRecipes = root.assetJson(metagui.inputData.shopRecipes or "/recipes/auriShop/auriShopRecipes.config")
 local catagoryLabels = root.assetJson("/items/categories.config").labels
 
 local buyRecipe
@@ -23,7 +23,17 @@ function fixFilepath(string, item)
 	end
 end
 
-for tab, recipes in pairs(shopRecipes) do
+for j, tabData in pairs(shopRecipes) do
+	local tab = tabData.name
+	local recipes = tabData.recipes
+
+	shopTabField:newTab({
+		type = "tab", id = tab.."ShopTab", title = tabData.title or "", toolTip = tabData.toolTip, icon = tabData.icon, color = tabData.color or "ff00ff",
+		contents = { type = "panel", style = "flat", children = {{align = 0,size = 155},{{ type = "scrollArea", scrollDirections = {0, 1}, scrollBars = true, thumbScrolling = true, children = {
+			{ type = "layout", id = tab.."ScrollArea", mode = "vertical", spacing = -3, align = 0, children = {}}
+		}}}}}
+	})
+
 	local tabScrollArea = _ENV[tab.."ScrollArea"]
 	for i, recipe in ipairs(recipes) do
 		local resultItemConfig = root.itemConfig(recipe.result)
@@ -48,14 +58,21 @@ for tab, recipes in pairs(shopRecipes) do
 		local scale = 2
 		local wasObject
 
-		if ((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image ~= nil then
-			image = ((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image
+		local objectImage = (
+			((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image
+			or ((resultItemConfig.config.orientations or {})[1] or {}).image
+			or ((resultItemConfig.config.orientations or {})[1] or {}).dualImage
+		)
+		if objectImage then
+			image = objectImage
 			wasObject = true
 		elseif resultItemConfig.config.largeImage ~= nil then
 			image = resultItemConfig.config.largeImage
 			scale = 1.5
 		end
+---@diagnostic disable-next-line: cast-local-type
 		image = fixFilepath(image, resultItemConfig)
+
 
 		if wasObject and image ~= nil then
 			local size = root.imageSize(image)
@@ -75,10 +92,10 @@ for tab, recipes in pairs(shopRecipes) do
 		function listItem:onClick()
 			buyRecipe = recipe
 			itemInfoPanelSlot:setItem({ name = recipe.result, parameters = recipe.parameters })
-			itemNameLabel:setText(resultItemConfig.config.shortdescription)
+			itemNameLabel:setText(resultItemConfig.parameters.shortdescription or resultItemConfig.config.shortdescription)
 			itemCategoryLabel:setText("^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category))
-			itemDescriptionLabel:setText(resultItemConfig.config.description)
-			itemImage:setFile(image)
+			itemDescriptionLabel:setText(resultItemConfig.parameters.description or resultItemConfig.config.description)
+			itemImage:setFile(sb.replaceTags(image, { frame = 1, color = resultItemConfig.parameters.color or resultItemConfig.config.color or "default" }))
 			itemImage:setScale({scale, scale})
 
 			if sbq.data.dialogueTree.itemSelection[recipe.result] ~= nil then

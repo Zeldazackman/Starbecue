@@ -125,11 +125,9 @@
 			"balls"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine" : ["fatten", "womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine" : ["womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
 			"womb" : { "name" : "Womb", "max": 2, "selectEffect" : true, "eggify" : {}, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true
 			},
-			"fatten" : { "mass": 1 },
-
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
@@ -158,9 +156,9 @@
 			"wombEggify" : false
 		},
 		"allowedModifiers": {
-			"fatten": {"min": 0, "max": 2},
+			"bellyVisualMin": {"min": 0, "max": 2},
 			"escapeDifficulty": {"min": -100, "max": 100},
-			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyEffectSlot": {"none":true, "heal":true, "digest":true, "softDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},

@@ -146,7 +146,7 @@
 			"tail"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 3, "selectEffect" : true, "combine":["fatten"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true,
+			"belly" : { "name" : "Belly", "max": 3, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true,
 				"eggify" : {
 					"icon" : "/interface/scripted/sbq/sbqSettings/eggify.png?replace;a99f87=e4a126;eae0c8=ffb62e;fff6de=ffca69",
 					"data" : {
@@ -170,14 +170,12 @@
 			"tail" : { "name" : "Tail", "max": 1, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bodybob", "tailbob"] },
 
 			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["bodybob"] },
-			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] },
-
-			"fatten" : { "mass": 1 }
+			"pinned" : { "max": 1, "maxNested": 2, "transformGroups" : ["bodybob"] }
 		},
 		"allowedModifiers": {
-			"fatten": {"min": 0, "max": 3},
+			"bellyVisualMin": {"min": 0, "max": 3},
 			"escapeDifficulty": {"min": -100, "max": 100},
-			"bellyEffect": { "sbqRemoveBellyEffects":true, "sbqHeal":true, "sbqDigest":true, "sbqSoftDigest":true },
+			"bellyEffectSlot": {"none":true, "heal":true, "digest":true, "softDigest":true },
 			"bellyMultiplier": {"min": 0, "max": 100},
 			"displayDigest": "bool"
 		},

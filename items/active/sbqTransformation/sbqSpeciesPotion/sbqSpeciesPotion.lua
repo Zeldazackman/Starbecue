@@ -10,6 +10,7 @@ function update(dt, fireMode, shiftHeld)
 		data.species = speciesAnimOverrideData.species or world.entitySpecies(entity.id())
 		data.potionPath = "/items/active/sbqTransformation/sbqSpeciesPotion/"
 		data.potionDirectives = (speciesAnimOverrideData.directives or "")..(((speciesAnimOverrideData.identity or {})).bodyDirectives or "")
+		data.rarity = "rare"
 		player.giveItem({name = "sbqMysteriousPotion", parameters = data})
 		item.consume(1)
 	end

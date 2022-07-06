@@ -1,6 +1,6 @@
 {
   "objectName" : "sbqLargeWoodenArmchair",
-  "colonyTags" : ["avian","avianvillage"],
+  "colonyTags" : ["avian","avianvillage","drimyr","drimyrvillage","large"],
   "rarity" : "Common",
   "description" : "A large comfy wooden armchair.",
   "shortdescription" : "Large Wooden Armchair",
@@ -16,7 +16,7 @@
   "hylotlDescription" : "Comfortable... not sure about humble.",
   "novakidDescription" : "An attractive lookin' armchair, I reckon t'was made for larger folk.",
 
-  "inventoryIcon" : "/objects/sbq/woodenarmchair1/woodenarmchair1icon.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
+  "inventoryIcon" : "/objects/sbq/sbqLargeWoodenArmchair/woodenarmchair1icon.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",
   "orientations" : [
     {
       "image" : "sbqLargeWoodenArmchair.png?replace;6f2919=30196f;a85636=5f36a8;e0975c=a25ce0;d9c189=c789d9;f7e7b2=edb2f7",

@@ -1,6 +1,6 @@
 {
 	"objectName" : "sbqPurpleCrystalTorch",
-	"colonyTags" : ["light"],
+	"colonyTags" : ["light","drimyr"],
 	"rarity" : "Common",
 	"category" : "light",
 	"printable" : true,

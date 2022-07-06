@@ -121,6 +121,7 @@ function update(dt, fireMode, shiftHeld)
 	if fireMode == "primary" and not activeItem.callOtherHandScript("isDartGun") then
 		local parameters = getIdentity()
 		parameters.potionPath = "/items/active/sbqTransformation/sbqDuplicatePotion/"
+		parameters.rarity = "legendary"
 		player.giveItem({name = "sbqMysteriousPotion", parameters = parameters})
 		item.consume(1)
 	end

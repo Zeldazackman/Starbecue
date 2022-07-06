@@ -13,7 +13,7 @@ function update()
 		end
 		while not gotData and data[1] ~= nil do
 			local i = math.random(#data)
-			if (data[i].spawnOnce and world.getProperty(data[i].dungeon.."Placed")) or (not checkRequirements(data[i].checkRequirements or {})) then
+			if data[i].dungeon and (data[i].spawnOnce and world.getProperty(data[i].dungeon.."Placed")) or (not checkRequirements(data[i].checkRequirements or {})) then
 				table.remove(data,i)
 			else
 				data = data[i]

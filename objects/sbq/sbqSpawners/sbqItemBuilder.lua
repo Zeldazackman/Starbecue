@@ -14,11 +14,6 @@ function build( directory, config, parameters, level, seed )
 			config.rarity = "Rare"
 			config.inventoryIcon = "/vehicles/sbq/"..species.."/skins/"..skin.."/icon.png"..directives
 		end
-
-		--config.tooltipFields.statusLabel = sb.replaceTags(config.descriptionWithTags, {
-		--	fattenAdjective = config.fattenAdjectives[settings.fatten + 1],
-		--	hungryAdjective = config.hungryAdjectives[settings.bellyEffect]
-		--})
 	end
 
 	return config, parameters

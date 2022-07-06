@@ -1,6 +1,6 @@
 {
 	"objectName" : "sbqLargeWoodenDoor",
-	"colonyTags" : ["door"],
+	"colonyTags" : ["door","large","largedoor"],
 	"printable" : true,
 	"rarity" : "Common",
 

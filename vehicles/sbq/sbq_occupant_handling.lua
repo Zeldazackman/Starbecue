@@ -214,17 +214,17 @@ function sbq.locationFull(location)
 		local emptyslots = sbq.occupants.maximum - sbq.occupants.total
 
 		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
-		and not sbq.settings.hammerspaceDisabled[location] then
+		and not sbq.settings[location.."HammerspaceDisabled"] then
 			return false, emptyslots
 		end
 		if (sbq.sbqData.locations[location].combined or sbq.sbqData.locations[location].combine)
-		and ((sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)) < (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max))
+		and ((sbq.actualOccupants[location]+(sbq.settings[location.."VisualMin"] or 0)) < (sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max))
 		and (sbq.occupants[location] < sbq.sbqData.locations[location].max)
 		then
-			return false, math.min(emptyslots,(sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max) - (sbq.actualOccupants[location]+(sbq.settings.visualMin[location] or 0)))
+			return false, math.min(emptyslots,(sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max) - (sbq.actualOccupants[location]+(sbq.settings[location.."VisualMin"] or 0)))
 		end
 
-		return (sbq.occupants[location] >= (sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max)), math.min(emptyslots,(sbq.settings.visualMax[location] or sbq.sbqData.locations[location].max) - (sbq.occupants[location]))
+		return (sbq.occupants[location] >= (sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max)), math.min(emptyslots,(sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max) - (sbq.occupants[location]))
 	end
 end
 
@@ -350,9 +350,8 @@ function sbq.resetOccupantCount()
 	sbq.occupants.total = 0
 	sbq.occupants.totalSize = 0
 	for location, data in pairs(sbq.sbqData.locations) do
-		sbq.occupants[location] = sbq.settings.visualMin[location] or 0
+		sbq.occupants[location] = sbq.settings[location.."VisualMin"] or 0
 	end
-	sbq.occupants.fatten = sbq.settings.fatten or 0
 	sbq.occupants.mass = 0
 end
 
@@ -455,8 +454,8 @@ function sbq.setOccupantTags()
 	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
-		local max = sbq.settings.visualMax[location] or data.max
-		local min = sbq.settings.visualMin[location] or data.minVisual
+		local max = sbq.settings[location.."VisualMax"] or data.max
+		local min = sbq.settings[location.."VisualMin"] or data.minVisual
 		if type(max) == "number" and sbq.occupants[location] > max then
 			sbq.occupants[location] = max
 		elseif type(min) == "number" and sbq.occupants[location] < min then

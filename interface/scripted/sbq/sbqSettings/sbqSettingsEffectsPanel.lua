@@ -26,8 +26,6 @@ function sbq.effectsPanel()
 				end
 			end
 
-
-
 			effectsLayout:addChild({ type = "layout", mode = "horizontal", spacing = -1, children = {
 				{
 				{ size = 67},

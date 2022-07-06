@@ -8,36 +8,6 @@
 	"children" : [
 		{ "type" : "layout", "id" : "shopLayout", "mode" : "horizontal", "expandMode" : [1, 1], "children" : [ { "type" : "panel", "id" : "shopPanel", "expandMode" : [1, 1], "style" : "flat", "children" : [ { "mode" : "horizontal" },
 			{ "type" : "tabField", "id" : "shopTabField", "layout" : "horizontal", "tabs" : [
-				{ "type" : "tab", "id" : "predShopTab", "toolTip" : "Predators", "title" : "", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "predScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "furnitureShopTab", "toolTip" : "Furniture", "title" : "", "icon" : "/objects/sbq/sbqSpawners/sbqSpawnerVappyBed/sbqSpawnerVappyBedIcon.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "furnitureScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "modifierShopTab", "toolTip" : "Predator Modifiers", "title" : "", "icon" : "/items/sbq/modifiers/sbqModifierFatteningDonut.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "modifierScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "toolShopTab", "toolTip" : "Tools", "title" : "", "icon" : "/items/active/sbqNominomicon/sbqNominomicon.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "toolScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "transformationShopTab", "toolTip" : "Transformation", "title" : "", "icon" : "/items/active/sbqTransformation/sbqMysteriousPotion/sbqPotion.png", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "transformationScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]},
-				{ "type" : "tab", "id" : "miscShopTab", "toolTip" : "Miscellaneous", "title" : "", "icon" : "/vehicles/sbq/sbqEgg/skins/plastic/icon.png?replace;47623a=777777;678857=999999;779e64=cccccc;9ccd83=ffffff;70695a=777777;a99f87=999999;eae0c8=cccccc;fff6de=ffffff", "visible" : true, "color" : "ff00ff", "contents" : [
-					{ "type" : "panel", "style" : "flat", "children" : [{ "type" : "scrollArea", "scrollDirections" : [0, 1], "scrollBars" : true, "thumbScrolling" : true, "children" : [
-						{ "type" : "layout","id" : "miscScrollArea", "mode" : "vertical", "spacing" : -3, "children" : []}
-					]}]}
-				]}
 			]},
 			{ "type" : "layout", "mode" : "vertical", "size" : [ 116, 176 ], "children" : [
 				{ "type" : "panel", "id" : "itemInfoPanel", "expandMode" : [1,1], "style" : "flat", "children" : [ { "mode" : "vertical" },

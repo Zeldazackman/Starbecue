@@ -13,6 +13,6 @@
 
 	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],
 	"sbqModifier": {
-		"fatten": 0
+		"bellyVisualMin": -1
 	}
 }
