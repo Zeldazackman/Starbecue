@@ -66,7 +66,7 @@ function getIdentity()
 				if found1 ~= nil then
 					local found3 = imageString:find("?")
 					local directives = imageString:sub(found3)
-					overrideData.identity.bodyDirectives = overrideData.identity.emoteDirectives or directives
+					overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or directives
 				end
 			end
 			if not overrideData.identity.arm then

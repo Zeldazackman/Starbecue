@@ -129,45 +129,45 @@
 					[
 						{ "type" : "panel", "id" : "speciesColorPanel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Color Pickers", "inline" : true },
+							{ "type" : "label", "text" : "Color Pickers", "inline" : true, "align" : "center" },
 							[
-								{ "type" : "label", "text" : "Body Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Body Color", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesBodyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesBodyColorLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesBodyColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesBodyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Undy Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Undy Color",  "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesUndyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesUndyColorLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesUndyColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesUndyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Hair Color", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Hair Color", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesHairColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesHairColorLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesHairColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesHairColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							]
 						]},
 						{ "type" : "panel", "id" : "speciesStylePanel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Style Pickers", "inline" : true },
+							{ "type" : "label", "text" : "Style Pickers", "inline" : true, "align" : "center" },
 							[
-								{ "type" : "label", "text" : "Hair Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Hair Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesHairTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesHairTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Facial Hair Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Facial Hair Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesFacialHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesFacialHairTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesFacialHairTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesFacialHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Facial Mask Style", "inline" : true, "size" : [50,10] },
+								{ "type" : "label", "text" : "Facial Mask Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesFacialMaskType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "speciesFacialMaskTypeLabel", "text" : "", "inline" : true },
+								{ "type" : "label", "id" : "speciesFacialMaskTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesFacialMaskType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							]
 						]}

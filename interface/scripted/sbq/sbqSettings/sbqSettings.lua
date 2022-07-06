@@ -518,7 +518,7 @@ if speciesLayout ~= nil then
 			speciesHairColorText:setText(sbq.currentCustomSpecies.identity.hairDirectives)
 			speciesFacialHairColorText:setText(sbq.currentCustomSpecies.identity.facialHairDirectives)
 			speciesFacialMaskColorText:setText(sbq.currentCustomSpecies.identity.facialMaskDirectives)
-			speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.EmoteDirectives)
+			speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.emoteDirectives)
 
 			speciesHairTypeLabel:setText(sbq.currentCustomSpecies.identity.hairType)
 			speciesFacialHairTypeLabel:setText(sbq.currentCustomSpecies.identity.facialHairType)
@@ -661,11 +661,13 @@ if speciesLayout ~= nil then
 			overrideData.identity.facialMaskDirectives = overrideData.identity.facialMaskDirectives..overrideData.identity.bodyDirectives
 		end
 
+		overrideData.identity.emoteDirectives = overrideData.identity.bodyDirectives
+
 		speciesBodyColorText:setText(sbq.currentCustomSpecies.identity.bodyDirectives)
 		speciesHairColorText:setText(sbq.currentCustomSpecies.identity.hairDirectives)
 		speciesFacialHairColorText:setText(sbq.currentCustomSpecies.identity.facialHairDirectives)
 		speciesFacialMaskColorText:setText(sbq.currentCustomSpecies.identity.facialMaskDirectives)
-		speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.EmoteDirectives)
+		speciesEmoteColorText:setText(sbq.currentCustomSpecies.identity.emoteDirectives)
 
 		sbq.saveSpeciesCustomize()
 	end
@@ -715,8 +717,17 @@ if speciesLayout ~= nil then
 	function decSpeciesHairColor:onClick() sbq.changeSpeciesHairColor(-1) end
 	function incSpeciesHairColor:onClick() sbq.changeSpeciesHairColor(1) end
 
+	function speciesCustomColorText:onEnter() sbq.saveSpeciesCustomize() end
+
 
 	function sbq.saveSpeciesCustomize()
+		sbq.currentCustomSpecies.identity.bodyDirectives = speciesBodyColorText.text
+		sbq.currentCustomSpecies.identity.hairDirectives = speciesHairColorText.text
+		sbq.currentCustomSpecies.identity.facialHairDirectives = speciesFacialHairColorText.text
+		sbq.currentCustomSpecies.identity.facialMaskDirectives = speciesFacialMaskColorText.text
+		sbq.currentCustomSpecies.identity.emoteDirectives = speciesEmoteColorText.text
+		sbq.currentCustomSpecies.directives = speciesCustomColorText.text
+
 		status.setStatusProperty("sbqCustomizedSpecies", sbq.customizedSpecies )
 		applySpecies:onClick()
 	end

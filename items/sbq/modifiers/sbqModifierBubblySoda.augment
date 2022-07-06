@@ -10,6 +10,6 @@
 
 	"scripts": ["/items/sbq/modifiers/sbqModifier.lua"],
 	"sbqModifier": {
-		"escapeDifficulty": -1
+		"escapeDifficulty": -10
 	}
 }
