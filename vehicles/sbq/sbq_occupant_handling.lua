@@ -627,7 +627,7 @@ function sbq.doBellyEffects(dt)
 						sbq.occupant[i].progressBarActive = false
 					end
 				end
-			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."EggifyImmune"]) then
+			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].egged or sbq.occupant[i][location.."EggifyImmune"]) then
 				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (immune)
 					if not immune then
 						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")

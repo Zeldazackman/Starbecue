@@ -126,7 +126,8 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine" : ["womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
-			"womb" : { "name" : "Womb", "max": 2, "selectEffect" : true, "eggify" : {}, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true
+			"womb" : { "name" : "Womb", "max": 2, "selectEffect" : true, "mass" : 1, "combined" : true, "transformGroups" : ["bodybob"], "hammerspace" : true,
+				"eggify" : { "preset" : "egg" }
 			},
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},

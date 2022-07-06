@@ -157,6 +157,7 @@
 						"species" : "sbqEgg",
 						"layerLocation" : "egg",
 						"settings" : {
+							"firstLoadDone" : true,
 							"cracks" : 0,
 							"eggEffect" : "sbqHeal",
 							"replaceColorTable" : [

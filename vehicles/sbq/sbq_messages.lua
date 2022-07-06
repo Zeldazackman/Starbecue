@@ -20,13 +20,16 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 	if TF.preset then
 		TF.data =  sb.jsonMerge(sbq.config.victimTransformPresets[TF.preset] or {}, {})
 	end
+	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and not ((TF.data or {}).species))
+	TF.data = TF.data or { species = sbq.species }
+
 	if TF.data.randomSpecies then
 		TF.data.species = TF.data.randomSpecies[math.random(#TF.data.randomSpecies)]
 	end
 	for setting, values in pairs(TF.data.randomSettings or {}) do
 		TF.data.settings[setting] = values[math.random(#values)]
 	end
-	for i, setting in ipairs(TF.data.inheritSettings) do
+	for i, setting in ipairs(TF.data.inheritSettings or {}) do
 		TF.data.settings[setting] = sbq.settings[setting]
 	end
 	if TF.data.randomColors then
@@ -39,9 +42,7 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 		end
 		TF.data.settings.replaceColorTable = replaceColorTable
 	end
-	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and not ((TF.data or {}).species))
-	TF.data = data.data or { species = sbq.species }
-	TF.locations = data.locations or { [location] = true }
+	TF.locations = TF.locations or { [location] = true }
 
 	sbq.lounging[eid].progressBarLocations = TF.locations
 	sbq.lounging[eid].progressBarActive = true
