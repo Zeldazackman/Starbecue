@@ -129,28 +129,30 @@ function sbq.doMysteriousTF(data)
 	end
 
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..overrideData.species..".species"))
-	if success and not overrideData.identity then
-		overrideData.identity = {}
+
+	overrideData.identity = overrideData.identity or {}
+
+	if success then
 		for i, data in ipairs(speciesFile.genders or {}) do
 			if data.name == overrideData.gender then
-				overrideData.identity.hairGroup = data.hairGroup or "hair"
-				overrideData.identity.facialHairGroup = data.facialHairGroup or "facialHair"
-				overrideData.identity.facialMaskGroup = data.facialMaskGroup or "facialMask"
+				overrideData.identity.hairGroup = overrideData.identity.hairGroup or data.hairGroup or "hair"
+				overrideData.identity.facialHairGroup = overrideData.identity.facialHairGroup or data.facialHairGroup or "facialHair"
+				overrideData.identity.facialMaskGroup = overrideData.identity.facialMaskGroup or data.facialMaskGroup or "facialMask"
 
-				if data.hair[1] ~= nil then
-					overrideData.identity.hairType = data.hair[math.random(#data.hair)]
+				if data.hair and data.hair[1] then
+					overrideData.identity.hairType = overrideData.identity.hairType or data.hair[math.random(#data.hair)]
 				end
-				if data.facialHair[1] ~= nil then
-					overrideData.identity.facialHairType = data.facialHair[math.random(#data.facialHair)]
+				if data.facialHair and data.facialHair[1] then
+					overrideData.identity.facialHairType = overrideData.identity.facialHairType or data.facialHair[math.random(#data.facialHair)]
 				end
-				if data.facialMask[1] ~= nil then
-					overrideData.identity.facialMaskType = data.facialMask[math.random(#data.facialMask)]
+				if data.facialMask and data.facialMask[1] then
+					overrideData.identity.facialMaskType = overrideData.identity.facialMaskType or data.facialMask[math.random(#data.facialMask)]
 				end
 			end
 		end
 	end
 	local undyColor = overrideData.identity.undyColor or ""
-	if success and not overrideData.identity.undyColor then
+	if success and not overrideData.identity.undyColor and speciesFile.undyColor and speciesFile.undyColor[1] then
 		local index = math.random(#speciesFile.undyColor)
 		local colorTable = (speciesFile.undyColor or {})[index]
 		if type(colorTable) == "table" then
@@ -164,7 +166,7 @@ function sbq.doMysteriousTF(data)
 	end
 
 	local bodyColor = overrideData.identity.bodyDirectives or ""
-	if success and not overrideData.identity.bodyDirectives then
+	if success and not overrideData.identity.bodyDirectives and speciesFile.bodyColor and speciesFile.bodyColor[1] then
 		local index = math.random(#speciesFile.bodyColor)
 		local colorTable = (speciesFile.bodyColor or {})[index]
 		if type(colorTable) == "table" then
@@ -182,7 +184,7 @@ function sbq.doMysteriousTF(data)
 	end
 
 	local hairColor = overrideData.identity.hairDirectives or ""
-	if success and not overrideData.identity.hairDirectives then
+	if success and not overrideData.identity.hairDirectives and speciesFile.hairColor and speciesFile.hairColor[1] then
 		local index = math.random(#speciesFile.hairColor)
 		local colorTable = (speciesFile.hairColor or {})[index]
 		if type(colorTable) == "table" then
@@ -222,8 +224,6 @@ function sbq.doMysteriousTF(data)
 	end
 
 	overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or overrideData.identity.bodyDirectives
-
-
 
 	local specialStatus
 	if success then
