@@ -1,6 +1,7 @@
 function init()
 	self.useTimer = nil
 	activeItem.setArmAngle(-math.pi/4)
+	animator.resetTransformationGroup("potion")
 	animator.rotateTransformationGroup("potion", math.pi/4)
 end
 

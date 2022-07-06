@@ -1,6 +1,7 @@
 function init()
 	self.vehicle = config.getParameter("vehicle")
 	activeItem.setArmAngle(-math.pi/4)
+	animator.resetTransformationGroup("potion")
 	animator.rotateTransformationGroup("potion", math.pi/4)
 end
 
