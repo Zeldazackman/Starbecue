@@ -8,7 +8,8 @@
 		"statusDirectives" : "",
 		"armVisible" : "",
 		"partVisible" : "",
-		"smolpath": ""
+		"smolpath": "",
+		"wrappingFrame" : "1"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -30,7 +31,6 @@
 				"default": "none",
 				"states": {
 					"wrapping": { "frames": 9, "cycle": 3, "mode": "end", "priority": 0 },
-					"unwrapping": { "frames": 9, "cycle": 3, "mode": "end", "priority": 0, "baseAnim" : "wrapping" },
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
@@ -170,7 +170,7 @@
 				},
 				"partStates": {
 					"wrappingState": {
-						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<wrappingStateAnim>.<wrappingStateFrame><partVisible><directives><statusDirectives>" } },
+						"wrapping": { "properties": { "image": "skins/default/Wrapping_frames.png:<wrappingStateAnim>.<wrappingFrame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

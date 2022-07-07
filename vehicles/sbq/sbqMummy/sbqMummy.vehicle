@@ -110,7 +110,13 @@
 		},
 
 		"locations" :{
-			"grab" : { "name" : "Grabbed!", "max": 1, "transformGroups" : ["bodybob"] }
+			"grab" : { "name" : "Grabbed!", "max": 1, "transformGroups" : ["bodybob"],
+				"TF" : {
+					"toolTip" : "People that are grabbed will be wrapped up into mummies!",
+					// "icon" : "/imagePathHere.png"
+					"data" : { "species" : "sbqMummy", "state" : "stand" }
+				}
+			}
 		},
 
 		"driverStatusEffects": {
@@ -143,7 +149,7 @@
 					"voreType" : "held",
 					"timing" : "wrapping", // timing here is the name of the partState your animation is timed on
 					"animation" : {
-						"wrapping" : "unwrapping" // and it will get the timing from this anim
+						"wrapping" : "wrapping" // and it will get the timing from this anim
 						// only whatever the "wrapping" state is is controling the timing here, also we need to make the actual part for that
 					}
 				} //And when it times to unwrap, it is affecting just the arms, right? Or should I be calling wrapping's animation? (namely the one for wrapping around player?)
@@ -171,7 +177,8 @@
 			},
 			"struggle": {
 				"grab" : {
-					"parts" : ["wrapping"],
+					"parts" : [],
+					"sound" : false,
 					"directions" : {
 						"front": { "transition" : "escape" },
 						"back": { "transition" : "escape" },
@@ -187,8 +194,8 @@
 				"backarms" : [2, 4]
 			},
 			"handOffsets" : {
-				"frontarms" : [16, 4],
-				"backarms" : [20, 4]
+				"frontarms" : [20, 4],
+				"backarms" : [24, 4]
 			},
 			"control": {
 				"animations": {

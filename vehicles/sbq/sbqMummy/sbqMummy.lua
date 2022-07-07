@@ -4,9 +4,34 @@ state = {
 	stand = {}
 }
 
+
+function sbq.wrappingframe()
+	local victim = sbq.findFirstOccupantIdForLocation("grab")
+	if victim ~= nil then
+		local progressbar = sbq.lounging[victim].progressBar / 100
+		local frame = math.floor(progressbar * sbq.animStateData.wrappingState.states.wrapping.frames) + 1
+		sb.logInfo(progressbar)
+		sb.logInfo(sbq.animStateData.wrappingState.states.wrapping.frames)
+		sb.logInfo(frame)
+
+		sbq.setPartTag("global", "wrappingFrame", frame )
+	else
+		sbq.doAnim("wrappingState", "none")
+	end
+end
+-- this uses math to not have to deal with defining each percentage individually 
+-- heck we can even do this
+--Wait, so that will get the right frames regardless of frame amount? Well, as long as I specify the right parts (replace wrappingstate and wrapping with relevant bits if I reuse)?
+-- yeah
+--Alright, need to keep note of that.
+-- also removed the "unwrapping" anim since that won't need to be used now, since if you do make the progress bar go in reverse it will go back down the relevant frames now
+--That is cool! It saves on a lot of complications down the line. Should I get rid of the unwrapping bits in the .frames? you don't need to, they just won't do anything
+--Safe to attempt a test?
+-- should be yeah, save and test
 function sbq.update(dt)
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
+	sbq.wrappingframe()
 end
 
 function state.stand.grab(args, tconfig)
@@ -37,7 +62,7 @@ function sbq.letGrabGo(location)
 	sbq.doAnim("wrappingState", "none")
 end
 
-
+-- also I am doing an overhaul of the tf effects, so heres one thing that will save you a bit of effort later
 function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
 	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.trappedTF then
 		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
