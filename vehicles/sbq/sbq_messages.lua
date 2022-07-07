@@ -56,7 +56,7 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 		sbq.lounging[eid].progressBarColor = (
 			(((TF.data.settings or {}).replaceColorTable or {})[1])
 			or (sbq.settings.replaceColorTable[TF.data.replaceColorIndex or 1])
-			or (sbq.sbqData.replaceColors[TF.data.replaceColorIndex or 1][(sbq.settings.replaceColors[TF.data.replaceColorIndex or 1] or sbq.sbqData.defaultSettings.replaceColors[TF.data.replaceColorIndex or 1] or 1) + 1]) -- pred body color
+			or (sbq.sbqData.replaceColors[TF.data.replaceColorIndex or 1][((sbq.settings.replaceColors or {})[TF.data.replaceColorIndex or 1] or (sbq.sbqData.defaultSettings.replaceColors or {})[TF.data.replaceColorIndex or 1] or 1) + 1]) -- pred body color
 		)
 	end
 
