@@ -655,6 +655,7 @@ function sbq.doBellyEffects(dt)
 				-- p.occupant[i].indicatorCooldown = 0.5
 				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
 				local directions = {}
+				local icon
 				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" and sbq.occupant[i].location ~= "nested" then
 					for dir, data in pairs(struggledata.directions or {}) do
 						if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
@@ -668,6 +669,9 @@ function sbq.doBellyEffects(dt)
 						end
 					end
 				end
+				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
+					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..(sbq.occupant[i].smolPreyData.settings.skinNames.head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
+				end
 				sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
 					"sbqOpenInterface", {"sbqIndicatorHud",
 					{
@@ -679,6 +683,7 @@ function sbq.doBellyEffects(dt)
 							percent = sbq.occupant[i].progressBar,
 							dx = progressbarDx
 						},
+						icon = icon,
 						time = sbq.occupant[i].occupantTime,
 						location = (sbq.sbqData.locations[location] or {}).name or nested or ""
 					}

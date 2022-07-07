@@ -60,6 +60,7 @@ function init()
 	progress = config.getParameter( "progress" )
 	time = config.getParameter( "time" )
 	location = config.getParameter( "location" )
+	icon = config.getParameter( "icon" )
 	if not owner or not world.entityExists( owner ) or player.loungingIn() ~= owner then
 		pane.dismiss() -- nothing to indicate?
 	end
@@ -148,6 +149,9 @@ function update( dt )
 		{position = {16, 29}, horizontalAnchor = "mid", wrapWidth = 25},
 		8, {127, 127, 127}
 	)
+	if icon then
+		indicator:drawImageDrawable(icon, {46,16}, 1)
+	end
 end
 
 function uninit()
