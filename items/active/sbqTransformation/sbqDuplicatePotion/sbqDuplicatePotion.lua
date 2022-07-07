@@ -13,24 +13,12 @@ function getIdentity()
 
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..overrideData.species..".species"))
 	if success then
-		if not overrideData.identity.hairGroup and type(speciesFile) == "table" then
+		if type(speciesFile) == "table" then
 			for i, data in ipairs(speciesFile.genders or {}) do
 				if data.name == overrideData.gender then
-					overrideData.identity.hairGroup = data.hairGroup or "hair"
-				end
-			end
-		end
-		if not overrideData.identity.facialHairGroup and type(speciesFile) == "table" then
-			for i, data in ipairs(speciesFile.genders or {}) do
-				if data.name == overrideData.gender then
-					overrideData.identity.facialHairGroup = data.facialHairGroup or "facialHair"
-				end
-			end
-		end
-		if not overrideData.identity.facialMaskGroup and type(speciesFile) == "table" then
-			for i, data in ipairs(speciesFile.genders or {}) do
-				if data.name == overrideData.gender then
-					overrideData.identity.facialMaskGroup = data.facialMaskGroup or "facialMask"
+					overrideData.identity.hairGroup = overrideData.identity.hairGroup or data.hairGroup or "hair"
+					overrideData.identity.facialHairGroup = overrideData.identity.facialHairGroup or data.facialHairGroup or "facialHair"
+					overrideData.identity.facialMaskGroup = overrideData.identity.facialMaskGroup or data.facialMaskGroup or "facialMask"
 				end
 			end
 		end
@@ -93,7 +81,7 @@ function getIdentity()
 			if (not overrideData.identity.facialHairType) or not (overrideData.identity.facialHairDirectives) then
 				local found1, found2 = imageString:find("/"..(overrideData.identity.facialHairGroup or "facialHair").."/")
 				if found1 ~= nil then
-					found3, found4 = imageString:find(".png")
+					found3, found4 = imageString:find(".png:normal")
 					overrideData.identity.facialHairType = overrideData.identity.facialHairType or imageString:sub(found2+1, found3-1)
 
 					local found5, found6 = imageString:find("?addmask=")
@@ -105,8 +93,8 @@ function getIdentity()
 			if (not overrideData.identity.facialMaskType) or (not overrideData.identity.facialMaskDirectives) then
 				local found1, found2 = imageString:find("/"..(overrideData.identity.facialMaskGroup or "facialMask").."/")
 				if found1 ~= nil then
-					found3, found4 = imageString:find(".png")
-					overrideData.identity.facialMaskType = imageString:sub(found2+1, found3-1)
+					found3, found4 = imageString:find(".png:normal")
+					overrideData.identity.facialMaskType = overrideData.identity.facialMaskType imageString:sub(found2+1, found3-1)
 
 					local found5, found6 = imageString:find("?addmask=")
 					local directives = imageString:sub(found4+1, (found5 or 0)-1) -- this is really elegant haha
