@@ -75,8 +75,8 @@ for j, tabData in pairs(shopRecipes) do
 
 
 		if wasObject and image ~= nil then
-			local size = root.imageSize(image)
-			if size[1] > 90 or size[2] > 90 then
+			local success, size = pcall(root.imageSize,(image))
+			if success and (size[1] > 90 or size[2] > 90) then
 				local x = 90/(size[1])
 				local y = 90/(size[2])
 				if x > y then
