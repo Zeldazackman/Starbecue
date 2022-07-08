@@ -451,7 +451,7 @@ sbq.expandQueue = {}
 sbq.shrinkQueue = {}
 
 function sbq.setOccupantTags()
-	sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) )
+	if sbq.occupants.total ~= sbq.occupantsPrev.total then sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) ) end
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
 		local max = sbq.settings[location.."VisualMax"] or data.max
@@ -484,8 +484,10 @@ function sbq.setOccupantTags()
 			local amount = math.min(data.max, math.max(sbq.occupants[location.."R"], sbq.occupants[location.."L"]))
 			sbq.occupants[location] = amount
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
-				sbq.setPartTag( "global", location.."FrontOccupants", tostring(amount) )
-				sbq.setPartTag( "global", location.."BackOccupants", tostring(amount) )
+				if sbq.occupants[location] ~= sbq.occupantsPrev[location] then
+					sbq.setPartTag( "global", location.."FrontOccupants", tostring(amount) )
+					sbq.setPartTag( "global", location.."BackOccupants", tostring(amount) )
+				end
 
 				if sbq.occupants[location] > sbq.occupantsPrev[location] then
 					sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
@@ -495,8 +497,8 @@ function sbq.setOccupantTags()
 
 			else
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) )
-					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."L"]) )
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) ) end
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."L"]) ) end
 
 					if sbq.occupants[location.."R"] > sbq.occupantsPrev[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
@@ -510,8 +512,8 @@ function sbq.setOccupantTags()
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
-					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."R"]) )
-					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."L"]) )
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."R"]) ) end
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."L"]) ) end
 
 					if sbq.occupants[location.."L"] > sbq.occupantsPrev[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
@@ -527,7 +529,7 @@ function sbq.setOccupantTags()
 				end
 			end
 		else
-			sbq.setPartTag( "global", location.."Occupants", tostring(math.min(sbq.occupants[location], sbq.sbqData.locations[location].max or sbq.occupants[location])) )
+			if sbq.occupants[location] ~= sbq.occupantsPrev[location] then sbq.setPartTag( "global", location.."Occupants", tostring(math.min(sbq.occupants[location], sbq.sbqData.locations[location].max or sbq.occupants[location])) ) end
 
 			if sbq.totalTimeAlive > 0.5 or config.getParameter("doExpandAnim") then
 				if sbq.occupants[location] > sbq.occupantsPrev[location] then
@@ -541,6 +543,7 @@ function sbq.setOccupantTags()
 		sbq.expandQueue[location] = nil
 		sbq.shrinkQueue[location] = nil
 	end
+	sbq.prevDirection = sbq.direction
 end
 
 function sbq.swapOccupants(a, b)

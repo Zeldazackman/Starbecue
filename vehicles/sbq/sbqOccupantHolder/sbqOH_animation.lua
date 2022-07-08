@@ -1,14 +1,17 @@
 
 function sbq.setPartTag(part, tag, value)
 	sbq.partTags[part][tag] = value
-	animator.setPartTag(part, tag, value)
+	if part == "global" then
+		world.sendEntityMessage(sbq.spawner, "sbqSetGlobalTag", tag, value)
+	else
+		world.sendEntityMessage(sbq.spawner, "sbqSetPartTag", part, tag, value)
+	end
 end
 
 function sbq.getAnimData()
-	sbq.loopedMessage("getAnimData", sbq.spawner, "sbqGetAnimData", {sbq.partTags}, function(animData)
-		--p.animStateData = animData[1]
-		animator.setFlipped(animData[2]==-1)
-		sbq.direction = animData[2]
+	sbq.loopedMessage("getAnimData", sbq.spawner, "sbqGetAnimData", {}, function(direction)
+		animator.setFlipped(direction==-1)
+		sbq.direction = direction
 	end)
 end
 

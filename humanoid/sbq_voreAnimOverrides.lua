@@ -17,6 +17,14 @@ message.setHandler("sbqUpdateAnimPartTag", function (_,_, part, animTags)
 	end
 end)
 
+message.setHandler("sbqSetPartTag", function (_,_, part, tag, value)
+	animator.setPartTag(part, tag, value)
+end)
+
+message.setHandler("sbqSetGlobalTag", function (_,_, tag, value)
+	animator.setGlobalTag(tag, value)
+end)
+
 message.setHandler("sbqSetStatusValue", function (_,_, name, value)
 	self[name] = value
 	refreshCosmetics = true
@@ -104,19 +112,8 @@ message.setHandler("sbqDoAnim", function (_,_, state, anim, force)
 	doAnim(state, anim, force)
 end)
 
-message.setHandler("sbqGetAnimData", function (_,_, partTags)
-	for part, tags in pairs(partTags) do
-		if part == "global" then
-			for tag, value in pairs(tags) do
-				animator.setGlobalTag(tag, value)
-			end
-		else
-			for tag, value in pairs(tags) do
-				animator.setPartTag(part, tag, value)
-			end
-		end
-	end
-	return {self.animStateData, mcontroller.facingDirection()}
+message.setHandler("sbqGetAnimData", function (_,_)
+	return mcontroller.facingDirection()
 end)
 
 function sbq.getSettings(callback, failcallback)
