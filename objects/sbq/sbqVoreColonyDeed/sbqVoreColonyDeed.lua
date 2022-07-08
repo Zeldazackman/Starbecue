@@ -201,7 +201,7 @@ function checkHouseIntegrity()
 		end
 	end
 
-	if  #storage.grumbles > 0 and isGrumbling() and self.grumbleTimer:complete() and storage.possibleTortureRoom then
+	if #storage.grumbles > 0 and isGrumbling() and self.grumbleTimer:complete() and storage.possibleTortureRoom then
 		evictTenants()
 	end
 end
@@ -256,6 +256,7 @@ function scanHouseIntegrity()
 	storage.house.objects = objects
 
 	local tags = countTags(scanResults.objects, house.doors or {})
+	storage.house.contents = tags
 	for tag, requiredAmount in pairs(getTagCriteria()) do
 		local currentAmount = tags[tag] or 0
 		if currentAmount < requiredAmount then

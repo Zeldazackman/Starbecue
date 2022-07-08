@@ -33,17 +33,9 @@ function sbq.cumDigest(id, i)
 end
 
 function sbq.transform(id, i)
-	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "transformImmunity"), function (immune)
-		if not immune then
-			world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id )
-		end
-	end)
+	world.sendEntityMessage( sbq.sbqCurrentData.id, "transform", id )
 end
 
 function sbq.eggify(id, i)
-	sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", "eggImmunity"), function (immune)
-		if not immune then
-
-		end
-	end)
+	world.sendEntityMessage( sbq.sbqCurrentData.id, "eggify", id )
 end

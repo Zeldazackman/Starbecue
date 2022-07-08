@@ -859,9 +859,11 @@
 			"mood" : "default",
 			"personality" : "default",
 
-			"bellyEffect" : "sbqHeal",
+			"bellyEffectSlot" : "heal",
+			"wombEffectSlot" : "heal",
+			"tailEffectSlot" : "heal",
 
-			"displayDigest" : false,
+			"displayDigest" : true,
 
 			"escapeDifficulty": 0,
 			"escapeDifficultyMin": 0,
@@ -882,12 +884,20 @@
 
 		// any setting you define above can be modified by a player, this table allows you to define settings a player *cannot* modify, making sure your OC is always in line with your prefrences
 		"sbqOverrideSettings" : {
+			"bellyDigestEnable" : false,
+			"bellySoftDigestEnable" : false,
+			"shaftDigestEnable" : false,
+			"shaftSoftDigestEnable" : false,
+			"ballsDigestEnable" : false,
+			"ballsSoftDigestEnable" : false,
+			"wombDigestEnable" : false,
+			"wombSoftDigestEnable": false,
+
 			"tailVorePred" : false,
 			"absorbVorePred" : false,
 			"navelVorePred" : false,
 			"breastVorePred" : false,
 			"cockVorePred" : false,
-
 
 			"bellySounds" : false
 		},

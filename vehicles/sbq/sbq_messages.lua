@@ -9,9 +9,22 @@ message.setHandler( "letout", function(_,_, id )
 	sbq.letout(id)
 end )
 
+message.setHandler( "eggify", function(_,_, eid, data)
+	local location = sbq.lounging[eid].location
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].eggify or {}).immunity or "eggImmunity"), function (immune)
+		if not immune then
+			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].eggify, "eggify")
+		end
+	end)
+end)
 message.setHandler( "transform", function(_,_, eid, data)
-	sbq.transformMessageHandler(eid, data)
-end )
+	local location = sbq.lounging[eid].location
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].TF or {}).immunity or "transformImmunity"), function (immune)
+		if not immune then
+			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].TF)
+		end
+	end)
+end)
 
 function sbq.transformMessageHandler(eid, TF, TFType)
 	if sbq.lounging[eid] == nil or sbq.lounging[eid].progressBarActive then return end

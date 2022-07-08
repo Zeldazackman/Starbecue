@@ -209,6 +209,15 @@ function init()
 			end
 		end
 
+		local list = {"None","Heal","SoftDigest","Digest","TF","Eggify"}
+		for location, data in pairs(sbq.predatorConfig.locations) do
+			for i, effect in ipairs(list) do
+				if sbq.overrideSettings[location..effect.."Enable"] == false then
+					local button = _ENV[location..effect.."EnableLocked"]
+					if button then button:setVisible(false) end
+				end
+			end
+		end
 
 		function questParticipation:onClick()
 			sbq.changePredSetting("questParticipation", questParticipation.checked)

@@ -31,7 +31,7 @@
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Prey will emit numbers upon taking damage" }, { "type" : "label", "text" : " Display DoT Effects" } ],
+							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "label", "text" : " Display Effects" } ],
 							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : " Belly Sounds" } ],
 							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
 						]}]}
@@ -106,7 +106,7 @@
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
 								[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to digestion" }, { "type" : "label", "text" : " Digestion" }],
 								[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to cum digestion" }, { "type" : "label", "text" : " Cumgestion" }],
-								[{ "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "Become immune to cum transformation" }, { "type" : "label", "text" : " Cum TF" }],
+								[{ "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "Become immune to cum transformation" }, { "type" : "label", "text" : " Cum Transformation" }],
 								[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : " Transformation" }],
 								[{ "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "Become immune to genderswap effects" }, { "type" : "label", "text" : " Genderswap" }],
 								[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : " Egg Entrapment" }]

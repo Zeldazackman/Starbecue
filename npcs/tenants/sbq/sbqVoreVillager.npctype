@@ -870,7 +870,7 @@
 									"transform" : {
 										"next" : "transformImmunity",
 										"false" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] } // shy type is, kinda unaware of cum tf, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
+										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
 									}
 								}
 							}
@@ -915,7 +915,7 @@
 									"transform" : {
 										"next" : "transformImmunity",
 										"false" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.default"} ] } // shy type is, kinda unaware of cum tf, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
+										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.default"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
 									}
 								}
 							}

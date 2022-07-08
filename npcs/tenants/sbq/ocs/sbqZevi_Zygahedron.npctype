@@ -43,16 +43,19 @@
 			"absorbVorePredEnable" : true
 		},
 		"sbqOverrideSettings" : {
+			"shaftDigestEnable" : false,
+			"shaftSoftDigestEnable" : false,
+			"ballsDigestEnable" : false,
+			"ballsSoftDigestEnable" : false,
+			"wombDigestEnable" : false,
+			"wombSoftDigestEnable" : false,
+
 			"navelVorePred" : false,
 			"breastVorePred" : false,
 			"tailVorePred" : false,
 
 			"penisCumTF" : false,
-			"wombTF" : false,
-
-			"penisCumDigestion" : false,
-			"ballsCumDigestion" : false,
-			"wombCumDigestion" : false
+			"wombTF" : false
 		},
 		"sbqOverridePreyEnabled" : {
 			"cumDigestImmunity" : true,
