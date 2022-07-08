@@ -55,10 +55,12 @@ function init()
 	message.setHandler("sbqSummonNewTenant", function (_,_, newTenant, seed)
 		if not storage.house then return animator.playSound("error") end
 
-		evictTenants()
-		if not newTenant then return end
+		if not newTenant then return animator.playSound("error") end
 		local success, occupier = pcall(root.tenantConfig,(newTenant))
-		if not success then return end
+		if not success then return animator.playSound("error") end
+
+		if checkExistingUniqueIds(occupier) then return animator.playSound("error") end
+		evictTenants()
 
 		local data = occupier.checkRequirements or {}
 		if data.checkItems then
@@ -139,6 +141,8 @@ function chooseTenants(seed, tags)
 			if not (success and notEmpty ~= nil) then return end
 		end
 
+		if checkExistingUniqueIds(match) then return end
+
 		return (match.priority >= highestPriority)
 	end)
 	util.debugLog("Applicable tenants:")
@@ -157,6 +161,17 @@ function chooseTenants(seed, tags)
 		math.randomseed(util.seedTime())
 	end
 end
+
+function checkExistingUniqueIds(occupier)
+	for _, tenant in ipairs(occupier.tenants) do
+		local npcConfig = root.npcConfig(tenant.type)
+		if (npcConfig.scriptConfig or {}).uniqueId then
+			local id = world.loadUniqueEntity((npcConfig.scriptConfig or {}).uniqueId)
+			if id and world.entityExists(id) then return true end
+		end
+	end
+end
+
 
 function setTenantsData(occupier)
 	local occupier = occupier
