@@ -1,0 +1,14 @@
+{
+	"name" : "sbqMilkDigest",
+	"blockingStat" : "milkDigestImmunity",
+
+	"effectConfig" : { "effect" : "sbqMilkDigest"},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqCumDigest.lua"
+	],
+
+	"label" : "Converting Into Milk",
+	"icon" : "/stats/sbq/sbqDigest/sbqCumDigest.png"
+}

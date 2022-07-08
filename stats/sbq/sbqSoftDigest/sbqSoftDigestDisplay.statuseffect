@@ -2,7 +2,7 @@
 	"name" : "sbqSoftDigestDisplay",
 	"blockingStat" : "digestionImmunity",
 
-	"effectConfig" : {},
+	"effectConfig" : { "effect" : "sbqSoftDigestDisplay"},
 	"defaultDuration" : 5,
 
 	"scripts" : [

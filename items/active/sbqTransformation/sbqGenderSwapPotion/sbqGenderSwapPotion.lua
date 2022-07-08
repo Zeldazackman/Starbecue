@@ -49,5 +49,5 @@ function update(dt, fireMode, shiftHeld)
 end
 
 function dartGunData()
-	return { funcName = "genderSwap" }
+	return { funcName = "genderswap" }
 end

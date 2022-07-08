@@ -18,6 +18,14 @@
 			"unbirthPredEnable" : false
 
 		},
+		"sbqOverridePreyEnabled" : {
+			"digestImmunity": true,
+			"transformImmunity": true,
+			"milkDigestImmunity": true,
+			"cumDigestImmunity": true,
+			"cumTFImmunity":true,
+			"genderswapImmunity": true
+		},
 
 		"dialogueTree" : {
 			"converse" : {
@@ -56,12 +64,6 @@
 		"stats" : {
 			"protection" : {
 				"baseValue" : 100.0
-			}
-		},
-		"statusProperties" : {
-			"sbqPreyEnabled" : {
-				"digestImmunity": true,
-				"transformImmunity": true
 			}
 		}
 	}

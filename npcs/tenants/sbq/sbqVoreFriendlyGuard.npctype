@@ -73,7 +73,11 @@
 			//"breastVorePredEnable" : [true,false],
 			//"unbirthPredEnable" : [true,false],
 
-			"bellyEffect" : [ "sbqRemoveBellyEffects", "sbqHeal", "sbqDigest", "sbqSoftDigest"],
+			"bellyEffectSlot" : [ "none", "heal", "digest", "softDigest"],
+			"wombEffectSlot" : [ "none", "heal", "digest", "softDigest"],
+			"ballsEffectSlot" : [ "none", "heal", "digest", "softDigest"],
+			"shaftEffectSlot" : [ "none", "heal", "digest", "softDigest"],
+			"breastsEffectSlot" : [ "none", "heal", "digest", "softDigest"],
 
 			"hammerspace" : [true,false],
 

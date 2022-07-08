@@ -54,6 +54,27 @@
 			"breastVorePredEnable" : false,
 			"unbirthPredEnable" : false
 		},
+		"sbqOverridePreyEnabled" : {
+			"preyEnabled": false,
+
+			"digestImmunity": true,
+			"cumDigestImmunity":true,
+			"milkDigestImmunity":true,
+			"transformImmunity": true,
+			"cumTFImmunity": true,
+
+			"eggImmunity": false,
+			"held": false,
+			"oralVore": true,
+			"tailVore": true,
+			"absorbVore": false,
+
+			"navelVore": false,
+			"analVore": true,
+			"unbirth": true,
+			"cockVore": true,
+			"breastVore": false
+		},
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
 
@@ -78,24 +99,6 @@
 		"stats" : {
 			"protection" : {
 				"baseValue" : 100.0
-			}
-		},
-		"statusProperties" : {
-			"sbqPreyEnabled" : {
-				"preyEnabled": false,
-				"digestImmunity": true,
-				"transformImmunity": true,
-				"eggImmunity": false,
-				"held": false,
-				"oralVore": true,
-				"tailVore": true,
-				"absorbVore": false,
-
-				"navelVore": false,
-				"analVore": true,
-				"unbirth": true,
-				"cockVore": true,
-				"breastVore": false
 			}
 		}
 	},

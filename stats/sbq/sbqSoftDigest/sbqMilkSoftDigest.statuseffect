@@ -1,0 +1,14 @@
+{
+	"name" : "sbqMilkSoftDigest",
+	"blockingStat" : "milkDigestImmunity",
+
+	"effectConfig" : { "effect" : "sbqMilkSoftDigest"},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+	"sbqCumSoftDigest.lua"
+	],
+
+	"label" : "Soft Converting Into Milk",
+	"icon" : "/stats/sbq/sbqSoftDigest/sbqCumSoftDigest.png"
+}

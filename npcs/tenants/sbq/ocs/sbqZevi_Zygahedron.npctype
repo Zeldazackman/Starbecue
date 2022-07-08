@@ -54,11 +54,12 @@
 			"breastVorePred" : false,
 			"tailVorePred" : false,
 
-			"penisCumTF" : false,
-			"wombTF" : false
+			"shaftTFEnable" : false,
+			"wombTFEnable" : false
 		},
 		"sbqOverridePreyEnabled" : {
 			"cumDigestImmunity" : true,
+			"milkDigestImmunity" : true,
 			"navelVore" : false
 		},
 

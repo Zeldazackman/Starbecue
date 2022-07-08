@@ -12,4 +12,9 @@ function sbq.handleImmunities(type)
 	else
 		status.clearPersistentEffects("cumDigestImmunity")
 	end
+	if sbqPreyEnabled.milkDigestImmunity then
+		status.setPersistentEffects("milkDigestImmunity", {"sbqMilkDigestImmunity"})
+	else
+		status.clearPersistentEffects("milkDigestImmunity")
+	end
 end

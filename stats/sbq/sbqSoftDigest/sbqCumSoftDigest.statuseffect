@@ -2,7 +2,7 @@
 	"name" : "sbqCumSoftDigest",
 	"blockingStat" : "cumDigestImmunity",
 
-	"effectConfig" : {},
+	"effectConfig" : { "effect" : "sbqCumSoftDigest"},
 	"defaultDuration" : 5,
 
 	"scripts" : [

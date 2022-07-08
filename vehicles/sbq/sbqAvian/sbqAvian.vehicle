@@ -221,13 +221,13 @@
 			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "mass": 0.1, "maxNested" : -1,
-				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
-				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
+				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
+				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
 			"balls" : { "name" : "Balls", "selectEffect" : true, "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true,
-				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power."},
-				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP."},
+				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
+				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
 			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },

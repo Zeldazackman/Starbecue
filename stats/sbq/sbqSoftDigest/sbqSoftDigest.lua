@@ -5,7 +5,7 @@ function init()
 	script.setUpdateDelta(5)
 	self.powerMultiplier = effect.duration()
 
-	removeOtherBellyEffects("sbqSoftDigest")
+	removeOtherBellyEffects(config.getParameter("effect"))
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true

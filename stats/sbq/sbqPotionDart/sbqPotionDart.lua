@@ -38,7 +38,7 @@ function sbq.transform(data)
 	animator.playSound("activate")
 end
 
-function sbq.genderSwap()
+function sbq.genderswap()
 	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).genderswapImmunity
 	if immune then return effect.expire() end
 

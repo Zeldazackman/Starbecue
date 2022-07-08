@@ -1,0 +1,10 @@
+{
+	"name" : "sbqMilkDigestImmunity",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqMilkDigestImmunity.lua"
+	]
+}
