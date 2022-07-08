@@ -77,7 +77,9 @@ This mod includes no assets from the respective modded races, modified or not, m
 
 
 ### NPC Vore Tenants
-- Zevi (Pred/Prey)
+- Zevi (Pred/Prey) Zygahedron
+- Socks Flareon (Pred/Prey) LokiVulpix
+- Blue the Synth (Pred/Prey) Blueninja
 
 ### Other Things
 - Egg

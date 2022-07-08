@@ -16,6 +16,7 @@
 
 # Writers
 	radiantAurora
+	Blueninja
 
 # Playtesters / Bug Hunters
 	xeronious

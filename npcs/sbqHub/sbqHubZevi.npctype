@@ -3,7 +3,7 @@
 	"baseType" : "sbqZevi_Zygahedron",
 
 	"scriptConfig" : {
-		"sbqDefaultSettings" : {
+		"sbqOverrideSettings" : {
 			"mood" : "default",
 			"personality" : "default",
 

@@ -76,6 +76,7 @@
 	"guard_lastree": [ "sbq_guard_lastree", "sbq_guardT2_lastree", "sbq_guardT3_lastree", "sbq_guardT4_lastree" ],
 
 	"Zevi": "sbq_tenant_zevi_zygahedron",
-	"Socks": "sbq_tenant_socks_lokivulpix"
+	"Socks": "sbq_tenant_socks_lokivulpix",
+	"Blue_the_synth" : "sbq_tenant_Blue_Blueninja"
 
 }
