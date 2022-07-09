@@ -214,12 +214,6 @@
 								"next" : "getLocationEffect",
 								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
 								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
-								"sbqDigest" : {
-									"next" : "digestImmunity",
-									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								},
-								"sbqSoftDigest" : "struggle.location.race.personality.mood.sbqDigest",
 
 								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
@@ -258,11 +252,6 @@
 									"next" : "eggImmunity",
 									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
 							}
 						}
