@@ -673,7 +673,7 @@ function sbq.doBellyEffects(dt)
 					end
 				end
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
-					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..(sbq.occupant[i].smolPreyData.settings.skinNames.head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
+					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
 				end
 				sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
 					"sbqOpenInterface", {"sbqIndicatorHud",
