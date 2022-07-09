@@ -124,24 +124,38 @@
 								"next" : "getVoreButtonAction",
 								"request" : {
 									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
-									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+									"before" : { "randomDialogue" : [
+										"Want to take a nap inside~?", "My insides are nice and soft, as a plushie should be~", "You'll be nice and safe tucked away inside me~",
+										"Gonna be like you're getting hugged from all sides~", "An excellent idea, I am like a living sleeping bag after all~",
+										"I guarantee you'll have an excellent nap~", "Just slide on down my silky throat~", "Asking a plushie to eat you~?"
+									]},
+									"after" : { "randomDialogue" : [
+										"Hehehe, eaten by a plushie~", "I hope you like the feel of my fabric all snug around you~", "Right where you belong~", "Hope you consider staying for a while~",
+										"I was made just for this~", "Get yourself nice and comfortable~", "I hope you like how soft it is in there~", "Hope you enjoy the snuggles~"
+									]}
 								},
 								"unprompted" : {
 									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "I think you'll fill me up.", "I just need a bite to eat.", "You seem like you'd make a good meal.", "My belly's been grumbling..." ] },
-									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+									"before" : { "randomDialogue" : [
+										"I think I could use some extra stuffing~", "I think you could use a rest in a nice, soft, comfortable bed~", "I've got some empty space inside... and you seem like the perfect stuffing~",
+										"I think you could use a rest... inside me~", "Heheh... want a special hug?", "I'm gonna snuggle so much~", "You know, if you don't snuggle your plushies... they might come to snuggle you~"
+									]},
+									"after" : "vore.oralVore.race.personality.mood.request.after"
 								},
 								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
 								"full" : {
 									"next" : "getLocationEffect",
-									"default" : { "randomDialogue" : [ "I'm a bit too full...", "My belly can't stretch any further...", "I've eaten too much already...", "I would... but I'm too full..." ]},
-									"sbqDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]},
-									"sbqSoftDigest" : { "randomDialogue" : [ "Maybe after I melt down the last meal", "Urrrrp!\n Won't be too long until I can fit you.", "I've eaten too much already... but I'll probably have room soon.", "I'll have to finish processing this meal first." ]}
+									"default" : { "randomDialogue" : [ "I might pop a stitch if I try to eat any more!", "My fabric is getting stretched pretty thin!", "My belly is a great napping spot, but already at full occupancy~",
+										"You can hug me from the outside if you want~", "You just can't resist the call of my soft plushie belly, can you~", "Maybe if you squish your paws on my belly enough I might give you a turn~",
+										"How about we just snuggle with you out here for now~", "Perhaps we can think of something else to do hmmm~?"
+									]}
 								},
-								"otherLocationFull" : { "randomDialogue" : [ "I'm a bit too full...", "My body can't stretch any further...", "I've been filled too much already...", "I would... but I'm too full..." ]},
+								"otherLocationFull" : {"randomDialogue" : [ "I might pop a stitch if I try to fill myself any more!", "My fabric is getting stretched pretty thin!", "My body has some great napping spots, but already at full occupancy~",
+									"You can hug me from the outside if you want~", "You just can't resist the call of my soft plushie body, can you~", "Maybe if you squish your paws on my belly enough I might give you a turn somewhere~",
+									"How about we just snuggle with you out here for now~", "Perhaps we can think of something else to do hmmm~?"
+								]},
 
-								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+								"tooBig" : { "randomDialogue" : [ "I don't want to tear myself trying to force you in.", "You're a bit too large, I might pop a seam.", "You should try and make yourself smaller~", "You're a bit too big to stuff into this plushie." ]}
 							}
 						}
 					}
