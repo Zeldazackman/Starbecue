@@ -5,14 +5,14 @@
 	"maxStack" : 1,
 	"rarity" : "Legendary",
 	"description" : "A decorated bottle of thick blue liquid...",
-	"shortdescription" : "Vaporeon Goo",
+	"shortdescription" : "Giant Vaporeon Goo",
 	"tooltipKind" : "tool",
 	"category" : "Potion",
 	"twoHanded" : false,
 	"itemTags" : ["sbqTransformation"],
 
 	"vehicle" : "sbqVaporeon",
-	"transformationDescription" : "a vaporeon",
+	"transformationDescription" : "a giant vaporeon",
 
 	"inventoryIcon" : "sbqPotion.png",
 	"largeImage" : "sbqPotionLarge.png",
