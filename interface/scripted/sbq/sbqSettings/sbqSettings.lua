@@ -487,11 +487,25 @@ if speciesLayout ~= nil then
 		end
 	end
 	table.sort(sbq.unlockedSpeciesList)
-	sbq.currentPlayerSpecies = player.species()
+	sbq.currentPlayerSpecies = (status.statusProperty("speciesAnimOverrideData") or {}).species or originalSpecies
 	for i, species in ipairs(sbq.unlockedSpeciesList) do
 		if species == player.species then
 			sbq.speciesOverrideIndex = i
 		end
+	end
+	function speciesGenderToggle:onClick()
+		local table = {
+			male = "female",
+			female = "male"
+		}
+		sbq.currentCustomSpecies.gender = table[sbq.currentCustomSpecies.gender or world.entityGender(player.id())]
+		for i, data in ipairs(sbq.speciesFile.genders or {}) do
+			if data.name == sbq.currentCustomSpecies.gender then
+				sbq.genderTable = data
+				speciesGenderToggle:setImage(data.image)
+			end
+		end
+		sbq.saveSpeciesCustomize()
 	end
 	function sbq.changeSpecies(inc)
 		local index = (sbq.speciesOverrideIndex or 1) + inc
@@ -523,6 +537,49 @@ if speciesLayout ~= nil then
 			speciesHairTypeLabel:setText(sbq.currentCustomSpecies.identity.hairType)
 			speciesFacialHairTypeLabel:setText(sbq.currentCustomSpecies.identity.facialHairType)
 			speciesFacialMaskTypeLabel:setText(sbq.currentCustomSpecies.identity.facialMaskType)
+
+			speciesBodyColorNameLabel:setText(speciesFile.charGenTextLabels[1])
+			speciesHairTypeNameLabel:setText(speciesFile.charGenTextLabels[2])
+			local visible = false
+			if speciesFile.altOptionAsFacialMask then
+				visible = true
+				speciesFacialMaskTypeNameLabel:setText(speciesFile.charGenTextLabels[5])
+			end
+			speciesFacialMaskTypeNameLabel:setVisible(visible)
+			speciesFacialMaskTypeLabel:setVisible(visible)
+			incSpeciesFacialMaskType:setVisible(visible)
+			decSpeciesFacialMaskType:setVisible(visible)
+
+			visible = false
+			if speciesFile.altOptionAsUndyColor then
+				visible = true
+				speciesUndyColorNameLabel:setText(speciesFile.charGenTextLabels[5])
+			end
+			speciesUndyColorNameLabel:setVisible(visible)
+			speciesUndyColorLabel:setVisible(visible)
+			incSpeciesUndyColor:setVisible(visible)
+			decSpeciesUndyColor:setVisible(visible)
+
+			visible = false
+			if speciesFile.headOptionAsFacialhair then
+				visible = true
+				speciesFacialHairTypeNameLabel:setText(speciesFile.charGenTextLabels[6])
+			end
+			speciesFacialHairTypeNameLabel:setVisible(visible)
+			speciesFacialHairTypeLabel:setVisible(visible)
+			incSpeciesFacialHairType:setVisible(visible)
+			decSpeciesFacialHairType:setVisible(visible)
+
+			visible = false
+			if speciesFile.headOptionAsHairColor then
+				visible = true
+				speciesHairColorNameLabel:setText(speciesFile.charGenTextLabels[6])
+			end
+			speciesHairColorNameLabel:setVisible(visible)
+			speciesHairColorLabel:setVisible(visible)
+			incSpeciesHairColor:setVisible(visible)
+			decSpeciesHairColor:setVisible(visible)
+
 			for i, data in ipairs(speciesFile.genders or {}) do
 				if data.name == sbq.currentCustomSpecies.gender then
 					sbq.genderTable = data
@@ -541,6 +598,7 @@ if speciesLayout ~= nil then
 							sbq.facialMaskTypeIndex = i
 						end
 					end
+					speciesGenderToggle:setImage(data.image)
 				end
 			end
 			speciesBodyColorLabel:setText(sbq.currentCustomSpecies.identity.bodyColorIndex or 1)

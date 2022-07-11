@@ -125,26 +125,27 @@
 						{ "type" : "iconButton", "id" : "decSpecies", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 						{ "type" : "textBox", "id" : "speciesText", "expandMode" : [1, 0] },
 						{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-						{ "type" : "button", "id" : "applySpecies", "caption" : "Transform", "expandMode" : [0, 0] }
+						{ "type" : "button", "id" : "applySpecies", "caption" : "Transform", "expandMode" : [0, 0] },
+						{ "type" : "iconButton", "id" : "speciesGenderToggle", "image" : "/interface/title/male.png" }
 					]}]],
 					[
 						{ "type" : "panel", "id" : "speciesColorPanel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Color Pickers", "inline" : true, "align" : "center" },
 							[
-								{ "type" : "label", "text" : "Body Color", "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesBodyColorNameLabel", "text" : "Body Color", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesBodyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesBodyColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesBodyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Undy Color",  "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesUndyColorNameLabel", "text" : "Undy Color",  "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesUndyColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesUndyColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesUndyColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Hair Color", "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesHairColorNameLabel", "text" : "Hair Color", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesHairColor", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesHairColorLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesHairColor", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
@@ -154,26 +155,26 @@
 							{ "mode" : "v" },
 							{ "type" : "label", "text" : "Style Pickers", "inline" : true, "align" : "center" },
 							[
-								{ "type" : "label", "text" : "Hair Style", "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesHairTypeNameLabel", "text" : "Hair Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesHairTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Facial Hair Style", "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesFacialHairTypeNameLabel", "text" : "Facial Hair Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesFacialHairType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesFacialHairTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesFacialHairType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							],
 							[
-								{ "type" : "label", "text" : "Facial Mask Style", "size" : [45,10], "align" : "center" },
+								{ "type" : "label", "id" : "speciesFacialMaskTypeNameLabel", "text" : "Facial Mask Style", "size" : [45,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "decSpeciesFacialMaskType", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
 								{ "type" : "label", "id" : "speciesFacialMaskTypeLabel", "text" : "", "size" : [50,10], "align" : "center" },
 								{ "type" : "iconButton", "id" : "incSpeciesFacialMaskType", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 							]
 						]}
 					],
-					[{ "size" : 95 },[{ "type" : "panel", "id" : "speciesManualColorPanel",  "style" : "convex", "children" : [
+					[{ "size" : 90 },[{ "type" : "panel", "id" : "speciesManualColorPanel",  "style" : "convex", "children" : [
 						{ "mode" : "v" },
 						{ "type" : "label", "text" : "Manual Color Entry", "inline" : true },
 						{ "type" : "scrollArea", "id" : "speciesManualColorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
