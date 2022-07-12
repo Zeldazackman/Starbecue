@@ -117,10 +117,10 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 	local speaker = pane.sourceEntity()
 
 	if dialogueTree.speaker ~= nil then
-		speaker = dialogueTree.speaker
-		if type(speaker) == "string" then
-			speaker = world.loadUniqueEntity(speaker)
+		if type(dialogueTree.speaker) == "table" then
+			speaker = dialogueTree.speaker[dialoguePos] or dialogueTree.speaker[#dialogueTree.speaker]
 		end
+		speaker = dialogueTree.speaker
 	end
 	local tags = { entityname = playerName }
 	local imagePortrait
@@ -153,31 +153,27 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 		if sbq.data.entityPortrait then
 			sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, randomPortrait or sbq.data.defaultPortrait ), {32,8} )
 		else
-			imagePortrait = ((sbq.data.portraitPath or "")..(randomPortrait or sbq.data.defaultPortrait))
-			dialoguePortrait:setFile(imagePortrait)
+			dialoguePortrait:setFile(sbq.getPortraitPath(dialogueTree, (randomPortrait or sbq.data.defaultPortrait)))
 		end
 	elseif dialogueTree.portrait ~= nil then
 		if type(dialogueTree.portrait) == "table" then
 			if sbq.data.entityPortrait then
 				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait[dialoguePos] or dialogueTree.portrait[#dialogueTree.portrait] or sbq.data.defaultPortrait ), {32,8} )
 			else
-				imagePortrait = ((sbq.data.portraitPath or "")..(dialogueTree.portrait[dialoguePos] or dialogueTree.portrait[#dialogueTree.portrait] or sbq.data.defaultPortrait))
-				dialoguePortrait:setFile(imagePortrait)
+				dialoguePortrait:setFile(sbq.getPortraitPath(dialogueTree, (dialogueTree.portrait[dialoguePos] or dialogueTree.portrait[#dialogueTree.portrait] or sbq.data.defaultPortrait)))
 			end
 		else
 			if sbq.data.entityPortrait then
 				sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, dialogueTree.portrait or sbq.data.defaultPortrait ), {32,8} )
 			else
-				imagePortrait = ((sbq.data.portraitPath or "")..(dialogueTree.portrait or sbq.data.defaultPortrait))
-				dialoguePortrait:setFile(imagePortrait)
+				dialoguePortrait:setFile(sbq.getPortraitPath(dialogueTree, (dialogueTree.portrait or sbq.data.defaultPortrait) ))
 			end
 		end
 	else
 		if sbq.data.entityPortrait then
 			sbq.setPortrait( dialoguePortraitCanvas, world.entityPortrait( speaker, sbq.data.defaultPortrait ), {32,8} )
 		else
-			imagePortrait = ((sbq.data.portraitPath or "")..(sbq.data.defaultPortrait))
-			dialoguePortrait:setFile(imagePortrait)
+			dialoguePortrait:setFile(sbq.getPortraitPath(dialogueTree, (sbq.data.defaultPortrait)))
 		end
 	end
 
@@ -203,6 +199,14 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 	sbq.dismissAfterTimer(dialogueTree.dismissTime)
 
 	return dialogueTree, randomRolls
+end
+
+function sbq.getPortraitPath(dialogueTree, portrait)
+	if portrait:find("^/") then
+		return portrait
+	else
+		return (dialogueTree.portraitPath or sbq.data.portraitPath or "")..portrait
+	end
 end
 
 function sbq.setPortrait( canvasName, data, offset )
@@ -317,18 +321,27 @@ function dialogueCont:onClick()
 			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, table.unpack(sbq.prevDialogueBranch.scriptArgs)))
 		end
 	elseif sbq.prevDialogueBranch.continue ~= nil then
+		local continue = true
+		local entities = {}
 		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
-			local entities = checkEntitiesMatch( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}} ), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
-			if entities ~= nil then
-				for _, entity in ipairs(entities) do
-					world.sendEntityMessage( entity, "sbqSetInteracted", player.id())
-				end
-				sbq.updateDialogueBox({}, sbq.prevDialogueBranch.continue)
-			else
-				sbq.updateDialogueBox({}, sbq.prevDialogueBranch.fail)
+			continue = false
+			local found = checkEntityName( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
+			for _, id in ipairs(found) do
+				continue = true
+				table.insert(entities, id)
 			end
-		else
+		end
+		if sbq.prevDialogueBranch.continue.nearUniqueId ~= nil then
+			local found = checkEntityUniqueId( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), sbq.prevDialogueBranch.continue.nearUniqueId)
+			for _, id in ipairs(found) do
+				continue = true
+				table.insert(entities, id)
+			end
+		end
+		if continue then
 			sbq.updateDialogueBox({}, sbq.prevDialogueBranch.continue)
+		else
+			sbq.updateDialogueBox({}, sbq.prevDialogueBranch.fail)
 		end
 	elseif sbq.prevDialogueBranch.jump ~= nil then
 		sbq.updateDialogueBox(sbq.prevDialogueBranch.jump)

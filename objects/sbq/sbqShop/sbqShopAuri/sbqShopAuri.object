@@ -47,7 +47,8 @@
 		"sbqShopAuri.lua"
 	],
 
-	"defaultPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
+	"portraitPath" : "/humanoid/sbqAuri_LokiVulpix/portraits/A",
+	"defaultPortrait" : "Neutral.png",
 	"defaultName" : "Auri",
 	"dialogueTree" : {
 		"greeting" : {
@@ -61,7 +62,24 @@
 					"options" : [
 						[ "What is this place?", { "randomDialogue" : [ "Oh this is just some weird little planet linked to a bunch of others, so I decided to build my shop here to sell this weird stuff."], "jump" : [ "greeting", "mood", "continue"]} ],
 						[ "Who are you?", { "randomDialogue" : [ "I'm Auri, pronounced \"Ar-ee\" a fluffy furry fox dragon thing, pleased to (m)eet you."], "jump" : [ "greeting", "mood", "continue"]} ],
-						[ "Can you eat me?", { "randomPortrait" : [ "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png" ],  "randomDialogue" : [ "I could probably, but my real world counterpart hasn't animated that yet!"], "jump" : [ "greeting", "mood", "continue"]} ]
+						[ "Can you eat me?", {
+							"portrait" : [
+								"Joyful.png",
+								"Smug.png",
+								"Happy.png"
+							],
+							"dialogue" : [
+								"I could probably, but my real world counterpart hasn't animated that yet!",
+								"However...",
+								"A fan did make this interactive flash anim:\n^blue;https://www.furaffinity.net/view/46484379\n^#555;Yes I do know the link is fake and unclikable so shush, you only really need to retype the post ID"
+							],
+							"buttonText" : [
+								"Aww...",
+								"Oh?",
+								"Oooh!"
+							],
+							"jump" : [ "greeting", "mood", "continue"]
+						}]
 					]
 				}
 			}
@@ -69,9 +87,9 @@
 		"itemSelection" : {
 			"sbqPotionVaporeon" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AUwU.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"
+					"UwU.png",
+					"Neutral.png",
+					"Blep.png"
 				],
 				"randomDialogue" : [
 					"Vappy TF UwU",
@@ -85,14 +103,15 @@
 				],
 				"continue" : {
 					"useLastRandom" : true,
-					"nearEntitiesNamed" : ["Zevi"],
+					"nearUniqueId" : ["sbqZevi_Zygahedron"],
 					"speaker" : "sbqZevi_Zygahedron",
 					"range" : 8,
 					"randomName" : "Zevi",
+					"portraitPath" : "/humanoid/sbqZevi_Zygahedron/portraits/Z",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZUwU.png",
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZBlep.png"
+						"UwU.png",
+						"Neutral.png",
+						"Blep.png"
 					],
 					"randomDialogue" : [
 						"Vappy TF UwU",
@@ -110,9 +129,9 @@
 			},
 			"sbqCoreVaporeon" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AUwU.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"
+					"UwU.png",
+					"Neutral.png",
+					"Blep.png"
 				],
 				"randomDialogue" : [
 					"Vappy UwU",
@@ -126,14 +145,15 @@
 				],
 				"continue" : {
 					"useLastRandom" : true,
-					"nearEntitiesNamed" : ["Zevi"],
+					"nearUniqueId" : ["sbqZevi_Zygahedron"],
 					"randomName" : "Zevi",
 					"range" : 8,
 					"speaker" : "sbqZevi_Zygahedron",
+					"portraitPath" : "/humanoid/sbqZevi_Zygahedron/portraits/Z",
 					"randomPortrait" : [
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZUwU.png",
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZNeutral.png",
-						"/humanoid/sbqZevi_Zygahedron/portraits/ZBlep.png"
+						"UwU.png",
+						"Neutral.png",
+						"Blep.png"
 					],
 					"randomDialogue" : [
 						"Vappy UwU",
@@ -152,10 +172,10 @@
 
 			"sbqPotionAvian" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ADizzy.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png"
+					"Dizzy.png",
+					"Blep.png",
+					"Joyful.png",
+					"Happy.png"
 
 				],
 				"randomDialogue" : [
@@ -168,10 +188,10 @@
 			},
 			"sbqCoreAvian" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ADizzy.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png"
+					"Dizzy.png",
+					"Blep.png",
+					"Joyful.png",
+					"Happy.png"
 
 				],
 				"randomDialogue" : [
@@ -184,7 +204,7 @@
 			},
 			"sbqPotionXeronious" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png"
+					"Neutral.png"
 				],
 				"randomDialogue" : [
 					"The first comm for one of these, currently the one with the most varied actions.",
@@ -197,7 +217,7 @@
 			},
 			"sbqCoreXeronious" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png"
+					"Neutral.png"
 				],
 				"randomDialogue" : [
 					"The first comm for one of these, currently the one with the most varied actions.",
@@ -209,8 +229,8 @@
 
 			"sbqPotionSlime" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"
+					"Neutral.png",
+					"Blep.png"
 				],
 				"randomDialogue" : [
 					"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
@@ -220,8 +240,8 @@
 			},
 			"sbqCoreSlime" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"
+					"Neutral.png",
+					"Blep.png"
 				],
 				"randomDialogue" : [
 					"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
@@ -231,7 +251,7 @@
 			},
 
 			"sbqCoreCharem" : {
-				"portrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AMad.png"],
+				"portrait" : ["Mad.png"],
 				"dialogue" : [
 					"So, someone edited the shop recipes and also added this back into the game, fucking disgusting. This person expliclty allowed minors into vore spaces, I don't want to associate with them."
 				],
@@ -254,10 +274,10 @@
 			},
 			"sbqPotionDartGun" : {
 				"randomPortrait" : [
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png",
-					"/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png"
+					"Joyful.png",
+					"Neutral.png",
+					"Happy.png",
+					"Neutral.png"
 				],
 				"randomDialogue" : [
 					"TF GUN!\nTF GUN!\nTF GUN!",
@@ -278,17 +298,21 @@
 
 			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqModifierFatteningDonut" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqModifierFatteningDonut" : { "randomPortrait" : ["Blep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqModifierDietPill" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqModifierDietPill" : { "randomPortrait" : ["Confused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqModifierHealingPotion" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqPlasticEgg" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AHappy.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ANeutral.png", "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/ABlep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqEggWand" : { "randomPortrait" : "/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AConfused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] },
 
-			"sbqBallsPoster" : { "randomPortrait" : ["/objects/sbq/sbqShop/sbqShopAuri/auri/portraits/AJoyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "greeting", "mood", "continue"] }
+			"sbqBallsPoster" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "greeting", "mood", "continue"] },
+			"spookypumpkinhead" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Halloween is my favorite!", "My pet plushie Socks probably would like one of these in her house."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqLargeWoodenArmchair" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["Beeg chair for beeg friends."], "jump" : [ "greeting", "mood", "continue"] },
+
+			"smallBellyBoundStore" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["They were the reason this mod came to be, even if I have surpassed it a bit in some aspects.", "Might as well offer this here incase anyone wants it.", "Do note that I'm not maintaining any of that mod's content.", "While this was originally an add on to SSVM, SBQ is entirely standalone from it now."], "jump" : [ "greeting", "mood", "continue"] }
 
 		}
 	}

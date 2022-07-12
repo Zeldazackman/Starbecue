@@ -31,7 +31,7 @@ function init()
 end
 
 function onInteraction(args)
-	local dialogueBoxData = { dialogueTreeStart = config.getParameter("dialogueTreeStart"), settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), occupantHolder = occupantHolder }
+	local dialogueBoxData = { dialogueTreeStart = config.getParameter("dialogueTreeStart"), settings = storage.sbqSettings, dialogueTree = config.getParameter("dialogueTree"), defaultPortrait = config.getParameter("defaultPortrait"), defaultName = config.getParameter("defaultName"), portraitPath = config.getParameter("portraitPath"), occupantHolder = occupantHolder }
 	return {"ScriptPane", { data = dialogueBoxData, gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:auriShop" }}
 end
 
@@ -153,6 +153,7 @@ function checkTimers(dt)
 				timer.callback()
 			end
 			if type(name) == "number" then
+				---@diagnostic disable-next-line: param-type-mismatch
 				table.remove(self.timerList, name)
 			else
 				self.timerList[name] = nil

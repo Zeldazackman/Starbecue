@@ -39,72 +39,74 @@ for j, tabData in pairs(shopRecipes) do
 	local tabScrollArea = _ENV[tab.."ScrollArea"]
 	for i, recipe in ipairs(recipes) do
 		local resultItemConfig = root.itemConfig({ name = recipe.result, count = recipe.count, parameters = recipe.parameters })
-		local bottom = { type = "label", text = " "}
-		for _, material in ipairs(recipe.materials) do
-			if material.item == "money" then
-				bottom = { { mode = "horizontal" }, { type = "layout", expandMode = {1,1} }, { type = "image", file = "/interface/merchant/pixels.png", align = 1 }, { type = "label", text = (tostring( material.count )), inline = true, align = 1}}
-			end
-		end
-		local listItem = tabScrollArea:addChild({ type = "menuItem", selectionGroup = "buyItem", children = {{ type = "panel", style = "convex", children = {{ mode = "horizontal"},
-			{ type = "itemSlot", autoInteract = false, item = { name = recipe.result, count = recipe.count, parameters = recipe.parameters }},
-			{
-				{ type = "label", text = resultItemConfig.config.shortdescription},
-				{
-					{ type = "label", text = "^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category), expandMode = {2,1}},
-					bottom
-				}
-			}
-		}}}})
-
-		local image = resultItemConfig.config.inventoryIcon or "/empty_image.png"
-		local scale = 2
-		local wasObject
-
-		local objectImage = (
-			((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image
-			or ((resultItemConfig.config.orientations or {})[1] or {}).image
-			or ((resultItemConfig.config.orientations or {})[1] or {}).dualImage
-		)
-		if objectImage then
-			image = objectImage
-			wasObject = true
-		elseif resultItemConfig.config.largeImage ~= nil then
-			image = resultItemConfig.config.largeImage
-			scale = 1.5
-		end
----@diagnostic disable-next-line: cast-local-type
-		image = fixFilepath(image, resultItemConfig)
-
-
-		if wasObject and image ~= nil then
-			local success, size = pcall(root.imageSize,(image))
-			if success and (size[1] > 90 or size[2] > 90) then
-				local x = 90/(size[1])
-				local y = 90/(size[2])
-				if x > y then
-					scale = y
-				else
-					scale = x
+		if resultItemConfig ~= nil then
+			local bottom = { type = "label", text = " "}
+			for _, material in ipairs(recipe.materials) do
+				if material.item == "money" then
+					bottom = { { mode = "horizontal" }, { type = "layout", expandMode = {1,1} }, { type = "image", file = "/interface/merchant/pixels.png", align = 1 }, { type = "label", text = (tostring( material.count )), inline = true, align = 1}}
 				end
-			else
-				scale = 1
 			end
-		end
+			local listItem = tabScrollArea:addChild({ type = "menuItem", selectionGroup = "buyItem", children = {{ type = "panel", style = "convex", children = {{ mode = "horizontal"},
+				{ type = "itemSlot", autoInteract = false, item = { name = recipe.result, count = recipe.count, parameters = recipe.parameters }},
+				{
+					{ type = "label", text = resultItemConfig.config.shortdescription},
+					{
+						{ type = "label", text = "^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category), expandMode = {2,1}},
+						bottom
+					}
+				}
+			}}}})
 
-		function listItem:onClick()
-			buyRecipe = recipe
-			itemInfoPanelSlot:setItem({ name = recipe.result, parameters = recipe.parameters })
-			itemNameLabel:setText(resultItemConfig.parameters.shortdescription or resultItemConfig.config.shortdescription)
-			itemCategoryLabel:setText("^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category))
-			itemDescriptionLabel:setText(resultItemConfig.parameters.description or resultItemConfig.config.description)
-			itemImage:setFile(sb.replaceTags(image, { frame = 1, color = resultItemConfig.parameters.color or resultItemConfig.config.color or "default" }))
-			itemImage:setScale({scale, scale})
+			local image = resultItemConfig.config.inventoryIcon or "/empty_image.png"
+			local scale = 2
+			local wasObject
 
-			if sbq.data.dialogueTree.itemSelection[recipe.dialogue or recipe.result] ~= nil then
-				lastWasGreeting = false
-				sbq.updateDialogueBox({ "itemSelection", recipe.dialogue or recipe.result })
-			elseif not lastWasGreeting then
-				sbq.updateDialogueBox({ "greeting" })
+			local objectImage = (
+				((((resultItemConfig.config.orientations or {})[1] or {}).imageLayers or {})[1] or {}).image
+				or ((resultItemConfig.config.orientations or {})[1] or {}).image
+				or ((resultItemConfig.config.orientations or {})[1] or {}).dualImage
+			)
+			if objectImage then
+				image = objectImage
+				wasObject = true
+			elseif resultItemConfig.config.largeImage ~= nil then
+				image = resultItemConfig.config.largeImage
+				scale = 1.5
+			end
+			---@diagnostic disable-next-line: cast-local-type
+			image = fixFilepath(image, resultItemConfig)
+
+
+			if wasObject and image ~= nil then
+				local success, size = pcall(root.imageSize,(image))
+				if success and (size[1] > 90 or size[2] > 90) then
+					local x = 90/(size[1])
+					local y = 90/(size[2])
+					if x > y then
+						scale = y
+					else
+						scale = x
+					end
+				else
+					scale = 1
+				end
+			end
+
+			function listItem:onClick()
+				buyRecipe = recipe
+				itemInfoPanelSlot:setItem({ name = recipe.result, parameters = recipe.parameters })
+				itemNameLabel:setText(resultItemConfig.parameters.shortdescription or resultItemConfig.config.shortdescription)
+				itemCategoryLabel:setText("^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category))
+				itemDescriptionLabel:setText(resultItemConfig.parameters.description or resultItemConfig.config.description)
+				itemImage:setFile(sb.replaceTags(image, { frame = 1, color = resultItemConfig.parameters.color or resultItemConfig.config.color or "default" }))
+				itemImage:setScale({scale, scale})
+
+				if sbq.data.dialogueTree.itemSelection[recipe.dialogue or recipe.result] ~= nil then
+					lastWasGreeting = false
+					sbq.updateDialogueBox({ "itemSelection", recipe.dialogue or recipe.result })
+				elseif not lastWasGreeting then
+					sbq.updateDialogueBox({ "greeting" })
+				end
 			end
 		end
 	end
