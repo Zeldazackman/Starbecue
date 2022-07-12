@@ -579,11 +579,11 @@
 									"next" : "getLocationEffect",
 									"default" : { "randomDialogue" : [
 										["Mmmm pretty comfortable.", "Ahh... your belly is so soft...", {"check":{"bellySounds":true},"add":["Your belly is so noisy.", "Mmm... I like the sounds your belly is making."]}],
-										{"check":{"predator":"sbqVaporeon"},"add":["Gooey Vappy belly.", "Its all gooey in here."]}
+										{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Gooey Vappy belly.", "Its all gooey in here."]}
 									]},
 									"sbqHeal" : { "randomDialogue" : [
 										["Ahh... its so soothing.", "I can feel all my troubles melting away...", "Its so comfortable in here.", {"check":{"bellySounds":true},"add":["I really like the sounds your belly makes... very calming.", "I could just drift off to sleep listening to the sounds of your body..."]} ],
-										{"check":{"predator":"sbqVaporeon"},"add":["I always liked vappy goo."]}
+										{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["I always liked vappy goo."]}
 									]},
 									"sbqDigest" : {
 										"next" : "digestImmunity",
@@ -592,7 +592,7 @@
 										]},
 										"false" : { "randomDialogue" : [
 											["Ahh... I'm starting to melt.", "Oh my... I'm just gonna be food.", {"check":{"bellySounds":true},"add":["Your belly is so noisy... I'm going to be gurgled up aren't I?", "All this grumbling... you must be pretty hungry."]} ],
-											{"check":{"predator":"sbqVaporeon"},"add":["Ahh... I'm starting to melt into goo..."]}
+											{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Ahh... I'm starting to melt into goo..."]}
 										]}
 									},
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
@@ -600,7 +600,7 @@
 										"next" : "transformImmunity",
 										"false" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "It feels like... I'm changing?"],
-											{"check":{"predator":"sbqVaporeon"},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
+											{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
 										]},
 										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}

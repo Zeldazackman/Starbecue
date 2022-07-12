@@ -1,9 +1,9 @@
 {
 	"objectName": "sbqSpawnerSarcophagus",
-	"colonyTags": ["vore"],
+	"colonyTags": ["trap"],
 	"rarity": "Uncommon",
 	"race": "generic",
-	"category": "other",
+	"category": "Trap",
 	"price": 10,
 	"health" : 5,
 	"itemTags": ["sbqSpawner"],
@@ -50,7 +50,6 @@
 	"inspectable" : false,
 	"allowScanning" : false,
 	"isContainer" : false,
-	"builder" : "/objects/sbq/sbqSpawners/sbqItemBuilder.lua",
 	"scripts": [
 		"/objects/sbq/sbqSpawners/sbqSpawner.lua"
 	]

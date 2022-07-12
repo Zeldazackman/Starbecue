@@ -517,11 +517,11 @@
 									"next" : "getLocationEffect",
 									"default" : { "randomDialogue" : [
 										["Mmmm pretty comfortable by my calculations~", "ooh, your belly seems quite suited for my, i'm so snug in here~", {"check":{"bellySounds":true},"add":["Your belly is making the most soothing grumbles to my audio receptors~", "Mmm... I should save this sounds to my memory so i can play them back to sleep to~"]}],
-										{"check":{"predator":"sbqVaporeon"},"add":["Does this mean... you've caught me?", "Interesting body you've got, it's like being sqeezed by a water bed~"]}
+										{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Does this mean... you've caught me?", "Interesting body you've got, it's like being sqeezed by a water bed~"]}
 									]},
 									"sbqHeal" : { "randomDialogue" : [
 										["Ahh... its so soothing.", "I can't believe the power of your healing, mending even my metal parts~", "Comfort at 100%, time left for rapairs.... um, maybe after i'm done taking a nap?", {"check":{"bellySounds":true},"add":["Your belly is making the most soothing grumbles to my audio receptors~", "Mmm... I should save this sounds to my memory so i can play them back to sleep to~"]}],
-										{"check":{"predator":"sbqVaporeon"},"add":["The fluid in this stomach is like healing water! and it feels so nice"]}
+										{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["The fluid in this stomach is like healing water! and it feels so nice"]}
 									]},
 									"sbqDigest" : {
 										"next" : "digestImmunity",
@@ -530,7 +530,7 @@
 										]},
 										"false" : { "randomDialogue" : [
 											["Ahh... I'm starting to melt.", "Oh my... I'm just gonna be food.", {"check":{"bellySounds":true},"add":["Your belly is so noisy... I'm going to be gurgled up aren't I?", "All this grumbling... you must be pretty hungry."]} ],
-											{"check":{"predator":"sbqVaporeon"},"add":["Ahh... I'm starting to melt into goo..."]}
+											{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Ahh... I'm starting to melt into goo..."]}
 										]}
 									},
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
@@ -538,7 +538,7 @@
 										"next" : "transformImmunity",
 										"false" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "It feels like... I'm changing?"],
-											{"check":{"predator":"sbqVaporeon"},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
+											{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
 										]},
 										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}

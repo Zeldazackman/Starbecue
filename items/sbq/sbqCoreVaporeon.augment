@@ -2,7 +2,7 @@
 	"itemName" : "sbqCoreVaporeon",
 	"price" : 1000,
 	"rarity" : "Rare",
-	"category" : "Vore",
+	"category" : "Pred Core",
 	"itemTags": ["reagent"],
 
 	"tooltipKind" : "sbqSpawner",

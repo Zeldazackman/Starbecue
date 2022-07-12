@@ -9,6 +9,8 @@ local buyRecipe
 
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBox.lua")
 
+local lastWasGreeting = true
+
 function fixFilepath(string, item)
 	if type(string) == "string" then
 		if string == "" then return
@@ -36,7 +38,7 @@ for j, tabData in pairs(shopRecipes) do
 
 	local tabScrollArea = _ENV[tab.."ScrollArea"]
 	for i, recipe in ipairs(recipes) do
-		local resultItemConfig = root.itemConfig(recipe.result)
+		local resultItemConfig = root.itemConfig({ name = recipe.result, count = recipe.count, parameters = recipe.parameters })
 		local bottom = { type = "label", text = " "}
 		for _, material in ipairs(recipe.materials) do
 			if material.item == "money" then
@@ -48,7 +50,7 @@ for j, tabData in pairs(shopRecipes) do
 			{
 				{ type = "label", text = resultItemConfig.config.shortdescription},
 				{
-					{ type = "label", text = "^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category)},
+					{ type = "label", text = "^gray;"..(catagoryLabels[resultItemConfig.config.category] or resultItemConfig.config.category), expandMode = {2,1}},
 					bottom
 				}
 			}
@@ -98,17 +100,14 @@ for j, tabData in pairs(shopRecipes) do
 			itemImage:setFile(sb.replaceTags(image, { frame = 1, color = resultItemConfig.parameters.color or resultItemConfig.config.color or "default" }))
 			itemImage:setScale({scale, scale})
 
-			if sbq.data.dialogueTree.itemSelection[recipe.result] ~= nil then
-				sbq.updateDialogueBox({ "itemSelection",recipe.result })
-			else
+			if sbq.data.dialogueTree.itemSelection[recipe.dialogue or recipe.result] ~= nil then
+				lastWasGreeting = false
+				sbq.updateDialogueBox({ "itemSelection", recipe.dialogue or recipe.result })
+			elseif not lastWasGreeting then
 				sbq.updateDialogueBox({ "greeting" })
 			end
 		end
 	end
-end
-
-function update(dt)
-
 end
 
 function sbq.dismissAfterTimer(time)

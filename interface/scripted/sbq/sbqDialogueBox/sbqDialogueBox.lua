@@ -32,6 +32,11 @@ function init()
 			end
 			sbq.data.icons[voreType] = icon
 		end
+	else
+		for i, voreType in ipairs(sbq.config.voreTypes) do
+			local icon =  "/items/active/sbqController/"..voreType..".png".. (metagui.inputData.iconDirectives or "")
+			sbq.data.icons[voreType] = icon
+		end
 	end
 
 	sbq.data = sb.jsonMerge(sbq.data, metagui.inputData)
@@ -64,10 +69,11 @@ function sbq.getOccupancy()
 			sbq.occupant = occupancyData.occupant
 			sbq.occupants = occupancyData.occupants
 			sbq.actualOccupants = occupancyData.actualOccupants
+			sbq.checkVoreButtonsEnabled()
 		end)
 	end
-	sbq.checkVoreButtonsEnabled()
 end
+
 function sbq.refreshData()
 	sbq.loopedMessage("refreshData", pane.sourceEntity(), "sbqRefreshDialogueBoxData", { player.id(), (player.getProperty("sbqCurrentData") or {}).type }, function (dialogueBoxData)
 		sbq.data = sb.jsonMerge(sbq.data, dialogueBoxData)
@@ -80,6 +86,7 @@ local finished = false
 local dialoguePos = 1
 
 function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
+	sbq.checkVoreButtonsEnabled()
 	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, sbq.data.settings, dialogueTree)
 	if not dialogueTree then return false end
 	recursionCount = 0 -- since we successfully made it here, reset the recursion count

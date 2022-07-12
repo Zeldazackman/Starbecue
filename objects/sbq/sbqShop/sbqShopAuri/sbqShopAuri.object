@@ -7,6 +7,8 @@
 	"price": 100,
 	"health" : 5,
 
+	"uniqueId" : "sbqAuri_LokiVulpix",
+
 	"inventoryIcon": "/objects/generic/woodendesk/woodendeskicon.png",
 	"shortdescription": "Vore Shop Auri",
 
@@ -269,8 +271,10 @@
 			"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
 			"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
 			"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-			"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most.", "The gender fluid."], "jump" : [ "greeting", "mood", "continue"] },
 			"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "greeting", "mood", "continue"] },
 
 			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
 
