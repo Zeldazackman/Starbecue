@@ -17,6 +17,9 @@
       "species": ["delphox"],
       "type": "sbqVoreTenant",
       "overrides": {
+        "identity" : {
+          "hairType" : "male56"
+        }
        }
      }
    ],

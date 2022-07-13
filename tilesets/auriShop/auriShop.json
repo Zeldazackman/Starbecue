@@ -6,7 +6,7 @@
 
     },
  "spacing":0,
- "tilecount":18,
+ "tilecount":21,
  "tileheight":88,
  "tileproperties":
     {
@@ -80,11 +80,32 @@
          "object":"sbqBallsPoster",
          "tilesetDirection":"right"
         },
+     "18":
+        {
+         "imagePositionX":"-16",
+         "imagePositionY":"-16",
+         "object":"sbqLoadOfThisGuyPoster",
+         "tilesetDirection":"right"
+        },
+     "19":
+        {
+         "imagePositionX":"-8",
+         "imagePositionY":"0",
+         "object":"sbqFilledCondom",
+         "tilesetDirection":"right"
+        },
      "2":
         {
          "imagePositionX":"-24",
          "imagePositionY":"0",
          "object":"sbqCatTower",
+         "tilesetDirection":"right"
+        },
+     "20":
+        {
+         "imagePositionX":"-8",
+         "imagePositionY":"0",
+         "object":"sbqMilkCarton",
          "tilesetDirection":"right"
         },
      "3":
@@ -177,11 +198,23 @@
         },
      "17":
         {
-         "image":"..\/..\/objects\/sbq\/sbqBallsPoster\/poster.png"
+         "image":"..\/..\/objects\/sbq\/posters\/sbqBallsPoster\/poster.png"
+        },
+     "18":
+        {
+         "image":"..\/..\/objects\/sbq\/posters\/sbqLoadOfThisGuyPoster\/poster.png"
+        },
+     "19":
+        {
+         "image":"..\/..\/objects\/sbq\/digestResults\/sbqFilledCondom\/object.png"
         },
      "2":
         {
          "image":"..\/..\/objects\/sbq\/sbqCatTower\/sbqCatTower.png"
+        },
+     "20":
+        {
+         "image":"..\/..\/objects\/sbq\/digestResults\/sbqMilkCarton\/object.png"
         },
      "3":
         {

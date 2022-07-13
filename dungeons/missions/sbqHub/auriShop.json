@@ -2,7 +2,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJzt2EEOgjAQheFuvBRXcOHCKxgP4TlccDwTL+JCSEhT6LSlTOn8k7yFkZDpx1BQ59qrYRHq2Lo595mj3Yu1wv5fd5Kd0nqT7JSUdu89JKe0e+4puLftr\/1sspBYjVOuRJTZ67GSUWDu26+dqzSxPpfv9zX72HM9Ne1T74NYL9in2b8Sgj32vdiz5zD3rQX7vu3Zc5j7OWvXHfv69qHvNO4Ti3uOJfvUfrDPt9f+j+osqT33R84Q7zlt2\/v3ZWzt0mOxl9lvfc49FnvsW7dnz9Gzl84yc7+\/fe5vOezL7aWe7Dm69tJjsedZ27q9dJaZe+z9+gYyGMvyWm8ldp6QZWq0LbC3E+yxxx577ElKsMfeYrDH3mKw78P+edFfz5nC3GNvMdhjbzHYY28x2J\/H\/gf3JYJp",
+         "data":"eJzt2EEOgjAQheFuvBRXcOHCK7jxCp7DBccz8SIuhIQ0hU5bypTOP8lbGAmZfgwFda69Ghahjq2bc5852r1YK+z\/dSfZKa03yU5JaffeQ3JKu+eegnvb\/trPJguJ1TjlSkSZvR4rGQXmvv3auUoT63P5fl+zjz3XU9M+9T6I9YJ9mv0rIdhj34s9ew5z31qw79uePYe5n7N23bGvbx\/6TuM+sbjnWLJP7Qf7fHvt\/6jOktpzf+QM8Z7Ttr1\/X8bWLj0We5n91ufcY7HHvnV79hw9e+ksM\/f72+f+lsO+3F7qyZ6jay89Fnueta3bS2eZucfer28gg7Esr\/VWYucJWaZG2wJ7O8Eee+yxx56kBHvsLQZ77C0G+z7snxf99ZwpzD32FoM99haDPfYWg\/157H8agIJs",
          "encoding":"base64",
          "height":55,
          "name":"back",
@@ -15,7 +15,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJztmEFugzAQRckiy256iOxzji6y6A2o1BN10WvlBln3FDESI1lpgAFm8m3Pf9IXQSIj+xlsQ9cRQkg5fDKz8eSHmY0X6H7VEmvQ\/aktVqD7UWv2gF63Wskefsd8MKqILwssa03Vbwm6x0H3OGpy3xp0j4PucdA9DrrHEdH9++F5Xk1E96VA9zjoHoeHe\/Q3qldkas3QpMZvaaWxd32O6H7N3mbp2j3+I7q3Zqv\/qL6sQbwf1IjlnPN4LcFB\/\/N4f0egfxu2jhP9Y6H\/\/3ittVP\/JzjoH4u3\/0vX3SLFystfumYudI9zr\/GPdkH3cUL3dE\/3ZbjXtmktW\/vuzdvheZagexty1xrvA1r3a2qpGxwcusdB9zg83J\/S7\/7o0tym0LhfW+s7eT+n82vKaczZuN0l4bnP0SK1Bs\/iWzKMR8tj4LXP0fLoXnx\/Zcd8PKKz5H5LrT67x6\/jMT\/Pn4nIeLiXOUac589AlDlIw5z7rbXk3hb\/Mtfk5zIm\/TGufw\/3zLrs9U73Nu413AFMcKgv",
+         "data":"eJztmEFugzAQRckiy256iOxzji6y6Bmo1Pt00WvlBln3FDESI1lpgAFm8m3Pf9IXQSIj+xlsQ9cRQkg5fDKz8eSHmY0X6H7VEmvQ\/aktVqD7UWv2gF63Wskefsd8MKqILwssa03Vbwm6x0H3OGpy3xp0j4PucdA9DrrHEdH9++F5Xk1E96VA9zjoHoeHe\/Q3qldkas3QpMZvaaWxd32O6H7N3mbp2j3+I7q3Zqv\/qL6sQbwf1IjlnPN4LcFB\/\/N4f0egfxu2jhP9Y6H\/\/3ittVP\/JzjoH4u3\/0vX3SLFystfumYudI9zr\/GPdkH3cUL3dE\/3ZbjXtmktW\/vuzdvheZagexty1xrvA1r3a2qpGxwcusdB9zg83J\/S7\/7o0tym0LhfW+s7eT+n82vKaczZuN0l4bnP0SK1Bs\/iWzKMR8tj4LXP0fLoXnx\/Zcd8PKKz5H5LrT67x6\/jMT\/Pn4nIeLiXOUac589AlDlIw5z7rbXk3hb\/Mtfk5zIm\/TGufw\/3zLrs9U73Nu413AGOG6hc",
          "encoding":"base64",
          "height":55,
          "name":"front",
@@ -832,7 +832,7 @@
                  "y":240
                 }, 
                 {
-                 "gid":918,
+                 "gid":921,
                  "height":80,
                  "id":74,
                  "name":"",
@@ -848,7 +848,7 @@
                  "y":424
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":75,
                  "name":"",
@@ -864,7 +864,7 @@
                  "y":296
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":76,
                  "name":"",
@@ -880,7 +880,7 @@
                  "y":296
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":77,
                  "name":"",
@@ -896,7 +896,7 @@
                  "y":312
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":78,
                  "name":"",
@@ -912,7 +912,7 @@
                  "y":328
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":79,
                  "name":"",
@@ -928,7 +928,7 @@
                  "y":312
                 }, 
                 {
-                 "gid":1009,
+                 "gid":1012,
                  "height":16,
                  "id":80,
                  "name":"",
@@ -944,7 +944,7 @@
                  "y":328
                 }, 
                 {
-                 "gid":730,
+                 "gid":733,
                  "height":16,
                  "id":97,
                  "name":"",
@@ -960,7 +960,7 @@
                  "y":248
                 }, 
                 {
-                 "gid":703,
+                 "gid":706,
                  "height":16,
                  "id":98,
                  "name":"",
@@ -976,7 +976,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":714,
+                 "gid":717,
                  "height":8,
                  "id":99,
                  "name":"",
@@ -992,7 +992,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":597,
+                 "gid":600,
                  "height":16,
                  "id":100,
                  "name":"",
@@ -1008,7 +1008,7 @@
                  "y":392
                 }, 
                 {
-                 "gid":772,
+                 "gid":775,
                  "height":16,
                  "id":102,
                  "name":"",
@@ -1024,7 +1024,7 @@
                  "y":216
                 }, 
                 {
-                 "gid":665,
+                 "gid":668,
                  "height":8,
                  "id":103,
                  "name":"",
@@ -1040,7 +1040,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":714,
+                 "gid":717,
                  "height":8,
                  "id":104,
                  "name":"",
@@ -1056,7 +1056,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":719,
+                 "gid":722,
                  "height":8,
                  "id":105,
                  "name":"",
@@ -1072,7 +1072,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":719,
+                 "gid":722,
                  "height":8,
                  "id":106,
                  "name":"",
@@ -1088,7 +1088,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":714,
+                 "gid":717,
                  "height":8,
                  "id":107,
                  "name":"",
@@ -1104,7 +1104,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":665,
+                 "gid":668,
                  "height":8,
                  "id":108,
                  "name":"",
@@ -1120,7 +1120,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":1140,
+                 "gid":1143,
                  "height":14,
                  "id":109,
                  "name":"",
@@ -1136,7 +1136,7 @@
                  "y":216
                 }, 
                 {
-                 "gid":1164,
+                 "gid":1167,
                  "height":14,
                  "id":110,
                  "name":"",
@@ -1152,7 +1152,7 @@
                  "y":240
                 }, 
                 {
-                 "gid":1346,
+                 "gid":1349,
                  "height":9,
                  "id":111,
                  "name":"",
@@ -1248,23 +1248,7 @@
                  "y":104
                 }, 
                 {
-                 "gid":1683,
-                 "height":16,
-                 "id":174,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":552,
-                 "y":360
-                }, 
-                {
-                 "gid":1667,
+                 "gid":1670,
                  "height":16,
                  "id":189,
                  "name":"",
@@ -1382,6 +1366,102 @@
                  "width":48,
                  "x":552,
                  "y":152
+                }, 
+                {
+                 "gid":531,
+                 "height":56,
+                 "id":203,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":352,
+                 "y":400
+                }, 
+                {
+                 "gid":532,
+                 "height":16,
+                 "id":204,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":336,
+                 "y":424
+                }, 
+                {
+                 "gid":2147484180,
+                 "height":16,
+                 "id":205,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":368,
+                 "y":424
+                }, 
+                {
+                 "gid":532,
+                 "height":16,
+                 "id":206,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":392,
+                 "y":424
+                }, 
+                {
+                 "gid":533,
+                 "height":16,
+                 "id":207,
+                 "name":"",
+                 "properties":
+                    {
+                     "parameters":"{\"pred\":\"Xeronious\", \"description\":\"A Xeronious branded milk carton.\" }"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":464,
+                 "y":400
+                }, 
+                {
+                 "gid":1690,
+                 "height":16,
+                 "id":208,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":552,
+                 "y":360
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2133,7 +2213,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":202,
+ "nextobjectid":209,
  "orientation":"orthogonal",
  "properties":
     {
@@ -2167,27 +2247,27 @@
          "source":"..\/..\/..\/tilesets\/auriShop\/auriShop.json"
         }, 
         {
-         "firstgid":531,
+         "firstgid":534,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-race\/apex.json"
         }, 
         {
-         "firstgid":902,
+         "firstgid":905,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/door.json"
         }, 
         {
-         "firstgid":1034,
+         "firstgid":1037,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/other.json"
         }, 
         {
-         "firstgid":1346,
+         "firstgid":1349,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/generic.json"
         }, 
         {
-         "firstgid":1348,
+         "firstgid":1351,
          "source":"..\/..\/..\/tilesets\/wasabiRaptor\/paintedBlocks\/paintedBlocks.json"
         }, 
         {
-         "firstgid":1485,
+         "firstgid":1488,
          "source":"..\/..\/..\/..\/..\/assets\/packed\/tilesets\/packed\/objects-by-category\/wire.json"
         }],
  "tilewidth":8,

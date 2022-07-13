@@ -19,6 +19,9 @@
       "species": ["braixen"],
       "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
+        "identity" : {
+          "hairType" : "male56"
+        }
        }
      }
    ],
