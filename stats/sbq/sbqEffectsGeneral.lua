@@ -17,17 +17,21 @@ function doItemDrop()
 		if drop then
 			local pred
 			local prey
+			local predUUID
+			local preyUUID
 			local predType = world.entityType(effect.sourceEntity())
 			local preyType = world.entityType(entity.id())
 
 			if predType == "npc" or predType == "player" then
 				pred = world.entityName(effect.sourceEntity())
+				predUUID = world.entityUniqueId(effect.sourceEntity())
 			end
 			if preyType == "npc" or preyType == "player" then
 				prey = world.entityName(entity.id())
+				preyUUID = world.entityUniqueId(entity.id())
 			end
 
-			world.spawnItem(drop, mcontroller.position(), 1, { pred = pred, prey = prey })
+			world.spawnItem(drop, mcontroller.position(), 1, { pred = pred, predUUID = predUUID, prey = prey, preyUUID = preyUUID })
 		end
 	end
 end

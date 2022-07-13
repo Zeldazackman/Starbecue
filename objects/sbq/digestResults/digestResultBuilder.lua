@@ -1,16 +1,24 @@
 
 function build( directory, config, parameters, level, seed )
+	parameters.originalColonyTags = parameters.originalColonyTags or config.colonyTags
+	parameters.colonyTags = parameters.originalColonyTags
 	config = sb.jsonMerge(config, parameters)
 	local preyPossessive = "'s"
 	if config.prey then
 		if config.prey:sub(-1,-1) == "s" then
 			preyPossessive = "'"
 		end
+		if config.preyUUID then
+			table.insert(config.colonyTags, config.objectName.."Prey"..config.preyUUID)
+		end
 	end
 	local predPossessive = "'s"
 	if config.pred then
 		if config.pred:sub(-1,-1) == "s" then
 			predPossessive = "'"
+		end
+		if config.predUUID then
+			table.insert(config.colonyTags, config.objectName.."Pred"..config.predUUID)
 		end
 	end
 	local replaceTagTable = { predName = config.pred, preyName = config.prey, predPossessive = predPossessive, preyPossessive = preyPossessive}
@@ -28,6 +36,7 @@ function build( directory, config, parameters, level, seed )
 
 	parameters.description = config.description
 	parameters.shortdescription = config.shortdescription
+	parameters.colonyTags = config.colonyTags
 
 	return config, parameters
 end
