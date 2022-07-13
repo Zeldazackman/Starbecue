@@ -6,11 +6,12 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
-	removeOtherBellyEffects("sbqHeal")
+	removeOtherBellyEffects()
 
 end
 
 function update(dt)
+	self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
 	status.modifyResourcePercentage("health", 0.01 * dt * self.powerMultiplier)
 end
 

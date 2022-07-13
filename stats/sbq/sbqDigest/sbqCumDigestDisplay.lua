@@ -8,12 +8,11 @@ function init()
 	self.tickTime = 1.0
 	self.cdt = 0 -- cumulative dt
 	self.cdamage = 0
-	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.rpcAttempts = 0
 	self.targetTime = 0
 
-	removeOtherBellyEffects(config.getParameter("effect"))
+	removeOtherBellyEffects()
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true
@@ -22,12 +21,15 @@ function init()
 	message.setHandler("sbqDigestResponse", function(_,_, time)
 		effect.modifyDuration((time or self.targetTime)+1)
 		self.targetTime = time or self.targetTime
+		self.dropItem = true
 	end)
 
 end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
+		self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
+
 		local health = world.entityHealth(entity.id())
 		local digestRate = 0.01
 		if self.turboDigest then
@@ -55,7 +57,8 @@ function update(dt)
 			self.turboDigest = false
 			self.cdt = self.cdt + dt
 			if self.cdt >= self.targetTime then
-				--world.sendEntityMessage(effect.sourceEntity(), "uneat", entity.id())
+				doItemDrop()
+				mcontroller.resetAnchorState()
 				status.modifyResourcePercentage("health", -1)
 			else
 				status.setResource("health", 1)

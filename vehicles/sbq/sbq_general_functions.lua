@@ -237,7 +237,7 @@ function sbq.transformPrey(i)
 	end
 	if type(smolPreyData.species) == "string" then
 		local entityType = world.entityType(sbq.occupant[i].id)
-		if entityType == "player" or entityType == "NPC" and not smolPreyData.forceSettings then
+		if entityType == "player" or entityType == "npc" and not smolPreyData.forceSettings then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
 				sbq.doTransformPrey(i, sb.jsonMerge(smolPreyData.settings, settings or {}), smolPreyData)
 			end)

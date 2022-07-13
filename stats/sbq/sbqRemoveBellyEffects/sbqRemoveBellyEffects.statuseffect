@@ -1,6 +1,8 @@
 {
 	"name" : "sbqRemoveBellyEffects",
-	"effectConfig" : {},
+	"effectConfig" : {
+		"effect" : "sbqRemoveBellyEffects"
+	},
 	"defaultDuration" : 1,
 
 	"scripts" : [

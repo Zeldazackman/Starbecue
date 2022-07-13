@@ -6,7 +6,7 @@ function init()
 	self.powerMultiplier = effect.duration()
 	self.cdt = 0
 
-	removeOtherBellyEffects("sbqHealDisplay")
+	removeOtherBellyEffects()
 
 	animator.setParticleEmitterOffsetRegion("healing", mcontroller.boundBox())
 	animator.setParticleEmitterEmissionRate("healing", self.powerMultiplier * 3)
@@ -15,6 +15,7 @@ function init()
 end
 
 function update(dt)
+	self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
 	status.modifyResourcePercentage("health", 0.01 * dt * self.powerMultiplier)
 end
 

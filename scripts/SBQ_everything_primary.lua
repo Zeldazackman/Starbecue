@@ -82,6 +82,11 @@ function sbq.everything_primary()
 		sbq.endMysteriousTF()
 	end)
 
+	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, power, sourceEntityId)
+		status.setStatusProperty("sbqDigestPower", power or 1)
+		status.addEphemeralEffect(effectConfig, 1, sourceEntityId)
+	end)
+
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
 end
 

@@ -15,6 +15,9 @@ function build( directory, config, parameters, level, seed )
 			config.rarity = "Rare"
 			config.inventoryIcon = "/vehicles/sbq/"..species.."/skins/"..skin.."/icon.png"..directives
 			config.tooltipFields.statusLabel = config.description.."\nInhabited by: "..(vehicleFile.sbqData.displayName or species:gsub("^sbq", ""))
+			parameters.rarity = config.rarity
+			parameters.inventoryIcon = config.inventoryIcon
+			parameters.tooltipFields = config.tooltipFields
 		end
 	end
 

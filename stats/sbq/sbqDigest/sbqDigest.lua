@@ -3,14 +3,13 @@ require("/stats/sbq/sbqEffectsGeneral.lua")
 
 
 function init()
-	self.powerMultiplier = effect.duration()
 	self.digested = false
 	self.cdt = 0
 	self.turboDigest = false
 	self.targetTime = 0
 	self.rpcAttempts = 0
 
-	removeOtherBellyEffects(config.getParameter("effect"))
+	removeOtherBellyEffects()
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true
@@ -19,12 +18,15 @@ function init()
 	message.setHandler("sbqDigestResponse", function(_,_, time)
 		effect.modifyDuration((time or self.targetTime)+1)
 		self.targetTime = time or self.targetTime
+		self.dropItem = true
 	end)
 
 end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
+		self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
+
 		local health = world.entityHealth(entity.id())
 		local digestRate = 0.01
 		if self.turboDigest then
@@ -38,6 +40,7 @@ function update(dt)
 			self.turboDigest = false
 			self.cdt = self.cdt + dt
 			if self.cdt >= self.targetTime then
+				doItemDrop()
 				mcontroller.resetAnchorState()
 				status.modifyResourcePercentage("health", -1)
 			else

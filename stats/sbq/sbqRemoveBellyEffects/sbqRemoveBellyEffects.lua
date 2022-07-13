@@ -2,7 +2,7 @@
 require("/stats/sbq/sbqEffectsGeneral.lua")
 
 function init()
-	removeOtherBellyEffects("sbqRemoveBellyEffects")
+	removeOtherBellyEffects()
 end
 
 function update(dt)

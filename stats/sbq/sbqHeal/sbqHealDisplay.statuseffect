@@ -1,7 +1,9 @@
 {
 	"name" : "sbqHealDisplay",
 
-	"effectConfig" : {},
+	"effectConfig" : {
+		"effect" : "sbqHealDisplay"
+	},
 	"defaultDuration" : 5,
 
 	"scripts" : [

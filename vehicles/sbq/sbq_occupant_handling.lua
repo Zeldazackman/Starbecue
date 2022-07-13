@@ -565,7 +565,7 @@ end
 function sbq.doBellyEffects(dt)
 	if sbq.occupants.total <= 0 then return end
 
-	local powerMultiplier = math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1
+	local powerMultiplier = math.max(math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1, 1)
 
 	for i = sbq.startSlot, sbq.occupantSlots do
 
@@ -603,13 +603,13 @@ function sbq.doBellyEffects(dt)
 				local locationEffect = sbq.occupant[i].nestedPreyData.locationEffect or "sbqRemoveBellyEffects"
 				if locationEffect then
 					local status = (settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
-					world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, owner)
+					world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, owner)
 				end
 			else
 				if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) and sbq.config.bellyGurgleEffects[locationEffect] then
 					sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
 				end
-				world.sendEntityMessage( eid, "applyStatusEffect", status, powerMultiplier, sbq.driver or entity.id())
+				world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())
 			end
 
 			local progressbarDx = 0

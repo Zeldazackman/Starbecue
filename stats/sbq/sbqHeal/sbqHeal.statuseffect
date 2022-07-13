@@ -1,7 +1,9 @@
 {
 	"name" : "sbqHeal",
 
-	"effectConfig" : {},
+	"effectConfig" : {
+		"effect" : "sbqHeal"
+	},
 	"defaultDuration" : 5,
 
 	"scripts" : [

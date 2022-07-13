@@ -2,7 +2,10 @@
 	"name" : "sbqCumDigest",
 	"blockingStat" : "cumDigestImmunity",
 
-	"effectConfig" : { "effect" : "sbqCumDigest"},
+	"effectConfig" : {
+		"effect" : "sbqCumDigest",
+		"itemDrop" : "sbqFilledCondom"
+	},
 	"defaultDuration" : 5,
 
 	"scripts" : [

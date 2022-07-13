@@ -8,18 +8,26 @@ function init()
 	self.tickTime = 1.0
 	self.cdt = 0 -- cumulative dt
 	self.cdamage = 0
-	self.powerMultiplier = effect.duration()
+	self.digested = false
 
-	removeOtherBellyEffects(config.getParameter("effect"))
+	removeOtherBellyEffects()
 
 	message.setHandler("sbqTurboDigest", function()
 		self.turboDigest = true
+	end)
+
+	message.setHandler("sbqDigestResponse", function(_,_, time)
+		effect.modifyDuration((time or self.targetTime)+1)
+		self.targetTime = time or self.targetTime
+		self.dropItem = true
 	end)
 
 end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
+		self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
+
 		local health = world.entityHealth(entity.id())
 		local digestRate = 0.01
 		if self.turboDigest then
@@ -28,15 +36,24 @@ function update(dt)
 
 		local damagecalc = status.resourceMax("health") * digestRate * self.powerMultiplier * self.cdt + self.cdamage
 
-		if health[1] <= 1 and not self.digested then
+		if self.digested then
+			self.turboDigest = false
+			self.cdt = self.cdt + dt
+			if self.cdt >= self.targetTime then
+				doItemDrop()
+			end
+			status.setResource("health", 1)
+		elseif health[1] <= 1 then
+			self.cdt = 0
+			self.targetTime = 2
+			effect.modifyDuration(2+1)
+
 			self.turboDigest = false
 			self.digested = true
 			status.setResource("health", 1)
 			world.sendEntityMessage(effect.sourceEntity(), "sbqSoftDigest", entity.id())
-			return
-		end
 
-		if health[1] > damagecalc and not self.digested then
+		elseif health[1] > damagecalc then
 
 			self.cdt = self.cdt + dt
 			--if self.cdt < self.tickTime then return end -- wait until at least 1 second has passed
