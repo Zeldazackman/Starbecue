@@ -1,0 +1,43 @@
+{
+  "objectName" : "sbqMilkCarton",
+  "colonyTags" : ["bvore", "horny", "milk"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A large milk carton.",
+  "shortdescription" : "Milk Carton",
+  "race" : "generic",
+
+  "replaceDescPredPrey" : "A <predName> branded milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
+  "replaceDescPrey" : "A large milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
+  "replaceDescPred" : "A <predName> branded milk carton.",
+
+  "replaceShortDescPredPrey" : "<preyName> Flavored Milk",
+  "replaceShortDescPrey" : "<preyName> Flavored Milk",
+  "replaceShortDescPred" : "<predName><predPossessive> Milk",
+
+  "builder" : "/objects/sbq/digestResults/digestResultBuilder.lua",
+	"retainObjectParametersInItem" : true,
+
+  "inventoryIcon" : "object.png",
+  "orientations" : [
+    {
+      "image" : "object.png",
+      "imagePosition" : [-8, 0],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    },
+    {
+      "image" : "object.png",
+      "imagePosition" : [-8, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ]
+}

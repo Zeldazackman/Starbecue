@@ -2,7 +2,10 @@
 	"name" : "sbqMilkSoftDigest",
 	"blockingStat" : "milkDigestImmunity",
 
-	"effectConfig" : { "effect" : "sbqMilkSoftDigest"},
+	"effectConfig" : {
+		"effect" : "sbqMilkSoftDigest",
+		"itemDrop" : "sbqMilkCarton"
+	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
