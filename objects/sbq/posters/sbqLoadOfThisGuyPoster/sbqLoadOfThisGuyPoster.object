@@ -1,0 +1,32 @@
+{
+  "objectName" : "sbqLoadOfThisGuyPoster",
+  "colonyTags" : ["cvore", "horny", "cum", "loadOfThisGuyPoster"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "Finally, I've gotten a load of This Guy.",
+  "shortdescription" : "Load of This Guy Poster",
+  "race" : "generic",
+
+  "apexDescription" : "The implications here are rather... interesting.",
+  "avianDescription" : "How prepersterous, such a thing is surely impossible... unless...",
+  "floranDescription" : "Floran can make many more loadsss of thisss guy.",
+  "glitchDescription" : "Curious. Was I supposed to be searching for such a load of this guy?",
+  "humanDescription" : "Is that a... oh I get it.",
+  "hylotlDescription" : "What is this supposed to be implying?",
+  "novakidDescription" : "Heh, and theres surely more where that came from.",
+  "avaliDescription" : "I've certainly got plenty.",
+
+  "inventoryIcon" : "postericon.png",
+  "orientations" : [
+    {
+      "image" : "poster.png",
+      "imagePosition" : [-16, -16],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ]
+}
