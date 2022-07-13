@@ -733,9 +733,9 @@ function sbq.validStruggle(struggler, dt)
 
 	if struggling then return end
 
-	if config.getParameter("name") ~= "sbqEgg" then
-		if sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species] then
-			if not sbq.driving then
+	if not sbq.config.speciesStrugglesDisabled[config.getParameter("name")] then
+		if (sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species]) or sbq.occupant[struggler].digested then
+			if not sbq.driving or world.entityType(sbq.driver) == "npc" then
 				sbq.occupant[struggler].struggleTime = math.max(0, sbq.occupant[struggler].struggleTime + dt)
 				if sbq.occupant[struggler].struggleTime > 1 then
 					sbq.letout(sbq.occupant[struggler].id)
