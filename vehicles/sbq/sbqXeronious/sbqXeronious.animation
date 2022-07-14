@@ -10,7 +10,8 @@
 		"bellymask" : "",
 		"smolpath": "",
 		"skin": "default",
-		"direction": "1"
+		"direction": "1",
+		"armVisible": ""
 	},
 	"animatedParts": {
 		"stateTypes": {

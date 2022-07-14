@@ -13,7 +13,7 @@ function sbq.init()
 end
 
 function sbq.update(dt)
-	sbq.changeSize()
+	--sbq.changeSize()
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
 end

@@ -220,22 +220,27 @@
 			"belly" : { "name" : "Belly", "max": 1, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
 			"hug" : { "name" : "Held", "max": 1, "maxNested": -1, "transformGroups" : ["armsbob"] },
 
-			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "mass": 0.1, "maxNested" : -1,
+			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1,
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
-			"balls" : { "name" : "Balls", "selectEffect" : true, "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true,
+			"balls" : { "name" : "Balls", "selectEffect" : true, "sided" : true, "max": 1, "hammerspace" : true,
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"TF" : { "immunity" : "cumTFImmunity", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png", "toolTip" : "Prey within will be transformed into cum.", "preset" : "cumBlob" }
 			},
-			"ballsL" : { "name" : "Left Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
-			"ballsR" : { "name" : "Right Ball", "max": 1, "mass": 0.1, "hammerspace" : true },
+			"ballsL" : { "name" : "Left Ball", "max": 1, "hammerspace" : true },
+			"ballsR" : { "name" : "Right Ball", "max": 1, "hammerspace" : true },
 
-			"breasts" : { "name" : "Breasts", "sided" : true, "max": 1, "mass": 0.1, "hammerspace" : true },
-			"breastsL" : { "name" : "Left Breast", "max": 1, "mass": 0.1, "hammerspace" : true },
-			"breastsR" : { "name" : "Right Breast", "max": 1, "mass": 0.1, "hammerspace" : true }
+			"bulge" : { "copy" : ["shaft", "ballsL", "ballsR"] },
+
+			"breasts" : { "name" : "Breasts", "selectEffect" : true, "sided" : true, "max": 1, "hammerspace" : true,
+				"digest" : { "effect" : "sbqMilkDigest", "toolTip" : "Prey within will be churned into milk, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/milk.png"},
+				"softDigest" : { "effect" : "sbqMilkSoftDigest", "toolTip" : "Prey within will be churned into milk, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/milk.png"}
+			},
+			"breastsL" : { "name" : "Left Breast", "max": 1, "hammerspace" : true },
+			"breastsR" : { "name" : "Right Breast", "max": 1, "hammerspace" : true }
 		},
 
 

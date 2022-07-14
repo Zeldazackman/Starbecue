@@ -62,9 +62,7 @@ function sbq.handleGrab()
 		sbq.uneat(sbq.grabbing)
 		sbq.grabbing = nil
 		if primary == "grab" then
-			sbq.grabAngleTransitions(victim)
-			--this doesn't work and its likely not going to work
-			--world.sendEntityMessage(victim, "sbqSetVelocityAngle", {velocity = sbq.armRotation.frontarmsVelocity, angle = sbq.armRotation.frontarmsAngle} )
+			--sbq.grabAngleTransitions(victim)
 		else
 			sbq.doTransition(primary, { id = victim })
 		end
@@ -72,7 +70,7 @@ function sbq.handleGrab()
 		sbq.uneat(sbq.grabbing)
 		sbq.grabbing = nil
 		if alt == "grab" then
-			sbq.grabAngleTransitions(victim)
+			--sbq.grabAngleTransitions(victim)
 		else
 			sbq.doTransition(alt, { id = victim })
 		end

@@ -2,6 +2,7 @@
 	"globalTagDefaults" : {
 		"totalOccupants" : "0",
 		"bellyOccupants" : "0",
+		"tailOccupants" : "0",
 		"shaftOccupants": "0",
 		"ballsLOccupants": "0",
 		"ballsROccupants": "0",
@@ -163,7 +164,9 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
-					"run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0, "baseAnim" : "idle" },
+
+					"walk": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 },
+					"run": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0, "baseAnim" : "walk" },
 
 					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim" : "idle" },
@@ -183,8 +186,8 @@
 
 					"rotation": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "idle" },
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "walk" },
 
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
@@ -224,11 +227,11 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "idle" },
-					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "idle" },
+					"walk": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0 },
+					"run": { "frames": 8, "cycle": 0.75, "mode": "end", "priority": 0, "baseAnim" : "walk" },
 
-					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2 },
-					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "jump" },
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
 					"smol.idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
@@ -355,7 +358,8 @@
 				},
 				"partStates": {
 					"bellyState": {
-						"idle": { "properties": { "image": "skins/<bodySkin>/giant/giant_tail.png:<tailOccupants>.<tailStateAnim>.<tailStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
+						"idle": { "properties": { "image": "skins/<tailSkin>/giant/giant_tail.png:<tailOccupants>.<tailStateAnim>.<tailStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
+						"walk": { "properties": { "image": "skins/<tailSkin>/giant/giant_tail.png:<direction>.<tailOccupants>.<tailStateAnim>.<tailStateFrame><partVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
@@ -449,6 +453,7 @@
 				"partStates": {
 					"armsState": {
 						"idle": { "properties": { "image": "skins/<armsSkin>/giant/foreground/giant_arms.png:<armsStateAnim>.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
+						"walk": { "properties": { "image": "skins/<armsSkin>/giant/foreground/giant_arms.png:<direction>.<armsStateAnim>.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"none": { "properties": {} }
 					}
@@ -478,6 +483,7 @@
 				"partStates": {
 					"armsState": {
 						"idle": { "properties": { "image": "skins/<armsSkin>/giant/giant_arms.png:<armsStateAnim>.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
+						"walk": { "properties": { "image": "skins/<armsSkin>/giant/giant_arms.png:<direction>.<armsStateAnim>.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
 
 						"none": { "properties": {} }
 					}
@@ -505,9 +511,8 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "skins/<legsSkin>/giant/foreground/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
-
-						"jump": { "properties": { "zLevel": -0.99, "image": "skins/<legsSkin>/giant/foreground/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
+						"idle": { "properties": {"offset" : [0,-1], "image": "skins/<legsSkin>/giant/foreground/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
+						"walk": { "properties": {"offset" : [0,-1], "image": "skins/<legsSkin>/giant/foreground/giant_legs.png:<direction>.<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}
@@ -521,9 +526,8 @@
 				},
 				"partStates": {
 					"legsState": {
-						"idle": { "properties": { "image": "skins/<legsSkin>/giant/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
-
-						"jump": { "properties": { "image": "skins/<legsSkin>/giant/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
+						"idle": { "properties": {"offset" : [0,-1], "image": "skins/<legsSkin>/giant/giant_legs.png:<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
+						"walk": { "properties": {"offset" : [0,-1], "image": "skins/<legsSkin>/giant/giant_legs.png:<direction>.<legsStateAnim>.<legsStateFrame><partVisible><directives><statusDirectives>" } },
 
 						"none": { "properties": {} }
 					}

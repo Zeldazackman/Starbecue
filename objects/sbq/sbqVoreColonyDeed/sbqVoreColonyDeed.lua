@@ -389,8 +389,9 @@ function spawn(tenant, i)
 		else
 			tenant.personality = world.callScriptedEntity(entityId, "personality")
 		end
-		if not tenant.overrides.identity then
+		if not tenant.storedIdentity then
 			tenant.overrides.identity = world.callScriptedEntity(entityId, "npc.humanoidIdentity")
+			tenant.storedIdentity = true
 		end
 	elseif tenant.spawn == "monster" then
 		if not overrides.seed and tenant.seed then

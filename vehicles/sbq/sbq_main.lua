@@ -138,7 +138,7 @@ function init()
 	sbq.config = root.assetJson( "/sbqGeneral.config")
 	sbq.transformGroups = root.assetJson( sbq.cfgAnimationFile ).transformationGroups
 
-	sbq.settings = sb.jsonMerge(sbq.config.defaultSettings, sb.jsonMerge( sbq.sbqData.defaultSettings or {}, config.getParameter( "settings" ) or {}))
+	sbq.settings = sb.jsonMerge(sbq.config.defaultSettings, sb.jsonMerge( sbq.sbqData.defaultSettings or {}, sb.jsonMerge(config.getParameter( "settings" ) or {}, sbq.sbqData.overrideSettings or {})))
 
 	sbq.spawner = config.getParameter("spawner")
 	sbq.settings.directives = sbq.sbqData.defaultDirectives or ""

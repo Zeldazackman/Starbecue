@@ -110,7 +110,9 @@ function sbq.rotateArm(enabled, arm, LR)
 
 		if occupantId ~= nil and sbq.lounging[occupantId] ~= nil then
 			local victimAnim = sbq.lounging[occupantId].victimAnim
+---@diagnostic disable-next-line: param-type-mismatch
 			victimAnim.last.x = math.cos(sbq.armRotation[arm.."Angle"]) * handOffset[1]
+---@diagnostic disable-next-line: param-type-mismatch
 			victimAnim.last.y = math.sin(sbq.armRotation[arm.."Angle"]) * handOffset[2]
 		end
 
