@@ -11,13 +11,18 @@ function update()
 		if data[1] == nil then
 			gotData = true
 		end
+		local didBias = false
 		while not gotData and data[1] ~= nil do
 			local i = math.random(#data)
 			if data[i].dungeon and (data[i].spawnOnce and world.getProperty(data[i].dungeon.."Placed")) or (not checkRequirements(data[i].checkRequirements or {})) then
 				table.remove(data,i)
 			else
-				data = data[i]
-				gotData = true
+				if data[i].bias or didBias then
+					data = data[i]
+					gotData = true
+				else
+					didBias = true
+				end
 			end
 		end
 

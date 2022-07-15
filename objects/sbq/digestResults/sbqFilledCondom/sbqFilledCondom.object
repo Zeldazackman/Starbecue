@@ -4,6 +4,7 @@
   "rarity" : "Common",
   "category" : "decorative",
   "price" : 100,
+  "maxStack" : 64,
 
   "description" : "A large condom filled with cum.",
   "shortdescription" : "Filled Condom",

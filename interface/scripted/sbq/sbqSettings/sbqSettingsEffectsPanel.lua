@@ -20,8 +20,14 @@ function sbq.effectsPanel()
 			if sbq.deedUI then
 				if locationData.selectEffect and sbq.predatorSettings[location.."NoneEnable"] == nil then
 					sbq.predatorSettings[location.."NoneEnable"] = false
+				end
+				if locationData.selectEffect and sbq.predatorSettings[location.."HealEnable"] == nil then
 					sbq.predatorSettings[location.."HealEnable"] = false
+				end
+				if locationData.selectEffect and sbq.predatorSettings[location.."SoftDigestEnable"] == nil then
 					sbq.predatorSettings[location.."SoftDigestEnable"] = false
+				end
+				if locationData.selectEffect and sbq.predatorSettings[location.."DigestEnable"] == nil then
 					sbq.predatorSettings[location.."DigestEnable"] = false
 				end
 			end

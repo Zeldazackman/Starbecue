@@ -12,13 +12,18 @@ function update()
 		if data[1] == nil then
 			gotData = true
 		end
+		local didBias = false
 		while not gotData do
 			local i = math.random(#data)
 			if (data[i].spawnOnce and world.getProperty(data[i].npc..data[i].npcTypeName.."Spawned")) or (not checkRequirements(data[i].checkRequirements or {})) then
 				table.remove(data,i)
 			else
-				data = data[i]
-				gotData = true
+				if data[i].bias or didBias then
+					data = data[i]
+					gotData = true
+				else
+					didBias = true
+				end
 			end
 		end
 

@@ -54,5 +54,22 @@
 			{"item" : {"name":"firelordlegs", "parameters":{"colorIndex":4}}},
 			{"item" : {"name":"simplecapeback", "parameters":{"colorIndex":4}}}
 		]}]
+	],
+	"sbqPascalKaoriCum" : [
+		[0, { "fill" : [
+			{"item" : {"name":"sbqFilledCondom", "count":64, "parameters":{"pred":"Pascal", "predUUID":"sbqPascal_LokiVulpix", "prey":"Kaori", "preyUUID":"sbqKaori_Fevix", "description":"A large condom with a label:\nKaori is just a load of Pascal's cum~" }}}
+		]}]
+	],
+	"sbqPascalKaoriCumBarrel" : [
+		[0, {
+			"pool" : [
+				{"weight":1, "pool" : "sbqPascalKaoriCum"}
+			],
+			"poolRounds" :[
+				[0.25, 16],
+				[0.5, 32],
+				[0.25, 48]
+			]
+		}]
 	]
 }
