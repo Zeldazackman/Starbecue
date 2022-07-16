@@ -48,6 +48,9 @@ function update(dt)
 			end
 			status.setResource("health", 1)
 		elseif health[1] <= 1 then
+			effect.addStatModifierGroup({
+				{stat = "protection", amount = 100},
+			})
 			self.cdt = 0
 			self.targetTime = 2
 			effect.modifyDuration(2+1)
