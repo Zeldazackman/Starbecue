@@ -173,3 +173,33 @@ function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
 
 	return dialogueTree[effect] or dialogueTree.default
 end
+
+function dialogueBoxScripts.digestImmunity(dialogueTree, settings, branch)
+	if settings.digestImmunity and (settings.allowSoftDigest and settings[settings.location.."Effect"] == "sbqSoftDigest") then
+		return dialogueTree["false"] or dialogueTree.default
+	elseif settings.digestImmunity then
+		return dialogueTree["true"] or dialogueTree.default
+	else
+		return dialogueTree["false"] or dialogueTree.default
+	end
+end
+
+function dialogueBoxScripts.cumDigestImmunity(dialogueTree, settings, branch)
+	if settings.cumDigestImmunity and (settings.allowCumSoftDigest and settings[settings.location.."Effect"] == "sbqCumSoftDigest") then
+		return dialogueTree["false"] or dialogueTree.default
+	elseif settings.cumDigestImmunity then
+		return dialogueTree["true"] or dialogueTree.default
+	else
+		return dialogueTree["false"] or dialogueTree.default
+	end
+end
+
+function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch)
+	if settings.milkDigestImmunity and (settings.allowMilkSoftDigest and settings[settings.location.."Effect"] == "sbqMilkSoftDigest") then
+		return dialogueTree["false"] or dialogueTree.default
+	elseif settings.milkDigestImmunity then
+		return dialogueTree["true"] or dialogueTree.default
+	else
+		return dialogueTree["false"] or dialogueTree.default
+	end
+end

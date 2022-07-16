@@ -97,7 +97,13 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "General", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : " Prey Enabled" }]
+								[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" },{ "type" : "iconButton", "id" : "preyEnabledLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Prey Enabled" }],
+								[
+									{ "type" : "checkBox", "id" : "allowSoftDigest", "toolTip" : "Allow soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
+									{ "type" : "checkBox", "id" : "allowCumSoftDigest", "toolTip" : "Allow cum soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowCumSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
+									{ "type" : "checkBox", "id" : "allowMilkSoftDigest", "toolTip" : "Allow milk soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowMilkSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
+									{ "type" : "label", "text" : " Allow Soft Digest" }
+								]
 							]}
 						]},
 						{ "type" : "panel", "style" : "convex", "children" : [
