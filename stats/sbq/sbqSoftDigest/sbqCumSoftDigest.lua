@@ -29,9 +29,6 @@ function update(dt)
 		end
 
 		if health[1] <= 1 and not self.digested then
-			effect.addStatModifierGroup({
-				{stat = "protection", amount = 100},
-			})
 			self.cdt = 0
 			self.targetTime = 2
 			effect.modifyDuration(2+1)

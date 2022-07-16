@@ -1,0 +1,10 @@
+{
+	"name" : "sbqPreyInvulnerable",
+
+	"effectConfig" : {},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqPreyInvulnerable.lua"
+	]
+}

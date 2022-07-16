@@ -106,7 +106,7 @@
 			}
 		},
 		"occupantStatusEffects": {
-			"breathprotectionvehicle" : { "power" : 1 },
+			"sbqPreyInvulnerable" : { "power" : 1 },
 			"dontstarve" : { "power" : 1 }
 		},
 

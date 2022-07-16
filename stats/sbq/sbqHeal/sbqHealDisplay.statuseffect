@@ -1,5 +1,6 @@
 {
 	"name" : "sbqHealDisplay",
+	"blockingStat" : "healingStatusImmunity",
 
 	"effectConfig" : {
 		"effect" : "sbqHealDisplay"
