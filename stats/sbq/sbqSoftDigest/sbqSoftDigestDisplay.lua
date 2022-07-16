@@ -26,9 +26,6 @@ end
 
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
-		if status.statPositive(config.getParameter("blockingStat")) then
-			if not status.statusProperty("sbqPreyEnabled")[config.getParameter("allowSetting")] then return end
-		end
 
 		self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
 

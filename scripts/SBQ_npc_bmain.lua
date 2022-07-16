@@ -81,9 +81,7 @@ function init()
 
 	_init()
 
-	require("/scripts/SBQ_immunities.lua")
-	sbq.handleImmunities("npc")
-
+	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	if not status.statusProperty("sbqDidVornyConvertCheck") then
 		status.setStatusProperty("sbqDidVornyConvertCheck", true)
 		if tenant ~= nil then

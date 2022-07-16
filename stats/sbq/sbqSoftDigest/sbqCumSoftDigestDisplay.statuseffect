@@ -1,9 +1,8 @@
 {
 	"name" : "sbqCumSoftDigestDisplay",
+	"blockingStat" : "cumSoftDigestImmunity",
 
 	"effectConfig" : {
-		"blockingStat" : "cumDigestImmunity",
-		"allowSetting" : "allowCumSoftDigest",
 		"effect" : "sbqCumSoftDigestDisplay",
 		"itemDrop" : "sbqFilledCondom"
 	},

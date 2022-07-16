@@ -9,7 +9,6 @@ function capture_monster_setDamageTeam(data)
 	end
 end
 
-require("/scripts/SBQ_immunities.lua")
 
 function init()
 
@@ -39,7 +38,6 @@ function init()
 		end
 	end)
 
-	sbq.handleImmunities("monster")
-
+	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	oldinit()
 end

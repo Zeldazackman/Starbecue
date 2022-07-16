@@ -323,6 +323,8 @@ function sbq.changePreySetting(settingname, settingvalue)
 	sbq.sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	sbq.sbqPreyEnabled[settingname] = settingvalue
 	status.setStatusProperty("sbqPreyEnabled", sbq.sbqPreyEnabled)
+	status.clearPersistentEffects("digestImmunity")
+	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 end
 
 function sbq.setIconDirectives()
@@ -806,24 +808,6 @@ if mainTabField.tabs.globalPreySettings ~= nil then
 			function button:onClick()
 				sbq.changePreySetting(setting, button.checked)
 			end
-		end
-	end
-
-	function digestImmunity:onClick()
-		sbq.changePreySetting("digestImmunity", digestImmunity.checked)
-		if digestImmunity.checked then
-			status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-		else
-			status.clearPersistentEffects("digestImmunity")
-		end
-	end
-
-	function cumDigestImmunity:onClick()
-		sbq.changePreySetting("cumDigestImmunity", cumDigestImmunity.checked)
-		if cumDigestImmunity.checked then
-			status.setPersistentEffects("cumDigestImmunity", {"sbqCumDigestImmunity"})
-		else
-			status.clearPersistentEffects("cumDigestImmunity")
 		end
 	end
 end

@@ -1,9 +1,8 @@
 {
 	"name" : "sbqMilkSoftDigest",
+	"blockingStat" : "milkSoftDigestImmunity",
 
 	"effectConfig" : {
-		"blockingStat" : "milkDigestImmunity",
-		"allowSetting" : "allowMilkSoftDigest",
 		"effect" : "sbqMilkSoftDigest",
 		"itemDrop" : "sbqMilkCarton"
 	},

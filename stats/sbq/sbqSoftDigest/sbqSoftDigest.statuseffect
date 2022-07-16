@@ -1,9 +1,8 @@
 {
 	"name" : "sbqSoftDigest",
+	"blockingStat" : "softDigestImmunity",
 
 	"effectConfig" : {
-		"blockingStat" : "digestionImmunity",
-		"allowSetting" : "allowSoftDigest",
 		"effect" : "sbqSoftDigest"
 	},
 	"defaultDuration" : 5,
