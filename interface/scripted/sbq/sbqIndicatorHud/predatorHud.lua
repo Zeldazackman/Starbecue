@@ -17,8 +17,21 @@ end
 local canvas = widget.bindCanvas(frame.backingWidget .. ".canvas")
 canvas:clear()
 
+speciesOverride = {}
+function speciesOverride._species()
+	return (status.statusProperty("speciesAnimOverrideData") or {}).species or speciesOverride.species()
+end
+
+function speciesOverride._gender()
+	return (status.statusProperty("speciesAnimOverrideData") or {}).gender or speciesOverride.gender()
+end
+speciesOverride.species = player.species
+player.species = speciesOverride._species
+
+speciesOverride.gender = player.gender
+player.gender = speciesOverride._gender
+
 require("/scripts/SBQ_RPC_handling.lua")
-require("/scripts/speciesAnimOverride_player_species.lua")
 
 function init()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -35,6 +48,8 @@ function init()
 		sbq.getPlayerOccupantHolderData()
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings.sbqOccupantHolder or {}), sbq.globalSettings)
 	end
+	sbq.overrideSettings = sbq.predatorConfig.overrideSettings or {}
+
 	if sbq.predatorConfig.listLocations then
 		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 			if sbq.predatorSettings.lastLocationSelect == location then
@@ -397,12 +412,12 @@ function sbq.predUIeffectsPanel(location)
 		eggifyButton:setChecked(sbq.predatorSettings[location.."Eggify"] or false)
 		transformButton:setChecked(sbq.predatorSettings[location.."TF"] or false)
 
-		noneButton:setVisible(locationData.selectEffect or false)
-		healButton:setVisible(locationData.selectEffect or false)
-		softDigestButton:setVisible(locationData.selectEffect or false)
-		digestButton:setVisible(locationData.selectEffect or false)
-		eggifyButton:setVisible(locationData.eggify or false)
-		transformButton:setVisible(locationData.TF or false)
+		noneButton:setVisible((locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.none or {}).effect or (sbq.predatorConfig.effectDefaults or {}).none or "sbqRemoveBellyEffects")) or (sbq.overrideSettings[location.."NoneEnable"] == false))) or false)
+		healButton:setVisible((locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.heal or {}).effect or (sbq.predatorConfig.effectDefaults or {}).heal or "sbqHeal")) or (sbq.overrideSettings[location.."HealEnable"] == false))) or false)
+		softDigestButton:setVisible((locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.softDigest or {}).effect or (sbq.predatorConfig.effectDefaults or {}).softDigest or "sbqSoftDigest")) or (sbq.overrideSettings[location.."SoftDigestEnable"] == false))) or false)
+		digestButton:setVisible((locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.digest or {}).effect or (sbq.predatorConfig.effectDefaults or {}).digest or "sbqDigest")) or (sbq.overrideSettings[location.."DigestEnable"] == false))) or false)
+		eggifyButton:setVisible((locationData.eggify and not sbq.overrideSettings[location.."Eggify"] ~= nil) or false)
+		transformButton:setVisible((locationData.TF and not sbq.overrideSettings[location.."TF"] ~= nil) or false)
 	else
 		sbq.clearEffectButtons()
 	end

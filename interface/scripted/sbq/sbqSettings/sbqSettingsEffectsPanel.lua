@@ -2,6 +2,7 @@
 
 function sbq.effectsPanel()
 	if not sbq.predatorConfig or not sbq.predatorConfig.locations then return end
+	effectsLayout:clearChildren()
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 		local locationData = sbq.predatorConfig.locations[location] or {}
 		if (locationData.selectEffect or locationData.TF or locationData.eggify) then

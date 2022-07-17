@@ -266,6 +266,8 @@ function refreshOccupantHolder()
 		world.sendEntityMessage(currentData.id, "reversion")
 		if currentData.species == "sbqOccupantHolder" then
 			world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
+		elseif type(currentData.species) == "nil" then
+			world.sendEntityMessage(entity.id(), "sbqGetSpeciesVoreConfig")
 		end
 	else
 		world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)

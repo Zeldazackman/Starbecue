@@ -21,7 +21,7 @@ function init()
 
 		sbq.npcConfig = root.npcConfig(sbq.tenant.type)
 		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings or {}
-		sbq.overridePreySettings = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {}
+		sbq.overridePreyEnabled = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {}
 
 		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings),
 			sb.jsonMerge( sbq.npcConfig.scriptConfig.sbqDefaultSettings or {},
@@ -29,7 +29,7 @@ function init()
 			)
 		)
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
-			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreySettings or {})
+			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
 		sbq.globalSettings = sbq.predatorSettings
 		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
@@ -171,12 +171,12 @@ function init()
 
 					local enable = _ENV[setting.."Enable"]
 
-					if sbq.overridePreySettings[setting] ~= nil then
+					if sbq.overridePreyEnabled[setting] ~= nil then
 						button:setVisible(false)
 						local locked = _ENV[setting .. "Locked"]
 						if locked ~= nil then
 							locked:setVisible(true)
-							if sbq.overridePreySettings[setting] then
+							if sbq.overridePreyEnabled[setting] then
 								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
 							else
 								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
@@ -188,7 +188,7 @@ function init()
 								local enableLocked = _ENV[setting .. "EnableLocked"]
 								if enableLocked ~= nil then
 									enableLocked:setVisible(true)
-									if sbq.overridePreySettings[setting.."Enable"] then
+									if sbq.overridePreyEnabled[setting.."Enable"] then
 										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
 									else
 										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
@@ -300,6 +300,7 @@ function sbq.changePreySetting(settingname, value)
 end
 
 function sbq.changeEscapeModifier( settingname, label, inc )
+	if sbq.overrideSettings[settingname] ~= nil then return end
 	sbq.changePredSetting(settingname, (sbq.predatorSettings[settingname] or 0) + inc)
 	label:setText(tostring(sbq.predatorSettings[settingname] or 0))
 end
@@ -368,20 +369,24 @@ end
 --------------------------------------------------------------------------------------------------
 
 function decPersonality:onClick()
+	if sbq.overrideSettings.personality ~= nil then return end
 	sbq.changePredSetting("personality", sbq.changeSelectedFromList(sbq.config.npcPersonalities, personalityText, "personalityIndex", -1))
 end
 
 function incPersonality:onClick()
+	if sbq.overrideSettings.personality ~= nil then return end
 	sbq.changePredSetting("personality", sbq.changeSelectedFromList(sbq.config.npcPersonalities, personalityText, "personalityIndex", 1))
 end
 
 --------------------------------------------------------------------------------------------------
 
 function decMood:onClick()
+	if sbq.overrideSettings.mood ~= nil then return end
 	sbq.changePredSetting("mood", sbq.changeSelectedFromList(sbq.config.npcMoods, moodText, "moodIndex", -1))
 end
 
 function incMood:onClick()
+	if sbq.overrideSettings.mood ~= nil then return end
 	sbq.changePredSetting("mood", sbq.changeSelectedFromList(sbq.config.npcMoods, moodText, "moodIndex", 1))
 end
 

@@ -8,9 +8,23 @@ sbq = {
 	config = root.assetJson( "/sbqGeneral.config" ),
 	overrideSettings = {}
 }
+speciesOverride = {}
+
+function speciesOverride._species()
+	return (status.statusProperty("speciesAnimOverrideData") or {}).species or speciesOverride.species()
+end
+
+function speciesOverride._gender()
+	return (status.statusProperty("speciesAnimOverrideData") or {}).gender or speciesOverride.gender()
+end
+speciesOverride.species = player.species
+player.species = speciesOverride._species
+
+speciesOverride.gender = player.gender
+player.gender = speciesOverride._gender
+
 
 require("/scripts/SBQ_RPC_handling.lua")
-require("/scripts/speciesAnimOverride_player_species.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 
@@ -70,6 +84,8 @@ function sbq.getPlayerOccupantHolderData()
 			table.insert(scripts, script)
 		end
 	end
+	status.setStatusProperty("sbqOverridePreyEnabled", sbq.predatorConfig.overridePreyEnabled)
+
 	sbq.predatorConfig = finalConfig
 	sbq.predatorConfig.scripts = scripts
 end
@@ -91,6 +107,7 @@ function init()
 		sbq.getPlayerOccupantHolderData()
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings.sbqOccupantHolder or {}), sbq.globalSettings)
 	end
+	sbq.overrideSettings = sbq.predatorConfig.overrideSettings or {}
 
 	sbq.locationPanel()
 	sbq.effectsPanel()
@@ -252,11 +269,25 @@ function init()
 
 	for setting, value in pairs(sbq.predatorSettings) do
 		local button = _ENV[setting]
+		local locked = _ENV[setting .. "Locked"]
 		if button ~= nil and type(value) == "boolean" then
-			if sbq.predatorConfig.overrideSettings[setting] ~= nil then
+			if sbq.overrideSettings[setting] ~= nil then
 				button:setVisible(false)
+				if locked ~= nil then
+					locked:setVisible(true)
+					if sbq.overrideSettings[setting] then
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+					else
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+					end
+					locked.toolTip = (button.toolTip or "").." (Locked)"
+				end
 			else
+				button:setVisible(true)
 				button:setChecked(value)
+				if locked ~= nil then
+					locked:setVisible(false)
+				end
 				function button:onClick()
 					sbq.changePredatorSetting(setting, button.checked)
 				end
@@ -265,11 +296,25 @@ function init()
 	end
 	for setting, value in pairs(sbq.globalSettings) do
 		local button = _ENV[setting]
+		local locked = _ENV[setting .. "Locked"]
 		if button ~= nil and type(value) == "boolean" then
-			if sbq.predatorConfig.overrideSettings[setting] ~= nil then
+			if sbq.overrideSettings[setting] ~= nil then
 				button:setVisible(false)
+				if locked ~= nil then
+					locked:setVisible(true)
+					if sbq.overrideSettings[setting] then
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+					else
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+					end
+					locked.toolTip = (button.toolTip or "").." (Locked)"
+				end
 			else
+				button:setVisible(true)
 				button:setChecked(value)
+				if locked ~= nil then
+					locked:setVisible(false)
+				end
 				function button:onClick()
 					sbq.changeGlobalSetting(setting, button.checked)
 				end
@@ -281,11 +326,25 @@ function init()
 		sbq.overridePreyEnabled = status.statusProperty("sbqOverridePreyEnabled") or {}
 		for setting, value in pairs(sbq.sbqPreyEnabled) do
 			local button = _ENV[setting]
+			local locked = _ENV[setting .. "Locked"]
 			if button ~= nil and type(value) == "boolean" then
 				if sbq.overridePreyEnabled[setting] ~= nil then
 					button:setVisible(false)
+					if locked ~= nil then
+						locked:setVisible(true)
+						if sbq.overridePreyEnabled[setting] then
+							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+						else
+							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+						end
+						locked.toolTip = (button.toolTip or "").." (Locked)"
+					end
 				else
+					button:setVisible(true)
 					button:setChecked(value)
+					if locked ~= nil then
+						locked:setVisible(false)
+					end
 					function button:onClick()
 						sbq.changePreySetting(setting, button.checked)
 					end
@@ -486,9 +545,13 @@ if speciesLayout ~= nil then
 
 	function applySpecies:onClick()
 		if speciesText.text ~= "" and type(sbq.customizedSpecies[speciesText.text]) == "table" then
+			local species = player.species()
 			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
 			status.setPersistentEffects("speciesAnimOverride", {  sbq.currentCustomSpecies.customAnimStatus or "speciesAnimOverride"})
+			if species ~= speciesText.text then
+				init()
+			end
 		else
 			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", nil)
@@ -514,9 +577,8 @@ if speciesLayout ~= nil then
 		end
 	end
 	table.sort(sbq.unlockedSpeciesList)
-	sbq.currentPlayerSpecies = (status.statusProperty("speciesAnimOverrideData") or {}).species or originalSpecies
 	for i, species in ipairs(sbq.unlockedSpeciesList) do
-		if species == player.species then
+		if species == player.species() then
 			sbq.speciesOverrideIndex = i
 		end
 	end

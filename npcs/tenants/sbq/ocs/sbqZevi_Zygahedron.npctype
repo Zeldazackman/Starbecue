@@ -46,7 +46,6 @@
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,
 			"ballsDigestEnable" : false,
-			"ballsSoftDigestEnable" : false,
 			"wombDigestEnable" : false,
 			"wombSoftDigestEnable" : false,
 
@@ -58,6 +57,7 @@
 			"wombTFEnable" : false
 		},
 		"sbqOverridePreyEnabled" : {
+			"digestImmunity" : true,
 			"cumDigestImmunity" : true,
 			"milkDigestImmunity" : true,
 			"navelVore" : false

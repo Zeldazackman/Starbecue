@@ -272,11 +272,20 @@ function sbq.transformPlayer(i)
 	end
 end
 
+local map = {
+	heal = "Heal",
+	none = "None",
+	digest = "Digest",
+	softDigest = "SoftDigest"
+}
 function sbq.initLocationEffects()
 	for location, data in pairs(sbq.sbqData.locations) do
 		local value = sbq.settings[location.."EffectSlot"]
 		if value then
 			local effect = (data[value] or {}).effect or (sbq.sbqData.effectDefaults or {})[value] or (sbq.config.effectDefaults or {})[value] or "sbqRemoveBellyEffects"
+			if sbq.sbqData.overrideSettings[location..map[value].."Enable"] == false then
+				effect = sbq.sbqData.defaultSettings[location.."Effect"] or "sbqRemoveBellyEffects"
+			end
 			sbq.settings[location.."Effect"] = effect
 			if data.sided then
 				local left =  sbq.sbqData.locations[location.."L"]
