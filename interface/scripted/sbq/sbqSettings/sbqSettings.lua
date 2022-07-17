@@ -253,18 +253,43 @@ function init()
 	for setting, value in pairs(sbq.predatorSettings) do
 		local button = _ENV[setting]
 		if button ~= nil and type(value) == "boolean" then
-			button:setChecked(value)
-			function button:onClick()
-				sbq.changePredatorSetting(setting, button.checked)
+			if sbq.predatorConfig.overrideSettings[setting] ~= nil then
+				button:setVisible(false)
+			else
+				button:setChecked(value)
+				function button:onClick()
+					sbq.changePredatorSetting(setting, button.checked)
+				end
 			end
 		end
 	end
 	for setting, value in pairs(sbq.globalSettings) do
 		local button = _ENV[setting]
 		if button ~= nil and type(value) == "boolean" then
-			button:setChecked(value)
-			function button:onClick()
-				sbq.changeGlobalSetting(setting, button.checked)
+			if sbq.predatorConfig.overrideSettings[setting] ~= nil then
+				button:setVisible(false)
+			else
+				button:setChecked(value)
+				function button:onClick()
+					sbq.changeGlobalSetting(setting, button.checked)
+				end
+			end
+		end
+	end
+	if mainTabField.tabs.globalPreySettings ~= nil then
+		sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
+		sbq.overridePreyEnabled = status.statusProperty("sbqOverridePreyEnabled") or {}
+		for setting, value in pairs(sbq.sbqPreyEnabled) do
+			local button = _ENV[setting]
+			if button ~= nil and type(value) == "boolean" then
+				if sbq.overridePreyEnabled[setting] ~= nil then
+					button:setVisible(false)
+				else
+					button:setChecked(value)
+					function button:onClick()
+						sbq.changePreySetting(setting, button.checked)
+					end
+				end
 			end
 		end
 	end
@@ -795,20 +820,4 @@ if speciesLayout ~= nil then
 	sbq.changeSpecies(0)
 end
 
---------------------------------------------------------------------------------------------------
-
-
-if mainTabField.tabs.globalPreySettings ~= nil then
-	sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
-
-	for setting, value in pairs(sbq.sbqPreyEnabled) do
-		local button = _ENV[setting]
-		if button ~= nil and type(value) == "boolean" then
-			button:setChecked(value)
-			function button:onClick()
-				sbq.changePreySetting(setting, button.checked)
-			end
-		end
-	end
-end
 --------------------------------------------------------------------------------------------------

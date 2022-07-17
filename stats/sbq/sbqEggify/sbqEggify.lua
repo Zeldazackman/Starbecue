@@ -1,6 +1,6 @@
 local replaceColors = {}
 function init()
-	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultPreyEnabled[world.entityType(entity.id())], status.statusProperty("sbqPreyEnabled") or {})
+	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	local currentData = status.statusProperty("sbqCurrentData") or {}
 	if (not preyEnabled.preyEnabled) or (preyEnabled.eggImmunity) or currentData.type == "prey" then
 		return

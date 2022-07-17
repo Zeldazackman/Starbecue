@@ -4,9 +4,6 @@
 
 	"scriptConfig" : {
 		"sbqOverrideSettings" : {
-			"mood" : "default",
-			"personality" : "default",
-
 			"analVorePred" : false,
 			"cockVorePred" : false,
 			"breastVorePred" : false,

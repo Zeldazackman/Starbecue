@@ -1,0 +1,28 @@
+{
+  "name": "sbq_tenant_Helena_FFWizard",
+  "priority": 60,
+
+  "colonyTagCriteria": {
+    "light": 1,
+    "door": 1,
+    "sbqVore" : 1,
+    "crystalline" : 8
+  },
+
+  "checkRequirements" : {},
+
+  "tenants": [
+    {
+      "spawn": "npc",
+      "species": ["sbqHelena_FFWizard"],
+      "type": "sbqHelena_FFWizard",
+      "overrides": {
+       }
+     }
+   ],
+
+  "rent": {
+    "periodRange": [1200.0, 1800.0],
+    "pool": "villagerGift"
+  }
+}

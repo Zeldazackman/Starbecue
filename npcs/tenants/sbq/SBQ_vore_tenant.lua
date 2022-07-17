@@ -192,6 +192,8 @@ function sbq.getSpeciesConfig()
 
 	sbq.sbqData = sbq.speciesConfig.sbqData
 
+	status.setStatusProperty("sbqOverridePreyEnabled", sbq.speciesConfig.sbqData.overridePreySettings)
+
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
 	local effects = status.getPersistentEffects("speciesAnimOverride")

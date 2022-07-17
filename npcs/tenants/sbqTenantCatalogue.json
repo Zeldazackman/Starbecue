@@ -75,8 +75,11 @@
 	"guard_neki": [ "sbq_guard_neki", "sbq_guardT2_neki", "sbq_guardT3_neki", "sbq_guardT4_neki" ],
 	"guard_lastree": [ "sbq_guard_lastree", "sbq_guardT2_lastree", "sbq_guardT3_lastree", "sbq_guardT4_lastree" ],
 
-	"Zevi": "sbq_tenant_zevi_zygahedron",
-	"Socks": "sbq_tenant_socks_lokivulpix",
-	"Blue_the_synth" : "sbq_tenant_Blue_Blueninja"
+	"Zevi": "sbq_tenant_Zevi_Zygahedron",
+	"Socks": "sbq_tenant_Socks_LokiVulpix",
+	"Blue_the_synth" : "sbq_tenant_Blue_Blueninja",
+	"Sandy" : "sbq_tenant_Sandy_Fevix",
+	"Helena" : "sbq_tenant_Helena_FFWizard",
+	"Batty" : "sbq_tenant_Batty_Xeronious"
 
 }

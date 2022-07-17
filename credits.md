@@ -10,6 +10,8 @@
 	xeronious
 	Lakota Amitola
 	BRZYN-Z18
+	Fevix
+	FFWizard
 
 # Builders
 	Cosmic
@@ -21,6 +23,7 @@
 # Playtesters / Bug Hunters
 	xeronious
 	Rex Anivius
+	Rick4242
 
 # Patrons
 ## Special Thanks

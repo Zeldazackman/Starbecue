@@ -255,6 +255,8 @@ function init()
 		end
 		speciesConfig.states = finalConfig
 
+		status.setStatusProperty("sbqOverridePreyEnabled", speciesConfig.sbqData.overridePreySettings)
+
 		local effects = status.getPersistentEffects("speciesAnimOverride")
 		if not effects[1] then
 			status.setPersistentEffects("speciesAnimOverride", {  speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })

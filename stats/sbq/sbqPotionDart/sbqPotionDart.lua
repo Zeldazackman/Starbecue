@@ -30,7 +30,7 @@ function uninit()
 end
 
 function sbq.transform(data)
-	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	local immune = getPreyEnabled().transformImmunity
 	if immune then return effect.expire() end
 
 	world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, 5*60)
@@ -39,7 +39,7 @@ function sbq.transform(data)
 end
 
 function sbq.genderswap()
-	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).genderswapImmunity
+	local immune = getPreyEnabled().genderswapImmunity
 	if immune then return effect.expire() end
 
 	local table = {
@@ -68,7 +68,7 @@ function sbq.genderswap()
 end
 
 function sbq.reversion()
-	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	local immune = getPreyEnabled().transformImmunity
 	if immune then return effect.expire() end
 
 	world.sendEntityMessage(entity.id(), "sbqEndMysteriousPotionTF")
@@ -76,7 +76,7 @@ function sbq.reversion()
 end
 
 function sbq.vehiclePred(vehicle)
-	local immune = (status.statusProperty("sbqPreyEnabled") or sbq.config.defaultPreyEnabled[world.entityType(entity.id())] or {}).transformImmunity
+	local immune = getPreyEnabled().transformImmunity
 	if immune then return effect.expire() end
 
 	local currentData = status.statusProperty("sbqCurrentData") or {}
@@ -87,4 +87,8 @@ function sbq.vehiclePred(vehicle)
 		world.spawnVehicle( vehicle, mcontroller.position(), { driver = entity.id(), retrievePrey = currentData.id } )
 		animator.playSound("activate")
 	end)
+end
+
+function getPreyEnabled()
+	return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 end

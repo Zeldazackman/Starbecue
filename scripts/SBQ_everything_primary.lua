@@ -39,11 +39,12 @@ function sbq.everything_primary()
 	end)
 
 	message.setHandler("sbqIsPreyEnabled", function(_,_, voreType)
-		if (status.statusProperty("sbqPreyEnabled") or {}).preyEnabled == false then return false end
-		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {}))[voreType]
+		local preySettings = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
+		if preySettings.preyEnabled == false then return false end
+		return preySettings[voreType]
 	end)
 	message.setHandler("sbqGetPreyEnabled", function(_,_)
-		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {}))
+		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	end)
 
 	message.setHandler("sbqSetVelocityAngle", function(_,_, data)

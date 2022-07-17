@@ -1,0 +1,33 @@
+{
+	"type" : "sbqHubHelena_FFWizard",
+	"baseType" : "sbqHelena_FFWizard",
+
+	"scriptConfig" : {
+		"sbqOverrideSettings" : {
+			"analVorePred" : false,
+			"cockVorePred" : false,
+			"breastVorePred" : false,
+			"unbirthPred" : false,
+
+			"analVorePredEnable" : false,
+			"cockVorePredEnable" : false,
+			"breastVorePredEnable" : false,
+			"unbirthPredEnable" : false
+		},
+		"sbqOverridePreyEnabled" : {
+			"digestImmunity": true,
+			"transformImmunity": true,
+			"milkDigestImmunity": true,
+			"cumDigestImmunity": true,
+			"cumTFImmunity":true,
+			"genderswapImmunity": true
+		}
+	},
+	"statusControllerSettings" : {
+		"stats" : {
+			"protection" : {
+				"baseValue" : 100.0
+			}
+		}
+	}
+}

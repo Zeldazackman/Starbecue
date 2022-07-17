@@ -1,6 +1,22 @@
 
 function init()
-	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config").defaultPreyEnabled[world.entityType(entity.id())], status.statusProperty("sbqPreyEnabled") or {})
+	message.setHandler("refreshDigestImmunity", function ()
+		refresh()
+	end)
+	status.clearPersistentEffects("cumDigestImmunity")
+	status.clearPersistentEffects("milkDigestImmunity")
+	refresh()
+	script.setUpdateDelta(0)
+end
+
+function update(dt)
+end
+
+function uninit()
+end
+
+function refresh()
+	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	local statModifierGroup = {}
 	if preyEnabled.digestImmunity then
 		table.insert(statModifierGroup, {stat = "digestionImmunity", amount = 1})
@@ -21,11 +37,4 @@ function init()
 		end
 	end
 	effect.addStatModifierGroup(statModifierGroup)
-	script.setUpdateDelta(0)
-end
-
-function update(dt)
-end
-
-function uninit()
 end
