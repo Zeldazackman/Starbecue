@@ -100,11 +100,14 @@ function init()
 		sbq.getSpeciesConfig()
 		return sbq.speciesConfig
 	end)
-	message.setHandler("sbqSaveSettings", function (_,_, settings)
+	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
 		storage.settings = settings
-		sbq.setRelevantPredSettings()
-		if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
-			world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
+		if menuName and menuName ~= "sbqOccupantHolder" then
+		else
+			sbq.setRelevantPredSettings()
+			if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
+				world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
+			end
 		end
 	end)
 	message.setHandler("sbqSavePreySettings", function (_,_, settings)
@@ -121,6 +124,12 @@ function init()
 			sbq.getRandomDialogue( treestart, entity, sb.jsonMerge(settings, sb.jsonMerge({personality = storage.settings.personality, mood = storage.settings.mood}, status.statusProperty("sbqPreyEnabled") or {})))
 		end
 	end)
+	message.setHandler( "sbqLoadSettings", function(_,_, menuName )
+		if menuName then return sb.jsonMerge((config.getParameter("sbqPredatorSettings") or {})[menuName] or {}, storage.settings or {}) end
+		return storage.settings
+	end)
+
+
 	message.setHandler("requestTransition", function ( _,_, transition, args)
 		if not sbq.occupantHolder then
 			sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = storage.settings, doExpandAnim = true } )

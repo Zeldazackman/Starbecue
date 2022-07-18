@@ -56,48 +56,21 @@
 				{"mode": "horizontal"},
 				{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Body Parts", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore"}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Bra" }],
-					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth"}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Underwear" }],
+					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore", "visible" : false}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "braLabel", "type" : "label", "text" : " Bra", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth", "visible" : false}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "underwearLabel", "type" : "label", "text" : " Underwear", "visible" : false }],
 
-					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one"}, { "type" : "iconButton", "id" : "tailLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tail" }],
-					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw"}, { "type" : "iconButton", "id" : "tailmawLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tailmaw" }],
-					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes"}, { "type" : "iconButton", "id" : "navelLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Navel" }],
+					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one", "visible" : false}, { "type" : "iconButton", "id" : "tailLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "tailLabel", "type" : "label", "text" : " Tail", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw", "visible" : false}, { "type" : "iconButton", "id" : "tailmawLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "tailmawLabel", "type" : "label", "text" : " Tailmaw", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes", "visible" : false}, { "type" : "iconButton", "id" : "navelLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "navelLabel", "type" : "label", "text" : " Navel", "visible" : false }],
 
-					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Boobs! for breast vore"}, { "type" : "iconButton", "id" : "breastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Breasts" }],
-					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "iconButton", "id" : "symmetricalBreastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Symmetrical Breasts" }],
+					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Boobs! for breast vore", "visible" : false}, { "type" : "iconButton", "id" : "breastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "breastsLabel", "type" : "label", "text" : " Breasts", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside", "visible" : false}, { "type" : "iconButton", "id" : "symmetricalBreastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "symmetricalBreastsLabel", "type" : "label", "text" : " Symmetrical Breasts", "visible" : false }],
 
-					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "iconButton", "id" : "penisLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis" }],
-					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "iconButton", "id" : "ballsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls" }],
-					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "iconButton", "id" : "symmetricalBallsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Symmetrical Balls" }],
+					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside", "visible" : false }, { "type" : "iconButton", "id" : "penisLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "penisLabel", "type" : "label", "text" : " Penis", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls", "visible" : false}, { "type" : "iconButton", "id" : "ballsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "ballsLabel", "type" : "label", "text" : " Balls", "visible" : false }],
+					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside", "visible" : false}, { "type" : "iconButton", "id" : "symmetricalBallsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "symmetricalBallsLabel", "type" : "label", "text" : " Symmetrical Balls", "visible" : false }],
 
-					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Pussy" }]
-				]}]},
-				{ "type" : "panel", "id" : "passiveEffectsPanel", "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-				]}]}
-			]}
-		},
-		"myfirsttest" : { // latex
-			"scripts" : [],
-			"tab": { "type" : "tab", "id" : "occupantHolderSettingsTab", "title" : "Config", "icon" : "/items/active/sbqController/unassigned.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"mode": "horizontal"},
-				{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Body Parts", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-					[{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore"}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Bra" }],
-					[{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth"}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Underwear" }],
-
-					[{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one"}, { "type" : "iconButton", "id" : "tailLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tail" }],
-					[{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tailmaw"}, { "type" : "iconButton", "id" : "tailmawLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tailmaw" }],
-					[{ "type" : "checkBox", "id" : "navel", "toolTip" : "Enable the navel for navel vore and escapes"}, { "type" : "iconButton", "id" : "navelLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Navel" }],
-
-					[{ "type" : "checkBox", "id" : "breasts", "toolTip" : "Boobs! for breast vore"}, { "type" : "iconButton", "id" : "breastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Breasts" }],
-					[{ "type" : "checkBox", "id" : "symmetricalBreasts", "toolTip" : "When one of the breasts is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "iconButton", "id" : "symmetricalBreastsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Symmetrical Breasts" }],
-
-					[{ "type" : "checkBox", "id" : "penis",  "toolTip" : "The Cock Vore Action shrinks people down to fit inside" }, { "type" : "iconButton", "id" : "penisLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Penis" }],
-					[{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls"}, { "type" : "iconButton", "id" : "ballsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Balls" }],
-					[{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside"}, { "type" : "iconButton", "id" : "symmetricalBallsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Symmetrical Balls" }],
-
-					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth"}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Pussy" }]
+					[{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth", "visible" : false}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "pussyLabel", "type" : "label", "text" : " Pussy", "visible" : false }]
 				]}]},
 				{ "type" : "panel", "id" : "passiveEffectsPanel", "style" : "convex", "children" : [
 					{ "type" : "label", "text" : "Passive Effects", "inline" : true },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [

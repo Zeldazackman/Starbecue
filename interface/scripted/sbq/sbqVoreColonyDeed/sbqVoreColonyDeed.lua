@@ -108,7 +108,11 @@ function init()
 		for setting, value in pairs(sbq.predatorSettings) do
 			if setting:sub(-6,-1) ~= "Locked" then
 				local button = _ENV[setting]
+				local label = _ENV[setting .. "Label"]
 				if button ~= nil and type(value) == "boolean" then
+					if label ~= nil then
+						label:setVisible(true)
+					end
 					button:setChecked(value)
 					function button:onClick()
 						sbq.changePredSetting(setting, button.checked)
@@ -163,7 +167,11 @@ function init()
 		for setting, value in pairs(sbq.preySettings) do
 			if setting:sub(-6,-1) ~= "Locked" then
 				local button = _ENV[setting]
+				local label = _ENV[setting .. "Label"]
 				if button ~= nil and type(value) == "boolean" then
+					if label ~= nil then
+						label:setVisible(true)
+					end
 					button:setChecked(value)
 					function button:onClick()
 						sbq.changePreySetting(setting, button.checked)
