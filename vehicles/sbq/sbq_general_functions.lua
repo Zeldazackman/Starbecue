@@ -160,8 +160,8 @@ function sbq.smolPreyAnimationPaths(settings, species, state, newTags)
 		returnValues.frontarms = sbq.fixSmolPreyPathTags(directory, animatedParts, "frontarms", "arms", edibleAnims.arms, settings, tags)
 	end
 	if edibleAnims.balls ~= nil then
-		returnValues.backBalls = sbq.fixSmolPreyPathTags(directory, animatedParts, "backBalls", "backBalls", edibleAnims.balls, settings, tags)
-		returnValues.frontBalls = sbq.fixSmolPreyPathTags(directory, animatedParts, "frontBalls", "frontBalls", edibleAnims.balls, settings, tags)
+		returnValues.ballsBack = sbq.fixSmolPreyPathTags(directory, animatedParts, "ballsBack", "ballsBack", edibleAnims.balls, settings, tags)
+		returnValues.ballsFront = sbq.fixSmolPreyPathTags(directory, animatedParts, "ballsFront", "ballsFront", edibleAnims.balls, settings, tags)
 	end
 	if edibleAnims.breasts ~= nil then
 		returnValues.backBreasts = sbq.fixSmolPreyPathTags(directory, animatedParts, "backBreasts", "backBreasts", edibleAnims.breasts, settings, tags)
@@ -283,7 +283,7 @@ function sbq.initLocationEffects()
 		local value = sbq.settings[location.."EffectSlot"]
 		if value then
 			local effect = (data[value] or {}).effect or (sbq.sbqData.effectDefaults or {})[value] or (sbq.config.effectDefaults or {})[value] or "sbqRemoveBellyEffects"
-			if sbq.sbqData.overrideSettings[location..map[value].."Enable"] == false then
+			if( sbq.sbqData.overrideSettings or {})[location..map[value].."Enable"] == false then
 				effect = sbq.sbqData.defaultSettings[location.."Effect"] or "sbqRemoveBellyEffects"
 			end
 			sbq.settings[location.."Effect"] = effect

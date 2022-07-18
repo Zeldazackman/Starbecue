@@ -395,8 +395,8 @@
 				"belly": "idle",
 				"frontBreasts": "idle",
 				"backBreasts": "idle",
-				"frontBalls": "idle",
-				"backBalls": "idle",
+				"ballsFront": "idle",
+				"ballsBack": "idle",
 				"offset" : {}
 			},
 			"idleAnimations": [
@@ -432,8 +432,8 @@
 				},
 				"ballsL" : {
 					"sided" :{
-						"rightParts" : ["backBalls"],
-						"leftParts" : ["frontBalls"]
+						"rightParts" : ["ballsBack"],
+						"leftParts" : ["ballsFront"]
 					},
 					"sound" : false,
 					"directions":{
@@ -448,8 +448,8 @@
 				},
 				"ballsR" : {
 					"sided" :{
-						"rightParts" : ["frontBalls"],
-						"leftParts" : ["backBalls"]
+						"rightParts" : ["ballsFront"],
+						"leftParts" : ["ballsBack"]
 					},
 					"sound" : false,
 					"directions":{
@@ -598,8 +598,8 @@
 				"belly": "smol.idle",
 				"frontBreasts": "smol.idle",
 				"backBreasts": "smol.idle",
-				"frontBalls": "smol.idle",
-				"backBalls": "smol.idle",
+				"ballsFront": "smol.idle",
+				"ballsBack": "smol.idle",
 				"offset" : {}
 			},
 			"idleAnimations": [

@@ -1,11 +1,12 @@
 {
 	"frameGrid" : {
 		"size" : [43, 43],
-		"dimensions" : [8, 3],
+		"dimensions" : [8, 4],
 		"names" : [
 			[ "1.stand.expand.1", "1.stand.expand.2", "1.stand.expand.3", "1.stand.expand.4", "1.stand.expand.5", "1.stand.expand.6", "1.stand.expand.7", "1.stand.expand.8"],
 			[ "1.stand.s_up.1", "1.stand.s_up.2", "1.stand.s_up.3", "1.stand.s_up.4", "1.stand.s_down.1", "1.stand.s_down.2", "1.stand.s_down.3", "1.stand.s_down.4"],
-			[ "1.stand.s_back.1", "1.stand.s_back.2", "1.stand.s_back.3", "1.stand.s_back.4", "1.stand.s_front.1", "1.stand.s_front.2", "1.stand.s_front.3", "1.stand.s_front.4"]
+			[ "1.stand.s_back.1", "1.stand.s_back.2", "1.stand.s_back.3", "1.stand.s_back.4", "1.stand.s_front.1", "1.stand.s_front.2", "1.stand.s_front.3", "1.stand.s_front.4"],
+			[ "empty" ]
 		]
 	},
 	"aliases" : {
@@ -49,6 +50,85 @@
 		"0.stand.s_down.2" : "0.stand.idle.1",
 		"0.stand.s_down.3" : "0.stand.idle.1",
 		"0.stand.s_down.4" : "0.stand.idle.1",
-		"0.stand.s_down.5" : "0.stand.idle.1"
+		"0.stand.s_down.5" : "0.stand.idle.1",
+
+		"0.sit.shrink.1" : "empty",
+		"0.sit.shrink.2" : "empty",
+		"0.sit.shrink.3" : "empty",
+		"0.sit.shrink.4" : "empty",
+		"0.sit.shrink.5" : "empty",
+		"0.sit.shrink.6" : "empty",
+		"0.sit.shrink.7" : "empty",
+		"0.sit.shrink.8" : "empty",
+
+		"0.sit.expand.1" : "empty",
+		"0.sit.expand.2" : "empty",
+		"0.sit.expand.3" : "empty",
+		"0.sit.expand.4" : "empty",
+		"0.sit.expand.5" : "empty",
+		"0.sit.expand.6" : "empty",
+		"0.sit.expand.7" : "empty",
+		"0.sit.expand.8" : "empty",
+
+		"0.sit.s_back.1" : "empty",
+		"0.sit.s_back.2" : "empty",
+		"0.sit.s_back.3" : "empty",
+		"0.sit.s_back.4" : "empty",
+		"0.sit.s_back.5" : "empty",
+		"0.sit.s_front.1" : "empty",
+		"0.sit.s_front.2" : "empty",
+		"0.sit.s_front.3" : "empty",
+		"0.sit.s_front.4" : "empty",
+		"0.sit.s_front.5" : "empty",
+		"0.sit.s_up.1" : "empty",
+		"0.sit.s_up.2" : "empty",
+		"0.sit.s_up.3" : "empty",
+		"0.sit.s_up.4" : "empty",
+		"0.sit.s_up.5" : "empty",
+		"0.sit.s_down.1" : "empty",
+		"0.sit.s_down.2" : "empty",
+		"0.sit.s_down.3" : "empty",
+		"0.sit.s_down.4" : "empty",
+		"0.sit.s_down.5" : "empty",
+
+		"1.sit.shrink.1" : "empty",
+		"1.sit.shrink.2" : "empty",
+		"1.sit.shrink.3" : "empty",
+		"1.sit.shrink.4" : "empty",
+		"1.sit.shrink.5" : "empty",
+		"1.sit.shrink.6" : "empty",
+		"1.sit.shrink.7" : "empty",
+		"1.sit.shrink.8" : "empty",
+
+		"1.sit.expand.1" : "empty",
+		"1.sit.expand.2" : "empty",
+		"1.sit.expand.3" : "empty",
+		"1.sit.expand.4" : "empty",
+		"1.sit.expand.5" : "empty",
+		"1.sit.expand.6" : "empty",
+		"1.sit.expand.7" : "empty",
+		"1.sit.expand.8" : "empty",
+
+		"1.sit.s_back.1" : "empty",
+		"1.sit.s_back.2" : "empty",
+		"1.sit.s_back.3" : "empty",
+		"1.sit.s_back.4" : "empty",
+		"1.sit.s_back.5" : "empty",
+		"1.sit.s_front.1" : "empty",
+		"1.sit.s_front.2" : "empty",
+		"1.sit.s_front.3" : "empty",
+		"1.sit.s_front.4" : "empty",
+		"1.sit.s_front.5" : "empty",
+		"1.sit.s_up.1" : "empty",
+		"1.sit.s_up.2" : "empty",
+		"1.sit.s_up.3" : "empty",
+		"1.sit.s_up.4" : "empty",
+		"1.sit.s_up.5" : "empty",
+		"1.sit.s_down.1" : "empty",
+		"1.sit.s_down.2" : "empty",
+		"1.sit.s_down.3" : "empty",
+		"1.sit.s_down.4" : "empty",
+		"1.sit.s_down.5" : "empty"
+
 	}
 }

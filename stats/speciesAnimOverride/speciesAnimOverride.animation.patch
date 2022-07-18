@@ -259,7 +259,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.3,
-					"transformationGroups": ["belly_offset", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["belly_offset", "bellybob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bellyState": {
@@ -282,7 +282,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.31,
-					"transformationGroups": ["belly_offset", "bellybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["belly_offset", "bellybob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bellyState": {
@@ -372,7 +372,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.18,
-					"transformationGroups": ["crotch_offset", "crotchbob", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "cockbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"cockState": {
@@ -395,7 +395,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.19,
-					"transformationGroups": ["crotch_offset", "crotchbob", "cockbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "cockbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"cockState": {
@@ -456,7 +456,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.12,
-					"transformationGroups": ["crotch_offset", "crotchbob", "ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "ballsFrontbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"ballsFrontState": {
@@ -479,7 +479,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.14,
-					"transformationGroups": ["crotch_offset", "crotchbob", "ballsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "ballsFrontbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"ballsFrontState": {
@@ -540,7 +540,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.1,
-					"transformationGroups": ["crotch_offset", "crotchbob", "ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "ballsBackbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"ballsBackState": {
@@ -563,7 +563,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.11,
-					"transformationGroups": ["crotch_offset", "crotchbob", "ballsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "ballsBackbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"ballsBackState": {
@@ -625,7 +625,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.01,
-					"transformationGroups": ["crotch_offset", "crotchbob", "pussybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "pussybob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"pussyState": {
@@ -686,7 +686,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.4,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsFrontState": {
@@ -709,7 +709,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.41,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsFrontState": {
@@ -732,7 +732,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.42,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsFrontbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsFrontState": {
@@ -794,7 +794,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.27,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsBackState": {
@@ -817,7 +817,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.28,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsBackState": {
@@ -840,7 +840,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.29,
-					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "breastsBackbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"breastsBackState": {
@@ -902,7 +902,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.192,
-					"transformationGroups": ["crotch_offset", "crotchbob", "bulgebob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["crotch_offset", "crotchbob", "bulgebob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bulgeState": {
@@ -929,7 +929,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.01,
-					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -951,7 +951,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.02,
-					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -973,7 +973,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.191,
-					"transformationGroups": [ "bodybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": [ "bodybob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -995,7 +995,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 2.01,
-					"transformationGroups": [ "bodybob", "sitrotation", "globalOffset", "globalOffset2", "globalRotation"]
+					"transformationGroups": [ "bodybob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"legsState": {

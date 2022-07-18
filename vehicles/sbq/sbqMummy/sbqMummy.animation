@@ -233,7 +233,7 @@
 						"idle": { "properties": { "image": "skins/default/Mummy_backarm_stand.png<directives><statusDirectives><armVisible>" } },
 
 						"walk": { "properties": { "image": "skins/default/Mummy_backarm_walk_frames.png:walk.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
-						
+
 						"jump": { "properties": { "image": "skins/default/Mummy_backarm_jump_frames.png:jump.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
 						"fall": { "properties": { "image": "skins/default/Mummy_backarm_jump_frames.png:fall.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
                         "wrap": { "properties": { "image": "skins/default/Mummy_backarm_wrapattack_frames.png:fall.<armsStateFrame><partVisible><directives><statusDirectives><armVisible>" } },
@@ -274,7 +274,7 @@
 						"idle": { "properties": { "image": "skins/default/Mummy_Legs_stand.png<directives><statusDirectives>" } },
 
 						"walk": { "properties": { "image": "skins/default/Mummy_Legs_walk.png:walk.<legsStateFrame><partVisible><directives><statusDirectives>" } },
-						
+
 						"jump": { "properties": { "image": "skins/default/Mummy_Legs_jump.png:jump.<legsStateFrame><partVisible><directives><statusDirectives>" } },
 						"fall": { "properties": { "image": "skins/default/Mummy_Legs_jump.png:fall.<legsStateFrame><partVisible><directives><statusDirectives>" } },
 
@@ -315,11 +315,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0backBalls": {
+			"occupant0ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0frontBalls": {
+			"occupant0ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -385,11 +385,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1backBalls": {
+			"occupant1ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1frontBalls": {
+			"occupant1ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -455,11 +455,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2backBalls": {
+			"occupant2ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2frontBalls": {
+			"occupant2ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -524,11 +524,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3backBalls": {
+			"occupant3ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3frontBalls": {
+			"occupant3ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -593,11 +593,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4backBalls": {
+			"occupant4ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4frontBalls": {
+			"occupant4ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -662,11 +662,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5backBalls": {
+			"occupant5ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5frontBalls": {
+			"occupant5ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -731,11 +731,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6backBalls": {
+			"occupant6ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6frontBalls": {
+			"occupant6ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -800,11 +800,11 @@
 				"properties": { "centered": true, "zLevel": 0.14, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7backBalls": {
+			"occupant7ballsBack": {
 				"properties": { "centered": true, "zLevel": 0.15, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7frontBalls": {
+			"occupant7ballsFront": {
 				"properties": { "centered": true, "zLevel": 0.16, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
