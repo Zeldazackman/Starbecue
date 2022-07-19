@@ -740,6 +740,7 @@
 
 		// any setting you define above can be modified by a player, this table allows you to define settings a player *cannot* modify, making sure your OC is always in line with your prefrences
 		"sbqOverrideSettings" : {
+			"digestEnable" : false,
 			"bellyDigestEnable" : false,
 			"bellySoftDigestEnable" : false,
 			"shaftDigestEnable" : false,

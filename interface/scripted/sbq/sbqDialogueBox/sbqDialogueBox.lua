@@ -245,9 +245,21 @@ function sbq.checkVoreTypeActive(voreType)
 	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
 			if type(sbq.data.occupantHolder) ~= "nil" and type(sbq.occupants) == "table" then
-				if currentData.type == "driver" and ((not currentData.edible) or (((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings[locationName.."VisualMax"] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings[locationName.."HammerspaceDisabled"]) ) then
+				if currentData.type == "driver" and ((not currentData.edible)
+					or not locationData.sided and(((sbq.occupants[locationName] + 1 + currentData.totalOccupants) > (sbq.data.settings[locationName.."VisualMax"] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings[locationName.."HammerspaceDisabled"])
+					or locationData.sided and (
+						(((sbq.occupants[locationName.."L"] + 1 + currentData.totalOccupants) > (sbq.data.settings[locationName.."LVisualMax"] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings[locationName.."LHammerspaceDisabled"])
+						or (((sbq.occupants[locationName.."R"] + 1 + currentData.totalOccupants) > (sbq.data.settings[locationName.."RVisualMax"] or locationData.max))) and not (sbq.data.settings.hammerspace and not sbq.data.settings[locationName.."RHammerspaceDisabled"])
+					)
+				)
+				then
 					return "tooBig", locationName, locationData
-				elseif (sbq.occupants[locationName] >= (sbq.data.settings[locationName.."VisualMax"] or locationData.max) ) then
+				elseif not locationData.sided and (sbq.occupants[locationName] >= (sbq.data.settings[locationName.."VisualMax"] or locationData.max))
+				or locationData.sided and (
+					(sbq.occupants[locationName.."L"] >= (sbq.data.settings[locationName.."LVisualMax"] or locationData.max))
+					and (sbq.occupants[locationName.."R"] >= (sbq.data.settings[locationName.."RVisualMax"] or locationData.max))
+				)
+				then
 					if sbq.actualOccupants == 0 then
 						return "otherLocationFull", locationName, locationData
 					else

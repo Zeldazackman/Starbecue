@@ -85,29 +85,6 @@
 				"pointLight" : true
 			}
 		},
-		"listLocations" : [
-			"belly",
-			"womb",
-			"shaft",
-			"balls",
-			"breasts"
-		],
-		"defaultSettings" : {
-			"bra" : false,
-			"underwear" : false,
-
-			"symmetricalBalls" : true,
-			"symmetricalBreasts" : true,
-			"breasts" : false,
-			"penis" : false,
-			"balls" : false,
-			"pussy" : false,
-
-			"penisCumTF" : false,
-			"ballsCumTF" : false,
-			"wombEggify" : false
-		},
-
 		"locations" :{
 			"belly" : {},
 			"womb" : {},

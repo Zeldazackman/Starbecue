@@ -43,6 +43,7 @@
 			"absorbVorePredEnable" : true
 		},
 		"sbqOverrideSettings" : {
+			"digestEnable" : false,
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,
 			"ballsDigestEnable" : false,

@@ -1,10 +1,10 @@
 {
-  "kind" : "sbqHelena_FFWizard",
+  "kind" : "hellhound",
 
   "speciesAnimOverride" : "speciesAnimOverride.config",
 
   "charCreationTooltip" : {
-      "title" : "Helena",
+      "title" : "Hellhound",
       "subTitle" : "S8",
       "description" : "Are you sure you're supposed to be able to read this?"
   },

@@ -17,6 +17,7 @@ dialogueBoxScripts = {}
 require("/scripts/SBQ_RPC_handling.lua")
 require("/lib/stardust/json.lua")
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBoxScripts.lua")
+require("/scripts/SBQ_species_config.lua")
 
 local _npc_setItemSlot
 
@@ -47,7 +48,7 @@ function init()
 		npc.setItemSlot = new_npc_setItemSlot
 	end
 
-	sbq.getSpeciesConfig()
+	sbq.setSpeciesConfig()
 
 	if not storage.settings then
 		storage.settings = sb.jsonMerge( sbq.config.defaultSettings,
@@ -97,7 +98,7 @@ function init()
 		self.board:setEntity("interactionSource", id)
 	end)
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
-		sbq.getSpeciesConfig()
+		sbq.setSpeciesConfig()
 		return sbq.speciesConfig
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
@@ -138,73 +139,10 @@ function init()
 	end)
 end
 
-function sbq.getSpeciesConfig()
-	sbq.speciesConfig = root.assetJson("/humanoid/sbqData.config")
-
-	local species = npc.species()
-	local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
-	local path = registry[species] or "/humanoid/sbqData.config"
-	if path:sub(1,1) ~= "/" then
-		path = "/humanoid/"..species.."/"..path
-	end
-	local speciesConfig = root.assetJson(path)
-	if type(speciesConfig.sbqData) == "table" then
-		sbq.speciesConfig.sbqData = speciesConfig.sbqData
-	end
-	if type(speciesConfig.states) == "table" then
-		sbq.speciesConfig.states = speciesConfig.states
-	end
-
-	sbq.speciesConfig.species = species
-	local mergeConfigs = sbq.speciesConfig.sbqData.merge or {}
-	local configs = { sbq.speciesConfig.sbqData }
-	while type(mergeConfigs[#mergeConfigs]) == "string" do
-		local insertPos = #mergeConfigs
-		local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
-		for i = #(newConfig.merge or {}), 1, -1 do
-			table.insert(mergeConfigs, insertPos, newConfig.merge[i])
-		end
-
-		table.insert(configs, 1, newConfig)
-
-		table.remove(mergeConfigs, #mergeConfigs)
-	end
-	local scripts = {}
-	local finalConfig = {}
-	for i, config in ipairs(configs) do
-		finalConfig = sb.jsonMerge(finalConfig, config)
-		for j, script in ipairs(config.scripts or {}) do
-			table.insert(scripts, script)
-		end
-	end
-	sbq.speciesConfig.sbqData = finalConfig
-	sbq.speciesConfig.sbqData.scripts = scripts
-
-	local mergeConfigs = sbq.speciesConfig.states.merge or {}
-	local configs = { sbq.speciesConfig.states }
-	while type(mergeConfigs[#mergeConfigs]) == "string" do
-		local insertPos = #mergeConfigs
-		local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).states
-		for i = #(newConfig.merge or {}), 1, -1 do
-			table.insert(mergeConfigs, insertPos, newConfig.merge[i])
-		end
-
-		table.insert(configs, 1, newConfig)
-
-		table.remove(mergeConfigs, #mergeConfigs)
-	end
-	local finalConfig = {}
-	for i, config in ipairs(configs) do
-		finalConfig = sb.jsonMerge(finalConfig, config)
-	end
-	sbq.speciesConfig.states = finalConfig
-
-	sbq.sbqData = sbq.speciesConfig.sbqData
-
+function sbq.setSpeciesConfig()
+	sbq.getSpeciesConfig(npc.species())
 	status.setStatusProperty("sbqOverridePreyEnabled", sbq.speciesConfig.sbqData.overridePreyEnabled)
-
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
-
 	local effects = status.getPersistentEffects("speciesAnimOverride")
 	if not effects[1] then
 		status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })

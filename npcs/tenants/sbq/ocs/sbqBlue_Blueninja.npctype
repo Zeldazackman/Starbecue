@@ -37,8 +37,6 @@
       "hairDirectives" : "?replace;ffca8a=b5c2fa;ffc181=758bf8;d39c6c=4a5ba5;c7815b=272665",
       "facialMaskType" : ""
 
-
-
 	},
 	"scriptConfig" : {
 		"isOC" : true, // this is just for scripts to identify this NPC as an OC and for some specific behavior relating to that

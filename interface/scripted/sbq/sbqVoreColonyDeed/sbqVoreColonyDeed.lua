@@ -10,6 +10,7 @@ sbq = {
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
+require("/scripts/SBQ_species_config.lua")
 
 function init()
 	sbq.storage = metagui.inputData
@@ -71,36 +72,8 @@ function init()
 			end
 		end
 
-		local registry = root.assetJson("/humanoid/sbqDataRegistry.config")
-		local path = registry[species] or "/humanoid/sbqData.config"
-		if path:sub(1,1) ~= "/" then
-			path = "/humanoid/"..species.."/"..path
-		end
-		sbq.predatorConfig = root.assetJson(path).sbqData
-
-		local mergeConfigs = sbq.predatorConfig.merge or {}
-		local configs = { sbq.predatorConfig }
-		while type(mergeConfigs[#mergeConfigs]) == "string" do
-			local insertPos = #mergeConfigs
-			local newConfig = root.assetJson(mergeConfigs[#mergeConfigs]).sbqData
-			for i = #(newConfig.merge or {}), 1, -1 do
-				table.insert(mergeConfigs, insertPos, newConfig.merge[i])
-			end
-
-			table.insert(configs, 1, newConfig)
-
-			table.remove(mergeConfigs, #mergeConfigs)
-		end
-		local scripts = {}
-		local finalConfig = {}
-		for i, config in ipairs(configs) do
-			finalConfig = sb.jsonMerge(finalConfig, config)
-			for j, script in ipairs(config.scripts or {}) do
-				table.insert(scripts, script)
-			end
-		end
-		sbq.predatorConfig = finalConfig
-		sbq.predatorConfig.scripts = scripts
+		sbq.getSpeciesConfig(species)
+		sbq.predatorConfig = sbq.speciesConfig.sbqData
 
 		sbq.locationPanel()
 		sbq.effectsPanel()

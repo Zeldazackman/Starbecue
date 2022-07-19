@@ -33,7 +33,7 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 	if TF.preset then
 		TF.data =  sb.jsonMerge(sbq.config.victimTransformPresets[TF.preset] or {}, {})
 	end
-	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and not ((TF.data or {}).species))
+	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and type((TF.data or {}).species) == "nil")
 	TF.data = TF.data or { species = sbq.species }
 
 	if TF.data.randomSpecies then

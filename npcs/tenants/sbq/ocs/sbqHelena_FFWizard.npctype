@@ -12,6 +12,7 @@
 	// you really should make sure to define the npcname so the OC actually has the OC's name
 	"npcname" : "Helena",
 	"identity" : {
+		"gender" : "female"
 	},
 	"scriptConfig" : {
 		"isOC" : true, // this is just for scripts to identify this NPC as an OC and for some specific behavior relating to that
@@ -887,6 +888,7 @@
 			"navelVorePred" : false,
 			"cockVorePred" : false,
 
+			"digestEnable" : false,
 			"bellyDigestEnable" : false,
 			"wombDigestEnable" : false
 		},
@@ -912,6 +914,11 @@
 		},
 		"statusProperties" : {
 			"sbqDidVornyConvertCheck" : true,
+			"sbqCustomizedSpecies" : {
+				"hellhound" : {
+					"species" : "sbqHelena_FFWizard"
+				}
+			},
 
 			// this arg for speciesAnimOverrideData should only be used if your NPC has a unique body, only mess with it if you know what you're doing
 			"speciesAnimOverrideData" : {},
