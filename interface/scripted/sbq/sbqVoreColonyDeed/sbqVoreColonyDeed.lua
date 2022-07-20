@@ -67,9 +67,6 @@ function init()
 			for i, script in ipairs( speciesSettings.scripts ) do
 				require(script)
 			end
-			if bodyPartsPanel ~= nil then
-				bodyPartsPanel:setVisible(false)
-			end
 		end
 
 		sbq.getSpeciesConfig(species)

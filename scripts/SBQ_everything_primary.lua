@@ -123,15 +123,17 @@ function sbq.doMysteriousTF(data)
 
 	local genders = {"male", "female"}
 
-	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], (status.statusProperty("sbqPreyEnabled") or {})).genderswapImmunity
+	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge(status.statusProperty("sbqPreyEnabled") or {}, status.statusProperty("sbqOverridePreyEnabled") or {})).genderswapImmunity
 	if genderswapImmunity then
 		overrideData.gender = currentData.gender or world.entityGender(entity.id())
 	else
-		if not overrideData.gender then
+		if overrideData.gender == "random" then
 			overrideData.gender = genders[math.random(2)]
-		end
-		if overrideData.gender == "noChange" then
+		elseif not overrideData.gender or overrideData.gender == "noChange" then
 			overrideData.gender = currentData.gender or world.entityGender(entity.id())
+		elseif overrideData.gender == "swap" then
+			local table = { male = "female", female = "male" }
+			overrideData.gender = table[currentData.gender or world.entityGender(entity.id())]
 		end
 	end
 

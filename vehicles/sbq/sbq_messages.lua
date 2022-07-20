@@ -34,7 +34,7 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 		TF.data =  sb.jsonMerge(sbq.config.victimTransformPresets[TF.preset] or {}, {})
 	end
 	local isOccupantHolderDefault = (world.entityName(entity.id()) == "sbqOccupantHolder" and type((TF.data or {}).species) == "nil")
-	TF.data = TF.data or { species = sbq.species }
+	TF.data = TF.data or { species = sbq.species, gender = sbq.settings.TFTG or "noChange" }
 
 	if TF.data.randomSpecies then
 		TF.data.species = TF.data.randomSpecies[math.random(#TF.data.randomSpecies)]
@@ -44,6 +44,9 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 	end
 	for i, setting in ipairs(TF.data.inheritSettings or {}) do
 		TF.data.settings[setting] = sbq.settings[setting]
+	end
+	if not TF.data.gender then
+		TF.data.gender = sbq.settings.TFTG or "noChange"
 	end
 	if TF.data.randomColors then
 		local predatorConfig = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle").sbqData

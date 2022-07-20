@@ -265,7 +265,7 @@ end
 
 function sbq.transformPlayer(i)
 	local id = sbq.occupant[i].id
-	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = "noChange"}
+	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = sbq.settings.TFTG or "noChange"}
 	sbq.occupant[i].transformed = true
 	if type(id) == "number" and world.entityExists(id) then
 		world.sendEntityMessage(id, "sbqMysteriousPotionTF", data )

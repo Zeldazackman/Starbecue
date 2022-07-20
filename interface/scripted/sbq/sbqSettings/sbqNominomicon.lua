@@ -8,9 +8,10 @@ require("/interface/scripted/sbq/sbqSettings/sbqSettings.lua")
 local oldInit = init
 
 function init()
-	sbq.predatorEntity = pane.sourceEntity()
+	local id = pane.sourceEntity()
 	sbq.sbqCurrentData = {
-		species = world.entityName(sbq.predatorEntity),
+		id = id,
+		species = world.entityName(id),
 		type = "object"
 	}
 
@@ -63,6 +64,9 @@ function update()
 end
 
 function sbq.getInitialData()
+	sbq.lastSpecies = sbq.sbqCurrentData.species
+	sbq.lastType = sbq.sbqCurrentData.type
+	sbq.predatorEntity = sbq.sbqCurrentData.id
 end
 
 function sbq.getHelpTab()

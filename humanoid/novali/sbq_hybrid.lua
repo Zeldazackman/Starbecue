@@ -2,7 +2,7 @@
 
 local _sbq_transformPlayer = sbq.transformPlayer
 function sbq.transformPlayer(i)
-	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = "noChange"}
+	local data = sbq.occupant[i].progressBarData or {species = sbq.species, gender = sbq.settings.TFTG or "noChange"}
 	local id = sbq.occupant[i].id
 	sbq.addRPC(world.sendEntityMessage(id,"sbqGetSpeciesOverrideData"), function (overrideData)
 		local success, notEmpty = pcall(root.nonEmptyRegion,("/humanoid/novali/malebody.png"))
