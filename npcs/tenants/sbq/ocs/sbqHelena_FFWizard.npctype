@@ -878,7 +878,7 @@
 			"analVorePred" : false,
 			"unbirthPred" : true,
 			"cockVorePred" : false,
-			"breastVorePred" : true
+			"breastVorePred" : false
 		},
 
 		// any setting you define above can be modified by a player, this table allows you to define settings a player *cannot* modify, making sure your OC is always in line with your prefrences
@@ -958,5 +958,23 @@
 				"breastVore": true
 			}
 		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+						"chestCosmetic" : [{
+							"name" : "sbqHelena_FFWizard_chest",
+							"count" : 1
+						}],
+						"headCosmetic" : [{
+							"name" : "sbqHelena_FFWizard_head",
+							"count" : 1
+						}]
+					}
+				]
+			]
+		]
 	}
 }
