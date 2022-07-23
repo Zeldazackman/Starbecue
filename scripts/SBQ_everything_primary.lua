@@ -114,12 +114,12 @@ function sbq.doMysteriousTF(data)
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 		overrideData.species = speciesList[math.random(#speciesList)]
 	end
-	local customData = customizedSpecies[overrideData.species] or {}
-	if (overrideData.species == originalSpecies or customData.species == originalSpecies) and (not overrideData.identity) then
+	local customData = customizedSpecies[overrideData.species]
+	if (overrideData.species == originalSpecies or (customData or {}).species == originalSpecies) and (not overrideData.identity) then
 		return sbq.endMysteriousTF()
 	end
 
-	overrideData = sb.jsonMerge(customData, overrideData)
+	overrideData = sb.jsonMerge(customData or {}, overrideData)
 
 	local genders = {"male", "female"}
 
