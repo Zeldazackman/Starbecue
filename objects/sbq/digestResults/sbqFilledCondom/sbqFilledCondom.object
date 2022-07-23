@@ -46,7 +46,7 @@
       "direction" : "right",
 
       "spaceScan" : 0.1,
-      "anchors" : [ "background" ]
+      "anchors" : [ "bottom" ]
     },
     {
       "image" : "object.png",
@@ -55,7 +55,7 @@
       "flipImages" : true,
 
       "spaceScan" : 0.1,
-      "anchors" : [ "background" ]
+      "anchors" : [ "bottom" ]
     }
   ]
 }
