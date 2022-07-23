@@ -5,6 +5,7 @@
 # Artists
 	Zygan / Zygahedron
 	Wasabi_Raptor / LokiVulpix / Loki_the_Vulpix
+	ArgobargSoup
 
 # Commissioners
 	xeronious
