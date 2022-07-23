@@ -295,6 +295,10 @@
 			"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "greeting", "mood", "continue"] },
 
 			"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqMysteriousPotionHellhound" : { "randomDialogue" : ["This turns you into a anthro Hellhound!"], "jump" : [ "greeting", "mood", "continue"] },
+
+			"sbqMysteriousPotionSandy_Fevix" : { "randomDialogue" : ["This turns you into Sandy the Floatporeon! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
+			"sbqMysteriousPotionHelena_FFWizard" : { "randomDialogue" : ["This turns you into Helena the Hellhound! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
 
 			"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
 

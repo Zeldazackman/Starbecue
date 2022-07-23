@@ -11,7 +11,7 @@ function sbq.unForceSeat(occupantId)
 	end
 end
 
-function sbq.eat( occupantId, location, force )
+function sbq.eat( occupantId, location, force, voreType )
 	local seatindex = sbq.occupants.total + sbq.startSlot
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
@@ -32,6 +32,7 @@ function sbq.eat( occupantId, location, force )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			sbq.occupant[seatindex].id = occupantId
 			sbq.occupant[seatindex].location = location
+			sbq.occupant[seatindex].entryType = voreType
 			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 			sbq.forceSeat( occupantId, seatindex)
 			sbq.refreshList = true
@@ -46,6 +47,7 @@ function sbq.eat( occupantId, location, force )
 	sbq.occupant[seatindex].id = occupantId
 	sbq.occupant[seatindex].species = species
 	sbq.occupant[seatindex].location = location
+	sbq.occupant[seatindex].entryType = voreType
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 	sbq.forceSeat( occupantId, seatindex )
 	sbq.refreshList = true
@@ -257,7 +259,7 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 			end
 		end
 	end
-	if sbq.eat( args.id, location ) then
+	if sbq.eat( args.id, location, voreType ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
 		sbq.showEmote("emotehappy")
@@ -267,7 +269,8 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 		local settings = {
 			voreType = voreType or "default",
 			predator = sbq.species,
-			location = location
+			location = location,
+			entryType = voreType
 		}
 		local entityType = world.entityType(args.id)
 		local sayLine = entityType == "npc" or entityType == "player" and type(sbq.driver) == "number" and world.entityExists(sbq.driver)
@@ -290,7 +293,7 @@ function sbq.doEscape(args, statuses, afterstatuses, voreType )
 	if not victim then return false end -- could be part of above but no need to log an error here
 	local location = sbq.lounging[victim].location
 
-	local settings = {
+	local settings = sb.jsonMerge(sbq.lounging[victim].visited,{
 		voreType = voreType or "default",
 		struggleTrigger = args.struggleTrigger,
 		location = location,
@@ -300,7 +303,7 @@ function sbq.doEscape(args, statuses, afterstatuses, voreType )
 		egged = sbq.lounging[victim].egged,
 		transformed = sbq.lounging[victim].transformed,
 		progressBarType = sbq.lounging[victim].progressBarType
-	}
+	})
 	local entityType = world.entityType(args.id)
 	local sayLine = entityType == "npc" or entityType == "player" and type(sbq.driver) == "number" and world.entityExists(sbq.driver)
 
@@ -413,6 +416,9 @@ function sbq.updateOccupants(dt)
 					sbq.uneat(sbq.occupant[i].id)
 					return
 				else
+					sbq.occupant[i].visited[location.."Visited"] = true
+					sbq.occupant[i].visited[location.."Time"] = (sbq.occupant[i].visited[location.."Time"] or 0) + dt
+
 					sbq.occupants[location] = sbq.occupants[location] + (sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier)
 					sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
 
