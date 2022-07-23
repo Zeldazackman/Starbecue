@@ -17,7 +17,7 @@ function sbq.eat( occupantId, location, force, voreType )
 	if seatindex > sbq.occupantSlots then return false end
 	local full, locationslots = sbq.locationFull(location)
 
-	if not force and (occupantId == nil or full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) then return false end -- don't eat self
+	if not occupantId or not world.entityExists(occupantId) or (not force and (full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId))) then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
