@@ -62,7 +62,7 @@ end
 
 function sbq.detectShirt()
 	if sbq.settings.bra then return true end
-	local shirt = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
+	local shirt = sbq.seats[sbq.driverSeat].controls.chestCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
 	local result = not sbq.config.chestVoreWhitelist[shirt.name or "none"]
 	sbq.settings.shirt = result
 end
