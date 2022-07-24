@@ -23,28 +23,28 @@
 			["flesh","flesh"]
 		]
 	}},
-	{ "op" : "add", "path": "/globalTagDefaults/ballsFront", "value": "/humanoid/human/ballsFront.png" },
+	{ "op" : "add", "path": "/globalTagDefaults/ballsFrontMask", "value": "/humanoid/human/ballsFront.png" },
 	{ "op" : "add", "path" : "/remapParts/ballsFront", "value" : {
 		"species" : "human",
 		"remapColors" : [
 			["primary","primary"]
 		]
 	}},
-	{ "op" : "add", "path": "/globalTagDefaults/ballsBack", "value": "/humanoid/human/ballsBack.png" },
+	{ "op" : "add", "path": "/globalTagDefaults/ballsBackMask", "value": "/humanoid/human/ballsBack.png" },
 	{ "op" : "add", "path" : "/remapParts/ballsBack", "value" : {
 		"species" : "human",
 		"remapColors" : [
 			["primary","primary"]
 		]
 	}},
-	{ "op" : "add", "path": "/globalTagDefaults/breastsFront", "value": "/humanoid/human/breastsFront.png" },
+	{ "op" : "add", "path": "/globalTagDefaults/breastsFrontMask", "value": "/humanoid/human/breastsFront.png" },
 	{ "op" : "add", "path" : "/remapParts/breastsFront", "value" : {
 		"species" : "human",
 		"remapColors" : [
 			["primary","primary1"]
 		]
 	}},
-	{ "op" : "add", "path": "/globalTagDefaults/breastsBack", "value": "/humanoid/human/breastsBack.png" },
+	{ "op" : "add", "path": "/globalTagDefaults/breastsBackMask", "value": "/humanoid/human/breastsBack.png" },
 	{ "op" : "add", "path" : "/remapParts/breastsBack", "value" : {
 		"species" : "human",
 		"remapColors" : [

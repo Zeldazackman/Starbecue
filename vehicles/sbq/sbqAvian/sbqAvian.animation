@@ -62,7 +62,7 @@
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
-			"backBreastsState": {
+			"breastsBackState": {
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
@@ -82,7 +82,7 @@
 					"none": { "frames": 1, "cycle": 0.01, "mode": "end", "priority": 0 }
 				}
 			},
-			"frontBreastsState": {
+			"breastsFrontState": {
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 3, "mode": "end", "priority": 0 },
@@ -363,49 +363,49 @@
 				}
 			},
 
-			"backBreasts": {
+			"breastsBack": {
 				"properties": {
 					"centered": true,
 					"zLevel": -1.1,
 					"transformationGroups": ["flip", "armsbob"]
 				},
 				"partStates": {
-					"backBreastsState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:idle.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+					"breastsBackState": {
+						"idle": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:idle.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:eat.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:escape.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:eat.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:escape.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_back.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_front.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_up.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_down.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_back.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_front.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_up.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/giant_breasts.png:s_down.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"smol.idle": { "properties": { "image": "skins/<skin>/normal/breasts.png:idle.<backBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/breasts.png:idle.<breastsBackStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
 				}
 			},
-			"frontBreasts": {
+			"breastsFront": {
 				"properties": {
 					"centered": true,
 					"zLevel": -1,
 					"transformationGroups": ["flip", "armsbob"]
 				},
 				"partStates": {
-					"frontBreastsState": {
-						"idle": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:idle.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+					"breastsFrontState": {
+						"idle": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:idle.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"eat": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:eat.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"escape": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:escape.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"eat": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:eat.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"escape": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:escape.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"s_back": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_back.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_front": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_front.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_up": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_up.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
-						"s_down": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_down.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_back": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_back.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_front": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_front.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_up": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_up.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"s_down": { "properties": { "image": "skins/<skin>/giant/foreground/giant_breasts.png:s_down.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
-						"smol.idle": { "properties": { "image": "skins/<skin>/normal/foreground/breasts.png:idle.<frontBreastsStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
+						"smol.idle": { "properties": { "image": "skins/<skin>/normal/foreground/breasts.png:idle.<breastsFrontStateFrame><breastsVisible><partVisible><directives><statusDirectives><bellymask>" } },
 
 						"none": { "properties": {} }
 					}
@@ -833,11 +833,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0backBreasts": {
+			"occupant0breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0frontBreasts": {
+			"occupant0breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -903,11 +903,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1backBreasts": {
+			"occupant1breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1frontBreasts": {
+			"occupant1breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -973,11 +973,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2backBreasts": {
+			"occupant2breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2frontBreasts": {
+			"occupant2breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -1042,11 +1042,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3backBreasts": {
+			"occupant3breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3frontBreasts": {
+			"occupant3breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -1111,11 +1111,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4backBreasts": {
+			"occupant4breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4frontBreasts": {
+			"occupant4breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -1180,11 +1180,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5backBreasts": {
+			"occupant5breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5frontBreasts": {
+			"occupant5breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -1249,11 +1249,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6backBreasts": {
+			"occupant6breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6frontBreasts": {
+			"occupant6breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -1318,11 +1318,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7backBreasts": {
+			"occupant7breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7frontBreasts": {
+			"occupant7breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},

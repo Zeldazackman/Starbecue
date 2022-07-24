@@ -215,8 +215,8 @@ function sbq.smolPreyAnimPath(occupant)
 	sbq.setSmolOccupantPart(seatname, "ballsBack", occupant.smolPreyData.images.ballsBack)
 	sbq.setSmolOccupantPart(seatname, "ballsFront", occupant.smolPreyData.images.ballsFront)
 
-	sbq.setSmolOccupantPart(seatname, "backBreasts", occupant.smolPreyData.images.backBreasts)
-	sbq.setSmolOccupantPart(seatname, "frontBreasts", occupant.smolPreyData.images.frontBreasts)
+	sbq.setSmolOccupantPart(seatname, "breastsBack", occupant.smolPreyData.images.breastsBack)
+	sbq.setSmolOccupantPart(seatname, "breastsFront", occupant.smolPreyData.images.breastsFront)
 
 	occupant.smolPreyData.update = false
 end

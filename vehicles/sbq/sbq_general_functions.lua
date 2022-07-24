@@ -164,8 +164,8 @@ function sbq.smolPreyAnimationPaths(settings, species, state, newTags)
 		returnValues.ballsFront = sbq.fixSmolPreyPathTags(directory, animatedParts, "ballsFront", "ballsFront", edibleAnims.balls, settings, tags)
 	end
 	if edibleAnims.breasts ~= nil then
-		returnValues.backBreasts = sbq.fixSmolPreyPathTags(directory, animatedParts, "backBreasts", "backBreasts", edibleAnims.breasts, settings, tags)
-		returnValues.frontBreasts = sbq.fixSmolPreyPathTags(directory, animatedParts, "frontBreasts", "frontBreasts", edibleAnims.breasts, settings, tags)
+		returnValues.breastsBack = sbq.fixSmolPreyPathTags(directory, animatedParts, "breastsBack", "breastsBack", edibleAnims.breasts, settings, tags)
+		returnValues.breastsFront = sbq.fixSmolPreyPathTags(directory, animatedParts, "breastsFront", "breastsFront", edibleAnims.breasts, settings, tags)
 	end
 	return returnValues
 end

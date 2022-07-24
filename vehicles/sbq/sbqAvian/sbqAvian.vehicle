@@ -323,8 +323,8 @@
 				"cock": "idle",
 				"belly": "idle",
 				"neck": "none",
-				"frontBreasts": "idle",
-				"backBreasts": "idle",
+				"breastsFront": "idle",
+				"breastsBack": "idle",
 				"ballsFront": "idle",
 				"ballsBack": "idle",
 				"offset" : {}
@@ -524,8 +524,8 @@
 				"cock": "smol.idle",
 				"belly": "smol.idle",
 				"neck": "none",
-				"frontBreasts": "smol.idle",
-				"backBreasts": "smol.idle",
+				"breastsFront": "smol.idle",
+				"breastsBack": "smol.idle",
 				"ballsFront": "smol.idle",
 				"ballsBack": "smol.idle",
 				"offset" : {}

@@ -499,11 +499,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0backBreasts": {
+			"occupant0breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant0frontBreasts": {
+			"occupant0breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant0Position"] },
 				"partStates": { "occupant0State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -569,11 +569,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1backBreasts": {
+			"occupant1breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant1frontBreasts": {
+			"occupant1breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant1Position"] },
 				"partStates": { "occupant1State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -639,11 +639,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2backBreasts": {
+			"occupant2breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant2frontBreasts": {
+			"occupant2breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant2Position"] },
 				"partStates": { "occupant2State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -708,11 +708,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3backBreasts": {
+			"occupant3breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant3frontBreasts": {
+			"occupant3breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant3Position"] },
 				"partStates": { "occupant3State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -777,11 +777,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4backBreasts": {
+			"occupant4breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant4frontBreasts": {
+			"occupant4breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant4Position"] },
 				"partStates": { "occupant4State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -846,11 +846,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5backBreasts": {
+			"occupant5breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant5frontBreasts": {
+			"occupant5breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant5Position"] },
 				"partStates": { "occupant5State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -915,11 +915,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6backBreasts": {
+			"occupant6breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant6frontBreasts": {
+			"occupant6breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant6Position"] },
 				"partStates": { "occupant6State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
@@ -984,11 +984,11 @@
 				"properties": { "centered": true, "zLevel": 0.18, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7backBreasts": {
+			"occupant7breastsBack": {
 				"properties": { "centered": true, "zLevel": 0.19, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
-			"occupant7frontBreasts": {
+			"occupant7breastsFront": {
 				"properties": { "centered": true, "zLevel": 0.191, "transformationGroups": ["flip", "occupant7Position"] },
 				"partStates": { "occupant7State": { "smol": { "properties" : { "image": "<smolpath>" } } } }
 			},
