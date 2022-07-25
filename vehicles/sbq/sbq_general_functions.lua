@@ -288,7 +288,7 @@ function sbq.initLocationEffects()
 		if value then
 			local effect = (data[value] or {}).effect or (sbq.sbqData.effectDefaults or {})[value] or (sbq.config.effectDefaults or {})[value] or "sbqRemoveBellyEffects"
 			if( sbq.sbqData.overrideSettings or {})[location..map[value].."Enable"] == false then
-				effect = sbq.sbqData.defaultSettings[location.."Effect"] or "sbqRemoveBellyEffects"
+				effect = (sbq.sbqData.defaultSettings or {})[location.."Effect"] or "sbqRemoveBellyEffects"
 			end
 			sbq.settings[location.."Effect"] = effect
 			if data.sided then

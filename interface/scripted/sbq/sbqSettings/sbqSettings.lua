@@ -542,9 +542,16 @@ if speciesLayout ~= nil then
 		if speciesText.text ~= "" and type(sbq.customizedSpecies[speciesText.text]) == "table" then
 			local species = player.species()
 			if species ~= speciesText.text then
-				status.clearPersistentEffects("speciesAnimOverride")
 				status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
-				status.setPersistentEffects("speciesAnimOverride", {  sbq.currentCustomSpecies.customAnimStatus or "speciesAnimOverride"})
+
+				local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
+				local resultEffect = sbq.speciesFile.customAnimStatus or "speciesAnimOverride"
+				if resultEffect == currentEffect then
+					world.sendEntityMessage(player.id(), "refreshAnimOverrides", true)
+				else
+					status.clearPersistentEffects("speciesAnimOverride")
+					status.setPersistentEffects("speciesAnimOverride", { resultEffect })
+				end
 				init()
 				refreshOccupantHolder()
 			else
@@ -557,7 +564,6 @@ if speciesLayout ~= nil then
 			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", nil)
 			status.setStatusProperty("oldSpeciesAnimOverrideData", nil)
-			status.setStatusProperty("sbqMysteriousPotionTF", nil)
 			status.setStatusProperty("sbqMysteriousPotionTFDuration", nil)
 		end
 	end

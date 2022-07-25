@@ -239,14 +239,10 @@ function sbq.doMysteriousTF(data)
 		overrideData.identity.emoteDirectives = overrideData.identity.emoteDirectives or overrideData.identity.bodyDirectives
 	end
 
-	local specialStatus
-	if success then
-		specialStatus = speciesFile.customAnimStatus
-	end
 
 	overrideData.mysteriousPotion = true
 	overrideData.permanent = true
-	overrideData.customAnimStatus = specialStatus
+	overrideData.customAnimStatus = speciesFile.customAnimStatus
 
 	if (not isOriginalSpecies and not customData) and not speciesFile.noUnlock then
 		overrideData.unlockSpecies = nil
@@ -261,10 +257,17 @@ function sbq.doMysteriousTF(data)
 		status.setStatusProperty("oldSpeciesAnimOverrideCategory", status.getPersistentEffects("speciesAnimOverride"))
 	end
 
-	status.setStatusProperty("sbqMysteriousPotionTF", overrideData)
-	status.clearPersistentEffects("speciesAnimOverride")
 	status.setStatusProperty("speciesAnimOverrideData", overrideData)
-	status.setPersistentEffects("speciesAnimOverride", {specialStatus or "speciesAnimOverride"})
+
+	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
+	local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
+	if resultEffect == currentEffect then
+		world.sendEntityMessage(player.id(), "refreshAnimOverrides", true)
+	else
+		status.clearPersistentEffects("speciesAnimOverride")
+		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
+	end
+
 	refreshOccupantHolder()
 end
 
@@ -285,9 +288,16 @@ end
 function sbq.endMysteriousTF()
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", nil )
 	mysteriousTFDuration = nil
-	status.setStatusProperty("sbqMysteriousPotionTF", nil)
-	status.clearPersistentEffects("speciesAnimOverride")
-	status.setStatusProperty("speciesAnimOverrideData", status.statusProperty("oldSpeciesAnimOverrideData"))
-	status.setPersistentEffects("speciesAnimOverride", status.statusProperty("oldSpeciesAnimOverrideCategory") or {})
+	local oldData = status.statusProperty("oldSpeciesAnimOverrideData")
+	status.setStatusProperty("speciesAnimOverrideData", oldData)
+
+	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
+	local resultEffect = oldData.customAnimStatus or "speciesAnimOverride"
+	if resultEffect == currentEffect then
+		world.sendEntityMessage(player.id(), "refreshAnimOverrides", true)
+	else
+		status.clearPersistentEffects("speciesAnimOverride")
+		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
+	end
 	refreshOccupantHolder()
 end
