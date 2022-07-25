@@ -485,8 +485,9 @@
 									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
+								"sbqFemcumSoftDigest" : "struggle.location.race.personality.mood.sbqFemcumDigest",
+								"sbqFemcumDigest" : {
+									"next" : "femcumDigestImmunity",
 									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
 									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
 								}
@@ -1255,6 +1256,9 @@
 
 			"cumDigestImmunity" : [true,false],
 			"cumDigestImmunityEnable" : [true,false],
+
+			"femcumDigestImmunity" : [true,false],
+			"femcumDigestImmunityEnable" : [true,false],
 
 			"eggImmunity" : [true,false],
 			"eggImmunityEnable" : [true,false],

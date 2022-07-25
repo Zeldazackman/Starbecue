@@ -250,6 +250,8 @@ function init()
 		if not effects[1] then
 			status.setPersistentEffects("speciesAnimOverride", {  speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
 		end
+		status.clearPersistentEffects("digestImmunity")
+		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 		return sbq.speciesConfig
 	end)
 
@@ -260,6 +262,7 @@ function init()
 		}, 1)
 	end)
 
+	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	initStage = 1 -- init has run
 end

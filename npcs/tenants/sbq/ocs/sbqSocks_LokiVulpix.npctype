@@ -752,16 +752,13 @@
 										"Ahh~ Its so soft in here~", "Ohhh~ Your womb is so snug and soft~", "This is so hot~", "Usually I put people in here,\nbut I'm not complaining~",
 										"Aaaa I'm going to need a wash after this!~"
 									]},
-									"sbqCumSoftDigest" : "struggling.location.predator.race.personality.mood.sbqCumDigest",
-									"sbqCumDigest" : {
-										"next" : "cumDigestImmunity",
+									"sbqFemcumSoftDigest" : "struggling.location.predator.race.personality.mood.sbqFemcumDigest",
+									"sbqFemcumDigest" : {
+										"next" : "femcumDigestImmunity",
 										"true" : {"randomDialogue" : [
-											"A-all this is doing is staining me white!", "I-I'm not going to turn,\nall you're doing is making me more messy!",
+											"A-all this is doing is staining me white!", "I-I'm never going to turn,\nall you're doing is making me more messy!",
+											"Wombs are supposed to be a safe place...",
 											{"add":"struggling.location.predator.race.personality.mood.default"}
-										]},
-										"false" : {"randomDialogue" : [
-											"All this cum is starting to stain me!", "Ahhh~ I'm getting all mushy from all this squeezing!",
-											"Aaaa I'm going to need much more than a wash after this!~"
 										]}
 									},
 									"transform" : "struggling.belly.predator.race.personality.mood.transform",
@@ -792,7 +789,7 @@
 										"Ahh~ Its so soft in here~", "Ohhh~ Your boobs are so soft~", "This is so hot~", "Hehe, the milk in here tastes great~",
 										"Aaaa I'm going to need a wash after this!~"
 									]},
-									"sbqMilkSoftDigest" : "struggling.location.predator.race.personality.mood.sbqCumDigest",
+									"sbqMilkSoftDigest" : "struggling.location.predator.race.personality.mood.sbqMilkDigest",
 									"sbqMilkDigest" : {
 										"next" : "milkDigestImmunity",
 										"true" : {"randomDialogue" : [
@@ -1043,6 +1040,8 @@
 			"cumDigestImmunity" : true,
 			"milkDigestImmunity" : true,
 			"cumTFImmunity" : true,
+			"femcumDigestImmunity" : true,
+			"allowFemcumSoftDigest" : false,
 
 			"transformImmunity": true,
 			"genderswapImmunity" : true

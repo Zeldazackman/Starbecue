@@ -1,0 +1,16 @@
+{
+	"name" : "sbqFemcumDigest",
+	"blockingStat" : "femcumDigestImmunity",
+
+	"effectConfig" : {
+		"effect" : "sbqFemcumDigest"
+	},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqCumDigest.lua"
+	],
+
+	"label" : "Converting Into Femcum",
+	"icon" : "/stats/sbq/sbqDigest/sbqCumDigest.png"
+}

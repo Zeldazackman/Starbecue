@@ -285,7 +285,11 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "combine":["womb"], "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
-			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true },
+			"womb" : { "name" : "Womb", "max": 2, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true, "selectEffect" : true,
+				"digest" : { "effect" : "sbqFemumDigest", "toolTip" : "Prey within will be melted into femcum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
+				"softDigest" : { "effect" : "sbqFemcumSoftDigest", "toolTip" : "Prey within will be melted into femcum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
+				"eggify" : { "preset" : "egg" }
+			},
 
 			"tail" : { "name" : "Tail", "max": 1, "selectEffect" : true, "transformGroups" : ["tailbob"] },
 

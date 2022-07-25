@@ -194,6 +194,16 @@ function dialogueBoxScripts.cumDigestImmunity(dialogueTree, settings, branch)
 	end
 end
 
+function dialogueBoxScripts.femcumDigestImmunity(dialogueTree, settings, branch)
+	if settings.femcumDigestImmunity and (settings.allowFemcumSoftDigest and settings[settings.location.."Effect"] == "sbqFemcumSoftDigest") then
+		return dialogueTree["false"] or dialogueTree.default
+	elseif settings.femcumDigestImmunity then
+		return dialogueTree["true"] or dialogueTree.default
+	else
+		return dialogueTree["false"] or dialogueTree.default
+	end
+end
+
 function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch)
 	if settings.milkDigestImmunity and (settings.allowMilkSoftDigest and settings[settings.location.."Effect"] == "sbqMilkSoftDigest") then
 		return dialogueTree["false"] or dialogueTree.default

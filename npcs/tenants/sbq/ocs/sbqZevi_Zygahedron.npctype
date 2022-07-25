@@ -61,6 +61,8 @@
 			"digestImmunity" : true,
 			"cumDigestImmunity" : true,
 			"milkDigestImmunity" : true,
+			"femcumDigestImmunity" : true,
+			"allowFemcumSoftDigest" : false,
 			"navelVore" : false
 		},
 

@@ -1,8 +1,5 @@
 
 function init()
-	message.setHandler("refreshDigestImmunity", function ()
-		refresh()
-	end)
 	status.clearPersistentEffects("cumDigestImmunity")
 	status.clearPersistentEffects("milkDigestImmunity")
 	refresh()
@@ -28,6 +25,12 @@ function refresh()
 		table.insert(statModifierGroup, {stat = "cumDigestImmunity", amount = 1})
 		if not preyEnabled.allowCumSoftDigest then
 			table.insert(statModifierGroup, {stat = "cumSoftDigestImmunity", amount = 1})
+		end
+	end
+	if preyEnabled.femcumDigestImmunity then
+		table.insert(statModifierGroup, {stat = "femcumDigestImmunity", amount = 1})
+		if not preyEnabled.allowFemcumSoftDigest then
+			table.insert(statModifierGroup, {stat = "femcumSoftDigestImmunity", amount = 1})
 		end
 	end
 	if preyEnabled.milkDigestImmunity then

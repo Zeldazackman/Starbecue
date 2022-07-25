@@ -17,7 +17,9 @@ function sbq.eat( occupantId, location, force, voreType )
 	if seatindex > sbq.occupantSlots then return false end
 	local full, locationslots = sbq.locationFull(location)
 
-	if not occupantId or not world.entityExists(occupantId) or (not force and (full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId))) then return false end -- don't eat self
+	if (not occupantId) or (not world.entityExists(occupantId))
+	or ((full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
+	then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
@@ -259,7 +261,7 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 			end
 		end
 	end
-	if sbq.eat( args.id, location, voreType ) then
+	if sbq.eat( args.id, location, false, voreType ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
 		sbq.showEmote("emotehappy")

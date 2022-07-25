@@ -319,6 +319,7 @@
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
+								"sbqCumSoftDigest" : "struggle.location.race.personality.mood.sbqCumDigest",
 								"sbqCumDigest" : {
 									"next" : "cumDigestImmunity",
 									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
@@ -345,6 +346,7 @@
 									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
+								"sbqCumSoftDigest" : "struggle.location.race.personality.mood.sbqCumDigest",
 								"sbqCumDigest" : {
 									"next" : "cumDigestImmunity",
 									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },

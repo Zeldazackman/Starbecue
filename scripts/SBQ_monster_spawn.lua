@@ -38,6 +38,7 @@ function init()
 		end
 	end)
 
+	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	oldinit()
 end

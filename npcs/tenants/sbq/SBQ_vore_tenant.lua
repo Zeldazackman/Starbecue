@@ -147,6 +147,8 @@ function sbq.setSpeciesConfig()
 	if not effects[1] then
 		status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
 	end
+	status.clearPersistentEffects("digestImmunity")
+	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 end
 
 function update(dt)
