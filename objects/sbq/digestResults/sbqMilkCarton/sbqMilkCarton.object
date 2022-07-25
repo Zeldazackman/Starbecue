@@ -1,44 +1,59 @@
 {
-  "objectName" : "sbqMilkCarton",
-  "colonyTags" : ["bvore", "horny", "milk"],
-  "rarity" : "Common",
-  "category" : "decorative",
-  "price" : 100,
-  "maxStack" : 64,
+	"objectName" : "sbqMilkCarton",
+	"colonyTags" : ["bvore", "horny", "milk"],
+	"rarity" : "Common",
+	"category" : "decorative",
+	"price" : 100,
+	"maxStack" : 64,
 
-  "description" : "A large milk carton.",
-  "shortdescription" : "Milk Carton",
-  "race" : "generic",
+	"description" : "A large milk carton.",
+	"shortdescription" : "Milk Carton",
+	"race" : "generic",
 
-  "replaceDescPredPrey" : "A <predName> branded milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
-  "replaceDescPrey" : "A large milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
-  "replaceDescPred" : "A <predName> branded milk carton.",
+	"baseColorMap":{
+		"primary" : ["34739b","4183ac","4792c1"],
+		"secondary" : ["336c93","4080a9","4f9fd1"]
+	},
 
-  "replaceShortDescPredPrey" : "<preyName> Flavored Milk",
-  "replaceShortDescPrey" : "<preyName> Flavored Milk",
-  "replaceShortDescPred" : "<predName><predPossessive> Milk",
+	"replaceDescPredPrey" : "A <predName> branded milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
+	"replaceDescPrey" : "A large milk carton.\n<preyName><preyPossessive> face is printed on the side of it.",
+	"replaceDescPred" : "A <predName> branded milk carton.",
 
-  "builder" : "/objects/sbq/digestResults/digestResultBuilder.lua",
+	"replaceShortDescPredPrey" : "<preyName> Flavored Milk",
+	"replaceShortDescPrey" : "<preyName> Flavored Milk",
+	"replaceShortDescPred" : "<predName><predPossessive> Milk",
+
+	"builder" : "/objects/sbq/digestResults/digestResultBuilder.lua",
 	"retainObjectParametersInItem" : true,
 
-  "inventoryIcon" : "object.png",
-  "orientations" : [
-    {
-      "image" : "object.png",
-      "imagePosition" : [-8, 0],
-      "direction" : "right",
+	"objectImage" : "object.png",
+	"iconImage" : "object.png",
 
-      "spaceScan" : 0.1,
-      "anchors" : [ "bottom" ]
-    },
-    {
-      "image" : "object.png",
-      "imagePosition" : [-8, 0],
-      "direction" : "left",
-      "flipImages" : true,
+	"animation" : "/objects/sbq/digestResults/object.animation",
+	"animationParts" : {
+		"object" : "object.png"
+	},
+	"animationPosition" : [0, 8],
+	"inventoryIcon" : "object.png",
+	"orientations" : [
+		{
+			"image" : "object.png",
+			"imagePosition" : [-8, 0],
 
-      "spaceScan" : 0.1,
-      "anchors" : [ "bottom" ]
-    }
-  ]
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		},
+		{
+			"image" : "object.png",
+			"imagePosition" : [-8, 0],
+
+			"direction" : "left",
+			"flipImages" : true,
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		}
+	]
 }

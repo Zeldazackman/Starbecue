@@ -77,6 +77,20 @@ function init()
 		end
 	end)
 
+	message.setHandler("sbqDigestDrop", function(_,_, itemDrop)
+		local itemDrop = itemDrop
+		local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
+		local identity = overrideData.identity or npc.identity()
+		local species = npc.species()
+		local speciesFile = root.assetJson("/species/"..species..".species")
+		itemDrop.parameters.predSpecies = species
+		itemDrop.parameters.predDirectives = (overrideData.directives or "")..(identity.bodyDirectives or "")..(identity.hairDirectives or "")
+		itemDrop.parameters.predColorMap = speciesFile.baseColorMap
+
+		world.spawnItem(itemDrop, mcontroller.position())
+	end)
+
+
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	_init()

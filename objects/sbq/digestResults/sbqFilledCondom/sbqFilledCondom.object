@@ -1,61 +1,77 @@
 {
-  "objectName" : "sbqFilledCondom",
-  "colonyTags" : ["cvore", "horny", "cum", "condom"],
-  "rarity" : "Common",
-  "category" : "decorative",
-  "price" : 100,
-  "maxStack" : 64,
+	"objectName" : "sbqFilledCondom",
+	"colonyTags" : ["cvore", "horny", "cum", "condom"],
+	"rarity" : "Common",
+	"category" : "decorative",
+	"price" : 100,
+	"maxStack" : 64,
 
-  "description" : "A large condom filled with cum.",
-  "shortdescription" : "Filled Condom",
-  "race" : "generic",
+	"color" : "?replace;",
+	"description" : "A large condom filled with cum.",
+	"shortdescription" : "Filled Condom",
+	"race" : "generic",
 
-  "replaceDescPredPrey" : [
-    ["A large condom with a label:\n<preyName> is just a load of <predName><predPossessive> cum~"],
-    ["A large condom with a label:\n<preyName> is just a load of cum~"],
-    ["A large condom with a label:\nA load of <predName><predPossessive> cum~", "<predName><predPossessive> Filled Condom"],
-    ["A large condom with a label:\n<preyName> churned in <predName><predPossessive> nuts and all they got was this lousy condom~"],
-    ["A large condom with a label:\nThis used to be <preyName>. And then they met <predName>. The rest, like <preyName>, is history~"],
-    ["A large condom with a label:\n<predName> and <preyName> sitting in a tree, C-U-M-M-I-N-G~"],
-    ["A large condom with a label:\n... Forgot your name, sorry!", "<predName><predPossessive> Forgetful Condom"]
-  ],
-  "replaceDescPrey" : [
-    ["A large condom with a label:\n<preyName> is just a load of cum~"],
-    ["A large condom with a label:\n<preyName> churned in someone's nuts and all they got was this lousy condom~"],
-    ["A large condom with a label:\nThis used to be <preyName>. And then they met someone. The rest, like <preyName>, is history~"],
-    ["A large condom with a label:\n... Forgot your name, sorry!", "Forgetful Condom"]
-  ],
-  "replaceDescPred" : [
-    ["A large condom with a label:\nA load of <predName><predPossessive> cum~"],
-    ["A large condom with a label:\n<predName> churned someone in their nuts and all they got was this lousy condom~"],
-    ["A large condom with a label:\n... Forgot your name, sorry!", "<predName><predPossessive> Forgetful Condom"]
-  ],
+	"baseColorMap":{
+		"primary" : ["b48520","dfa831","ffc341"],
+		"secondary" : ["000000","53e313","725924"]
+	},
 
-  "replaceShortDescPredPrey" : "<preyName> Filled Condom",
-  "replaceShortDescPrey" : "<preyName> Filled Condom",
-  "replaceShortDescPred" : "<predName><predPossessive> Filled Condom",
+	"replaceDescPredPrey" : [
+		["A large condom with a label:\n<preyName> is just a load of <predName><predPossessive> cum~"],
+		["A large condom with a label:\n<preyName> is just a load of cum~"],
+		["A large condom with a label:\nA load of <predName><predPossessive> cum~", "<predName><predPossessive> Filled Condom"],
+		["A large condom with a label:\n<preyName> churned in <predName><predPossessive> nuts and all they got was this lousy condom~"],
+		["A large condom with a label:\nThis used to be <preyName>. And then they met <predName>. The rest, like <preyName>, is history~"],
+		["A large condom with a label:\n<predName> and <preyName> sitting in a tree, C-U-M-M-I-N-G~"],
+		["A large condom with a label:\n... Forgot your name, sorry!", "<predName><predPossessive> Forgetful Condom"]
+	],
+	"replaceDescPrey" : [
+		["A large condom with a label:\n<preyName> is just a load of cum~"],
+		["A large condom with a label:\n<preyName> churned in someone's nuts and all they got was this lousy condom~"],
+		["A large condom with a label:\nThis used to be <preyName>. And then they met someone. The rest, like <preyName>, is history~"],
+		["A large condom with a label:\n... Forgot your name, sorry!", "Forgetful Condom"]
+	],
+	"replaceDescPred" : [
+		["A large condom with a label:\nA load of <predName><predPossessive> cum~"],
+		["A large condom with a label:\n<predName> churned someone in their nuts and all they got was this lousy condom~"],
+		["A large condom with a label:\n... Forgot your name, sorry!", "<predName><predPossessive> Forgetful Condom"]
+	],
 
-  "builder" : "/objects/sbq/digestResults/digestResultBuilder.lua",
+	"replaceShortDescPredPrey" : "<preyName> Filled Condom",
+	"replaceShortDescPrey" : "<preyName> Filled Condom",
+	"replaceShortDescPred" : "<predName><predPossessive> Filled Condom",
+
+	"builder" : "/objects/sbq/digestResults/digestResultBuilder.lua",
 	"retainObjectParametersInItem" : true,
 
-  "inventoryIcon" : "object.png",
-  "orientations" : [
-    {
-      "image" : "object.png",
-      "imagePosition" : [-8, 0],
-      "direction" : "right",
+	"objectImage" : "object.png",
+	"iconImage" : "object.png",
 
-      "spaceScan" : 0.1,
-      "anchors" : [ "bottom" ]
-    },
-    {
-      "image" : "object.png",
-      "imagePosition" : [-8, 0],
-      "direction" : "left",
-      "flipImages" : true,
+	"animation" : "/objects/sbq/digestResults/object.animation",
+	"animationParts" : {
+		"object" : "object.png"
+	},
+	"animationPosition" : [0, 8],
+	"inventoryIcon" : "object.png",
+	"orientations" : [
+		{
+			"image" : "object.png",
+			"imagePosition" : [-8, 0],
 
-      "spaceScan" : 0.1,
-      "anchors" : [ "bottom" ]
-    }
-  ]
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		},
+		{
+			"image" : "object.png",
+			"imagePosition" : [-8, 0],
+
+			"direction" : "left",
+			"flipImages" : true,
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "bottom" ]
+		}
+	]
 }

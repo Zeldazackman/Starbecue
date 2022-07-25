@@ -232,3 +232,15 @@ end)
 message.setHandler( "sbqSendAllPreyTo", function (_,_, id)
 	sbq.sendAllPreyTo = id
 end)
+
+message.setHandler("sbqDigestDrop", function(_,_, itemDrop)
+	local itemDrop = itemDrop
+	itemDrop.parameters.predSpecies = sbq.species
+	itemDrop.parameters.predDirectives = sbq.settings.directives
+	itemDrop.parameters.predColorMap = {
+		primary = ((sbq.sbqData.replaceColors or {})[1] or {})[1],
+		secondary = ((sbq.sbqData.replaceColors or {})[2] or {})[1]
+	}
+
+	world.spawnItem(itemDrop, mcontroller.position())
+end)

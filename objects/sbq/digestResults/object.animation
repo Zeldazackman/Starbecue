@@ -1,0 +1,21 @@
+{
+	"globalTagDefaults" : {
+	},
+	"animatedParts": {
+		"stateTypes": {
+		},
+		"parts": {
+			"object" : {
+				"properties": {
+					"image": "<partImage>"
+				}
+			}
+		}
+	},
+	"transformationGroups": {
+	},
+	"sounds": {
+	},
+	"particleEmitters": {
+	}
+}

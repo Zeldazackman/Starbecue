@@ -55,6 +55,25 @@ function build( directory, config, parameters, level, seed )
 				shortdescription = config.replaceShortDescPred
 			end
 		end
+		if config.preyColorMap and config.preyDirectives then
+			local colorRemap = "?replace"
+			for colorName, from in pairs(config.baseColorMap) do
+				local to = config.preyColorMap[colorName] or from
+				for i, color in ipairs(from or {}) do
+					colorRemap = colorRemap .. ";" .. color .. "=" .. (to[i] or to[#to])
+				end
+			end
+			config.directives = colorRemap..config.preyDirectives
+		elseif config.predColorMap and config.predDirectives then
+			local colorRemap = "?replace"
+			for colorName, from in pairs(config.baseColorMap) do
+				local to = config.predColorMap[colorName] or from
+				for i, color in ipairs(from or {}) do
+					colorRemap = colorRemap .. ";" .. color .. "=" .. (to[i] or to[#to])
+				end
+			end
+			config.directives = colorRemap..config.predDirectives
+		end
 
 		if description then
 			config.description = sb.replaceTags(description, replaceTagTable)
@@ -63,7 +82,13 @@ function build( directory, config, parameters, level, seed )
 			config.shortdescription = sb.replaceTags(shortdescription, replaceTagTable)
 		end
 	end
+	config.animationParts.object = config.objectImage..(config.directives or "")
+	config.inventoryIcon = config.iconImage..(config.directives or "")
 
+	parameters.orientations = config.orientations
+	parameters.inventoryIcon = config.inventoryIcon
+	parameters.animationParts = config.animationParts
+	parameters.directives = config.directives
 	parameters.description = config.description
 	parameters.shortdescription = config.shortdescription
 	parameters.colonyTags = config.colonyTags
