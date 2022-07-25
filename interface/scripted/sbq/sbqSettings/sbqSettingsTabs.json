@@ -55,7 +55,7 @@
 			"tab": { "type" : "tab", "id" : "occupantHolderSettingsTab", "title" : "Config", "icon" : "/items/active/sbqController/unassigned.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"mode": "horizontal"},
 				{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Body Parts", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+					{ "type" : "label", "text" : "Body Parts", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : 0, "children" : [
 					[{ "type" : "checkBox", "id" : "braEnable", "visible" : false},{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore", "visible" : false}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "braLabel", "type" : "label", "text" : " Bra", "visible" : false }],
 					[{ "type" : "checkBox", "id" : "underwearEnable", "visible" : false},{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth", "visible" : false}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "underwearLabel", "type" : "label", "text" : " Underwear", "visible" : false }],
 
@@ -73,10 +73,11 @@
 					[{ "type" : "checkBox", "id" : "pussyEnable", "visible" : false},{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth", "visible" : false}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "pussyLabel", "type" : "label", "text" : " Pussy", "visible" : false }]
 				]}]},
 				{ "type" : "panel", "id" : "otherEffectsPanel", "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Other Effects", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+					{ "type" : "label", "text" : "Other Effects", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : 0, "children" : [
 						{ "type" : "panel", "id" : "genderswapPanel", "style" : "concave", "children" : [
 							{"mode": "vertical"},
 							{ "type" : "label", "text" : "Genderswap Transformation", "align" : "center" },
+							[{ "type" : "checkBox", "id" : "TGOnlyEnable", "visible" : false},{ "type" : "iconButton", "id" : "TGOnlyEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TGOnly", "toolTip" : "During TF, leave prey's species unchanged.", "visible" : false}, { "id" : "TGOnlyLabel", "type" : "label", "text" : " TG Only", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGNoChangeEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGNoChangeEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGNoChange", "value" : "noChange", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, leave prey's gender unchanged.", "visible" : false}, { "id" : "TFTGNoChangeLabel", "type" : "label", "text" : " No Change", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGSwapEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGSwapEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGSwap", "value" : "swap", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender.", "visible" : false}, { "id" : "TFTGSwapLabel", "type" : "label", "text" : " Swap Gender", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGRandomEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGRandomEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGRandom", "value" : "random", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, randomly swap prey's gender.", "visible" : false}, { "id" : "TFTGRandomLabel", "type" : "label", "text" : " Randomize Gender", "visible" : false }],

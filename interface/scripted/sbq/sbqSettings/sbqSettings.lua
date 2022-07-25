@@ -516,6 +516,20 @@ end
 
 --------------------------------------------------------------------------------------------------
 if speciesLayout ~= nil then
+	function refreshOccupantHolder()
+		local currentData = status.statusProperty("sbqCurrentData") or {}
+		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+			world.sendEntityMessage(currentData.id, "reversion")
+			if currentData.species == "sbqOccupantHolder" then
+				world.spawnProjectile("sbqWarpInEffect", world.entityPosition(player.id()), player.id(), { 0, 0 }, true)
+			elseif type(currentData.species) == "nil" then
+				world.sendEntityMessage(entity.id(), "sbqGetSpeciesVoreConfig")
+			end
+		else
+			world.spawnProjectile("sbqWarpInEffect", world.entityPosition(player.id()), player.id(), { 0, 0 }, true)
+		end
+	end
+
 	function decSpecies:onClick()
 		sbq.changeSpecies(-1)
 	end
@@ -527,12 +541,18 @@ if speciesLayout ~= nil then
 	function applySpecies:onClick()
 		if speciesText.text ~= "" and type(sbq.customizedSpecies[speciesText.text]) == "table" then
 			local species = player.species()
-			status.clearPersistentEffects("speciesAnimOverride")
-			status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
-			status.setPersistentEffects("speciesAnimOverride", {  sbq.currentCustomSpecies.customAnimStatus or "speciesAnimOverride"})
 			if species ~= speciesText.text then
+				status.clearPersistentEffects("speciesAnimOverride")
+				status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
+				status.setPersistentEffects("speciesAnimOverride", {  sbq.currentCustomSpecies.customAnimStatus or "speciesAnimOverride"})
 				init()
+				refreshOccupantHolder()
+			else
+				status.setStatusProperty("speciesAnimOverrideData", sbq.currentCustomSpecies)
+				world.sendEntityMessage(player.id(), "refreshAnimOverrides")
 			end
+		elseif player.isAdmin() and pcall(root.assetJson, ("/species/"..speciesText.text..".species")) then
+			world.sendEntityMessage(player.id(), "sbqMysteriousPotionTF", { species = speciesText.text, gender = sbq.currentCustomSpecies.gender })
 		else
 			status.clearPersistentEffects("speciesAnimOverride")
 			status.setStatusProperty("speciesAnimOverrideData", nil)
@@ -548,14 +568,17 @@ if speciesLayout ~= nil then
 	function speciesFacialMaskColorText:onEnter() sbq.saveSpeciesCustomize() end
 	function speciesEmoteColorText:onEnter() sbq.saveSpeciesCustomize() end
 
-	sbq.unlockedSpeciesList = {}
+	local originalSpecies = world.entitySpecies(player.id())
+	sbq.unlockedSpeciesList = {originalSpecies}
 	sbq.customizedSpecies = status.statusProperty("sbqCustomizedSpecies") or {}
 	sbq.currentCustomSpecies = {}
-	local originalSpecies = world.entitySpecies(player.id())
 	for species, data in pairs(sbq.customizedSpecies) do
 		if species ~= originalSpecies then
 			table.insert(sbq.unlockedSpeciesList, species)
 		end
+	end
+	if player.isAdmin() then
+		sbq.unlockedSpeciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
 	end
 	table.sort(sbq.unlockedSpeciesList)
 	for i, species in ipairs(sbq.unlockedSpeciesList) do
@@ -587,16 +610,45 @@ if speciesLayout ~= nil then
 		end
 		sbq.speciesOverrideIndex = index
 		local selectedSpecies = sbq.unlockedSpeciesList[sbq.speciesOverrideIndex]
-		sbq.currentCustomSpecies = sbq.customizedSpecies[selectedSpecies]
+		sbq.currentCustomSpecies = sbq.customizedSpecies[selectedSpecies] or {gender = player.gender(), identity = {}}
 		if not selectedSpecies then
 			sbq.hideSpeciesPanel = true
 			return
 		end
+		local hidePanels = (selectedSpecies ~= originalSpecies) and type(sbq.customizedSpecies[selectedSpecies]) == "table"
+		speciesColorPanel:setVisible(hidePanels)
+		speciesStylePanel:setVisible(hidePanels)
+		speciesManualColorPanel:setVisible(hidePanels)
 
 		local success, speciesFile = pcall(root.assetJson, ("/species/"..selectedSpecies..".species"))
 		if success then
 			sbq.speciesFile = speciesFile
 			speciesText:setText(selectedSpecies)
+
+			for i, data in ipairs(speciesFile.genders or {}) do
+				if data.name == sbq.currentCustomSpecies.gender then
+					sbq.genderTable = data
+					for i, type in ipairs(data.hair) do
+						if sbq.currentCustomSpecies.identity.hairType == type then
+							sbq.hairTypeIndex = i
+						end
+					end
+					for i, type in ipairs(data.facialHair) do
+						if sbq.currentCustomSpecies.identity.facialHairType == type then
+							sbq.facialHairTypeIndex = i
+						end
+					end
+					for i, type in ipairs(data.facialMask) do
+						if sbq.currentCustomSpecies.identity.facialMaskType == type then
+							sbq.facialMaskTypeIndex = i
+						end
+					end
+					speciesGenderToggle:setImage(data.image)
+				end
+			end
+
+			if not hidePanels then return end
+
 			speciesCustomColorText:setText(sbq.currentCustomSpecies.directives)
 			speciesBodyColorText:setText(sbq.currentCustomSpecies.identity.bodyDirectives)
 			speciesHairColorText:setText(sbq.currentCustomSpecies.identity.hairDirectives)
@@ -650,27 +702,6 @@ if speciesLayout ~= nil then
 			incSpeciesHairColor:setVisible(visible)
 			decSpeciesHairColor:setVisible(visible)
 
-			for i, data in ipairs(speciesFile.genders or {}) do
-				if data.name == sbq.currentCustomSpecies.gender then
-					sbq.genderTable = data
-					for i, type in ipairs(data.hair) do
-						if sbq.currentCustomSpecies.identity.hairType == type then
-							sbq.hairTypeIndex = i
-						end
-					end
-					for i, type in ipairs(data.facialHair) do
-						if sbq.currentCustomSpecies.identity.facialHairType == type then
-							sbq.facialHairTypeIndex = i
-						end
-					end
-					for i, type in ipairs(data.facialMask) do
-						if sbq.currentCustomSpecies.identity.facialMaskType == type then
-							sbq.facialMaskTypeIndex = i
-						end
-					end
-					speciesGenderToggle:setImage(data.image)
-				end
-			end
 			speciesBodyColorLabel:setText(sbq.currentCustomSpecies.identity.bodyColorIndex or 1)
 			speciesUndyColorLabel:setText(sbq.currentCustomSpecies.identity.undyColorIndex or 1)
 			speciesHairColorLabel:setText(sbq.currentCustomSpecies.identity.hairColorIndex or 1)
