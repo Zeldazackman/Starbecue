@@ -34,6 +34,7 @@ function sbq.effectsPanel()
 			end
 
 			effectsLayout:addChild({ type = "layout", mode = "horizontal", spacing = -1, children = {
+				{ type = "label", text = " "..(locationData.name.." " or location), align = "right", inline = true, size = {40,10} },
 				{
 				{ size = 67},
 				{
@@ -104,8 +105,7 @@ function sbq.effectsPanel()
 					},
 					{ type = "iconButton", id = location.."EggifyEnableLocked", visible = false, image = "lockedDisabled.png"},
 					{type = "spacer", size = 1}
-				}},
-				{ type = "label", text = " "..(locationData.name or location) }
+				}}
 			}})
 			local noneButton = _ENV[location.."None"]
 			local healButton = _ENV[location.."Heal"]

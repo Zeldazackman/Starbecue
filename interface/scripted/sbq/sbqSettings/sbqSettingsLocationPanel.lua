@@ -10,30 +10,29 @@ function sbq.locationPanel()
 			sbq.saveSettings()
 		end
 	end
-	local layout
-	if sbq.predatorSettings.hammerspace then
-		layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical", spacing = -1})
-	else
-		layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical" })
-	end
+	local layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical", spacing = -1})
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
-
 		local data = sbq.predatorConfig.locations[location] or {}
-		layout:addChild({ type = "layout", mode = "horizontal", children = {
-			{ type = "checkBox", id = location .. "HammerspaceDisabledButton", checked = not sbq.predatorSettings[location.."HammerspaceDisabled"], visible = (data.hammerspace or false) and sbq.predatorSettings.hammerspace, toolTip = "Enable Hammerspace for the "..(data.name or location) },
-			{ type = "iconButton", id = location .. "Locked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = (not data.hammerspace) and sbq.predatorSettings.hammerspace, toolTip = "The "..(data.name or location).." Can't have hammerspace, but you can change the min and max size" },
-
-			{ type = "iconButton", id = location .. "PrevMin", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the min size of the "..(data.name or location) },
-			{ type = "label", id = location .. "ValueMin", text = sbq.predatorSettings[location.."VisualMin"] or data.minVisual or 0, inline = true },
-			{ type = "iconButton", id = location .. "NextMin", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the min size of the "..(data.name or location) },
-
-			{ type = "iconButton", id = location .. "PrevMax", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the max size of the "..(data.name or location) },
-			{ type = "label", id = location .. "ValueMax", text = sbq.predatorSettings[location.."VisualMax"] or 1, inline = true },
-			{ type = "iconButton", id = location .. "NextMax", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the max size of the "..(data.name or location) },
-
-			{ type = "checkBox", id = location .. "CompressionButton", checked = sbq.predatorSettings[location.."Compression"], visible = true, toolTip = "Enable compression within "..(data.name or location) },
-
-			{ type = "label", text = (data.name or location), inline = true }
+		layout:addChild({ type = "layout", mode = "horizontal", spacing = -1, children = {
+			{ type = "label", text = " "..(data.name or location).." ", align = "right", inline = true, size = {40,10}},
+			{
+				{ mode = "horizontal" },
+				{ type = "checkBox", id = location .. "HammerspaceDisabledButton", checked = not sbq.predatorSettings[location.."HammerspaceDisabled"], visible = (data.hammerspace or false) and sbq.predatorSettings.hammerspace, toolTip = "Enable Hammerspace for the "..(data.name or location) },
+				{ type = "iconButton", id = location .. "HammerspaceLocked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = (not data.hammerspace) and sbq.predatorSettings.hammerspace, toolTip = "The "..(data.name or location).." Can't have hammerspace." },
+				{ type = "checkBox", id = location .. "CompressionButton", checked = sbq.predatorSettings[location.."Compression"], visible = sbq.overrideSettings[location .. "Compression"] == nil, toolTip = "Enable compression within "..(data.name or location) },
+				{
+					{ mode = "horizontal" },
+					{ type = "iconButton", id = location .. "PrevMin", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the min size of the "..(data.name or location) },
+					{ type = "label", id = location .. "ValueMin", text = " "..(sbq.predatorSettings[location.."VisualMin"] or data.minVisual or 0).." ", inline = true },
+					{ type = "iconButton", id = location .. "NextMin", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the min size of the "..(data.name or location) },
+				},
+				{
+					{ mode = "horizontal" },
+					{ type = "iconButton", id = location .. "PrevMax", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the max size of the "..(data.name or location) },
+					{ type = "label", id = location .. "ValueMax", text = " "..(sbq.predatorSettings[location.."VisualMax"] or 1).." ", inline = true },
+					{ type = "iconButton", id = location .. "NextMax", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the max size of the "..(data.name or location) },
+				}
+			},
 		} })
 		local enableHammerspace = _ENV[location .. "HammerspaceDisabledButton"]
 
@@ -102,10 +101,10 @@ function sbq.changeLocationMax(location, inc, labelMax, labelMin)
 	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return
 	elseif type(sbq.predatorSettings[location.."VisualMin"]) == "number" and newValue < (sbq.predatorSettings[location.."VisualMax"]) then
 		sbq.predatorSettings[location.."VisualMin"] = newValue
-		labelMin:setText(newValue)
+		labelMin:setText(" "..newValue.." ")
 	end
 
-	labelMax:setText(newValue)
+	labelMax:setText(" "..newValue.." ")
 	sbq.predatorSettings[location.."VisualMax"] = newValue
 	sbq.saveSettings()
 end
@@ -116,10 +115,10 @@ function sbq.changeLocationMin(location, inc, labelMin, labelMax)
 	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return
 	elseif type(sbq.predatorSettings[location.."VisualMax"]) == "number" and newValue > (sbq.predatorSettings[location.."VisualMax"]) then
 		sbq.predatorSettings[location.."VisualMax"] = newValue
-		labelMax:setText(newValue)
+		labelMax:setText(" "..newValue.." ")
 	end
 
-	labelMin:setText(newValue)
+	labelMin:setText(" "..newValue.." ")
 	sbq.predatorSettings[location.."VisualMin"] = newValue
 	sbq.saveSettings()
 end
