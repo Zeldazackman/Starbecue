@@ -412,6 +412,7 @@ function sbq.lockItem(itemDescriptor, type)
 	end
 
 	local consumed = player.consumeItem(itemDescriptor, false, true)
+
 	if consumed then
 		local lockedItemList = player.getProperty( "sbqLockedItems" ) or {}
 		table.insert(lockedItemList, consumed)

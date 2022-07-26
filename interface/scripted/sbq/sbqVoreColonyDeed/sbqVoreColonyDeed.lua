@@ -75,25 +75,24 @@ function init()
 		sbq.locationPanel()
 		sbq.effectsPanel()
 
+		local settingsDealtWith = {}
 		for setting, value in pairs(sbq.predatorSettings) do
-			if setting:sub(-6,-1) ~= "Locked" then
+			if setting:sub(-6,-1) ~= "Locked" and not settingsDealtWith[setting] then
 				local button = _ENV[setting]
 				local label = _ENV[setting .. "Label"]
+				local locked = _ENV[setting .. "Locked"]
+				local enable = _ENV[setting.."Enable"]
+				local enableLocked = _ENV[setting .. "EnableLocked"]
+				settingsDealtWith[setting] = true
+				settingsDealtWith[setting.."Enable"] = true
+
 				if button ~= nil and type(value) == "boolean" then
 					if label ~= nil then
 						label:setVisible(true)
 					end
-					button:setChecked(value)
-					function button:onClick()
-						sbq.changePredSetting(setting, button.checked)
-					end
-
-					local enable = _ENV[setting.."Enable"]
 
 					if sbq.overrideSettings[setting] ~= nil then
 						button:setVisible(false)
-						local locked = _ENV[setting .. "Locked"]
-
 						if locked ~= nil then
 							locked:setVisible(true)
 							if sbq.overrideSettings[setting] then
@@ -102,26 +101,31 @@ function init()
 								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
 							end
 							locked.toolTip = (button.toolTip or "").." (Locked)"
-						end
 
-						if enable ~= nil then
-							enable:setVisible(false)
-							local enableLocked = _ENV[setting .. "EnableLocked"]
-							if enableLocked ~= nil then
-								enableLocked:setVisible(true)
-								if sbq.overrideSettings[setting.."Enable"] then
-									enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-								else
-									enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+							if enable ~= nil then
+								enable:setVisible(false)
+								if enableLocked ~= nil then
+									enableLocked:setVisible(true)
+									if sbq.overrideSettings[setting.."Enable"] then
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+									else
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+									end
+									enableLocked.toolTip = (enable.toolTip or "").." (Locked)"
 								end
-								enableLocked.toolTip = (enable.toolTip or "").." (Locked)"
 							end
 						end
 					else
+						button:setVisible(true)
+						button:setChecked(value)
+						function button:onClick()
+							sbq.changePredSetting(setting, button.checked)
+						end
 						if enable ~= nil then
+							enable:setVisible(true)
 							enable:setChecked(sbq.predatorSettings[setting.."Enable"] or false)
 							function enable:onClick()
-								sbq.changePredSetting(setting, enable.checked)
+								sbq.changePredSetting(setting.."Enable", enable.checked)
 							end
 						end
 					end
@@ -134,24 +138,24 @@ function init()
 		end
 
 
+		settingsDealtWith = {}
 		for setting, value in pairs(sbq.preySettings) do
-			if setting:sub(-6,-1) ~= "Locked" then
+			if setting:sub(-6,-1) ~= "Locked" and not settingsDealtWith[setting] then
 				local button = _ENV[setting]
 				local label = _ENV[setting .. "Label"]
+				local locked = _ENV[setting .. "Locked"]
+				local enable = _ENV[setting.."Enable"]
+				local enableLocked = _ENV[setting .. "EnableLocked"]
+
+				settingsDealtWith[setting] = true
+				settingsDealtWith[setting.."Enable"] = true
+
 				if button ~= nil and type(value) == "boolean" then
 					if label ~= nil then
 						label:setVisible(true)
 					end
-					button:setChecked(value)
-					function button:onClick()
-						sbq.changePreySetting(setting, button.checked)
-					end
-
-					local enable = _ENV[setting.."Enable"]
-
 					if sbq.overridePreyEnabled[setting] ~= nil then
 						button:setVisible(false)
-						local locked = _ENV[setting .. "Locked"]
 						if locked ~= nil then
 							locked:setVisible(true)
 							if sbq.overridePreyEnabled[setting] then
@@ -163,7 +167,6 @@ function init()
 
 							if enable ~= nil then
 								enable:setVisible(false)
-								local enableLocked = _ENV[setting .. "EnableLocked"]
 								if enableLocked ~= nil then
 									enableLocked:setVisible(true)
 									if sbq.overridePreyEnabled[setting.."Enable"] then
@@ -176,10 +179,16 @@ function init()
 							end
 						end
 					else
+						button:setVisible(true)
+						button:setChecked(value)
+						function button:onClick()
+							sbq.changePreySetting(setting, button.checked)
+						end
 						if enable ~= nil then
+							enable:setVisible(true)
 							enable:setChecked(sbq.preySettings[setting.."Enable"] or false)
 							function enable:onClick()
-								sbq.changePreySetting(setting, enable.checked)
+								sbq.changePreySetting(setting.."Enable", enable.checked)
 							end
 						end
 					end
