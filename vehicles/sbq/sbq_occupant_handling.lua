@@ -378,78 +378,77 @@ function sbq.updateOccupants(dt)
 	local lastFilled = true
 
 	for i = sbq.startSlot, sbq.occupantSlots do
-			if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
-				sbq.occupants.total = sbq.occupants.total + 1
-				if not lastFilled and sbq.swapCooldown <= 0 then
-					sbq.swapOccupants( i-1, i )
-					i = i - 1
-				end
-
-				sbq.occupant[i].index = i
-				local seatname = "occupant"..i
-				sbq.occupant[i].seatname = seatname
-				sbq.lounging[sbq.occupant[i].id] = sbq.occupant[i]
-				sbq.seats[sbq.occupant[i].seatname] = sbq.occupant[i]
-				sbq.occupant[i].occupantTime = sbq.occupant[i].occupantTime + dt
-
-				local massMultiplier = 0
-				local mass = sbq.occupant[i].controls.mass
-				local location = sbq.occupant[i].location
-
-				if location == "nested" then
-					local owner = sbq.occupant[i].nestedPreyData.owner
-					mass = mass * sbq.occupant[i].nestedPreyData.massMultiplier
-					if world.entityExists(owner) and sbq.lounging[owner] ~= nil then
-						location = sbq.lounging[owner].location
-						sbq.occupant[i].nestedPreyData.ownerLocation = location
-
-						sbq.resetTransformationGroup(seatname.."Position")
-						sbq.translateTransformationGroup(seatname.."Position", sbq.globalToLocal(world.entityPosition(owner)))
-					else
-						if sbq.occupant[i].nestedPreyData.nestedPreyData ~= nil then
-							sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
-						else
-							location = sbq.occupant[i].nestedPreyData.ownerLocation
-							sbq.occupant[i].location = location
-						end
-					end
-				elseif location == "digesting" or location == "escaping" then
-				elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or ((sbq.sbqData.locations[location].max or 0) == 0) then
-					sbq.uneat(sbq.occupant[i].id)
-					return
-				else
-					sbq.occupant[i].visited[location.."Visited"] = true
-					sbq.occupant[i].visited[location.."Time"] = (sbq.occupant[i].visited[location.."Time"] or 0) + dt
-
-					sbq.occupants[location] = sbq.occupants[location] + (sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier)
-					sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
-
-					massMultiplier = sbq.sbqData.locations[location].mass or 0
-
-					sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
-
-					if sbq.sbqData.locations[location].transformGroups ~= nil then
-						sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname.."Position")
-					end
-				end
-
-				lastFilled = true
-			elseif type(sbq.occupant[i].id) == "number" and not world.entityExists(sbq.occupant[i].id) then
-				sbq.occupant[i] = sbq.clearOccupant(i)
-				sbq.refreshList = true
-				lastFilled = false
-			else
-				lastFilled = false
-				sbq.occupant[i] = sbq.clearOccupant(i)
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
+			sbq.occupants.total = sbq.occupants.total + 1
+			if not lastFilled and sbq.swapCooldown <= 0 then
+				sbq.swapOccupants(i - 1, i)
+				i = i - 1
 			end
+
+			sbq.occupant[i].index = i
+			local seatname = "occupant" .. i
+			sbq.occupant[i].seatname = seatname
+			sbq.lounging[sbq.occupant[i].id] = sbq.occupant[i]
+			sbq.seats[sbq.occupant[i].seatname] = sbq.occupant[i]
+			sbq.occupant[i].occupantTime = sbq.occupant[i].occupantTime + dt
+
+			local massMultiplier = 0
+			local mass = sbq.occupant[i].controls.mass
+			local location = sbq.occupant[i].location
+
+			if location == "nested" then
+				local owner = sbq.occupant[i].nestedPreyData.owner
+				mass = mass * sbq.occupant[i].nestedPreyData.massMultiplier
+				if world.entityExists(owner) and sbq.lounging[owner] ~= nil then
+					location = sbq.lounging[owner].location
+					sbq.occupant[i].nestedPreyData.ownerLocation = location
+
+					sbq.resetTransformationGroup(seatname .. "Position")
+					sbq.translateTransformationGroup(seatname .. "Position", sbq.globalToLocal(world.entityPosition(owner)))
+				else
+					if sbq.occupant[i].nestedPreyData.nestedPreyData ~= nil then
+						sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
+					else
+						location = sbq.occupant[i].nestedPreyData.ownerLocation
+						sbq.occupant[i].location = location
+					end
+				end
+			elseif location == "digesting" or location == "escaping" then
+			elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or
+				((sbq.sbqData.locations[location].max or 0) == 0) then
+				sbq.uneat(sbq.occupant[i].id)
+				return
+			else
+				sbq.occupant[i].visited[location .. "Visited"] = true
+				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
+
+				sbq.occupants[location] = sbq.occupants[location] + (sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier)
+				sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
+				massMultiplier = sbq.sbqData.locations[location].mass or 0
+
+				sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
+
+				if sbq.sbqData.locations[location].transformGroups ~= nil then
+					sbq.copyTransformationFromGroupsToGroup(sbq.sbqData.locations[location].transformGroups, seatname .. "Position")
+				end
+			end
+
+			lastFilled = true
+		elseif type(sbq.occupant[i].id) == "number" and not world.entityExists(sbq.occupant[i].id) then
+			sbq.occupant[i] = sbq.clearOccupant(i)
+			sbq.refreshList = true
+			lastFilled = false
+		else
+			lastFilled = false
+			sbq.occupant[i] = sbq.clearOccupant(i)
+		end
 	end
 	sbq.swapCooldown = math.max(0, sbq.swapCooldown - 1)
 
 	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})
 
 	for location, occupancy in pairs(sbq.occupants) do
-		occupancy = math.ceil(occupancy)
-		sbq.actualOccupants[location] = occupancy
+		sbq.actualOccupants[location] = math.floor(occupancy+0.4)
 	end
 
 	sbq.setOccupantTags()
@@ -485,6 +484,9 @@ function sbq.setOccupantTags()
 			end
 			sbq.occupants[location] = math.max(table.unpack(copyTable))
 		end
+	end
+	for location, data in pairs(sbq.sbqData.locations) do
+		sbq.occupants[location] = math.floor((sbq.occupants[location] or 0)+0.4)
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do
@@ -618,6 +620,10 @@ function sbq.doBellyEffects(dt)
 					sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
 				end
 				world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())
+			end
+
+			if sbq.settings[location.."Compression"] and not sbq.occupant[i].digested and sbq.occupant[i].bellySettleDownTimer <= 0 then
+				sbq.occupant[i].sizeMultiplier = math.min(1, math.max(0.1, sbq.occupant[i].sizeMultiplier - (powerMultiplier * dt)/100 ))
 			end
 
 			local progressbarDx = 0
@@ -784,6 +790,7 @@ function sbq.handleStruggles(dt)
 		sbq.occupant[struggler].struggleTime = 0
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
+		local location = sbq.occupant[struggler].location
 
 		if (struggledata.directions[movedir].indicate == "red" or struggledata.directions[movedir].indicate == "green") and ( struggledata.directions[movedir].settings == nil or sbq.checkSettings(struggledata.directions[movedir].settings) ) then
 			sbq.occupant[struggler].controls.favorDirection = movedir
@@ -819,6 +826,10 @@ function sbq.handleStruggles(dt)
 		end
 		sbq.occupant[struggler].bellySettleDownTimer = time
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
+
+		if sbq.settings[location.."Compression"] and not sbq.occupant[struggler].digested then
+			sbq.occupant[struggler].sizeMultiplier = sbq.occupant[struggler].sizeMultiplier + (time * 2)/100
+		end
 
 		if not sbq.movement.animating then
 			sbq.doAnims( struggledata.directions[movedir].animation or struggledata.animation )
