@@ -73,7 +73,7 @@ function sbq.uneat( occupantId )
 		world.sendEntityMessage(occupantId, "sbqOpenInterface", "sbqClose")
 	end
 
-	if occupantData.species ~= nil and occupantData.smolPreyData then
+	if occupantData.species ~= nil and occupantData.smolPreyData ~= nil then
 		if type(occupantData.smolPreyData.id) == "number" and world.entityExists(occupantData.smolPreyData.id) then
 			world.sendEntityMessage(occupantData.smolPreyData.id, "uneaten")
 		else
@@ -106,7 +106,7 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 			entity.id()
 		)
 		sbq.isNested = true
-		animator.scaleTransformationGroup("globalScale", {0,0})
+		sbq.scaleTransformationGroup("globalScale", {0,0})
 		return true
 	end
 end

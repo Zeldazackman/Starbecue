@@ -232,7 +232,12 @@ function init()
 		sbq.isObject = true
 	end
 
-	if not config.getParameter( "uneaten" ) then
+	local uneaten = config.getParameter( "uneaten" )
+	local isNested = config.getParameter( "nested" )
+	if isNested then
+		sbq.isNested = true
+		sbq.scaleTransformationGroup("globalScale", {0,0})
+	elseif not uneaten then
 		sbq.warpInEffect()
 	end
 

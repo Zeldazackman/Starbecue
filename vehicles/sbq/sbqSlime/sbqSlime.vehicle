@@ -185,7 +185,7 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Slime", "max": 1, "selectEffect" : true, "transformGroups" : ["preybob"],
-				"TF" : {}
+				"TF" : { "data" : { "species": "sbqSlime", "randomColors" : true, "settings" : { "firstLoadDone" : true } }}
 			}
 		},
 		"victimAnimations": "/vehicles/sbq/sbqSlime/victim_animations.config"

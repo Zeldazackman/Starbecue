@@ -49,9 +49,9 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 		TF.data.gender = sbq.settings.TFTG or "noChange"
 	end
 	if TF.data.randomColors then
-		local predatorConfig = root.assetJson("/vehicles/sbq/sbqEgg/sbqEgg.vehicle").sbqData
+		local predatorConfig = root.assetJson("/vehicles/sbq/"..TF.data.species.."/"..TF.data.species..".vehicle").sbqData
 		local replaceColors =  TF.data.replaceColors or "replaceColors"
-		local offset = (TF.data.replaceColors ~= nil) and 1 or 0
+		local offset = type(TF.data.replaceColors) == "nil" and 1 or 0
 		local replaceColorTable = {}
 		for i, colorTable in ipairs(predatorConfig[replaceColors] or {}) do
 			replaceColorTable[i] = colorTable[math.random(#colorTable-offset)+offset]
@@ -77,7 +77,6 @@ function sbq.transformMessageHandler(eid, TF, TFType)
 			or sbq.sbqData.defaultProgressBarColor
 		)
 	end
-
 	if sbq.lounging[eid].species == "sbqOccupantHolder" then
 		sbq.lounging[eid].progressBarData.layer = true
 	end
@@ -132,20 +131,29 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
 
+		sbq.lounging[eid].sizeMultiplier = 0
+		sbq.lounging[eid].visible = false
 		sbq.lounging[eid].location = "digesting"
+		sbq.lounging[eid].digested = true
+
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 		else
 			world.sendEntityMessage(eid, "sbqDigestResponse")
 		end
+	else
+		sbq.lounging[eid].sizeMultiplier = 0
+		sbq.lounging[eid].visible = false
+		sbq.lounging[eid].location = "digesting"
+		sbq.lounging[eid].digested = true
 	end
 end )
 
-message.setHandler( "sbqCumDigest", function(_,_, eid)
-  if eid ~= nil and type(sbq.lounging[eid]) == "table" then
-    sbq.lounging[eid].cumDigesting = true
-  end
-end )
+message.setHandler("sbqCumDigest", function(_, _, eid)
+	if eid ~= nil and type(sbq.lounging[eid]) == "table" then
+		sbq.lounging[eid].cumDigesting = true
+	end
+end)
 
 message.setHandler( "sbqSoftDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
@@ -159,6 +167,10 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 		else
 			world.sendEntityMessage(eid, "sbqDigestResponse")
 		end
+	else
+		sbq.lounging[eid].sizeMultiplier = 0
+		sbq.lounging[eid].digested = true
+		sbq.lounging[eid].visible = false
 	end
 end )
 
@@ -243,5 +255,5 @@ end)
 
 message.setHandler( "uneaten", function ()
 	sbq.isNested = false
-	animator.resetTransformationGroup("globalScale")
+	sbq.resetTransformationGroup("globalScale")
 end)

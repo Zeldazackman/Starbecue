@@ -222,12 +222,15 @@ function sbq.transformPrey(i)
 	local smolPreyData = sbq.occupant[i].progressBarData or {}
 	if smolPreyData.layer == true then
 		smolPreyData.layer = sbq.occupant[i].smolPreyData
+		sbq.occupant[i].smolPreyData = {}
 	end
 	if type(smolPreyData.species) == "string" then
 		local entityType = world.entityType(sbq.occupant[i].id)
 		if entityType == "player" or entityType == "npc" and not smolPreyData.forceSettings then
 			sbq.addRPC(world.sendEntityMessage(sbq.occupant[i].id, "sbqLoadSettings", smolPreyData.species), function(settings)
 				sbq.doTransformPrey(i, sb.jsonMerge(smolPreyData.settings, settings or {}), smolPreyData)
+			end, function ()
+				sbq.doTransformPrey(i, smolPreyData.settings or {}, smolPreyData)
 			end)
 		else
 			sbq.doTransformPrey(i, smolPreyData.settings or {}, smolPreyData)
@@ -242,10 +245,13 @@ function sbq.transformPrey(i)
 end
 
 function sbq.doTransformPrey(i, settings, smolPreyData)
-	smolPreyData = sb.jsonMerge(smolPreyData, sbq.getSmolPreyData(settings, smolPreyData.species, "smol"))
+	smolPreyData = sb.jsonMerge(smolPreyData, sbq.getSmolPreyData(settings, smolPreyData.species, smolPreyData.state or "smol"))
 	if sbq.occupant[i].species == "sbqEgg" then
 		sbq.occupant[i].smolPreyData.layer = smolPreyData
 	else
+		if type(sbq.occupant[i].smolPreyData.id) == "number" and world.entityExists(sbq.occupant[i].smolPreyData.id) then
+			smolPreyData.id = world.spawnVehicle( smolPreyData.species, sbq.localToGlobal({ sbq.occupant[i].victimAnim.last.x or 0, sbq.occupant[i].victimAnim.last.y or 0}), { driver = sbq.occupant[i].id, settings = smolPreyData.settings, uneaten = true, startState = smolPreyData.state, layer = smolPreyData.layer, isNested = true, retrievePrey = sbq.occupant[i].smolPreyData.id })
+		end
 		sbq.occupant[i].smolPreyData = smolPreyData
 		sbq.occupant[i].species = smolPreyData.species
 	end
