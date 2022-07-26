@@ -106,8 +106,10 @@ function sbq.getSeatData(occupant, seatname, eid)
 	else
 		seatType = "prey"
 		data = occupant.smolPreyData
+		data.predId = entity.id()
 	end
 	data.type = seatType
+	data.location = occupant.location
 
 	if occupant.controls.primaryHandItem ~= nil and occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage ~= nil and occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata ~= nil then
 		occupant.controls = sb.jsonMerge(occupant.controls, occupant.controls.primaryHandItemDescriptor.parameters.scriptStorage.seatdata)

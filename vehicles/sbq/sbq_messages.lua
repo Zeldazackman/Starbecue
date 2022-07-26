@@ -126,15 +126,21 @@ function sbq.reversion()
 	end
 end
 
+sbq.entityDigestedAt = {}
 message.setHandler( "sbqDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
+		sbq.entityDigestedAt[eid] = location
 
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].visible = false
 		sbq.lounging[eid].location = "digesting"
 		sbq.lounging[eid].digested = true
+
+		if type(sbq.lounging[eid].smolPreyData.id) and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", eid)
+		end
 
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
@@ -159,9 +165,16 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
+		sbq.entityDigestedAt[eid] = location
+
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].digested = true
 		sbq.lounging[eid].visible = false
+
+		if type(sbq.lounging[eid].smolPreyData.id) and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", entity.id())
+		end
+
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 		else
@@ -204,6 +217,11 @@ message.setHandler( "addPrey", function (_,_, data)
 	table.insert(sbq.addPreyQueue, data)
 end)
 
+message.setHandler( "addDigestPrey", function (_,_, data, owner)
+	data.location = sbq.entityDigestedAt[owner] or "belly"
+	table.insert(sbq.addPreyQueue, data)
+end)
+
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)
 	sbq.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
 		if enabled then
@@ -240,6 +258,12 @@ end)
 message.setHandler( "sbqSendAllPreyTo", function (_,_, id)
 	sbq.sendAllPreyTo = id
 end)
+
+message.setHandler( "giveDigestPrey", function (_,_, id)
+	sbq.sendAllPreyTo = id
+	sbq.digestSendPrey = true
+end)
+
 
 message.setHandler("sbqDigestDrop", function(_,_, itemDrop)
 	local itemDrop = itemDrop

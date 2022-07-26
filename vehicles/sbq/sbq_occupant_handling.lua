@@ -117,7 +117,11 @@ function sbq.sendAllPrey()
 		for i = sbq.startSlot, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" then
 				sbq.occupant[i].visible = false
-				world.sendEntityMessage(sbq.sendAllPreyTo, "addPrey", sbq.occupant[i])
+				if sbq.digestSendPrey then
+					world.sendEntityMessage(sbq.sendAllPreyTo, "addDigestPrey", sbq.occupant[i], sbq.driver)
+				else
+					world.sendEntityMessage(sbq.sendAllPreyTo, "addPrey", sbq.occupant[i])
+				end
 				sbq.occupant[i] = sbq.clearOccupant(i)
 			end
 		end
