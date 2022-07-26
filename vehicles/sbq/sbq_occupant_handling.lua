@@ -73,11 +73,12 @@ function sbq.uneat( occupantId )
 		world.sendEntityMessage(occupantId, "sbqOpenInterface", "sbqClose")
 	end
 
-	if occupantData.species ~= nil then
-		table.insert(sbq.preyRecepients, {
-			vehicle = world.spawnVehicle( occupantData.species, sbq.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer } ),
-			owner = occupantId
-		})
+	if occupantData.species ~= nil and occupantData.smolPreyData then
+		if type(occupantData.smolPreyData.id) == "number" and world.entityExists(occupantData.smolPreyData.id) then
+			world.sendEntityMessage(occupantData.smolPreyData.id, "uneaten")
+		else
+			world.spawnVehicle( occupantData.species, sbq.localToGlobal({ occupantData.victimAnim.last.x or 0, occupantData.victimAnim.last.y or 0}), { driver = occupantId, settings = occupantData.smolPreyData.settings, uneaten = true, startState = occupantData.smolPreyData.state, layer = occupantData.smolPreyData.layer })
+		end
 	else
 		world.sendEntityMessage( occupantId, "sbqRemoveStatusEffects", sbq.config.predStatusEffects)
 		world.sendEntityMessage( occupantId, "sbqPredatorDespawned", true ) -- to clear the current data for players
