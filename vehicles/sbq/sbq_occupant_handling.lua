@@ -92,10 +92,6 @@ end
 
 function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 	if sbq.driver ~= occupantId then return false end
-	local total = sbq.occupants.total + sbq.startSlot
-
-	if total > emptyslots then return false end
-	if locationslots ~= -1 and total > locationslots then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
@@ -108,59 +104,9 @@ function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
 			),
 			entity.id()
 		)
-
-		for i = sbq.startSlot, sbq.occupantSlots do
-			if type(sbq.occupant[i].id) == "number" then
-				local location = sbq.occupant[i].location
-				local massMultiplier = 0
-
-				if location == "nested" then
-					location = sbq.occupant[i].nestedPreyData.ownerLocation
-				end
-				massMultiplier = (sbq.sbqData.locations[location] or {}).mass or 0
-
-				if sbq.occupant[i].location == "nested" then
-					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
-				end
-
-				local occupantData = sb.jsonMerge(sbq.occupant[i], {
-					location = "nested",
-					visible = false,
-					nestedPreyData = {
-						owner = sbq.driver,
-						location = sbq.occupant[i].location,
-						massMultiplier = massMultiplier,
-						digest = (sbq.sbqData.locations[location] or {}).digest,
-						nestedPreyData = sbq.occupant[i].nestedPreyData
-					}
-				})
-				world.sendEntityMessage( source, "addPrey", occupantData)
-			end
-		end
+		sbq.isNested = true
+		animator.scaleTransformationGroup("globalScale", {0,0})
 		return true
-	end
-end
-
-sbq.preyRecepients = {}
-
-function sbq.sendPreyTo()
-	for j, recepient in ipairs(sbq.preyRecepients) do
-		if world.entityExists(recepient.vehicle) then
-			for i = 0, sbq.occupantSlots do
-				if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == recepient.owner then
-					local occupantData = sb.jsonMerge(sbq.occupant[i], {})
-
-					occupantData.location = sbq.occupant[i].nestedPreyData.location
-					occupantData.visible = false
-					occupantData.nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
-
-					world.sendEntityMessage( recepient.vehicle, "addPrey", occupantData)
-
-					sbq.occupant[i] = sbq.clearOccupant(i)
-				end
-			end
-			table.remove(sbq.preyRecepients, j)
-		end
 	end
 end
 
@@ -190,14 +136,7 @@ end
 function sbq.moveOccupantLocation(args, location)
 	local full, locationslots = sbq.locationFull(location)
 	if not args.id or full then return false end
-	local maxNested = sbq.sbqData.locations[location].maxNested or ( locationslots - 1 )
-	local nestCount = 0
-	for i = 0, sbq.occupantSlots do
-		if sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == args.id then
-			nestCount = nestCount + 1
-		end
-	end
-	if maxNested ~= -1 and (nestCount > maxNested) then return false end
+
 	sbq.lounging[args.id].location = location
 	return true
 end
@@ -241,6 +180,7 @@ function sbq.locationEmpty(location)
 end
 
 function sbq.doVore(args, location, statuses, sound, voreType )
+	if sbq.isNested then return false end
 	local location = location
 	if sbq.sbqData.locations[location].sided then
 		if sbq.direction > 0 then
@@ -291,6 +231,8 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 end
 
 function sbq.doEscape(args, statuses, afterstatuses, voreType )
+	if sbq.isNested then return false end
+
 	local victim = args.id
 	if not victim then return false end -- could be part of above but no need to log an error here
 	local location = sbq.lounging[victim].location
@@ -372,7 +314,6 @@ end
 
 sbq.actualOccupants = {}
 function sbq.updateOccupants(dt)
-	sbq.sendPreyTo()
 	sbq.resetOccupantCount()
 
 	local lastFilled = true
@@ -396,24 +337,7 @@ function sbq.updateOccupants(dt)
 			local mass = sbq.occupant[i].controls.mass
 			local location = sbq.occupant[i].location
 
-			if location == "nested" then
-				local owner = sbq.occupant[i].nestedPreyData.owner
-				mass = mass * sbq.occupant[i].nestedPreyData.massMultiplier
-				if world.entityExists(owner) and sbq.lounging[owner] ~= nil then
-					location = sbq.lounging[owner].location
-					sbq.occupant[i].nestedPreyData.ownerLocation = location
-
-					sbq.resetTransformationGroup(seatname .. "Position")
-					sbq.translateTransformationGroup(seatname .. "Position", sbq.globalToLocal(world.entityPosition(owner)))
-				else
-					if sbq.occupant[i].nestedPreyData.nestedPreyData ~= nil then
-						sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
-					else
-						location = sbq.occupant[i].nestedPreyData.ownerLocation
-						sbq.occupant[i].location = location
-					end
-				end
-			elseif location == "digesting" or location == "escaping" then
+			if location == "digesting" or location == "escaping" then
 			elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or
 				((sbq.sbqData.locations[location].max or 0) == 0) then
 				sbq.uneat(sbq.occupant[i].id)
@@ -603,24 +527,11 @@ function sbq.doBellyEffects(dt)
 			end
 
 			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
-			local nested
 
-			if location == "nested" then -- to make nested prey use the belly effect of the one they're in
-				nested = "Nested"
-				local owner = sbq.occupant[i].nestedPreyData.owner
-				local settings = sbq.lounging[owner].smolPreyData.settings or {}
-				local powerMultiplier = math.max(1, math.log(sbq.lounging[owner].controls.powerMultiplier) + 1)
-				local locationEffect = sbq.occupant[i].nestedPreyData.locationEffect or "sbqRemoveBellyEffects"
-				if locationEffect then
-					local status = (settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
-					world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, owner)
-				end
-			else
-				if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) and sbq.config.bellyGurgleEffects[locationEffect] then
-					sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
-				end
-				world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())
+			if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) and sbq.config.bellyGurgleEffects[locationEffect] then
+				sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
 			end
+			world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())
 
 			if sbq.settings[location.."Compression"] and not sbq.occupant[i].digested and sbq.occupant[i].bellySettleDownTimer <= 0 then
 				sbq.occupant[i].sizeMultiplier = math.min(1, math.max(0.1, sbq.occupant[i].sizeMultiplier - (powerMultiplier * dt)/100 ))
@@ -673,12 +584,16 @@ function sbq.doBellyEffects(dt)
 				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
 				local directions = {}
 				local icon
-				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" and sbq.occupant[i].location ~= "nested" then
+				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" then
 					for dir, data in pairs(struggledata.directions or {}) do
-						if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings) ) then
+						if data and (not sbq.driving or data.drivingEnabled) and ((data.settings == nil) or sbq.checkSettings(data.settings)) then
 							if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
 							if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
-							directions[dir] = data.indicate or "default"
+							if sbq.isNested and data.indicate == "red" then
+								directions[dir] = "default"
+							else
+								directions[dir] = data.indicate or "default"
+							end
 						elseif data then
 							if dir == "front" then dir = ({"left","","right"})[sbq.direction+2] end
 							if dir == "back" then dir = ({"right","","left"})[sbq.direction+2] end
@@ -702,7 +617,7 @@ function sbq.doBellyEffects(dt)
 						},
 						icon = icon,
 						time = sbq.occupant[i].occupantTime,
-						location = (sbq.sbqData.locations[location] or {}).name or nested or ""
+						location = (sbq.sbqData.locations[location] or {}).name
 					}
 				})
 			end

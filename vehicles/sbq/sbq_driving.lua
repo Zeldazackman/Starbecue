@@ -1,5 +1,7 @@
 
 function sbq.updateDriving(dt)
+	if sbq.isNested then return end
+
 	if sbq.driver and sbq.driving then
 		local light = sbq.sbqData.lights.driver
 		if light ~= nil then

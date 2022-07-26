@@ -222,18 +222,6 @@ function sbq.transformPrey(i)
 	local smolPreyData = sbq.occupant[i].progressBarData or {}
 	if smolPreyData.layer == true then
 		smolPreyData.layer = sbq.occupant[i].smolPreyData
-		for j = 0, sbq.occupantSlots do
-			if sbq.occupant[j].location == "nested" and sbq.occupant[j].nestedPreyData.owner == sbq.occupant[i].id then
-				local nestedPreyData = sb.jsonMerge(sbq.occupant[j].nestedPreyData, {})
-				sbq.occupant[j].nestedPreyData = {
-					nestedPreyData = nestedPreyData,
-					location = "nested",
-					owner = sbq.occupant[i].id,
-					massMultiplier = smolPreyData.layerMass or 1,
-					locationEffect = nestedPreyData.locationEffect
-				}
-			end
-		end
 	end
 	if type(smolPreyData.species) == "string" then
 		local entityType = world.entityType(sbq.occupant[i].id)

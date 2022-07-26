@@ -330,58 +330,6 @@ function sbq.entityLounging( entity )
 	return false
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
-	if sbq.driver ~= occupantId then return false end
-	local total = sbq.occupants.total
-	total = total + 1
-
-	if total > emptyslots then return false end
-	if locationslots ~= -1 and total > locationslots then return false end
-
-	if sbq.stateconfig[sbq.state].edible then
-		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
-			sbq.getSmolPreyData(
-				sbq.settings,
-				world.entityName( entity.id() ),
-				sbq.state,
-				sbq.partTags,
-				sbq.seats[sbq.driverSeat].smolPreyData
-			),
-			entity.id()
-		)
-
-		for i = sbq.startSlot, sbq.occupantSlots do
-			if type(sbq.occupant[i].id) == "number" then
-				local location = sbq.occupant[i].location
-				local massMultiplier = 0
-
-				if location == "nested" then
-					location = sbq.occupant[i].nestedPreyData.ownerLocation
-				end
-				massMultiplier = (sbq.sbqData.locations[location] or {}).mass or 0
-
-				if sbq.occupant[i].location == "nested" then
-					massMultiplier = massMultiplier * sbq.occupant[i].nestedPreyData.massMultiplier
-				end
-
-				local occupantData = sb.jsonMerge(sbq.occupant[i], {
-					location = "nested",
-					visible = false,
-					nestedPreyData = {
-						owner = sbq.driver,
-						location = sbq.occupant[i].location,
-						massMultiplier = massMultiplier,
-						digest = (sbq.sbqData.locations[location] or {}).digest,
-						nestedPreyData = sbq.occupant[i].nestedPreyData
-					}
-				})
-				world.sendEntityMessage( source, "addPrey", occupantData)
-			end
-		end
-		return true
-	end
-end
-
 function sbq.setStatusValue(name, value)
 	world.sendEntityMessage(sbq.driver, "sbqSetStatusValue", name, value)
 end

@@ -487,7 +487,10 @@ function sbq.setMovementParams(name)
 end
 
 function sbq.checkSpawnerExists()
-	if sbq.spawner ~= nil and world.entityExists(sbq.spawner) then
+	if sbq.spawner and world.entityExists(sbq.spawner) then
+		if sbq.isNested then
+			mcontroller.setPosition(world.entityPosition(sbq.spawner))
+		end
 	elseif (sbq.spawnerUUID ~= nil) then
 		for i = sbq.startSlot, sbq.occupantSlots do
 			local id = sbq.occupant[i].id

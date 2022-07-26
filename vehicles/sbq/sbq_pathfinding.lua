@@ -1,6 +1,7 @@
 require("/scripts/pathing.lua")
 
 function sbq.updatePathfinding(dt)
+	if sbq.isNested then return end
 	local driver = sbq.driver
 	if sbq.driving and (driver ~= nil) and (world.entityType(driver) == "player") then return end
 	--[[

@@ -114,6 +114,9 @@ function sbq.checkRefresh(dt)
 	if sbq.sbqCurrentData.type == "driver" then
 		sbq.loopedMessage("checkRefresh", sbq.sbqCurrentData.id, "settingsMenuRefresh", {}, function (result)
 			if result ~= nil then
+				if result.isNested then
+					pane.dismiss()
+				end
 				sbq.predatorSettings = result.settings
 				sbq.occupants = result.occupants
 				sbq.occupant = result.occupant

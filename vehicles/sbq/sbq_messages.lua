@@ -99,6 +99,7 @@ message.setHandler( "settingsMenuRefresh", function(_,_)
 	local refreshList = sbq.refreshList
 	sbq.refreshList = nil
 	return {
+		isNested = sbq.isNested,
 		occupants = sbq.occupants,
 		occupant = sbq.occupant,
 		powerMultiplier = sbq.seats[sbq.driverSeat].controls.powerMultiplier,
@@ -130,12 +131,7 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
 		local location = sbq.lounging[eid].location
 		local success, timing = sbq.doTransition("digest"..location)
-		for i = 0, sbq.occupantSlots do
-			if type(sbq.occupant[i].id) == "number" and sbq.occupant[i].location == "nested" and sbq.occupant[i].nestedPreyData.owner == eid then
-				sbq.occupant[i].location = location
-				sbq.occupant[i].nestedPreyData = sbq.occupant[i].nestedPreyData.nestedPreyData
-			end
-		end
+
 		sbq.lounging[eid].location = "digesting"
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
@@ -170,9 +166,9 @@ message.setHandler( "uneat", function(_,_, eid)
 	sbq.uneat( eid )
 end )
 
-message.setHandler( "sbqSmolPreyData", function(_,_, seatindex, data, type)
-	world.sendEntityMessage( type, "despawn", true ) -- no warpout
+message.setHandler( "sbqSmolPreyData", function(_,_, seatindex, data, id)
 	sbq.occupant[seatindex].smolPreyData = data
+	sbq.occupant[seatindex].smolPreyData.id = id
 end )
 
 message.setHandler( "indicatorClosed", function(_,_, eid)
@@ -243,4 +239,9 @@ message.setHandler("sbqDigestDrop", function(_,_, itemDrop)
 	}
 
 	world.spawnItem(itemDrop, mcontroller.position())
+end)
+
+message.setHandler( "uneaten", function ()
+	sbq.isNested = false
+	animator.resetTransformationGroup("globalScale")
 end)
