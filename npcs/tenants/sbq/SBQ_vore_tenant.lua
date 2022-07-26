@@ -270,14 +270,16 @@ end
 
 function sbq.say(string, tags, imagePortrait, emote)
 	if type(string) == "string" and string ~= "" then
+		local options = {sound = randomChatSound()}
 		if type(imagePortrait) == "string" and config.getParameter("sayPortrait") then
-			npc.sayPortrait(string, imagePortrait, tags)
+			npc.sayPortrait(string, imagePortrait, tags, options)
 		else
-			npc.say(string, tags)
+			npc.say(string, tags, options )
 		end
 		if type(emote) == "string" then
 			npc.emote(emote)
 		end
+
 	end
 end
 
