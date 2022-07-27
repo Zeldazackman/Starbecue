@@ -1,7 +1,6 @@
 ---@diagnostic disable: undefined-global
 
 local _init = init
-sizeRayMisfire = false
 
 local switchAbility = {
 	primary = "alt",
@@ -17,6 +16,7 @@ function init()
 			self:setState(self.cooldown, self.cooldownTimer)
 			return
 		end
+		local sizeRayMisfire
 		if math.random()<0.25 and not sizeRayHoldingShift then
 			sizeRayMisfire = true
 			sizeRayHoldingShift = not sizeRayHoldingShift
