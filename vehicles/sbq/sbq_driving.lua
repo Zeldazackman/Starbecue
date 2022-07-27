@@ -601,14 +601,14 @@ function sbq.grab(location, aimrange, grabrange)
 	local target = sbq.checkValidAim(sbq.driverSeat, aimrange or 2)
 	if target then
 		sbq.addRPC(world.sendEntityMessage(target, "sbqIsPreyEnabled", "held"), function(enabled)
-			if enabled then
+			if enabled and enabled.enabled then
 				local prey = world.entityQuery(mcontroller.position(), grabrange or 5, {
 					withoutEntityId = sbq.driver,
 					includedTypes = {"creature"}
 				})
 				for _, entity in ipairs(prey) do
 					if entity == target then
-						if sbq.eat(target, location) then
+						if sbq.eat(target, location, enabled.size or 1) then
 							sbq.grabbing = target
 							sbq.movement.clickActionsDisabled = true
 						end

@@ -66,7 +66,8 @@ function sbq.doTransition( direction, scriptargs )
 
 	if tconfig.voreType ~= nil and type(id) == "number" and world.entityExists(id) then
 		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
-			if enabled then
+			if enabled and enabled.enabled then
+				scriptargs.size = enabled.size
 				sbq.doingTransition(tconfig, direction, scriptargs)
 			else
 				animator.playSound("error")

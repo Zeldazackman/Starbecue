@@ -1,4 +1,5 @@
 local mysteriousTFDuration
+require("/scripts/rect.lua")
 
 function sbq.everything_primary()
 	message.setHandler("sbqApplyStatusEffects", function(_,_, statlist)
@@ -41,8 +42,11 @@ function sbq.everything_primary()
 	message.setHandler("sbqIsPreyEnabled", function(_,_, voreType)
 		local preySettings = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 		if preySettings.preyEnabled == false then return false end
-		return preySettings[voreType]
+		local boundRectSize = rect.size(mcontroller.boundBox())
+		local size = (boundRectSize[1] * boundRectSize[2])/8 -- size is being based on the player 1 prey would be 4x2
+		return { enabled = preySettings[voreType], size = size}
 	end)
+
 	message.setHandler("sbqGetPreyEnabled", function(_,_)
 		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	end)

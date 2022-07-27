@@ -68,7 +68,7 @@ function feed() -- function copied from SSVM mostly because it gets its target w
 
 	-- [SBQ] taking off the bottom of feed() now that we have the target to get SBQ's prey enabling options
 	sbq.addRPC(world.sendEntityMessage(tempTarget, "sbqIsPreyEnabled", config.getParameter("sbqPredType")), function(enabled)
-		if enabled then
+		if enabled and enabled.enabled then
 			doFeed(tempTarget)
 		end
 	end)
@@ -101,7 +101,7 @@ end
 local oldReqFeed = reqFeed
 function reqFeed(input) -- since reqFeed() has an input source from the start, we can just wrap our check around it
 	sbq.addRPC(world.sendEntityMessage(input.sourceId, "sbqIsPreyEnabled", sbqPredType), function(enabled)
-		if enabled then
+		if enabled and data.enabled then
 			oldReqFeed(input)
 		end
 	end)

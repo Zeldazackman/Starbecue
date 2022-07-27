@@ -124,8 +124,8 @@ function state.sit.pin( args )
 	end
 	if #pinnable >= 1 then
 		sbq.addRPC(world.sendEntityMessage(pinnable[1], "sbqIsPreyEnabled", "held"), function(enabled)
-			if enabled then
-				sbq.eat( pinnable[1], "hug" )
+			if enabled and enabled.enabled then
+				sbq.eat( pinnable[1], "hug", enabled.size or 1 )
 			end
 			sbq.doTransition("lay")
 		end)
@@ -196,7 +196,7 @@ function state.back.update()
 end
 
 function state.back.bed( args )
-	return sbq.eat( args.id, "hug" )
+	return sbq.eat( args.id, "hug", args.size or 1 )
 end
 
 function state.back.unbed(args)

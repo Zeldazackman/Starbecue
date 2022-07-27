@@ -19,7 +19,7 @@ function sbq.wrappingframe()
 		sbq.doAnim("wrappingState", "none")
 	end
 end
--- this uses math to not have to deal with defining each percentage individually 
+-- this uses math to not have to deal with defining each percentage individually
 -- heck we can even do this
 --Wait, so that will get the right frames regardless of frame amount? Well, as long as I specify the right parts (replace wrappingstate and wrapping with relevant bits if I reuse)?
 -- yeah
@@ -60,15 +60,4 @@ _letGrabGo = sbq.letGrabGo
 function sbq.letGrabGo(location)
 	_letGrabGo(location)
 	sbq.doAnim("wrappingState", "none")
-end
-
--- also I am doing an overhaul of the tf effects, so heres one thing that will save you a bit of effort later
-function sbq.otherLocationEffects(i, eid, health, bellyEffect, location )
-	if (sbq.occupant[i].progressBar <= 0) and sbq.settings.trappedTF then
-		sbq.loopedMessage("TF"..eid, eid, "sbqIsPreyEnabled", {"transformImmunity"}, function (immune)
-			if not immune then
-				transformMessageHandler( eid , 3, { species = "sbqMummy", state = "stand" } )
-			end
-		end)
-	end
 end

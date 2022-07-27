@@ -11,14 +11,14 @@ function sbq.unForceSeat(occupantId)
 	end
 end
 
-function sbq.eat( occupantId, location, force, voreType )
+function sbq.eat( occupantId, location, size, voreType, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
 	local full, locationslots = sbq.locationFull(location)
 
 	if (not occupantId) or (not world.entityExists(occupantId))
-	or ((full or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
+	or ((full or ((size or 1) > locationslots) or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
 	then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
@@ -34,6 +34,7 @@ function sbq.eat( occupantId, location, force, voreType )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			sbq.occupant[seatindex].id = occupantId
 			sbq.occupant[seatindex].location = location
+			sbq.occupant[seatindex].size = size or 1
 			sbq.occupant[seatindex].entryType = voreType
 			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 			sbq.forceSeat( occupantId, seatindex)
@@ -49,6 +50,7 @@ function sbq.eat( occupantId, location, force, voreType )
 	sbq.occupant[seatindex].id = occupantId
 	sbq.occupant[seatindex].species = species
 	sbq.occupant[seatindex].location = location
+	sbq.occupant[seatindex].size = size or 1
 	sbq.occupant[seatindex].entryType = voreType
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 	sbq.forceSeat( occupantId, seatindex )
@@ -206,7 +208,7 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 			end
 		end
 	end
-	if sbq.eat( args.id, location, false, voreType ) then
+	if sbq.eat( args.id, location, args.size, voreType ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
 		sbq.showEmote("emotehappy")
@@ -561,8 +563,8 @@ function sbq.doBellyEffects(dt)
 					end
 				end
 			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].egged or sbq.occupant[i][location.."EggifyImmune"]) then
-				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (immune)
-					if not immune then
+				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (enabled)
+					if enabled and not enabled.enabled then
 						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")
 					else
 						sbq.occupant[i][location.."EggifyImmune"] = true
@@ -571,8 +573,8 @@ function sbq.doBellyEffects(dt)
 					sbq.occupant[i][location.."EggifyImmune"] = true
 				end)
 			elseif sbq.settings[location.."TF"] and sbq.sbqData.locations[location].TF and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."TFImmune"]) then
-				sbq.loopedMessage(location.."TF"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].TF.immunity or "transformImmunity"}, function (immune)
-					if not immune then
+				sbq.loopedMessage(location.."TF"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].TF.immunity or "transformImmunity"}, function (enabled)
+					if enabled and not enabled.enabled then
 						sbq.transformMessageHandler(eid)
 					else
 						sbq.occupant[i][location.."TFImmune"] = true

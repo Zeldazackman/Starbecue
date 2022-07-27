@@ -412,7 +412,7 @@ function sbq.searchForValidPrey(voreType)
 	if storage.settings.huntFriendlyPlayers or storage.settings.huntHostilePlayers then
 		for i, entity in ipairs(players) do
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-				if enabled then
+				if enabled and enabled.enabled then
 					table.insert(sbq.targetedEntities, {entity, voreType})
 				end
 			end)
@@ -421,7 +421,7 @@ function sbq.searchForValidPrey(voreType)
 	if storage.settings.huntHostileNPCs or storage.settings.huntFriendlyNPCs then
 		for i, entity in ipairs(npcs) do
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-				if enabled then
+				if enabled and enabled.enabled then
 					table.insert(sbq.targetedEntities, {entity, voreType})
 				end
 			end)
@@ -430,7 +430,7 @@ function sbq.searchForValidPrey(voreType)
 	if storage.settings.huntHostileMonsters or storage.settings.huntFriendlyMonsters then
 		for i, entity in ipairs(monsters) do
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqIsPreyEnabled", voreType), function (enabled)
-				if enabled then
+				if enabled and enabled.enabled then
 					table.insert(sbq.targetedEntities, {entity, voreType})
 				end
 			end)

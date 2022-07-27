@@ -11,16 +11,16 @@ end )
 
 message.setHandler( "eggify", function(_,_, eid, data)
 	local location = sbq.lounging[eid].location
-	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].eggify or {}).immunity or "eggImmunity"), function (immune)
-		if not immune then
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].eggify or {}).immunity or "eggImmunity"), function (enabled)
+		if enabled and not enabled.enabled then
 			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].eggify, "eggify")
 		end
 	end)
 end)
 message.setHandler( "transform", function(_,_, eid, data)
 	local location = sbq.lounging[eid].location
-	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].TF or {}).immunity or "transformImmunity"), function (immune)
-		if not immune then
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].TF or {}).immunity or "transformImmunity"), function (enabled)
+		if enabled and not enabled.enabled then
 			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].TF)
 		end
 	end)
@@ -224,15 +224,15 @@ end)
 
 message.setHandler( "requestEat", function (_,_, prey, voreType, location)
 	sbq.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
-		if enabled then
-			sbq.eat(prey, location)
+		if enabled and enabled.enabled then
+			sbq.eat(prey, location, enabled.size or 1)
 		end
 	end)
 end)
 
 message.setHandler( "requestUneat", function (_,_, prey, voreType)
 	sbq.addRPC(world.sendEntityMessage(prey, "sbqIsPreyEnabled", voreType), function(enabled)
-		if enabled then
+		if enabled and enabled.enabled then
 			sbq.uneat(prey)
 		end
 	end)
