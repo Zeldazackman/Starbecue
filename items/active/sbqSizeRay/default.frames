@@ -7,5 +7,14 @@
       [ "chargeGrow.1", "chargeGrow.2", "chargeGrow.3", "fullchargeGrow.1", "fullchargeGrow.2" ],
       [ "chargeShrink.1", "chargeShrink.2", "chargeShrink.3", "fullchargeShrink.1", "fullchargeShrink.2" ]
     ]
+  },
+  "aliases" : {
+    "fireShrink.1" : "chargeShrink.3",
+    "fireShrink.2" : "chargeShrink.2",
+    "fireShrink.3" : "chargeShrink.1",
+
+    "fireGrow.1" : "chargeGrow.3",
+    "fireGrow.2" : "chargeGrow.2",
+    "fireGrow.3" : "chargeGrow.1"
   }
 }

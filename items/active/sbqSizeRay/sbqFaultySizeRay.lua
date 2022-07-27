@@ -3,6 +3,10 @@
 local _init = init
 sizeRayMisfire = false
 
+local switchAbility = {
+	primary = "alt",
+	alt = "primary"
+}
 function init()
 	_init()
 
@@ -19,8 +23,12 @@ function init()
 		end
 		if math.random()<0.25 then
 			sizeRayMisfire = true
-			local table = {"primary","alt"}
-			local otherAbility = config.getParameter((table[math.random(2)]).."Ability")
+			local abilityName = switchAbility[sizeRayWhichFireMode]
+			if math.random()<0.25 then
+				local table = {"primary","alt"}
+				abilityName = (table[math.random(2)])
+			end
+			local otherAbility = config.getParameter(abilityName.."Ability")
 			self.chargeLevel = copy(otherAbility.chargeLevels[math.random(2,#otherAbility.chargeLevels)])
 		end
 

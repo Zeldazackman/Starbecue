@@ -1,0 +1,31 @@
+{
+  "projectileName" : "sbqSizeZapGrow",
+  "physics" : "laser",
+  "actionOnCollide" : [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/projectiles/plasmabullet_ricochet1.ogg",
+        "/sfx/projectiles/plasmabullet_ricochet2.ogg",
+        "/sfx/projectiles/plasmabullet_ricochet3.ogg"
+      ]
+    }
+  ],
+  "lightColor" : [209, 134, 14],
+  "image" : "sbqSizeZapGrow.png",
+  "animationCycle" : 0.25,
+  "frameNumber" : 1,
+  "damagePoly" : [ [5, -5], [-5, -5], [-5, 5], [5, 5] ],
+  "timeToLive" : 10,
+  "pointLight" : true,
+  "fullbright" : true,
+  "speed" : 100,
+  "damageType" : "NoDamage",
+  "damageKind" : "default",
+  "power" : 0,
+  "damageTeam" : {
+    "type" : "indiscriminate"
+  },
+  "scripts" : ["/projectiles/sbqSizeZap/sbqSizeZap.lua"]
+
+}

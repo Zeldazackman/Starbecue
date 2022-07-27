@@ -3,11 +3,28 @@
 local _init = init
 local _update = update
 sizeRayHoldingShift = false
-sizeRayWhichFireMode = "none"
+sizeRayWhichFireMode = "primary"
+
+sizeRayFireModeMap = {
+	primary = "Shrink",
+	alt = "Grow"
+}
+
+local _sizeRayAnimator_setAnimationState
+function sizeRayAnimator_setAnimationState(state, anim, force)
+	if anim ~= "off" then
+		anim = anim..sizeRayFireModeMap[sizeRayWhichFireMode]
+	end
+	_sizeRayAnimator_setAnimationState(state, anim, force)
+end
 
 function init()
 	_init()
 
+	if type(_sizeRayAnimator_setAnimationState) ~= "function" then
+		_sizeRayAnimator_setAnimationState = animator.setAnimationState
+		animator.setAnimationState = sizeRayAnimator_setAnimationState
+	end
 	function ChargeFire:fireProjectile()
 
 		local params = copy(self.chargeLevel.projectileParameters or {})
@@ -45,6 +62,8 @@ end
 
 function update(dt, fireMode, shiftHeld, controls)
 	sizeRayHoldingShift = shiftHeld
-	sizeRayWhichFireMode = fireMode
+	if fireMode ~= "none" then
+		sizeRayWhichFireMode = fireMode
+	end
 	_update(dt, fireMode, shiftHeld, controls)
 end

@@ -7,33 +7,53 @@
           "off" : {},
           "chargeGrow" : {
             "frames" : 3,
-            "cycle" : 1.0,
+            "cycle" : 0.75,
             "mode" : "transition",
             "transition" : "fullchargeGrow",
             "properties" : {
-              "persistentSound" : "/sfx/gun/dragonhead_charge2.ogg",
+              "persistentSound" : "/sfx/gun/magnorbs_shield_loop2.ogg",
               "persistentSoundStopTime" : 0.5
             }
           },
           "fullchargeGrow" : {
             "frames" : 2,
             "cycle" : 0.2,
-            "mode" : "loop"
+            "mode" : "loop",
+            "properties" : {
+              "persistentSound" : "/sfx/gun/magnorbs_shield_loop2.ogg",
+              "persistentSoundStopTime" : 0.5
+            }
+          },
+          "fireGrow" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "off"
           },
           "chargeShrink" : {
             "frames" : 3,
-            "cycle" : 1.0,
+            "cycle" : 0.75,
             "mode" : "transition",
             "transition" : "fullchargeShrink",
             "properties" : {
-              "persistentSound" : "/sfx/gun/dragonhead_charge2.ogg",
+              "persistentSound" : "/sfx/gun/magnorbs_shield_loop1.ogg",
               "persistentSoundStopTime" : 0.5
             }
           },
           "fullchargeShrink" : {
             "frames" : 2,
             "cycle" : 0.2,
-            "mode" : "loop"
+            "mode" : "loop",
+            "properties" : {
+              "persistentSound" : "/sfx/gun/magnorbs_shield_loop1.ogg",
+              "persistentSoundStopTime" : 0.5
+            }
+          },
+          "fireShrink" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "off"
           }
         }
       }
@@ -64,6 +84,11 @@
                 "image" : "<partImage>:fullchargeGrow.<frame>"
               }
             },
+            "fireGrow" : {
+              "properties" : {
+                "image" : "<partImage>:fireGrow.<frame>"
+              }
+            },
             "chargeShrink" : {
               "properties" : {
                 "image" : "<partImage>:chargeShrink.<frame>"
@@ -72,6 +97,11 @@
             "fullchargeShrink" : {
               "properties" : {
                 "image" : "<partImage>:fullchargeShrink.<frame>"
+              }
+            },
+            "fireShrink" : {
+              "properties" : {
+                "image" : "<partImage>:fireShrink.<frame>"
               }
             }
           }
@@ -103,6 +133,11 @@
                 "image" : "<partImage>:fullchargeGrow.<frame>"
               }
             },
+            "fireGrow" : {
+              "properties" : {
+                "image" : "<partImage>:fireGrow.<frame>"
+              }
+            },
             "chargeShrink" : {
               "properties" : {
                 "image" : "<partImage>:chargeShrink.<frame>"
@@ -111,6 +146,11 @@
             "fullchargeShrink" : {
               "properties" : {
                 "image" : "<partImage>:fullchargeShrink.<frame>"
+              }
+            },
+            "fireShrink" : {
+              "properties" : {
+                "image" : "<partImage>:fireShrink.<frame>"
               }
             }
           }
@@ -125,8 +165,8 @@
   },
 
   "sounds" : {
-    "error" : ["/sfx/interface/clickon_error.ogg"],
-    "fire" : [ "/sfx/gun/dragonhead_fire1.ogg" ],
-    "fire2" : [ "/sfx/gun/dragonhead_charged_fire1.ogg", "/sfx/gun/dragonhead_charged_fire1.ogg", "/sfx/gun/dragonhead_charged_fire1.ogg", "/sfx/gun/dragonhead_charged_fire2.ogg", "/sfx/gun/dragonhead_charged_fire3.ogg", "/sfx/gun/dragonhead_charged_fire4.ogg" ]
+    "error" : ["/sfx/interface/energy_out1.ogg","/sfx/interface/energy_out2.ogg"],
+    "fire" : [ "/sfx/gun/lightningcoil1.ogg", "/sfx/gun/lightningcoil2.ogg", "/sfx/gun/lightningcoil3.ogg" ],
+    "fire2" : [ "/sfx/gun/magnorbs_fire1.ogg", "/sfx/gun/magnorbs_fire2.ogg", "/sfx/gun/magnorbs_fire3.ogg", "/sfx/gun/magnorbs_fire4.ogg", "/sfx/gun/magnorbs_fire5.ogg" ]
   }
 }

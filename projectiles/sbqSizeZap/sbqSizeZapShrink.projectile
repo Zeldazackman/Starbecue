@@ -1,20 +1,24 @@
 {
-  "projectileName" : "sbqSizeZap",
+  "projectileName" : "sbqSizeZapShrink",
   "physics" : "laser",
   "actionOnCollide" : [
     {
       "action" : "sound",
       "options" : [
-        "/sfx/gun/impact_arrow.ogg"
+        "/sfx/projectiles/plasmabullet_ricochet1.ogg",
+        "/sfx/projectiles/plasmabullet_ricochet2.ogg",
+        "/sfx/projectiles/plasmabullet_ricochet3.ogg"
       ]
     }
   ],
-  "image" : "sbqSizeZap.png",
+  "lightColor" : [100, 100, 100],
+  "image" : "sbqSizeZapShrink.png",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damagePoly" : [ [8, -0.2], [8.5, -0.2], [8.5, 0.2], [8, 0.2] ],
+  "damagePoly" : [ [5, -5], [-5, -5], [-5, 5], [5, 5] ],
   "timeToLive" : 10,
-  "pointLight" : false,
+  "pointLight" : true,
+  "fullbright" : true,
   "speed" : 100,
   "damageType" : "NoDamage",
   "damageKind" : "default",
