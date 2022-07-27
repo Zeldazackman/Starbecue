@@ -5,26 +5,35 @@
         "default" : "off",
         "states" : {
           "off" : {},
-          "charge" : {
-            "frames" : 4,
+          "chargeGrow" : {
+            "frames" : 3,
             "cycle" : 1.0,
             "mode" : "transition",
-            "transition" : "fullcharge",
+            "transition" : "fullchargeGrow",
             "properties" : {
               "persistentSound" : "/sfx/gun/dragonhead_charge2.ogg",
               "persistentSoundStopTime" : 0.5
             }
           },
-          "fullcharge" : {
-            "frames" : 3,
+          "fullchargeGrow" : {
+            "frames" : 2,
             "cycle" : 0.2,
             "mode" : "loop"
           },
-          "fire" : {
-            "frames" : 1,
-            "cycle" : 0.07,
+          "chargeShrink" : {
+            "frames" : 3,
+            "cycle" : 1.0,
             "mode" : "transition",
-            "transition" : "off"
+            "transition" : "fullchargeShrink",
+            "properties" : {
+              "persistentSound" : "/sfx/gun/dragonhead_charge2.ogg",
+              "persistentSoundStopTime" : 0.5
+            }
+          },
+          "fullchargeShrink" : {
+            "frames" : 2,
+            "cycle" : 0.2,
+            "mode" : "loop"
           }
         }
       }
@@ -45,19 +54,24 @@
                 "image" : "<partImage>:empty"
               }
             },
-            "charge" : {
+            "chargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:charge.<frame>"
+                "image" : "<partImage>:chargeGrow.<frame>"
               }
             },
-            "fullcharge" : {
+            "fullchargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:fullcharge.<frame>"
+                "image" : "<partImage>:fullchargeGrow.<frame>"
               }
             },
-            "fire" : {
+            "chargeShrink" : {
               "properties" : {
-                "image" : "<partImage>:fire"
+                "image" : "<partImage>:chargeShrink.<frame>"
+              }
+            },
+            "fullchargeShrink" : {
+              "properties" : {
+                "image" : "<partImage>:fullchargeShrink.<frame>"
               }
             }
           }
@@ -79,19 +93,24 @@
                 "image" : "<partImage>:empty"
               }
             },
-            "charge" : {
+            "chargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:charge.<frame>"
+                "image" : "<partImage>:chargeGrow.<frame>"
               }
             },
-            "fullcharge" : {
+            "fullchargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:fullcharge.<frame>"
+                "image" : "<partImage>:fullchargeGrow.<frame>"
               }
             },
-            "fire" : {
+            "chargeShrink" : {
               "properties" : {
-                "image" : "<partImage>:fire"
+                "image" : "<partImage>:chargeShrink.<frame>"
+              }
+            },
+            "fullchargeShrink" : {
+              "properties" : {
+                "image" : "<partImage>:fullchargeShrink.<frame>"
               }
             }
           }

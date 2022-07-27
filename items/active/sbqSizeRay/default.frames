@@ -1,14 +1,11 @@
 {
   "frameGrid" : {
-    "size" : [28, 14],
-    "dimensions" : [4, 3],
+    "size" : [32, 16],
+    "dimensions" : [5, 3],
     "names" : [
-      [ "empty", null, null, null ],
-      [ "charge.1", "charge.2", "charge.3", "charge.4" ],
-      [ "fullcharge.1", "fullcharge.2", "fire", null]
+      [ "empty", null, null, null, null ],
+      [ "chargeGrow.1", "chargeGrow.2", "chargeGrow.3", "fullchargeGrow.1", "fullchargeGrow.2" ],
+      [ "chargeShrink.1", "chargeShrink.2", "chargeShrink.3", "fullchargeShrink.1", "fullchargeShrink.2" ]
     ]
-  },
-  "aliases" : {
-    "fullcharge.3" : "fire"
   }
 }
