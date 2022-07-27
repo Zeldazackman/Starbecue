@@ -1,10 +1,10 @@
 {
-  "itemName" : "sbqSizeRay",
+  "itemName" : "sbqFaultySizeRay",
   "price" : 1500,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A ray gun to alter people's size, hold shift to target yourself.\nprimary: shrink\nalt: growth",
-  "shortdescription" : "Size Ray",
+  "description" : "A ray gun to alter people's size, though this one seems... iffy, hold shift to target yourself.\nprimary: shrink\nalt: growth",
+  "shortdescription" : "Faulty Size Ray",
   "tooltipKind" : "base",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
@@ -23,6 +23,7 @@
   "scripts" : [
     "/items/active/weapons/ranged/gun.lua",
     "/items/active/sbqSizeRay/sbqSizeRay.lua",
+    "/items/active/sbqSizeRay/sbqFaultySizeRay.lua",
     "/items/active/activeitemOverrides.lua"
   ],
 

@@ -26,7 +26,11 @@
 	"baseOffset" : [0.5, 0.0],
 	"muzzleOffset" : [1.875, 0.125],
 
-	"scripts" : ["/items/active/weapons/ranged/gun.lua", "/items/active/sbqPotionDartGun/sbqPotionDartGun.lua"],
+	"scripts" : [
+		"/items/active/weapons/ranged/gun.lua",
+		"/items/active/sbqPotionDartGun/sbqPotionDartGun.lua",
+		"/items/active/activeitemOverrides.lua"
+	],
 
 	"elementalType" : "physical",
 
