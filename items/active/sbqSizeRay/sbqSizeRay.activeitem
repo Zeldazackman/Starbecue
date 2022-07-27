@@ -1,0 +1,128 @@
+{
+  "itemName" : "sbqSizeRay",
+  "price" : 1500,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "A ray gun to alter people's size, hold shift to target yourself.\nprimary: shrink\nalt: growth",
+  "shortdescription" : "Size Ray",
+  "tooltipKind" : "base",
+  "category" : "uniqueWeapon",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged"],
+
+  "inventoryIcon" : "sbqSizeRayIcon.png",
+
+  "animation" : "sbqSizeRay.animation",
+  "animationParts" : {
+    "gun" : "sbqSizeRay.png",
+    "gunfullbright" : "sbqSizeRayFullbright.png"
+  },
+  "animationCustom" : {},
+  "muzzleOffset" : [2.5, 0.5],
+
+  "scripts" : ["/items/active/weapons/ranged/gun.lua"],
+
+  "primaryAbilityType" : "chargefire",
+  "primaryAbility" : {
+    "chargeLevels" : [
+      {
+        "time" : 0,
+        "energyCost" : 5,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 1},
+        "inaccuracy" : 0.008,
+        "baseDamage" : 0,
+        "fireSound" : "fire"
+      },
+      {
+        "time" : 1,
+        "energyCost" : 5,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 0.75},
+        "inaccuracy" : 0.008,
+        "baseDamage" : 0,
+        "fireSound" : "fire"
+      },
+      {
+        "time" : 2,
+        "energyCost" : 40,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 0.5},
+        "inaccuracy" : 0,
+        "baseDamage" : 0,
+        "fireSound" : "fire2"
+      },
+      {
+        "time" : 4,
+        "energyCost" : 40,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 0.25},
+        "inaccuracy" : 0,
+        "baseDamage" : 0,
+        "fireSound" : "fire2"
+      },
+      {
+        "time" : 6,
+        "energyCost" : 40,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 0.1},
+        "inaccuracy" : 0,
+        "baseDamage" : 0,
+        "fireSound" : "fire2"
+      }
+    ]
+  },
+  "altAbilityType" : "chargefire",
+  "altAbility" : {
+    "chargeLevels" : [
+      {
+        "time" : 0,
+        "energyCost" : 5,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 1},
+        "inaccuracy" : 0.008,
+        "baseDamage" : 0,
+        "fireSound" : "fire"
+      },
+      {
+        "time" : 1,
+        "energyCost" : 5,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 1.25},
+        "inaccuracy" : 0.008,
+        "baseDamage" : 0,
+        "fireSound" : "fire"
+      },
+      {
+        "time" : 2,
+        "energyCost" : 40,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 1.5},
+        "inaccuracy" : 0,
+        "baseDamage" : 0,
+        "fireSound" : "fire2"
+      },
+      {
+        "time" : 5,
+        "energyCost" : 40,
+        "cooldown" : 1,
+        "projectileType" : "sbqSizeZap",
+        "projectileParameters" : {"animOverrideScale" : 2},
+        "inaccuracy" : 0,
+        "baseDamage" : 0,
+        "fireSound" : "fire2"
+      }
+    ]
+  },
+
+
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}
