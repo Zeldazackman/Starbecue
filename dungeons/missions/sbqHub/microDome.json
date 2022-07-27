@@ -173,18 +173,99 @@
          "objects":[
                 {
                  "height":8,
-                 "id":9,
-                 "name":"",
+                 "id":10,
+                 "name":"random Vore NPC",
                  "properties":
                     {
-
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":8,
-                 "x":64,
-                 "y":72
+                 "x":56,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":11,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":80,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":12,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":104,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":13,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":128,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":14,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":152,
+                 "y":40
+                }, 
+                {
+                 "height":8,
+                 "id":15,
+                 "name":"random Vore NPC",
+                 "properties":
+                    {
+                     "parameters":"{ \"randomSelection\":\"\/npcs\/sbqHub\/sbqHubMicroNpcList.config\", \"npcParameters\":{\"statusControllerSettings\" : {\"statusProperties\" : {\"animOverrideScale\" : 0.25,\"speciesAnimOverrideData\" : {\"permanent\" : true}}}} }",
+                     "stagehand":"sbqNPCSpawner"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":32,
+                 "y":40
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -193,7 +274,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":10,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "properties":
     {
