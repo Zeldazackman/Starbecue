@@ -20,6 +20,7 @@
 # Writers
 	radiantAurora
 	Blueninja
+	FFWizard
 
 # Playtesters / Bug Hunters
 	xeronious

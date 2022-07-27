@@ -117,6 +117,7 @@ function init()
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end)
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
+		settings.locationsData = sbq.speciesConfig.sbqData.locations
 		if getVictimPreySettings then
 			sbq.addRPC(world.sendEntityMessage(entity, "sbqGetPreyEnabled" ), function (sbqPreyEnabled)
 				sbq.getRandomDialogue( treestart, entity, sb.jsonMerge(storage.settings, sb.jsonMerge(sbqPreyEnabled or {}, settings or {})))
@@ -202,6 +203,7 @@ function interact(args)
 		if args.predData then
 			sbq.predData = args.predData
 			local settings = args.predData.settings
+			settings.locationsData = sbq.speciesConfig.sbqData.locations
 			settings.location = args.predData.location
 			settings.predator = args.predData.predator
 			settings.isPrey = true

@@ -129,17 +129,13 @@ end
 function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	local dialogueTree = dialogueTree
 	local options = {}
-	local effect
+	local effect = settings[settings.location.."Effect"]
 	if settings.digested then
 		return dialogueTree.digested or dialogueTree.default
 	end
 
-	if settings.cumDigesting then
-		effect = "sbqCumDigest"
-	elseif settings.digesting then
-		effect = "sbqDigest"
-	elseif settings[settings.location.."Effect"] ~= nil then
-		effect = settings.location.."Effect"
+	if settings.cumDigesting or settings.digesting then
+		effect = ((settings.locationsData[settings.location] or {}).digest).effect or "sbqDigest"
 	end
 	table.insert(options, effect or "default")
 
@@ -159,16 +155,12 @@ end
 
 function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
 	local dialogueTree = dialogueTree
-	local effect
+	local effect = settings[settings.location.."Effect"]
 	if settings.digested then
 		return dialogueTree.digested or dialogueTree.default
 	end
-	if settings.cumDigesting then
-		effect = "sbqCumDigest"
-	elseif settings.digesting then
-		effect = "sbqDigest"
-	elseif settings[settings.location.."Effect"] ~= nil then
-		effect = settings.location.."Effect"
+	if settings.cumDigesting or settings.digesting then
+		effect = ((settings.locationsData[settings.location] or {}).digest).effect or "sbqDigest"
 	end
 
 	return dialogueTree[effect] or dialogueTree.default
