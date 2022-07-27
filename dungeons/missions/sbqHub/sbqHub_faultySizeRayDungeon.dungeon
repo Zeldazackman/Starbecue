@@ -1,0 +1,20 @@
+{
+	"metadata" : {
+		"name" : "sbqHub_faultySizeRayDungeon",
+		"species" : "generic",
+		"rules" : [],
+		"anchor" : [ "house" ],
+		"maxRadius" : 1000000,
+		"maxParts" : 1
+	},
+
+	"parts" : [
+		{
+			"name" : "house",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "faultySizeRayDungeon.json" ]
+		}
+	]
+}

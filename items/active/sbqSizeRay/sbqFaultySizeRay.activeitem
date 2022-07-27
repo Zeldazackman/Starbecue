@@ -3,7 +3,7 @@
   "price" : 500,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A ray gun to alter people's size, though this one seems... iffy, hold shift to target yourself.\n \n^cyan;primary: shrink\n^orange;alt: growth",
+  "description" : "A ray gun to alter people's size, though this one seems... iffy.\n \n^green;Hold shift to target yourself.\n \n^reset;primary: ^cyan;shrink\n^reset;alt: ^orange;growth",
   "shortdescription" : "Faulty Size Ray",
   "tooltipKind" : "base",
   "category" : "uniqueWeapon",
