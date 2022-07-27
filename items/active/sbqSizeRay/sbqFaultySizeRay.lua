@@ -17,7 +17,7 @@ function init()
 			self:setState(self.cooldown, self.cooldownTimer)
 			return
 		end
-		if math.random()<0.25 then
+		if math.random()<0.25 and not sizeRayHoldingShift then
 			sizeRayMisfire = true
 			sizeRayHoldingShift = not sizeRayHoldingShift
 		end
