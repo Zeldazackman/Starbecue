@@ -1,133 +1,153 @@
 {
-  "itemName" : "sbqFaultySizeRay",
-  "price" : 500,
-  "maxStack" : 1,
-  "rarity" : "Legendary",
-  "description" : "A ray gun to alter people's size, though this one seems... iffy.\n \n^green;Hold shift to target yourself.\n \n^reset;primary: ^cyan;shrink\n^reset;alt: ^orange;growth",
-  "shortdescription" : "Faulty Size Ray",
-  "tooltipKind" : "base",
-  "category" : "uniqueWeapon",
-  "twoHanded" : true,
-  "itemTags" : ["weapon","ranged"],
+	"itemName" : "sbqFaultySizeRay",
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A ray gun to alter people's size, though this one seems... iffy.\n \n^green;Hold shift to target yourself.\n \n^reset;primary: ^cyan;shrink\n^reset;alt: ^orange;growth",
+	"shortdescription" : "Faulty Size Ray",
+	"tooltipKind" : "base",
+	"category" : "uniqueWeapon",
+	"twoHanded" : true,
+	"itemTags" : ["weapon","ranged"],
 
-  "inventoryIcon" : "sbqFaultySizeRay.png:empty",
+	"inventoryIcon" : "sbqFaultySizeRay.png:empty",
 
-  "animation" : "sbqSizeRay.animation",
-  "animationParts" : {
-    "gun" : "sbqFaultySizeRay.png",
-    "gunfullbright" : "sbqSizeRayFullbright.png"
-  },
-  "animationCustom" : {},
-  "muzzleOffset" : [2.5, 0.5],
+	"animation" : "sbqSizeRay.animation",
+	"animationParts" : {
+		"gun" : "sbqFaultySizeRay.png",
+		"gunfullbright" : "sbqSizeRayFullbright.png"
+	},
+	"animationCustom" : {},
+	"muzzleOffset" : [2.5, 0.5],
 
-  "scripts" : [
-    "/items/active/weapons/ranged/gun.lua",
-    "/items/active/sbqSizeRay/sbqSizeRay.lua",
-    "/items/active/sbqSizeRay/sbqFaultySizeRay.lua",
-    "/items/active/activeitemOverrides.lua"
-  ],
+	"scripts" : [
+		"/items/active/weapons/ranged/gun.lua",
+		"/items/active/sbqSizeRay/sbqSizeRay.lua",
+		"/items/active/activeitemOverrides.lua"
+	],
 
-  "primaryAbilityType" : "chargefire",
-  "primaryAbility" : {
-    "chargeLevels" : [
-      {
-        "time" : 0,
-        "energyCost" : 5,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapShrink",
-        "projectileParameters" : {"animOverrideScale" : 1},
-        "inaccuracy" : 0.008,
-        "baseDamage" : 0,
-        "fireSound" : "fire"
-      },
-      {
-        "time" : 1,
-        "energyCost" : 5,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapShrink",
-        "projectileParameters" : {"animOverrideScale" : 0.75},
-        "inaccuracy" : 0.008,
-        "baseDamage" : 0,
-        "fireSound" : "fire"
-      },
-      {
-        "time" : 2,
-        "energyCost" : 40,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapShrink",
-        "projectileParameters" : {"animOverrideScale" : 0.5},
-        "inaccuracy" : 0,
-        "baseDamage" : 0,
-        "fireSound" : "fire2"
-      },
-      {
-        "time" : 4,
-        "energyCost" : 40,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapShrink",
-        "projectileParameters" : {"animOverrideScale" : 0.25},
-        "inaccuracy" : 0,
-        "baseDamage" : 0,
-        "fireSound" : "fire2"
-      },
-      {
-        "time" : 6,
-        "energyCost" : 40,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapShrink",
-        "projectileParameters" : {"animOverrideScale" : 0.1},
-        "inaccuracy" : 0,
-        "baseDamage" : 0,
-        "fireSound" : "fire2"
-      }
-    ]
-  },
-  "altAbilityType" : "chargefire",
-  "altAbility" : {
-    "chargeLevels" : [
-      {
-        "time" : 0,
-        "energyCost" : 5,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapGrow",
-        "projectileParameters" : {"animOverrideScale" : 1},
-        "inaccuracy" : 0.008,
-        "baseDamage" : 0,
-        "fireSound" : "fire"
-      },
-      {
-        "time" : 1,
-        "energyCost" : 5,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapGrow",
-        "projectileParameters" : {"animOverrideScale" : 1.25},
-        "inaccuracy" : 0.008,
-        "baseDamage" : 0,
-        "fireSound" : "fire"
-      },
-      {
-        "time" : 2,
-        "energyCost" : 40,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapGrow",
-        "projectileParameters" : {"animOverrideScale" : 1.5},
-        "inaccuracy" : 0,
-        "baseDamage" : 0,
-        "fireSound" : "fire2"
-      },
-      {
-        "time" : 5,
-        "energyCost" : 40,
-        "cooldown" : 1,
-        "projectileType" : "sbqSizeZapGrow",
-        "projectileParameters" : {"animOverrideScale" : 2},
-        "inaccuracy" : 0,
-        "baseDamage" : 0,
-        "fireSound" : "fire2"
-      }
-    ]
-  },
+	"primaryAbilityType" : "chargefire",
+	"primaryAbility" : {
+		"scripts" : ["/items/active/weapons/ranged/abilities/chargefire/chargefire.lua", "/items/active/sbqSizeRay/sbqSizeRayChargeFire.lua", "/items/active/sbqSizeRay/sbqFaultySizeRayChargeFire.lua"],
+		"chargeLevels" : [
+			{
+				"time" : 0,
+				"energyCost" : 5,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapShrink",
+				"projectileParameters" : {"animOverrideScale" : 1},
+				"inaccuracy" : 0.008,
+				"baseDamage" : 0,
+				"fireSound" : "fire",
+				"level": "1"
+			},
+			{
+				"time" : 1,
+				"energyCost" : 5,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapShrink",
+				"projectileParameters" : {"animOverrideScale" : 0.75},
+				"inaccuracy" : 0.008,
+				"baseDamage" : 0,
+				"fireSound" : "fire",
+				"level": "2"
+			},
+			{
+				"time" : 2,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapShrink",
+				"projectileParameters" : {"animOverrideScale" : 0.5},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2",
+				"level": "3"
+			},
+			{
+				"time" : 3,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapShrink",
+				"projectileParameters" : {"animOverrideScale" : 0.25},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2",
+				"level": "4"
+			},
+			{
+				"time" : 5,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapShrink",
+				"projectileParameters" : {"animOverrideScale" : 0.1},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2",
+				"level": "4"
+			}
+		]
+	},
+	"altAbilityType" : "chargefire",
+	"altAbility" : {
+		"scripts" : ["/items/active/weapons/ranged/abilities/chargefire/chargefire.lua", "/items/active/sbqSizeRay/sbqSizeRayChargeFire.lua", "/items/active/sbqSizeRay/sbqFaultySizeRayChargeFire.lua"],
+		"chargeLevels" : [
+			{
+				"time" : 0,
+				"energyCost" : 5,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapGrow",
+				"projectileParameters" : {"animOverrideScale" : 1},
+				"inaccuracy" : 0.008,
+				"baseDamage" : 0,
+				"fireSound" : "fire",
+				"level": "1"
+			},
+			{
+				"time" : 1,
+				"energyCost" : 5,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapGrow",
+				"projectileParameters" : {"animOverrideScale" : 1.25},
+				"inaccuracy" : 0.008,
+				"baseDamage" : 0,
+				"fireSound" : "fire",
+				"level": "2"
+			},
+			{
+				"time" : 2,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapGrow",
+				"projectileParameters" : {"animOverrideScale" : 1.5},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2",
+				"level": "3"
+			},
+			{
+				"time" : 3,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapGrow",
+				"projectileParameters" : {"animOverrideScale" : 2},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2",
+				"level": "4"
+			},
+			{
+				"time" : 5,
+				"energyCost" : 40,
+				"cooldown" : 0.25,
+				"projectileType" : "sbqSizeZapGrow",
+				"projectileParameters" : {"animOverrideScale" : 3},
+				"inaccuracy" : 0,
+				"baseDamage" : 0,
+				"fireSound" : "fire2"
+			}
+		]
+	},
 
 
-  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+	"builder" : "/items/buildscripts/buildunrandweapon.lua"
 }
