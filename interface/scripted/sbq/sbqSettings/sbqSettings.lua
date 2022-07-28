@@ -46,6 +46,12 @@ function sbq.getInitialData()
 	sbq.lastType = sbq.sbqCurrentData.type
 
 	sbq.predatorEntity = sbq.sbqCurrentData.id
+
+	sbq.animOverrideSettings = status.statusProperty("speciesAnimOverrideSettings") or {}
+	sbq.animOverrideSettings.scale = status.statusProperty("animOverrideScale") or 1
+	sbq.animOverrideOverrideSettings = status.statusProperty("speciesAnimOverrideOverrideSettings") or {}
+
+	sbq.sbqCurrentData.species = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 end
 
 function sbq.getHelpTab()
@@ -377,6 +383,13 @@ function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 
 	sbq.saveSettings()
+end
+
+function sbq.changeAnimOverrideSetting(settingname, settingvalue)
+	sbq.animOverrideSettings[settingname] = settingvalue
+	status.setStatusProperty("speciesAnimOverrideSettings", sbq.animOverrideSettings)
+	world.sendEntityMessage(player.id(), "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
+	world.sendEntityMessage(player.id(), "animOverrideScale", sbq.animOverrideSettings.scale)
 end
 
 function sbq.changePreySetting(settingname, settingvalue)

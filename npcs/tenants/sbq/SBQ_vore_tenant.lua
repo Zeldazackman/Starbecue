@@ -116,6 +116,9 @@ function init()
 		status.clearPersistentEffects("digestImmunity")
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	end)
+	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings)
+		status.setStatusProperty("speciesAnimOverrideSettings", settings)
+	end)
 	message.setHandler("sbqSayRandomLine", function ( _,_, entity, settings, treestart, getVictimPreySettings )
 		settings.locationsData = sbq.speciesConfig.sbqData.locations
 		if getVictimPreySettings then

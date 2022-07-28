@@ -47,6 +47,13 @@ function init()
 			{statusProperties = { sbqPreyEnabled = settings}}
 		)
 	end)
+	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings, index)
+
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
+			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
+			{statusProperties = { speciesAnimOverrideSettings = settings}}
+		)
+	end)
 
 	message.setHandler("sbqDeedInteract", function (_,_, args)
 		_onInteraction(args)

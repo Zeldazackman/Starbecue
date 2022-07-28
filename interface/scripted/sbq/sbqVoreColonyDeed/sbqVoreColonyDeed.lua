@@ -32,6 +32,10 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
+		sbq.animOverrideSettings = sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings or {}
+		sbq.animOverrideSettings.scale = sbq.tenant.overrides.statusControllerSettings.statusProperties.animOverrideScale or 1
+		sbq.animOverrideOverrideSettings = sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideOverrideSettings or {}
+
 		sbq.globalSettings = sbq.predatorSettings
 		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))
 		escapeValueMin:setText(tostring(sbq.overrideSettings.escapeDifficultyMin or sbq.predatorSettings.escapeDifficultyMin or 0))
@@ -286,6 +290,17 @@ function sbq.changePreySetting(settingname, value)
 	sbq.savePreySettings()
 end
 
+function sbq.changeAnimOverrideSetting(settingname, settingvalue)
+	sbq.animOverrideSettings[settingname] = settingvalue
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings, sbq.tenantIndex)
+	if sbq.storage.occupier then
+		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "animOverrideScale", sbq.animOverrideSettings.scale)
+	end
+end
+
+
 indexes = {
 
 }
@@ -381,7 +396,7 @@ function escapeValue:onEnter()
 	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
 	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
 	then
-		sbq.changeGlobalSetting("escapeDifficulty", value)
+		sbq.changePredSetting("escapeDifficulty", value)
 	else
 		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))
 	end
