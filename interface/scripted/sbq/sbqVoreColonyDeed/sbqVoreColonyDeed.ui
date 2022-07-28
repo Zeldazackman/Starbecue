@@ -88,24 +88,11 @@
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Escape Modifier", "inline": true },
+							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center"},
 							[
-								{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
-								{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-								{ "type" : "label", "text" : "Current Value", "inline": true }
-							],
-							[
-								{ "type" : "iconButton", "id" : "decEscapeMin", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "escapeValueMin", "text" : "0", "inline": true },
-								{ "type" : "iconButton", "id" : "incEscapeMin", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-								{ "type" : "label", "text" : "Minimum Value", "inline": true }
-							],
-							[
-								{ "type" : "iconButton", "id" : "decEscapeMax", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-								{ "type" : "label", "id" : "escapeValueMax", "text" : "10", "inline": true },
-								{ "type" : "iconButton", "id" : "incEscapeMax", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-								{ "type" : "label", "text" : "Maximum Value", "inline": true }
+								{ "type" : "textBox", "id" : "escapeValueMin", "toolTip" : "Minimum Escape Difficulty", "text" : "0" },
+								{ "type" : "textBox", "id" : "escapeValue", "toolTip" : "Current Escape Difficulty", "text" : "0" },
+								{ "type" : "textBox", "id" : "escapeValueMax", "toolTip" : "Maximum Escape Difficulty", "text" : "10" }
 							]
 						]}]],
 						{ "type" : "panel", "style" : "convex", "children" : [

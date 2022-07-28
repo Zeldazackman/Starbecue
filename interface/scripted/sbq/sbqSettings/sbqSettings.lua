@@ -379,11 +379,6 @@ function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.saveSettings()
 end
 
-function sbq.changeEscapeModifier(inc)
-	sbq.changeGlobalSetting("escapeDifficulty", (sbq.globalSettings.escapeDifficulty or 0) + inc)
-	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-end
-
 function sbq.changePreySetting(settingname, settingvalue)
 	sbq.sbqPreyEnabled = status.statusProperty("sbqPreyEnabled") or {}
 	sbq.sbqPreyEnabled[settingname] = settingvalue
@@ -478,12 +473,18 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function decEscape:onClick()
-	sbq.changeEscapeModifier(-1)
-end
-
-function incEscape:onClick()
-	sbq.changeEscapeModifier(1)
+function escapeValue:onEnter()
+	local value = tonumber(escapeValue.text)
+	local isNumber = type(value) == "number"
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	then
+		sbq.changeGlobalSetting("escapeDifficulty", value)
+	else
+		escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+	end
 end
 
 --------------------------------------------------------------------------------------------------

@@ -20,31 +20,54 @@ function sbq.locationPanel()
 				{ type = "checkBox", id = location .. "HammerspaceDisabledButton", checked = not sbq.predatorSettings[location.."HammerspaceDisabled"], visible = (data.hammerspace or false) and sbq.predatorSettings.hammerspace, toolTip = "Enable Hammerspace for the "..(data.name or location) },
 				{ type = "iconButton", id = location .. "HammerspaceLocked", image = "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png", visible = (not data.hammerspace) and sbq.predatorSettings.hammerspace, toolTip = "The "..(data.name or location).." Can't have hammerspace." },
 				{ type = "checkBox", id = location .. "CompressionButton", checked = sbq.predatorSettings[location.."Compression"], visible = sbq.overrideSettings[location .. "Compression"] == nil, toolTip = "Enable compression within "..(data.name or location) },
-				{
-					{ mode = "horizontal" },
-					{ type = "iconButton", id = location .. "PrevMin", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the min size of the "..(data.name or location) },
-					{ type = "label", id = location .. "ValueMin", text = " "..(sbq.predatorSettings[location.."VisualMin"] or data.minVisual or 0).." ", inline = true },
-					{ type = "iconButton", id = location .. "NextMin", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the min size of the "..(data.name or location) },
-				},
-				{
-					{ mode = "horizontal" },
-					{ type = "iconButton", id = location .. "PrevMax", image = "/interface/pickleft.png", hoverImage = "/interface/pickleftover.png", toolTip = "Decrease the max size of the "..(data.name or location) },
-					{ type = "label", id = location .. "ValueMax", text = " "..(sbq.predatorSettings[location.."VisualMax"] or 1).." ", inline = true },
-					{ type = "iconButton", id = location .. "NextMax", image = "/interface/pickright.png", hoverImage = "/interface/pickrightover.png", toolTip = "Increase the max size of the "..(data.name or location) },
-				}
+				{ type = "textBox", id = location .. "VisualMin", toolTip = "Minimum Occupancy"},
+				{ type = "textBox", id = location .. "VisualMax", toolTip = "Maximum Occupancy"},
+				{ type = "textBox", id = location .. "Multiplier", toolTip = "Occupant Multiplier"}
 			},
 		} })
 		local enableHammerspace = _ENV[location .. "HammerspaceDisabledButton"]
 
-		local prevMax = _ENV[location .. "PrevMax"]
-		local labelMax = _ENV[location .. "ValueMax"]
-		local nextMax = _ENV[location .. "NextMax"]
-
-		local prevMin = _ENV[location .. "PrevMin"]
-		local labelMin = _ENV[location .. "ValueMin"]
-		local nextMin = _ENV[location .. "NextMin"]
+		local visualMin = _ENV[location .. "VisualMin"]
+		local visualMax = _ENV[location .. "VisualMax"]
+		local multiplier = _ENV[location .. "Multiplier"]
 
 		local compression = _ENV[location .. "CompressionButton"]
+
+		visualMin:setText(tostring(sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or 0))
+		function visualMin:onEnter()
+			local value = tonumber(visualMin.text)
+			local isNumber = type(value) == "number"
+			if isNumber and sbq.overrideSettings[location.."VisualMin"] == nil
+			and value <= (sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or data.max or 0 )
+			then
+				sbq.changePredatorSetting(location.."VisualMin", value)
+			else
+				visualMin:setText(tostring(sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or 0))
+			end
+		end
+
+		visualMax:setText(tostring(sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or 0))
+		function visualMax:onEnter()
+			local value = tonumber(visualMax.text)
+			local isNumber = type(value) == "number"
+			if isNumber and sbq.overrideSettings[location.."VisualMax"] == nil
+			and value >= (sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or data.minVisual or 0 )
+			then
+				sbq.changePredatorSetting(location.."VisualMax", value)
+			else
+				visualMax:setText(tostring(sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or 0))
+			end
+		end
+		multiplier:setText(tostring(sbq.overrideSettings[location.."Multiplier"] or sbq.predatorSettings[location.."Multiplier"] or 1))
+		function multiplier:onEnter()
+			local value = tonumber(multiplier.text)
+			local isNumber = type(value) == "number"
+			if isNumber and sbq.overrideSettings[location.."Multiplier"] == nil then
+				sbq.changePredatorSetting(location.."Multiplier", value)
+			else
+				multiplier:setText(tostring(sbq.overrideSettings[location.."Multiplier"] or sbq.predatorSettings[location.."Multiplier"] or 1))
+			end
+		end
 
 		function enableHammerspace:onClick()
 			if data.sided then
@@ -63,62 +86,5 @@ function sbq.locationPanel()
 			sbq.saveSettings()
 		end
 
-		function prevMax:onClick()
-			if data.sided then
-				sbq.changeLocationMax(location .. "L", -1, labelMax, labelMin)
-				sbq.changeLocationMax(location .. "R", -1, labelMax, labelMin)
-			end
-			sbq.changeLocationMax(location, -1, labelMax, labelMin)
-		end
-		function nextMax:onClick()
-			if data.sided then
-				sbq.changeLocationMax(location .. "L", 1, labelMax, labelMin)
-				sbq.changeLocationMax(location .. "R", 1, labelMax, labelMin)
-			end
-			sbq.changeLocationMax(location, 1, labelMax, labelMin)
-		end
-
-		function prevMin:onClick()
-			if data.sided then
-				sbq.changeLocationMin(location .. "L", -1, labelMin, labelMax)
-				sbq.changeLocationMin(location .. "R", -1, labelMin, labelMax)
-			end
-			sbq.changeLocationMin(location, -1, labelMin, labelMax)
-		end
-		function nextMin:onClick()
-			if data.sided then
-				sbq.changeLocationMin(location .. "L", 1, labelMin, labelMax)
-				sbq.changeLocationMin(location .. "R", 1, labelMin, labelMax)
-			end
-			sbq.changeLocationMin(location, 1, labelMin, labelMax)
-		end
 	end
-end
-
-function sbq.changeLocationMax(location, inc, labelMax, labelMin)
-	local newValue = (sbq.predatorSettings[location.."VisualMax"] or 0) + inc
-	if newValue < (sbq.predatorConfig.locations[location].minVisual or 0) then return
-	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return
-	elseif type(sbq.predatorSettings[location.."VisualMin"]) == "number" and newValue < (sbq.predatorSettings[location.."VisualMax"]) then
-		sbq.predatorSettings[location.."VisualMin"] = newValue
-		labelMin:setText(" "..newValue.." ")
-	end
-
-	labelMax:setText(" "..newValue.." ")
-	sbq.predatorSettings[location.."VisualMax"] = newValue
-	sbq.saveSettings()
-end
-
-function sbq.changeLocationMin(location, inc, labelMin, labelMax)
-	local newValue = (sbq.predatorSettings[location.."VisualMin"] or 0) + inc
-	if newValue < (sbq.predatorConfig.locations[location].minVisual or 0) then return
-	elseif newValue > (sbq.predatorConfig.locations[location].max or 0) then return
-	elseif type(sbq.predatorSettings[location.."VisualMax"]) == "number" and newValue > (sbq.predatorSettings[location.."VisualMax"]) then
-		sbq.predatorSettings[location.."VisualMax"] = newValue
-		labelMax:setText(" "..newValue.." ")
-	end
-
-	labelMin:setText(" "..newValue.." ")
-	sbq.predatorSettings[location.."VisualMin"] = newValue
-	sbq.saveSettings()
 end

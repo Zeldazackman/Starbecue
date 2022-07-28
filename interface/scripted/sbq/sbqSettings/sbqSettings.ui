@@ -21,12 +21,12 @@
 					],[// second quarter
 						{ "expandMode" : [2, 2]},
 						[[{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "h" },
-							{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },{ "type" : "iconButton", "id" : "impossibleEscapeLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-							{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
-							{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-							{ "type" : "label", "text" : "Escape Modifier" }
+							{ "mode" : "v" },
+							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center"},
+							[
+								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },{ "type" : "iconButton", "id" : "impossibleEscapeLocked", "image" : "lockedDisabled.png", "visible" : false },
+								{ "type" : "textBox", "id" : "escapeValue", "toolTip" : "Current Escape Difficulty", "text" : "0" }
+							]
 						]}]],
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},

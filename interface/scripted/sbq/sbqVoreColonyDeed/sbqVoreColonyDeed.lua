@@ -33,9 +33,9 @@ function init()
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
 		sbq.globalSettings = sbq.predatorSettings
-		escapeValue:setText(tostring(sbq.predatorSettings.escapeDifficulty or 0))
-		escapeValueMin:setText(tostring(sbq.predatorSettings.escapeDifficultyMin or 0))
-		escapeValueMax:setText(tostring(sbq.predatorSettings.escapeDifficultyMax or 0))
+		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))
+		escapeValueMin:setText(tostring(sbq.overrideSettings.escapeDifficultyMin or sbq.predatorSettings.escapeDifficultyMin or 0))
+		escapeValueMax:setText(tostring(sbq.overrideSettings.escapeDifficultyMax or sbq.predatorSettings.escapeDifficultyMax or 0))
 
 		personalityText:setText(sbq.predatorSettings.personality or "default")
 		moodText:setText(sbq.predatorSettings.mood or "default")
@@ -286,12 +286,6 @@ function sbq.changePreySetting(settingname, value)
 	sbq.savePreySettings()
 end
 
-function sbq.changeEscapeModifier( settingname, label, inc )
-	if sbq.overrideSettings[settingname] ~= nil then return end
-	sbq.changePredSetting(settingname, (sbq.predatorSettings[settingname] or 0) + inc)
-	label:setText(tostring(sbq.predatorSettings[settingname] or 0))
-end
-
 indexes = {
 
 }
@@ -379,28 +373,38 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function decEscape:onClick()
-	sbq.changeEscapeModifier("escapeDifficulty", escapeValue, -1)
+function escapeValue:onEnter()
+	local value = tonumber(escapeValue.text)
+	local isNumber = type(value) == "number"
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	then
+		sbq.changeGlobalSetting("escapeDifficulty", value)
+	else
+		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))
+	end
 end
 
-function incEscape:onClick()
-	sbq.changeEscapeModifier("escapeDifficulty", escapeValue, 1)
+function escapeValueMin:onEnter()
+	local value = tonumber(escapeValueMin.text)
+	local isNumber = type(value) == "number"
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil then
+		sbq.changePredSetting("escapeDifficultyMin", value)
+	else
+		escapeValueMin:setText(tostring(sbq.overrideSettings.escapeDifficultyMin or sbq.predatorSettings.escapeDifficultyMin or 0))
+	end
 end
 
-function decEscapeMin:onClick()
-	sbq.changeEscapeModifier("escapeDifficultyMin", escapeValueMin, -1)
-end
-
-function incEscapeMin:onClick()
-	sbq.changeEscapeModifier("escapeDifficultyMin", escapeValueMin, 1)
-end
-
-function decEscapeMax:onClick()
-	sbq.changeEscapeModifier("escapeDifficultyMax", escapeValueMax, -1)
-end
-
-function incEscapeMax:onClick()
-	sbq.changeEscapeModifier("escapeDifficultyMax", escapeValueMax, 1)
+function escapeValueMax:onEnter()
+	local value = tonumber(escapeValueMax.text)
+	local isNumber = type(value) == "number"
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMax == nil then
+		sbq.changePredSetting("escapeDifficultyMax", value)
+	else
+		escapeValueMax:setText(tostring(sbq.overrideSettings.escapeDifficultyMax or sbq.predatorSettings.escapeDifficultyMax or 0))
+	end
 end
 
 --------------------------------------------------------------------------------------------------

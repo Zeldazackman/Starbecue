@@ -18,34 +18,36 @@
 
 				{ "type" : "image", "file" : "predHudBottom.png", "noAutoCrop" : true },
 
-				{ "type" : "panel", "id" : "effectsPanel", "style" : "concave", "size" : [38,27], "position" : [4,4], "children" : [
-					{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+				{ "type" : "panel", "id" : "effectsPanel", "style" : "concave", "size" : [45,28], "position" : [9,3], "children" : [
+					{ "type" : "layout", "mode" : "vertical", "spacing" : 0, "children" : [
 						[
-							[[{"expandMode":[2,2]}]],
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "noneButton", "value" : "none", "radioGroup" : "effectsGroup"},
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "healButton", "value" : "heal",  "radioGroup" : "effectsGroup"},
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "transformButton" },
-							[[{"expandMode":[2,2]}]]
+							[[{ "expandMode" : [2, 2]}]]
 						],
 						[
-							[[{"expandMode":[2,2]}]],
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "softDigestButton", "value" : "softDigest", "radioGroup" : "effectsGroup"},
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "digestButton", "value" : "digest",  "radioGroup" : "effectsGroup"},
+							[[{ "expandMode" : [2, 2]}]],
 							{ "type" : "checkBox", "id" : "eggifyButton" },
-							[[{"expandMode":[2,2]}]]
+							[[{ "expandMode" : [2, 2]}]]
 						]
 					]}
 				]},
-				{ "type" : "iconButton", "id" : "prevLocation", "position" : [1, 8], "image" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png", "hoverImage" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?replace;000000=FFFFFF" },
-				{ "type" : "iconButton", "id" : "nextLocation", "position" : [40, 8], "image" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?flipx", "hoverImage" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?replace;000000=FFFFFF?flipx" },
+				{ "type" : "iconButton", "id" : "prevLocation", "position" : [3, 8], "image" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png", "hoverImage" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?replace;000000=FFFFFF" },
+				{ "type" : "iconButton", "id" : "nextLocation", "position" : [50, 8], "image" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?flipx", "hoverImage" : "/interface/scripted/sbq/sbqIndicatorHud/leftSide.png?replace;000000=FFFFFF?flipx" },
 
-				{ "type" : "panel", "style" : "concave", "size" : [48,24], "position" : [45,5], "children" : [
-					{ "type" : "label", "text" : "  Escape" },
+				{ "type" : "panel", "style" : "concave", "size" : [32,18], "position" : [61,12], "children" : [
+					{ "spacing" : -1},
 					[
 						{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
-						{ "type" : "iconButton", "id" : "decEscape", "toolTip" : "Make escaping easier", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-						{ "type" : "label", "id" : "escapeValue", "text" : "0", "inline": true },
-						{ "type" : "iconButton", "id" : "incEscape", "toolTip" : "Make escaping harder", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+						{ "type" : "textBox", "id" : "escapeValue", "text" : "0", "toolTip": "Current Escape Difficulty" }
 					]
 				]},
 

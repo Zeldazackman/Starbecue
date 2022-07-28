@@ -353,7 +353,7 @@ function sbq.updateOccupants(dt)
 				sbq.occupant[i].visited[location .. "Visited"] = true
 				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
 
-				sbq.occupants[location] = sbq.occupants[location] + (sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier)
+				sbq.occupants[location] = sbq.occupants[location] + ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
 				sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
 				massMultiplier = sbq.sbqData.locations[location].mass or 0
 

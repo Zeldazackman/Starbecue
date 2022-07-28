@@ -51,6 +51,8 @@ function init()
 	end
 	sbq.overrideSettings = sbq.predatorConfig.overrideSettings or {}
 
+	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+
 	if sbq.predatorConfig.listLocations then
 		for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 			if sbq.predatorSettings.lastLocationSelect == location then
@@ -287,13 +289,6 @@ function sbq.setPortrait( canvasName, data, offset )
 	end
 end
 
-function sbq.changeEscapeModifier(inc)
-	sbq.globalSettings.escapeDifficulty = (sbq.globalSettings.escapeDifficulty or 0) + inc
-	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-
-	sbq.saveSettings()
-end
-
 function sbq.saveSettings()
 	if type(sbq.sbqCurrentData.id) == "number" and sbq.sbqCurrentData.type == "driver" and world.entityExists(sbq.sbqCurrentData.id) then
 		world.sendEntityMessage( sbq.sbqCurrentData.id, "settingsMenuSet", sb.jsonMerge(sbq.predatorSettings, sbq.globalSettings))
@@ -311,12 +306,20 @@ function settings:onClick()
 	player.interact("ScriptPane", { gui = { }, scripts = {"/metagui.lua"}, ui = "starbecue:settings" })
 end
 
-function decEscape:onClick()
-	sbq.changeEscapeModifier(-1)
-end
-
-function incEscape:onClick()
-	sbq.changeEscapeModifier(1)
+function escapeValue:onEnter()
+	sb.logInfo("escapeValue")
+	local value = tonumber(escapeValue.text)
+	local isNumber = type(value) == "number"
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
+	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	then
+		sbq.globalSettings.escapeDifficulty = value
+		sbq.saveSettings()
+	else
+		escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+	end
 end
 
 function impossibleEscape:onClick()

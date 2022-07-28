@@ -33,10 +33,10 @@ function sbq.effectsPanel()
 				end
 			end
 
-			effectsLayout:addChild({ type = "layout", mode = "horizontal", spacing = -1, children = {
+			effectsLayout:addChild({ type = "layout", mode = "horizontal", spacing = 0, children = {
 				{ type = "label", text = " "..(locationData.name.." " or location), align = "right", inline = true, size = {40,10} },
 				{
-				{ size = 67},
+				{ size = 75},
 				{
 					{
 						type = "checkBox", id = location.."None", checked = sbq.predatorSettings[location.."EffectSlot"] == "none" or sbq.predatorSettings[location.."EffectSlot"] == nil,
