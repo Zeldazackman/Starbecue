@@ -18,6 +18,11 @@
 		"chargeGrow.4.3" : "chargeGrow.4.1",
 		"chargeGrow.4.4" : "chargeGrow.4.2",
 
+		"chargeGrow.5.1" : "chargeGrow.4.1",
+		"chargeGrow.5.2" : "chargeGrow.4.2",
+		"chargeGrow.5.3" : "chargeGrow.4.1",
+		"chargeGrow.5.4" : "chargeGrow.4.2",
+
 		"fireGrow.1.1" : "chargeGrow.1.1",
 		"fireGrow.1.2" : "empty",
 		"fireGrow.1.3" : "empty",
