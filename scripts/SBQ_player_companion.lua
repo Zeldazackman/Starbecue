@@ -252,7 +252,7 @@ function init()
 		end
 		status.clearPersistentEffects("digestImmunity")
 		status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-		return sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0
+		return {sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0}
 	end)
 
 	message.setHandler("sbqUnlockedSpecies", function ()

@@ -246,9 +246,9 @@ local sentDataMessage
 function update(dt)
 	if not sentDataMessage then
 		sentDataMessage = true
-		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data, scale, scaleYOffset)
-			sb.logInfo("species config return, scale is "..sb.print(scale)..", yoffset is "..sb.print(scaleYOffset))
-			initAfterInit(data, scale, scaleYOffset)
+		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data)
+			sb.logInfo("species config return, scale is "..sb.print(data[2])..", yoffset is "..sb.print(data[3]))
+			initAfterInit(table.unpack(data))
 			inited = true
 		end, function ()
 			sentDataMessage = false
