@@ -1,4 +1,7 @@
 {
+  "globalTagDefaults" : {
+    "charge": "1"
+  },
   "animatedParts" : {
     "stateTypes" : {
       "firing" : {
@@ -6,18 +9,8 @@
         "states" : {
           "off" : {},
           "chargeGrow" : {
-            "frames" : 3,
-            "cycle" : 0.75,
-            "mode" : "transition",
-            "transition" : "fullchargeGrow",
-            "properties" : {
-              "persistentSound" : "/sfx/gun/magnorbs_shield_loop2.ogg",
-              "persistentSoundStopTime" : 0.5
-            }
-          },
-          "fullchargeGrow" : {
-            "frames" : 2,
-            "cycle" : 0.2,
+            "frames" : 4,
+            "cycle" : 0.5,
             "mode" : "loop",
             "properties" : {
               "persistentSound" : "/sfx/gun/magnorbs_shield_loop2.ogg",
@@ -26,23 +19,13 @@
           },
           "fireGrow" : {
             "frames" : 3,
-            "cycle" : 0.25,
+            "cycle" : 0.2,
             "mode" : "transition",
             "transition" : "off"
           },
           "chargeShrink" : {
-            "frames" : 3,
-            "cycle" : 0.75,
-            "mode" : "transition",
-            "transition" : "fullchargeShrink",
-            "properties" : {
-              "persistentSound" : "/sfx/gun/magnorbs_shield_loop1.ogg",
-              "persistentSoundStopTime" : 0.5
-            }
-          },
-          "fullchargeShrink" : {
-            "frames" : 2,
-            "cycle" : 0.2,
+            "frames" : 4,
+            "cycle" : 0.5,
             "mode" : "loop",
             "properties" : {
               "persistentSound" : "/sfx/gun/magnorbs_shield_loop1.ogg",
@@ -51,7 +34,7 @@
           },
           "fireShrink" : {
             "frames" : 3,
-            "cycle" : 0.25,
+            "cycle" : 0.2,
             "mode" : "transition",
             "transition" : "off"
           }
@@ -76,32 +59,22 @@
             },
             "chargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:chargeGrow.<frame>"
-              }
-            },
-            "fullchargeGrow" : {
-              "properties" : {
-                "image" : "<partImage>:fullchargeGrow.<frame>"
+                "image" : "<partImage>:chargeGrow.<charge>.<frame>"
               }
             },
             "fireGrow" : {
               "properties" : {
-                "image" : "<partImage>:fireGrow.<frame>"
+                "image" : "<partImage>:fireGrow.<charge>.<frame>"
               }
             },
             "chargeShrink" : {
               "properties" : {
-                "image" : "<partImage>:chargeShrink.<frame>"
-              }
-            },
-            "fullchargeShrink" : {
-              "properties" : {
-                "image" : "<partImage>:fullchargeShrink.<frame>"
+                "image" : "<partImage>:chargeShrink.<charge>.<frame>"
               }
             },
             "fireShrink" : {
               "properties" : {
-                "image" : "<partImage>:fireShrink.<frame>"
+                "image" : "<partImage>:fireShrink.<charge>.<frame>"
               }
             }
           }
@@ -125,32 +98,22 @@
             },
             "chargeGrow" : {
               "properties" : {
-                "image" : "<partImage>:chargeGrow.<frame>"
-              }
-            },
-            "fullchargeGrow" : {
-              "properties" : {
-                "image" : "<partImage>:fullchargeGrow.<frame>"
+                "image" : "<partImage>:chargeGrow.<charge>.<frame>"
               }
             },
             "fireGrow" : {
               "properties" : {
-                "image" : "<partImage>:fireGrow.<frame>"
+                "image" : "<partImage>:fireGrow.<charge>.<frame>"
               }
             },
             "chargeShrink" : {
               "properties" : {
-                "image" : "<partImage>:chargeShrink.<frame>"
-              }
-            },
-            "fullchargeShrink" : {
-              "properties" : {
-                "image" : "<partImage>:fullchargeShrink.<frame>"
+                "image" : "<partImage>:chargeShrink.<charge>.<frame>"
               }
             },
             "fireShrink" : {
               "properties" : {
-                "image" : "<partImage>:fireShrink.<frame>"
+                "image" : "<partImage>:fireShrink.<charge>.<frame>"
               }
             }
           }

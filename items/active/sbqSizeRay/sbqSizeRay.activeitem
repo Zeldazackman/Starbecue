@@ -37,7 +37,8 @@
         "projectileParameters" : {"animOverrideScale" : 1},
         "inaccuracy" : 0.008,
         "baseDamage" : 0,
-        "fireSound" : "fire"
+        "fireSound" : "fire",
+        "level": "1"
       },
       {
         "time" : 1,
@@ -47,7 +48,8 @@
         "projectileParameters" : {"animOverrideScale" : 0.75},
         "inaccuracy" : 0.008,
         "baseDamage" : 0,
-        "fireSound" : "fire"
+        "fireSound" : "fire",
+        "level": "2"
       },
       {
         "time" : 2,
@@ -57,7 +59,8 @@
         "projectileParameters" : {"animOverrideScale" : 0.5},
         "inaccuracy" : 0,
         "baseDamage" : 0,
-        "fireSound" : "fire2"
+        "fireSound" : "fire2",
+        "level": "3"
       },
       {
         "time" : 4,
@@ -67,7 +70,8 @@
         "projectileParameters" : {"animOverrideScale" : 0.25},
         "inaccuracy" : 0,
         "baseDamage" : 0,
-        "fireSound" : "fire2"
+        "fireSound" : "fire2",
+        "level": "4"
       },
       {
         "time" : 6,
@@ -77,7 +81,8 @@
         "projectileParameters" : {"animOverrideScale" : 0.1},
         "inaccuracy" : 0,
         "baseDamage" : 0,
-        "fireSound" : "fire2"
+        "fireSound" : "fire2",
+        "level": "4"
       }
     ]
   },
@@ -92,7 +97,8 @@
         "projectileParameters" : {"animOverrideScale" : 1},
         "inaccuracy" : 0.008,
         "baseDamage" : 0,
-        "fireSound" : "fire"
+        "fireSound" : "fire",
+        "level": "1"
       },
       {
         "time" : 1,
@@ -102,7 +108,8 @@
         "projectileParameters" : {"animOverrideScale" : 1.25},
         "inaccuracy" : 0.008,
         "baseDamage" : 0,
-        "fireSound" : "fire"
+        "fireSound" : "fire",
+        "level": "2"
       },
       {
         "time" : 2,
@@ -112,7 +119,8 @@
         "projectileParameters" : {"animOverrideScale" : 1.5},
         "inaccuracy" : 0,
         "baseDamage" : 0,
-        "fireSound" : "fire2"
+        "fireSound" : "fire2",
+        "level": "3"
       },
       {
         "time" : 5,
@@ -122,7 +130,8 @@
         "projectileParameters" : {"animOverrideScale" : 2},
         "inaccuracy" : 0,
         "baseDamage" : 0,
-        "fireSound" : "fire2"
+        "fireSound" : "fire2",
+        "level": "4"
       }
     ]
   },
