@@ -137,6 +137,8 @@ function sbq.settingsMenuUpdated()
 		sbq.sbqData.locations.breastsL.max = 0
 		sbq.sbqData.locations.breastsR.max = 0
 	end
+	world.sendEntityMessage(sbq.driver, "setBoobMask", sbq.settings.breasts)
+
 	sbq.sbqData.locations.breasts.symmetrical = sbq.settings.symmetricalBreasts
 
 	if sbq.settings.pussy then

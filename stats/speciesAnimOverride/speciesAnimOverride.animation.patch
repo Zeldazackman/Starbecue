@@ -30,6 +30,7 @@
 
 	],
 	[	// transformgroups
+		{ "op" : "add", "path" : "/transformationGroups/breastscover", "value" : { "interpolated": false } },
 		{ "op" : "add", "path" : "/transformationGroups/breastsbob", "value" : { "interpolated": false } },
 		{ "op" : "add", "path" : "/transformationGroups/crotchbob", "value" : { "interpolated": false } }
 	],
@@ -929,7 +930,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.01,
-					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
+					"transformationGroups": ["breasts_offset", "breastscover", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bodyState": {
@@ -951,7 +952,7 @@
 				"properties": {
 					"centered": true,
 					"zLevel": 0.02,
-					"transformationGroups": ["breasts_offset", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
+					"transformationGroups": ["breasts_offset", "breastscover", "chestbob", "sitrotation", "sitrotation2", "globalOffset", "globalOffset2", "globalRotation", "globalRotation2", "globalScale", "globalScale2"]
 				},
 				"partStates": {
 					"bodyState": {

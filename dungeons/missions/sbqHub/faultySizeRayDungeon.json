@@ -2,7 +2,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJztlsENACEIBLGT60v7r+O+99C4elHBzGN+EkYhSE5mGQAAAELx2HkUv\/Jhh1Mt36hf6dA6o8YqnuodVzj2auWpBxXHv++wKh5HHHGcd\/RKpBke4S+MslN46s3T++mtvBSadiA=",
+         "data":"eJzt1jkKACEQBdGem3gvvetczUgwENoFlw8VvGRArFFQ42cWAQCAlN\/u6+lLlRNNrflG+5IjDH735mh19v7jjkZvr0pjsHfVjSvrsHM8jTTSON\/4KqUzXOEuVHlTqLzNMC8DgD3eeA==",
          "encoding":"base64",
          "height":30,
          "name":"back",
@@ -15,7 +15,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJztzkEKwCAMRFGPkq33P0YvVboTkWQEjRX+g9mUtvmlAACA29gPpvRlN0cNSt9O6l1zluH0fQC4mTl7xH9879VmM99590edo2fRvb5P7Wz7ohalc+fUvsymmWas8wIwBRyh",
+         "data":"eJzt1ssNABEURmFt6L8QBWhK7MSC3+siOV9ydzPjxGJwDgAA\/CY8MEqfdXOvQek7SV13dt93ub0+APys9Q+N4jfyc76YkfdWzkm1s+5TO8u+XovS+cKdwrJppBn7JArZhHk=",
          "encoding":"base64",
          "height":30,
          "name":"front",
