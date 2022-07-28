@@ -158,9 +158,14 @@ function init()
 	for _, script in ipairs(sbq.config.scripts) do
 		require(script)
 	end
+
+	message.setHandler("sbqOccupantHolderScale", function(_, _, scale, scaleYOffset)
+		sbq.predScale = scale
+		sbq.predScaleYOffset = scaleYOffset
+	end)
 end
 
-function initAfterInit(data)
+function initAfterInit(data, scale, scaleYOffset)
 	sbq.sbqData = sb.jsonMerge(config.getParameter("sbqData"), data.sbqData)
 	sbq.species = data.species
 	sbq.defaultSbqData = sb.jsonMerge(sbq.sbqData, {})
@@ -179,6 +184,8 @@ function initAfterInit(data)
 		occupant6Position = {},
 		occupant7Position = {},
 	}
+	sbq.predScale = scale
+	sbq.predScaleYOffset = scaleYOffset
 
 	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
 
@@ -239,8 +246,9 @@ local sentDataMessage
 function update(dt)
 	if not sentDataMessage then
 		sentDataMessage = true
-		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data)
-			initAfterInit(data)
+		sbq.addRPC(world.sendEntityMessage(sbq.spawner, "sbqGetSpeciesVoreConfig"), function (data, scale, scaleYOffset)
+			sb.logInfo("species config return, scale is "..sb.print(scale)..", yoffset is "..sb.print(scaleYOffset))
+			initAfterInit(data, scale, scaleYOffset)
 			inited = true
 		end, function ()
 			sentDataMessage = false

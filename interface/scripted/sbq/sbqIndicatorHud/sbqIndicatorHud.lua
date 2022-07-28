@@ -145,7 +145,7 @@ function update( dt )
 
 	-- location
 	indicator:drawText(
-		location,
+		location or "",
 		{position = {16, 29}, horizontalAnchor = "mid", wrapWidth = 25},
 		8, {127, 127, 127}
 	)

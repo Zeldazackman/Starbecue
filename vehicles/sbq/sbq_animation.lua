@@ -240,26 +240,31 @@ function sbq.victimAnimUpdate(eid)
 		local seatname = sbq.lounging[eid].seatname
 		local transformGroup = seatname.."Position"
 		sbq.resetTransformationGroup(transformGroup)
-		local scale = {victimAnim.last.xs, victimAnim.last.ys}
+
+		local predScale = sbq.predScale or 1
+		local predScaleYOffset = sbq.predScaleYOffset or 0
+
+		local scale = {victimAnim.last.xs * predScale, victimAnim.last.ys * predScale}
 		sbq.scaleTransformationGroup(transformGroup, scale)
 		sbq.applyScaleStatusEffect(eid, scale)
 		sbq.rotateTransformationGroup(transformGroup, (victimAnim.last.r * math.pi/180))
 
+		local translation
 		if sbq.stateconfig[sbq.state].locationCenters ~= nil and sbq.stateconfig[sbq.state].locationCenters[location] ~= nil
 		and (victimAnim.progress < 1 )
 		then
 			victimAnim.progress = math.min(1, victimAnim.progress + sbq.dt)
 			local progress = victimAnim.progress
 			local center = sbq.stateconfig[sbq.state].locationCenters[location]
-			local translation = { (victimAnim.last.x + ((center[1] - victimAnim.last.x) * progress)), (victimAnim.last.y + ((center[2] - victimAnim.last.y) * progress)) }
-			sbq.translateTransformationGroup(transformGroup, translation)
+			translation = { (victimAnim.last.x + ((center[1] - victimAnim.last.x) * progress)), (victimAnim.last.y + ((center[2] - victimAnim.last.y) * progress)) }
 			if progress == 1 then
 				victimAnim.last.x = center[1]
 				victimAnim.last.y = center[2]
 			end
 		else
-			sbq.translateTransformationGroup(transformGroup, {victimAnim.last.x, victimAnim.last.y})
+			translation = {victimAnim.last.x, victimAnim.last.y}
 		end
+		sbq.translateTransformationGroup(transformGroup, {translation[1] * predScale, translation[2] * predScale - predScaleYOffset})
 		return
 	end
 	local statename = victimAnim.statename

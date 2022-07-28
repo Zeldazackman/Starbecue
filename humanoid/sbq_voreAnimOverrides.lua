@@ -1,7 +1,18 @@
 ---@diagnostic disable:undefined-global
 
 --local oldInitAfterInit = initAfterInit
---local oldDoUpdate = doUpdate
+
+local oldDoUpdate = doUpdate
+function doUpdate(dt)
+	local oldScale = self.currentScale
+	if oldDoUpdate then oldDoUpdate(dt) end
+	if self.currentScale ~= oldScale then
+		local occupantHolder = (status.statusProperty("sbqCurrentData") or {}).id
+		if occupantHolder then
+			world.sendEntityMessage(occupantHolder, "sbqOccupantHolderSize", self.currentScale or 1, self.controlParameters.yOffset or 0)
+		end
+	end
+end
 
 sbq = {}
 
