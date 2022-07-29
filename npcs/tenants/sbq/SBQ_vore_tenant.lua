@@ -99,8 +99,7 @@ function init()
 	end)
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
 		sbq.setSpeciesConfig()
-		sb.logInfo("getting npc species config")
-		return sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0
+		return {sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0}
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
 		storage.settings = settings
