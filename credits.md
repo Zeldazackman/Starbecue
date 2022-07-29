@@ -41,30 +41,23 @@
 	Lunadefends
 	xyoshi
 	amber310
-	Avar
-	Canary
-	The_Gamer_Eagle
-	GoldFeather93
-	Lakota Amitola
-	pelle
 	Ethan Hennen
+	pelle
+	Ivan Ivanovich
 	Sandyagos
-	Arden Umbraheart
 	LefTonbo
 	Koole
-	Vargo_Bargo
 	assasin604
-	Sony Antoing
 	LP
-	Arden Umbraheart
-	Dirty Kitty
+	dirty kitty
 	Signum
 	Knochen
 	Fevix
 	Pascal Gailloud
-	BilboDrawings
-	Ias Delino Iney
 	Mojmír Závada
+	Ignitus
 	Selicia
 	Timothy D.
-	潘禹全
+	lil cam
+	DarkerNebel
+	Kuni"
