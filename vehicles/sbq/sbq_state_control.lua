@@ -54,6 +54,31 @@ end
 sbq.transitionLock = false
 sbq.movementLock = false
 
+
+function sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, preyList)
+	if not world.entityExists(preyList[preyIndex]) then
+		animator.playSound("error")
+		return
+	end
+	sbq.addRPC(world.sendEntityMessage(preyList[preyIndex], "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
+		if enabled and enabled.enabled then
+			if enabled.preyList then
+				for _, prey in ipairs(enabled.preyList) do
+					table.insert(preyList, prey)
+				end
+			end
+			if preyIndex >= #preyList then
+				sbq.doingTransition(tconfig, direction, scriptargs)
+			else
+				preyIndex = preyIndex + 1
+				sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, preyList)
+			end
+		else
+			animator.playSound("error")
+		end
+	end)
+end
+
 function sbq.doTransition( direction, scriptargs )
 	if (not sbq.stateconfig or not sbq.stateconfig[sbq.state].transitions[direction]) then return "no data" end
 	if sbq.transitionLock then return "locked" end
@@ -68,7 +93,12 @@ function sbq.doTransition( direction, scriptargs )
 		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
 			if enabled and enabled.enabled then
 				scriptargs.size = enabled.size
-				sbq.doingTransition(tconfig, direction, scriptargs)
+				if enabled.preyList then
+					local preyIndex = 1
+					sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, enabled.preyList)
+				else
+					sbq.doingTransition(tconfig, direction, scriptargs)
+				end
 			else
 				animator.playSound("error")
 			end
