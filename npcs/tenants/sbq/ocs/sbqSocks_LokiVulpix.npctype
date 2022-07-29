@@ -33,7 +33,7 @@
 		"defaultPortrait" : "Neutral.png",
 		"portraitPath" : "/humanoid/sbqSocks_LokiVulpix/portraits/S",
 
-		"dialogueBoxScripts" : [], // this is for scripts used by both the dialogue box and the NPC itself, used for adding extra behavior step scripts to the dialogue tree
+		"dialogueBoxScripts" : ["/npcs/tenants/sbq/ocs/pet_dialogue_script.lua"],
 		// as the scipts here are being called on both a UI and on the NPC, do avoid using the player or npc lua tables in such scripts unless said script would only trigger in the context of it having said table
 		"dialogueTree" : {
 			// after following a path, next steps will automatically advance you down the tree until there is a step that does not have a next
@@ -68,6 +68,7 @@
 				],
 				"randomButtonText" : "[Options]",
 				"options" : [
+					[ "* Pet", {"jump":["pet"]}],
 					[ "My name is...", {
 						"check":{"introduced":false},
 						"dialogue" : [
@@ -136,7 +137,7 @@
 						],
 						"jump" : ["talkAboutSelf"]
 					}],
-					["Have any intersting stories?", {"jump":["tellMeAStory"]}],
+					["Have any interesting stories?", {"jump":["tellMeAStory"]}],
 					["Thats it for now.",{"jump":["converse"]}]
 				]
 			},
@@ -199,6 +200,36 @@
 					}],
 					["Thats it for now.",{"jump":["converse"]}]
 				]
+			},
+			"pet" : {
+				"next" : "petting",
+				"normal" : {
+					"randomDialogue" : ["Purrr", "UwU"],
+					"buttonText" : ["[back]"],
+					"jump" : ["converse"]
+				},
+				"many" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"excessive" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"problem" : {
+					"randomDialogue" : ["<dontSpeak>* It's possible that you may have a problem."],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				}
+
 			},
 
 			// lines for when a pred is eating prey, be it from hunting, or from it being requested

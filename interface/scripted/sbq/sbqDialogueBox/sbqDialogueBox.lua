@@ -139,7 +139,7 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 		end
 		speaker = dialogueTree.speaker
 	end
-	local tags = { entityname = playerName }
+	local tags = { entityname = playerName, dontSpeak = "" }
 	local imagePortrait
 
 	if type(randomName) == "string" then

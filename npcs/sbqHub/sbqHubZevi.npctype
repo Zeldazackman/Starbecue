@@ -29,6 +29,7 @@
 				"randomDialogue" : ["So what did you want to talk about?"],
 				"randomButtonText" : "[options]",
 				"options" : [
+					[ "* Pet", {"jump":["pet"]}],
 					["Can we talk about you?", {
 						"randomButtonText" : ["[options]"],
 						"randomDialogue" : [ "What about me?" ],

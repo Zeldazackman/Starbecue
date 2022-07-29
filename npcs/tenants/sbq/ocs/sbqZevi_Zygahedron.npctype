@@ -68,6 +68,8 @@
 
 		"defaultPortrait" : "Neutral.png",
 		"portraitPath" : "/humanoid/sbqZevi_Zygahedron/portraits/Z",
+		"dialogueBoxScripts" : ["/npcs/tenants/sbq/ocs/pet_dialogue_script.lua"],
+
 		"dialogueTree" : {
 			// path is: personality -> mood
 			// when next step in the path isn't found it attempts to use "default" or just stays at the step its at
@@ -130,6 +132,7 @@
 				"randomDialogue" : ["So what did you want to talk about?"],
 				"randomButtonText" : "[options]",
 				"options" : [
+					[ "* Pet", {"jump":["pet"]}],
 					["Can we talk about you?", {
 						"randomButtonText" : ["[options]"],
 						"randomDialogue" : [ "What about me?" ],
@@ -139,6 +142,35 @@
 						]
 					}]
 				]
+			},
+			"pet" : {
+				"next" : "petting",
+				"normal" : {
+					"randomDialogue" : ["Purrr", "UwU"],
+					"randomButtonText" : ["[back]"],
+					"jump" : ["converse"]
+				},
+				"many" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"excessive" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"problem" : {
+					"randomDialogue" : ["<dontSpeak>* It's possible that you may have a problem."],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				}
 			},
 
 			// lines for when a pred is eating prey, be it from hunting, or from it being requested

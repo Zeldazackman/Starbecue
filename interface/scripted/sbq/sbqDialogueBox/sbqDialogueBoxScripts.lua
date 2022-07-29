@@ -81,7 +81,7 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 			if randomTable.check then
 				if sbq.checkSettings(randomTable.check, settings) then
 					if type(randomTable.add) == "string" then
-						randomTable = sbq.getRedirectedDialogue(randomTable, settings)[name]
+						randomTable = sbq.getRedirectedDialogue(randomTable.add, settings)[name]
 					else
 						randomTable = randomTable.add
 					end
@@ -92,7 +92,7 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 				end
 			else
 				if type(randomTable.add) == "string" then
-					randomTable = sbq.getRedirectedDialogue(randomTable, settings)[name]
+					randomTable = sbq.getRedirectedDialogue(randomTable.add, settings)[name]
 				else
 					randomTable = randomTable.add
 				end
@@ -102,7 +102,7 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 				table.insert(randomRolls, math.random(#randomTable))
 			end
 			prevTable = randomTable
-			randomTable = randomTable[randomRolls[i]]
+			randomTable = randomTable[randomRolls[i]] or randomTable[1]
 			i = i + 1
 		end
 	end

@@ -29,7 +29,7 @@
 		"portraitPath" : "/humanoid/sbqSandy_Fevix/portraits/S", // Depending on how you make your OC, you may want to have your portraits located in different places, so heres some suggestions
 
 
-		"dialogueBoxScripts" : [], // this is for scripts used by both the dialogue box and the NPC itself, used for adding extra behavior step scripts to the dialogue tree
+		"dialogueBoxScripts" : ["/npcs/tenants/sbq/ocs/pet_dialogue_script.lua"],
 		// as the scipts here are being called on both a UI and on the NPC, do avoid using the player or npc lua tables in such scripts unless said script would only trigger in the context of it having said table
 
 		//"dialogueTree" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree", // if one wants to just use the default random gen NPC dialogue tree, one can just delete the table and uncomment this
@@ -50,8 +50,8 @@
 					"default" : { // personality
 						"next" : "mood",
 						"default" : { // mood
-							"randomDialogue" : [ "This is my first random greeting line.", "This is my second random greeting line" ],
-							"randomButtonText" : [ "Ok", "Yeah I can tell"],
+							"randomDialogue" : [ "Blub.", "Hi I'm Sandy!", "Hi I'm Sandy Blub!\n...\nNo wait I'm just Sandy!" ],
+							"randomButtonText" : [ "Hi"],
 							"jump" : ["converse"] // all jumps are relative to the top of the dialogue tree
 						}
 					}
@@ -59,45 +59,52 @@
 			},
 			// and jumps can go to any other part of the tree
 			"converse" : {
-				"dialogue" : [
-					"here comes some lines in sequence",
-					"One",
-					"You can't tell me what to do.",
-					"Haha yes.",
-					"Now the other stuff for the button can trigger since the sequence is done."
+				"randomDialogue" : [
+					"Did you want to talk about something?", "Blub.", "Blub!", "Did you want to talk blub?",
+					"Oooh you want to talk?", "So what are we gonna do?"
 				],
-				"buttonText" : [
-					"Oh really?",
-					"Now you're gonna say 'two'",
-					"Guess you're too smart.",
-					"So what now?",
-					"Like what?"
-				],
-				"continue" : {
-					"dialogue" : ["I can give you more dialogue options to choose from."],
+				"randomButtonText" : ["[options]"],
+				"options" : [
+					[ "* Pet", {"jump":["pet"]}],
+					[ "So whats your belly like?", {
+						"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+						"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
+						"default" : { "dialogue" : ["Doesn't really do much"], "jump" : ["converse","continue"]},
+						"sbqHeal" : { "dialogue" : ["You'd be healed."], "jump" : ["converse","continue"]},
+						"sbqDigest" : { "dialogue" : ["I'd melt you down."], "jump" : ["converse","continue"]},
+						"sbqSoftDigest" : { "dialogue" : ["I'd melt you down, but you'd be fine."], "jump" : ["converse","continue"]}
+					}]
+				]
+			},
+			"pet" : {
+				"next" : "petting",
+				"normal" : {
+					"randomDialogue" : ["Blub!", "<dontSpeak>* Sandy licks your hand.", "<dontSpeak>* Your hand is now wet."],
+					"buttonText" : ["[back]"],
+					"jump" : ["converse"]
+				},
+				"many" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
 					"options" : [
-						[ "Woah, dropdown options.", {
-							"dialogue" : ["Yep, pretty cool."],
-							"continue" : {
-								"next" : ["random1", "random2"], // using a table for next keys makes it randonly select between them
-								"random1" : { "dialogue" : ["So lets jump back there so you can choose again alright?"], "jump" : ["converse","continue"] },
-								"random2" : {
-									"dialogue" : ["What if we talked a little more?"],
-									"continue" : { "dialogue" : ["Oh alright we'll jump back"], "jump" : ["converse","continue"] }
-								}
-							}
-						}],
-						[ "Jump Example", { "jump" : ["converse", "continue", "options", 1, 2, "continue"] } ], // this is one that goes to another option but the jump can go anywhere really
-						[ "So whats your belly like?", {
-							"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
-							"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
-							"default" : { "dialogue" : ["Doesn't really do much"], "jump" : ["converse","continue"]},
-							"sbqHeal" : { "dialogue" : ["You'd be healed."], "jump" : ["converse","continue"]},
-							"sbqDigest" : { "dialogue" : ["I'd melt you down."], "jump" : ["converse","continue"]},
-							"sbqSoftDigest" : { "dialogue" : ["I'd melt you down, but you'd be fine."], "jump" : ["converse","continue"]}
-						}]
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"excessive" : {
+					"randomDialogue" : [{"add":"pet.normal"}],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
+					]
+				},
+				"problem" : {
+					"randomDialogue" : ["* It's possible that you may have a problem."],
+					"buttonText" : ["[ACT]"],
+					"options" : [
+						[ "* Pet", {"jump":["pet"]}]
 					]
 				}
+
 			},
 
 			// lines for when a pred is eating prey, be it from hunting, or from it being requested

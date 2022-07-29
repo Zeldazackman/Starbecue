@@ -275,7 +275,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 end
 
 function sbq.say(string, tags, imagePortrait, emote)
-	if type(string) == "string" and string ~= "" then
+	if type(string) == "string" and string ~= "" and not string:find("<dontSpeak>") then
 		local options = {sound = randomChatSound()}
 		if type(imagePortrait) == "string" and config.getParameter("sayPortrait") then
 			npc.sayPortrait(string, imagePortrait, tags, options)
@@ -285,7 +285,6 @@ function sbq.say(string, tags, imagePortrait, emote)
 		if type(emote) == "string" then
 			npc.emote(emote)
 		end
-
 	end
 end
 
