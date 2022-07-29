@@ -175,6 +175,7 @@ function initAfterInit(data, scale, scaleYOffset)
 	sbq.loungePositions = config.getParameter("loungePositions")
 	sbq.animStateData = root.assetJson( sbq.cfgAnimationFile ).animatedParts.stateTypes
 	sbq.transformGroups = {
+		globalScale = {},
 		occupant0Position = {},
 		occupant1Position = {},
 		occupant2Position = {},
@@ -286,7 +287,7 @@ end
 sbq.predHudOpen = 1
 
 function sbq.openPredHud(dt)
-	if not sbq.driving then return end
+	if not sbq.driving or sbq.isNested then return end
 	sbq.predHudOpen = math.max( 0, sbq.predHudOpen - dt )
 	if sbq.predHudOpen <= 0 then
 		sbq.predHudOpen = 2
