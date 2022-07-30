@@ -78,6 +78,7 @@ function update()
 	sbq.checkTimers(dt)
 	sbq.refreshData()
 	sbq.getOccupancy()
+	sbq.checkIfVored(dt)
 end
 
 function sbq.getOccupancy()
@@ -319,12 +320,29 @@ function sbq.voreButton(voreType)
 		sbq.data.settings.doingVore = "before"
 		local dialogueTree = sbq.updateDialogueBox({ "vore" }) or {}
 		sbq.timer("eatMessage", dialogueTree.delay or 1.5, function ()
-			sbq.data.settings.doingVore = "after"
-			sbq.updateDialogueBox({ "vore" })
+			sbq.voring = true
+			sbq.voringDelay = dialogueTree.delay or 1.5
 			world.sendEntityMessage( sbq.data.occupantHolder or pane.sourceEntity(), "requestTransition", voreType, { id =  player.id() } )
 		end)
 	else
 		sbq.updateDialogueBox({ "vore" })
+	end
+end
+
+
+function sbq.checkIfVored(dt)
+	if sbq.voring then
+		sbq.voringDelay = math.max(0, sbq.voringDelay - dt)
+		if sbq.voringDelay <= 0 then
+			sbq.voring = false
+			for i, occpant in pairs(sbq.occupant or {}) do
+				if occpant.id == player.id() then
+					sbq.data.settings.doingVore = "after"
+					sbq.updateDialogueBox({ "vore" })
+					break
+				end
+			end
+		end
 	end
 end
 
