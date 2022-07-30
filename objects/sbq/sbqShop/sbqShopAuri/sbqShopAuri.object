@@ -287,6 +287,22 @@
 				],
 				"jump" : [ "greeting", "mood", "continue"]
 			},
+			"sbqSizeRay" : {
+				"randomPortrait" : [
+					"Joyful.png",
+					"Neutral.png",
+					"Happy.png",
+					"Neutral.png"
+				],
+				"randomDialogue" : [
+					["SHRINK RAY!\nSHRINK RAY!\nSHRINK RAY!", "GROWTH RAY!\nGROWTH RAY!\nGROWTH RAY!", "SIZE RAY!\nSIZE RAY!\nSIZE RAY!"],
+					"Use responsibly, and remember, micros are meant to be stepped on.",
+					"This thing is so much fun!",
+					"If you have this in your inv you can set a scale manually in the settings."
+				],
+				"jump" : [ "greeting", "mood", "continue"]
+			},
+
 
 			"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
 			"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
