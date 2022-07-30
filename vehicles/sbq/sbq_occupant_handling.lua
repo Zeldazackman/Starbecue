@@ -424,7 +424,7 @@ function sbq.setOccupantTags()
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.sided then
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
-				if sbq.occupants[location] ~= sbq.occupantsPrev[location] then
+				if sbq.occupants[location] ~= sbq.occupantsPrev[location] or sbq.refreshSizes then
 					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location)) )
 					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location)) )
 				end
@@ -437,10 +437,10 @@ function sbq.setOccupantTags()
 
 			else
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "R")) )
 					end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "L")) )
 					end
 
@@ -456,10 +456,10 @@ function sbq.setOccupantTags()
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "R")) )
 					end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "L")) )
 					end
 
@@ -477,7 +477,7 @@ function sbq.setOccupantTags()
 				end
 			end
 		else
-			if sbq.occupants[location] ~= sbq.occupantsPrev[location] then
+			if sbq.occupants[location] ~= sbq.occupantsPrev[location] or sbq.refreshSizes then
 				sbq.setPartTag( "global", location.."Occupants", tostring(sbq.locationVisualSize(location)) )
 			end
 
@@ -493,6 +493,7 @@ function sbq.setOccupantTags()
 		sbq.expandQueue[location] = nil
 		sbq.shrinkQueue[location] = nil
 	end
+	sbq.refreshSizes = false
 	sbq.prevDirection = sbq.direction
 end
 
