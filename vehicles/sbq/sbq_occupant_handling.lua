@@ -18,7 +18,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	local full, locationslots = sbq.locationFull(location)
 
 	if (not occupantId) or (not world.entityExists(occupantId))
-	or ((full or ((size or 1) > locationslots) or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
+	or ((full or (((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) > locationslots) or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
 	then return false end -- don't eat self
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
