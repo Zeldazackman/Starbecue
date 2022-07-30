@@ -185,8 +185,8 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
 	local location = location
 	if sbq.sbqData.locations[location].sided then
-		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > args.size
-		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > args.size
+		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > (args.size or 1)
+		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > (args.size or 1)
 		if sbq.direction > 0 then
 			if leftHasSpace then
 				location = location.."L"
