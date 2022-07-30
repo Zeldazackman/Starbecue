@@ -390,7 +390,7 @@
 										"portrait" : ["Angry.png"],
 										"dialogue" : [
 										"^red;Ah. That. Take off the r.",
-										"^red;Yeah. Next time I see that klutz I call a friend, I'm gonna eat him."
+										"^red;Yeah. Next time my clumsy friend visits, I'm gonna eat him."
 										],
 										"buttonText" : [
 										"Alright?",
@@ -402,7 +402,7 @@
 										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Nothing special. Take what you will of that."], "jump" : ["converse","default","friendly","question"]},
-										"sbqHeal" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;It's the only part of my body that isn't pissed. Might mend you up."], "jump" : ["converse","default","friendly","question"]},
+										"sbqHeal" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["converse","default","friendly","question"]},
 										"sbqDigest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","friendly","question"]},
 										"sbqSoftDigest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["converse","default","friendly","question"]}
 									}]
@@ -587,6 +587,7 @@
 									"dialogue" : ["So, do you have any other questions for me?"],
 									"buttonText" : ["Yes."],
 									"continue" : {
+										"portrait" : ["Sleepy.png"],
 										"dialogue" : ["Of course! Ask away, you tasty dog."],
 										"jump" : ["hhconverse","default","hungry","continue"]
 									}
@@ -596,6 +597,7 @@
 									"dialogue" : ["That answers that. Anything else?"],
 									"buttonText" : ["Yes."],
 									"continue" : {
+										"portrait" : ["Sleepy.png"],
 										"dialogue" : ["Sure! It's rare to have someone that doesn't just run away upon seeing me so hungry."],
 										"jump" : ["hhconverse","default","hungry","continue"]
 									}
@@ -681,7 +683,7 @@
 									"buttonText" : ["Yes."],
 									"continue" : {
 										"portrait" : ["OwO.png"],
-										"dialogue" : ["Sure! It's rare to talk to  someone that looks as hot as you do as a hellhound."],
+										"dialogue" : ["Sure! It's rare to talk to someone that looks as hot as you do as a hellhound."],
 										"jump" : ["hhconverse","default","horny","continue"]
 									}
 								}
@@ -693,14 +695,14 @@
 						"randomButtonText" : ["..."],
 							"continue" : {
 								"portrait" : ["Mad.png"],
-								"randomDialogue" : ["So, spit it out.", "Speak.", "What is it?"],
+								"randomDialogue" : ["^red;So, spit it out.", "^red;Speak.", "^red;What is it?"],
 								"randomButtonText" : ["[Choose]", "[Choose]", "[Choose]"],
 								"options" : [
 									["Who are you, really?", {
 										"portrait" : ["Mad.png"],
 										"dialogue" : [
-											"^red;I'm Helena^. Be glad this doesn't happen to you.",
-											"You're on my list.",
+											"^red;I'm Helena. This anger doesn't happen to you.",
+											"^red;You're on my list.",
 											"^red;List of souls I won't take. Don't ask. I won't do it."
 											],
 										"buttonText" : [
@@ -714,7 +716,7 @@
 										"portrait" : ["Mad.png"],
 										"dialogue" : [
 										"^red;Yes. But not fully.",
-										"^red;You're safe. You don't have another side you need to smother.",
+										"^red;You're safe. You don't have this rage. It can be hard to smother.",
 										"^red;Yes. I'm 'That B!tch' for a reason."
 										],
 										"buttonText" : [
@@ -728,7 +730,7 @@
 										"portrait" : ["Mad.png"],
 										"dialogue" : [
 										"^red;Ah. That. Take off the r.",
-										"^red;Yeah. Next time I see that klutz I call a friend, I'm gonna eat him."
+										"^red;Yeah. Next time I see Mystic, I'm gonna eat him."
 										],
 										"buttonText" : [
 										"Fiendly?",
@@ -740,7 +742,7 @@
 										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Nothing special. Take what you will of that."], "jump" : ["hhconverse","default","friendly","question"]},
-										"sbqHeal" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;It's the only part of my body that isn't pissed. Might mend you up."], "jump" : ["hhconverse","default","friendly","question"]},
+										"sbqHeal" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["hhconverse","default","friendly","question"]},
 										"sbqDigest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","friendly","question"]},
 										"sbqSoftDigest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["hhconverse","default","friendly","question"]}
 									}]
@@ -826,14 +828,14 @@
 									"sbqSoftDigest" : { "portrait" : ["Sleepy.png"], "randomDialogue" : ["Hm? Nothing to see here. Any cries for help are just your imagination.", "Yummy... Just reminiscing about a tasty meal. Come back later.", "My belly is a bit busy. Somewhere else may prove more fruitful~", "Who's the unlucky prey? Probably someone you know~" ]}
 								},
 								"otherLocationFull" : { "portrait" : ["Hurt.png"], "randomDialogue" : ["While my body really wants you inside it, it'd get way too cramped...", "Trust me, I want to. My body wants to. You want to. But I can't.", "I could probably give you a lick, but that's it...", "...Not right now, my body has its limits..."]},
-								"tooBig" : { "portrait" : ["shocked.png"], "randomDialogue" : ["Wow! You're far too big for even me to handle with how hungry I am.", "I really, REALLY, want to, but even I know my limits.", "I can't. I'm pretty sure my rumbly gut would pop instantly.", "No way. Not after the last time I tried with someone as big as you. Thanks, belly."]}
+								"tooBig" : { "portrait" : ["Shocked.png"], "randomDialogue" : ["Wow! You're far too big for even me to handle with how hungry I am.", "I really, REALLY, want to, but even I know my limits.", "I can't. I'm pretty sure my rumbly gut would pop instantly.", "No way. Not after the last time I tried with someone as big as you. Thanks, belly."]}
 							},
 							"horny" : { // mood
 								"next" : "getVoreButtonAction",
 								"request" : {
 									"next" : "doingVore",
 									"before" : { "portrait" : ["Determined.png"], "randomDialogue" : ["I bet you can't wait to be trapped in my hot, gurgly gut. Who knows if I'll ever let you out~", "My my, what a hot looking <entityname>~", "Hehe, such a sexy offering. Let me put you in your proper place~", "If you're lucky, your friends might hear you over my gurgling tummy. Maybe not~"] },
-									"after" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Ooooh, yes... Enjoy your nice and ^pink;steamy^reset; home, dear~", "In terms of taste, you simply can't be beat. Settle in and enjoy my ^pink;heat^reset;~", "Mmm, enjoy your private room, dear. Better hope I don't lose the key~", "Absolutely delightful. Relax, curl up, and let my ^pink;steam.^reset; loosen you up~"] }
+									"after" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Ooooh, yes... Enjoy your nice and ^pink;steamy^reset; home, dear~", "In terms of taste, you simply can't be beat. Settle in and enjoy my ^pink;heat^reset;~", "Mmm, enjoy your private room, dear. Better hope I don't lose the key~", "Absolutely delightful. Relax, curl up, and let my ^pink;steam^reset; loosen you up~"] }
 								},
 								"unprompted" : {
 									"next" : "doingVore",
@@ -930,14 +932,14 @@
 									"sbqSoftDigest" : "vore.oralVore.race.personality.mood.full"
 								},
 								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
-								"tooBig" : { "portrait" : ["shocked.png"], "randomDialogue" : ["Wow! You're far too big for even me to handle with how hungry I am.", "I really, REALLY, want to, but even I know my limits.", "I can't. I'm pretty sure my rumbly gut would pop instantly.", "No way. Not after the last time I tried with someone as big as you. Thanks, butt."]}
+								"tooBig" : { "portrait" : ["Shocked.png"], "randomDialogue" : ["Wow! You're far too big for even me to handle with how hungry I am.", "I really, REALLY, want to, but even I know my limits.", "I can't. I'm pretty sure my rumbly gut would pop instantly.", "No way. Not after the last time I tried with someone as big as you. Thanks, butt."]}
 							},
 							"horny" : { // mood
 								"next" : "getVoreButtonAction",
 								"request" : {
 									"next" : "doingVore",
 									"before" : "vore.oralVore.race.personality.mood.request",
-									"after" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Ooooh, yes... Enjoy your nice and ^pink;steamy^reset; home, dear~", "In terms of feel, you simply can't be beat. Settle in and enjoy my ^pink;heat^reset;~", "Mmm, enjoy your private room, dear. Better hope I don't lose the key~", "Absolutely delightful. Relax, curl up, and let my ^pink;steam.^reset; loosen you up~"] }
+									"after" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Ooooh, yes... Enjoy your nice and ^pink;steamy^reset; home, dear~", "In terms of feel, you simply can't be beat. Settle in and enjoy my ^pink;heat^reset;~", "Mmm, enjoy your private room, dear. Better hope I don't lose the key~", "Absolutely delightful. Relax, curl up, and let my ^pink;steam^reset; loosen you up~"] }
 								},
 								"unprompted" : {
 									"next" : "doingVore",
@@ -972,7 +974,7 @@
 									"next" : "getLocationEffect",
 									"default" : "vore.oralVore.race.personality.mood.full",
 									"sbqHeal" : "vore.oralVore.race.personality.mood.full",
-									"sbqDigest" : { "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
 									"sbqSoftDigest" : "vore.oralVore.race.personality.mood.full"
 								},
 								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
@@ -999,7 +1001,7 @@
 								},
 								"unprompted" : {
 									"next" : "doingVore",
-									"before" : {"randomDialogue" : ["I've got a ^pink;sizzling.^reset; e-date coming up, so sorry in advance.", "Ooh, you'll do nicely. I need to go up a few sizes.", "You look thirsty. Let me fix that.", "Your next quest involves being trapped in my breasts. *glomp*"]},
+									"before" : {"randomDialogue" : ["I've got a ^pink;sizzling^reset; e-date coming up, so sorry in advance.", "Ooh, you'll do nicely. I need to go up a few sizes.", "You look thirsty. Let me fix that.", "Your next quest involves being trapped in my breasts. *glomp*"]},
 									"after" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Oh shush. We both know you want this~", "A little bumpy, but those will smooth as you settle in.", "And not a single drop wasted. Hope you don't mind getting soaked~", "I knew you'd fit in perfectly~"]}
 								},
 								"notFeelingIt" : { "randomDialogue" : ["Tempting! But no.", "No room for you, dear.", "Ah, maybe later.", "I'm not ready. You're welcome to touch, however~"] },
@@ -1007,8 +1009,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Sorry, they're occupied. Your milky adventure will have to wait.", "Your gaze tell me everything. It'll have to wait.", "My eyes are up here. Oh? You can't see them? Feel free to keep staring, then~", "Jealous? I might have an opening elsewhere, dear~" ]},
 									"sbqHeal" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Ever have a glass of warm milk right before bed? That's them right now.", "They wanted a good soak to wash the stress away. Come back later~", "They're gonna be a while. Maybe try somewhere else?", "They're fun to watch move around, aren't they? Try not to get hypnotized~"]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Looking for someone? I'm sure you'll find them eventually. Care for a warm sip?", "Hm? It looks like my boobs are moving? Must be your imagination~", "You'll have to wait your turn. You're welcome to shake them up, though.", "If you place your ear against me, they say you can hear the ocean~ \nAnd maybe the occasional call for help."]}
+									"sbqMilkDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqMilkSoftDigest" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Looking for someone? I'm sure you'll find them eventually. Care for a warm sip?", "Hm? It looks like my boobs are moving? Must be your imagination~", "You'll have to wait your turn. You're welcome to shake them up, though.", "If you place your ear against me, they say you can hear the ocean~ \nAnd maybe the occasional call for help."]}
 								},
 								"tooBig" : { "randomDialogue" : ["Sorry. I like being able to fit through most doorways, thank you.", "I'm pretty sure my back can't handle that, dear.", "If I was a cow, then maybe. But I'm not.", "That's impossible, even for me."]}
 							},
@@ -1021,7 +1023,7 @@
 								},
 								"unprompted" : {
 									"next" : "doingVore",
-									"before" : { "portrait" : ["shocked.png"], "randomDialogue" : ["Alright, time for you to go down the hatc--whoops!", "'Hold ^green;[Shift]^reset;, then press ^green;[Up]^reset;'--ack!", "All I have to do is grab them and-<keysmash>", "Alright. This spell should do the trick."]},
+									"before" : { "portrait" : ["Shocked.png"], "randomDialogue" : ["Alright, time for you to go down the hatc--whoops!", "'Hold ^green;[Shift]^reset;, then press ^green;[Up]^reset;'--ack!", "All I have to do is grab them and-<keysmash>", "Alright. This spell should do the trick."]},
 									"after" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I hate it when I misclick.", "That's not my stomach. Damn.", "Whatever, this still feels good.", "I meant to do that."]}
 								},
 								"notFeelingIt" : { "portrait" : ["Sleepy.png"], "randomDialogue" : ["It's something else that needs attention, dear.", "More 'om nom', not 'gl-omp'.", "Settle my inner fire a bit, then you can spend as much time as you like with them~", "My maw is up here, <entityname>."] },
@@ -1029,10 +1031,10 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Tired.png"], "randomDialogue" : ["They're full. My stomach, on the other hand, is getting pretty grumbly.", "You could always slip into my stomach and give them a good bump from below~", "Other accommodations might be available~", "How about I reserve a boob for you if you fix my hunger?"]},
 									"sbqHeal" : { "portrait" : ["Tired.png"], "randomDialogue" : ["My milk is healing them up, but it could be even faster if I wasn't as hungry...", "While I'm fixing them up, why don't you fix me up? I'm starving.", "If you're hurt that badly, I'm sure you could take a little sip.", "While I am hungry, they were hurt. I'm not a complete b!tch."]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Have some cookies handy? I've got plenty of milk to spare.", "Perfect, you're just in time. Mind dropping some excess milk at Auri's shop for me?", "In case you're curious, they're fine. Any milk is just excess water weight and such.", "If you call me a cow, you're next."]}
+									"sbqMilkDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqMilkSoftDigest" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Have some cookies handy? I've got plenty of milk to spare.", "Perfect, you're just in time. Mind dropping some excess milk at Auri's shop for me?", "In case you're curious, they're fine. Any milk is just excess water weight and such.", "If you call me a cow, you're next."]}
 								},
-								"tooBig" : { "portrait" : ["shocked.png"], "randomDialogue" : ["Sorry. I like being able to fit into most kitchens~", "I'm pretty sure my boobs can't handle that, dear.", "If I was a slime, then maybe. But I'm not.", "That's impossible, even though I think it'd be fun." ]}
+								"tooBig" : { "portrait" : ["Shocked.png"], "randomDialogue" : ["Sorry. I like being able to fit into most kitchens~", "I'm pretty sure my boobs can't handle that, dear.", "If I was a slime, then maybe. But I'm not.", "That's impossible, even though I think it'd be fun." ]}
 							},
 							"horny" : { // mood
 								"next" : "getVoreButtonAction",
@@ -1050,9 +1052,9 @@
 								"full" : {
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["OwO.png"], "randomDialogue" : ["If I was anatomically correct, I might've had extra rooms. Sadly, I'm not~", "Hmhm, how horny~ Look into my other vacancies if you really want inside me~", "Maybe if you give them a good squeeze, someone might come out~", "If you notice any leaks, you're welcome to lap them up~"]},
-									"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["They're getting patched up. We had a ^pink;rough^reset; session earlier~", "It may take them a while. Care to discuss any ^pink;sizzling.^reset; secrets?", "Mmmf... You'll get your turn eventually~", "You're more than welcome to nestle your head in-between my breasts while you wait~"]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["OwO.png"], "randomDialogue" : ["You thought you heard a moan? Who knows where that came from~", "Mm, it's just me and my milk-bags over here~", "You're welcome to watch them jiggle away if you'd like~", "Thirsty? I can fetch a glass. It'll be a little spicy~"]}
+									"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["They're getting patched up. We had a ^pink;rough^reset; session earlier~", "It may take them a while. Care to discuss any ^pink;sizzling^reset; secrets?", "Mmmf... You'll get your turn eventually~", "You're more than welcome to nestle your head in-between my breasts while you wait~"]},
+									"sbqMilkDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqMilkSoftDigest" : { "portrait" : ["OwO.png"], "randomDialogue" : ["You thought you heard a moan? Who knows where that came from~", "Mm, it's just me and my milk-bags over here~", "You're welcome to watch them jiggle away if you'd like~", "Thirsty? I can fetch a glass. It'll be a little spicy~"]}
 								},
 								"tooBig" : { "portrait" : ["OwO.png"], "randomDialogue" : [ "Sorry. I like being able to fit into most bedrooms~", "I'm pretty sure my bed can't handle that, dear.", "If I was a succubus, then maybe. But I'm not.", "That's impossible, even though I really want to." ]}
 							},
@@ -1073,8 +1075,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;What? Admiring my assets? Fine.", "^red;You may stare.", "^red;It's full. Find another opening.", "^red;Give them a squeeze. If you'd like."]},
 									"sbqHeal" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Stop worrying. They'll be fine.", "^red;They're thirsty. Please wait.", "^red;Almost done. Maybe not.", "^red;Mind rubbing them?"]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Want a drink? Might burn your tongue.", "^red;Someone missing? Haven't seen them.", "^red;I can't. No room.", "^red;Feel free to feel them."]}
+									"sbqMilkDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqMilkSoftDigest" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Want a drink? Might burn your tongue.", "^red;Someone missing? Haven't seen them.", "^red;I can't. No room.", "^red;Feel free to feel them."]}
 								},
 								"tooBig" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Too big. Please shrink down.", "^red;I'd never fit in another shirt. No.", "^red;I just can't. You're massive.", "^red;I'd love to. But I'd crash e621."]}
 							}
@@ -1105,8 +1107,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Happy.png"], "randomDialogue" : ["It's our time right now. Yours will come soon enough~", "I'm not a Greyhound bus, dear. My capacity is sadly limited.", "You could ask them politely to leave. I might not let them, though~", "They're exploring an instanced dungeon. You'll have to wait~"]},
 									"sbqHeal" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Mm, I'm rekindling their fire.", "Didn't want to melt them by accident. Hm? Okay, fine. I didn't want to digest them by accident.", "You're welcome to touch. Feel their movements getting stronger", "Sorry that I can't tend to you. I may be able to fit you in elsewhere, though~"]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Don't be afraid. They'll reform when they're due~", "You saw a kick? Must've been your imagination.", "They're definitely a keeper. You look like one, too~", "Looking to play? You'll have to wait your turn~"]}
+									"sbqFemcumDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqFemcumSoftDigest" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Don't be afraid. They'll reform when they're due~", "You saw a kick? Must've been your imagination.", "They're definitely a keeper. You look like one, too~", "Looking to play? You'll have to wait your turn~"]}
 								},
 								"tooBig" : { "portrait" : ["Confused.png"], "randomDialogue" : ["T-tempting, but even I'm not that stretchy~", "Woof. You're big!", "No. I did consider it, though!", "I wouldn't be able to walk straight for weeks, so no." ]}
 							},
@@ -1128,8 +1130,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Lugging them around has gotten me peckish. Got any snacks?", "Oh! Feel my belly. You might feel their movements. Don't mind the occasional grumble.", "Ugh, I'm nearly out of space and I'm still hungry...", "I'll gladly meet your needs any other time."]},
 									"sbqHeal" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I always love this part, even if I'm starving. It's rare to heal someone in such a tender manner~", "Honestly, I would if I could. I'd gladly heal you too~", "Mind fetching me a snack? I feel like my healing could be faster.\nDoesn't mean their stay will be any shorter, though~", "Ssh... They're resting..."]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I can't, but you're welcome to watch them get nice and soft.", "Oh? You saw a bit of ^pink;steam^reset; come out? They must be having fun.", "Are you jealous? Don't be. You might be next~", "This doesn't really fix my hunger, but it still feels wonderful."]}
+									"sbqFemcumDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqFemcumSoftDigest" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I can't, but you're welcome to watch them get nice and soft.", "Oh? You saw a bit of ^pink;steam^reset; come out? They must be having fun.", "Are you jealous? Don't be. You might be next~", "This doesn't really fix my hunger, but it still feels wonderful."]}
 								},
 								"tooBig" : "vore.unbirth.race.personality.mood.tooBig"
 							},
@@ -1151,8 +1153,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["OwO.png"], "randomDialogue" : ["What happened? We were just having a little fun and they slipped right on in~", "Hng~ Sorry, they pushed just the right spot~", "Ah, this is certainly the life. I'll take your details if you're interested in being next~", "Poke them if you'd like. I'm nearly there from all that squirming~"]},
 									"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Haa~ They're slowly mending~", "They're probably good now, but I'd like to make doubly sure~", "No more room in the ^pink;VIP suite^reset;, I'm afraid~ Book another slot?", "You can feel if you'd like in the meantime~"]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'd prefer not to open the floodgates just yet, dear. You might drown~", "I can reform them at any time, but I'd like to keep them... for a while longer~", "Pry as much as you like, you're not getting in just yet~", "They're mine for now~"]}
+									"sbqFemcumDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqFemcumSoftDigest" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'd prefer not to open the floodgates just yet, dear. You might drown~", "I can reform them at any time, but I'd like to keep them... for a while longer~", "Pry as much as you like, you're not getting in just yet~", "They're mine for now~"]}
 								},
 								"tooBig" : "vore.unbirth.race.personality.mood.tooBig"
 							},
@@ -1174,8 +1176,8 @@
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;You're too late. They're mine. For now.", "^red;I couldn't resist. Sorry.", "^red;I'd like a belly rub.", "^red;Should be done soon."] },
 									"sbqHeal" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Getting them fixed.", "^red;Quiet. They're tired.", "^red;Join us later.", "^red;You can be next."]},
-									"sbqDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
-									"sbqSoftDigest" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;All mine.", "^red;Mostly soft by now.", "^red;They will reform.", "^red;Interested?"]}
+									"sbqFemcumDigest" : { "portrait" : ["Bork.png"], "randomDialogue" : ["^red;Hmph.^reset;"]},
+									"sbqFemcumSoftDigest" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;All mine.", "^red;Mostly soft by now.", "^red;They will reform.", "^red;Interested?"]}
 								},
 								"tooBig" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;One of us would get crushed.", "^red;I'm not that desperate.", "^red;You're big. I'm not so big.", "^red;I'd consider it. But I know better."]}
 							}
@@ -1318,6 +1320,7 @@
 							"default" : { // mood
 								"next" : "getLocationEffect",
 								"default" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Just relax and enjoy the ^pink;warmth^reset;...", "Ssh... It's alright.", "I've got you.", "Oof, I felt that kick. Keep it up."] },
+								"sbqHeal" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Heal up, dear. My womb is your private sanctuary.", "Mmm, yes... Get yourself nice and coated in my healing fluids.", "There's no rush, dear. I've got all the time in the world.", "Hush... No one can hurt you..."] },
 								"transformed" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
 									"next" : "transformImmunity",
@@ -1333,7 +1336,7 @@
 								"sbqFemcumSoftDigest" : {
 									"next" : "femcumDigestImmunity",
 									"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Just think of it as a temporary weight loss program for both of us.", "Squirm if you like. I'll always reform you.", "Getting softer, dear. Soon you'll be just a cute little bump.", "I barely felt that."] },
-									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["It's going to get insanely warm. You shouldn't notice a difference.", "Nice fire resistance. Keep it up.", "Oh? I didn't even notice the change. Did you?", "Don't mind me. I'm going to turn up the ^pink;steam.^reset; a lot~"] }
+									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["It's going to get insanely warm. You shouldn't notice a difference.", "Nice fire resistance. Keep it up.", "Oh? I didn't even notice the change. Did you?", "Don't mind me. I'm going to turn up the ^pink;steam^reset; a lot~"] }
 								},
 								"wombCompression" : {
 									"next" : "wombCompression",
@@ -1357,6 +1360,7 @@
 							"hungry" : { // mood
 								"next" : "getLocationEffect",
 								"default" : { "portrait" : ["Tired.png"], "randomDialogue" : ["You're safe from my hunger in there.", "Settle down, you'll scare any potential prey.", "Quit it. I'm getting ready to hunt.", "You're lucky I don't know how to warp you right into my stomach."]},
+								"sbqHeal" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Stay calm... I'm here for you.", "I'll be your shield as long as you need.", "Your adventure isn't going anywhere.", "Let my steady heartbeat and occasional gurgle help you drift away..."] },
 								"transformed" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
 									"next" : "transformImmunity",
@@ -1396,6 +1400,7 @@
 							"horny" : { // mood
 								"next" : "getLocationEffect",
 								"default" : { "portrait" : ["OwO.png"], "randomDialogue" : ["What? Don't like your hiding place?", "Ha-aa~, right there~", "Sink into my ^pink;warm^reset; abyss~", "I'm close~"] },
+								"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Rest your body, dear. I've got you~", "Ooh~ That was a nice, strong kick~", "I'll always be your private getaway~", "Mmhm... <entityname>..."] },
 								"transformed" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
 									"next" : "transformImmunity",
@@ -1435,6 +1440,7 @@
 							"friendly" : { // mood
 								"next" : "getLocationEffect",
 								"default" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Good. Keep moving.", "^red;Hush.", "^red;Your safety comes first.", "^red;I can handle you."]},
+								"sbqHeal" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Relax. You deserve this.", "^red;I will always protect you.", "^red;Ssh... It's fine.", "^red;Let your enemies try me. They will fail."] },
 								"transformed" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;You're like me now.", "^red;Safety in numbers.", "^red;We both bork now.", "^red;A new you."] },
 								"transform" : {
 									"next" : "transformImmunity",
@@ -1620,24 +1626,24 @@
 								"hungry" : { // mood
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I was this close to deciding to melt you for a while.", "Ah, the grumbling getting to you?", "Yeah, I get it. I'll have a snack beforehand next time..", "Shoot. I was hoping you'd get comfy~"] },
-									"sbqHeal" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+									"sbqHeal" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Feeling better? Good.", "Looks like you still have a scratch. Care for another visit?", "I'm here anytime if you get hurt.", "Tell your friends about my services, too."] },
 									"sbqSoftDigest" : {
 										"next" : "digestImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect"
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Heh, can't handle the heat? You sure got out of this hellhound fast.", "Don't worry, I never really play for keeps", "Ooh, so close to being pudge. Maybe next time~", "Mm, that still helped quell my hunger a bit. Thanks."] },
+										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Thanks for allowing me to really let loose.", "The heat too much for you, <entityname>?", "Not a bad escape. I'll have to keep that one in mind.", "And not a single pixel on you harmed."] }
 									},
 									"digested" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Thanks, you don't know how much that helped. Time to reform you.", "Melting you down felt... perfect. Back to the outside world you go.", "I'm in your debt. Seriously. You don't know how bad my hunger gets.", "Ah, you were a delightful meal. Toodles."]}
 								},
 								"horny" : { // mood
 									"next" : "getLocationEffect",
 									"default" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'd be lying if I said I didn't want to keep you for longer~", "Interested in another round~?", "Mind, uh, getting back in?", "You hit all the right buttons, dear~"] },
-									"sbqHeal" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+									"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Feeling better? Good.", "Looks like you still have a scratch. Care for another visit?", "I'm here anytime if you get hurt.", "Tell your friends about my services, too."] },
 									"sbqSoftDigest" : {
 										"next" : "digestImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect"
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Heh, can't handle the heat? You sure got out of this hellhound fast.", "Don't worry, I never really play for keeps", "Ooh, so close to being pudge. Maybe next time~", "Mm, that still helped quell my hunger a bit. Thanks."] },
+										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Thanks for allowing me to really let loose.", "The heat too much for you, <entityname>?", "Not a bad escape. I'll have to keep that one in mind.", "And not a single pixel on you harmed."] }
 									},
-									"digested" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect"
+									"digested" : { "portrait" : ["OwO.png"], "randomDialogue" : ["And there! Good as new. Maybe even better.", "A moment on my lips thankfully isn't a lifetime on my hips for you.", "I could make the stay a lot longer next time if you'd like~", "Oh? Got something to do? Come back later and we'll continue where we left off~"]}
 								},
 								"friendly" : { // mood
 									"next" : "getLocationEffect",
@@ -1666,7 +1672,7 @@
 									"sbqSoftDigest" : {
 										"next" : "digestImmunity",
 										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Oops! Didn't even notice you were melting.", "You would've been fine, but I have a swimsuit contest coming up.", "Not today, belly. Another time.", "Mmm, no. Maybe I'll melt you down elsewhere~"] },
-										"true" : "letout.oralVore.struggleTrigger.race.personality.mood.default"
+										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I'd love to keep you for longer, but I feel a change coming on.", "My poor belly needs a break. Give me a bit to recover, okay?", "Time's up, dear.", "Better stretch those muscles. I don't want you wasting away in me."] }
 									},
 									"digested" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I've had my fun. Out you go.", "One of my friends is dropping by soon. She loves to call me fat, so you gotta go.", "The squish is nice, but I want to slim down for a bit.", "I can hear the floor creaking, so time to reform you."]}
 								},
@@ -1677,7 +1683,7 @@
 									"sbqSoftDigest" : {
 										"next" : "digestImmunity",
 										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Oh, uh, change of plans. My gut wanted to go all the way.", "Sorry, belly, but you can't keep them.", "Sorry if you wanted to melt, but I'm losing control.", "That takes off the edge of my hunger a bit. Thanks."] },
-										"true" : "letout.oralVore.struggleTrigger.race.personality.mood.default"
+										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I'd love to keep you for longer, but I feel a change coming on.", "My poor belly needs a break. Give me a bit to recover, okay?", "Time's up, dear.", "Better stretch those muscles. I don't want you wasting away in me."] }
 									},
 									"digested" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Lugging you around as fat is nice, but I don't want to use you as fuel. Come on out.", "I need a little extra space, so I gotta reform you and let you out.", "I need a proper bite, so out you go.", "This doesn't quite quell my hunger. Sorry, you gotta go."]}
 								},
@@ -1688,7 +1694,7 @@
 									"sbqSoftDigest" : {
 										"next" : "digestImmunity",
 										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Ooh, don't want you to melt. That would end our fun too early~", "Nah, I don't want you as fat. I want you~", "Mhm, I think I have a better use for you~", "Time to let you out~"] },
-										"true" : "letout.oralVore.struggleTrigger.race.personality.mood.default"
+										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'd love to keep you for longer, but I feel a change coming on.", "My poor belly needs a break. Give me a bit to recover, okay?", "Time's up, dear.", "Better stretch those muscles. I don't want you wasting away in me."] }
 									},
 									"digested" : { "portrait" : ["OwO.png"], "randomDialogue" : ["It's been fun, but these love handles are getting to be a bit much~", "You as pudge is nice, but these hugs are too one-sided. Time to reform~", "Have to let you go for now. My next session might cause you to melt even more~", "Sure, I'd love to keep you forever, but your adventure awaits."]}
 								},

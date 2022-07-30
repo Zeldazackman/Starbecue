@@ -139,6 +139,9 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	end
 	table.insert(options, effect or "default")
 
+	if settings[settings.location.."Compression"] then
+		table.insert(options, settings.location.."Compression")
+	end
 	if settings.transformed and dialogueTree.transformed then
 		table.insert(options, "transformed")
 	elseif not settings.transformed and settings.progressBarType == "transforming" and dialogueTree.transform then
