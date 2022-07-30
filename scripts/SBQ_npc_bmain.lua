@@ -59,6 +59,7 @@ function init()
 
 	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
 		_npc_setInteractive(interactive)
+		status.setStatusProperty("sbqPreyList", nil)
 		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 

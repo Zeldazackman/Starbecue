@@ -15,6 +15,8 @@ function init()
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
+		status.setStatusProperty("sbqPreyList", nil)
+
 		status.setStatusProperty( "sbqCurrentData", nil)
 	end)
 

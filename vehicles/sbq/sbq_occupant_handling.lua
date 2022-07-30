@@ -325,8 +325,11 @@ function sbq.updateOccupants(dt)
 
 	local lastFilled = true
 
+	local list = {}
 	for i = sbq.startSlot, sbq.occupantSlots do
 		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
+			table.insert(list, sbq.occupant[i].id)
+
 			sbq.occupants.total = sbq.occupants.total + 1
 			if not lastFilled and sbq.swapCooldown <= 0 then
 				sbq.swapOccupants(i - 1, i)
@@ -374,6 +377,7 @@ function sbq.updateOccupants(dt)
 			sbq.occupant[i] = sbq.clearOccupant(i)
 		end
 	end
+	sbq.loopedMessage("preyList", sbq.driver, "sbqPreyList", {list})
 	sbq.swapCooldown = math.max(0, sbq.swapCooldown - 1)
 
 	mcontroller.applyParameters({mass = sbq.movementParams.mass + sbq.occupants.mass})

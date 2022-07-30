@@ -218,6 +218,7 @@ function init()
 	end)
 
 	message.setHandler("sbqPredatorDespawned", function (_,_, eaten, species, occupants)
+		status.setStatusProperty("sbqPreyList", nil)
 		world.sendEntityMessage(player.id(), "sbqRefreshSettings", player.getProperty( "sbqSettings") or {} )
 		world.sendEntityMessage(player.id(), "sbqLight")
 

@@ -44,7 +44,7 @@ function sbq.everything_primary()
 		if preySettings.preyEnabled == false then return false end
 		local boundRectSize = rect.size(mcontroller.boundBox())
 		local size = math.sqrt(boundRectSize[1] * boundRectSize[2])/math.sqrt(8) -- size is being based on the player 1 prey would be 4x2
-		return { enabled = preySettings[voreType], size = size}
+		return { enabled = preySettings[voreType], size = size, preyList = status.statusProperty("sbqPreyList")}
 	end)
 
 	message.setHandler("sbqGetPreyEnabled", function(_,_)
@@ -71,6 +71,9 @@ function sbq.everything_primary()
 		if type(currentData.id) == "number" and world.entityExists(currentData.id) then
 			world.sendEntityMessage(currentData.id, "sbqSoftDigest", id)
 		end
+	end)
+	message.setHandler("sbqPreyList", function (_,_,preyList)
+		status.setStatusProperty("sbqPreyList", preyList)
 	end)
 
 	message.setHandler("sbqGetSpeciesOverrideData", function (_,_)

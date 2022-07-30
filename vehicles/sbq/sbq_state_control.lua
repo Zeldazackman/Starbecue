@@ -64,7 +64,17 @@ function sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, pre
 		if enabled and enabled.enabled then
 			if enabled.preyList then
 				for _, prey in ipairs(enabled.preyList) do
-					table.insert(preyList, prey)
+					if prey == sbq.driver then
+						animator.playSound("error")
+						return
+					end
+					local repeated = false
+					for _, prey2 in ipairs(preyList) do
+						if prey == prey2 then repeated = true end
+					end
+					if not repeated then
+						table.insert(preyList, prey)
+					end
 				end
 			end
 			if preyIndex >= #preyList then
@@ -93,7 +103,7 @@ function sbq.doTransition( direction, scriptargs )
 		sbq.addRPC(world.sendEntityMessage(id, "sbqIsPreyEnabled", tconfig.voreType), function(enabled)
 			if enabled and enabled.enabled then
 				scriptargs.size = enabled.size
-				if enabled.preyList then
+				if enabled.preyList and type(enabled.preyList[1]) == "number" then
 					local preyIndex = 1
 					sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, enabled.preyList)
 				else
