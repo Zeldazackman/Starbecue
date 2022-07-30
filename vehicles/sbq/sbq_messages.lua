@@ -138,7 +138,7 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 		sbq.lounging[eid].location = "digesting"
 		sbq.lounging[eid].digested = true
 
-		if type(sbq.lounging[eid].smolPreyData.id) and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+		if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
 			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", eid)
 		end
 
@@ -171,7 +171,7 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 		sbq.lounging[eid].digested = true
 		sbq.lounging[eid].visible = false
 
-		if type(sbq.lounging[eid].smolPreyData.id) and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+		if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
 			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", entity.id())
 		end
 
