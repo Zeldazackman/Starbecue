@@ -299,6 +299,7 @@ function sbq.checkSpawnerExists()
 	if sbq.spawner and world.entityExists(sbq.spawner) then
 		local position = world.entityPosition(sbq.spawner)
 		mcontroller.setPosition({position[1], position[2] + (sbq.predScaleYOffset or 0)})
+	elseif sbq.sendAllPreyTo ~= nil then
 	elseif (sbq.spawnerUUID ~= nil) then
 		for i = sbq.startSlot, sbq.occupantSlots do
 			local id = sbq.occupant[i].id

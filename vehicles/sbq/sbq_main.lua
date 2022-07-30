@@ -496,6 +496,7 @@ function sbq.checkSpawnerExists()
 		if sbq.isNested then
 			mcontroller.setPosition(world.entityPosition(sbq.spawner))
 		end
+	elseif sbq.sendAllPreyTo ~= nil then
 	elseif (sbq.spawnerUUID ~= nil) then
 		for i = sbq.startSlot, sbq.occupantSlots do
 			local id = sbq.occupant[i].id
