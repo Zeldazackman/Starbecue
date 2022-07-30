@@ -9,7 +9,7 @@ function doUpdate(dt)
 	if self.currentScale ~= oldScale then
 		local occupantHolder = (status.statusProperty("sbqCurrentData") or {}).id
 		if occupantHolder then
-			world.sendEntityMessage(occupantHolder, "sbqOccupantHolderSize", self.currentScale or 1, (self.controlParameters or {}).yOffset or 0)
+			world.sendEntityMessage(occupantHolder, "sbqOccupantHolderScale", self.currentScale or 1, (self.controlParameters or {}).yOffset or 0)
 		end
 	end
 end

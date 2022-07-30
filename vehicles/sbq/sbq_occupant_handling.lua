@@ -37,6 +37,10 @@ function sbq.eat( occupantId, location, size, voreType, force )
 			sbq.occupant[seatindex].size = size or 1
 			sbq.occupant[seatindex].entryType = voreType
 			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
+			sbq.addRPC(world.sendEntityMessage(occupantId, "sbqGetSpeciesVoreConfig"), function (data)
+				sbq.occupant[seatindex].scale = data[2]
+				sbq.occupant[seatindex].scaleYOffset = data[3]
+			end)
 			sbq.forceSeat( occupantId, seatindex)
 			sbq.refreshList = true
 			sbq.updateOccupants(0)
