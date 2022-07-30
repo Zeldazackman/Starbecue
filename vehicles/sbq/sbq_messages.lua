@@ -281,3 +281,7 @@ message.setHandler( "uneaten", function ()
 	sbq.isNested = false
 	sbq.resetTransformationGroup("globalScale")
 end)
+
+message.setHandler("animOverridesLoungeAnim", function ()
+	return "lay"
+end)
