@@ -80,14 +80,14 @@ function sbq.occupantArray( maybearray )
 		if maybearray.location then
 			if maybearray.failOnFull then
 				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif sbq.locationFull(maybearray.location) then return maybearray.failTransition end
+				elseif sbq.locationSpaceAvailable(maybearray.location) <= 0 then return maybearray.failTransition end
 			else
-				if sbq.locationEmpty(maybearray.location) then return maybearray.failTransition end
+				if sbq.occupants[maybearray.location] <= 0 then return maybearray.failTransition end
 			end
 		end
 		return maybearray
 	else -- pick one depending on number of occupants
-		return maybearray[(sbq.occupants[maybearray[1].location or "total"] or 0) + 1]
+		return maybearray[math.floor(sbq.occupants[maybearray[1].location or "total"] or 0) + 1]
 	end
 end
 

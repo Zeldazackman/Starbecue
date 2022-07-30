@@ -488,7 +488,7 @@ function sbq.checkValidAim(seat, range)
 end
 
 function sbq.checkEatPosition(position, range, location, transition, noaim, aimrange)
-	if not sbq.locationFull(location) then
+	if sbq.locationSpaceAvailable(location) > 0 then
 		local target = sbq.checkValidAim(sbq.driverSeat, aimrange)
 
 		local prey = world.entityQuery(position, range, {

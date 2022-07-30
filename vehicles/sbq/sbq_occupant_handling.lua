@@ -15,11 +15,11 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
-	local full, locationslots = sbq.locationFull(location)
-
+	local locationSpace = sbq.locationSpaceAvailable(location)
+	if locationSpace - (size or 1) < 0 then return false end
 	if (not occupantId) or (not world.entityExists(occupantId))
-	or ((full or (((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) > locationslots) or sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
-	then return false end -- don't eat self
+	or ((sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
+	then return false end
 
 	local loungeables = world.entityQuery( world.entityPosition(occupantId), 5, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
@@ -28,7 +28,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, sbq.sbqData.locations[location].maxNested or locationslots}
+		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, locationSpace}
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
@@ -97,7 +97,7 @@ function sbq.uneat( occupantId )
 	return true
 end
 
-function sbq.edible( occupantId, seatindex, source, emptyslots, locationslots )
+function sbq.edible( occupantId, seatindex, source, spaceAvailable )
 	if sbq.driver ~= occupantId then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
@@ -145,8 +145,8 @@ function sbq.firstNotLounging(entityaimed)
 end
 
 function sbq.moveOccupantLocation(args, location)
-	local full, locationslots = sbq.locationFull(location)
-	if not args.id or full then return false end
+	local space = sbq.locationSpaceAvailable(location)
+	if not args.id or space < (sbq.occupant[args.id].size or 1) then return false end
 
 	sbq.lounging[args.id].location = location
 	return true
@@ -160,52 +160,45 @@ function sbq.findFirstOccupantIdForLocation(location)
 	end
 end
 
-
-function sbq.locationFull(location)
-	if sbq.occupants.total >= sbq.occupants.maximum then
-		return true, 0
-	else
-		local emptyslots = sbq.occupants.maximum - sbq.occupants.total
-
-		if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
-		and not sbq.settings[location.."HammerspaceDisabled"] then
-			return false, emptyslots
+function sbq.locationVisualSize(location, side)
+	local locationSize = sbq.occupants[location]
+	if sbq.sbqData.locations[location].sided then
+		if sbq.sbqData.locations[location].symmetrical then
+			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
+		else
+			locationSize = sbq.occupants[location..(side or "L")]
 		end
-		if (sbq.sbqData.locations[location].combined or sbq.sbqData.locations[location].combine)
-		and ((sbq.actualOccupants[location]+(sbq.settings[location.."VisualMin"] or 0)) < (sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max))
-		and (sbq.occupants[location] < sbq.sbqData.locations[location].max)
-		then
-			return false, math.min(emptyslots,(sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max) - (sbq.actualOccupants[location]+(sbq.settings[location.."VisualMin"] or 0)))
-		end
-
-		return (sbq.occupants[location] >= (sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max)), math.min(emptyslots,(sbq.settings[location.."VisualMax"] or sbq.sbqData.locations[location].max) - (sbq.occupants[location]))
 	end
+	local unscaled = math.min(locationSize, sbq.sbqData.locations[location].max or math.huge)
+	return math.floor(unscaled / sbq.predScale + 0.4)
 end
 
-function sbq.locationEmpty(location)
-	if sbq.occupants.total == 0 then
-		return true
-	else
-		return sbq.occupants[location] == 0
+function sbq.locationSpaceAvailable(location)
+	if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
+	and not sbq.settings[location.."HammerspaceDisabled"] then
+		return math.huge
 	end
+	return (sbq.sbqData.locations[location].max * (sbq.predScale or 1)) - sbq.occupants[location]
 end
 
 function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
 	local location = location
 	if sbq.sbqData.locations[location].sided then
+		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > args.size
+		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > args.size
 		if sbq.direction > 0 then
-			if not sbq.locationFull(location.."L") then
+			if leftHasSpace then
 				location = location.."L"
-			elseif not sbq.locationFull(location.."R") then
+			elseif rightHasSpace then
 				location = location.."R"
 			else
 				return false
 			end
 		else
-			if not sbq.locationFull(location.."R") then
+			if rightHasSpace then
 				location = location.."R"
-			elseif not sbq.locationFull(location.."L") then
+			elseif leftHasSpace then
 				location = location.."L"
 			else
 				return false
@@ -360,7 +353,7 @@ function sbq.updateOccupants(dt)
 				sbq.occupant[i].visited[location .. "Visited"] = true
 				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
 
-				sbq.occupants[location] = sbq.occupants[location] + ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1)) / sbq.predScale
+				sbq.occupants[location] = sbq.occupants[location] + ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
 				sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
 				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
@@ -430,12 +423,10 @@ function sbq.setOccupantTags()
 
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.sided then
-			local amount = math.min(data.max, math.max(sbq.occupants[location.."R"], sbq.occupants[location.."L"]))
-			sbq.occupants[location] = amount
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
 				if sbq.occupants[location] ~= sbq.occupantsPrev[location] then
-					sbq.setPartTag( "global", location.."FrontOccupants", tostring(amount) )
-					sbq.setPartTag( "global", location.."BackOccupants", tostring(amount) )
+					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location)) )
+					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location)) )
 				end
 
 				if sbq.occupants[location] > sbq.occupantsPrev[location] then
@@ -446,8 +437,12 @@ function sbq.setOccupantTags()
 
 			else
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."R"]) ) end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."L"]) ) end
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then
+						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "R")) )
+					end
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then
+						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "L")) )
+					end
 
 					if sbq.occupants[location.."R"] > sbq.occupantsPrev[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
@@ -461,8 +456,12 @@ function sbq.setOccupantTags()
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location.."R"]) ) end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location.."L"]) ) end
+					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection then
+						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "R")) )
+					end
+					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection then
+						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "L")) )
+					end
 
 					if sbq.occupants[location.."L"] > sbq.occupantsPrev[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
@@ -478,7 +477,9 @@ function sbq.setOccupantTags()
 				end
 			end
 		else
-			if sbq.occupants[location] ~= sbq.occupantsPrev[location] then sbq.setPartTag( "global", location.."Occupants", tostring(math.min(sbq.occupants[location], sbq.sbqData.locations[location].max or sbq.occupants[location])) ) end
+			if sbq.occupants[location] ~= sbq.occupantsPrev[location] then
+				sbq.setPartTag( "global", location.."Occupants", tostring(sbq.locationVisualSize(location)) )
+			end
 
 			if sbq.totalTimeAlive > 0.5 or config.getParameter("doExpandAnim") then
 				if sbq.occupants[location] > sbq.occupantsPrev[location] then
