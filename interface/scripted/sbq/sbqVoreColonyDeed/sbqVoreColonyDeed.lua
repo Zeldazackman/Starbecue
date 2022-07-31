@@ -30,11 +30,11 @@ function init()
 			)
 		)
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
-			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
+			sb.jsonMerge(((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
-		sbq.animOverrideSettings = sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings or {}
-		sbq.animOverrideSettings.scale = sbq.tenant.overrides.statusControllerSettings.statusProperties.animOverrideScale or 1
-		sbq.animOverrideOverrideSettings = sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideOverrideSettings or {}
+		sbq.animOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {}
+		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
+		sbq.animOverrideOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideOverrideSettings or {}
 
 		sbq.globalSettings = sbq.predatorSettings
 		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))

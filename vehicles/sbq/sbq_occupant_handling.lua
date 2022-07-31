@@ -16,7 +16,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
 	local locationSpace = sbq.locationSpaceAvailable(location)
-	if locationSpace - (size or 1) < 0 then return false end
+	if locationSpace < ((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) then return false end
 	if (not occupantId) or (not world.entityExists(occupantId))
 	or ((sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
 	then return false end
@@ -146,7 +146,7 @@ end
 
 function sbq.moveOccupantLocation(args, location)
 	local space = sbq.locationSpaceAvailable(location)
-	if not args.id or space < (sbq.occupant[args.id].size or 1) then return false end
+	if not args.id or (space < ((sbq.lounging[args.id].size or 1) * (sbq.settings[location.."Multiplier"] or 1))) then return false end
 
 	sbq.lounging[args.id].location = location
 	return true
@@ -170,7 +170,7 @@ function sbq.locationVisualSize(location, side)
 		end
 	end
 	local unscaled = math.min(locationSize, sbq.sbqData.locations[location].max or math.huge)
-	return math.floor(unscaled / sbq.predScale + 0.4)
+	return math.floor((unscaled / sbq.predScale) + 0.4)
 end
 
 function sbq.locationSpaceAvailable(location)
@@ -185,8 +185,8 @@ function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
 	local location = location
 	if sbq.sbqData.locations[location].sided then
-		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > (args.size or 1)
-		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > (args.size or 1)
+		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > ((args.size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((args.size or 1) * (sbq.settings[location.."Multiplier"] or 1))
 		if sbq.direction > 0 then
 			if leftHasSpace then
 				location = location.."L"
@@ -353,8 +353,9 @@ function sbq.updateOccupants(dt)
 				sbq.occupant[i].visited[location .. "Visited"] = true
 				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
 
-				sbq.occupants[location] = sbq.occupants[location] + ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
-				sbq.occupants.totalSize = sbq.occupants.totalSize + sbq.occupants[location]
+				local size = ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
+				sbq.occupants[location] = sbq.occupants[location] + size
+				sbq.occupants.totalSize = sbq.occupants.totalSize + size
 				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
 				sbq.occupants.mass = sbq.occupants.mass + mass * massMultiplier
@@ -424,9 +425,10 @@ function sbq.setOccupantTags()
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.sided then
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
+				sbq.occupants[location] = sbq.locationVisualSize(location)
 				if sbq.occupants[location] ~= sbq.occupantsPrev[location] or sbq.refreshSizes then
-					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location)) )
-					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location)) )
+					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location]) )
+					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location]) )
 				end
 
 				if sbq.occupants[location] > sbq.occupantsPrev[location] then

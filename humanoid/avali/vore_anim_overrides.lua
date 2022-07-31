@@ -10,7 +10,7 @@ message.setHandler("setBoobMask", function (_,_,booba)
 		elseif self.speciesData.sbqBreastCoverRemap then
 			local partname = "breastsCover"
 			local remapPart = self.speciesData.sbqBreastCoverRemap
-			local part = replaceSpeciesGenderTags(string, remapPart.imagePath or remapPart.species, remapPart.reskin)
+			local part = replaceSpeciesGenderTags(remapPart.string or "/humanoid/<species><reskin>/breasts/femaleBreastsCover.png", remapPart.imagePath or remapPart.species, remapPart.reskin)
 			local success2, baseColorMap = pcall(root.assetJson, "/species/" .. (remapPart.species or "human") .. ".species:baseColorMap")
 			local colorRemap
 			if success2 and baseColorMap ~= nil and remapPart.remapColors and self.speciesFile.baseColorMap then
