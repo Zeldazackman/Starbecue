@@ -111,6 +111,7 @@ function sbq.edible( occupantId, seatindex, source, spaceAvailable )
 			),
 			entity.id()
 		)
+		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose", false, false, entity.id() )
 		sbq.isNested = true
 		sbq.scaleTransformationGroup("globalScale", {0,0})
 		return true
