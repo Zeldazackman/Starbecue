@@ -6,6 +6,7 @@ sbq = {
 		maximum = 0,
 		total = 0
 	},
+	occupantsVisualSize = {},
 	occupant = {},
 	occupantSlots = 7, -- 0 indexed
 	justAte = false,
