@@ -63,15 +63,15 @@
 			// we shouldn't have the randomly generated preds generate with nsfw stuff
 			// not everyone wants to stumble across an NPC with their dick out
 
-			//"cockVorePred" : [true,false],
-			//"analVorePred" : [true,false],
-			//"breastVorePred" : [true,false],
-			//"unbirthPred" : [true,false],
+			"cockVorePred" : [true,false],
+			"analVorePred" : [true,false],
+			"breastVorePred" : [true,false],
+			"unbirthPred" : [true,false],
 
-			//"cockVorePredEnable" : [true,false],
-			//"analVorePredEnable" : [true,false],
-			//"breastVorePredEnable" : [true,false],
-			//"unbirthPredEnable" : [true,false],
+			"cockVorePredEnable" : [true,false],
+			"analVorePredEnable" : [true,false],
+			"breastVorePredEnable" : [true,false],
+			"unbirthPredEnable" : [true,false],
 
 			"bellyEffectSlot" : [ "none", "heal", "digest", "softDigest"],
 			"wombEffectSlot" : [ "none", "heal", "digest", "softDigest"],
