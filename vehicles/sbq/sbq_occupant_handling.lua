@@ -440,6 +440,8 @@ function sbq.setOccupantTags()
 				end
 
 			else
+				sbq.occupantsVisualSize[location.."L"] = sbq.locationVisualSize(location, "L")
+				sbq.occupantsVisualSize[location.."R"] = sbq.locationVisualSize(location, "R")
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
 					if sbq.occupantsVisualSize[location.."R"] ~= sbq.occupantsPrevVisualSize[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location.."R"]) )
