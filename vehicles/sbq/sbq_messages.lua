@@ -10,6 +10,7 @@ message.setHandler( "letout", function(_,_, id )
 end )
 
 message.setHandler( "eggify", function(_,_, eid, data)
+	if not eid or not sbq.lounging[eid] then return end
 	local location = sbq.lounging[eid].location
 	sbq.addRPC( world.sendEntityMessage(eid, "sbqIsPreyEnabled", (data or sbq.sbqData.locations[location].eggify or {}).immunity or "eggImmunity"), function (enabled)
 		if enabled and not enabled.enabled then
