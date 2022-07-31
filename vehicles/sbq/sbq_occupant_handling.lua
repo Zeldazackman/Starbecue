@@ -426,6 +426,7 @@ function sbq.setOccupantTags()
 
 	for location, data in pairs(sbq.sbqData.locations) do
 		sbq.occupantsVisualSize[location] = sbq.locationVisualSize(location)
+		if sbq.occupantsPrevVisualSize[location] == nil then sbq.occupantsPrevVisualSize[location] = 0 end
 		if data.sided then
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
 				if sbq.occupantsVisualSize[location] ~= sbq.occupantsPrevVisualSize[location] or sbq.refreshSizes then
