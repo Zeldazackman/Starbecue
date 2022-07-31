@@ -298,6 +298,8 @@ end
 
 function sbq.resetOccupantCount()
 	sbq.occupantsPrev = sb.jsonMerge(sbq.occupants, {})
+	sbq.occupantsPrevVisualSize = sb.jsonMerge(sbq.occupantsVisualSize, {})
+
 	sbq.occupants.total = 0
 	sbq.occupants.totalSize = 0
 	for location, data in pairs(sbq.sbqData.locations) do
@@ -423,70 +425,73 @@ function sbq.setOccupantTags()
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do
+		sbq.occupantsVisualSize[location] = sbq.locationVisualSize(location)
+		if sbq.occupantsPrevVisualSize[location] == nil then sbq.occupantsPrevVisualSize[location] = 0 end
 		if data.sided then
 			if data.symmetrical then -- for when people want their balls and boobs to be the same size
-				sbq.occupants[location] = sbq.locationVisualSize(location)
-				if sbq.occupants[location] ~= sbq.occupantsPrev[location] or sbq.refreshSizes then
-					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupants[location]) )
-					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupants[location]) )
+				if sbq.occupantsVisualSize[location] ~= sbq.occupantsPrevVisualSize[location] or sbq.refreshSizes then
+					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location]) )
+					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupantsVisualSize[location]) )
 				end
 
-				if sbq.occupants[location] > sbq.occupantsPrev[location] then
+				if sbq.occupantsVisualSize[location] > sbq.occupantsPrevVisualSize[location] then
 					sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
-				elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+				elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 					sbq.doAnims(sbq.shrinkQueue[location] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location])
 				end
 
 			else
+				sbq.occupantsVisualSize[location.."L"] = sbq.locationVisualSize(location, "L")
+				sbq.occupantsVisualSize[location.."R"] = sbq.locationVisualSize(location, "R")
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
-						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "R")) )
+					if sbq.occupantsVisualSize[location.."R"] ~= sbq.occupantsPrevVisualSize[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
+						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location.."R"]) )
 					end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
-						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "L")) )
+					if sbq.occupantsVisualSize[location.."L"] ~= sbq.occupantsPrevVisualSize[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
+						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupantsVisualSize[location.."L"]) )
 					end
 
-					if sbq.occupants[location.."R"] > sbq.occupantsPrev[location.."R"] then
+					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
-					if sbq.occupants[location.."L"] > sbq.occupantsPrev[location.."L"] then
+					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
-					if sbq.occupants[location.."R"] ~= sbq.occupantsPrev[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
-						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.locationVisualSize(location, "R")) )
+					if sbq.occupantsVisualSize[location.."R"] ~= sbq.occupantsPrevVisualSize[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
+						sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupantsVisualSize[location.."R"]) )
 					end
-					if sbq.occupants[location.."L"] ~= sbq.occupantsPrev[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
-						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.locationVisualSize(location, "L")) )
+					if sbq.occupantsVisualSize[location.."L"] ~= sbq.occupantsPrevVisualSize[location.."L"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
+						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location.."L"]) )
 					end
 
-					if sbq.occupants[location.."L"] > sbq.occupantsPrev[location.."L"] then
+					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
-					if sbq.occupants[location.."R"] > sbq.occupantsPrev[location.."R"] then
+					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				end
 			end
 		else
-			if sbq.occupants[location] ~= sbq.occupantsPrev[location] or sbq.refreshSizes then
-				sbq.setPartTag( "global", location.."Occupants", tostring(sbq.locationVisualSize(location)) )
+			if sbq.occupantsVisualSize[location] ~= sbq.occupantsPrevVisualSize[location] or sbq.refreshSizes then
+				sbq.setPartTag( "global", location.."Occupants", tostring(sbq.occupantsVisualSize[location]) )
 			end
 
 			if sbq.totalTimeAlive > 0.5 or config.getParameter("doExpandAnim") then
-				if sbq.occupants[location] > sbq.occupantsPrev[location] then
+				if sbq.occupantsVisualSize[location] > sbq.occupantsPrevVisualSize[location] then
 					sbq.doAnims(sbq.expandQueue[location] or (sbq.stateconfig[sbq.state].expandAnims or {})[location])
-				elseif sbq.occupants[location] < sbq.occupantsPrev[location] then
+				elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
 					sbq.doAnims(sbq.shrinkQueue[location] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location])
 				end
 			end
