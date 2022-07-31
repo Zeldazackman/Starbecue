@@ -6,6 +6,7 @@ sbq = {
 	occupants = {
 		maximum = 8
 	},
+	occupantsVisualSize = {},
 	includeDriver = true,
 	occupant = {},
 	occupantSlots = 7, -- 0 indexed
