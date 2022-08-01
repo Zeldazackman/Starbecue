@@ -61,6 +61,7 @@ function state.stand.navelEscape(args, tconfig)
 end
 
 function sbq.detectShirt()
+	if sbq.sbqData.overrideSettings.shirt == false then return false end
 	if sbq.settings.bra then return true end
 	local shirt = sbq.seats[sbq.driverSeat].controls.chestCosmetic or sbq.seats[sbq.driverSeat].controls.chest or {}
 	local result = not sbq.config.chestVoreWhitelist[shirt.name or "none"]
@@ -68,6 +69,7 @@ function sbq.detectShirt()
 end
 
 function sbq.detectPants()
+	if sbq.sbqData.overrideSettings.pants == false then return false end
 	if sbq.settings.underwear then return true end
 	local pants = sbq.seats[sbq.driverSeat].controls.legsCosmetic or sbq.seats[sbq.driverSeat].controls.legs or {}
 	local result = not sbq.config.legsVoreWhitelist[pants.name or "none"]

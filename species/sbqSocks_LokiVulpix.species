@@ -128,7 +128,11 @@
       "facialMask" : [ ]
     }
   ],
-
+  "baseColorMap" : {
+    "primary" : ["c8c43","dbc751","f7e75a"],
+    "secondary" : ["afb3cd","c8cbdf","eef0ff"],
+    "flesh" : ["418093", "57a3b9", "70b9cf"]
+  },
   // These are the tables for the replace colors, if your sprites neeed to have their colors replaced, you should probably define those colors here
   "bodyColor" : [
     { "ffe2c5" : "ab8c77", "ffc181" : "86644a", "d39c6c" : "684431", "c7815b" : "40271d" }
