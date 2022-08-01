@@ -98,7 +98,7 @@ function sbq.uneat( occupantId )
 end
 
 function sbq.edible( occupantId, seatindex, source, spaceAvailable )
-	if sbq.driver ~= occupantId then return false end
+	if sbq.driver ~= occupantId or sbq.isNested then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
