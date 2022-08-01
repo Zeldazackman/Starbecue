@@ -111,6 +111,7 @@ function sbq.edible( occupantId, seatindex, source, spaceAvailable )
 			),
 			entity.id()
 		)
+		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose", false, false, entity.id() )
 		sbq.isNested = true
 		sbq.scaleTransformationGroup("globalScale", {0,0})
 		return true
@@ -162,6 +163,7 @@ end
 
 function sbq.locationVisualSize(location, side)
 	local locationSize = sbq.occupants[location]
+	local data = sbq.sbqData[location]
 	if sbq.sbqData.locations[location].sided then
 		if sbq.sbqData.locations[location].symmetrical then
 			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
@@ -170,7 +172,7 @@ function sbq.locationVisualSize(location, side)
 		end
 	end
 	local unscaled = math.min(locationSize, sbq.sbqData.locations[location].max or math.huge)
-	return math.floor((unscaled / sbq.predScale) + 0.4)
+	return math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(math.floor((unscaled / sbq.predScale) + 0.4), (sbq.settings[location.."VisualMax"] or data.max or math.huge))))
 end
 
 function sbq.locationSpaceAvailable(location)
@@ -396,13 +398,7 @@ function sbq.setOccupantTags()
 	if sbq.occupants.total ~= sbq.occupantsPrev.total then sbq.setPartTag( "global", "totalOccupants", tostring(sbq.occupants.total) ) end
 	-- because of the fact that pairs feeds things in a random ass order we need to make sure these have tripped on every location *before* setting the occupancy tags or checking the expand/shrink queue
 	for location, data in pairs(sbq.sbqData.locations) do
-		local max = sbq.settings[location.."VisualMax"] or data.max
-		local min = sbq.settings[location.."VisualMin"] or data.minVisual
-		if type(max) == "number" and sbq.occupants[location] > max then
-			sbq.occupants[location] = max
-		elseif type(min) == "number" and sbq.occupants[location] < min then
-			sbq.occupants[location] = min
-		end
+		sbq.occupants[location] = math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(sbq.occupants[location] or 0, sbq.settings[location.."VisualMax"] or data.max or math.huge))
 	end
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.combine then
@@ -421,7 +417,7 @@ function sbq.setOccupantTags()
 		end
 	end
 	for location, data in pairs(sbq.sbqData.locations) do
-		sbq.occupants[location] = math.floor((sbq.occupants[location] or 0)+0.4)
+		sbq.occupants[location] = math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0),math.min(math.floor((sbq.occupants[location] or 0)+0.4), sbq.settings[location.."VisualMax"] or data.max or math.huge)))
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do
