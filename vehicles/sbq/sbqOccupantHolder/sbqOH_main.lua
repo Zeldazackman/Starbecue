@@ -7,6 +7,7 @@ sbq = {
 		maximum = 8
 	},
 	occupantsVisualSize = {},
+	occupantsPrevVisualSize = {},
 	includeDriver = true,
 	occupant = {},
 	occupantSlots = 7, -- 0 indexed
@@ -225,6 +226,7 @@ function initAfterInit(data, scale, scaleYOffset)
 		sbq.spawnerUUID = world.entityUniqueId(sbq.spawner)
 	end
 
+	sbq.resetOccupantCount()
 	sbq.resetOccupantCount()
 
 	mcontroller.applyParameters({ collisionEnabled = false, frictionEnabled = false, gravityEnabled = false, ignorePlatformCollision = true})

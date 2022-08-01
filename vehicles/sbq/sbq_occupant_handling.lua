@@ -163,15 +163,15 @@ end
 
 function sbq.locationVisualSize(location, side)
 	local locationSize = sbq.occupants[location]
-	local data = sbq.sbqData[location] or {}
-	if sbq.sbqData.locations[location].sided then
-		if sbq.sbqData.locations[location].symmetrical then
+	local data = sbq.sbqData.locations[location] or {}
+	if data.sided then
+		if data.symmetrical then
 			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
 		else
 			locationSize = sbq.occupants[location..(side or "L")]
 		end
 	end
-	local unscaled = math.min(locationSize, sbq.sbqData.locations[location].max or math.huge)
+	local unscaled = math.min(locationSize, data.max or math.huge)
 	return math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(math.floor((unscaled / sbq.predScale) + 0.4), (sbq.settings[location.."VisualMax"] or data.max or math.huge))))
 end
 
@@ -449,13 +449,13 @@ function sbq.setOccupantTags()
 
 					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."R"] < sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
 					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."L"] < sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
@@ -468,13 +468,13 @@ function sbq.setOccupantTags()
 
 					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."L"] < sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
 					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."R"] < sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				end

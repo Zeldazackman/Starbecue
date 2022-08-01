@@ -7,6 +7,7 @@ sbq = {
 		total = 0
 	},
 	occupantsVisualSize = {},
+	occupantsPrevVisualSize = {},
 	occupant = {},
 	occupantSlots = 7, -- 0 indexed
 	justAte = false,
@@ -182,6 +183,7 @@ function init()
 	sbq.movementParamsName = "default"
 	sbq.faceDirection(config.getParameter("direction", 1)) -- the hitbox and default movement params are set here
 
+	sbq.resetOccupantCount()
 	sbq.resetOccupantCount()
 
 	for i = 0, sbq.occupantSlots do
