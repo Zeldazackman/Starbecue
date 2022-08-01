@@ -9,7 +9,10 @@
 		"skin" : "default",
 		"bap" : "",
 		"cockVisible" : "",
-		"ballsVisible" : ""
+		"ballsVisible" : "",
+		"ballsFrontOccupants" : "0",
+		"ballsBackOccupants" : "0",
+		"shaftOccupants" : "0"
 	},
 	"animatedParts": {
 		"stateTypes": {
