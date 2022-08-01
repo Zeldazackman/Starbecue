@@ -37,10 +37,8 @@ function sbq.locationPanel()
 		function visualMin:onEnter()
 			local value = tonumber(visualMin.text)
 			local isNumber = type(value) == "number"
-			if isNumber and sbq.overrideSettings[location.."VisualMin"] == nil
-			and value <= (sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or data.max or 0 )
-			then
-				sbq.changePredatorSetting(location.."VisualMin", value)
+			if isNumber and sbq.overrideSettings[location.."VisualMin"] == nil then
+				sbq.changePredatorSetting(location.."VisualMin", math.min(math.max(value, ( sbq.overrideSettings[location.."VisualMin"] or data.minVisual or 0 ) ), (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge)))
 			else
 				visualMin:setText(tostring(sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or 0))
 			end
@@ -50,10 +48,8 @@ function sbq.locationPanel()
 		function visualMax:onEnter()
 			local value = tonumber(visualMax.text)
 			local isNumber = type(value) == "number"
-			if isNumber and sbq.overrideSettings[location.."VisualMax"] == nil
-			and value >= (sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or data.minVisual or 0 )
-			then
-				sbq.changePredatorSetting(location.."VisualMax", value)
+			if isNumber and sbq.overrideSettings[location.."VisualMax"] == nil then
+				sbq.changePredatorSetting(location.."VisualMax", math.min(math.max(value, ( sbq.overrideSettings[location.."VisualMin"] or data.minVisual or 0 ) ), (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge)))
 			else
 				visualMax:setText(tostring(sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or 0))
 			end
