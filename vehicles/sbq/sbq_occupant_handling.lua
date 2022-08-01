@@ -163,7 +163,7 @@ end
 
 function sbq.locationVisualSize(location, side)
 	local locationSize = sbq.occupants[location]
-	local data = sbq.sbqData[location]
+	local data = sbq.sbqData[location] or {}
 	if sbq.sbqData.locations[location].sided then
 		if sbq.sbqData.locations[location].symmetrical then
 			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
