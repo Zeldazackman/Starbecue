@@ -13,16 +13,15 @@ function ChargeFire:fire()
 		return
 	end
 	local sizeRayMisfire
-	if math.random()<0.25 and not sizeRayHoldingShift then
+	if math.random()<0.33 and not sizeRayHoldingShift then
 		sizeRayMisfire = true
 		sizeRayHoldingShift = not sizeRayHoldingShift
 	end
-	if math.random()<0.25 then
+	if math.random()<0.33 then
 		sizeRayMisfire = true
-		local abilityName = switchAbility[sizeRayWhichFireMode]
-		if math.random()<0.25 then
-			local table = {"primary","alt"}
-			abilityName = (table[math.random(2)])
+		local abilityName = sizeRayWhichFireMode
+		if math.random()<0.5 then
+			abilityName = switchAbility[sizeRayWhichFireMode]
 		end
 		local otherAbility = config.getParameter(abilityName.."Ability")
 		self.chargeLevel = copy(otherAbility.chargeLevels[math.random(2,#otherAbility.chargeLevels)])

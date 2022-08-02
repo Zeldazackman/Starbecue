@@ -582,6 +582,8 @@ if speciesLayout ~= nil then
 			status.setStatusProperty("speciesAnimOverrideData", nil)
 			status.setStatusProperty("oldSpeciesAnimOverrideData", nil)
 			status.setStatusProperty("sbqMysteriousPotionTFDuration", nil)
+			status.setStatusProperty("frontarmAnimOverrideArmOffset", nil)
+			status.setStatusProperty("backarmAnimOverrideArmOffset", nil)
 		end
 	end
 	function speciesText:onEnter() applySpecies:onClick() end
