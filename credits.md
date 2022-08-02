@@ -26,6 +26,7 @@
 	xeronious
 	Rex Anivius
 	Rick4242
+	FFWizard
 
 # Patrons
 ## Special Thanks
