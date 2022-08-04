@@ -43,10 +43,13 @@ scaleValue:setText(tostring(sbq.animOverrideOverrideSettings.scale or sbq.animOv
 function scaleValue:onEnter()
 	local value = tonumber(scaleValue.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax == nil
-	or isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax == nil
-	or isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax >= value
-	or isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax >= value
+	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and player.hasItem("sbqSizeRay")
+	and (
+		(sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax == nil)
+		or (sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax == nil)
+		or (sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax >= value)
+		or (sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax >= value)
+	)
 	then
 		sbq.changeAnimOverrideSetting("scale", value)
 	else
@@ -58,7 +61,7 @@ scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.
 function scaleValueMin:onEnter()
 	local value = tonumber(scaleValueMin.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin == nil then
+	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin == nil and (value <= 1 or player.hasItem("sbqSizeRay") ) and value > 0 then
 		sbq.changeAnimOverrideSetting("scaleMin", value)
 	else
 		scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.animOverrideSettings.scaleMin or 0.1))
@@ -69,7 +72,7 @@ scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.
 function scaleValueMax:onEnter()
 	local value = tonumber(scaleValueMax.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMax == nil then
+	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMax == nil and (value >= 1 or player.hasItem("sbqSizeRay")) and value > 0 then
 		sbq.changeAnimOverrideSetting("scaleMax", value)
 	else
 		scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3))

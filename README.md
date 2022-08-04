@@ -53,6 +53,8 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Umbreon](https://steamcommunity.com/sharedfiles/filedetails/?id=730345787)
 - [Braixen](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Delphox](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
+- [Zoroark](https://steamcommunity.com/sharedfiles/filedetails/?id=2811625141)
+- [Hisui Zoroark](https://steamcommunity.com/workshop/filedetails/?id=2813977483)
 - [Crylan](https://steamcommunity.com/sharedfiles/filedetails/?id=1197335162)
 - [Rodent](https://github.com/Zygahedron/StarboundSimpleVoreMod) (Sheights' version of SSVM is broken, this is a fixed fork)
 - [Lyceen](https://steamcommunity.com/sharedfiles/filedetails/?id=1360547769)

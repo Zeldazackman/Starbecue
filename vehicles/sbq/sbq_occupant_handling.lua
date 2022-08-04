@@ -98,7 +98,7 @@ function sbq.uneat( occupantId )
 end
 
 function sbq.edible( occupantId, seatindex, source, spaceAvailable )
-	if sbq.driver ~= occupantId then return false end
+	if sbq.driver ~= occupantId or sbq.isNested then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
@@ -163,15 +163,15 @@ end
 
 function sbq.locationVisualSize(location, side)
 	local locationSize = sbq.occupants[location]
-	local data = sbq.sbqData[location]
-	if sbq.sbqData.locations[location].sided then
-		if sbq.sbqData.locations[location].symmetrical then
+	local data = sbq.sbqData.locations[location] or {}
+	if data.sided then
+		if data.symmetrical then
 			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
 		else
 			locationSize = sbq.occupants[location..(side or "L")]
 		end
 	end
-	local unscaled = math.min(locationSize, sbq.sbqData.locations[location].max or math.huge)
+	local unscaled = math.min(locationSize, data.max or math.huge)
 	return math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(math.floor((unscaled / sbq.predScale) + 0.4), (sbq.settings[location.."VisualMax"] or data.max or math.huge))))
 end
 
@@ -439,6 +439,8 @@ function sbq.setOccupantTags()
 			else
 				sbq.occupantsVisualSize[location.."L"] = sbq.locationVisualSize(location, "L")
 				sbq.occupantsVisualSize[location.."R"] = sbq.locationVisualSize(location, "R")
+				if sbq.occupantsPrevVisualSize[location.."L"] == nil then sbq.occupantsPrevVisualSize[location.."L"] = 0 end
+				if sbq.occupantsPrevVisualSize[location.."R"] == nil then sbq.occupantsPrevVisualSize[location.."R"] = 0 end
 				if sbq.direction > 0 then -- to make sure those in the balls in CV and breasts in BV cases stay on the side they were on instead of flipping
 					if sbq.occupantsVisualSize[location.."R"] ~= sbq.occupantsPrevVisualSize[location.."R"] or sbq.direction ~= sbq.prevDirection or sbq.refreshSizes then
 						sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location.."R"]) )
@@ -449,13 +451,13 @@ function sbq.setOccupantTags()
 
 					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."R"] < sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
 					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."L"] < sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				else
@@ -468,13 +470,13 @@ function sbq.setOccupantTags()
 
 					if sbq.occupantsVisualSize[location.."L"] > sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.expandQueue[location.."Front"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Front"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."L"] < sbq.occupantsPrevVisualSize[location.."L"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Front"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Front"])
 					end
 
 					if sbq.occupantsVisualSize[location.."R"] > sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.expandQueue[location.."Back"] or (sbq.stateconfig[sbq.state].expandAnims or {})[location.."Back"])
-					elseif sbq.occupantsVisualSize[location] < sbq.occupantsPrevVisualSize[location] then
+					elseif sbq.occupantsVisualSize[location.."R"] < sbq.occupantsPrevVisualSize[location.."R"] then
 						sbq.doAnims(sbq.shrinkQueue[location.."Back"] or (sbq.stateconfig[sbq.state].shrinkAnims or {})[location.."Back"])
 					end
 				end
@@ -548,7 +550,7 @@ function sbq.doBellyEffects(dt)
 
 			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
 
-			if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) and sbq.config.bellyGurgleEffects[locationEffect] then
+			if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) then
 				sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
 			end
 			world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())

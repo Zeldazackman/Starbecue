@@ -310,10 +310,13 @@ function escapeValue:onEnter()
 	sb.logInfo("escapeValue")
 	local value = tonumber(escapeValue.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0
+	and (
+		(sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value)
+	)
 	then
 		sbq.globalSettings.escapeDifficulty = value
 		sbq.saveSettings()

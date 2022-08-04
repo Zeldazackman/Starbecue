@@ -646,7 +646,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "xeronious":"{\"treasurePools\":[\"sbqXeroniousMilkCrate\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -662,7 +662,7 @@
                  "name":"",
                  "properties":
                     {
-
+                     "parameters":"{\"treasurePools\":[\"sbqXeroniousMilkCrate\"]}"
                     },
                  "rotation":0,
                  "type":"",
@@ -1390,7 +1390,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"pred\":\"Pascal\",  \"prey\":\"Kaori\", \"description\":\"A large condom with a label:\\nKaori is just a load of Pascal's cum~\" }"
+                     "parameters":"{\"preyDirectives\":\"\",\"colonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\",\"sbqFilledCondomPreysbqKaori_Fevix\",\"sbqFilledCondomPredsbqPascal_LokiVulpix\"],\"preyUUID\":\"sbqKaori_Fevix\",\"description\":\"A large condom with a label:\\n... Forgot your name, sorry!\",\"prey\":\"Kaori\",\"originalColonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\"],\"animationParts\":{\"object\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\"},\"orientations\":[{\"imagePosition\":[-8,0],\"image\":\"object.png\",\"direction\":\"right\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]},{\"imagePosition\":[-8,0],\"flipImages\":true,\"image\":\"object.png\",\"direction\":\"left\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]}],\"pred\":\"Pascal\",\"preyColorMap\":{\"primary\":[\"0b0b0b\",\"101010\",\"1b1b1b\"],\"secondary\":[\"3890cf\",\"1ac2e7\",\"01e9fa\"]},\"inventoryIcon\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"shortdescription\":\"Pascal's Forgetful Condom\",\"directives\":\"?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"predUUID\":\"sbqPascal_LokiVulpix\"}"
                     },
                  "rotation":0,
                  "type":"",
@@ -1406,7 +1406,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"pred\":\"Xeronious\", \"description\":\"A Xeronious branded milk carton.\" }"
+                     "parameters":"{\"colonyTags\":[\"bvore\",\"horny\",\"milk\"],\"description\":\"A Xeronious branded milk carton.\",\"originalColonyTags\":[\"bvore\",\"horny\",\"milk\"],\"animationParts\":{\"object\":\"object.png?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\"},\"orientations\":[{\"imagePosition\":[-8,0],\"image\":\"object.png\",\"spaceScan\":0.1,\"direction\":\"right\",\"anchors\":[\"bottom\"]},{\"imagePosition\":[-8,0],\"flipImages\":true,\"image\":\"object.png\",\"spaceScan\":0.1,\"direction\":\"left\",\"anchors\":[\"bottom\"]}],\"pred\":\"Xeronious\",\"inventoryIcon\":\"object.png?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\",\"shortdescription\":\"Xeronious' Milk\",\"predDirectives\":\"\",\"scriptStorage\":{},\"predColorMap\":{\"secondary\":[\"656565\",\"838383\",\"909090\",\"a6a6a6\"],\"primary\":[\"0e0e0e\",\"292929\",\"3f3f3f\",\"575757\"]},\"predUUID\":\"sbqXeronious_Xeronious\",\"directives\":\"?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\"}"
                     },
                  "rotation":0,
                  "type":"",
@@ -1438,13 +1438,13 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"pred\":\"Pascal\",  \"prey\":\"Kaori\", \"description\":\"A large condom with a label:\\nKaori is just a load of Pascal's cum~\" }"
+                     "parameters":"{\"preyDirectives\":\"\",\"colonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\",\"sbqFilledCondomPreysbqKaori_Fevix\",\"sbqFilledCondomPredsbqPascal_LokiVulpix\"],\"preyUUID\":\"sbqKaori_Fevix\",\"description\":\"A large condom with a label:\\nKaori is just a load of Pascal's cum~\",\"prey\":\"Kaori\",\"originalColonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\"],\"animationParts\":{\"object\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\"},\"orientations\":[{\"imagePosition\":[-8,0],\"image\":\"object.png\",\"direction\":\"right\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]},{\"imagePosition\":[-8,0],\"flipImages\":true,\"image\":\"object.png\",\"direction\":\"left\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]}],\"pred\":\"Pascal\",\"preyColorMap\":{\"primary\":[\"0b0b0b\",\"101010\",\"1b1b1b\"],\"secondary\":[\"3890cf\",\"1ac2e7\",\"01e9fa\"]},\"inventoryIcon\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"shortdescription\":\"Kaori Filled Condom\",\"directives\":\"?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"predUUID\":\"sbqPascal_LokiVulpix\"}"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":328,
+                 "x":320,
                  "y":400
                 }, 
                 {
@@ -1454,7 +1454,7 @@
                  "name":"",
                  "properties":
                     {
-                     "parameters":"{\"pred\":\"Pascal\",  \"prey\":\"Kaori\", \"description\":\"A large condom with a label:\\nKaori is just a load of Pascal's cum~\" }"
+                     "parameters":"{\"preyDirectives\":\"\",\"colonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\",\"sbqFilledCondomPreysbqKaori_Fevix\",\"sbqFilledCondomPredsbqPascal_LokiVulpix\"],\"preyUUID\":\"sbqKaori_Fevix\",\"description\":\"A large condom with a label:\\nKaori churned in Pascal's nuts and all they got was this lousy condom~\",\"prey\":\"Kaori\",\"originalColonyTags\":[\"cvore\",\"horny\",\"cum\",\"condom\"],\"animationParts\":{\"object\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\"},\"orientations\":[{\"imagePosition\":[-8,0],\"image\":\"object.png\",\"direction\":\"right\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]},{\"imagePosition\":[-8,0],\"flipImages\":true,\"image\":\"object.png\",\"direction\":\"left\",\"spaceScan\":0.1,\"anchors\":[\"bottom\"]}],\"pred\":\"Pascal\",\"preyColorMap\":{\"primary\":[\"0b0b0b\",\"101010\",\"1b1b1b\"],\"secondary\":[\"3890cf\",\"1ac2e7\",\"01e9fa\"]},\"inventoryIcon\":\"object.png?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"shortdescription\":\"Kaori Filled Condom\",\"directives\":\"?replace;b48520=0b0b0b;dfa831=101010;ffc341=1b1b1b;000000=3890cf;523e13=1ac2e7;725927=01e9fa\",\"predUUID\":\"sbqPascal_LokiVulpix\"}"
                     },
                  "rotation":0,
                  "type":"",
@@ -1478,6 +1478,22 @@
                  "width":24,
                  "x":320,
                  "y":424
+                }, 
+                {
+                 "gid":2147484181,
+                 "height":16,
+                 "id":216,
+                 "name":"",
+                 "properties":
+                    {
+                     "parameters":"{\"colonyTags\":[\"bvore\",\"horny\",\"milk\"],\"description\":\"A Xeronious branded milk carton.\",\"originalColonyTags\":[\"bvore\",\"horny\",\"milk\"],\"animationParts\":{\"object\":\"object.png?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\"},\"orientations\":[{\"imagePosition\":[-8,0],\"image\":\"object.png\",\"spaceScan\":0.1,\"direction\":\"right\",\"anchors\":[\"bottom\"]},{\"imagePosition\":[-8,0],\"flipImages\":true,\"image\":\"object.png\",\"spaceScan\":0.1,\"direction\":\"left\",\"anchors\":[\"bottom\"]}],\"pred\":\"Xeronious\",\"inventoryIcon\":\"object.png?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\",\"shortdescription\":\"Xeronious' Milk\",\"predDirectives\":\"\",\"scriptStorage\":{},\"predColorMap\":{\"secondary\":[\"656565\",\"838383\",\"909090\",\"a6a6a6\"],\"primary\":[\"0e0e0e\",\"292929\",\"3f3f3f\",\"575757\"]},\"predUUID\":\"sbqXeronious_Xeronious\",\"directives\":\"?replace;336c93=656565;4080a9=838383;4f9fd1=909090;34739b=0e0e0e;4183ac=292929;4792c1=3f3f3f\"}"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":440,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2229,7 +2245,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":216,
+ "nextobjectid":217,
  "orientation":"orthogonal",
  "properties":
     {

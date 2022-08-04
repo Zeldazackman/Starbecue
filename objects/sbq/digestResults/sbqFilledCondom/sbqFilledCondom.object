@@ -13,7 +13,7 @@
 
 	"baseColorMap":{
 		"primary" : ["b48520","dfa831","ffc341"],
-		"secondary" : ["000000","53e313","725924"]
+		"secondary" : ["000000","523e13","725927"]
 	},
 
 	"replaceDescPredPrey" : [

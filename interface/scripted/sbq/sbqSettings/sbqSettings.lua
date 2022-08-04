@@ -489,10 +489,13 @@ end
 function escapeValue:onEnter()
 	local value = tonumber(escapeValue.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0
+	and (
+		(sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value)
+	)
 	then
 		sbq.changeGlobalSetting("escapeDifficulty", value)
 	else
@@ -579,6 +582,8 @@ if speciesLayout ~= nil then
 			status.setStatusProperty("speciesAnimOverrideData", nil)
 			status.setStatusProperty("oldSpeciesAnimOverrideData", nil)
 			status.setStatusProperty("sbqMysteriousPotionTFDuration", nil)
+			status.setStatusProperty("frontarmAnimOverrideArmOffset", nil)
+			status.setStatusProperty("backarmAnimOverrideArmOffset", nil)
 		end
 	end
 	function speciesText:onEnter() applySpecies:onClick() end

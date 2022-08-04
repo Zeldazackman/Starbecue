@@ -62,13 +62,42 @@
 	],
 	"sbqPascalKaoriCum" : [
 		[0, { "fill" : [
-			{"item" : {"name":"sbqFilledCondom", "count":64, "parameters":{"pred":"Pascal", "predUUID":"sbqPascal_LokiVulpix", "prey":"Kaori", "preyUUID":"sbqKaori_Fevix", "description":"A large condom with a label:\nKaori is just a load of Pascal's cum~" }}}
+			{"item" : {"name":"sbqFilledCondom", "count":64, "parameters":{"pred":"Pascal", "predUUID":"sbqPascal_LokiVulpix", "prey":"Kaori", "preyUUID":"sbqKaori_Fevix",
+				"preyDirectives" : "",
+				"preyColorMap" : {
+					"primary" : ["0b0b0b","101010","1b1b1b"],
+					"secondary" : ["3890cf","1ac2e7","01e9fa"]
+				}
+			}}}
 		]}]
 	],
 	"sbqPascalKaoriCumBarrel" : [
 		[0, {
 			"pool" : [
 				{"weight":1, "pool" : "sbqPascalKaoriCum"}
+			],
+			"poolRounds" :[
+				[0.25, 16],
+				[0.5, 32],
+				[0.25, 48]
+			]
+		}]
+	],
+	"sbqXeroniousMilk" : [
+		[0, { "fill" : [
+			{"item" : {"name":"sbqMilkCarton", "count":64, "parameters":{"pred":"Xeronious", "predUUID":"sbqXeronious_Xeronious",
+				"predDirectives" : "",
+				"predColorMap" : {
+					"primary" : ["0e0e0e", "292929", "3f3f3f", "575757"],
+					"secondary" : ["656565", "838383", "909090", "a6a6a6"]
+				}
+			}}}
+		]}]
+	],
+	"sbqXeroniousMilkCrate" : [
+		[0, {
+			"pool" : [
+				{"weight":1, "pool" : "sbqXeroniousMilk"}
 			],
 			"poolRounds" :[
 				[0.25, 16],

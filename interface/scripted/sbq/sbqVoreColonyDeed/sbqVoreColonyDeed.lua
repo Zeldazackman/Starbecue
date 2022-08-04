@@ -391,10 +391,13 @@ end
 function escapeValue:onEnter()
 	local value = tonumber(escapeValue.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value
-	or isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0
+	and (
+		(sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil)
+		or (sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value)
+		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value)
+	)
 	then
 		sbq.changePredSetting("escapeDifficulty", value)
 	else
@@ -405,7 +408,7 @@ end
 function escapeValueMin:onEnter()
 	local value = tonumber(escapeValueMin.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil then
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMin == nil and value > 0 then
 		sbq.changePredSetting("escapeDifficultyMin", value)
 	else
 		escapeValueMin:setText(tostring(sbq.overrideSettings.escapeDifficultyMin or sbq.predatorSettings.escapeDifficultyMin or 0))
@@ -415,7 +418,7 @@ end
 function escapeValueMax:onEnter()
 	local value = tonumber(escapeValueMax.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMax == nil then
+	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and sbq.overrideSettings.escapeDifficultyMax == nil and value > 0 then
 		sbq.changePredSetting("escapeDifficultyMax", value)
 	else
 		escapeValueMax:setText(tostring(sbq.overrideSettings.escapeDifficultyMax or sbq.predatorSettings.escapeDifficultyMax or 0))
