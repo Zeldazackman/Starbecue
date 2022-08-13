@@ -2,15 +2,13 @@
 
 --local oldInitAfterInit = initAfterInit
 
-local oldDoUpdate = doUpdate
-function doUpdate(dt)
-	local oldScale = self.currentScale
-	if oldDoUpdate then oldDoUpdate(dt) end
-	if self.currentScale ~= oldScale then
-		local occupantHolder = (status.statusProperty("sbqCurrentData") or {}).id
-		if occupantHolder then
-			world.sendEntityMessage(occupantHolder, "sbqOccupantHolderScale", self.currentScale or 1, (self.controlParameters or {}).yOffset or 0)
-		end
+
+local _scaleUpdated = scaleUpdated
+function scaleUpdated(dt)
+	_scaleUpdated(dt)
+	local occupantHolder = (status.statusProperty("sbqCurrentData") or {}).id
+	if occupantHolder then
+		world.sendEntityMessage(occupantHolder, "sbqOccupantHolderScale", self.currentScale or 1, (self.controlParameters or {}).yOffset or 0)
 	end
 end
 

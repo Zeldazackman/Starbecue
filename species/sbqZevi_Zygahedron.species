@@ -123,18 +123,20 @@
     }
   ],
   "baseColorMap" : {
-    "primary" : ["8c8c8c","bfbfbf","e3e3e3"],
-    "secondary" : ["8b72a9","a38cbe","c3aae2"],
+    "primary" : ["8b72a9","a38cbe","c3aae2"],
+    "tertiary" : ["8c8c8c","bfbfbf","e3e3e3"],
+    "secondary" : ["418093", "57a3b9", "70b9cf"],
     "flesh" : ["418093", "57a3b9", "70b9cf"]
   },
+  // These are the tables for the replace colors, if your sprites neeed to have their colors replaced, you should probably define those colors here
   "bodyColor" : [
-    // Yellow
-    { "fff8b5" : "fff8b5", "fde03f" : "fde03f", "f6b919" : "f6b919", "806319" : "352b12" }
+    { "ffe2c5" : "ab8c77" }
   ],
   "undyColor" : [
-    { "f32200" : "FFDCC4", "dc1f00" : "FFB98F", "be1b00" : "C1695F", "951500" : "7E3F38" }
+    { "dc1f00" : "4d76ad" }
   ],
   "hairColor" : [
-    { "f7e7b2" : "FFB0A3", "d9c189" : "FC8469", "a38d59" : "BE424D", "735e3a" : "782027" }
+    { "d9c189" : "E86D46" }
   ]
+
 }
