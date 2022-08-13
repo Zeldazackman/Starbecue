@@ -66,6 +66,7 @@
 					{ "expandMode" : [2, 2]},
 					{ "id" : "requiredTagsPanel", "type" : "panel", "style" : "convex", "children" : [
 						{ "type" : "label", "text" : "Colony Tags", "inline" : true },
+						[{"type":"button", "id":"tenantNote", "caption":"?", "visible" : false, "size" : [15,15]},{"type":"button", "id":"orderFurniture", "toolTip": "Order furniture this tenant may appreciate.", "caption":"Order Furniture", "visible":false, "expandMode" : [2,0]}],
 						{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 					]}
 				],[ // fourth quarter

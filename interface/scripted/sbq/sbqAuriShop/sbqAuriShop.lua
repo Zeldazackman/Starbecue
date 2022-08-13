@@ -137,6 +137,8 @@ function buy:onClick()
 		for i = 1, buyAmount do
 			player.giveItem({ name = buyRecipe.result, count = buyRecipe.count, parameters = buyRecipe.parameters })
 		end
+	else
+		pane.playSound("/sfx/interface/clickon_error.ogg")
 	end
 end
 

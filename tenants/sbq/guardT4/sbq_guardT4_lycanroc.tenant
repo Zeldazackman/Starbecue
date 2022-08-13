@@ -12,7 +12,13 @@
   },
 
   "checkRequirements" : { "checkItems" : ["rockruffaf"] },
-
+  "orderFurniture" : [
+    {"name":"cavebed", "count":1},
+    {"name":"cavechair", "count":1},
+    {"name":"cavechest", "count":1},
+    {"name":"cavelamp", "count":1},
+    {"name":"rockruffaf", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

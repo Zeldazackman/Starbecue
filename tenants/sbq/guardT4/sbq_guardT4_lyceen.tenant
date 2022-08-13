@@ -12,7 +12,19 @@
   },
 
   "checkRequirements" : { "checkItems" : ["lyceenoutfit1chest"] },
-
+  "orderFurniture" : [
+    {"name":"lyceenbannerlarge", "count":1},
+    {"name":"lyceenbannersmall", "count":1},
+    {"name":"lyceenbookcase", "count":1},
+    {"name":"lyceendresser", "count":1},
+    {"name":"lyceenornatebed", "count":1},
+    {"name":"lyceensmallbed", "count":1},
+    {"name":"lyceensmalllamp", "count":1},
+    {"name":"lyceenwoodchair", "count":1},
+    {"name":"lyceenexteriordoor", "count":1},
+    {"name":"lyceeninteriordoor", "count":1},
+    {"name":"lyceenlamppost1", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

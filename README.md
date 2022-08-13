@@ -74,6 +74,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Attarran](https://steamcommunity.com/sharedfiles/filedetails/?id=797166006)
 - [Neki](https://steamcommunity.com/sharedfiles/filedetails/?id=2611501999)
 - [Lastree](https://steamcommunity.com/sharedfiles/filedetails/?id=1380941596)
+- [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706)
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 
@@ -81,7 +82,9 @@ This mod includes no assets from the respective modded races, modified or not, m
 ### NPC Vore Tenants
 - Zevi (Pred/Prey) Zygahedron
 - Socks Flareon (Pred/Prey) LokiVulpix
-- Blue the Synth (Pred/Prey) Blueninja
+- Helena hellhound (Pred/Prey) FFWizard
+- Sandy Floatporeon (Pred/Prey) Fevix
+- Blue the Synth (Pred/Prey) Blueninja (requires [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706) mod )
 
 ### Other Things
 - Egg

@@ -12,6 +12,16 @@
   },
 
   "checkRequirements" : { "checkImage" : "/humanoid/argonian/malebody.png" },
+  "orderFurniture" : [
+    {"name":"argoniandrum", "count":1},
+    {"name":"ashbed", "count":1},
+    {"name":"chestargonian1", "count":1},
+    {"name":"chestargonian2", "count":1},
+    {"name":"argonianpot", "count":1},
+    {"name":"argoniantotem", "count":1},
+    {"name":"argonianbannergreen", "count":1},
+    {"name":"argonianbannertan", "count":1}
+  ],
 
   "tenants": [
     {

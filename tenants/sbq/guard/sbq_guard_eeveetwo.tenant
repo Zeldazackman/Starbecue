@@ -7,11 +7,18 @@
     "combat" : 8,
     "door": 1,
     "sbqVore" : 1,
-    "eeveetwo" : 8
+    "human" : 8
   },
 
   "checkRequirements" : { "checkItems" : ["eeveetwotier1chest"] },
-
+  "orderFurniture" : [
+    {"name":"carbed", "count":1},
+    {"name":"jukebox", "count":1},
+    {"name":"basictv", "count":1},
+    {"name":"fridge", "count":1},
+    {"name":"oven1", "count":1},
+    {"name":"basicbath", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

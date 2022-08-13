@@ -11,7 +11,17 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"medievalarmor", "count":1},
+    {"name":"medievalbed", "count":1},
+    {"name":"medievalbookcase", "count":1},
+    {"name":"medievalchandelier", "count":1},
+    {"name":"medievalfireplace", "count":1},
+    {"name":"medievalsworddisplay", "count":1},
+    {"name":"royalcabinet", "count":1},
+    {"name":"royalbed", "count":1},
+    {"name":"wallshackles", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

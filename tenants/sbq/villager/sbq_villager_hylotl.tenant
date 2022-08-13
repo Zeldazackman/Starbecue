@@ -10,7 +10,15 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"hylotlchair", "count":1},
+    {"name":"hylotlcityposter", "count":1},
+    {"name":"hylotldrinks", "count":1},
+    {"name":"hylotlfashionhologram", "count":1},
+    {"name":"neonhylotlhead", "count":1},
+    {"name":"hylotlwallshelf", "count":1},
+    {"name":"hylotlcounter", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

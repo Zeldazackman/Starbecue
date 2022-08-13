@@ -10,6 +10,11 @@
   },
 
   "checkRequirements" : {},
+  "orderFurniture" : [
+    {"name":"dustybed", "count":1},
+    {"name":"dusychair", "count":1},
+    {"name":"dustytable", "count":1}
+  ],
 
   "tenants": [
     {

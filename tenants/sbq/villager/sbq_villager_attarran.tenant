@@ -6,8 +6,15 @@
     "light": 1,
     "door": 1,
     "sbqVore" : 1,
-    "Attarran" : 8
+    "rust" : 8
   },
+  "orderFurniture" : [
+    {"name":"rustbed", "count":1},
+    {"name":"rustchair", "count":1},
+    {"name":"rustchest", "count":1},
+    {"name":"rustdoor", "count":1},
+    {"name":"rusttable", "count":1}
+  ],
 
   "checkRequirements" : { "checkImage" : "/humanoid/Attarran/malebody.png" },
 

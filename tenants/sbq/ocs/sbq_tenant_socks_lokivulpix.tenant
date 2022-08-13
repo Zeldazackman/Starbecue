@@ -14,6 +14,18 @@
   "colonyObjectCriteria" : {
     "spookypumpkinhead" : 1
   },
+  "tenantNote" : "^green;\"unscorched\"^reset; objects are the variants of ^green;\"scorched\"^reset; objects that aren't ruined.",
+  "orderFurniture" : [
+    {"name":"spookypumpkinhead", "count":1},
+    {"name":"scorchedcitytv", "count":1},
+    {"name":"scorchedcitycounter", "count":1},
+    {"name":"scorchedcityfridge", "count":1},
+    {"name":"fennixaf", "count":1},
+    {"name":"spookitaf", "count":1},
+    {"name":"unicornplush", "count":1},
+    {"name":"woodencouch2", "count":1, "parameters":{"color":"green"}},
+    {"name":"redtoyblock", "count":50, "price":10}
+  ],
 
   "checkRequirements" : {},
 

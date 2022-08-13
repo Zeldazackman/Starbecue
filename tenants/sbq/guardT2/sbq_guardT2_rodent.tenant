@@ -12,7 +12,13 @@
   },
 
   "checkRequirements" : { "checkItems" : ["vorechip-chip"] },
-
+  "orderFurniture" : [
+    {"name":"sleepingbag", "count":1},
+    {"name":"treasuremap", "count":1},
+    {"name":"medievalmap", "count":1},
+    {"name":"recreationalvehicle", "count":1},
+    {"name":"apextent", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",
