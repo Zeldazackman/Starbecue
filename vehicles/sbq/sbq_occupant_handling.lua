@@ -626,28 +626,31 @@ function sbq.doBellyEffects(dt)
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
 					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
 				end
-				sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
-					"sbqOpenInterface", {"sbqIndicatorHud",
-					{
-						owner = entity.id(),
-						directions = directions,
-						progress = {
-							active = sbq.occupant[i].progressBarActive,
-							color = sbq.occupant[i].progressBarColor,
-							percent = sbq.occupant[i].progressBar,
-							dx = progressbarDx
-						},
-						icon = icon,
-						time = sbq.occupant[i].occupantTime,
-						location = (sbq.sbqData.locations[location] or {}).name
-					}
-				})
+				sbq.openPreyHud(i, directions, progressbarDx, icon, location)
 			end
 
 			sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier )
 
 		end
 	end
+end
+function sbq.openPreyHud(i, directions, progressbarDx, icon, location)
+	sbq.loopedMessage(sbq.occupant[i].id .. "-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
+		"sbqOpenInterface", { "sbqIndicatorHud",
+		{
+			owner = entity.id(),
+			directions = directions,
+			progress = {
+				active = sbq.occupant[i].progressBarActive,
+				color = sbq.occupant[i].progressBarColor,
+				percent = sbq.occupant[i].progressBar,
+				dx = progressbarDx
+			},
+			icon = icon,
+			time = sbq.occupant[i].occupantTime,
+			location = (sbq.sbqData.locations[location] or {}).name
+		}
+	})
 end
 
 function sbq.validStruggle(struggler, dt)

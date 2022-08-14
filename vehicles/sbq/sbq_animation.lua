@@ -339,10 +339,10 @@ function sbq.victimAnimUpdate(eid)
 	local rotation = sbq.getVictimAnimInterpolatedValue(victimAnim, "r", progress)
 	local translation = { sbq.getVictimAnimInterpolatedValue(victimAnim, "x", progress), sbq.getVictimAnimInterpolatedValue(victimAnim, "y", progress)}
 
-	sb.setLogMap("-currTime", currTime)
-	sb.setLogMap("-progress", progress)
-	sb.setLogMap("-frame", victimAnim.frame)
-	sb.setLogMap("-Prevframe", victimAnim.prevFrame)
+	--sb.setLogMap("-currTime", currTime)
+	--sb.setLogMap("-progress", progress)
+	--sb.setLogMap("-frame", victimAnim.frame)
+	--sb.setLogMap("-Prevframe", victimAnim.prevFrame)
 
 	sbq.resetTransformationGroup(transformGroup)
 	--could probably use animator.transformTransformationGroup() and do everything below in one matrix but I don't know how those work exactly so

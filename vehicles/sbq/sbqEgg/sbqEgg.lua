@@ -21,6 +21,30 @@ function sbq.initAfterInit()
 	end
 end
 
+function sbq.applyStatusLists()
+	for i = 0, sbq.occupantSlots do
+		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id) then
+			if not sbq.weirdFixFrame then
+				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
+			end
+			sbq.loopedMessage( sbq.occupant[i].seatname.."StatusEffects", sbq.occupant[i].id, "sbqApplyStatusEffects", {sbq.occupant[i].statList} )
+			if not (i == 0 and sbq.isNested) then
+				sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
+			end
+		else
+			vehicle.setLoungeEnabled(sbq.occupant[i].seatname, false)
+		end
+	end
+	sbq.weirdFixFrame = nil
+end
+
+local _openPreyHud = sbq.openPreyHud
+function sbq.openPreyHud(i, directions, progressbarDx, icon, location)
+	if not (i == 0 and sbq.isNested) then
+		_openPreyHud(i, directions, progressbarDx, icon, location)
+	end
+end
+
 _escapeScript = sbq.escapeScript
 
 function sbq.escapeScript(i)
