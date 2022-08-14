@@ -1,15 +1,17 @@
 {
-  "name": "sbq_villager_vaporeon",
-  "priority": 51,
+  "name": "sbq_guardT4_vaporeon",
+  "priority": 55,
 
   "colonyTagCriteria": {
     "light": 1,
+    "tier4": 12,
+    "combat" : 8,
     "door": 1,
     "sbqVore" : 1,
     "sea" : 8
   },
 
-  "checkRequirements" : { },
+  "checkRequirements" : {},
   "orderFurniture" : [
     {"name":"brokenanchor", "count":1},
     {"name":"coralmirror", "count":1},
@@ -21,8 +23,9 @@
   "tenants": [
     {
       "spawn": "npc",
+      "level" : 4,
       "species": ["vaporeon"],
-      "type": "sbqVoreTenant",
+      "type": "sbqVoreFriendlyGuardTenant",
       "overrides": {
        }
      }

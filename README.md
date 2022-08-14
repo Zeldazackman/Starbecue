@@ -30,7 +30,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 
 ### Playable Predator transformation
 - Vaporeon
-- Xeronious
+- (Kaiju) Xeronious
 - Avian
 - Slime
 - Ziellek Dragon
