@@ -28,7 +28,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, locationSpace}
+		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), force}
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
@@ -97,8 +97,8 @@ function sbq.uneat( occupantId )
 	return true
 end
 
-function sbq.edible( occupantId, seatindex, source, spaceAvailable )
-	if sbq.driver ~= occupantId or sbq.isNested then return false end
+function sbq.edible( occupantId, seatindex, source, force )
+	if sbq.driver ~= occupantId or (sbq.isNested and not force) then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
