@@ -437,7 +437,11 @@ function orderFurniture:onClick()
 	local contextMenu = {}
 	for i, item in pairs(occupier.orderFurniture or {}) do
 		local itemConfig = root.itemConfig(item)
-		if itemConfig then
+		if not itemConfig then
+			sb.logInfo(item.name.." can't be ordered: doesn't exist")
+		elseif (type(item.price) ~= "number" or type((itemConfig.config or {}).price) ~= "number") then
+			sb.logInfo(item.name.." can't be ordered: has no price")
+		else
 			local actionLabel = itemConfig.config.shortdescription.."^reset;"
 			if item.count ~= nil and item.count > 1 then
 				actionLabel = actionLabel.." x"..item.count
