@@ -687,7 +687,9 @@ function sbq.validStruggle(struggler, dt)
 
 	if struggling then return end
 
-	if not sbq.config.speciesStrugglesDisabled[config.getParameter("name")] then
+	if sbq.config.speciesStrugglesDisabled[config.getParameter("name")] then
+		if sbq.isNested then return end
+	else
 		if (sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species]) or sbq.occupant[struggler].digested then
 			if not sbq.driving or world.entityType(sbq.driver) == "npc" then
 				sbq.occupant[struggler].struggleTime = math.max(0, sbq.occupant[struggler].struggleTime + dt)
