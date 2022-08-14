@@ -52,6 +52,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=1266991719) (Remade)
 - Vaporeon
 - [Umbreon](https://steamcommunity.com/sharedfiles/filedetails/?id=730345787)
+- [Sylveonoid](https://steamcommunity.com/sharedfiles/filedetails/?id=2843385916)
 - [Braixen](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Delphox](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Zoroark](https://steamcommunity.com/sharedfiles/filedetails/?id=2811625141)
@@ -76,6 +77,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Neki](https://steamcommunity.com/sharedfiles/filedetails/?id=2611501999)
 - [Lastree](https://steamcommunity.com/sharedfiles/filedetails/?id=1380941596)
 - [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706)
+- [Bunnykin](https://steamcommunity.com/sharedfiles/filedetails/?id=732452461)
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 

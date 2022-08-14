@@ -39,6 +39,8 @@
 	"vaporeon": "sbq_villager_vaporeon",
 	"zoroark": "sbq_villager_zoroark",
 	"hisuzor": "sbq_villager_hisuzor",
+	"sylveonoid": "sbq_villager_sylveonoid",
+	"bunnykin": "sbq_villager_bunnykin",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -80,6 +82,8 @@
 	"guard_vaporeon": [ "sbq_guard_vaporeon", "sbq_guardT2_vaporeon", "sbq_guardT3_vaporeon", "sbq_guardT4_vaporeon" ],
 	"guard_zoroark": [ "sbq_guard_zoroark", "sbq_guardT2_zoroark", "sbq_guardT3_zoroark", "sbq_guardT4_zoroark" ],
 	"guard_hisuzor": [ "sbq_guard_hisuzor", "sbq_guardT2_hisuzor", "sbq_guardT3_hisuzor", "sbq_guardT4_hisuzor" ],
+	"guard_sylveonoid": [ "sbq_guard_sylveonoid", "sbq_guardT2_sylveonoid", "sbq_guardT3_sylveonoid", "sbq_guardT4_sylveonoid" ],
+	"guard_bunnykin": [ "sbq_guard_bunnykin", "sbq_guardT2_bunnykin", "sbq_guardT3_bunnykin", "sbq_guardT4_bunnykin" ],
 
 	"Zevi": "sbq_tenant_Zevi_Zygahedron",
 	"Socks": "sbq_tenant_Socks_LokiVulpix",
