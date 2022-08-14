@@ -153,6 +153,9 @@
 
 		// error handling
 
+		"2.back.idle.1" : "1.back.idle.1",
+		"2.back.idle.2" : "1.back.idle.2",
+
 		"2.back.rollover.1" : "1.lay.rollover.5",
 		"2.back.rollover.2" : "1.lay.rollover.4",
 		"2.back.rollover.3" : "1.lay.rollover.3",

@@ -28,7 +28,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 
 	local edibles = world.entityQuery( world.entityPosition(occupantId), 2, {
 		withoutEntityId = entity.id(), includedTypes = { "vehicle" },
-		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), emptyslots, locationSpace}
+		callScript = "sbq.edible", callScriptArgs = { occupantId, seatindex, entity.id(), force}
 	} )
 	if edibles[1] == nil then
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
@@ -97,8 +97,8 @@ function sbq.uneat( occupantId )
 	return true
 end
 
-function sbq.edible( occupantId, seatindex, source, spaceAvailable )
-	if sbq.driver ~= occupantId or sbq.isNested then return false end
+function sbq.edible( occupantId, seatindex, source, force )
+	if sbq.driver ~= occupantId or (sbq.isNested and not force) then return false end
 
 	if sbq.stateconfig[sbq.state].edible then
 		world.sendEntityMessage(source, "sbqSmolPreyData", seatindex,
@@ -626,28 +626,31 @@ function sbq.doBellyEffects(dt)
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
 					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
 				end
-				sbq.loopedMessage(sbq.occupant[i].id.."-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
-					"sbqOpenInterface", {"sbqIndicatorHud",
-					{
-						owner = entity.id(),
-						directions = directions,
-						progress = {
-							active = sbq.occupant[i].progressBarActive,
-							color = sbq.occupant[i].progressBarColor,
-							percent = sbq.occupant[i].progressBar,
-							dx = progressbarDx
-						},
-						icon = icon,
-						time = sbq.occupant[i].occupantTime,
-						location = (sbq.sbqData.locations[location] or {}).name
-					}
-				})
+				sbq.openPreyHud(i, directions, progressbarDx, icon, location)
 			end
 
 			sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier )
 
 		end
 	end
+end
+function sbq.openPreyHud(i, directions, progressbarDx, icon, location)
+	sbq.loopedMessage(sbq.occupant[i].id .. "-indicator", sbq.occupant[i].id, -- update quickly but minimize spam
+		"sbqOpenInterface", { "sbqIndicatorHud",
+		{
+			owner = entity.id(),
+			directions = directions,
+			progress = {
+				active = sbq.occupant[i].progressBarActive,
+				color = sbq.occupant[i].progressBarColor,
+				percent = sbq.occupant[i].progressBar,
+				dx = progressbarDx
+			},
+			icon = icon,
+			time = sbq.occupant[i].occupantTime,
+			location = (sbq.sbqData.locations[location] or {}).name
+		}
+	})
 end
 
 function sbq.validStruggle(struggler, dt)
@@ -684,7 +687,9 @@ function sbq.validStruggle(struggler, dt)
 
 	if struggling then return end
 
-	if not sbq.config.speciesStrugglesDisabled[config.getParameter("name")] then
+	if sbq.config.speciesStrugglesDisabled[config.getParameter("name")] then
+		if sbq.isNested then return end
+	else
 		if (sbq.occupant[struggler].species ~= nil and sbq.config.speciesStrugglesDisabled[sbq.occupant[struggler].species]) or sbq.occupant[struggler].digested then
 			if not sbq.driving or world.entityType(sbq.driver) == "npc" then
 				sbq.occupant[struggler].struggleTime = math.max(0, sbq.occupant[struggler].struggleTime + dt)
@@ -745,7 +750,7 @@ function sbq.handleStruggles(dt)
 			end
 		end
 
-		local time = dt
+		local time = 0.75
 		if parts ~= nil then
 			for _, part in ipairs(parts) do
 				animation[part] = prefix.."s_"..movedir
@@ -754,12 +759,11 @@ function sbq.handleStruggles(dt)
 				animation[part] = prefix.."s_"..movedir
 			end
 			sbq.doAnims(animation)
+			local times = {}
 			for _, part in ipairs(parts) do
-				local newtime = sbq.animStateData[part.."State"].animationState.cycle
-				if newtime > time then
-					time = newtime
-				end
+				table.insert(times, sbq.animStateData[part.."State"].animationState.cycle)
 			end
+			time = math.max(0.75, table.unpack(times))
 		end
 		sbq.occupant[struggler].bellySettleDownTimer = time
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
