@@ -13,6 +13,12 @@
 
   "checkRequirements" : { "checkImage" : "/humanoid/braixen/malebody.png" },
 
+  "orderFurniture" : [
+    {"name":"spookypumpkinhead", "count":1},
+    {"name":"spookycandles", "count":1},
+    {"name":"spookycauldron", "count":1}
+  ],
+
   "tenants": [
     {
       "spawn": "npc",

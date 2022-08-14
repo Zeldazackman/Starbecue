@@ -12,6 +12,18 @@
   },
 
   "checkRequirements" : { "checkItems" : ["felintier1chest"] },
+  "orderFurniture" : [
+    {"name":"felinarmchair", "count":1},
+    {"name":"felinbanner", "count":1},
+    {"name":"felinbeanbagchair", "count":1},
+    {"name":"felinbed", "count":1},
+    {"name":"felincouch", "count":1},
+    {"name":"felinfireplace", "count":1},
+    {"name":"felinfridge", "count":1},
+    {"name":"felinoven", "count":1},
+    {"name":"felinhologram", "count":1},
+    {"name":"felinpillowpile", "count":1}
+  ],
 
   "tenants": [
     {

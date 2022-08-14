@@ -12,7 +12,16 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"apexarmchair", "count":1},
+    {"name":"apexcouch", "count":1},
+    {"name":"apexbed", "count":1},
+    {"name":"apexbananasign", "count":1},
+    {"name":"apexbrainjar", "count":1},
+    {"name":"apexcoolbookcase", "count":1},
+    {"name":"apexfridge", "count":1},
+    {"name":"apexoven", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

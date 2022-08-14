@@ -10,6 +10,17 @@
   },
 
   "checkRequirements" : { "checkItems" : ["avaliarmor1head"] },
+  "orderFurniture" : [
+    {"name":"avalicushion1", "count":1},
+    {"name":"avalicushion2", "count":1},
+    {"name":"avalihammock1", "count":1},
+    {"name":"avalichamber1", "count":1},
+    {"name":"avalibottle1", "count":1},
+    {"name":"avalicrystal1", "count":1},
+    {"name":"avalidreamcatcher1", "count":1},
+    {"name":"avaliemblem", "count":1},
+    {"name":"avaliemblembig", "count":1}
+  ],
 
   "tenants": [
     {

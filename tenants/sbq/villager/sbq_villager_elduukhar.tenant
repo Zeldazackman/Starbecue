@@ -10,6 +10,22 @@
   },
 
   "checkRequirements" : { "checkImage" : "/humanoid/elduukhar/malebody.png" },
+  "orderFurniture" : [
+    {"name":"elduubed", "count":1},
+    {"name":"elduuceilinglamp", "count":1},
+    {"name":"elduucouch", "count":1},
+    {"name":"elduudesklamp", "count":1},
+    {"name":"elduuhammock", "count":1},
+    {"name":"elduulongtable", "count":1},
+    {"name":"elduuspotlamp", "count":1},
+    {"name":"elduuwalllamp", "count":1},
+    {"name":"elduubookcase", "count":1},
+    {"name":"elduucabinet", "count":1},
+    {"name":"elduuchair", "count":1},
+    {"name":"elduuchest1", "count":1},
+    {"name":"elduudesk", "count":1},
+    {"name":"elduufridge", "count":1}
+  ],
 
   "tenants": [
     {

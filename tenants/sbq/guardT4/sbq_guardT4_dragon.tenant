@@ -12,7 +12,17 @@
   },
 
   "checkRequirements" : { "checkItems" : ["dragonoutfit1chest"] },
-
+  "orderFurniture" : [
+    {"name":"dragonbed", "count":1},
+    {"name":"dragonbeanbag", "count":1},
+    {"name":"dragontapestry", "count":1},
+    {"name":"nomadtable", "count":1},
+    {"name":"dragonceilinglight", "count":1},
+    {"name":"dragonfountain", "count":1},
+    {"name":"dragonvillagedoor", "count":1},
+    {"name":"dragonplushie", "count":1},
+    {"name":"dragondesk", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

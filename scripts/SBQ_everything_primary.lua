@@ -51,11 +51,6 @@ function sbq.everything_primary()
 		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	end)
 
-	message.setHandler("sbqSetVelocityAngle", function(_,_, data)
-		status.setStatusProperty("sbqSetVelocityAngle", data)
-		status.addEphemeralEffect("sbqSetVelocityAngle")
-	end)
-
 	message.setHandler("sbqProjectileSource", function (_,_, source)
 		status.setStatusProperty("sbqProjectileSource", source)
 	end)

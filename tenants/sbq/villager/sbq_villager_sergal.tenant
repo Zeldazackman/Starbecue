@@ -10,7 +10,19 @@
   },
 
   "checkRequirements" : { "checkImage" : "/humanoid/sergal/malebody.png" },
-
+  "orderFurniture" : [
+    {"name":"sergalbed", "count":1},
+    {"name":"sergalbookcase", "count":1},
+    {"name":"sergalcabinet1", "count":1},
+    {"name":"sergaltable", "count":1},
+    {"name":"sergaltradbed", "count":1},
+    {"name":"sergalwardrobe1", "count":1},
+    {"name":"sergalchair", "count":1},
+    {"name":"sergalchair2", "count":1},
+    {"name":"sergalchest", "count":1},
+    {"name":"sergalglobe", "count":1},
+    {"name":"sergallantern", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

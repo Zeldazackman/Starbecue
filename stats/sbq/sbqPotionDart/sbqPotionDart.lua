@@ -54,7 +54,16 @@ function sbq.genderswap()
 	end
 	status.setStatusProperty("speciesAnimOverrideData", data)
 
-	world.sendEntityMessage(entity.id(), "refreshAnimOverrides")
+	local success, speciesFile = pcall(root.assetJson, ("/species/"..(data.species or world.entitySpecies(entity.id()))..".species"))
+
+	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
+	local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
+	if resultEffect == currentEffect then
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+	else
+		status.clearPersistentEffects("speciesAnimOverride")
+		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
+	end
 
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
 	animator.playSound("activate")

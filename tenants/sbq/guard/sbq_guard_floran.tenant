@@ -11,7 +11,17 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"floranarmchair", "count":1},
+    {"name":"floranbed", "count":1},
+    {"name":"floranbonerack", "count":1},
+    {"name":"floranbookcase", "count":1},
+    {"name":"florancabinet1", "count":1},
+    {"name":"floranpainting1", "count":1},
+    {"name":"florandrum1", "count":1},
+    {"name":"floranstove", "count":1},
+    {"name":"plantcage1", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

@@ -11,7 +11,16 @@
   },
 
   "checkRequirements" : { "checkItems" : ["myfirsttestoutfit1chest"] },
-
+  "orderFurniture" : [
+    {"name":"biohazardsign", "count":1},
+    {"name":"symbiotesample", "count":1},
+    {"name":"hazardmicroscope", "count":1},
+    {"name":"apexcoolshelf2", "count":1},
+    {"name":"slimebed", "count":1},
+    {"name":"slimechair", "count":1},
+    {"name":"slimehide", "count":1},
+    {"name":"slimetorch", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

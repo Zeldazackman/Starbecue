@@ -12,7 +12,14 @@
   },
 
   "checkRequirements" : { "checkImage" : "/humanoid/Umbreon/malebody.png" },
-
+  "orderFurniture" : [
+    {"name":"glowbed", "count":1},
+    {"name":"glowchair", "count":1},
+    {"name":"glowchest", "count":1},
+    {"name":"glowbushlamp", "count":1},
+    {"name":"glowflowerlamp", "count":1},
+    {"name":"glowvinelamp", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

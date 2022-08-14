@@ -11,7 +11,14 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"carbed", "count":1},
+    {"name":"jukebox", "count":1},
+    {"name":"basictv", "count":1},
+    {"name":"fridge", "count":1},
+    {"name":"oven1", "count":1},
+    {"name":"basicbath", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

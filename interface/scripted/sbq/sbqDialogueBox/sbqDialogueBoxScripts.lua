@@ -36,12 +36,16 @@ end
 
 function sbq.checkDialogueBranch(dialogueTree, settings, branch)
 	local dialogueTree = dialogueTree
-	if type(dialogueBoxScripts[branch]) == "function" then
-		dialogueTree = dialogueBoxScripts[branch](dialogueTree, settings, branch)
-	elseif settings[branch] ~= nil then
-		dialogueTree = dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default
+	if type(dialogueTree) == "table" then
+		if type(dialogueBoxScripts[branch]) == "function" then
+			dialogueTree = dialogueBoxScripts[branch](dialogueTree, settings, branch)
+		elseif settings[branch] ~= nil then
+			dialogueTree = dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default
+		else
+			dialogueTree = dialogueTree[branch]
+		end
 	else
-		dialogueTree = dialogueTree[branch]
+		sb.logInfo(tostring(dialogueTree))
 	end
 	return sbq.getRedirectedDialogue(dialogueTree, settings)
 end
@@ -91,10 +95,10 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 					randomTable = prevTable
 				end
 			else
-				if type(randomTable.add) == "string" then
-					randomTable = sbq.getRedirectedDialogue(randomTable.add, settings)[name]
+				if type((randomTable or {}).add) == "string" then
+					randomTable = sbq.getRedirectedDialogue((randomTable or {}).add, settings)[name]
 				else
-					randomTable = randomTable.add
+					randomTable = (randomTable or {}).add
 				end
 			end
 		else

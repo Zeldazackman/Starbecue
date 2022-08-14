@@ -44,6 +44,11 @@ function init()
 		personalityText:setText(sbq.predatorSettings.personality or "default")
 		moodText:setText(sbq.predatorSettings.mood or "default")
 
+		tenantNote:setVisible(occupier.tenantNote ~= nil)
+		tenantNote.toolTip = occupier.tenantNote
+
+		orderFurniture:setVisible(occupier.orderFurniture ~= nil)
+
 		tenantText:setText( occupier.name or "")
 		local tags = sbq.storage.house.contents
 		local listed = { sbqVore = true }
@@ -422,6 +427,56 @@ function escapeValueMax:onEnter()
 		sbq.changePredSetting("escapeDifficultyMax", value)
 	else
 		escapeValueMax:setText(tostring(sbq.overrideSettings.escapeDifficultyMax or sbq.predatorSettings.escapeDifficultyMax or 0))
+	end
+end
+
+--------------------------------------------------------------------------------------------------
+
+function orderFurniture:onClick()
+	local occupier = sbq.storage.occupier
+	local contextMenu = {}
+	for i, item in pairs(occupier.orderFurniture or {}) do
+		local itemConfig = root.itemConfig(item)
+		if not itemConfig then
+			sb.logInfo(item.name.." can't be ordered: doesn't exist")
+		elseif (type(item.price) ~= "number" and type((itemConfig.config or {}).price) ~= "number") then
+			sb.logInfo(item.name.." can't be ordered: has no price")
+		else
+			local actionLabel = itemConfig.config.shortdescription.."^reset;"
+			if item.count ~= nil and item.count > 1 then
+				actionLabel = actionLabel.." x"..item.count
+			end
+
+			local price = ((item.count or 1)*(item.price or itemConfig.config.price))
+			actionLabel = actionLabel..", Price: ^yellow;"..price.."^reset;"
+
+			local comma = ""
+			local gotReqTag = false
+			for reqTag, value in pairs(occupier.tagCriteria or {}) do
+				for j, tag in ipairs(itemConfig.config.colonyTags or {}) do
+					if tag == reqTag then
+						if not gotReqTag then
+							actionLabel = actionLabel..", Tags:"
+							gotReqTag = true
+						end
+						actionLabel = actionLabel..comma.." ^green;"..tag.."^reset;"
+						comma = ","
+						break
+					end
+				end
+			end
+
+			table.insert(contextMenu, {actionLabel, function () sbq.orderItem(item, price) end})
+		end
+	end
+	metagui.contextMenu(contextMenu)
+end
+
+function sbq.orderItem(item, price)
+	if player.isAdmin() or player.consumeCurrency( "money", price ) then
+		player.giveItem(item)
+	else
+		pane.playSound("/sfx/interface/clickon_error.ogg")
 	end
 end
 

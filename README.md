@@ -30,7 +30,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 
 ### Playable Predator transformation
 - Vaporeon
-- Xeronious
+- (Kaiju) Xeronious
 - Avian
 - Slime
 - Ziellek Dragon
@@ -50,7 +50,9 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Lycanroc](https://steamcommunity.com/sharedfiles/filedetails/?id=1800401078)
 - [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=1405822108) (GalaxyFoxes)
 - [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=1266991719) (Remade)
+- Vaporeon
 - [Umbreon](https://steamcommunity.com/sharedfiles/filedetails/?id=730345787)
+- [Sylveonoid](https://steamcommunity.com/sharedfiles/filedetails/?id=2843385916)
 - [Braixen](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Delphox](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Zoroark](https://steamcommunity.com/sharedfiles/filedetails/?id=2811625141)
@@ -74,6 +76,8 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Attarran](https://steamcommunity.com/sharedfiles/filedetails/?id=797166006)
 - [Neki](https://steamcommunity.com/sharedfiles/filedetails/?id=2611501999)
 - [Lastree](https://steamcommunity.com/sharedfiles/filedetails/?id=1380941596)
+- [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706)
+- [Bunnykin](https://steamcommunity.com/sharedfiles/filedetails/?id=732452461)
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 
@@ -81,9 +85,13 @@ This mod includes no assets from the respective modded races, modified or not, m
 ### NPC Vore Tenants
 - Zevi (Pred/Prey) Zygahedron
 - Socks Flareon (Pred/Prey) LokiVulpix
-- Blue the Synth (Pred/Prey) Blueninja
+- Helena hellhound (Pred/Prey) FFWizard
+- Sandy Floatporeon (Pred/Prey) Fevix
+- Blue the Synth (Pred/Prey) Blueninja (requires [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706) mod )
 
 ### Other Things
+- TF Dart Gun
+- Shrink Ray
 - Egg
 - Plastic Egg
 

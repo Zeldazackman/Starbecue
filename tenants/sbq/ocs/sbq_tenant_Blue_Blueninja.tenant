@@ -15,7 +15,25 @@
   // if your NPC requires a modded species, I would suggest checking if the image for their body exists
   // if your NPC is wearing modded armor cosmetics, or holding a modded item, I would suggest checking if each one exists
   // remove the checks your NPC does not need to use
-  "checkRequirements" : { "checkImage":"/humanoid/synth/malebody.png", "checkItems":[] },
+  "checkRequirements" : { "checkImage":"/humanoid/synth/malebody.png" },
+
+  "orderFurniture" : [
+    {"name":"icebed", "count":1},
+    {"name":"icechair", "count":1},
+    {"name":"icechest", "count":1},
+    {"name":"icedoor", "count":1},
+    {"name":"icemachine", "count":1},
+    {"name":"icetable", "count":1},
+    {"name":"snowglobe1", "count":1},
+    {"name":"snowglobe2", "count":1},
+    {"name":"spaceslideshow", "count":1},
+    {"name":"stationbench", "count":1},
+    {"name":"stationtable", "count":1},
+    {"name":"stationdoor", "count":1},
+    {"name":"stationhatch", "count":1},
+    {"name":"stationvendingmachine", "count":1},
+    {"name":"stationmedscanner", "count":1}
+  ],
 
   "tenants": [
     {

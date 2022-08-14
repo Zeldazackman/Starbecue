@@ -10,7 +10,14 @@
   },
 
   "checkRequirements" : {},
-
+  "orderFurniture" : [
+    {"name":"doombed", "count":1},
+    {"name":"doomchair", "count":1},
+    {"name":"doomdoor", "count":1},
+    {"name":"doomlight", "count":1},
+    {"name":"doomswitch", "count":1},
+    {"name":"doomtable", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",

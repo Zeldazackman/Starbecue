@@ -10,7 +10,16 @@
   },
 
   "checkRequirements" : { "checkImage" : "/humanoid/neki/malebody.png" },
-
+  "orderFurniture" : [
+    {"name":"nekibed", "count":1},
+    {"name":"nekichair", "count":1},
+    {"name":"nekicurtain1", "count":1},
+    {"name":"nekicurtain2", "count":1},
+    {"name":"nekicurtain3", "count":1},
+    {"name":"nekitable", "count":1},
+    {"name":"nekipod", "count":1},
+    {"name":"nekibedlavish", "count":1}
+  ],
   "tenants": [
     {
       "spawn": "npc",
