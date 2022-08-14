@@ -50,6 +50,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Lycanroc](https://steamcommunity.com/sharedfiles/filedetails/?id=1800401078)
 - [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=1405822108) (GalaxyFoxes)
 - [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=1266991719) (Remade)
+- Vaporeon
 - [Umbreon](https://steamcommunity.com/sharedfiles/filedetails/?id=730345787)
 - [Braixen](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
 - [Delphox](https://steamcommunity.com/sharedfiles/filedetails/?id=2260578148)
@@ -87,6 +88,8 @@ This mod includes no assets from the respective modded races, modified or not, m
 - Blue the Synth (Pred/Prey) Blueninja (requires [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706) mod )
 
 ### Other Things
+- TF Dart Gun
+- Shrink Ray
 - Egg
 - Plastic Egg
 

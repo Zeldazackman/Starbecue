@@ -439,7 +439,7 @@ function orderFurniture:onClick()
 		local itemConfig = root.itemConfig(item)
 		if not itemConfig then
 			sb.logInfo(item.name.." can't be ordered: doesn't exist")
-		elseif (type(item.price) ~= "number" or type((itemConfig.config or {}).price) ~= "number") then
+		elseif (type(item.price) ~= "number" and type((itemConfig.config or {}).price) ~= "number") then
 			sb.logInfo(item.name.." can't be ordered: has no price")
 		else
 			local actionLabel = itemConfig.config.shortdescription.."^reset;"
