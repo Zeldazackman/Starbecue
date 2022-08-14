@@ -761,6 +761,7 @@ function sbq.handleStruggles(dt)
 				end
 			end
 		end
+		time = math.max(time, 0.75)
 		sbq.occupant[struggler].bellySettleDownTimer = time
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
