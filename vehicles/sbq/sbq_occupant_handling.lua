@@ -745,7 +745,7 @@ function sbq.handleStruggles(dt)
 			end
 		end
 
-		local time = dt
+		local time = 0.75
 		if parts ~= nil then
 			for _, part in ipairs(parts) do
 				animation[part] = prefix.."s_"..movedir
@@ -754,14 +754,12 @@ function sbq.handleStruggles(dt)
 				animation[part] = prefix.."s_"..movedir
 			end
 			sbq.doAnims(animation)
+			local times = {}
 			for _, part in ipairs(parts) do
-				local newtime = sbq.animStateData[part.."State"].animationState.cycle
-				if newtime > time then
-					time = newtime
-				end
+				table.insert(times, sbq.animStateData[part.."State"].animationState.cycle)
 			end
+			time = math.max(0.75, table.unpack(times))
 		end
-		time = math.max(time, 0.75)
 		sbq.occupant[struggler].bellySettleDownTimer = time
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
