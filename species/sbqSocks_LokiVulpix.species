@@ -2,6 +2,7 @@
   "kind" : "sbqSocks_LokiVulpix",
 
   "speciesAnimOverride" : "speciesAnimOverride.config",
+  "permanentAnimOverride" : true,
 
   "charCreationTooltip" : {
       "title" : "Socks",

@@ -2,6 +2,7 @@
   "kind" : "sbqSandy_Fevix",
 
   "speciesAnimOverride" : "speciesAnimOverride.config",
+  "permanentAnimOverride" : true,
 
   "charCreationTooltip" : {
       "title" : "Sandy",
