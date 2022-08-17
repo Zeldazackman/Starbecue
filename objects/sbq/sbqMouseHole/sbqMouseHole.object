@@ -19,6 +19,7 @@
 			"image" : "/objects/sbq/sbqMouseHole/sbqMouseHoleIcon.png",
 			"imagePosition" : [0, 0],
 			"renderLayer" : "ForegroundOverlay+1",
+			"direction" : "right",
 
 			"spaceScan" : 0.1,
 			"anchors" : [ "background" ]

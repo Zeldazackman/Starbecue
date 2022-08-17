@@ -4,9 +4,11 @@ require "/scripts/vec2.lua"
 function init()
 	script.setUpdateDelta(5)
 end
-local timer = 0
+local timers = {}
 function update(dt)
-	timer = math.max(0, timer-dt)
+	for i, time in pairs(timers) do
+		timers[i] = math.max(0,time-dt)
+	end
 	local position = object.position()
 	local material = world.material(position, "background")
 	local color = world.materialColor(position, "background")
@@ -14,18 +16,20 @@ function update(dt)
 	animator.setGlobalTag("hueshift", hueshift)
 	local materialConfig = root.materialConfig(material)
 	if materialConfig then
-		local players = world.playerQuery(vec2.add(position, 0.5), 1.5)
-		local opacity = "FF"
+		local viewCircle = ""
+		local viewCircle2 = ""
+		local players = world.playerQuery(vec2.add(position, 0.5), 2)
 		if players and players[1] ~= nil then
-			if timer > 0 then
-				opacity = "88"
-			end
 			for i, player in ipairs(players) do
 				local velocity = world.entityVelocity(player)
 				if math.abs(velocity[1]) > 0.5 or math.abs(velocity[2]) > 0.5 then
-					timer = 5
-					opacity = "88"
-					break
+					timers[player] = 5
+				end
+				if type(timers[player]) == "number" and timers[player] > 0 then
+					local distance = vec2.mul(vec2.floor(vec2.mul(vec2.add(entity.distanceToEntity(player), { -4, -6 }), 8)),-1)
+
+					viewCircle = viewCircle.."?addmask=/objects/sbq/sbqMouseHole/sbqMouseHoleView.png;"..distance[1]..";"..distance[2]
+					viewCircle2 = viewCircle2.."?addmask=/objects/sbq/sbqMouseHole/sbqMouseHoleView.png;"..(distance[1])..";"..(distance[2]-8)
 				end
 			end
 		end
@@ -40,6 +44,17 @@ function update(dt)
 		local objectBelow = world.objectAt(vec2.add(position, { 0, -1 }))
 		local objectLeft = world.objectAt(vec2.add(position, { -1, 0 }))
 		local objectRight = world.objectAt(vec2.add(position, { 1, 0 }))
+
+		if below then
+			local materialConfigBelow = root.materialConfig(below)
+			if materialConfigBelow and materialConfigBelow.config.collisionKind == "platform" then
+				animator.setAnimationState("coverPlatform", "cover")
+			else
+				animator.setAnimationState("coverPlatform", "none")
+			end
+		else
+			animator.setAnimationState("coverPlatform", "none")
+		end
 
 		local mask = ""
 		if not above and (not objectAbove or world.entityName(objectAbove) ~= "sbqMouseHole") then
@@ -76,7 +91,8 @@ function update(dt)
 
 		animator.setGlobalTag("materialImage", texture)
 		animator.setGlobalTag("mask", mask)
-		animator.setGlobalTag( "opacity", opacity)
+		animator.setGlobalTag( "viewCircle", viewCircle)
+		animator.setGlobalTag( "viewCircle2", viewCircle2)
 		animator.setGlobalTag( "cropX1", crop1[1])
 		animator.setGlobalTag( "cropX2", crop2[1])
 		animator.setGlobalTag( "cropY1", crop1[2])

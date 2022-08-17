@@ -6,19 +6,58 @@
 		"cropY1" : "196",
 		"cropY2" : "204",
 		"hueshift" : "0",
-		"opacity" : "FF",
-		"mask" : ""
+		"viewCircle" : "",
+		"viewCircle2" : "",
+		"mask" : "",
+		"opacity" : "88"
 
 	},
 	"animatedParts" : {
 		"stateTypes" : {
+			"coverPlatform" : {
+				"default" : "none",
+				"states" : {
+					"none" : { "frames" : 1, "mode" : "end", "cycle" : 0 },
+					"cover" : { "frames" : 1, "mode" : "end", "cycle" : 0 }
+				}
+			}
 		},
 
 		"parts" : {
 			"block" : {
 				"properties" : {
 					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"blockTransparent" : {
+				"properties" : {
+					"centered" : false,
 					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift>?multiply=FFFFFF<opacity><mask>"
+				}
+			},
+			"platformCover" : {
+				"properties" : {
+					"centered" : false,
+					"offset" : [0, -1]
+				},
+				"partStates" : {
+					"coverPlatform" : {
+						"none" : {},
+						"cover" : { "properties" : { "image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle2>"}}
+					}
+				}
+			},
+			"platformCoverTransparent" : {
+				"properties" : {
+					"centered" : false,
+					"offset" : [0, -1]
+				},
+				"partStates" : {
+					"coverPlatform" : {
+						"none" : {},
+						"cover" : { "properties" : { "image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift>?multiply=FFFFFF<opacity>"}}
+					}
 				}
 			}
 		}
