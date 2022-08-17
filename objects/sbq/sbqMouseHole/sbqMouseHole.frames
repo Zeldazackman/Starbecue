@@ -1,0 +1,14 @@
+{
+
+	"frameGrid" : {
+		"size" : [8, 8],
+		"dimensions" : [3, 2],
+		"names" : [
+			[ "right.floor", "right.wall", "up"],
+			[ "left.floor",  "left.wall",  "down" ]
+		]
+	},
+
+	"aliases" : {
+	}
+}
