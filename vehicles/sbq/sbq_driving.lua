@@ -267,8 +267,8 @@ function sbq.transformAction()
 					if data.pressed and data.selection == "despawn" and not sbq.click then
 						sbq.reversion()
 					elseif data.pressed and not sbq.click then
-						sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", data.selection ), function (settings)
-							world.spawnVehicle( data.selection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+						sbq.addRPC(world.sendEntityMessage(sbq.driver, "sbqLoadSettings", data.selection), function(settings)
+							sbq.transformVehicle(settings)
 						end)
 					end
 					if data.button == 0 and not sbq.click then
@@ -285,12 +285,18 @@ function sbq.transformAction()
 			if sbq.lastRadialSelection == "despawn" then
 				sbq.reversion()
 			elseif sbq.lastRadialSelection ~= "cancel" then
-				sbq.addRPC(world.sendEntityMessage( sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection ), function (settings)
-					world.spawnVehicle( sbq.lastRadialSelection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
+				sbq.addRPC(world.sendEntityMessage(sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection), function(settings)
+					sbq.transformVehicle(settings)
 				end)
 			end
 		end
 		sbq.movement.transformActionRadial = nil
+	end
+end
+
+function sbq.transformVehicle(settings)
+	if not sbq.findFirstOccupantIdForLocation("escaping") and not sbq.findFirstOccupantIdForLocation("digesting") then
+		world.spawnVehicle( data.selection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
 	end
 end
 

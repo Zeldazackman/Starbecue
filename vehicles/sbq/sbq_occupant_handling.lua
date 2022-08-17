@@ -122,7 +122,9 @@ sbq.sendAllPreyTo = nil
 function sbq.sendAllPrey()
 	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
 		for i = sbq.startSlot, sbq.occupantSlots do
-			if type(sbq.occupant[i].id) == "number" then
+			if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
+				and (sbq.occupant[i].location ~= "escaping" and sbq.occupant[i].location ~= "digesting")
+			then
 				sbq.occupant[i].visible = false
 				if sbq.digestSendPrey then
 					world.sendEntityMessage(sbq.sendAllPreyTo, "addDigestPrey", sbq.occupant[i], sbq.driver)
