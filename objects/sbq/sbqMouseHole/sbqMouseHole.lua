@@ -4,8 +4,9 @@ require "/scripts/vec2.lua"
 function init()
 	script.setUpdateDelta(5)
 end
-
-function update()
+local timer = 0
+function update(dt)
+	timer = math.max(0, timer-dt)
 	local position = object.position()
 	local material = world.material(position, "background")
 	local color = world.materialColor(position, "background")
@@ -13,10 +14,20 @@ function update()
 	animator.setGlobalTag("hueshift", hueshift)
 	local materialConfig = root.materialConfig(material)
 	if materialConfig then
-		local players = world.playerQuery(position, 1.5)
+		local players = world.playerQuery(vec2.add(position, 0.5), 1.5)
 		local opacity = "FF"
 		if players and players[1] ~= nil then
-			opacity = "88"
+			if timer > 0 then
+				opacity = "88"
+			end
+			for i, player in ipairs(players) do
+				local velocity = world.entityVelocity(player)
+				if math.abs(velocity[1]) > 0.5 or math.abs(velocity[2]) > 0.5 then
+					timer = 5
+					opacity = "88"
+					break
+				end
+			end
 		end
 		local above = world.material(vec2.add(position, { 0, 1 }), "foreground")
 		local below = world.material(vec2.add(position, { 0, -1 }), "foreground")
