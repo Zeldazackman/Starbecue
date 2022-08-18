@@ -1,45 +1,13 @@
 {
 	"globalTagDefaults" : {
-		"materialImage" : "/tiles/materials/darkwood.png",
-		"cropX1" : "4",
-		"cropX2" : "12",
-		"cropY1" : "196",
-		"cropY2" : "204",
-		"hueshift" : "0",
-		"viewCircle" : "",
-		"viewCircle2" : "",
-		"mask" : "",
-		"opacity" : "44"
-
 	},
 	"animatedParts" : {
-		"stateTypes" : {
-			"coverPlatform" : {
-				"default" : "none",
-				"states" : {
-					"none" : { "frames" : 1, "mode" : "end", "cycle" : 0 },
-					"cover" : { "frames" : 1, "mode" : "end", "cycle" : 0 }
-				}
-			}
-		},
-
+		"stateTypes" : {},
 		"parts" : {
-			"block" : {
+			"empty" : {
 				"properties" : {
 					"centered" : false,
-					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
-				}
-			},
-			"platformCover" : {
-				"properties" : {
-					"centered" : false,
-					"offset" : [0, -1]
-				},
-				"partStates" : {
-					"coverPlatform" : {
-						"none" : {},
-						"cover" : { "properties" : { "image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle2>"}}
-					}
+					"image" : "/empty_image.png"
 				}
 			}
 		}

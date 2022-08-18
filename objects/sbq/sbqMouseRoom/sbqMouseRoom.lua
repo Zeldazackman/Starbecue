@@ -97,10 +97,16 @@ function playerViewCircle(position)
 				timers[player] = 5
 			end
 			if type(timers[player]) == "number" and timers[player] > 0 then
-				local distance = vec2.mul(vec2.floor(vec2.mul(vec2.add(entity.distanceToEntity(player), { -7, -6 }), 8)), -1)
-				for x = 0, width-1 do
-					for y = -height+1, 0 do
-						masks["block"..x.."_"..y] = masks["block"..x.."_"..y].. "?addmask=/objects/sbq/sbqMouseRoom/sbqMouseRoomView.png;" .. (distance[1] + (x * 8)) .. ";" .. (distance[2] + ( y * 8))
+				local distance = vec2.mul(vec2.floor(vec2.mul(vec2.add(entity.distanceToEntity(player), { -4, -6 }), 8)), -1)
+				for x = 0, width - 1 do
+					for y = -height + 1, 0 do
+						local xOffset = (distance[1] + (x * 8))
+						local yOffset = (distance[2] + (y * 8))
+						sb.logInfo("("..x..","..y.."), ("..xOffset..","..yOffset..")")
+
+						if xOffset >= 0 and xOffset <= 48 and yOffset >= 0 and yOffset <= 48 then
+							masks["block"..x.."_"..y] = masks["block"..x.."_"..y].. "?addmask=/objects/sbq/sbqMouseRoom/sbqMouseRoomView.png;" .. xOffset .. ";" .. yOffset
+						end
 					end
 				end
 			end
