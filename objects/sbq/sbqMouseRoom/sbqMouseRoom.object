@@ -1,0 +1,32 @@
+{
+	"objectName" : "sbqMouseRoom",
+	"colonyTags" : ["mouseroom"],
+	"printable" : true,
+	"rarity" : "Common",
+
+	"category" : "door",
+	"price" : 1,
+	"description" : "A small covered room... tiny people might fit inside.",
+	"shortdescription" : "Mouseroom",
+	"race" : "generic",
+
+	"inventoryIcon" : "/objects/sbq/sbqMouseRoom/sbqMouseRoomIcon.png",
+
+	"tooltipKind" : "door",
+
+	"orientations" : [
+		{
+			"image" : "/objects/sbq/sbqMouseRoom/sbqMouseRoomIcon.png",
+			"imagePosition" : [0, 0],
+			"renderLayer" : "ForegroundOverlay+1",
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "background" ]
+		}
+	],
+
+	"animation" : "/objects/sbq/sbqMouseRoom/sbqMouseRoom.animation",
+	"scripts" : ["/objects/sbq/sbqMouseRoom/sbqMouseRoom.lua"],
+	"animationPosition" : [0, 0]
+}

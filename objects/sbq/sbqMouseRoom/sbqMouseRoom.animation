@@ -1,0 +1,133 @@
+{
+	"globalTagDefaults" : {
+		"materialImage" : "/tiles/materials/darkwood.png",
+		"cropX1" : "4",
+		"cropX2" : "12",
+		"cropY1" : "196",
+		"cropY2" : "204",
+		"hueshift" : "0",
+		"viewCircle" : "",
+		"mask" : "",
+		"opacity" : "44"
+
+	},
+	"animatedParts" : {
+		"stateTypes" : {
+			"coverPlatform" : {
+				"default" : "none",
+				"states" : {
+					"none" : { "frames" : 1, "mode" : "end", "cycle" : 0 },
+					"cover" : { "frames" : 1, "mode" : "end", "cycle" : 0 }
+				}
+			}
+		},
+
+		"parts" : {
+			"block0_0" : {
+				"properties" : {
+					"offset" : [0,0],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block1_0" : {
+				"properties" : {
+					"offset" : [1,0],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block2_0" : {
+				"properties" : {
+					"offset" : [2,0],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block3_0" : {
+				"properties" : {
+					"offset" : [3,0],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block4_0" : {
+				"properties" : {
+					"offset" : [4,0],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block0_-1" : {
+				"properties" : {
+					"offset" : [0,-1],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block1_-1" : {
+				"properties" : {
+					"offset" : [1,-1],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block2_-1" : {
+				"properties" : {
+					"offset" : [2,-1],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block3_-1" : {
+				"properties" : {
+					"offset" : [3,-1],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block4_-1" : {
+				"properties" : {
+					"offset" : [4,-1],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block0_-2" : {
+				"properties" : {
+					"offset" : [0,-2],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block1_-2" : {
+				"properties" : {
+					"offset" : [1,-2],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block2_-2" : {
+				"properties" : {
+					"offset" : [2,-2],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block3_-2" : {
+				"properties" : {
+					"offset" : [3,-2],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			},
+			"block4_-2" : {
+				"properties" : {
+					"offset" : [4,-2],
+					"centered" : false,
+					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
+				}
+			}
+		}
+	}
+}

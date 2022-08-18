@@ -9,7 +9,7 @@
 		"viewCircle" : "",
 		"viewCircle2" : "",
 		"mask" : "",
-		"opacity" : "88"
+		"opacity" : "44"
 
 	},
 	"animatedParts" : {
@@ -30,12 +30,6 @@
 					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle><mask>"
 				}
 			},
-			"blockTransparent" : {
-				"properties" : {
-					"centered" : false,
-					"image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift>?multiply=FFFFFF<opacity><mask>"
-				}
-			},
 			"platformCover" : {
 				"properties" : {
 					"centered" : false,
@@ -45,18 +39,6 @@
 					"coverPlatform" : {
 						"none" : {},
 						"cover" : { "properties" : { "image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><viewCircle2>"}}
-					}
-				}
-			},
-			"platformCoverTransparent" : {
-				"properties" : {
-					"centered" : false,
-					"offset" : [0, -1]
-				},
-				"partStates" : {
-					"coverPlatform" : {
-						"none" : {},
-						"cover" : { "properties" : { "image" : "<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift>?multiply=FFFFFF<opacity>"}}
 					}
 				}
 			}
