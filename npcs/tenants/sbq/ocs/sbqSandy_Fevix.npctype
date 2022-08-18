@@ -98,7 +98,7 @@
 					]
 				},
 				"problem" : {
-					"randomDialogue" : ["* It's possible that you may have a problem."],
+					"randomDialogue" : ["<dontSpeak>* It's possible that you may have a problem."],
 					"buttonText" : ["[ACT]"],
 					"options" : [
 						[ "* Pet", {"jump":["pet"]}]
@@ -121,8 +121,52 @@
 								"next" : "getVoreButtonAction",
 								"request" : {
 									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "You want me to eat you?", "Alright, sure.", "Yeah ok.", "Sounds good." ] },
-									"after" : { "randomDialogue" : [ "Mmmmmmm... good.", "Tasty.", "Nice and filling.", "Not too bad." ] }
+									"before" : {
+										"next" : "locationEffect",
+										"default" : { "randomDialogue" : [
+											"Hmm, you do look tasty, let's find out!",
+											"Oooh, munchies! Make sure to wiggle!!"
+										]},
+										"sbqRemoveBellyEffects" : { "randomDialogue" : [
+											"Most passengers bring a saddle, but I guess you want the wet seat!",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]},
+										"sbqHeal" : { "randomDialogue" : [
+											"Belly hospital time!",
+											{"add":"vore.voreType.race.personality.mood.request.after.sbqRemoveBellyEffects"}
+										]},
+										"sbqDigest" : { "randomDialogue" : [
+											"Oh, food delivery? Hop right in!",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]},
+										"sbqSoftDigest" : { "randomDialogue" : [
+											"Oh, food delivery? Hop right in!",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]}
+									},
+									"after" : {
+										"next" : "locationEffect",
+										"default" : { "useLastRandom" : true, "randomDialogue" : [
+											"Wow, you really were!",
+											""
+										]},
+										"sbqRemoveBellyEffects" : { "useLastRandom" : true, "randomDialogue" : [
+											"",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]},
+										"sbqHeal" : { "useLastRandom" : true, "randomDialogue" : [
+											"",
+											{"add":"vore.voreType.race.personality.mood.request.after.sbqRemoveBellyEffects"}
+										]},
+										"sbqDigest" : { "useLastRandom" : true, "randomDialogue" : [
+											"",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]},
+										"sbqSoftDigest" : { "useLastRandom" : true, "randomDialogue" : [
+											"",
+											{"add":"vore.voreType.race.personality.mood.request.after.default"}
+										]}
+									}
 								},
 								"unprompted" : {
 									"next" : "doingVore",
@@ -143,61 +187,6 @@
 						}
 					}
 				},
-				"analVore" : {
-					"next" : "race",
-					"default" : { // race
-						"next" : "personality",
-						"default" : { // personality
-							"next" : "mood",
-							"default" : { // mood
-								"next" : "getVoreButtonAction",
-								"request" : {
-									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "You want to go up my butt?", "You know thats the wrong way right?", "That's going to be a tight fit.", "Thats an interesting request." ] },
-									"after" : { "randomDialogue" : [ "Ahhh~ Hope I'm not squeezing too much.", "Mmm~ This actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
-								},
-								"unprompted" : {
-									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "Hey, I want to try something.", "Hey... what if I shoved you up my ass?", "For some reason... I keep imagining you as a dildo.", "You know, theres a reason I'm not wearing pants." ] },
-									"after" : { "randomDialogue" : [ "Ahhh~ hope I'm not squeezing too much.", "Mmm~ That actually feels pretty good.", "Heh~ it's almost like you're a living dildo.", "Oooh~ That squirming is rather nice." ] }
-								},
-								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
-								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
-								"full" : "vore.oralVore.race.personality.mood.full",
-								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
-							}
-						}
-					}
-				},
-
-				// my brain checked out for this one, someone who's actually into this one should be the one writing the dialogue - Raptor
-				"navelVore" : {
-					"next" : "race",
-					"default" : { // race
-						"next" : "personality",
-						"default" : { // personality
-							"next" : "mood",
-							"default" : { // mood
-								"next" : "getVoreButtonAction",
-								"request" : {
-									"next" : "doingVore",
-									"before" : { "randomDialogue" : [ "You want to go in through my navel?", "That isn't the usual way to do things.", "I can try that.", "Thats my belly button right?" ] },
-									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "You really like bellies don't you.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
-								},
-								"unprompted" : {
-									"next" : "doingVore",
-									"before" : {"randomDialogue" : [ "This isn't the usual way to do things.", "I think we'll just skip right to your destination.", "Gonna do a bit more than just squish you against my belly here...", "Did you know theres more than just two ways into a belly?" ] },
-									"after" : { "randomDialogue" : [ "Mmmm~ that was a tight squeeze.", "Right into my belly.", "Not bothering with anything else, straight to the belly.", "Oooh~ Thats a stretch." ] }
-								},
-								"notFeelingIt" : "vore.oralVore.race.personality.mood.notFeelingIt",
-								"otherLocationFull" : "vore.oralVore.race.personality.mood.otherLocationFull",
-								"full" : "vore.oralVore.race.personality.mood.full",
-								"tooBig" : "vore.oralVore.race.personality.mood.tooBig"
-							}
-						}
-					}
-				},
-
 				"cockVore" : {
 					"next" : "race",
 					"default" : { // race
@@ -450,9 +439,6 @@
 						}
 					}
 				},
-				"analVore" : "letout.oralVore", // don't need to write unique lines for it yet
-				"navelVore" : "letout.oralVore", // don't need to write unique lines for it yet
-
 				"unbirth" : { // voreType
 					"next" : "struggleTrigger",
 					"true" : { // prey struggling out

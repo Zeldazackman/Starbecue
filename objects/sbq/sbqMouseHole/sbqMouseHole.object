@@ -1,0 +1,32 @@
+{
+	"objectName" : "sbqMouseHole",
+	"colonyTags" : ["mousehole"],
+	"printable" : true,
+	"rarity" : "Common",
+
+	"category" : "door",
+	"price" : 1,
+	"description" : "A small mousehole... tiny people might fit through it.",
+	"shortdescription" : "Mousehole",
+	"race" : "generic",
+
+	"inventoryIcon" : "/objects/sbq/sbqMouseHole/sbqMouseHoleIcon.png",
+
+	"tooltipKind" : "door",
+
+	"orientations" : [
+		{
+			"image" : "/objects/sbq/sbqMouseHole/sbqMouseHoleIcon.png",
+			"imagePosition" : [0, 0],
+			"renderLayer" : "ForegroundOverlay+1",
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "background" ]
+		}
+	],
+
+	"animation" : "/objects/sbq/sbqMouseHole/sbqMouseHole.animation",
+	"scripts" : ["/objects/sbq/sbqMouseHole/sbqMouseHole.lua"],
+	"animationPosition" : [0, 0]
+}

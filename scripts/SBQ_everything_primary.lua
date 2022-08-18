@@ -301,5 +301,12 @@ function sbq.endMysteriousTF()
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
 	end
+	local originalSpeciesFile = root.assetJson("/species/"..(oldData.species or world.entitySpecies(entity.id()))..".species") or {}
+	if originalSpeciesFile.statusEffects then
+		status.setPersistentEffects("species", originalSpeciesFile.statusEffects or {})
+	else
+		status.clearPersistentEffects("species")
+	end
+
 	refreshOccupantHolder()
 end
