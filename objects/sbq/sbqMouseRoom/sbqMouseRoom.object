@@ -26,7 +26,8 @@
 		}
 	],
 
+
 	"animation" : "/objects/sbq/sbqMouseRoom/sbqMouseRoom.animation",
-	"scripts" : ["/objects/sbq/sbqMouseRoom/sbqMouseRoom.lua"],
+	"animationScripts" : ["/objects/sbq/sbqMouseRoom/sbqMouseRoom.lua"],
 	"animationPosition" : [0, 0]
 }

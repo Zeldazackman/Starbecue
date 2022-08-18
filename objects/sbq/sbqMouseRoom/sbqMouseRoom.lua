@@ -8,9 +8,11 @@ local timers = {}
 local size = { 5, 3 }
 local materials = {}
 local colors = {}
-
-function update(dt)
-	local position = object.position()
+local blockImages = {}
+local blockViewMasks = {}
+function update()
+	local dt = script.updateDt()
+	local position = objectAnimator.position()
 
 	for i, time in pairs(timers) do
 		timers[i] = math.max(0,time-dt)
@@ -20,18 +22,29 @@ function update(dt)
 end
 
 function setMaterials(position)
+	localAnimator.clearDrawables()
 	local width = size[1]
 	local height = size[2]
 	for x = 0, width-1 do
 		for y = -height + 1, 0 do
+
 			local position = vec2.add(position, {x,y})
 			local material = world.material(position, "background")
 			local color = world.materialColor(position, "background")
+			local part = "block"..x.."_"..y
 			if materials["block" .. x .. "_" .. y] ~= material or colors["block" .. x .. "_" .. y] ~= color then
 				materials["block" .. x .. "_" .. y] = material
 				colors["block" .. x .. "_" .. y] = color
-				setMaterial(material, color, position, "block"..x.."_"..y)
+				setMaterial(material, color, position, part)
 			end
+			localAnimator.addDrawable(
+				{
+					image = (blockImages[part] or "/empty_image.png") .. (blockViewMasks[part] or ""),
+					centered = false,
+					position = position
+				},
+				"ForegroundOverlay+1"
+			)
 		end
 	end
 end
@@ -47,16 +60,22 @@ function setMaterial(material, color, position, part)
 		local imageSize = root.imageSize(texture)
 		local data = renderTemplate.pieces[tileType]
 		if not data then return end
-
+		local mask = ""
 		local crop1 = vec2.sub({ data.texturePosition[1], imageSize[2] - data.texturePosition[2] - data.textureSize[2] }, vec2.mul(data.colorStride, color))
 		local crop2 = vec2.sub({ data.texturePosition[1] + data.textureSize[1], imageSize[2] - data.texturePosition[2] }, vec2.mul(data.colorStride, color))
 
-		animator.setPartTag(part, "hueshift", hueshift)
-		animator.setPartTag(part, "materialImage", texture)
-		animator.setPartTag(part, "cropX1", crop1[1])
-		animator.setPartTag(part, "cropX2", crop2[1])
-		animator.setPartTag(part, "cropY1", crop1[2])
-		animator.setPartTag(part, "cropY2", crop2[2])
+		blockImages[part] = sb.replaceTags(
+			"<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><mask>",
+			{
+				hueshift = hueshift,
+				materialImage = texture,
+				mask = mask,
+				cropX1 = crop1[1],
+				cropX2 = crop2[1],
+				cropY1 = crop1[2],
+				cropY2 = crop2[2]
+			}
+		)
 	end
 end
 
@@ -87,9 +106,7 @@ function playerViewCircle(position)
 			end
 		end
 	end
-	for part, mask in pairs(masks) do
-		animator.setPartTag(part, "viewCircle", mask)
-	end
+	blockViewMasks = masks
 end
 
 function fixFilepath(string, item)
