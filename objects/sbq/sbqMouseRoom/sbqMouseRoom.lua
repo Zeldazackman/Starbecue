@@ -1,69 +1,118 @@
 
 require "/scripts/vec2.lua"
+require "/scripts/poly.lua"
 
-function init()
-	script.setUpdateDelta(5)
-end
-local timers = {}
-local size = { 5, 3 }
+local timers = {
+	refresh = 5
+}
 local materials = {}
 local colors = {}
 local blockImages = {}
 local blockViewMasks = {}
+local spaces = {}
+local detection = {}
+local position = {}
+
+function init()
+	script.setUpdateDelta(2)
+	spaces = objectAnimator.getParameter("spaces") or {
+		{ 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 },
+		{ 0, -1 }, { 1, -1 }, { 2, -1 }, { 3, -1 }, { 4, -1 },
+		{ 0, -2 }, { 1, -2 }, { 2, -2 }, { 3, -2 }, { 4, -2 }
+	}
+	local rect = poly.boundBox(spaces)
+	position = objectAnimator.position()
+	detection[1] = vec2.add({ rect[1] - 1, rect[2] - 1 }, position)
+	detection[2] = vec2.add({ rect[3] + 2, rect[4] + 2 }, position)
+end
+
 function update()
 	local dt = script.updateDt()
-	local position = objectAnimator.position()
-
 	for i, time in pairs(timers) do
 		timers[i] = math.max(0,time-dt)
 	end
-	playerViewCircle(position)
-	setMaterials(position)
+	if timers.refresh <= 0 then
+		timers.refresh = 5
+		materials = {}
+	end
+	playerViewCircle()
+	setMaterials()
 end
 
-function setMaterials(position)
+function setMaterials()
 	localAnimator.clearDrawables()
-	local width = size[1]
-	local height = size[2]
-	for x = 0, width-1 do
-		for y = -height + 1, 0 do
-
-			local position = vec2.add(position, {x,y})
-			local material = world.material(position, "background")
-			local color = world.materialColor(position, "background")
-			local part = "block"..x.."_"..y
-			if materials["block" .. x .. "_" .. y] ~= material or colors["block" .. x .. "_" .. y] ~= color then
-				materials["block" .. x .. "_" .. y] = material
-				colors["block" .. x .. "_" .. y] = color
-				setMaterial(material, color, position, part)
-			end
-			localAnimator.addDrawable(
-				{
-					image = (blockImages[part] or "/empty_image.png") .. (blockViewMasks[part] or ""),
-					centered = false,
-					position = position
-				},
-				"ForegroundOverlay+1"
-			)
+	for _, coords in ipairs(spaces or {}) do
+		local x = coords[1]
+		local y = coords[2]
+		local position = vec2.add(position, { x, y })
+		local material = world.material(position, "background")
+		local color = world.materialColor(position, "background")
+		local part = "block" .. x .. "_" .. y
+		if materials["block" .. x .. "_" .. y] ~= material or colors["block" .. x .. "_" .. y] ~= color then
+			materials["block" .. x .. "_" .. y] = material
+			colors["block" .. x .. "_" .. y] = color
+			setMaterial(material, color, position, part)
 		end
+		localAnimator.addDrawable(
+			{
+				image = (blockImages[part] or "/empty_image.png") .. (blockViewMasks[part] or ""),
+				centered = false,
+				position = position
+			},
+			"ForegroundOverlay+1"
+		)
 	end
 end
 
-function setMaterial(material, color, position, part)
-	local hueshift = world.materialHueShift(position, "background")
+local tileCheck = {
+	{ { 0, 1 }, "up", },
+	{ { 0, -1 }, "down" },
+	{ { -1, 0 }, "left.wall", {-1,-1}, "left.floor" },
+	{ { 1, 0 }, "right.wall", {1,-1}, "right.floor" },
+}
+function setMaterial(material, color, tilePosition, part)
+	if not material then return end
+	local hueshift = world.materialHueShift(tilePosition, "background")
 	local materialConfig = root.materialConfig(material)
 	if materialConfig then
 
 		local renderTemplate = root.assetJson(materialConfig.config.renderTemplate)
-		local texture = fixFilepath(materialConfig.config.renderParameters.texture, materialConfig)
 		local tileType = "base"
-		local imageSize = root.imageSize(texture)
 		local data = renderTemplate.pieces[tileType]
 		if not data then return end
+		local texture = fixFilepath(materialConfig.config.renderParameters.texture, materialConfig)
+		local imageSize = root.imageSize(texture)
 		local mask = ""
 		local crop1 = vec2.sub({ data.texturePosition[1], imageSize[2] - data.texturePosition[2] - data.textureSize[2] }, vec2.mul(data.colorStride, color))
 		local crop2 = vec2.sub({ data.texturePosition[1] + data.textureSize[1], imageSize[2] - data.texturePosition[2] }, vec2.mul(data.colorStride, color))
-
+		for _, check in ipairs(tileCheck) do
+			local pos1 = vec2.add(check[1], tilePosition)
+			local spaceOccupied
+			for _, space in ipairs(spaces) do
+				local pos2 = vec2.add(space, position)
+				if pos1[1] == pos2[1] and pos1[2] == pos2[2] then
+					spaceOccupied = true
+					break
+				end
+				local mat = world.material(pos1, "foreground")
+				if mat then
+					spaceOccupied = true
+				end
+			end
+			if not spaceOccupied then
+				if check[3] then
+					local pos3 = vec2.add(check[3], tilePosition)
+					local mat = world.material(pos3, "foreground")
+					if mat then
+						mask = mask.."?addmask=/objects/sbq/sbqMouseHole/sbqMouseHole.png:"..check[4]..";0;0"
+					else
+						mask = mask.."?addmask=/objects/sbq/sbqMouseHole/sbqMouseHole.png:"..check[2]..";0;0"
+					end
+				else
+					mask = mask.."?addmask=/objects/sbq/sbqMouseHole/sbqMouseHole.png:"..check[2]..";0;0"
+				end
+			end
+		end
 		blockImages[part] = sb.replaceTags(
 			"<materialImage>?crop=<cropX1>;<cropY1>;<cropX2>;<cropY2>?hueshift=<hueshift><mask>",
 			{
@@ -79,15 +128,13 @@ function setMaterial(material, color, position, part)
 	end
 end
 
-function playerViewCircle(position)
-	local width = size[1]
-	local height = size[2]
-	local players = world.playerQuery(vec2.add(position,{-1,-1-height}), vec2.add(position,{width+1, 1}))
+function playerViewCircle()
+	local players = world.playerQuery(detection[1], detection[2])
 	local masks = {}
-	for x = 0, width-1 do
-		for y = -height+1, 0 do
-			masks["block"..x.."_"..y] = ""
-		end
+	for _, coords in ipairs(spaces or {}) do
+		local x = coords[1]
+		local y = coords[2]
+		masks["block" .. x .. "_" .. y] = ""
 	end
 	if players and players[1] ~= nil then
 
@@ -98,15 +145,16 @@ function playerViewCircle(position)
 			end
 			if type(timers[player]) == "number" and timers[player] > 0 then
 				local distance = vec2.mul(vec2.floor(vec2.mul(vec2.add(entity.distanceToEntity(player), { -4, -6 }), 8)), -1)
-				for x = 0, width - 1 do
-					for y = -height + 1, 0 do
-						local xOffset = (distance[1] + (x * 8))
-						local yOffset = (distance[2] + (y * 8))
-						sb.logInfo("("..x..","..y.."), ("..xOffset..","..yOffset..")")
+				for _, coords in ipairs(spaces or {}) do
+					local x = coords[1]
+					local y = coords[2]
+					local xOffset = (distance[1] + (x * 8))
+					local yOffset = (distance[2] + (y * 8))
+					sb.logInfo("(" .. x .. "," .. y .. "), (" .. xOffset .. "," .. yOffset .. ")")
 
-						if xOffset >= 0 and xOffset <= 48 and yOffset >= 0 and yOffset <= 48 then
-							masks["block"..x.."_"..y] = masks["block"..x.."_"..y].. "?addmask=/objects/sbq/sbqMouseRoom/sbqMouseRoomView.png;" .. xOffset .. ";" .. yOffset
-						end
+					if xOffset >= 0 and xOffset <= 48 and yOffset >= 0 and yOffset <= 48 then
+						masks["block" .. x .. "_" .. y] = masks["block" .. x .. "_" .. y] ..
+							"?addmask=/objects/sbq/sbqMouseRoom/sbqMouseRoomView.png;" .. xOffset .. ";" .. yOffset
 					end
 				end
 			end
