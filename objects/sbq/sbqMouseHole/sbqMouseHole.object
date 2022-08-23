@@ -26,7 +26,13 @@
 		}
 	],
 
+	"coverSpaces" : [
+		[ 0, 0 ]
+	],
+
+	"viewCircle" : "/objects/sbq/sbqMouseHole/sbqMouseHoleView.png",
 	"animation" : "/objects/sbq/sbqMouseHole/sbqMouseHole.animation",
 	"scripts" : ["/objects/sbq/sbqMouseHole/sbqMouseHole.lua"],
+	"animationScripts" : ["/objects/sbq/sbqMouseHole/sbqMouseHoleAnimation.lua"],
 	"animationPosition" : [0, 0]
 }

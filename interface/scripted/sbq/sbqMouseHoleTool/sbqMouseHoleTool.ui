@@ -1,0 +1,23 @@
+{ //  -*- grammar-ext: json -*-
+	"style" : "window", // window (has titlebar), panel (just a frame) etc.
+	"size" : [64, 64], // *internal* size (not including chrome)
+	"title" : "Mouse Hole",
+	"icon" : "/objects/sbq/sbqMouseHole/sbqMouseHoleIcon.png",
+	"uniqueBy" : "path",
+	"scripts" : [ "sbqMouseHoleTool.lua" ],
+	"children" : [
+		{ "type" : "panel", "style" : "flat", "children" : [
+			{"mode" : "v"},
+			{"type":"label", "text":"Direction", "align" : "center"},
+			[
+				{"type": "checkBox", "id": "horizontalButton", "radioGroup": "direction", "value" : "h"},{"type":"label", "text":"H -", "align" : "left"},
+				{"type": "checkBox", "id": "verticalButton", "radioGroup": "direction", "value" : "v"},{"type":"label", "text":"V |", "align" : "left"}
+			]
+		]},
+		{ "type" : "panel", "style" : "flat", "children" : [
+			{"mode" : "v"},
+			{"type":"label", "text":"Length", "align" : "center"},
+			{"type":"textBox", "id":"lengthEntry", "caption" : "1"}
+		]}
+	]
+}

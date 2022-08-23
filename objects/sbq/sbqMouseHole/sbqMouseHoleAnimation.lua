@@ -9,25 +9,22 @@ local materials = {}
 local colors = {}
 local blockImages = {}
 local blockViewMasks = {}
-local spaces = {}
+local spaces
 local detection = {}
 local position = {}
 
 function init()
 	script.setUpdateDelta(2)
-	spaces = objectAnimator.getParameter("spaces") or {
-		{ 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 },
-		{ 0, -1 }, { 1, -1 }, { 2, -1 }, { 3, -1 }, { 4, -1 },
-		{ 0, -2 }, { 1, -2 }, { 2, -2 }, { 3, -2 }, { 4, -2 }
-	}
-	local rect = poly.boundBox(spaces)
 	position = objectAnimator.position()
-	detection[1] = vec2.add({ rect[1] - 1, rect[2] - 1 }, position)
-	detection[2] = vec2.add({ rect[3] + 2, rect[4] + 2 }, position)
 end
 
 function update()
-	spaces = objectAnimator.getParameter("spaces") or spaces
+	spaces = objectAnimator.getParameter("coverSpaces")
+	if not spaces then return end
+	local rect = poly.boundBox(spaces)
+	detection[1] = vec2.add({ rect[1] - 1, rect[2] - 1 }, position)
+	detection[2] = vec2.add({ rect[3] + 2, rect[4] + 2 }, position)
+
 	local dt = script.updateDt()
 	for i, time in pairs(timers) do
 		timers[i] = math.max(0,time-dt)
@@ -47,21 +44,24 @@ function setMaterials()
 		local y = coords[2]
 		local position = vec2.add(position, { x, y })
 		local material = world.material(position, "background")
+		local fgMat = world.material(position, "foreground")
 		local color = world.materialColor(position, "background")
 		local part = "block" .. x .. "_" .. y
-		if materials["block" .. x .. "_" .. y] ~= material or colors["block" .. x .. "_" .. y] ~= color then
-			materials["block" .. x .. "_" .. y] = material
-			colors["block" .. x .. "_" .. y] = color
-			setMaterial(material, color, position, part)
+		if not fgMat then
+			if materials["block" .. x .. "_" .. y] ~= material or colors["block" .. x .. "_" .. y] ~= color then
+				materials["block" .. x .. "_" .. y] = material
+				colors["block" .. x .. "_" .. y] = color
+				setMaterial(material, color, position, part)
+			end
+			localAnimator.addDrawable(
+				{
+					image = (blockImages[part] or "/empty_image.png") .. (blockViewMasks[part] or ""),
+					centered = false,
+					position = position
+				},
+				"ForegroundOverlay+1"
+			)
 		end
-		localAnimator.addDrawable(
-			{
-				image = (blockImages[part] or "/empty_image.png") .. (blockViewMasks[part] or ""),
-				centered = false,
-				position = position
-			},
-			"ForegroundOverlay+1"
-		)
 	end
 end
 
@@ -141,7 +141,7 @@ function playerViewCircle()
 
 		for _, player in ipairs(players) do
 			local velocity = world.entityVelocity(player)
-			if math.abs(velocity[1]) > 0.5 or math.abs(velocity[2]) > 0.5 then
+			if math.abs(velocity[1]) > 1 or math.abs(velocity[2]) > 1 then
 				timers[player] = 5
 			end
 			if type(timers[player]) == "number" and timers[player] > 0 then
@@ -154,7 +154,7 @@ function playerViewCircle()
 
 					if xOffset >= 0 and xOffset <= 48 and yOffset >= 0 and yOffset <= 48 then
 						masks["block" .. x .. "_" .. y] = masks["block" .. x .. "_" .. y] ..
-							"?addmask=/objects/sbq/sbqMouseRoom/sbqMouseRoomView.png;" .. xOffset .. ";" .. yOffset
+							"?addmask="..(objectAnimator.getParameter("viewCircle") or "/objects/sbq/sbqMouseHole/sbqMouseHoleView.png")..";" .. xOffset .. ";" .. yOffset
 					end
 				end
 			end

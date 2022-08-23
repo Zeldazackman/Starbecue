@@ -1,0 +1,44 @@
+{
+	"objectName" : "sbqMouseRoom",
+	"colonyTags" : ["mouseroom"],
+	"printable" : true,
+	"rarity" : "Common",
+
+	"category" : "door",
+	"price" : 1,
+	"description" : "A small covered room... tiny people might fit inside.",
+	"shortdescription" : "Mouseroom",
+	"race" : "generic",
+
+	"inventoryIcon" : "/objects/sbq/sbqMouseHole/sbqMouseRoomIcon.png",
+
+	"tooltipKind" : "door",
+
+	"orientations" : [
+		{
+			"image" : "/objects/sbq/sbqMouseHole/sbqMouseRoomIcon.png",
+			"imagePosition" : [0, 0],
+			"renderLayer" : "ForegroundOverlay+1",
+			"direction" : "right",
+
+			"spaceScan" : 0.1,
+			"anchors" : [ "background" ]
+		}
+	],
+	"savedData" : {
+		"size" : [5,3],
+		"offset" : [0,-2]
+	},
+
+	"coverSpaces" : [
+		[ 0, 0 ], [ 1, 0 ], [ 2, 0 ], [ 3, 0 ], [ 4, 0 ],
+		[ 0, -1 ], [ 1, -1 ], [ 2, -1 ], [ 3, -1 ], [ 4, -1 ],
+		[ 0, -2 ], [ 1, -2 ], [ 2, -2 ], [ 3, -2 ], [ 4, -2 ]
+	],
+
+	"viewCircle" : "/objects/sbq/sbqMouseHole/sbqMouseRoomView.png",
+	"animation" : "/objects/sbq/sbqMouseHole/sbqMouseHole.animation",
+	"scripts" : ["/objects/sbq/sbqMouseHole/sbqMouseRoom.lua"],
+	"animationScripts" : ["/objects/sbq/sbqMouseHole/sbqMouseHoleAnimation.lua"],
+	"animationPosition" : [0, 0]
+}
