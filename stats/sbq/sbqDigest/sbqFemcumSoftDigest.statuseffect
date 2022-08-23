@@ -1,14 +1,14 @@
 {
-	"name" : "sbqFemcumSoftDigestDisplay",
+	"name" : "sbqFemcumSoftDigest",
 	"blockingStat" : "femcumSoftDigestImmunity",
 
 	"effectConfig" : {
-		"effect" : "sbqFemcumSoftDigestDisplay"
+		"effect" : "sbqFemcumSoftDigest"
 	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-	"sbqCumSoftDigestDisplay.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Soft Converting Into Femcum",

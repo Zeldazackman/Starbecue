@@ -3,12 +3,14 @@
 	"blockingStat" : "softDigestImmunity",
 
 	"effectConfig" : {
-		"effect" : "sbqSoftDigestDisplay"
+		"effect" : "sbqSoftDigestDisplay",
+		"displayDamage" : true,
+		"sendHunger" : true
 	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-	"sbqSoftDigestDisplay.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Being Soft Digested",

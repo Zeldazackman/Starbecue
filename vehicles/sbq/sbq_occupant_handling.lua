@@ -123,7 +123,7 @@ function sbq.sendAllPrey()
 	if type(sbq.sendAllPreyTo) == "number" and world.entityExists(sbq.sendAllPreyTo) then
 		for i = sbq.startSlot, sbq.occupantSlots do
 			if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
-				and (sbq.occupant[i].location ~= "escaping" and sbq.occupant[i].location ~= "digesting")
+				and (sbq.occupant[i].location ~= "escaping" )
 			then
 				sbq.occupant[i].visible = false
 				if sbq.digestSendPrey then
@@ -350,7 +350,7 @@ function sbq.updateOccupants(dt)
 			local mass = sbq.occupant[i].controls.mass
 			local location = sbq.occupant[i].location
 
-			if location == "digesting" or location == "escaping" then
+			if location == "escaping" then
 			elseif (location == nil) or (sbq.sbqData.locations[location] == nil) or
 				((sbq.sbqData.locations[location].max or 0) == 0) then
 				sbq.uneat(sbq.occupant[i].id)
@@ -543,11 +543,8 @@ function sbq.doBellyEffects(dt)
 				world.sendEntityMessage( eid, "sbqLight", sb.jsonMerge(light, {position = lightPosition}) )
 			end
 
-			if location == "digesting" then
-				locationEffect = "sbqDigest"
-			end
-			if sbq.occupant[i].cumDigesting then
-				locationEffect = "sbqCumDigest"
+			if sbq.occupant[i].digesting then
+				locationEffect = (sbq.sbqData.locations[location].digest or {}).effect or "sbqDigest"
 			end
 
 			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect

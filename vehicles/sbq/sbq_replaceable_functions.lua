@@ -107,7 +107,7 @@ end
 function sbq.getRecentPrey()
 	for i = sbq.occupantSlots, 0, -1 do
 		if type(sbq.occupant[i].id) == "number" and world.entityExists(sbq.occupant[i].id)
-		and sbq.occupant[i].location ~= "digesting" and sbq.occupant[i].location ~= "escaping"
+		and sbq.occupant[i].location ~= "escaping"
 		then
 			return sbq.occupant[i].id
 		end

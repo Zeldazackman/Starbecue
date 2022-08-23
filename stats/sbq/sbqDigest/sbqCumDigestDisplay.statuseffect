@@ -4,12 +4,14 @@
 
 	"effectConfig" : {
 		"effect" : "sbqCumDigestDisplay",
-		"itemDrop" : "sbqFilledCondom"
+		"itemDrop" : "sbqFilledCondom",
+		"fatal" : true,
+		"displayDamage" : true
 	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-		"sbqCumDigestDisplay.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Converting Into Cum",
