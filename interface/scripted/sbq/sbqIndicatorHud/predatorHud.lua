@@ -74,6 +74,7 @@ function init()
 		nextLocation:setVisible(false)
 		effectsPanel:setVisible(false)
 	end
+	impossibleEscape:setChecked(sbq.globalSettings.impossibleEscape)
 	sbq.predUIeffectsPanel(sbq.predatorSettings.lastLocationSelect)
 end
 
