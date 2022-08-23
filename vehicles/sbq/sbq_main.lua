@@ -477,6 +477,7 @@ function sbq.faceDirection(x)
 		sbq.direction = -1
 		animator.setFlipped(true)
 	end
+	sbq.setPartTag("global", "facingDirection", tostring(sbq.direction))
 	sbq.setMovementParams(sbq.movementParamsName)
 end
 

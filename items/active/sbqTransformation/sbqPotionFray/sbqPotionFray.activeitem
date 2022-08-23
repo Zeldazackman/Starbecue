@@ -1,0 +1,30 @@
+{
+	"itemName" : "sbqPotionFray",
+	"level" : 1,
+	"price" : 500,
+	"maxStack" : 1,
+	"rarity" : "Legendary",
+	"description" : "A bottle of thick blue liquid...",
+	"shortdescription" : "Fray Potion",
+	"tooltipKind" : "tool",
+	"category" : "Potion",
+	"twoHanded" : false,
+	"itemTags" : ["sbqTransformation"],
+
+	"vehicle" : "sbqFray_IcyVixen",
+	"transformationDescription" : "a large version of a certain Vulpix",
+
+	"inventoryIcon" : "sbqPotion.png",
+	"largeImage" : "sbqPotionLarge.png",
+
+	"animationParts" : {
+		"potion" : "sbqPotion.png"
+	},
+
+	"animation" : "/items/active/sbqTransformation/sbqPotion.animation",
+
+	"scripts" : [
+		"/items/active/sbqTransformation/sbqTransformPotion.lua",
+		"/items/active/activeitemOverrides.lua"
+	]
+}

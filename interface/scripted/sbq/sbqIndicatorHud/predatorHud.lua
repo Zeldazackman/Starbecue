@@ -307,7 +307,6 @@ function settings:onClick()
 end
 
 function escapeValue:onEnter()
-	sb.logInfo("escapeValue")
 	local value = tonumber(escapeValue.text)
 	local isNumber = type(value) == "number"
 	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0

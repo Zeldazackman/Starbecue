@@ -27,6 +27,7 @@ function init()
 end
 
 function update()
+	spaces = objectAnimator.getParameter("spaces") or spaces
 	local dt = script.updateDt()
 	for i, time in pairs(timers) do
 		timers[i] = math.max(0,time-dt)
@@ -150,7 +151,6 @@ function playerViewCircle()
 					local y = coords[2]
 					local xOffset = (distance[1] + (x * 8))
 					local yOffset = (distance[2] + (y * 8))
-					sb.logInfo("(" .. x .. "," .. y .. "), (" .. xOffset .. "," .. yOffset .. ")")
 
 					if xOffset >= 0 and xOffset <= 48 and yOffset >= 0 and yOffset <= 48 then
 						masks["block" .. x .. "_" .. y] = masks["block" .. x .. "_" .. y] ..
