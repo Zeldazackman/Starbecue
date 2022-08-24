@@ -136,7 +136,7 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].visible = false
-		sbq.lounging[eid].location = "digesting"
+		sbq.lounging[eid].digesting = true
 		sbq.lounging[eid].digested = true
 
 		if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
@@ -146,12 +146,12 @@ message.setHandler( "sbqDigest", function(_,_, eid)
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 		else
-			world.sendEntityMessage(eid, "sbqDigestResponse")
+			world.sendEntityMessage(eid, "sbqDigestResponse", 2)
 		end
 	else
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].visible = false
-		sbq.lounging[eid].location = "digesting"
+		sbq.lounging[eid].digesting = true
 		sbq.lounging[eid].digested = true
 	end
 end )
@@ -179,7 +179,7 @@ message.setHandler( "sbqSoftDigest", function(_,_, eid)
 		if success and type(timing) == "number" then
 			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
 		else
-			world.sendEntityMessage(eid, "sbqDigestResponse")
+			world.sendEntityMessage(eid, "sbqDigestResponse", 2)
 		end
 	else
 		sbq.lounging[eid].sizeMultiplier = 0

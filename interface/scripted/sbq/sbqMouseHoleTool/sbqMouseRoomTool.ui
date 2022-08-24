@@ -1,0 +1,22 @@
+{ //  -*- grammar-ext: json -*-
+	"style" : "window", // window (has titlebar), panel (just a frame) etc.
+	"size" : [64, 64], // *internal* size (not including chrome)
+	"title" : "Mouse Room",
+	"icon" : "/objects/sbq/sbqMouseHole/sbqMouseRoomIcon.png",
+	"uniqueBy" : "path",
+	"scripts" : [ "sbqMouseRoomTool.lua" ],
+	"children" : [
+		{ "type" : "panel", "style" : "flat", "children" : [
+			{"mode" : "v"},
+			{"type":"label", "text":"Size", "align" : "center"},
+			[{"type":"textBox", "id":"widthEntry", "caption" : "1"},
+			{"type":"textBox", "id":"heightEntry", "caption" : "1"}]
+		]},
+		{ "type" : "panel", "style" : "flat", "children" : [
+			{"mode" : "v"},
+			{"type":"label", "text":"Offset", "align" : "center"},
+			[{"type":"textBox", "id":"offsetXEntry", "caption" : "0"},
+			{"type":"textBox", "id":"offsetYEntry", "caption" : "0"}]
+		]}
+	]
+}

@@ -295,7 +295,7 @@ function sbq.transformAction()
 end
 
 function sbq.transformVehicle(settings)
-	if not sbq.findFirstOccupantIdForLocation("escaping") and not sbq.findFirstOccupantIdForLocation("digesting") then
+	if not sbq.findFirstOccupantIdForLocation("escaping") then
 		world.spawnVehicle( data.selection, mcontroller.position(), { driver = sbq.driver, settings = settings, retrievePrey = entity.id(), direction = sbq.direction } )
 	end
 end

@@ -1,0 +1,18 @@
+{
+	"name" : "sbqMilkSoftDigestDisplay",
+	"blockingStat" : "milkSoftDigestImmunity",
+
+	"effectConfig" : {
+		"effect" : "sbqMilkSoftDigestDisplay",
+		"itemDrop" : "sbqMilkCarton",
+		"displayDamage" : true
+	},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqDigestion.lua"
+	],
+
+	"label" : "Soft Converting Into Milk",
+	"icon" : "/stats/sbq/sbqSoftDigest/sbqCumSoftDigest.png"
+}

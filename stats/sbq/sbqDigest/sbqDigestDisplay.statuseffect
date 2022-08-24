@@ -2,11 +2,16 @@
 	"name" : "sbqDigestDisplay",
 	"blockingStat" : "digestionImmunity",
 
-	"effectConfig" : { "effect" : "sbqDigestDisplay"},
+	"effectConfig" : {
+		"effect" : "sbqDigestDisplay",
+		"fatal" : true,
+		"displayDamage" : true,
+		"sendHunger" : true
+	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-		"sbqDigestDisplay.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Being Digested",

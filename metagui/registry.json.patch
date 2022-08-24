@@ -6,6 +6,8 @@
 		"dialogueBox" : "/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBox.ui",
 		"nominomicon" : "/interface/scripted/sbq/sbqSettings/sbqNominomicon.ui",
 		"auriShop" : "/interface/scripted/sbq/sbqAuriShop/sbqAuriShop.ui",
-		"voreColonyDeed" : "/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreColonyDeed.ui"
+		"voreColonyDeed" : "/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreColonyDeed.ui",
+		"mouseHoleTool" : "/interface/scripted/sbq/sbqMouseHoleTool/sbqMouseHoleTool.ui",
+		"mouseRoomTool" : "/interface/scripted/sbq/sbqMouseHoleTool/sbqMouseRoomTool.ui"
 	}}
 ]

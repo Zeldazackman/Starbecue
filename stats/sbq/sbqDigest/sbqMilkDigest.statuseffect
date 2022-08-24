@@ -4,12 +4,13 @@
 
 	"effectConfig" : {
 		"effect" : "sbqMilkDigest",
-		"itemDrop" : "sbqMilkCarton"
+		"itemDrop" : "sbqMilkCarton",
+		"fatal" : true
 	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-		"sbqCumDigest.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Converting Into Milk",

@@ -1,0 +1,17 @@
+{
+	"name" : "sbqCumSoftDigest",
+	"blockingStat" : "cumSoftDigestImmunity",
+
+	"effectConfig" : {
+		"effect" : "sbqCumSoftDigest",
+		"itemDrop" : "sbqFilledCondom"
+	},
+	"defaultDuration" : 5,
+
+	"scripts" : [
+		"sbqDigestion.lua"
+	],
+
+	"label" : "Soft Converting Into Cum",
+	"icon" : "/stats/sbq/sbqSoftDigest/sbqCumSoftDigest.png"
+}

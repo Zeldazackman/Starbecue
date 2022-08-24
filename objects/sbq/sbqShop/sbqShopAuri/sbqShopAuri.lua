@@ -66,7 +66,6 @@ function eyeTracking()
 		world.debugLine(worldHeadPos, targetPos, {72, 207, 180})
 
 		local angle = math.atan(targetDist[2], targetDist[1]) * 180/math.pi
-		local distance = world.magnitude(worldHeadPos, targetPos)
 		if angle <= 15 and angle >= -15 then
 			X = 1 * object.direction()
 			Y = 0
@@ -97,7 +96,7 @@ function eyeTracking()
 			Y = 0
 		end
 
-		if distance > 5 then
+		if math.abs(targetDist[1]) > 10 then
 			X = X * 2
 		end
 	end

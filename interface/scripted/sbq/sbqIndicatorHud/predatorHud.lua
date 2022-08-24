@@ -74,6 +74,7 @@ function init()
 		nextLocation:setVisible(false)
 		effectsPanel:setVisible(false)
 	end
+	impossibleEscape:setChecked(sbq.globalSettings.impossibleEscape)
 	sbq.predUIeffectsPanel(sbq.predatorSettings.lastLocationSelect)
 end
 
@@ -307,7 +308,6 @@ function settings:onClick()
 end
 
 function escapeValue:onEnter()
-	sb.logInfo("escapeValue")
 	local value = tonumber(escapeValue.text)
 	local isNumber = type(value) == "number"
 	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0

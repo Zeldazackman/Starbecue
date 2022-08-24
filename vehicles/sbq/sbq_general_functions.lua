@@ -276,7 +276,36 @@ local map = {
 	digest = "Digest",
 	softDigest = "SoftDigest"
 }
+local copyList = {
+	"none",
+	"heal",
+	"digest",
+	"softDigest",
+	"TF",
+	"eggify"
+}
+
 function sbq.initLocationEffects()
+	for location, data in pairs(sbq.sbqData.locations) do
+		if data.sided then
+			if not sbq.sbqData.locations[location.."L"] then
+				sbq.sbqData.locations[location.."L"] = {}
+			end
+			if not sbq.sbqData.locations[location.."R"] then
+				sbq.sbqData.locations[location.."R"] = {}
+			end
+			for name, copy in pairs(data) do
+				if name ~= "combine" and name ~= "sided" then
+					if not sbq.sbqData.locations[location.."L"][name] then
+						sbq.sbqData.locations[location.."L"][name] = copy
+					end
+					if not sbq.sbqData.locations[location.."R"][name] then
+						sbq.sbqData.locations[location.."R"][name] = copy
+					end
+				end
+			end
+		end
+	end
 	for location, data in pairs(sbq.sbqData.locations) do
 		local value = sbq.settings[location.."EffectSlot"]
 		if value then

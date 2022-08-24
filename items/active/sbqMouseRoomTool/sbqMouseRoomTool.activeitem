@@ -1,0 +1,18 @@
+{
+	"itemName" : "sbqMouseRoomTool",
+	"shortdescription" : "Mouse Tool",
+	"description" : "Used to modify length and sizes of the cover area of mouseholes and mouserooms.",
+	"price" : 1,
+	"maxStack" : 1,
+	"rarity" : "uncommon",
+	"category" : "tool",
+	"twoHanded" : true,
+	"itemTags" : ["tool"],
+	"inventoryIcon" : "/objects/sbq/sbqMouseHole/sbqMouseRoomIcon.png",
+
+	"scripts" : [
+		"/items/active/sbqMouseRoomTool/sbqMouseRoomTool.lua",
+		"/items/active/activeitemOverrides.lua"
+	],
+	"animationScripts" : ["/items/active/sbqMouseRoomTool/sbqMouseHoleToolAnimation.lua"]
+}

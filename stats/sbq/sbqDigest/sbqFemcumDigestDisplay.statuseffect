@@ -3,12 +3,14 @@
 	"blockingStat" : "femcumDigestImmunity",
 
 	"effectConfig" : {
-		"effect" : "sbqFemcumDigestDisplay"
+		"effect" : "sbqFemcumDigestDisplay",
+		"fatal" : true,
+		"displayDamage" : true
 	},
 	"defaultDuration" : 5,
 
 	"scripts" : [
-		"sbqCumDigestDisplay.lua"
+		"sbqDigestion.lua"
 	],
 
 	"label" : "Converting Into Femcum",
