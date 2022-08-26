@@ -562,20 +562,36 @@ function sbq.projectile( projectiledata, pressed, sounds, cooldown)
 end
 
 function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
-	local position = sbq.localToGlobal( projectiledata.position )
+	local position = {0,0}
+	if projectiledata.position then
+		if type(projectiledata.position[1]) == "table" then
+			local boundBox = poly.boundBox(projectiledata.position)
+			position = rect.randomPoint(boundBox)
+			while not world.polyContains(projectiledata.position, position) do
+				position = rect.randomPoint(boundBox)
+			end
+		elseif #projectiledata.position == 4 then
+			position = rect.randomPoint(projectiledata.position)
+		else
+			position = projectiledata.position
+		end
+	end
+	position = sbq.localToGlobal(position)
+
 	local direction
+	local params = projectiledata.params or {}
+
 	if projectiledata.aimable then
 		sbq.movement.aimingLock = 0.1
 
 		local aiming = sbq.seats[sbq.driverSeat].controls.aim
+		params.targetPosition = aiming
 		sbq.facePoint( aiming[1] )
-		position = sbq.localToGlobal( projectiledata.position )
 		aiming[2] = aiming[2] + (projectiledata.aimAdjust or 0) * sbq.direction * (aiming[1] - position[1])
-		direction = world.distance( aiming, position )
+		direction = world.distance(aiming, position)
 	else
 		direction = { sbq.direction, 0 }
 	end
-	local params = projectiledata.params or {}
 
 	if sounds ~= nil then
 		if pressed then

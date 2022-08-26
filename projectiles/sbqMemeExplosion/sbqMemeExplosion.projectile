@@ -10,7 +10,13 @@
   "renderLayer" : "Player+1",
 	"orientationLocked" : true,
   "bounces" : -1,
-  "persistentAudio" : "/sfx/meme/deltarune-explosion.ogg",
-  "fullbright" : true
-
+  "fullbright" : true,
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action" : "sound",
+      "options" : [ "/sfx/meme/deltarune-explosion.ogg" ]
+    }
+  ]
 }

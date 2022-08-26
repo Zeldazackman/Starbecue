@@ -1,0 +1,8 @@
+{
+  "frames" : "sbqSwiftParticles.png",
+  "variants" : 1,
+  "frameNumber" : 2,
+  "animationCycle" : 0.85,
+  "fullbright" : true,
+  "offset" : [0, 0]
+}
