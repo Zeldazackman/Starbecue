@@ -1,8 +1,6 @@
 ---@diagnostic disable: undefined-global
 
 function init()
-	sb.logInfo(sb.printJson(metagui.inputData))
-
 	lengthEntry:setText(tostring(metagui.inputData.length))
 	horizontalButton:selectValue(metagui.inputData.direction or "h")
 

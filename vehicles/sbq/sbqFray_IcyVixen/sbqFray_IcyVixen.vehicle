@@ -170,7 +170,7 @@
 			],
 			[
 				["4e0233","ff7ce9","230050","e3b8ff","ffffff"],
-				["4e0233","ff7ce9","230050","e3b8ff","ffffff"]
+				["4e0233","ff69e5","230050","c671ff","ffffff"]
 			],
 			[
 				["8cb2bb","c7e1e6","e8fbff"],
@@ -420,22 +420,18 @@
 			"defaultActions": ["vore", "oralVore"],
 			"actions": {
 				"specialAttack": {
-					"cooldown": 0.05,
+					"cooldown": 0.25,
 					"hold" : true,
-					"animation": { "head" : "breath"},
-					"sounds" : {
-						"fireStart" : "fireStart",
-						"fireLoop" : "fireLoop",
-						"fireEnd" : "fireEnd"
-					},
+					//"animation": { "head" : "breath"},
+
 					"projectile": {
-						"name": "flamethrower",
-						"position": [ 7.25, -0.5 ],
+						"name": "sbqDelayedSwift",
+						"position": [ [0,0],[-2,0],[-2,2],[0,4],[4,4],[6,2],[6,0],[4,0],[4,1],[3,2],[1,2],[0,1] ],
 						"aimable": true,
 						"energy": true,
-						"cost": 2,
+						"cost": 5,
 						"params" : {
-							"power" : 5
+							"power" : 10
 						}
 					}
 				},

@@ -1,3 +1,5 @@
+require("/scripts/poly.lua")
+require("/scripts/rect.lua")
 
 function sbq.logJson(arg)
 	sb.logInfo(sb.printJson(arg, 1))
@@ -21,7 +23,6 @@ function sbq.dtSince(name, overwrite) -- used for when something isn't in the ma
 	end
 	return sbq.totalTimeAlive - last
 end
-
 
 function sbq.notMoving()
 	return (math.abs(mcontroller.xVelocity()) < 0.1) and mcontroller.onGround()

@@ -1,0 +1,74 @@
+{
+  "projectileName" : "sbqSwift",
+  "image" : "/projectiles/sbqSwift/sbqSwift.png",
+  "animationCycle" : 0.5,
+  "lightColor" : [255, 213, 57],
+  "frameNumber" : 4,
+  "flippable" : true,
+  "fullbright" : true,
+  "damageKindImage" : "icon.png",
+  "physics" : "boomerang",
+  "emitters" : [ ],
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action" : "sound",
+      "options" : [ "/sfx/gen3_pokemon/Swift.ogg" ]
+    },
+    {
+      "time" : 0.1,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : {
+          "fullbright" : true,
+          "type" : "ember",
+          "size" : 1,
+          "color" : [255, 213, 57],
+          "position" : [-0.75, 0],
+          "destructionAction" : "fade",
+          "destructionTime" : 1,
+          "fade" : 1,
+          "layer" : "middle",
+          "timeToLive" : 1,
+          "variance" : {
+            "initialVelocity" : [2.0, 1.0],
+            "position" : [0.25, 1]
+          }
+      }
+    },
+    {
+      "time" : 0.1,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : false,
+      "specification" : {
+          "type" : "animated",
+          "animation" : "/projectiles/sbqSwift/sbqSwiftParticles.animation",
+          "size" : 1,
+          "position" : [-0.75, 0],
+          "destructionAction" : "fade",
+          "destructionTime" : 1,
+          "fade" : 1,
+          "layer" : "middle",
+          "timeToLive" : 1,
+          "variance" : {
+            "initialVelocity" : [2.0, 1.0],
+            "position" : [0.25, 1]
+          }
+      }
+    }
+
+
+  ],
+  "damagePoly" : [ [-8, 0], [2, 3], [8, 0], [2, -3] ],
+  "damageKind" : "plasma",
+  "damageType" : "IgnoresDef",
+  "piercing" : true,
+
+  "speed" : 75,
+
+  "scripts" : [ "/projectiles/tracksourcestatus.lua" ],
+  "scriptDelta" : 1
+}
