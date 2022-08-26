@@ -1,7 +1,7 @@
 require "/scripts/util.lua"
 
 function init()
-	self.targetPosition = config.getParameter("targetPosition")
+	self.targetPosition = projectile.getParameter("targetPosition")
 	local creatures = world.entityQuery(self.targetPosition, 10, {includedTypes = {"creature"}})
 	creatures = util.filter(shuffled(creatures), function(entityId)
 			return (not world.lineTileCollision(entity.position(), world.entityPosition(entityId))) and world.entityCanDamage(projectile.sourceEntity(), entityId)
@@ -27,6 +27,6 @@ end
 function destroy()
 	if projectile.sourceEntity() and world.entityExists(projectile.sourceEntity()) then
 		local rotation = mcontroller.rotation()
-		world.spawnProjectile("sbqSwift", mcontroller.position(), projectile.sourceEntity(), {math.cos(rotation), math.sin(rotation)}, false, { speed = 50, power = projectile.getParameter("power"), damageTeam = world.entityDamageTeam(projectile.sourceEntity()) or {type = "indiscriminate"}})
+		world.spawnProjectile( projectile.getParameter("childProjectile") or "sbqSwift", mcontroller.position(), projectile.sourceEntity(), {math.cos(rotation), math.sin(rotation)}, false, sb.jsonMerge({ speed = 50, power = projectile.getParameter("power"), damageTeam = world.entityDamageTeam(projectile.sourceEntity()) or {type = "indiscriminate"}}, projectile.getParameter("childParams") or {}))
 	end
 end

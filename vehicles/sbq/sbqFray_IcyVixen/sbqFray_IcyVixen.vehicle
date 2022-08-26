@@ -422,7 +422,7 @@
 				"specialAttack": {
 					"cooldown": 0.25,
 					"hold" : true,
-					//"animation": { "head" : "breath"},
+					"animation": { "emote" : "attack"},
 
 					"projectile": {
 						"name": "sbqDelayedSwift",
@@ -431,7 +431,8 @@
 						"energy": true,
 						"cost": 5,
 						"params" : {
-							"power" : 10
+							"power" : 10,
+							"childProjectile" : "sbqSwift"
 						}
 					}
 				},

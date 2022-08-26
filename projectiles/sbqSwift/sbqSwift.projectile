@@ -2,7 +2,6 @@
   "projectileName" : "sbqSwift",
   "image" : "/projectiles/sbqSwift/sbqSwift.png",
   "animationCycle" : 0.5,
-  "lightColor" : [255, 213, 57],
   "frameNumber" : 4,
   "flippable" : true,
   "fullbright" : true,
@@ -17,7 +16,12 @@
       "options" : [ "/sfx/gen3_pokemon/Swift.ogg" ]
     },
     {
-      "time" : 0.1,
+      "time" : 0,
+      "action" : "light",
+      "color" : [255, 213, 57]
+    },
+    {
+      "time" : 0.05,
       "repeat" : true,
       "action" : "particle",
       "rotate" : true,
@@ -37,7 +41,7 @@
             "position" : [0.25, 1]
           }
       }
-    },
+    }/*,
     {
       "time" : 0.1,
       "repeat" : true,
@@ -58,8 +62,7 @@
             "position" : [0.25, 1]
           }
       }
-    }
-
+    }*/
 
   ],
   "damagePoly" : [ [-8, 0], [2, 3], [8, 0], [2, -3] ],
