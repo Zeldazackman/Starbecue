@@ -16,6 +16,7 @@ end
 
 function sbq.update(dt)
 	eyeTracking()
+	detectEmote()
 end
 
 function sbq.letout(id)
@@ -36,6 +37,85 @@ function sbq.letout(id)
 	elseif location == "ballsL" or location == "ballsR" then
 		return sbq.ballsToShaft({id = id})
 	end
+end
+
+local _setColorReplaceDirectives = sbq.setColorReplaceDirectives
+function sbq.setColorReplaceDirectives()
+	_setColorReplaceDirectives()
+
+	local projectileConfig = root.projectileConfig(sbq.stateconfig.stand.actions.specialAttack.projectile.name)
+	local childProjectileConfig = root.projectileConfig(sbq.stateconfig.stand.actions.specialAttack.projectile.params.childProjectile)
+
+	local projectileParameters = {
+		periodicActions = projectileConfig.periodicActions,
+		actionOnReap = projectileConfig.actionOnReap
+	}
+	local childProjectileParameters = {
+		periodicActions = childProjectileConfig.periodicActions,
+		actionOnReap = childProjectileConfig.actionOnReap
+	}
+
+	local i = 4
+	local colorGroup = sbq.sbqData.replaceColors[i]
+	local basePalette = {"ff9418","ffac18","ffd539"}
+	local replacePalette = colorGroup[
+		((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
+	local colorReplaceString = ""
+
+	if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
+		replacePalette = sbq.settings.replaceColorTable[i]
+		if type(replacePalette) == "string" then
+			return
+		end
+	end
+
+	for j, color in ipairs(replacePalette) do
+		colorReplaceString = colorReplaceString .. "?replace;" .. (basePalette[j] or ""):sub(1, 6) .. "=" .. (color or "")
+		if color and j == 3 then
+
+			local R = tonumber(color:sub(1,2), 16)
+			local G = tonumber(color:sub(3,4), 16)
+			local B = tonumber(color:sub(5, 6), 16)
+			local RGB = { R, G, B }
+			for i, data in ipairs(projectileParameters.periodicActions or {}) do
+				if data.color then
+					projectileParameters.periodicActions[i].color = RGB
+				end
+				if data.specification then
+					projectileParameters.periodicActions[i].specification.color = RGB
+					projectileParameters.periodicActions[i].specification.processing = colorReplaceString
+				end
+			end
+			for i, data in ipairs(childProjectileParameters.periodicActions or {}) do
+				if data.color then
+					childProjectileParameters.periodicActions[i].color = RGB
+				end
+				if data.specification then
+					childProjectileParameters.periodicActions[i].specification.color = RGB
+					childProjectileParameters.periodicActions[i].specification.processing = colorReplaceString
+				end
+			end
+			for i, data in ipairs(projectileParameters.actionOnReap or {}) do
+				for j, data in ipairs(data.body or {}) do
+					if data.specification and data.specification.color then
+						projectileParameters.actionOnReap[i].body[j].specification.color = RGB
+					end
+				end
+			end
+			for i, data in ipairs(childProjectileParameters.actionOnReap or {}) do
+				for j, data in ipairs(data.body or {}) do
+					if data.specification and data.specification.color then
+						childProjectileParameters.actionOnReap[i].body[j].specification.color = RGB
+					end
+				end
+			end
+		end
+	end
+	projectileParameters.processing = colorReplaceString
+	childProjectileParameters.processing = colorReplaceString
+	projectileParameters.childParams = childProjectileParameters
+
+	sbq.stateconfig.stand.actions.specialAttack.projectile.params = sb.jsonMerge(sbq.stateconfig.stand.actions.specialAttack.projectile.params, projectileParameters)
 end
 
 -------------------------------------------------------------------------------
@@ -104,6 +184,29 @@ function eyeTracking()
 	end
 	animator.setGlobalTag("eyesX", X)
 	animator.setGlobalTag("eyesY", Y)
+end
+
+function detectEmote()
+	if sbq.driver and world.entityExists(sbq.driver) then
+		local portrait = world.entityPortrait(sbq.driver, "full")
+		for _, part in ipairs(portrait) do
+			local imageString = part.image
+			-- check for doing an emote animation
+			local found1, found2 = imageString:find("/emote.png:")
+			if found1 ~= nil then
+				local found3, found4 = imageString:find(".1", found2, found2 + 10)
+				if found3 ~= nil then
+					local emote = imageString:sub(found2 + 1, found3 - 1)
+					if type((sbq.stateconfig[sbq.state].emoteAnimations or {})[emote]) == "table" then
+						sbq.doAnims((sbq.stateconfig[sbq.state].emoteAnimations or {})[emote])
+					else
+						sbq.doAnim("emoteState", emote)
+					end
+					break
+				end
+			end
+		end
+	end
 end
 
 function checkPartsEnabled()

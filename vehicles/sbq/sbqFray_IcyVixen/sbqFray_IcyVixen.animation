@@ -154,6 +154,36 @@
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
 			},
+			"emoteState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"blabber": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"shout": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					//"happy": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					//"sad": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					//"neutral": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					//"laugh": { "frames": 2, "cycle": 0.5, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					//"annoyed": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					//"oh": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					//"oooh": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					"blink": { "frames": 8, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					"wink": { "frames": 8, "cycle": 0.5, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					//"eat": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+					//"sleep": { "frames": 2, "cycle": 1, "mode": "end", "priority": 1, "baseAnim" : "idle" },
+
+					"attack": { "frames": 1, "cycle": 1, "mode": "end", "priority": 2, "baseAnim" : "idle" },
+
+					"none2": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 20, "baseAnim" : "none" },
+					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
+				}
+			},
 			"earsState": {
 				"default": "idle",
 				"states": {
@@ -463,10 +493,24 @@
 					"image": "skins/default/<facingDirection>/eyes.png:<eyesX>.<eyesY><directives>"
 				}
 			},
-			"hair": {
+			"emote": {
 				"properties": {
 					"centered": true,
 					"zLevel": 2.2,
+					"transformationGroups": ["globalScale", "headbob"]
+				},
+				"partStates": {
+					"emoteState": {
+						"idle": { "properties": { "image": "skins/<headSkin>/emote.png:<emoteStateAnim>.<emoteStateFrame><directives>" } },
+
+						"none": { "properties": {} }
+					}
+				}
+			},
+			"hair": {
+				"properties": {
+					"centered": true,
+					"zLevel": 2.3,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {
@@ -480,7 +524,7 @@
 			"ear_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2.3,
+					"zLevel": 2.4,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {

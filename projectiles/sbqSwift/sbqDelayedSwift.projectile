@@ -2,7 +2,6 @@
   "projectileName" : "sbqDelayedSwift",
   "image" : "/projectiles/sbqSwift/sbqSwift.png",
   "animationCycle" : 0.5,
-  "lightColor" : [255, 213, 57],
   "frameNumber" : 4,
   "fullbright" : true,
   "damageKindImage" : "icon.png",
@@ -14,6 +13,11 @@
       "repeat" : false,
       "action" : "sound",
       "options" : [ "/sfx/gen3_pokemon/Swift.ogg" ]
+    },
+    {
+      "time" : 0,
+      "action" : "light",
+      "color" : [255, 213, 57]
     },
     {
       "time" : 0.1,
@@ -61,8 +65,8 @@
               "initialVelocity" : [2.0, 1.0],
               "position" : [0.25, 1]
             }
-        }
           }
+        }
       ]
     }
   ],
