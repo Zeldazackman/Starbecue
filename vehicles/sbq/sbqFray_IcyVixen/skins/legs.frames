@@ -3,7 +3,7 @@
 		"size" : [128, 64],
 		"dimensions" : [8, 16],
 		"names" : [
-			[ "idle.1"],
+			[ "idle.1", "analvore.2", "analvore.3"],
 			[ "1.walk.1", "1.walk.2", "1.walk.3", "1.walk.4", "1.walk.5", "1.walk.6", "1.walk.7", "1.walk.8"],
 			[ "1.run.1", "1.run.2", "1.run.3", "1.run.4", "1.run.5", "1.run.6", "1.run.7", "1.run.8"],
 			[ "jump.1", "jump.2", "jump.3", "jump.4", "fall.1", "fall.2", "fall.3", "fall.4"],
@@ -12,11 +12,21 @@
 		]
 	},
 	"aliases" : {
-		"spread.4" : "spread.3",
-		"spread.5" : "spread.3",
-		"spread.6" : "spread.3",
-		"spread.7" : "spread.2",
-		"spread.8" : "spread.1",
+		"analvore.1" : "idle.1",
+		"analvore.4" : "analvore.3",
+		"analvore.5" : "analvore.3",
+		"analvore.6" : "analvore.3",
+		"analvore.7" : "analvore.2",
+		"analvore.8" : "idle.1",
+
+		"anal.1" : "analvore.8",
+		"anal.2" : "analvore.7",
+		"anal.3" : "analvore.6",
+		"anal.4" : "analvore.6",
+		"anal.5" : "analvore.6",
+		"anal.6" : "analvore.6",
+		"anal.7" : "analvore.7",
+		"anal.8" : "analvore.8",
 
 		"-1.run.1" : "1.run.8",
 		"-1.run.2" : "1.run.7",

@@ -122,6 +122,7 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"butt" : { "name" : "Butt", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
@@ -187,7 +188,7 @@
 				// directional = driver can press that direction to transition
 
 				// non directional = not accessible via controls, except from script
-				"oralVore": { // 2 occupants
+				"oralVore": {
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
@@ -202,7 +203,7 @@
 					"victimAnimation": "oralVore",
 					"script": "oralVore"
 				},
-				"oralEscape": { // 2 occupants
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
@@ -245,29 +246,48 @@
 					"victimAnimation": "cockEscape",
 					"script": "cockEscape"
 				},
-				"ballsToShaft": { // 1 occupant
+				"ballsToShaft": {
 					"script": "ballsToShaft"
 				},
-				"shaftToBalls": { // 1 occupant
+				"shaftToBalls": {
 					"script": "shaftToBalls"
 				},
-				"switchBalls": { // 1 occupant
+				"switchBalls": {
 					"script": "switchBalls"
 				},
 
-				"analVore": { // 2 occupants
+				"analVore": {
 					"voreType" : "analVore",
 					"lock": true,
-					"location": "belly",
+					"location": "butt",
 					"failOnFull" : true,
 					"timing": "tail",
 					"animation": {
 						"offset" : {}
 					},
 					"victimAnimation": "analVore",
-					"script": "analVore"
+					"script": "analVore",
+					"pullInside" : {
+						"voreType" : "analVore",
+						"lock": true,
+						"movementLock" : true,
+						"location": "belly",
+						"failOnFull" : true,
+						"timing": "tail",
+						"animation": {
+							"offset" : {
+								"timing": "legs",
+								"parts" : [
+									{ "x":[0,1,2,2,2,2,1,0], "y":[0,-5, -18,-18,-18,-18,-5,0], "groups": ["headbob"] },
+									{ "y":[0,1,1,1,1,1,1,0], "groups": ["tailbob"] }
+								]
+							}
+						},
+						"victimAnimation": "analVore",
+						"script": "analVore"
+					}
 				},
-				"analEscape": { // 2 occupants
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock": true,
 					"location": "belly",
@@ -480,7 +500,7 @@
 						"offset" : {
 							"parts" : [
 								{"y": [0, 1, 2, 3], "groups": ["headbob"] },
-								{"y": [-1, 0, 0, 0], "groups": ["bellybob", "tailbob"] }
+								{"y": [-1, 0, 0, 0], "groups": ["tailbob"] }
 							]
 						}
 					},
@@ -492,7 +512,7 @@
 						"offset" : {
 							"parts" : [
 								{"y": [3, 2, 1, 0], "groups": ["headbob"] },
-								{"y": [0, 2, 2, 3], "groups": ["bellybob", "tailbob"] }
+								{"y": [0, 2, 2, 3], "groups": ["tailbob"] }
 							]
 						}
 					}

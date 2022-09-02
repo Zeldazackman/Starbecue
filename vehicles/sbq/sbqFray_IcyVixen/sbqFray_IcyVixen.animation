@@ -25,6 +25,10 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 
@@ -46,6 +50,10 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
+
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
 					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
@@ -120,7 +128,9 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
-					"spread": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
@@ -185,7 +195,7 @@
 
 					"attack": { "frames": 1, "cycle": 1, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
-					"none2": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 20, "baseAnim" : "none" },
+					"none2": { "frames": 1, "cycle": 0.1, "mode" : "transition", "transition" : "idle", "priority": 20, "baseAnim" : "none" },
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -287,7 +297,7 @@
 			"belly": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.2,
+					"zLevel": 1.3,
 					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
 				},
 				"partStates": {
@@ -302,7 +312,7 @@
 			"cock": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.3,
+					"zLevel": 1.2,
 					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
 				},
 				"partStates": {
