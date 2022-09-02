@@ -194,6 +194,7 @@
 					"failOnFull" : true,
 					"timing": "head",
 					"animation": {
+						"emote" : "idle2",
 						"neck": "eat",
 						"head": "eat",
 						"offset" : {}
@@ -207,6 +208,7 @@
 					"location": "belly",
 					"timing": "head",
 					"animation": {
+						"emote" : "idle2",
 						"neck": "escape",
 						"head": "escape",
 						"offset" : {}
@@ -260,7 +262,6 @@
 					"failOnFull" : true,
 					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
 						"offset" : {}
 					},
 					"victimAnimation": "analVore",
@@ -272,41 +273,10 @@
 					"location": "belly",
 					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
 						"offset" : {}
 					},
 					"victimAnimation": "analEscape",
 					"script": "analEscape"
-				},
-
-				"unbirth": { // 2 occupants
-					"voreType" : "unbirth",
-					"lock": true,
-					"movementLock": true,
-					"location": "womb",
-					"failOnFull" : true,
-					"timing": "legs",
-					"animation": {
-						"tail" : "raise",
-						"legs" : "spread",
-						"offset" : {}
-					},
-					"victimAnimation": "unbirth",
-					"script": "unbirth"
-				},
-				"unbirthEscape": { // 2 occupants
-					"voreType" : "unbirth",
-					"lock": true,
-					"movementLock": true,
-					"location": "womb",
-					"timing": "legs",
-					"animation": {
-						"tail" : "raise",
-						"legs" : "spread",
-						"offset" : {}
-					},
-					"victimAnimation": "unbirthEscape",
-					"script": "unbirthEscape"
 				}
 			},
 			"idle": {
@@ -395,10 +365,10 @@
 
 			},
 			"locationCenters" : {
-				"belly" : [-0.5, -1.75],
-				"shaft" : [-2, -1.75],
-				"ballsL" : [-3, -2],
-				"ballsR" : [-3, -2]
+				"belly" : [0, -1.75],
+				"shaft" : [-1, -1.75],
+				"ballsL" : [-1.5, -2],
+				"ballsR" : [-1.5, -2]
 			},
 			"interact": {
 				"oralVore": {
@@ -417,7 +387,7 @@
 					"location":"belly", "failOnFull":true
 				}
 			},
-			"defaultActions": ["vore", "oralVore"],
+			"defaultActions": ["vore", "specialAttack"],
 			"actions": {
 				"specialAttack": {
 					"cooldown": 0.25,
@@ -505,6 +475,7 @@
 					"jump": {
 						"legs": "jump",
 						"body": "jump",
+						"belly": "jump",
 						"neck": "none",
 						"offset" : {
 							"parts" : [
@@ -516,6 +487,7 @@
 					"fall": {
 						"legs": "fall",
 						"body": "fall",
+						"belly": "fall",
 						"neck": "none",
 						"offset" : {
 							"parts" : [

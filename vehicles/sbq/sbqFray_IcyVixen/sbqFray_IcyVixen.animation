@@ -50,6 +50,9 @@
 					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 5, "baseAnim": "idle" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 5, "baseAnim": "idle" },
+
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
 					"s_up": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
@@ -158,6 +161,8 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
+
+					"idle2": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 1, "baseAnim" : "idle", "animFrames" : "idle" },
 
 					"blabber": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 					"shout": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },

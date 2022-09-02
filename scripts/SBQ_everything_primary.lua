@@ -90,6 +90,10 @@ function sbq.everything_primary()
 		status.addEphemeralEffect(effectConfig, 1, sourceEntityId)
 	end)
 
+	message.setHandler("sbqConsumeResource", function(_, _, resourceName, amount)
+		return status.consumeResource(resourceName, amount)
+	end)
+
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
 end
 

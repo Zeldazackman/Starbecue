@@ -1,5 +1,5 @@
 function sbq.checkRPCsFinished(dt)
-	for i, list in pairs(sbq.rpcList) do
+	for i, list in ipairs(sbq.rpcList) do
 		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
 		if list.rpc:finished() then
 			if list.rpc:succeeded() and list.callback ~= nil then
@@ -10,6 +10,17 @@ function sbq.checkRPCsFinished(dt)
 			table.remove(sbq.rpcList, i)
 		end
 	end
+	for name, list in pairs(sbq.namedRPCList) do
+		list.dt = list.dt + dt -- I think this is good to have, incase the time passed since the RPC was put into play is important
+		if list.rpc:finished() then
+			if list.rpc:succeeded() and list.callback ~= nil then
+				list.callback(list.rpc:result(), list.dt)
+			elseif list.failCallback ~= nil then
+				list.failCallback(list.dt)
+			end
+			sbq.namedRPCList[name] = nil
+		end
+	end
 end
 
 sbq.rpcList = {}
@@ -18,6 +29,14 @@ function sbq.addRPC(rpc, callback, failCallback)
 		table.insert(sbq.rpcList, {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0})
 	end
 end
+
+sbq.namedRPCList = {}
+function sbq.addNamedRPC(name, rpc, callback, failCallback)
+	if (callback ~= nil or failCallback ~= nil) and name and not sbq.namedRPCList[name] then
+		sbq.namedRPCList[name] = {rpc = rpc, callback = callback, failCallback = failCallback, dt = 0}
+	end
+end
+
 
 sbq.loopedMessages = {}
 function sbq.loopedMessage(name, eid, message, args, callback, failCallback)
