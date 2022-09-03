@@ -247,10 +247,14 @@
 					"script": "cockEscape"
 				},
 				"ballsToShaft": {
-					"script": "ballsToShaft"
+					"settings" : { "penis" : true},
+					"location" : "shaft",
+					"script": "moveToLocation"
 				},
 				"shaftToBalls": {
-					"script": "shaftToBalls"
+					"settings" : { "balls" : true},
+					"location" : "balls",
+					"script": "moveToLocation"
 				},
 				"switchBalls": {
 					"script": "switchBalls"
@@ -263,40 +267,75 @@
 					"failOnFull" : true,
 					"timing": "tail",
 					"animation": {
+						"tail" : "anal",
 						"offset" : {}
 					},
 					"victimAnimation": "analVore",
-					"script": "analVore",
-					"pullInside" : {
-						"voreType" : "analVore",
-						"lock": true,
-						"movementLock" : true,
-						"location": "belly",
-						"failOnFull" : true,
-						"timing": "tail",
-						"animation": {
-							"offset" : {
-								"timing": "legs",
-								"parts" : [
-									{ "x":[0,1,2,2,2,2,1,0], "y":[0,-5, -18,-18,-18,-18,-5,0], "groups": ["headbob"] },
-									{ "y":[0,1,1,1,1,1,1,0], "groups": ["tailbob"] }
-								]
-							}
-						},
-						"victimAnimation": "analVore",
-						"script": "analVore"
-					}
+					"script": "analVore"
 				},
 				"analEscape": {
+					"voreType" : "analVore",
+					"lock": true,
+					"location": "butt",
+					"timing": "tail",
+					"animation": {
+						"tail" : "anal",
+						"offset" : {}
+					},
+					"victimAnimation": "analEscape",
+					"script": "analEscape"
+				},
+				"analPushOut": {
+					"voreType" : "analVore",
+					"lock": true,
+					"location": "butt",
+					"timing": "tail",
+					"animation": {
+						"tail" : "anal",
+						"offset" : {}
+					},
+					"victimAnimation": "analPushOut",
+					"script": "moveToLocation"
+				},
+				"analPushIn": {
 					"voreType" : "analVore",
 					"lock": true,
 					"location": "belly",
 					"timing": "tail",
 					"animation": {
+						"tail" : "anal",
 						"offset" : {}
 					},
-					"victimAnimation": "analEscape",
-					"script": "analEscape"
+					"victimAnimation": "analPushIn",
+					"script": "moveToLocation"
+				},
+				"analPullInside" : {
+					"voreType" : "analVore",
+					"lock": true,
+					"movementLock" : true,
+					"location": "belly",
+					"failOnFull" : true,
+					"timing": "body",
+					"animation": {
+						"belly" : "anal",
+						"legs" : "anal",
+						"body" : "anal",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{ "x":[0,1,2,2,2,2,1,0], "y":[0,-5, -18,-18,-18,-18,-5,0], "groups": ["headbob"] },
+								{ "y":[0,1,1,1,1,1,1,0], "groups": ["tailbob", "crotchbob"] }
+							]
+						}
+					},
+					"shrinkAnims" : {
+						"belly" : { "belly": "analescape" }
+					},
+					"expandAnims" : {
+						"belly" : { "belly": "analvore" }
+					},
+					"victimAnimation": "analPullInside",
+					"script": "moveToLocation"
 				}
 			},
 			"idle": {
@@ -330,8 +369,20 @@
 				"belly" : {
 					"parts" : ["belly"],
 					"directions": {
-						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "analPushOut", "indicate": "cyan", "drivingEnabled": true },
 						"front": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
+						"up": { },
+						"down": { }
+					},
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"butt" : {
+					"parts" : [],
+					"directions": {
+						"front": { "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
 						"up": { },
 						"down": { }
 					},
@@ -434,7 +485,7 @@
 				"oralVore":{
 					"cooldown": 1,
 					"script": "checkOralVore",
-					"position": [ 8, 0 ]
+					"position": [ 3, 0 ]
 				},
 				"cockVore":{
 					"cooldown": 1,
@@ -500,7 +551,7 @@
 						"offset" : {
 							"parts" : [
 								{"y": [0, 1, 2, 3], "groups": ["headbob"] },
-								{"y": [-1, 0, 0, 0], "groups": ["tailbob"] }
+								{"y": [-1, 0, 0, 0], "groups": ["tailbob", "crotchbob"] }
 							]
 						}
 					},
@@ -512,7 +563,7 @@
 						"offset" : {
 							"parts" : [
 								{"y": [3, 2, 1, 0], "groups": ["headbob"] },
-								{"y": [0, 2, 2, 3], "groups": ["tailbob"] }
+								{"y": [0, 2, 2, 3], "groups": ["tailbob", "crotchbob"] }
 							]
 						}
 					}

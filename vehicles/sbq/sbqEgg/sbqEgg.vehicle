@@ -85,12 +85,12 @@
 		},
 		"driverStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 },
-			"sbqEggMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqEgg/mask.png" }
+			"sbqVictimMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqEgg/mask.png" }
 		},
 		"occupantStatusEffects": {
 			"sbqPreyInvulnerable" : { "power" : 1 },
 			"dontstarve" : { "power" : 1 },
-			"sbqEggMask" : { "power" : 1 }
+			"sbqVictimMask" : { "power" : 1 }
 		},
 
 		"lights" : {

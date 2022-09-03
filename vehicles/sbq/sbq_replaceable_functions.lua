@@ -137,18 +137,18 @@ end
 
 -- used for moving around between locations
 
-function sbq.shaftToBalls(args)
-	if math.random() > 0.5 then
-		if sbq.moveOccupantLocation(args, "ballsL") then return true end
-		if sbq.moveOccupantLocation(args, "ballsR") then return true end
+function sbq.moveToLocation(args, tconfig)
+	if sbq.sbqData.locations[tconfig.location].sided then
+		if math.random() > 0.5 then
+			if sbq.moveOccupantLocation(args, tconfig.location.."L") then return true end
+			if sbq.moveOccupantLocation(args, tconfig.location.."R") then return true end
+		else
+			if sbq.moveOccupantLocation(args, tconfig.location.."R") then return true end
+			if sbq.moveOccupantLocation(args, tconfig.location.."L") then return true end
+		end
 	else
-		if sbq.moveOccupantLocation(args, "ballsR") then return true end
-		if sbq.moveOccupantLocation(args, "ballsL") then return true end
+		sbq.moveOccupantLocation(args, tconfig.location)
 	end
-end
-
-function sbq.ballsToShaft(args)
-	sbq.moveOccupantLocation(args, "shaft")
 end
 
 function sbq.switchBalls(args)

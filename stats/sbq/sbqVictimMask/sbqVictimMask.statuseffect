@@ -1,10 +1,10 @@
 {
-	"name" : "sbqEggMask",
+	"name" : "sbqVictimMask",
 	"effectConfig" : {},
-	"defaultDuration" : 0.1,
+	"defaultDuration" : 1,
 
 	"scripts" : [
-		"sbqEggMask.lua",
+		"sbqVictimMask.lua",
 		"/stats/speciesAnimOverride/storeDirectives.lua"
 	]
 

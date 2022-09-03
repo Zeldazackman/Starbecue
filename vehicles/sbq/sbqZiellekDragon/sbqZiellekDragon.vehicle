@@ -385,11 +385,15 @@
 					"victimAnimation": "cockEscape",
 					"script": "cockEscape"
 				},
-				"ballsToShaft": { // 1 occupant
-					"script": "ballsToShaft"
+				"ballsToShaft": {
+					"settings" : { "penis" : true},
+					"location" : "shaft",
+					"script": "moveToLocation"
 				},
-				"shaftToBalls": { // 1 occupant
-					"script": "shaftToBalls"
+				"shaftToBalls": {
+					"settings" : { "balls" : true},
+					"location" : "balls",
+					"script": "moveToLocation"
 				},
 				"switchBalls": { // 1 occupant
 					"script": "switchBalls"

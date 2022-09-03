@@ -43,7 +43,6 @@ function sbq.eat( occupantId, location, size, voreType, force )
 			end)
 			sbq.forceSeat( occupantId, seatindex)
 			sbq.refreshList = true
-			sbq.updateOccupants(0)
 			return true -- not lounging
 		else
 			return false -- lounging in something inedible
@@ -59,7 +58,6 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 	sbq.forceSeat( occupantId, seatindex )
 	sbq.refreshList = true
-	sbq.updateOccupants(0)
 	return true
 end
 
@@ -93,7 +91,6 @@ function sbq.uneat( occupantId )
 	sbq.lounging[occupantId] = nil
 	sbq.occupant[seatindex] = sbq.clearOccupant(seatindex)
 	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
-	sbq.updateOccupants(0)
 	return true
 end
 
@@ -289,15 +286,16 @@ function sbq.applyStatusLists()
 	sbq.weirdFixFrame = nil
 end
 
-function sbq.addStatusToList(index, status, power, source)
-	sbq.occupant[index].statList[status] = {
-		power = power or 1,
-		source = source or entity.id()
-	}
+function sbq.addStatusToList(eid, status, data)
+	sbq.lounging[eid].statList[status] = sb.jsonMerge({
+		power = 1,
+		source = sbq.driver or entity.id(),
+	}, data)
 end
 
-function sbq.removeStatusFromList(index, status)
-	sbq.occupant[index].statList[status] = nil
+function sbq.removeStatusFromList(eid, status)
+	sbq.lounging[eid].statList[status] = nil
+	world.sendEntityMessage(eid, "sbqRemoveStatusEffect", status)
 end
 
 function sbq.resetOccupantCount()

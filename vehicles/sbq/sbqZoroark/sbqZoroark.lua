@@ -153,7 +153,11 @@ function checkOralVore()
 end
 
 function checkCockVore()
-	return sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore")
+	local shaftOccupant = sbq.findFirstOccupantIdForLocation("shaft")
+	if shaftOccupant then
+		return sbq.moveToLocation({id = shaftOccupant}, {location = "balls"})
+	end
+	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.cockVore.position ), 5, "shaft", "cockVore")
 end
 
 -------------------------------------------------------------------------------
@@ -170,8 +174,7 @@ state.stand.cockEscape = cockEscape
 state.stand.checkCockVore = checkCockVore
 state.stand.checkOralVore = checkOralVore
 
-state.stand.shaftToBalls = sbq.shaftToBalls
-state.stand.ballsToShaft = sbq.ballsToShaft
+state.stand.moveToLocation = sbq.moveToLocation
 state.stand.switchBalls = sbq.switchBalls
 
 state.stand.grab = grab
