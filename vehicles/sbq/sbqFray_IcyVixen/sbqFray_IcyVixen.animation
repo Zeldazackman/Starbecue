@@ -25,6 +25,10 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
 					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 2, "baseAnim": "idle" },
 
@@ -47,8 +51,15 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
 					"expand": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 					"shrink": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+
+					"jump": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 5, "baseAnim": "idle" },
+					"fall": { "frames": 4, "cycle": 0.25, "mode": "end", "priority": 5, "baseAnim": "idle" },
 
 					"s_back": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
 					"s_front": { "frames": 5, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
@@ -117,7 +128,9 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "loop", "priority": 0 },
 
-					"spread": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"anal": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
+					"analvore": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"analescape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
 					"walk": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0 },
 					"run": { "frames": 8, "cycle": 0.75, "mode": "loop", "priority": 0, "baseAnim": "walk" },
@@ -135,6 +148,8 @@
 				"default": "idle",
 				"states": {
 					"idle": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 0 },
+
+					"anal": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 0, "baseAnim": "idle" },
 
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
@@ -159,6 +174,8 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
+					"idle2": { "frames": 1, "cycle": 1.5, "mode": "end", "priority": 1, "baseAnim" : "idle", "animFrames" : "idle" },
+
 					"blabber": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 					"shout": { "frames": 2, "cycle": 0.3, "mode": "end", "priority": 1, "baseAnim" : "idle" },
 
@@ -180,7 +197,7 @@
 
 					"attack": { "frames": 1, "cycle": 1, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
-					"none2": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 20, "baseAnim" : "none" },
+					"none2": { "frames": 1, "cycle": 0.1, "mode" : "transition", "transition" : "idle", "priority": 20, "baseAnim" : "none" },
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
 			},
@@ -254,7 +271,7 @@
 			"body": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1,
+					"zLevel": 2,
 					"transformationGroups": ["globalScale", "bodybob"]
 				},
 				"partStates": {
@@ -268,7 +285,7 @@
 			"neck": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.1,
+					"zLevel": 2.1,
 					"transformationGroups": ["globalScale", "bodybob"]
 				},
 				"partStates": {
@@ -282,7 +299,7 @@
 			"belly": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.2,
+					"zLevel": 2.3,
 					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
 				},
 				"partStates": {
@@ -297,8 +314,8 @@
 			"cock": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.3,
-					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
+					"zLevel": 2.2,
+					"transformationGroups": ["globalScale", "bodybob", "crotchbob"]
 				},
 				"partStates": {
 					"cockState": {
@@ -311,8 +328,8 @@
 			"ballsFront": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.12,
-					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
+					"zLevel": 2.12,
+					"transformationGroups": ["globalScale", "bodybob", "crotchbob"]
 				},
 				"partStates": {
 					"ballsFrontState": {
@@ -325,8 +342,8 @@
 			"ballsBack": {
 				"properties": {
 					"centered": true,
-					"zLevel": 1.11,
-					"transformationGroups": ["globalScale", "bodybob", "bellybob"]
+					"zLevel": 2.11,
+					"transformationGroups": ["globalScale", "bodybob", "crotchbob"]
 				},
 				"partStates": {
 					"ballsBackState": {
@@ -340,7 +357,7 @@
 			"frontlegs": {
 				"properties": {
 					"centered": true,
-					"zLevel": 3,
+					"zLevel": 4,
 					"transformationGroups": ["globalScale", "legsbob"]
 				},
 				"partStates": {
@@ -371,10 +388,10 @@
 				}
 			},
 
-			"tail_1": {
+			"tail_1_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1,
+					"zLevel": 1.4,
 					"transformationGroups": ["globalScale", "tailbob", "tailbob_1"]
 				},
 				"partStates": {
@@ -385,10 +402,10 @@
 					}
 				}
 			},
-			"tail_2": {
+			"tail_2_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.1,
+					"zLevel": 1.3,
 					"transformationGroups": ["globalScale", "tailbob", "tailbob_2"]
 				},
 				"partStates": {
@@ -399,10 +416,10 @@
 					}
 				}
 			},
-			"tail_3": {
+			"tail_3_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.2,
+					"zLevel": 1.2,
 					"transformationGroups": ["globalScale", "tailbob", "tailbob_3"]
 				},
 				"partStates": {
@@ -413,10 +430,10 @@
 					}
 				}
 			},
-			"tail_4": {
+			"tail_4_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.3,
+					"zLevel": 1.1,
 					"transformationGroups": ["globalScale", "tailbob", "tailbob_4"]
 				},
 				"partStates": {
@@ -427,10 +444,10 @@
 					}
 				}
 			},
-			"tail_5": {
+			"tail_5_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": -1.4,
+					"zLevel": 1,
 					"transformationGroups": ["globalScale", "tailbob", "tailbob_5"]
 				},
 				"partStates": {
@@ -474,7 +491,7 @@
 			"head_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2,
+					"zLevel": 3,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {
@@ -488,7 +505,7 @@
 			"eyes": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2.1,
+					"zLevel": 3.1,
 					"transformationGroups": ["globalScale", "headbob"],
 					"image": "skins/default/<facingDirection>/eyes.png:<eyesX>.<eyesY><directives>"
 				}
@@ -496,7 +513,7 @@
 			"emote": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2.2,
+					"zLevel": 3.2,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {
@@ -510,7 +527,7 @@
 			"hair": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2.3,
+					"zLevel": 3.3,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {
@@ -524,7 +541,7 @@
 			"ear_fg": {
 				"properties": {
 					"centered": true,
-					"zLevel": 2.4,
+					"zLevel": 3.4,
 					"transformationGroups": ["globalScale", "headbob"]
 				},
 				"partStates": {
@@ -1125,6 +1142,9 @@
 			"interpolated": true
 		},
 		"armsbob": {
+			"interpolated": false
+		},
+		"crotchbob": {
 			"interpolated": false
 		},
 		"headbob": {

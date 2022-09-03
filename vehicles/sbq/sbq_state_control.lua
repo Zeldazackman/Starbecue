@@ -122,12 +122,6 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 	if sbq.transitionLock then return "locked" end
 	local continue = true
 	local after
-	if tconfig.shrinkAnims ~= nil then
-		sbq.shrinkQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.shrinkAnims)
-	end
-	if tconfig.expandAnims ~= nil then
-		sbq.expandQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.expandAnims)
-	end
 
 	if tconfig.script then
 		local statescript = state[sbq.state][tconfig.script]
@@ -140,6 +134,14 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 			sb.logError("no script named: ["..tconfig.script.."] in state: ["..sbq.state.."]")
 		end
 	end
+
+	if tconfig.shrinkAnims ~= nil then
+		sbq.shrinkQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.shrinkAnims)
+	end
+	if tconfig.expandAnims ~= nil then
+		sbq.expandQueue = sb.jsonMerge(sbq.shrinkQueue, tconfig.expandAnims)
+	end
+
 	if not continue then return "script fail" end
 
 	if tconfig.timing == nil then
@@ -148,7 +150,7 @@ function sbq.doingTransition(tconfig, direction, scriptargs)
 	if tconfig.animation ~= nil then
 		sbq.doAnims( tconfig.animation )
 	end
-
+	sbq.updateOccupants(0)
 
 	local timing
 	local timingType = type(tconfig.timing)

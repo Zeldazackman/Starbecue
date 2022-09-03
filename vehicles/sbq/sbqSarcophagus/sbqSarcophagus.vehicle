@@ -89,7 +89,7 @@
 		},
 		"occupantStatusEffects": {
 			"breathprotectionvehicle" : { "power" : 1 },
-			"sbqEggMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqSarcophagus/skins/default/Sarcophagus_back.png" }
+			"sbqVictimMask" : { "power" : 1, "property" : "/vehicles/sbq/sbqSarcophagus/skins/default/Sarcophagus_back.png" }
 		},
 
 		"lights" : {

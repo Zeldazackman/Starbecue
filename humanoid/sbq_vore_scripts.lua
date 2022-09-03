@@ -30,14 +30,13 @@ end
 
 function state.stand.cockVore(args, tconfig)
 	if not args.id then
-		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+		sbq.moveToLocation({id = sbq.findFirstOccupantIdForLocation("shaft")}, {location = "balls"})
 		return false
 	end
 	return sbq.doVore(args, "shaft", {}, "swallow", tconfig.voreType)
 end
 
-state.stand.ballsToShaft = sbq.ballsToShaft
-state.stand.shaftToBalls = sbq.shaftToBalls
+state.stand.moveToLocation = sbq.moveToLocation
 state.stand.switchBalls = sbq.switchBalls
 
 function state.stand.cockEscape(args, tconfig)
@@ -95,7 +94,7 @@ function sbq.letout(id)
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
 	elseif location == "ballsL" or location == "ballsR" then
-		return sbq.ballsToShaft({id = id})
+		return sbq.moveToLocation({id = id}, {location = "shaft"})
 	elseif location == "breastsL" or location == "breastsR" then
 		return sbq.doTransition("breastEscape", {id = id})
 	elseif location == "womb" then

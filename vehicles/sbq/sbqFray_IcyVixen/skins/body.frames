@@ -3,11 +3,26 @@
 		"size" : [128, 64],
 		"dimensions" : [8, 8],
 		"names" : [
-			[ "idle.1" ],
+			[ "idle.1", "analvore.2", "analvore.3"],
 			[ "jump.1", "jump.2", "jump.3", "jump.4", "fall.1", "fall.2", "fall.3" ,"fall.4"]
 		]
 	},
 	"aliases" : {
+		"analvore.1" : "idle.1",
+		"analvore.4" : "analvore.3",
+		"analvore.5" : "analvore.3",
+		"analvore.6" : "analvore.3",
+		"analvore.7" : "analvore.2",
+		"analvore.8" : "idle.1",
+
+		"anal.1" : "analvore.8",
+		"anal.2" : "analvore.7",
+		"anal.3" : "analvore.6",
+		"anal.4" : "analvore.6",
+		"anal.5" : "analvore.6",
+		"anal.6" : "analvore.6",
+		"anal.7" : "analvore.7",
+		"anal.8" : "analvore.8"
 
 	}
 }

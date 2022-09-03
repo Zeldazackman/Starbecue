@@ -312,21 +312,33 @@ function sbq.victimAnimUpdate(eid)
 	end
 
 	sbq.lounging[eid].visible = (sbq.getPrevVictimAnimValue(victimAnim, "visible") == 1)
-	local e = sbq.getPrevVictimAnimValue(victimAnim, "e")
-	if e ~= 0 then
+	local e = sbq.getVictimAnimValue(victimAnim, "e")
+	if e then
 		world.sendEntityMessage(eid, "applyStatusEffect", e, (victimAnim.frame - victimAnim.prevFrame) * (sbq.animStateData[statename].animationState.cycle / sbq.animStateData[statename].animationState.frames) + 0.01, entity.id())
 	end
-	local sitpos = sbq.getPrevVictimAnimValue(victimAnim, "sitpos")
-	if sitpos ~= 0 then
+	local sitpos = sbq.getVictimAnimValue(victimAnim, "sitpos")
+	if sitpos then
 		vehicle.setLoungeOrientation(seatname, sitpos)
 	end
-	local emote = sbq.getPrevVictimAnimValue(victimAnim, "emote")
-	if emote ~= 0 then
-		vehicle.setLoungeOrientation(seatname, sitpos)
+	local emote = sbq.getVictimAnimValue(victimAnim, "emote")
+	if emote then
+		vehicle.setLoungeEmote(seatname, emote)
 	end
-	local dance = sbq.getPrevVictimAnimValue(victimAnim, "dance")
-	if dance ~= 0 then
-		vehicle.setLoungeOrientation(seatname, sitpos)
+	local dance = sbq.getVictimAnimValue(victimAnim, "dance")
+	if dance then
+		vehicle.setLoungeDance(seatname, dance)
+	end
+	local addEffects = sbq.getVictimAnimValue(victimAnim, "addEffects")
+	if type(addEffects) == "table" then
+		for effect, data in pairs(addEffects) do
+			sbq.addStatusToList(eid, effect, data)
+		end
+	end
+	local removeEffects = sbq.getVictimAnimValue(victimAnim, "removeEffects")
+	if type(removeEffects) == "table" then
+		for i, effect in ipairs(removeEffects) do
+			sbq.removeStatusFromList(eid, effect)
+		end
 	end
 
 	local currTime = time * speed
@@ -372,6 +384,14 @@ function sbq.getPrevVictimAnimValue(victimAnim, valName)
 		victimAnim.last[valName] = sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] or 0
 	end
 	return victimAnim.last[valName] or 0
+end
+
+function sbq.getVictimAnimValue(victimAnim, valName)
+	if sbq.victimAnimations[victimAnim.anim] ~= nil and sbq.victimAnimations[victimAnim.anim][valName] ~= nil and
+		sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex] ~= nil
+	then
+		return sbq.victimAnimations[victimAnim.anim][valName][victimAnim.prevIndex]
+	end
 end
 
 function sbq.getNextVictimAnimValue(victimAnim, valName)

@@ -12,7 +12,7 @@ function init()
 	local playersize = { farthest[3] - farthest[1], farthest[4] - farthest[2] }
 	local playerpos = { playersize[1] / 2, playersize[2] / 2 }
 
-	local path = status.statusProperty( "sbqEggMask" )
+	local path = status.statusProperty( "sbqVictimMask" )
 	local imageSize = root.imageSize(path)
 
 	objPosition = {

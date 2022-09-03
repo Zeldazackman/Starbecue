@@ -5,7 +5,7 @@
 	"price" : 1,
 	"maxStack" : 1,
 	"rarity" : "common",
-	"category" : "vehicleController",
+	"category" : "weapon",
 	"twoHanded" : false,
 	"itemTags" : ["vehiclecontroller", "vore"],
 	"inventoryIcon" : "unassigned.png",

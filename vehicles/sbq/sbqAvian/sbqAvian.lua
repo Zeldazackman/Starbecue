@@ -191,7 +191,7 @@ function sbq.letout(id)
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
 	elseif location == "ballsL" or location == "ballsR" then
-		return sbq.ballsToShaft({id = id})
+		return sbq.moveToLocation({id = id}, {location = "shaft"})
 	end
 end
 
@@ -226,10 +226,11 @@ function checkOralVore()
 end
 
 function checkCockVore()
-	if sbq.checkEatPosition(sbq.localToGlobal( {0, -3} ), 4, "shaft", "cockVore") then return true
-	else
-		sbq.shaftToBalls({id = sbq.findFirstOccupantIdForLocation("shaft")})
+	local shaftOccupant = sbq.findFirstOccupantIdForLocation("shaft")
+	if shaftOccupant then
+		return sbq.moveToLocation({id = shaftOccupant}, {location = "balls"})
 	end
+	return sbq.checkEatPosition(sbq.localToGlobal( sbq.stateconfig[sbq.state].actions.cockVore.position ), 5, "shaft", "cockVore")
 end
 
 -------------------------------------------------------------------------------
@@ -246,8 +247,7 @@ state.stand.cockEscape = cockEscape
 state.stand.checkCockVore = checkCockVore
 state.stand.checkOralVore = checkOralVore
 
-state.stand.shaftToBalls = sbq.shaftToBalls
-state.stand.ballsToShaft = sbq.ballsToShaft
+state.stand.moveToLocation = sbq.moveToLocation
 state.stand.switchBalls = sbq.switchBalls
 
 state.stand.grab = grab

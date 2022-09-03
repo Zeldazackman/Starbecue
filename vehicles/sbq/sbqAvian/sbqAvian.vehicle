@@ -305,10 +305,12 @@
 				},
 
 				"ballsToShaft": { // 1 occupant
-					"script": "ballsToShaft"
+					"location" : "shaft",
+					"script": "moveToLocation"
 				},
 				"shaftToBalls": { // 1 occupant
-					"script": "shaftToBalls"
+					"location" : "balls",
+					"script": "moveToLocation"
 				},
 				"switchBalls": { // 1 occupant
 					"script": "switchBalls"

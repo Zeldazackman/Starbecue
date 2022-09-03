@@ -122,6 +122,7 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"butt" : { "name" : "Butt", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
 				"softDigest" : { "effect" : "sbqCumSoftDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.\nBut they will always retain 1HP.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
@@ -187,13 +188,14 @@
 				// directional = driver can press that direction to transition
 
 				// non directional = not accessible via controls, except from script
-				"oralVore": { // 2 occupants
+				"oralVore": {
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
 					"timing": "head",
 					"animation": {
+						"emote" : "idle2",
 						"neck": "eat",
 						"head": "eat",
 						"offset" : {}
@@ -201,12 +203,13 @@
 					"victimAnimation": "oralVore",
 					"script": "oralVore"
 				},
-				"oralEscape": { // 2 occupants
+				"oralEscape": {
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
 					"timing": "head",
 					"animation": {
+						"emote" : "idle2",
 						"neck": "escape",
 						"head": "escape",
 						"offset" : {}
@@ -243,70 +246,96 @@
 					"victimAnimation": "cockEscape",
 					"script": "cockEscape"
 				},
-				"ballsToShaft": { // 1 occupant
-					"script": "ballsToShaft"
+				"ballsToShaft": {
+					"settings" : { "penis" : true},
+					"location" : "shaft",
+					"script": "moveToLocation"
 				},
-				"shaftToBalls": { // 1 occupant
-					"script": "shaftToBalls"
+				"shaftToBalls": {
+					"settings" : { "balls" : true},
+					"location" : "balls",
+					"script": "moveToLocation"
 				},
-				"switchBalls": { // 1 occupant
+				"switchBalls": {
 					"script": "switchBalls"
 				},
 
-				"analVore": { // 2 occupants
+				"analVore": {
 					"voreType" : "analVore",
 					"lock": true,
-					"location": "belly",
+					"location": "butt",
 					"failOnFull" : true,
 					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
+						"tail" : "anal",
 						"offset" : {}
 					},
 					"victimAnimation": "analVore",
 					"script": "analVore"
 				},
-				"analEscape": { // 2 occupants
+				"analEscape": {
 					"voreType" : "analVore",
 					"lock": true,
-					"location": "belly",
+					"location": "butt",
 					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
+						"tail" : "anal",
 						"offset" : {}
 					},
 					"victimAnimation": "analEscape",
 					"script": "analEscape"
 				},
-
-				"unbirth": { // 2 occupants
-					"voreType" : "unbirth",
+				"analPushOut": {
+					"voreType" : "analVore",
 					"lock": true,
-					"movementLock": true,
-					"location": "womb",
-					"failOnFull" : true,
-					"timing": "legs",
+					"location": "butt",
+					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
-						"legs" : "spread",
+						"tail" : "anal",
 						"offset" : {}
 					},
-					"victimAnimation": "unbirth",
-					"script": "unbirth"
+					"victimAnimation": "analPushOut",
+					"script": "moveToLocation"
 				},
-				"unbirthEscape": { // 2 occupants
-					"voreType" : "unbirth",
+				"analPushIn": {
+					"voreType" : "analVore",
 					"lock": true,
-					"movementLock": true,
-					"location": "womb",
-					"timing": "legs",
+					"location": "belly",
+					"timing": "tail",
 					"animation": {
-						"tail" : "raise",
-						"legs" : "spread",
+						"tail" : "anal",
 						"offset" : {}
 					},
-					"victimAnimation": "unbirthEscape",
-					"script": "unbirthEscape"
+					"victimAnimation": "analPushIn",
+					"script": "moveToLocation"
+				},
+				"analPullInside" : {
+					"voreType" : "analVore",
+					"lock": true,
+					"movementLock" : true,
+					"location": "belly",
+					"failOnFull" : true,
+					"timing": "body",
+					"animation": {
+						"belly" : "anal",
+						"legs" : "anal",
+						"body" : "anal",
+						"offset" : {
+							"timing": "legs",
+							"parts" : [
+								{ "x":[0,1,2,2,2,2,1,0], "y":[0,-5, -18,-18,-18,-18,-5,0], "groups": ["headbob"] },
+								{ "y":[0,1,1,1,1,1,1,0], "groups": ["tailbob", "crotchbob"] }
+							]
+						}
+					},
+					"shrinkAnims" : {
+						"belly" : { "belly": "analescape" }
+					},
+					"expandAnims" : {
+						"belly" : { "belly": "analvore" }
+					},
+					"victimAnimation": "analPullInside",
+					"script": "moveToLocation"
 				}
 			},
 			"idle": {
@@ -340,8 +369,20 @@
 				"belly" : {
 					"parts" : ["belly"],
 					"directions": {
-						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
+						"back": { "transition": "analPushOut", "indicate": "cyan", "drivingEnabled": true },
 						"front": { "transition": "oralEscape", "indicate": "red", "drivingEnabled": true },
+						"up": { },
+						"down": { }
+					},
+					"chances": { "min": 5, "max": 10 },
+					"animation": { "head": "look" },
+					"animationWhenMoving": { "head": "idle" }
+				},
+				"butt" : {
+					"parts" : [],
+					"directions": {
+						"front": { "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
 						"up": { },
 						"down": { }
 					},
@@ -395,10 +436,10 @@
 
 			},
 			"locationCenters" : {
-				"belly" : [-0.5, -1.75],
-				"shaft" : [-2, -1.75],
-				"ballsL" : [-3, -2],
-				"ballsR" : [-3, -2]
+				"belly" : [0, -1.75],
+				"shaft" : [-1, -1.75],
+				"ballsL" : [-1.5, -2],
+				"ballsR" : [-1.5, -2]
 			},
 			"interact": {
 				"oralVore": {
@@ -417,7 +458,7 @@
 					"location":"belly", "failOnFull":true
 				}
 			},
-			"defaultActions": ["vore", "oralVore"],
+			"defaultActions": ["vore", "specialAttack"],
 			"actions": {
 				"specialAttack": {
 					"cooldown": 0.25,
@@ -444,7 +485,7 @@
 				"oralVore":{
 					"cooldown": 1,
 					"script": "checkOralVore",
-					"position": [ 8, 0 ]
+					"position": [ 3, 0 ]
 				},
 				"cockVore":{
 					"cooldown": 1,
@@ -505,22 +546,24 @@
 					"jump": {
 						"legs": "jump",
 						"body": "jump",
+						"belly": "jump",
 						"neck": "none",
 						"offset" : {
 							"parts" : [
 								{"y": [0, 1, 2, 3], "groups": ["headbob"] },
-								{"y": [-1, 0, 0, 0], "groups": ["bellybob", "tailbob"] }
+								{"y": [-1, 0, 0, 0], "groups": ["tailbob", "crotchbob"] }
 							]
 						}
 					},
 					"fall": {
 						"legs": "fall",
 						"body": "fall",
+						"belly": "fall",
 						"neck": "none",
 						"offset" : {
 							"parts" : [
 								{"y": [3, 2, 1, 0], "groups": ["headbob"] },
-								{"y": [0, 2, 2, 3], "groups": ["bellybob", "tailbob"] }
+								{"y": [0, 2, 2, 3], "groups": ["tailbob", "crotchbob"] }
 							]
 						}
 					}

@@ -77,8 +77,8 @@ function sbq.globalToLocal( position )
 end
 
 function sbq.occupantArray( maybearray )
-	if maybearray == nil or maybearray[1] == nil then -- not an array, check for eating
-		if maybearray.location then
+	if maybearray[1] == nil then -- not an array, check for eating
+		if maybearray.location and maybearray.failOnFull ~= nil then
 			if maybearray.failOnFull then
 				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
 				elseif sbq.locationSpaceAvailable(maybearray.location) <= 0 then return maybearray.failTransition end

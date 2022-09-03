@@ -43,7 +43,6 @@ function sbq.eat( occupantId, location, size, voreType, force )
 			end)
 			sbq.forceSeat( occupantId, seatindex)
 			sbq.refreshList = true
-			sbq.updateOccupants(0)
 			return true -- not lounging
 		else
 			return false -- lounging in something inedible
@@ -59,7 +58,6 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
 	sbq.forceSeat( occupantId, seatindex )
 	sbq.refreshList = true
-	sbq.updateOccupants(0)
 	return true
 end
 
@@ -93,7 +91,6 @@ function sbq.uneat( occupantId )
 	sbq.lounging[occupantId] = nil
 	sbq.occupant[seatindex] = sbq.clearOccupant(seatindex)
 	world.sendEntityMessage(entity.id(), "sbqRestoreDamageTeam")
-	sbq.updateOccupants(0)
 	return true
 end
 
@@ -289,15 +286,16 @@ function sbq.applyStatusLists()
 	sbq.weirdFixFrame = nil
 end
 
-function sbq.addStatusToList(index, status, power, source)
-	sbq.occupant[index].statList[status] = {
-		power = power or 1,
-		source = source or entity.id()
-	}
+function sbq.addStatusToList(eid, status, data)
+	sbq.lounging[eid].statList[status] = sb.jsonMerge({
+		power = 1,
+		source = sbq.driver or entity.id(),
+	}, data)
 end
 
-function sbq.removeStatusFromList(index, status)
-	sbq.occupant[index].statList[status] = nil
+function sbq.removeStatusFromList(eid, status)
+	sbq.lounging[eid].statList[status] = nil
+	world.sendEntityMessage(eid, "sbqRemoveStatusEffect", status)
 end
 
 function sbq.resetOccupantCount()
@@ -727,6 +725,43 @@ function sbq.handleStruggles(dt)
 		end
 	end
 
+	local animation = { offset = struggledata.directions[movedir].offset }
+	local prefix = struggledata.prefix or ""
+	local parts = struggledata.parts
+	if struggledata.sided ~= nil then
+		parts = struggledata.sided.rightParts
+		if sbq.direction == -1 then
+			parts = struggledata.sided.leftParts
+		end
+	end
+
+	local time = 0.75
+	if parts ~= nil then
+		for _, part in ipairs(parts) do
+			animation[part] = prefix .. "s_" .. movedir
+		end
+		for _, part in ipairs(struggledata.additionalParts or {}) do -- these are parts that it doesn't matter if it struggles or not, meant for multiple parts triggering the animation but never conflicting since it doesn't check if its struggling already or not
+			animation[part] = prefix .. "s_" .. movedir
+		end
+		local times = {}
+		for _, part in ipairs(parts) do
+			table.insert(times, sbq.animStateData[part .. "State"].animationState.cycle)
+		end
+		time = math.max(0.75, table.unpack(times))
+	end
+	local entityType = world.entityType(strugglerId)
+	if entityType == "player" or entityType == "npc" then
+		sbq.addNamedRPC(strugglerId.."ConsumeEnergy", world.sendEntityMessage(strugglerId, "sbqConsumeResource", "energy", time * 5), function (consumed)
+			if consumed then
+				sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
+			end
+		end)
+	else
+		sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
+	end
+end
+
+function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
 	if sbq.struggleChance(struggledata, struggler, movedir) then
 		sbq.occupant[struggler].struggleTime = 0
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
@@ -739,31 +774,8 @@ function sbq.handleStruggles(dt)
 			sbq.occupant[struggler].controls.disfavorDirection = movedir
 		end
 
-		local animation = {offset = struggledata.directions[movedir].offset}
-		local prefix = struggledata.prefix or ""
-		local parts = struggledata.parts
-		if struggledata.sided ~= nil then
-			parts = struggledata.sided.rightParts
-			if sbq.direction == -1 then
-				parts = struggledata.sided.leftParts
-			end
-		end
+		sbq.doAnims(animation)
 
-		local time = 0.75
-		if parts ~= nil then
-			for _, part in ipairs(parts) do
-				animation[part] = prefix.."s_"..movedir
-			end
-			for _, part in ipairs(struggledata.additionalParts or {}) do -- these are parts that it doesn't matter if it struggles or not, meant for multiple parts triggering the animation but never conflicting since it doesn't check if its struggling already or not
-				animation[part] = prefix.."s_"..movedir
-			end
-			sbq.doAnims(animation)
-			local times = {}
-			for _, part in ipairs(parts) do
-				table.insert(times, sbq.animStateData[part.."State"].animationState.cycle)
-			end
-			time = math.max(0.75, table.unpack(times))
-		end
 		sbq.occupant[struggler].bellySettleDownTimer = time
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
