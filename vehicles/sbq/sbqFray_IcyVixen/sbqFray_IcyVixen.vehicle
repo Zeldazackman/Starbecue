@@ -193,7 +193,7 @@
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
-					"timing": "head",
+					"timing": "neck",
 					"animation": {
 						"emote" : "idle2",
 						"neck": "eat",
@@ -207,7 +207,7 @@
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
-					"timing": "head",
+					"timing": "neck",
 					"animation": {
 						"emote" : "idle2",
 						"neck": "escape",
@@ -317,6 +317,7 @@
 					"failOnFull" : true,
 					"timing": "body",
 					"animation": {
+						"force" : true,
 						"belly" : "anal",
 						"legs" : "anal",
 						"body" : "anal",
@@ -374,21 +375,17 @@
 						"up": { },
 						"down": { }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"butt" : {
-					"parts" : [],
+					"parts" : ["butt"],
 					"directions": {
-						"front": { "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
-						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
-						"up": { },
-						"down": { }
+						"front": { "victimAnimation" : "butt_s_front", "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "victimAnimation" : "butt_s_back", "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
+						"up": { "victimAnimation" : "butt_s_up" },
+						"down": { "victimAnimation" : "butt_s_down" }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 
 				"shaft" : {
@@ -399,9 +396,7 @@
 						"back": {},
 						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"ballsL" : {
 					"sided" :{
@@ -414,9 +409,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"ballsR" : {
 					"sided" :{
@@ -429,9 +422,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				}
 
 			},

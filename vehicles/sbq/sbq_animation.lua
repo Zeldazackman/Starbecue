@@ -9,7 +9,7 @@ function sbq.updateAnims(dt)
 			state.animationState.reverseFrame = math.abs(frame - state.animationState.frames)
 			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
 		elseif ended and state.animationState.mode == "transition" then
-			doAnim(statename, state.animationState.transition)
+			sbq.doAnim(statename, state.animationState.transition)
 		end
 	end
 
@@ -573,9 +573,10 @@ function sbq.doAnims( anims, force )
 		elseif state == "tags" then
 			sbq.setAnimTag( anim )
 		elseif state == "priority" then
-			sbq.changePriorityLength( anim )
+			sbq.changePriorityLength(anim)
+		elseif state == "force" then
 		else
-			sbq.doAnim( state.."State", anim, force)
+			sbq.doAnim( state.."State", anim, force or anims.force)
 		end
 	end
 end

@@ -27,13 +27,14 @@ function sbq.letout(id)
 
 	if location == "belly" then
 		if sbq.heldControl(sbq.driverSeat, "down") then
-			return sbq.doTransition("analEscape", {id = id})
+			return sbq.doTransition("analPushOut", {id = id})
 		else
 			return sbq.doTransition("oralEscape", {id = id})
 		end
 	elseif location == "shaft" then
-		return sbq.doTransition("cockEscape", {id = id})
-
+		return sbq.doTransition("cockEscape", { id = id })
+	elseif location == "butt" then
+		return sbq.doTransition("analEscape", { id = id })
 	elseif location == "ballsL" or location == "ballsR" then
 		return sbq.moveToLocation({id = id}, {location = "shaft"})
 	end
@@ -136,12 +137,14 @@ function eyeTracking()
 	if sbq.driving then
 		target = sbq.globalToLocal(sbq.seats[sbq.driverSeat].controls.aim)
 	else
-		local entity = getVisibleEntity(world.playerQuery(center, 50))
-		if not entity then
-			entity = getVisibleEntity(world.npcQuery(center, 50 ))
+		local center = sbq.localToGlobal(center)
+		local targetEntity = getVisibleEntity(world.playerQuery(center, 50))
+		if not targetEntity then
+			targetEntity = getVisibleEntity(world.npcQuery(center, 50 ))
 		end
-		if entity then
-			target = sbq.globalToLocal(world.entityPosition(entity))
+		sb.logInfo(tostring(targetEntity))
+		if targetEntity then
+			target = sbq.globalToLocal(world.entityPosition(targetEntity))
 		end
 	end
 

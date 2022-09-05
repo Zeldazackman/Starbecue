@@ -21,6 +21,8 @@ function sbq.updateAnims(dt)
 		local ended, times, time = sbq.hasAnimEnded(statename)
 		if (not ended) or (state.animationState.mode == "loop") then
 			state.animationState.frame = math.floor( time * state.animationState.speed ) + 1
+		elseif ended and state.animationState.mode == "transition" then
+			sbq.doAnim(statename, state.animationState.transition)
 		end
 	end
 

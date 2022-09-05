@@ -5,7 +5,8 @@
 	"defaultDuration" : 1,
 
 	"scripts" : [
-	"sbqForceSit.lua"
+		"sbqForceSit.lua",
+		"/stats/speciesAnimOverride/storeDirectives.lua"
 	]
 
 }
