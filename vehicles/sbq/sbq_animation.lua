@@ -699,6 +699,7 @@ function sbq.setColorReplaceDirectives()
 	if sbq.sbqData.replaceColors ~= nil then
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(sbq.sbqData.replaceColors) do
+			colorReplaceString = colorReplaceString.."?replace"
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
 			local fullbright = (sbq.settings.fullbright or {})[i]
@@ -716,7 +717,7 @@ function sbq.setColorReplaceDirectives()
 				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
 					color = color.."fe"
 				end
-				colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
+				colorReplaceString = colorReplaceString..";"..(basePalette[j] or "").."="..(color or "")
 
 			end
 		end

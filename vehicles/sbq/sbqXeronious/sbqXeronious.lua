@@ -71,41 +71,8 @@ function sbq.setItemActionColorReplaceDirectives()
 	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
 
 	if sbq.sbqData.replaceColors ~= nil then
-		local i = 1
-		local basePalette = { "154247", "23646a", "39979e", "4cc1c9" }
-		local replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-		local fullbright = (sbq.settings.fullbright or {})[i]
-
-		if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
-			replacePalette = sbq.settings.replaceColorTable[i]
-		end
-
-		for j, color in ipairs(basePalette) do
-			color = replacePalette[j]
-			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
-				color = color.."fe"
-			end
-							colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
-
-		end
-
-		i = 4
-		basePalette = { "63263d", "7a334d", "9d4165" }
-		replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-		fullbright = (sbq.settings.fullbright or {})[i]
-
-		if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
-			replacePalette = sbq.settings.replaceColorTable[i]
-		end
-
-		for j, color in ipairs(basePalette) do
-			color = replacePalette[j]
-			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
-				color = color.."fe"
-			end
-							colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
-
-		end
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 1, { "154247", "23646a", "39979e", "4cc1c9" })
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 4, { "63263d", "7a334d", "9d4165" } )
 	end
 
 	sbq.itemActionDirectives = colorReplaceString

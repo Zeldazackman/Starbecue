@@ -547,7 +547,7 @@ function sbq.doBellyEffects(dt)
 
 			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
 
-			if (sbq.settings.bellySounds == true) and (not sbq.occupant[i].digested) then
+			if (sbq.settings[location.."Sounds"] == true) and (not sbq.occupant[i].digested) then
 				sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
 			end
 			world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())

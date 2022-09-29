@@ -162,12 +162,12 @@
 		],
 		"replaceColors" : [
 			[
-				["3b3b3f","626368","727377"],
-				["3b3b3f","626368","727377"]
+				["3b3b3f","4a4a4f","626368","727377"],
+				["3b3b3f","4a4a4f","626368","727377"]
 			],
 			[
-				["1c1c1c","343434","424242"],
-				["1c1c1c","343434","424242"]
+				["1c1c1c","262626","343434","424242"],
+				["1c1c1c","262626","343434","424242"]
 			],
 			[
 				["4e0233","ff7ce9","230050","e3b8ff","ffffff"],
@@ -452,6 +452,7 @@
 			"defaultActions": ["vore", "specialAttack"],
 			"actions": {
 				"specialAttack": {
+					"icon" : "/items/active/sbqController/swift.png",
 					"cooldown": 0.25,
 					"hold" : true,
 					"animation": { "emote" : "attack"},

@@ -61,7 +61,7 @@ function sbq.setColorReplaceDirectives()
 	local basePalette = {"ff9418","ffac18","ffd539"}
 	local replacePalette = colorGroup[
 		((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-	local colorReplaceString = ""
+	local colorReplaceString = "?replace"
 
 	if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
 		replacePalette = sbq.settings.replaceColorTable[i]
@@ -71,7 +71,7 @@ function sbq.setColorReplaceDirectives()
 	end
 
 	for j, color in ipairs(replacePalette) do
-		colorReplaceString = colorReplaceString .. "?replace;" .. (basePalette[j] or ""):sub(1, 6) .. "=" .. (color or "")
+		colorReplaceString = colorReplaceString .. ";" .. (basePalette[j] or ""):sub(1, 6) .. "=" .. (color or "")
 		if color and j == 3 then
 
 			local R = tonumber(color:sub(1,2), 16)
@@ -117,6 +117,20 @@ function sbq.setColorReplaceDirectives()
 	projectileParameters.childParams = childProjectileParameters
 
 	sbq.stateconfig.stand.actions.specialAttack.projectile.params = sb.jsonMerge(sbq.stateconfig.stand.actions.specialAttack.projectile.params, projectileParameters)
+end
+
+
+function sbq.setItemActionColorReplaceDirectives()
+	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
+
+	if sbq.sbqData.replaceColors ~= nil then
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 1, { "154247", "23646a", "39979e", "4cc1c9" })
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 4, { "63263d", "7a334d", "9d4165" })
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 4, { "ff9418", "ffac18", "ffd539"} )
+
+	end
+
+	sbq.itemActionDirectives = colorReplaceString
 end
 
 -------------------------------------------------------------------------------
