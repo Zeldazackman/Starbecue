@@ -53,22 +53,10 @@
 		"sbqOccupantHolder" : {
 			"scripts" : ["/interface/scripted/sbq/sbqSettings/speciesScripts/sbqOccupantHolder.lua"],
 			"tab": { "type" : "tab", "id" : "occupantHolderSettingsTab", "title" : "Config", "icon" : "/items/active/sbqController/unassigned.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"mode": "horizontal"},
+				{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [{"mode": "horizontal"},
 				[
-					[{"expandMode" : [0,0]},[{ "type" : "panel", "id" : "sizePanel", "style" : "convex", "children" : [
-						{"mode": "vertical"},
-						{ "type" : "label", "text" : "Size Control", "align" : "center" },
-						[
-							{ "type" : "textBox", "id" : "scaleValueMin", "toolTip" : "Minimum Scale", "text" : "0.1" },
-							{ "type" : "textBox", "id" : "scaleValue", "toolTip" : "Current Scale", "text" : "1" },
-							{ "type" : "textBox", "id" : "scaleValueMax", "toolTip" : "Maximum Scale", "text" : "3" }
-						]
-					]}]],
-					[{"expandMode" : [2,2]},[{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
-
-						{ "type" : "label", "text" : "Body Parts", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : 0, "children" : [
-						[{ "type" : "checkBox", "id" : "braEnable", "visible" : false},{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore", "visible" : false}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "braLabel", "type" : "label", "text" : " Bra", "visible" : false }],
-						[{ "type" : "checkBox", "id" : "underwearEnable", "visible" : false},{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth", "visible" : false}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "underwearLabel", "type" : "label", "text" : " Underwear", "visible" : false }],
+					[{"expandMode" : [2,0]},{ "type" : "panel", "id" : "bodyPartsPanel", "style" : "convex", "children" : [
+						{"mode": "vertical"}, { "type" : "label", "text" : "Body Parts", "align" : "center" },
 
 						[{ "type" : "checkBox", "id" : "tailEnable", "visible" : false},{ "type" : "checkBox", "id" : "tail", "toolTip" : "Not everything usually has a tail, this might give things one", "visible" : false}, { "type" : "iconButton", "id" : "tailLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "tailLabel", "type" : "label", "text" : " Tail", "visible" : false }],
 						[{ "type" : "checkBox", "id" : "tailMawEnable", "visible" : false},{ "type" : "checkBox", "id" : "tailMaw", "toolTip" : "Give your tail a tail maw", "visible" : false}, { "type" : "iconButton", "id" : "tailMawLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "tailMawLabel", "type" : "label", "text" : " Tail Maw", "visible" : false }],
@@ -81,23 +69,42 @@
 						[{ "type" : "checkBox", "id" : "ballsEnable", "visible" : false},{ "type" : "checkBox", "id" : "balls", "toolTip" : "People can struggle down the shaft into the balls", "visible" : false}, { "type" : "iconButton", "id" : "ballsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "ballsLabel", "type" : "label", "text" : " Balls", "visible" : false }],
 						[{ "type" : "checkBox", "id" : "symmetricalBallsEnable", "visible" : false},{ "type" : "checkBox", "id" : "symmetricalBalls", "toolTip" : "When one of the balls is stretched out, the other will be stretched the same amount, even if theres nobody inside", "visible" : false}, { "type" : "iconButton", "id" : "symmetricalBallsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "symmetricalBallsLabel", "type" : "label", "text" : " Symmetrical Balls", "visible" : false }],
 
-						[{ "type" : "checkBox", "id" : "pussyEnable", "visible" : false},{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth", "visible" : false}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "pussyLabel", "type" : "label", "text" : " Pussy", "visible" : false }]
-					]}]}]]
-				],
-				{ "type" : "panel", "id" : "otherEffectsPanel", "style" : "convex", "children" : [
-					{ "type" : "label", "text" : "Other Effects", "align" : "center" },{"type" : "layout", "mode" : "vertical", "spacing" : 0, "children" : [
-						{ "type" : "panel", "id" : "genderswapPanel", "style" : "concave", "children" : [
-							{"mode": "vertical"},
-							{ "type" : "label", "text" : "Genderswap Transformation", "align" : "center" },
+						[{ "type" : "checkBox", "id" : "pussyEnable", "visible" : false},{ "type" : "checkBox", "id" : "pussy", "toolTip" : "Have a pussy and be able to perform unbirth", "visible" : false}, { "type" : "iconButton", "id" : "pussyLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "pussyLabel", "type" : "label", "text" : " Pussy", "visible" : false }],
+
+						[{ "type" : "checkBox", "id" : "braEnable", "visible" : false},{ "type" : "checkBox", "id" : "bra", "toolTip" : "Wear a bra, blocks Breast Vore", "visible" : false}, { "type" : "iconButton", "id" : "braLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "braLabel", "type" : "label", "text" : " Bra", "visible" : false }],
+						[{ "type" : "checkBox", "id" : "underwearEnable", "visible" : false},{ "type" : "checkBox", "id" : "underwear", "toolTip" : "Wear underwear, blocks Anal Vore, Cock Vore, and Unbirth", "visible" : false}, { "type" : "iconButton", "id" : "underwearLocked", "image" : "lockedDisabled.png", "visible" : false }, { "id" : "underwearLabel", "type" : "label", "text" : " Underwear", "visible" : false }]
+
+					]}]
+				],[
+					[{"expandMode" : [2,0]},{ "type" : "panel", "id" : "sizePanel", "style" : "convex", "children" : [
+						{"mode": "vertical"},
+						{ "type" : "label", "text" : "Size Control", "align" : "center" },
+						[
+							{ "type" : "textBox", "id" : "scaleValueMin", "toolTip" : "Minimum Scale", "text" : "0.1" },
+							{ "type" : "textBox", "id" : "scaleValue", "toolTip" : "Current Scale", "text" : "1" },
+							{ "type" : "textBox", "id" : "scaleValueMax", "toolTip" : "Maximum Scale", "text" : "3" }
+						]
+					]}],
+					[{"expandMode" : [2,0]},{ "type" : "panel", "id" : "genderswapPanel", "style" : "convex", "children" : [
+							{"mode": "vertical"},{ "type" : "label", "text" : "Genderswap Transformation", "align" : "center" },
 							[{ "type" : "checkBox", "id" : "TGOnlyEnable", "visible" : false},{ "type" : "iconButton", "id" : "TGOnlyEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TGOnly", "toolTip" : "During TF, leave prey's species unchanged.", "visible" : false}, { "id" : "TGOnlyLabel", "type" : "label", "text" : " TG Only", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGNoChangeEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGNoChangeEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGNoChange", "value" : "noChange", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, leave prey's gender unchanged.", "visible" : false}, { "id" : "TFTGNoChangeLabel", "type" : "label", "text" : " No Change", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGSwapEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGSwapEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGSwap", "value" : "swap", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender.", "visible" : false}, { "id" : "TFTGSwapLabel", "type" : "label", "text" : " Swap Gender", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGRandomEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGRandomEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGRandom", "value" : "random", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, randomly swap prey's gender.", "visible" : false}, { "id" : "TFTGRandomLabel", "type" : "label", "text" : " Randomize Gender", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGMaleEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGMaleEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGMale", "value" : "male", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender to male.", "visible" : false}, { "id" : "TFTGMaleLabel", "type" : "label", "text" : " Swap to Male", "visible" : false }],
 							[{ "type" : "checkBox", "id" : "TFTGFemaleEnable", "visible" : false},{ "type" : "iconButton", "id" : "TFTGFemaleLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "TFTGFemale", "value" : "female", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender to female.", "visible" : false}, { "id" : "TFTGFemaleLabel", "type" : "label", "text" : " Swap to Female", "visible" : false }]
-						]}
-				]}]}
-			]}
+					]}],
+					[{"expandMode" : [2,0]},{ "type" : "panel", "id" : "performanceSettingsPanel", "style" : "convex", "children" : [
+						{"mode": "vertical"},{ "type" : "label", "text" : "Performance Settings", "align" : "center" },
+						[
+							{ "type" : "checkBox", "id" : "noSpriteRedraw", "toolTip" : "Disable sprite redraw entirely, this means no vore or TF graphics, as well as no scaling in size." },
+							{ "type" : "checkBox", "id" : "noHandItems", "toolTip" : "Disable all hand items." },
+							{ "type" : "checkBox", "id" : "noAnimatedItems", "toolTip" : "Disable animated hand items, simple items without animations will still display, animated ones will be an empty hand." },
+							{ "type" : "checkBox", "id" : "noAnimatingItems", "toolTip" : "Disable animating hand items, simple items without animations will still display, animated ones will stay on their first frame." }
+						]
+					]}]
+				]
+			]}]}
 		},
 
 		"sbqVaporeon" : {

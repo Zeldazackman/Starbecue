@@ -32,7 +32,7 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
-		sbq.animOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {}
+		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {})
 		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
 		sbq.animOverrideOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideOverrideSettings or {}
 
@@ -196,6 +196,64 @@ function init()
 						if enable ~= nil then
 							enable:setVisible(true)
 							enable:setChecked(sbq.preySettings[setting.."Enable"] or false)
+							function enable:onClick()
+								sbq.changePreySetting(setting.."Enable", enable.checked)
+							end
+						end
+					end
+				end
+			end
+		end
+
+		settingsDealtWith = {}
+		for setting, value in pairs(sbq.animOverrideSettings) do
+			if setting:sub(-6,-1) ~= "Locked" and not settingsDealtWith[setting] then
+				local button = _ENV[setting]
+				local label = _ENV[setting .. "Label"]
+				local locked = _ENV[setting .. "Locked"]
+				local enable = _ENV[setting.."Enable"]
+				local enableLocked = _ENV[setting .. "EnableLocked"]
+
+				settingsDealtWith[setting] = true
+				settingsDealtWith[setting.."Enable"] = true
+
+				if button ~= nil and type(value) == "boolean" then
+					if label ~= nil then
+						label:setVisible(true)
+					end
+					if sbq.animOverrideOverrideSettings[setting] ~= nil then
+						button:setVisible(false)
+						if locked ~= nil then
+							locked:setVisible(true)
+							if sbq.animOverrideOverrideSettings[setting] then
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+							else
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+							end
+							locked.toolTip = (button.toolTip or "").." (Locked)"
+
+							if enable ~= nil then
+								enable:setVisible(false)
+								if enableLocked ~= nil then
+									enableLocked:setVisible(true)
+									if sbq.animOverrideOverrideSettings[setting.."Enable"] then
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+									else
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+									end
+									enableLocked.toolTip = (enable.toolTip or "").." (Locked)"
+								end
+							end
+						end
+					else
+						button:setVisible(true)
+						button:setChecked(value)
+						function button:onClick()
+							sbq.changePreySetting(setting, button.checked)
+						end
+						if enable ~= nil then
+							enable:setVisible(true)
+							enable:setChecked(sbq.animOverrideSettings[setting.."Enable"] or false)
 							function enable:onClick()
 								sbq.changePreySetting(setting.."Enable", enable.checked)
 							end
