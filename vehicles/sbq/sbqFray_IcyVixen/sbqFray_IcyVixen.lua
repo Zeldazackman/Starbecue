@@ -156,7 +156,6 @@ function eyeTracking()
 		if not targetEntity then
 			targetEntity = getVisibleEntity(world.npcQuery(center, 50 ))
 		end
-		sb.logInfo(tostring(targetEntity))
 		if targetEntity then
 			target = sbq.globalToLocal(world.entityPosition(targetEntity))
 		end
