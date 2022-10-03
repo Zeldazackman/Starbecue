@@ -97,7 +97,7 @@
 					[{"expandMode" : [2,0]},{ "type" : "panel", "id" : "performanceSettingsPanel", "style" : "convex", "children" : [
 						{"mode": "vertical"},{ "type" : "label", "text" : "Performance Settings", "align" : "center" },
 						[
-							{ "type" : "checkBox", "id" : "noSpriteRedraw", "toolTip" : "Disable sprite redraw entirely, this means no vore or TF graphics, as well as no scaling in size." },
+							{ "type" : "checkBox", "id" : "noSpriteRedraw", "toolTip" : "Disable sprite redraw entirely, this means no vore, TF, or TG graphics, as well as no scaling in size." },
 							{ "type" : "checkBox", "id" : "noHandItems", "toolTip" : "Disable all hand items." },
 							{ "type" : "checkBox", "id" : "noAnimatedItems", "toolTip" : "Disable animated hand items, simple items without animations will still display, animated ones will be an empty hand." },
 							{ "type" : "checkBox", "id" : "noAnimatingItems", "toolTip" : "Disable animating hand items, simple items without animations will still display, animated ones will stay on their first frame." }
