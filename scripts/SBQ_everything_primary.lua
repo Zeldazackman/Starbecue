@@ -119,7 +119,12 @@ function sbq.doMysteriousTF(data)
 
 	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
-		overrideData.species = speciesList[math.random(#speciesList)]
+		local validSpecies = false
+		local blacklist = root.assetJson("/animOverrideBlacklist.config")
+		while not validSpecies do
+			overrideData.species = speciesList[math.random(#speciesList)]
+			validSpecies = not blacklist[overrideData.species]
+		end
 	elseif overrideData.species == "originalSpecies" then
 		overrideData.species = currentData.species or originalSpecies
 	end
