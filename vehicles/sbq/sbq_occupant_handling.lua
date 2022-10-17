@@ -164,7 +164,7 @@ function sbq.locationVisualSize(location, side)
 	local locationSize = sbq.occupants[location]
 	local data = sbq.sbqData.locations[location] or {}
 	if data.sided then
-		if data.symmetrical then
+		if sbq.settings[location.."Symmetrical"] or data.symmetrical then
 			locationSize = math.max(sbq.occupants[location.."L"], sbq.occupants[location.."R"])
 		else
 			locationSize = sbq.occupants[location..(side or "L")]
@@ -182,30 +182,33 @@ function sbq.locationSpaceAvailable(location)
 	return (sbq.sbqData.locations[location].max * (sbq.predScale or 1)) - sbq.occupants[location]
 end
 
+function sbq.getSidedLocationWithSpace(location, size)
+	local data = sbq.sbqData.locations[location]
+	if data.sided then
+		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		if sbq.occupants[location.."L"] == sbq.occupants[location.."R"] then
+			if sbq.direction > 0 then -- thinking about it, after adding everything underneath to prioritize the one with less prey, this is kinda useless
+				if leftHasSpace then return location.."L", data
+				elseif rightHasSpace then return location.."R", data
+				else return false end
+			else
+				if rightHasSpace then return location.."R", data
+				elseif leftHasSpace then return location.."L", data
+				else return false end
+			end
+		elseif sbq.occupants[location .. "L"] < sbq.occupants[location .. "R"] and leftHasSpace then return location .. "L", data
+		elseif sbq.occupants[location .. "L"] > sbq.occupants[location .. "R"] and rightHasSpace then return location .. "R", data
+		else return false end
+	end
+	return location, data
+end
+
+
 function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
-	local location = location
-	if sbq.sbqData.locations[location].sided then
-		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > ((args.size or 1) * (sbq.settings[location.."Multiplier"] or 1))
-		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((args.size or 1) * (sbq.settings[location.."Multiplier"] or 1))
-		if sbq.direction > 0 then
-			if leftHasSpace then
-				location = location.."L"
-			elseif rightHasSpace then
-				location = location.."R"
-			else
-				return false
-			end
-		else
-			if rightHasSpace then
-				location = location.."R"
-			elseif leftHasSpace then
-				location = location.."L"
-			else
-				return false
-			end
-		end
-	end
+	local location = sbq.getSidedLocationWithSpace(location, args.size)
+	if not location then return false end
 	if sbq.eat( args.id, location, args.size, voreType ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
@@ -424,7 +427,7 @@ function sbq.setOccupantTags()
 		sbq.occupantsVisualSize[location] = sbq.locationVisualSize(location)
 		if sbq.occupantsPrevVisualSize[location] == nil then sbq.occupantsPrevVisualSize[location] = 0 end
 		if data.sided then
-			if data.symmetrical then -- for when people want their balls and boobs to be the same size
+			if sbq.settings[location.."Symmetrical"] or data.symmetrical then -- for when people want their balls and boobs to be the same size
 				if sbq.occupantsVisualSize[location] ~= sbq.occupantsPrevVisualSize[location] or sbq.refreshSizes then
 					sbq.setPartTag( "global", location.."FrontOccupants", tostring(sbq.occupantsVisualSize[location]) )
 					sbq.setPartTag( "global", location.."BackOccupants", tostring(sbq.occupantsVisualSize[location]) )

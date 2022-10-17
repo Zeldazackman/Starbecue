@@ -86,7 +86,6 @@ function checkPartsEnabled()
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
-	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
 end
 
 -------------------------------------------------------------------------------

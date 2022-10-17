@@ -130,16 +130,12 @@
 			"tail" : false,
 			"tailMaw" : false,
 
-			"symmetricalBalls" : true,
-			"symmetricalBreasts" : true,
+			"ballsSymmetrical" : true,
+			"breastsSymmetrical" : true,
 			"breasts" : false,
 			"penis" : false,
 			"balls" : false,
-			"pussy" : false,
-
-			"penisCumTF" : false,
-			"ballsCumTF" : false,
-			"wombEggify" : false
+			"pussy" : false
 		},
 
 		"allowedModifiers": {

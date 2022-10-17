@@ -128,7 +128,6 @@ function sbq.settingsMenuUpdated()
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
-	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
 	if sbq.settings.breasts then
 		sbq.setStatusValue( "breastsVisible", "")
 		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.balls.max
@@ -139,8 +138,6 @@ function sbq.settingsMenuUpdated()
 		sbq.sbqData.locations.breastsR.max = 0
 	end
 	world.sendEntityMessage(sbq.driver, "setBoobMask", sbq.settings.breasts)
-
-	sbq.sbqData.locations.breasts.symmetrical = sbq.settings.symmetricalBreasts
 
 	if sbq.settings.pussy then
 		sbq.setStatusValue( "pussyVisible", "")

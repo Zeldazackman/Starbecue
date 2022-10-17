@@ -141,7 +141,7 @@
 			"replaceColors" : [1,1,1,1],
 			"fullbright" : [false,false,true,true],
 
-			"symmetricalBalls" : true,
+			"ballsSymmetrical" : true,
 			"penis" : false,
 			"balls" : false
 
