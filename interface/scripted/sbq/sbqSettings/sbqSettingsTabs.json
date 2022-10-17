@@ -322,7 +322,22 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqFray_IcyVixen" : { "type" : "tab", "id" : "frayHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqFray_IcyVixenCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "frayHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "Fray_IcyVixenHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqFray_IcyVixenCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you've been turned into a particular vulpix...^reset;\n \nFray can fit one prey within his ^yellow;belly^reset; and one stuck up his ^yellow;butt^reset;. He can also stretch out his ^yellow;dick^reset; to fit one person inside it, and then one in each of his ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in your config." }
+					]}]}
+				]},
+				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;Stand State^reset;\n \nWhile Standing you can move around just like a player normally can.\n \nThe ^yellow;Special Attack^reset; action can be used to attack with Swift, creating stars that lock onto and fire at your enemies.\n \nThe ^yellow;Oral Vore^reset; action can be used to ^yellow;eat^reset; prey and put them in your ^yellow;belly^reset;, you may also let prey back out of your ^yellow;mouth^reset; with the ^green;[G]^reset; key, if one also holds ^green;[Down]^reset; key they'll be sent to your ^yellow;butt^reset;.\n \nThe ^yellow;Anal Vore^reset; action can force people up your ^yellow;butt^reset; and then click it again to pull them into your ^yellow;belly^reset;.\n \nThe ^yellow;Cock Vore^reset; action can be used to force people into your ^yellow;dick^reset;, stretching it out, using it while someone is inside may force them even deeper, down to your ^yellow;balls^reset; stretching one of them out instead. Pressing ^green;[G]^reset; will also bring them back out." }
+					]}]}
+				]}
+			]}
 		]}
+
 	},
 	"speciesInfoTabs" : {
 		"sbqVaporeon" : { "type" : "tab", "id" : "vaporeonHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqVaporeonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -418,7 +433,22 @@
 					]}]}
 				]}
 			]}
+		]},
+		"sbqFray_IcyVixen" : { "type" : "tab", "id" : "frayHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqFray_IcyVixenCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+			{ "type" : "tabField", "noFocusFirstTab" : true, "id" : "frayHelpTabs", "layout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				{ "type" : "tab", "id" : "Fray_IcyVixenHelpTab", "title" : "General", "icon" : "/interface/scripted/sbq/sbqSettings/sbqFray_IcyVixenCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;So you've found a particular vulpix...^reset;\n \nFray can fit one prey within his ^yellow;belly^reset; and one stuck up his ^yellow;butt^reset;. He can also stretch out his ^yellow;dick^reset; to fit one person inside it, and then one in each of his ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in the config." }
+					]}]}
+				]},
+				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+						{ "type" : "label", "text" : "^cyan;Stand State^reset;\n \nIf you stand in front of them and ^green;interact^reset; with their face they will attempt to ^yellow;eat^reset; you!\n \nIf you ^green;interact^reset; with their rear you'll be able to squirm into their ^yellow;butt^reset;\n \nIf you struggle in the right directions, you'll be able to struggle between the ^yellow;belly^reset; and the ^yellow;butt^reset;." }
+					]}]}
+				]}
+			]}
 		]}
+
 
 
 	}
