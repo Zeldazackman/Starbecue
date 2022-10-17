@@ -9,10 +9,10 @@
 
 	"inventoryIcon": "/vehicles/sbq/sbqFray_IcyVixen/skins/default/icon.png",
 	"shortdescription": "Fray",
-	"description" : "A big Fray of your very own! Use on an empty spawner to place them inside.",
+	"description" : "A big Vulpix of your very own! Use on an empty spawner to place him inside.",
 
 	"tooltipFields" : {
-		"statusLabel": "A big Fray of your very own! Use on an empty spawner to place them inside."
+		"statusLabel": "A big Vulpix of your very own! Use on an empty spawner to place him inside."
 	},
 
 	"augment" : {

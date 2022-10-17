@@ -26,7 +26,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 
 # Features
 
-![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)
+![](/vehicles/sbq/sbqVaporeon/sbqVaporeon.png)![](/vehicles/sbq/sbqEgg/sbqEgg.png)![](/vehicles/sbq/sbqSlime/sbqSlime.png)![](/vehicles/sbq/sbqXeronious/sbqXeronious.png)![](/vehicles/sbq/sbqAvian/sbqAvian.png)![](/vehicles/sbq/sbqZiellekDragon/sbqZiellekDragon.png)![](/vehicles/sbq/sbqFray_IcyVixen/sbqFray_IcyVixen.png)
 
 ### Playable Predator transformation
 - Vaporeon
@@ -34,6 +34,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - Avian
 - Slime
 - Ziellek Dragon
+- Fray the Vulpix
 
 ### Player/NPC Predator species
 - Human
