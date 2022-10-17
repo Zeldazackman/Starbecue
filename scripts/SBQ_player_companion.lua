@@ -44,15 +44,6 @@ function init()
 			message = "Zygan SSVM Addons detected.\n \nThat mod is an older version of Starbecue before it was renamed, please remove it."
 		})
 	end
-	if root.itemConfig("vorechipkit") ~= nil and not player.getProperty("sbqSSVMOverridesWarned") then
-		player.setProperty("sbqSSVMOverridesWarned", true)
-		player.confirm({
-			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
-			icon = "/interface/errorpopup/erroricon.png",
-			title = "SSVM Overrides Warning",
-			message = "Starbound Simple Vore Mod Detected.\n \nStarbecue overrides and bugfixes some functions of SSVM to have better parity, check the Help tab in Starbecue's settings for more information."
-		})
-	end
 
 	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
 		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})

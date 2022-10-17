@@ -21,9 +21,6 @@ function init()
 	end)
 end
 
-require("/scripts/SBQ_monster_primary.lua")
-require("/scripts/SSVM_compatibility_monster.lua")
-
 function applyDamageRequest(damageRequest)
 	if world.getProperty("nonCombat") then
 		return {}
@@ -139,3 +136,6 @@ function update(dt)
 		status.setResourcePercentage("health", 0)
 	end
 end
+
+require("/scripts/SBQ_monster_primary.lua")
+require("/scripts/SSVM_compatibility_monster.lua")

@@ -227,7 +227,7 @@ function init()
 	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
 	patronsLabel:setText(sbq.patronsString)
 
-	if root.itemConfig("vorechipkit") ~= nil then
+	if root.itemConfig("vorechipkit") ~= nil and sbq.confg.SSVMParityEnabled then
 		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
 		SSVMTargetCreatures:setChecked(status.statusProperty("sbqSSVMTargeting") == "creature")
 
