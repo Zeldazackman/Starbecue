@@ -33,7 +33,17 @@ function sbq.locationPanel()
 
 		local compression = _ENV[location .. "CompressionButton"]
 
-		visualMin:setText(tostring(sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or 0))
+		visualMin:setText(tostring(sbq.overrideSettings[location .. "VisualMin"] or sbq.predatorSettings[location ..
+			"VisualMin"] or 0))
+		visualMin.toolTip = "Minimum fullness (Min of " ..
+			(sbq.overrideSettings[location .. "VisualMin"] or data.minVisual or 0) .. ")"
+
+		local color = "00FF00"
+		if (sbq.predatorSettings[location.."VisualMin"] or 0) >= (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge) then
+			color = "FF0000"
+		end
+		visualMin:setColor(color)
+
 		function visualMin:onEnter()
 			local value = tonumber(visualMin.text)
 			local isNumber = type(value) == "number"
@@ -44,13 +54,26 @@ function sbq.locationPanel()
 					sbq.predatorSettings[location.."LVisualMin"] = newValue
 					sbq.predatorSettings[location.."RVisualMin"] = newValue
 				end
+				local color = "00FF00"
+				if newValue >= (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge) then
+					color = "FF0000"
+				end
+				visualMin:setColor(color)
+
 				sbq.saveSettings()
 			else
 				visualMin:setText(tostring(sbq.overrideSettings[location.."VisualMin"] or sbq.predatorSettings[location.."VisualMin"] or 0))
 			end
 		end
 
-		visualMax:setText(tostring(sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or data.max or 0))
+		visualMax:setText(tostring(sbq.overrideSettings[location .. "VisualMax"] or sbq.predatorSettings[location .."VisualMax"] or data.max or 0))
+		visualMax.toolTip = "Maximum fullness (Max of "..(sbq.overrideSettings[location.."VisualMax"] or data.max)..")\nIf Hammerspace is on, this only controls the visuals"
+		local color = "00FF00"
+		if (sbq.predatorSettings[location.."VisualMax"] or sbq.overrideSettings[location.."VisualMax"] or data.max) >= (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge) then
+			color = "FF0000"
+		end
+		visualMax:setColor(color)
+
 		function visualMax:onEnter()
 			local value = tonumber(visualMax.text)
 			local isNumber = type(value) == "number"
@@ -61,6 +84,12 @@ function sbq.locationPanel()
 					sbq.predatorSettings[location.."LVisualMax"] = newValue
 					sbq.predatorSettings[location.."RVisualMax"] = newValue
 				end
+				local color = "00FF00"
+				if newValue >= (sbq.overrideSettings[location.."VisualMax"] or data.max or math.huge) then
+					color = "FF0000"
+				end
+				visualMax:setColor(color)
+
 				sbq.saveSettings()
 			else
 				visualMax:setText(tostring(sbq.overrideSettings[location.."VisualMax"] or sbq.predatorSettings[location.."VisualMax"] or 0))
