@@ -130,8 +130,8 @@ function sbq.settingsMenuUpdated()
 	end
 	if sbq.settings.breasts then
 		sbq.setStatusValue( "breastsVisible", "")
-		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.balls.max
-		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.balls.max
+		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.breasts.max
+		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.breasts.max
 	else
 		sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.breastsL.max = 0
