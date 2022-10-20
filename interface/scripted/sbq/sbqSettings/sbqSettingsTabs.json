@@ -441,7 +441,7 @@
 						{ "type" : "label", "text" : "^cyan;So you've found a particular vulpix...^reset;\n \nFray can fit one prey within his ^yellow;belly^reset; and one stuck up his ^yellow;butt^reset;. He can also stretch out his ^yellow;dick^reset; to fit one person inside it, and then one in each of his ^yellow;balls^reset;... that is if they have the parts of course, these must be enabled in the config." }
 					]}]}
 				]},
-				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqZiellekDragonCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{ "type" : "tab", "id" : "standHelpTab", "title" : "Stand", "icon" : "/interface/scripted/sbq/sbqSettings/sbqFray_IcyVixenCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 					{ "type" : "scrollArea", "mode" : "vertical", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 						{ "type" : "label", "text" : "^cyan;Stand State^reset;\n \nIf you stand in front of them and ^green;interact^reset; with their face they will attempt to ^yellow;eat^reset; you!\n \nIf you ^green;interact^reset; with their rear you'll be able to squirm into their ^yellow;butt^reset;\n \nIf you struggle in the right directions, you'll be able to struggle between the ^yellow;belly^reset; and the ^yellow;butt^reset;." }
 					]}]}
