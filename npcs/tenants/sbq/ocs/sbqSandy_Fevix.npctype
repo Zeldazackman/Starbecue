@@ -894,7 +894,9 @@
 			"sbqDidVornyConvertCheck" : true,
 
 			// this arg for speciesAnimOverrideData should only be used if your NPC has a unique body, only mess with it if you know what you're doing
-			"speciesAnimOverrideData" : {},
+			"speciesAnimOverrideData" : {
+				"permanent" : true
+			},
 
 			// the prey prefrences for this NPC are set here!
 			// set each one to the value you want, if there are any that are unset, they'll just go to the default values
