@@ -242,136 +242,15 @@ function init()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
-	for setting, value in pairs(sbq.predatorSettings) do
-		local button = _ENV[setting]
-		local locked = _ENV[setting .. "Locked"]
-		local label = _ENV[setting .. "Label"]
-		if button ~= nil and type(value) == "boolean" then
-			if label ~= nil then
-				label:setVisible(true)
-			end
-			if sbq.overrideSettings[setting] ~= nil then
-				button:setVisible(false)
-				if locked ~= nil then
-					locked:setVisible(true)
-					if sbq.overrideSettings[setting] then
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-					else
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-					end
-					locked.toolTip = (button.toolTip or "").." (Locked)"
-				end
-			else
-				button:setVisible(true)
-				button:setChecked(value)
-				if locked ~= nil then
-					locked:setVisible(false)
-				end
-				function button:onClick()
-					sbq.changePredatorSetting(setting, button.checked)
-				end
-			end
-		end
-	end
-	for setting, value in pairs(sbq.globalSettings) do
-		local button = _ENV[setting]
-		local locked = _ENV[setting .. "Locked"]
-		local label = _ENV[setting .. "Label"]
-		if button ~= nil and type(value) == "boolean" then
-			if label ~= nil then
-				label:setVisible(true)
-			end
-			if sbq.overrideSettings[setting] ~= nil then
-				button:setVisible(false)
-				if locked ~= nil then
-					locked:setVisible(true)
-					if sbq.overrideSettings[setting] then
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-					else
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-					end
-					locked.toolTip = (button.toolTip or "").." (Locked)"
-				end
-			else
-				button:setVisible(true)
-				button:setChecked(value)
-				if locked ~= nil then
-					locked:setVisible(false)
-				end
-				function button:onClick()
-					sbq.changeGlobalSetting(setting, button.checked)
-				end
-			end
-		end
-	end
-	for setting, value in pairs(sbq.animOverrideSettings or {}) do
-		local button = _ENV[setting]
-		local locked = _ENV[setting .. "Locked"]
-		local label = _ENV[setting .. "Label"]
-		if button ~= nil and type(value) == "boolean" then
-			if label ~= nil then
-				label:setVisible(true)
-			end
-			if sbq.animOverrideOverrideSettings[setting] ~= nil then
-				button:setVisible(false)
-				if locked ~= nil then
-					locked:setVisible(true)
-					if sbq.animOverrideOverrideSettings[setting] then
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-					else
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-					end
-					locked.toolTip = (button.toolTip or "").." (Locked)"
-				end
-			else
-				button:setVisible(true)
-				button:setChecked(value)
-				if locked ~= nil then
-					locked:setVisible(false)
-				end
-				function button:onClick()
-					sbq.changeAnimOverrideSetting(setting, button.checked)
-				end
-			end
-		end
-	end
+	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
+	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+	sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
 	if mainTabField.tabs.globalPreySettings ~= nil then
 		sbq.sbqPreyEnabled = sb.jsonMerge(sbq.config.defaultPreyEnabled.player, status.statusProperty("sbqPreyEnabled") or {})
 		sbq.overridePreyEnabled = status.statusProperty("sbqOverridePreyEnabled") or {}
-		for setting, value in pairs(sbq.sbqPreyEnabled) do
-			local button = _ENV[setting]
-			local locked = _ENV[setting .. "Locked"]
-			local label = _ENV[setting .. "Label"]
-			if button ~= nil and type(value) == "boolean" then
-				if label ~= nil then
-					label:setVisible(true)
-				end
-				if sbq.overridePreyEnabled[setting] ~= nil then
-					button:setVisible(false)
-					if locked ~= nil then
-						locked:setVisible(true)
-						if sbq.overridePreyEnabled[setting] then
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-						else
-							locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-						end
-						locked.toolTip = (button.toolTip or "").." (Locked)"
-					end
-				else
-					button:setVisible(true)
-					button:setChecked(value)
-					if locked ~= nil then
-						locked:setVisible(false)
-					end
-					function button:onClick()
-						sbq.changePreySetting(setting, button.checked)
-					end
-				end
-			end
-		end
+		sbq.checkLockedSettingsButtons("sbqPreyEnabled", "overridePreyEnabled", "changePreySetting")
 	end
-
 	function hammerspace:onClick() -- only one that has unique logic
 		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
 		sbq.locationPanel()
@@ -380,6 +259,40 @@ function init()
 	require("/interface/scripted/sbq/sbqSettings/sbqResetSettings.lua")
 end
 local init = init
+
+function sbq.checkLockedSettingsButtons(settings, override, func)
+	for setting, value in pairs(sbq[settings] or {}) do
+		local button = _ENV[setting]
+		local locked = _ENV[setting .. "Locked"]
+		local label = _ENV[setting .. "Label"]
+		if button ~= nil and type(value) == "boolean" then
+			if label ~= nil then
+				label:setVisible(true)
+			end
+			if sbq[override][setting] ~= nil then
+				button:setVisible(false)
+				if locked ~= nil then
+					locked:setVisible(true)
+					if sbq[override][setting] then
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+					else
+						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+					end
+					locked.toolTip = (button.toolTip or "").." (Locked)"
+				end
+			else
+				button:setVisible(true)
+				button:setChecked(value)
+				if locked ~= nil then
+					locked:setVisible(false)
+				end
+				function button:onClick()
+					sbq[func](setting, button.checked)
+				end
+			end
+		end
+	end
+end
 
 function update()
 	sbq.sbqCurrentData = player.getProperty("sbqCurrentData") or {}
