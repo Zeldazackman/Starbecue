@@ -103,6 +103,11 @@ function sbq.letout(id)
 end
 
 function sbq.settingsMenuUpdated()
+	sbq.handleBodyParts()
+	sbq.handleUnderwear()
+end
+
+function sbq.handleBodyParts()
 	local defaultSbqData = sbq.defaultSbqData
 	if sbq.settings.penis then
 		if sbq.settings.underwear then
@@ -144,7 +149,6 @@ function sbq.settingsMenuUpdated()
 	else
 		sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
 	end
-	sbq.handleUnderwear()
 end
 
 function sbq.handleUnderwear()
