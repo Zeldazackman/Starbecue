@@ -299,7 +299,7 @@ end
 function sbq.endMysteriousTF()
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", nil )
 	mysteriousTFDuration = nil
-	local oldData = status.statusProperty("oldSpeciesAnimOverrideData")
+	local oldData = status.statusProperty("oldSpeciesAnimOverrideData") or {}
 	status.setStatusProperty("speciesAnimOverrideData", oldData)
 
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
