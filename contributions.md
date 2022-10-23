@@ -3,6 +3,7 @@
 	Avali Breast Vore Animations
 	Apex Breast Vore Animations
 	Fenerox Breast Vore Animations
+	"Friends are stored in the womb" poster
 
 # Blueninja
 	Blue the Synth NPC dialogue

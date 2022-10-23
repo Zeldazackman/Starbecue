@@ -1,0 +1,33 @@
+{
+  //ArgobargSoup
+  "objectName" : "sbqWombPoster",
+  "colonyTags" : ["uvore", "horny", "womb", "wombPoster"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "You might be inclined to agree.",
+  "shortdescription" : "Womb Poster",
+  "race" : "generic",
+
+  "apexDescription" : "A rather... interesting statement.",
+  "avianDescription" : "The Stargazers certainly would not approve... however...",
+  "floranDescription" : "What if floran sssstored them in ssstomach instead?",
+  "glitchDescription" : "Intrigued. Where might one find a 'Womb' module to install?",
+  "humanDescription" : "Somebody clearly has a kink.",
+  "hylotlDescription" : "A rather crude statement.",
+  "novakidDescription" : "How would I fit all of 'em in there?",
+  "avaliDescription" : "Do I even have that...?",
+
+  "inventoryIcon" : "postericon.png",
+  "orientations" : [
+    {
+      "image" : "poster.png",
+      "imagePosition" : [-16, -16],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ]
+}
