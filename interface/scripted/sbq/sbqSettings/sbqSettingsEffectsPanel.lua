@@ -12,7 +12,7 @@ function sbq.effectsPanel()
 					sbq.predatorSettings[location.."TFEnable"] = false
 				end
 			end
-			if locationData.TF and sbq.predatorSettings[location.."Eggify"] == nil then
+			if locationData.Eggify and sbq.predatorSettings[location.."Eggify"] == nil then
 				sbq.predatorSettings[location.."Eggify"] = false
 				if sbq.deedUI then
 					sbq.predatorSettings[location.."EggifyEnable"] = false
