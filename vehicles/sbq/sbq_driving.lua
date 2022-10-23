@@ -286,7 +286,7 @@ function sbq.transformAction()
 				sbq.reversion()
 			elseif sbq.lastRadialSelection ~= "cancel" then
 				sbq.addRPC(world.sendEntityMessage(sbq.driver, "sbqLoadSettings", sbq.lastRadialSelection), function(settings)
-					sbq.transformVehicle(settings, data.selection)
+					sbq.transformVehicle(settings, sbq.lastRadialSelection)
 				end)
 			end
 		end
