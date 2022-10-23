@@ -1,6 +1,9 @@
 {
   "kind" : "sbqBatty_Xeronious",
 
+  "speciesAnimOverride" : "speciesAnimOverride.config",
+  "permanentAnimOverride" : true,
+
   "charCreationTooltip" : {
       "title" : "Batty",
       "subTitle" : "Noodle",
@@ -9,10 +12,8 @@
 
   "nameGen" : [ "/species/humanmalenamegen.config:names", "/species/humanfemalenamegen.config:names" ],
 
-
   // these are the ouch noises! you'll probably want to make them point to the sounds your OC would make when hurt, that being custom, or another species'
   "ouchNoises" : [ "/sfx/humanoid/humanhurt_male1.ogg", "/sfx/humanoid/humanhurt_female1.ogg" ],
-
 
   "charGenTextLabels" : [ "Skin colour", "Hair style", "Shirt", "Legwear", "Underwear", "Hair colour", "Shirt colour", "Legwear colour", "HUMAN", "Personality" ],
   "skull" : "/humanoid/human/dead.png",
@@ -125,6 +126,12 @@
       "facialMask" : [ ]
     }
   ],
+
+  "baseColorMap" : {
+    "primary" : ["868686","a0a0a0","c3c3c3","d3d3d3"],
+    "secondary" : ["272727","2d2d2d","373737"],
+    "flesh" : ["be6c99", "cc76a6", "e487bc"]
+  },
 
   // These are the tables for the replace colors, if your sprites neeed to have their colors replaced, you should probably define those colors here
   "bodyColor" : [
