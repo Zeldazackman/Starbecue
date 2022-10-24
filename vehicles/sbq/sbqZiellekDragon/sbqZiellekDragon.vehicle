@@ -149,14 +149,11 @@
 			"replaceColors" : [1,1,1,1,1,1,1],
 			"fullbright" : [false,false,false,false,false,true,false],
 
-			"symmetricalBalls" : true,
+			"ballsSymmetrical" : true,
 			"penis" : false,
 			"balls" : false,
-			"pussy" : false,
+			"pussy" : false
 
-			"penisCumTF" : false,
-			"ballsCumTF" : false,
-			"wombEggify" : false
 		},
 		"allowedModifiers": {
 			"bellyVisualMin": {"min": 0, "max": 2},

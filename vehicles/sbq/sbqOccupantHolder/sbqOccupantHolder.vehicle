@@ -86,17 +86,7 @@
 			}
 		},
 		"locations" :{
-			"belly" : {},
-			"womb" : {},
-
-			"shaft" : {},
-			"balls" : {},
-			"ballsL" : {},
-			"ballsR" : {},
-
-			"breasts" : {},
-			"breastsL" : {},
-			"breastsR" : {}
+			"belly" : {}
 		},
 		"victimAnimations": "/humanoid/victim_animations.config"
 	},

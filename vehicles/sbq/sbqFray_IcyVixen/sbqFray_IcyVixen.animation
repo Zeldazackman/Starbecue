@@ -159,12 +159,21 @@
 				"states": {
 					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"look": { "frames": 1, "cycle": 2, "mode": "end", "priority": 2, "baseAnim": "idle" },
+					"eat": { "frames": 8, "cycle": 1.5, "mode": "transition", "priority": 4, "baseAnim": "idle", "transition" : "idle" },
+					"escape": { "frames": 8, "cycle": 1.5, "mode": "transition", "priority": 4, "baseAnim": "idle", "transition" : "idle" },
 
-					"breath": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": 3, "baseAnim": "idle" },
+					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
+				}
+			},
+			"buttState": {
+				"default": "idle",
+				"states": {
+					"idle": { "frames": 1, "cycle": 1, "mode": "end", "priority": 0 },
 
-					"eat": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
-					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
+					"s_back": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_front": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_up": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
+					"s_down": { "frames": 3, "cycle": 1, "mode": "end", "priority": 1, "baseAnim": "idle" },
 
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
@@ -197,7 +206,6 @@
 
 					"attack": { "frames": 1, "cycle": 1, "mode": "end", "priority": 2, "baseAnim" : "idle" },
 
-					"none2": { "frames": 1, "cycle": 0.1, "mode" : "transition", "transition" : "idle", "priority": 20, "baseAnim" : "none" },
 					"none": { "frames": 1, "cycle": 0.1, "mode": "end", "priority": -1 }
 				}
 			},

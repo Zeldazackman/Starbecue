@@ -3,9 +3,65 @@ sbq = {
 	config = root.assetJson("/sbqGeneral.config"),
 	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json"),
 	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
-	tenantIndex = 1,
+	storage = metagui.inputData,
 	deedUI = true
 }
+
+indexes = {
+	tenantIndex = 1
+}
+
+function sbq.changeSelectedFromList(list, label, indexName, inc )
+	indexes[indexName] = (indexes[indexName] or 1) + inc
+	if indexes[indexName] < 1 then
+		indexes[indexName] = #list
+	elseif indexes[indexName] > #list then
+		indexes[indexName] = 1
+	end
+	label:setText(list[indexes[indexName]])
+	return list[indexes[indexName]]
+end
+
+sbq.validTenantCatalogueList = {}
+for name, tenant in pairs(sbq.tenantCatalogue) do
+	local tenant = tenant
+	if type(tenant) == "table" then
+		tenant = tenant[1]
+	end
+	local data = root.tenantConfig(tenant).checkRequirements or {}
+	local addToList = true
+	if addToList and data.checkItems then
+		for i, item in ipairs(data.checkItems) do
+			addToList = root.itemConfig(item)
+			if not addToList then break end
+		end
+	end
+	if addToList and data.checkJson then
+		addToList, json = pcall(root.assetJson, data.checkJson)
+	end
+	if addToList and data.checkImage then
+		success, notEmpty = pcall(root.nonEmptyRegion, data.checkImage)
+		addToList = (success and notEmpty ~= nil)
+	end
+	if addToList then
+		table.insert(sbq.validTenantCatalogueList, name)
+	end
+end
+table.sort(sbq.validTenantCatalogueList)
+
+sbq.tenantList = {}
+if sbq.storage.occupier then
+	local occupier = sbq.storage.occupier
+	if type(occupier) == "table" and type(occupier.tenants) == "table" and
+		type(occupier.tenants[indexes.tenantIndex]) == "table" and
+		type(occupier.tenants[indexes.tenantIndex].species) == "string"
+	then
+		for i, tenant in ipairs(occupier.tenants) do
+			local name = ((tenant.overrides or {}).identity or {}).name or ""
+			table.insert(sbq.tenantList, name)
+		end
+	end
+end
 
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
@@ -13,12 +69,14 @@ require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
 
 function init()
-	sbq.storage = metagui.inputData
-
 	local occupier = sbq.storage.occupier
 
-	if type(occupier) == "table" and type(occupier.tenants) == "table" and type(occupier.tenants[sbq.tenantIndex]) == "table" and type(occupier.tenants[sbq.tenantIndex].species) == "string" then
-		sbq.tenant = occupier.tenants[sbq.tenantIndex]
+	if type(occupier) == "table" and type(occupier.tenants) == "table" and
+		type(occupier.tenants[indexes.tenantIndex]) == "table" and
+		type(occupier.tenants[indexes.tenantIndex].species) == "string"
+	then
+
+		sbq.tenant = occupier.tenants[indexes.tenantIndex]
 
 		sbq.npcConfig = root.npcConfig(sbq.tenant.type)
 		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings or {}
@@ -32,7 +90,7 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
-		sbq.animOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {}
+		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {})
 		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
 		sbq.animOverrideOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideOverrideSettings or {}
 
@@ -69,7 +127,7 @@ function init()
 			end
 		end
 
-		local species = occupier.tenants[sbq.tenantIndex].species
+		local species = occupier.tenants[indexes.tenantIndex].species
 		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
 		if speciesSettings.tab then
 			mainTabField:newTab( speciesSettings.tab )
@@ -205,6 +263,64 @@ function init()
 			end
 		end
 
+		settingsDealtWith = {}
+		for setting, value in pairs(sbq.animOverrideSettings) do
+			if setting:sub(-6,-1) ~= "Locked" and not settingsDealtWith[setting] then
+				local button = _ENV[setting]
+				local label = _ENV[setting .. "Label"]
+				local locked = _ENV[setting .. "Locked"]
+				local enable = _ENV[setting.."Enable"]
+				local enableLocked = _ENV[setting .. "EnableLocked"]
+
+				settingsDealtWith[setting] = true
+				settingsDealtWith[setting.."Enable"] = true
+
+				if button ~= nil and type(value) == "boolean" then
+					if label ~= nil then
+						label:setVisible(true)
+					end
+					if sbq.animOverrideOverrideSettings[setting] ~= nil then
+						button:setVisible(false)
+						if locked ~= nil then
+							locked:setVisible(true)
+							if sbq.animOverrideOverrideSettings[setting] then
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+							else
+								locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+							end
+							locked.toolTip = (button.toolTip or "").." (Locked)"
+
+							if enable ~= nil then
+								enable:setVisible(false)
+								if enableLocked ~= nil then
+									enableLocked:setVisible(true)
+									if sbq.animOverrideOverrideSettings[setting.."Enable"] then
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
+									else
+										enableLocked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
+									end
+									enableLocked.toolTip = (enable.toolTip or "").." (Locked)"
+								end
+							end
+						end
+					else
+						button:setVisible(true)
+						button:setChecked(value)
+						function button:onClick()
+							sbq.changePreySetting(setting, button.checked)
+						end
+						if enable ~= nil then
+							enable:setVisible(true)
+							enable:setChecked(sbq.animOverrideSettings[setting.."Enable"] or false)
+							function enable:onClick()
+								sbq.changePreySetting(setting.."Enable", enable.checked)
+							end
+						end
+					end
+				end
+			end
+		end
+
 		local list = {"None","Heal","SoftDigest","Digest","TF","Eggify"}
 		for location, data in pairs(sbq.predatorConfig.locations) do
 			for i, effect in ipairs(list) do
@@ -218,7 +334,7 @@ function init()
 		function questParticipation:onClick()
 			sbq.changePredSetting("questParticipation", questParticipation.checked)
 
-			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "enableParticipation", questParticipation.checked, sbq.tenantIndex)
+			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "enableParticipation", questParticipation.checked, indexes.tenantIndex)
 		end
 		function crewmateGraduation:onClick()
 			sbq.changePredSetting("crewmateGraduation", crewmateGraduation.checked)
@@ -232,36 +348,9 @@ function init()
 				}
 			}
 
-			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "graduation", graduation[tostring(crewmateGraduation.checked or false)], sbq.tenantIndex)
+			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "graduation", graduation[tostring(crewmateGraduation.checked or false)], indexes.tenantIndex)
 		end
 	end
-
-	sbq.validTenantCatalogueList = {}
-	for name, tenant in pairs(sbq.tenantCatalogue) do
-		local tenant = tenant
-		if type(tenant) == "table" then
-			tenant = tenant[1]
-		end
-		local data = root.tenantConfig(tenant).checkRequirements or {}
-		local addToList = true
-		if addToList and data.checkItems then
-			for i, item in ipairs(data.checkItems) do
-				addToList = root.itemConfig(item)
-				if not addToList then break end
-			end
-		end
-		if addToList and data.checkJson then
-			addToList, json = pcall(root.assetJson, data.checkJson)
-		end
-		if addToList and data.checkImage then
-			success, notEmpty = pcall(root.nonEmptyRegion, data.checkImage)
-			addToList = (success and notEmpty ~= nil)
-		end
-		if addToList then
-			table.insert(sbq.validTenantCatalogueList, name)
-		end
-	end
-	table.sort(sbq.validTenantCatalogueList)
 end
 
 function update()
@@ -271,17 +360,17 @@ function update()
 end
 
 function sbq.savePredSettings()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings, sbq.tenantIndex)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
 	end
 end
 sbq.saveSettings = sbq.savePredSettings
 
 function sbq.savePreySettings()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings, sbq.tenantIndex)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSavePreySettings", sbq.preySettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSavePreySettings", sbq.preySettings)
 	end
 end
 
@@ -297,27 +386,12 @@ end
 
 function sbq.changeAnimOverrideSetting(settingname, settingvalue)
 	sbq.animOverrideSettings[settingname] = settingvalue
-	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings, sbq.tenantIndex)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings)
-		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
-		world.sendEntityMessage(sbq.storage.occupier.tenants[sbq.tenantIndex].uniqueId, "animOverrideScale", sbq.animOverrideSettings.scale)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "animOverrideScale", sbq.animOverrideSettings.scale)
 	end
-end
-
-
-indexes = {
-
-}
-function sbq.changeSelectedFromList(list, label, indexName, inc )
-	indexes[indexName] = (indexes[indexName] or 1) + inc
-	if indexes[indexName] < 1 then
-		indexes[indexName] = #list
-	elseif indexes[indexName] > #list then
-		indexes[indexName] = 1
-	end
-	label:setText(list[indexes[indexName]])
-	return list[indexes[indexName]]
 end
 
 --------------------------------------------------------------------------------------------------
@@ -365,6 +439,18 @@ end
 
 function incTenant:onClick()
 	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", 1)
+end
+
+function decCurTenant:onClick()
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, curTenantName, "tenantList", -1)
+	curTenantIndex:setText(indexes.tenantIndex)
+	init()
+end
+
+function incCurTenant:onClick()
+	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantList", 1)
+	curTenantIndex:setText(indexes.tenantIndex)
+	init()
 end
 
 --------------------------------------------------------------------------------------------------

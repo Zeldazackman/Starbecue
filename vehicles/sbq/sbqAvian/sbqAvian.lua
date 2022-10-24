@@ -17,28 +17,11 @@ function sbq.update(dt)
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
 end
-
 function sbq.setItemActionColorReplaceDirectives()
 	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
 
 	if sbq.sbqData.replaceColors ~= nil then
-		local i = 1
-		local basePalette = { "4cc1c9", "39979e", "23646a", "154247" }
-		local replacePalette = sbq.sbqData.replaceColors[i][((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-		local fullbright = (sbq.settings.fullbright or {})[i]
-
-		if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
-			replacePalette = sbq.settings.replaceColorTable[i]
-		end
-
-		for j, color in ipairs(basePalette) do
-			color = replacePalette[j]
-			if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
-				color = color.."fe"
-			end
-							colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
-
-		end
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 1, { "4cc1c9", "39979e", "23646a", "154247" } )
 	end
 
 	sbq.itemActionDirectives = colorReplaceString

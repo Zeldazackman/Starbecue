@@ -103,6 +103,11 @@ function sbq.letout(id)
 end
 
 function sbq.settingsMenuUpdated()
+	sbq.handleBodyParts()
+	sbq.handleUnderwear()
+end
+
+function sbq.handleBodyParts()
 	local defaultSbqData = sbq.defaultSbqData
 	if sbq.settings.penis then
 		if sbq.settings.underwear then
@@ -128,11 +133,10 @@ function sbq.settingsMenuUpdated()
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
-	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
 	if sbq.settings.breasts then
 		sbq.setStatusValue( "breastsVisible", "")
-		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.balls.max
-		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.balls.max
+		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.breasts.max
+		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.breasts.max
 	else
 		sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.breastsL.max = 0
@@ -140,14 +144,11 @@ function sbq.settingsMenuUpdated()
 	end
 	world.sendEntityMessage(sbq.driver, "setBoobMask", sbq.settings.breasts)
 
-	sbq.sbqData.locations.breasts.symmetrical = sbq.settings.symmetricalBreasts
-
 	if sbq.settings.pussy then
 		sbq.setStatusValue( "pussyVisible", "")
 	else
 		sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
 	end
-	sbq.handleUnderwear()
 end
 
 function sbq.handleUnderwear()

@@ -28,21 +28,20 @@ function init()
 			message = "Monster Core Loader missing.\n \nThis is not required, but without it you may find some mod incompatibilities, especially with FU.\n \nMake sure to read install information."
 		})
 	end
+	if (not pcall(root.assetJson,("/stats/speciesAnimOverride/speciesAnimOverride.animation"))) then
+		player.confirm({
+			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
+			icon = "/interface/errorpopup/erroricon.png",
+			title = "Starbecue Mod Requirement Warning",
+			message = "If you had read the install directions, you would have installed the required starboundSpeciesAnimOverrides.pak file on the releases page."
+		})
+	end
 	if root.itemConfig("spovpilldonut") ~= nil then
 		player.confirm({
 			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
 			icon = "/interface/errorpopup/erroricon.png",
 			title = "Starbecue Mod Conflict Warning",
 			message = "Zygan SSVM Addons detected.\n \nThat mod is an older version of Starbecue before it was renamed, please remove it."
-		})
-	end
-	if root.itemConfig("vorechipkit") ~= nil and not player.getProperty("sbqSSVMOverridesWarned") then
-		player.setProperty("sbqSSVMOverridesWarned", true)
-		player.confirm({
-			paneLayout = "/interface/windowconfig/popup.config:paneLayout",
-			icon = "/interface/errorpopup/erroricon.png",
-			title = "SSVM Overrides Warning",
-			message = "Starbound Simple Vore Mod Detected.\n \nStarbecue overrides and bugfixes some functions of SSVM to have better parity, check the Help tab in Starbecue's settings for more information."
 		})
 	end
 

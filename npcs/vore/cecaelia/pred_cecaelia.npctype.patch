@@ -10,11 +10,7 @@
 			"path": "/scripts/-",
 			"value": "/scripts/SBQ_npc_bmain.lua"
 		},
-		{
-			"op": "add",
-			"path": "/scripts/-",
-			"value": "/npcs/vore/SBQ_SSVM_tenant_override.lua"
-		},
+
 		{
 			"op": "add",
 			"path": "/scripts/-",

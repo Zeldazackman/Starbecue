@@ -119,7 +119,12 @@ function sbq.doMysteriousTF(data)
 
 	if not overrideData.species then
 		local speciesList = root.assetJson("/interface/windowconfig/charcreation.config").speciesOrdering
-		overrideData.species = speciesList[math.random(#speciesList)]
+		local validSpecies = false
+		local blacklist = root.assetJson("/animOverrideBlacklist.config")
+		while not validSpecies do
+			overrideData.species = speciesList[math.random(#speciesList)]
+			validSpecies = not blacklist[overrideData.species]
+		end
 	elseif overrideData.species == "originalSpecies" then
 		overrideData.species = currentData.species or originalSpecies
 	end
@@ -294,7 +299,7 @@ end
 function sbq.endMysteriousTF()
 	status.setStatusProperty("sbqMysteriousPotionTFDuration", nil )
 	mysteriousTFDuration = nil
-	local oldData = status.statusProperty("oldSpeciesAnimOverrideData")
+	local oldData = status.statusProperty("oldSpeciesAnimOverrideData") or {}
 	status.setStatusProperty("speciesAnimOverrideData", oldData)
 
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]

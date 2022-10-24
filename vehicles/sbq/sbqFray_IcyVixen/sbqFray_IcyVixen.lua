@@ -27,13 +27,14 @@ function sbq.letout(id)
 
 	if location == "belly" then
 		if sbq.heldControl(sbq.driverSeat, "down") then
-			return sbq.doTransition("analEscape", {id = id})
+			return sbq.doTransition("analPushOut", {id = id})
 		else
 			return sbq.doTransition("oralEscape", {id = id})
 		end
 	elseif location == "shaft" then
-		return sbq.doTransition("cockEscape", {id = id})
-
+		return sbq.doTransition("cockEscape", { id = id })
+	elseif location == "butt" then
+		return sbq.doTransition("analEscape", { id = id })
 	elseif location == "ballsL" or location == "ballsR" then
 		return sbq.moveToLocation({id = id}, {location = "shaft"})
 	end
@@ -60,7 +61,7 @@ function sbq.setColorReplaceDirectives()
 	local basePalette = {"ff9418","ffac18","ffd539"}
 	local replacePalette = colorGroup[
 		((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
-	local colorReplaceString = ""
+	local colorReplaceString = "?replace"
 
 	if sbq.settings.replaceColorTable and sbq.settings.replaceColorTable[i] then
 		replacePalette = sbq.settings.replaceColorTable[i]
@@ -70,7 +71,7 @@ function sbq.setColorReplaceDirectives()
 	end
 
 	for j, color in ipairs(replacePalette) do
-		colorReplaceString = colorReplaceString .. "?replace;" .. (basePalette[j] or ""):sub(1, 6) .. "=" .. (color or "")
+		colorReplaceString = colorReplaceString .. ";" .. (basePalette[j] or ""):sub(1, 6) .. "=" .. (color or "")
 		if color and j == 3 then
 
 			local R = tonumber(color:sub(1,2), 16)
@@ -118,6 +119,20 @@ function sbq.setColorReplaceDirectives()
 	sbq.stateconfig.stand.actions.specialAttack.projectile.params = sb.jsonMerge(sbq.stateconfig.stand.actions.specialAttack.projectile.params, projectileParameters)
 end
 
+
+function sbq.setItemActionColorReplaceDirectives()
+	local colorReplaceString = sbq.sbqData.itemActionDirectives or ""
+
+	if sbq.sbqData.replaceColors ~= nil then
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 1, { "154247", "23646a", "39979e", "4cc1c9" })
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 4, { "63263d", "7a334d", "9d4165" })
+		colorReplaceString = sbq.doColorReplaceString(colorReplaceString, 4, { "ff9418", "ffac18", "ffd539"} )
+
+	end
+
+	sbq.itemActionDirectives = colorReplaceString
+end
+
 -------------------------------------------------------------------------------
 
 function getVisibleEntity(entities)
@@ -136,12 +151,13 @@ function eyeTracking()
 	if sbq.driving then
 		target = sbq.globalToLocal(sbq.seats[sbq.driverSeat].controls.aim)
 	else
-		local entity = getVisibleEntity(world.playerQuery(center, 50))
-		if not entity then
-			entity = getVisibleEntity(world.npcQuery(center, 50 ))
+		local center = sbq.localToGlobal(center)
+		local targetEntity = getVisibleEntity(world.playerQuery(center, 50))
+		if not targetEntity then
+			targetEntity = getVisibleEntity(world.npcQuery(center, 50 ))
 		end
-		if entity then
-			target = sbq.globalToLocal(world.entityPosition(entity))
+		if targetEntity then
+			target = sbq.globalToLocal(world.entityPosition(targetEntity))
 		end
 	end
 
@@ -227,7 +243,6 @@ function checkPartsEnabled()
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
-	sbq.sbqData.locations.balls.symmetrical = sbq.settings.symmetricalBalls
 end
 
 -------------------------------------------------------------------------------

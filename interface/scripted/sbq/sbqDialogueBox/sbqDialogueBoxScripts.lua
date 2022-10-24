@@ -70,7 +70,7 @@ function sbq.getRedirectedDialogue(dialogueTree, settings)
 			dialogueTree = sbq.getDialogueBranch(jump, settings)
 		end
 	end
-	return dialogueTree
+	return dialogueTree or {}
 end
 
 function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name)

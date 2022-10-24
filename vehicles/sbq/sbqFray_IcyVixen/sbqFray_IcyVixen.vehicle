@@ -121,7 +121,7 @@
 			"balls"
 		],
 		"locations" :{
-			"belly" : { "name" : "Belly", "max": 2, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
+			"belly" : { "name" : "Belly", "max": 1, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bellybob", "bodybob"], "hammerspace" : true },
 			"butt" : { "name" : "Butt", "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
 			"shaft" : { "name" : "Shaft", "selectEffect" : true, "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"],
 				"digest" : { "effect" : "sbqCumDigest", "toolTip" : "Prey within will be melted into cum, boosted by your attack power.", "icon" : "/interface/scripted/sbq/sbqSettings/cum.png"},
@@ -141,7 +141,7 @@
 			"replaceColors" : [1,1,1,1],
 			"fullbright" : [false,false,true,true],
 
-			"symmetricalBalls" : true,
+			"ballsSymmetrical" : true,
 			"penis" : false,
 			"balls" : false
 
@@ -162,12 +162,12 @@
 		],
 		"replaceColors" : [
 			[
-				["3b3b3f","626368","727377"],
-				["3b3b3f","626368","727377"]
+				["3b3b3f","4a4a4f","626368","727377"],
+				["3b3b3f","4a4a4f","626368","727377"]
 			],
 			[
-				["1c1c1c","343434","424242"],
-				["1c1c1c","343434","424242"]
+				["1c1c1c","262626","343434","424242"],
+				["1c1c1c","262626","343434","424242"]
 			],
 			[
 				["4e0233","ff7ce9","230050","e3b8ff","ffffff"],
@@ -193,7 +193,7 @@
 					"lock": true,
 					"location": "belly",
 					"failOnFull" : true,
-					"timing": "head",
+					"timing": "neck",
 					"animation": {
 						"emote" : "idle2",
 						"neck": "eat",
@@ -207,7 +207,7 @@
 					"voreType" : "oralVore",
 					"lock": true,
 					"location": "belly",
-					"timing": "head",
+					"timing": "neck",
 					"animation": {
 						"emote" : "idle2",
 						"neck": "escape",
@@ -317,6 +317,7 @@
 					"failOnFull" : true,
 					"timing": "body",
 					"animation": {
+						"force" : true,
 						"belly" : "anal",
 						"legs" : "anal",
 						"body" : "anal",
@@ -374,21 +375,17 @@
 						"up": { },
 						"down": { }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"butt" : {
-					"parts" : [],
+					"parts" : ["butt"],
 					"directions": {
-						"front": { "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
-						"back": { "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
-						"up": { },
-						"down": { }
+						"front": { "victimAnimation" : "butt_s_front", "transition": "analPushIn", "indicate": "cyan", "drivingEnabled": true },
+						"back": { "victimAnimation" : "butt_s_back", "transition": "analEscape", "indicate": "red", "drivingEnabled": true },
+						"up": { "victimAnimation" : "butt_s_up" },
+						"down": { "victimAnimation" : "butt_s_down" }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 
 				"shaft" : {
@@ -399,9 +396,7 @@
 						"back": {},
 						"up": { "transition": "shaftToBalls", "indicate": "cyan", "drivingEnabled": true, "settings" : { "balls" : true } }
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"ballsL" : {
 					"sided" :{
@@ -414,9 +409,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				},
 				"ballsR" : {
 					"sided" :{
@@ -429,9 +422,7 @@
 						"back": { "transition": "switchBalls", "indicate": "cyan", "drivingEnabled": true },
 						"down": {}
 					},
-					"chances": { "min": 5, "max": 10 },
-					"animation": { "head": "look" },
-					"animationWhenMoving": { "head": "idle" }
+					"chances": { "min": 5, "max": 10 }
 				}
 
 			},
@@ -461,6 +452,7 @@
 			"defaultActions": ["vore", "specialAttack"],
 			"actions": {
 				"specialAttack": {
+					"icon" : "/items/active/sbqController/swift.png",
 					"cooldown": 0.25,
 					"hold" : true,
 					"animation": { "emote" : "attack"},

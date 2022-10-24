@@ -9,7 +9,7 @@ function sbq.updateAnims(dt)
 			state.animationState.reverseFrame = math.abs(frame - state.animationState.frames)
 			sbq.setPartTag("global", statename.."Frame", state.animationState.frame or 1 )
 		elseif ended and state.animationState.mode == "transition" then
-			doAnim(statename, state.animationState.transition)
+			sbq.doAnim(statename, state.animationState.transition)
 		end
 	end
 
@@ -573,9 +573,10 @@ function sbq.doAnims( anims, force )
 		elseif state == "tags" then
 			sbq.setAnimTag( anim )
 		elseif state == "priority" then
-			sbq.changePriorityLength( anim )
+			sbq.changePriorityLength(anim)
+		elseif state == "force" then
 		else
-			sbq.doAnim( state.."State", anim, force)
+			sbq.doAnim( state.."State", anim, force or anims.force)
 		end
 	end
 end
@@ -698,6 +699,7 @@ function sbq.setColorReplaceDirectives()
 	if sbq.sbqData.replaceColors ~= nil then
 		local colorReplaceString = ""
 		for i, colorGroup in ipairs(sbq.sbqData.replaceColors) do
+			colorReplaceString = colorReplaceString.."?replace"
 			local basePalette = colorGroup[1]
 			local replacePalette = colorGroup[((sbq.settings.replaceColors or {})[i] or (sbq.sbqData.defaultSettings.replaceColors or {})[i] or 1) + 1]
 			local fullbright = (sbq.settings.fullbright or {})[i]
@@ -715,7 +717,7 @@ function sbq.setColorReplaceDirectives()
 				if fullbright and #color <= #"ffffff" then -- don't tack it on it if it already has a defined opacity or fullbright
 					color = color.."fe"
 				end
-				colorReplaceString = colorReplaceString.."?replace;"..(basePalette[j] or "").."="..(color or "")
+				colorReplaceString = colorReplaceString..";"..(basePalette[j] or "").."="..(color or "")
 
 			end
 		end
