@@ -65,12 +65,20 @@
 				[{ "size" : 65 },[ // third quarter
 					{ "expandMode" : [2, 2]},
 					{ "id" : "requiredTagsPanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "type" : "label", "text" : "Colony Tags", "inline" : true },
+						{ "type" : "label", "text" : "Colony Tags",  "align" : "center"},
 						[{"type":"button", "id":"tenantNote", "caption":"?", "visible" : false, "size" : [15,15]},{"type":"button", "id":"orderFurniture", "toolTip": "Order furniture this tenant may appreciate.", "caption":"Order Furniture", "visible":false, "expandMode" : [2,0]}],
 						{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 					]}
 				],[ // fourth quarter
 					{ "expandMode" : [2, 2]}
+					/*
+					{ "type" : "panel", "id" : "tenantSelectPanel", "style" : "convex", "children" : [
+						{ "mode" : "h" },
+						{ "type" : "label", "text" : "Tenant Settings", "align" : "center", "inline" : true },
+						{ "type" : "iconButton", "id" : "decCurTenant", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+						{ "type" : "label", "id" : "curTenantIndex", "text": "1", "align" : "center", "inline" : true },
+						{ "type" : "iconButton", "id" : "incCurTenant", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+					]}*/
 				]],
 				{ "type" : "button", "id" : "callTenant", "caption" : "Call Tenant", "expandMode" : [2, 0] }
 			]},
@@ -209,7 +217,9 @@
 				]}
 			]}
 		],
-			"bottomBar" : []
+			"bottomBar" : [
+				//{ "type" : "label", "id" : "curTenantName", "text": "", "align" : "center", "inline" : true }
+			]
 		}
 	]
 }

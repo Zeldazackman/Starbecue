@@ -12,7 +12,8 @@ function sbq.locationPanel()
 	end
 	local layout = locationPanelScrollArea:addChild({ type = "layout", mode = "vertical", spacing = -1})
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
-		local data = sbq.predatorConfig.locations[location] or {}
+		local data = sbq.predatorConfig.locations[location]
+		if not data then goto loopEnd end
 		layout:addChild({ type = "layout", mode = "horizontal", spacing = -1, children = {
 			{ type = "label", text = " "..(data.name or location).." ", align = "right", inline = true, size = {40,10}},
 			{
@@ -127,6 +128,6 @@ function sbq.locationPanel()
 			sbq.predatorSettings[location.."Compression"] = compression.checked
 			sbq.saveSettings()
 		end
-
+		::loopEnd::
 	end
 end
