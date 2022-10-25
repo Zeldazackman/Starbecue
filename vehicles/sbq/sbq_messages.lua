@@ -138,29 +138,25 @@ end
 
 sbq.entityDigestedAt = {}
 message.setHandler( "sbqDigest", function(_,_, eid)
-	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
-		local location = sbq.lounging[eid].location
-		local success, timing = sbq.doTransition("digest"..location)
-		sbq.entityDigestedAt[eid] = location
-
+	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].visible = false
 		sbq.lounging[eid].digesting = true
-		sbq.lounging[eid].digested = true
+		if not sbq.lounging[eid].digested then
+			local location = sbq.lounging[eid].location
+			local success, timing = sbq.doTransition("digest"..location)
+			sbq.entityDigestedAt[eid] = location
 
-		if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
-			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", eid)
-		end
+			if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+				world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", eid)
+			end
 
-		if success and type(timing) == "number" then
-			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
-		else
-			world.sendEntityMessage(eid, "sbqDigestResponse", 2)
+			if success and type(timing) == "number" then
+				world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+			else
+				world.sendEntityMessage(eid, "sbqDigestResponse", 2)
+			end
 		end
-	else
-		sbq.lounging[eid].sizeMultiplier = 0
-		sbq.lounging[eid].visible = false
-		sbq.lounging[eid].digesting = true
 		sbq.lounging[eid].digested = true
 	end
 end )
@@ -172,28 +168,25 @@ message.setHandler("sbqCumDigest", function(_, _, eid)
 end)
 
 message.setHandler( "sbqSoftDigest", function(_,_, eid)
-	if type(eid) == "number" and sbq.lounging[eid] ~= nil and not sbq.lounging[eid].digested then
-		local location = sbq.lounging[eid].location
-		local success, timing = sbq.doTransition("digest"..location)
-		sbq.entityDigestedAt[eid] = location
-
+	if type(eid) == "number" and sbq.lounging[eid] ~= nil then
 		sbq.lounging[eid].sizeMultiplier = 0
-		sbq.lounging[eid].digested = true
 		sbq.lounging[eid].visible = false
+		if not sbq.lounging[eid].digested then
+			local location = sbq.lounging[eid].location
+			local success, timing = sbq.doTransition("digest"..location)
+			sbq.entityDigestedAt[eid] = location
 
-		if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
-			world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", entity.id())
-		end
+			if type(sbq.lounging[eid].smolPreyData.id) == "number" and world.entityExists(sbq.lounging[eid].smolPreyData.id) then
+				world.sendEntityMessage(sbq.lounging[eid].smolPreyData.id, "giveDigestPrey", entity.id())
+			end
 
-		if success and type(timing) == "number" then
-			world.sendEntityMessage(eid, "sbqDigestResponse", timing)
-		else
-			world.sendEntityMessage(eid, "sbqDigestResponse", 2)
+			if success and type(timing) == "number" then
+				world.sendEntityMessage(eid, "sbqDigestResponse", timing)
+			else
+				world.sendEntityMessage(eid, "sbqDigestResponse", 2)
+			end
 		end
-	else
-		sbq.lounging[eid].sizeMultiplier = 0
 		sbq.lounging[eid].digested = true
-		sbq.lounging[eid].visible = false
 	end
 end )
 
