@@ -65,6 +65,13 @@ function sbq.getPlayerOccupantHolderData()
 	sbq.predatorConfig = sbq.speciesConfig.sbqData
 end
 
+function sbq.drawLocked(w, icon)
+	local c = widget.bindCanvas(w.backingWidget)
+	c:clear()
+	local pos = vec2.mul(c:size(), 0.5)
+	c:drawImageDrawable(icon, pos, 1)
+end
+
 function init()
 
 	sbq.getInitialData()
@@ -84,7 +91,6 @@ function init()
 	end
 	sbq.overrideSettings = sbq.predatorConfig.overrideSettings or {}
 
-	sbq.locationPanel()
 	sbq.effectsPanel()
 
 	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
@@ -263,29 +269,16 @@ local init = init
 function sbq.checkLockedSettingsButtons(settings, override, func)
 	for setting, value in pairs(sbq[settings] or {}) do
 		local button = _ENV[setting]
-		local locked = _ENV[setting .. "Locked"]
-		local label = _ENV[setting .. "Label"]
 		if button ~= nil and type(value) == "boolean" then
-			if label ~= nil then
-				label:setVisible(true)
-			end
 			if sbq[override][setting] ~= nil then
-				button:setVisible(false)
-				if locked ~= nil then
-					locked:setVisible(true)
-					if sbq[override][setting] then
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-					else
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-					end
-					locked.toolTip = (button.toolTip or "").." (Locked)"
+				if sbq[override][setting] then
+					function button:draw() sbq.drawLocked(button, "/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png") end
+				else
+					function button:draw() sbq.drawLocked(button, "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png") end
 				end
+				function button:onClick() end
 			else
-				button:setVisible(true)
 				button:setChecked(value)
-				if locked ~= nil then
-					locked:setVisible(false)
-				end
 				function button:onClick()
 					sbq[func](setting, button.checked)
 				end
@@ -321,11 +314,24 @@ function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.globalSettings[settingname] = settingvalue
 	sbq.predatorSettings[settingname] = settingvalue
 
+	-- a hack until I improve how sided locations are handled
+	if (settingname:sub(1, #"balls") == "balls") or (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.globalSettings[settingname.."L"] = settingvalue
+		sbq.predatorSettings[settingname.."L"] = settingvalue
+		sbq.globalSettings[settingname.."R"] = settingvalue
+		sbq.predatorSettings[settingname .. "R"] = settingvalue
+	end
 	sbq.saveSettings()
 end
 
 function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
+
+	-- a hack until I improve how sided locations are handled
+	if (settingname:sub(1, #"balls") == "balls") or (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.predatorSettings[settingname.."L"] = settingvalue
+		sbq.predatorSettings[settingname.."R"] = settingvalue
+	end
 
 	sbq.saveSettings()
 end
@@ -432,20 +438,7 @@ end
 --------------------------------------------------------------------------------------------------
 
 function escapeValue:onEnter()
-	local value = tonumber(escapeValue.text)
-	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0
-	and (
-		(sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil)
-		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil)
-		or (sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value)
-		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value)
-	)
-	then
-		sbq.changeGlobalSetting("escapeDifficulty", value)
-	else
-		escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-	end
+	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
 end
 
 --------------------------------------------------------------------------------------------------
