@@ -75,20 +75,21 @@
 							"Well hi there <entityname>!",
 							"My name's Socks!\nAnd I'm a plushie flareon!"
 						],
+						"playerSaveSettings" : { "introduced" : true },
 						"jump" : ["converse"]
 					}],
 					["Tell me about yourself", {"jump":["talkAboutSelf"]}],
 					[ "Whats your belly like?", {
-						"next" : "bellyEffect",
+						"next" : "bellyEffectSlot",
 						"voreType" : "oralVore",
 						"default" : { "dialogue" : ["Its all lined with nice soft fabric~\nSuper cozy and warm~\nPerfect for snuggling~"], "jump" : ["converse"]},
-						"sbqHeal" : { "dialogue" : ["Its so cozy in there you'll have an excellent nap and feel better coming out than when you went in~"], "jump" : ["converse"]}
+						"heal" : { "dialogue" : ["Its so cozy in there you'll have an excellent nap and feel better coming out than when you went in~"], "jump" : ["converse"]}
 					}],
 					[ "Whats your womb like?", {
-						"next" : "wombEffect",
+						"next" : "wombEffectSlot",
 						"voreType" : "unbirth",
 						"default" : { "dialogue" : ["My womb was lined with the softest fabric my crator could find, amazing for snuggling~\nOnce I zip you up in there you might never want to leave~"], "jump" : ["converse"]},
-						"sbqHeal" : { "dialogue" : ["The coziest most comfortable place in my entire body~\nOnce I zip you up for a rest in there it might be the rest you'll ever have~"], "jump" : ["converse"]}
+						"heal" : { "dialogue" : ["The coziest most comfortable place in my entire body~\nOnce I zip you up for a rest in there it might be the rest you'll ever have~"], "jump" : ["converse"]}
 					}]
 				]
 			},
@@ -152,54 +153,57 @@
 					//["(story about eating someone)", {}],
 					//["(story about anal vore)", {}],
 					["(story about unbirth)", {
-						"voreType" : "unbirth",
-						"next" : [
-							"sbqLoki_LokiVulpix",
-							"sbqJaych_Jaych"
-						],
-						"sbqLoki_LokiVulpix" : {
-							"next" : [
-								"creation"
-							],
-							"creation" : {
-								"buttonText" : ["->"],
-								"dialogue" : [
-									"So, back when Loki first made me, she didn't actually tell me what the zipper was for",
-									"But I knew perfectly well, I could just feel my purpose imbued into my very being hehe~",
-									"So I had to wait for my moment, all through the day as she showed me around the house, getting me familiar with the place...",
-									"But I didn't have the right moment yet, I just listened to her being cute while resisting the urge to stuff her up inside me right then and there~",
-									"And then, when we finally went to bed, and she snuggled right up against me, the fox's guard down entirely, I made my move~",
-									"I reached down and quietly unzipped myself, and then made sure I had her firmly in my grasp... before shoving her down inside headfirst!",
-									"She squirmed and squirmed and it felt so good, fighting back just a little, we both knew she could have easily stopped me, but she wouldn't~",
-									"Stuffed that fox all the way inside and zipped myself up tight, trapping her, not a single consequence for touching her tails~",
-									"And I had her nice and snug and tucked away in my womb, trapped inside me, she would never admit it, but she loved it~"
-								],
-								"jump":["tellMeAStory"]
-							}
-						},
-						"sbqJaych_Jaych" : {
-							"next" : [
-								"meeting"
-							],
-							"meeting" : {
-								"buttonText" : ["->"],
-								"dialogue" : [
-									"So, theres this ferret named Jaych, little friend of mine, a grassy noodly creature.",
-									"And he just absolutely loves being my little womb pet~",
-									"Back when I first met him, I was part of this little haunted house type thing, where people would wander inside and we would pick them off one by one~",
-									"I would turn them into plushies for my collection hehe, would turn them back afterwards if they wanted, but anyway...",
-									"He came in with a group, and when they split up to search the house, he was left alone in a bedroom with a totally inanimate plushie~",
-									"And while he was distracted by a yell from someone else, I snuck right up over him, and then shoved my rear down right on top!",
-									"And oooooh did it feel good to have such a wiggly noodly creature getting squeezed in my pussy~ I even fingered myself a bit before I zipped myself up to trap him inside~",
-									"And he was just so flustered being inside there, just a wiggly toy for me as the soft plush fabric squeezed tightly around him~",
-									"He loved it even more when I told him I wasn't letting him out~ He kept rubbing his against my closed zipper so he knew he was trapped~\nI think I kept him in there for a week~"
-								],
-								"jump":["tellMeAStory"]
-							}
-						}
+						"checkPlayerLikesKinks" : ["unbirth"],
+						"jump" : ["unbirthStories"]
 					}],
 					["Thats it for now.",{"jump":["converse"]}]
 				]
+			},
+			"unbirthStories" : {
+				"next" : [
+					"sbqLoki_LokiVulpix",
+					"sbqJaych_Jaych"
+				],
+				"sbqLoki_LokiVulpix" : {
+					"next" : [
+						"creation"
+					],
+					"creation" : {
+						"buttonText" : ["->"],
+						"dialogue" : [
+							"So, back when Loki first made me, she didn't actually tell me what the zipper was for",
+							"But I knew perfectly well, I could just feel my purpose imbued into my very being hehe~",
+							"So I had to wait for my moment, all through the day as she showed me around the house, getting me familiar with the place...",
+							"But I didn't have the right moment yet, I just listened to her being cute while resisting the urge to stuff her up inside me right then and there~",
+							"And then, when we finally went to bed, and she snuggled right up against me, the fox's guard down entirely, I made my move~",
+							"I reached down and quietly unzipped myself, and then made sure I had her firmly in my grasp... before shoving her down inside headfirst!",
+							"She squirmed and squirmed and it felt so good, fighting back just a little, we both knew she could have easily stopped me, but she wouldn't~",
+							"Stuffed that fox all the way inside and zipped myself up tight, trapping her, not a single consequence for touching her tails~",
+							"And I had her nice and snug and tucked away in my womb, trapped inside me, she would never admit it, but she loved it~"
+						],
+						"jump":["tellMeAStory"]
+					}
+				},
+				"sbqJaych_Jaych" : {
+					"next" : [
+						"meeting"
+					],
+					"meeting" : {
+						"buttonText" : ["->"],
+						"dialogue" : [
+							"So, theres this ferret named Jaych, little friend of mine, a grassy noodly creature.",
+							"And he just absolutely loves being my little womb pet~",
+							"Back when I first met him, I was part of this little haunted house type thing, where people would wander inside and we would pick them off one by one~",
+							"I would turn them into plushies for my collection hehe, would turn them back afterwards if they wanted, but anyway...",
+							"He came in with a group, and when they split up to search the house, he was left alone in a bedroom with a totally inanimate plushie~",
+							"And while he was distracted by a yell from someone else, I snuck right up over him, and then shoved my rear down right on top!",
+							"And oooooh did it feel good to have such a wiggly noodly creature getting squeezed in my pussy~ I even fingered myself a bit before I zipped myself up to trap him inside~",
+							"And he was just so flustered being inside there, just a wiggly toy for me as the soft plush fabric squeezed tightly around him~",
+							"He loved it even more when I told him I wasn't letting him out~ He kept rubbing his against my closed zipper so he knew he was trapped~\nI think I kept him in there for a week~"
+						],
+						"jump":["tellMeAStory"]
+					}
+				}
 			},
 			"pet" : {
 				"next" : "petting",

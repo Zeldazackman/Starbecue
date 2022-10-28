@@ -441,6 +441,7 @@ function incTenant:onClick()
 	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", 1)
 end
 
+--[[
 function decCurTenant:onClick()
 	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, curTenantName, "tenantList", -1)
 	curTenantIndex:setText(indexes.tenantIndex)
@@ -451,7 +452,7 @@ function incCurTenant:onClick()
 	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantList", 1)
 	curTenantIndex:setText(indexes.tenantIndex)
 	init()
-end
+end]]
 
 --------------------------------------------------------------------------------------------------
 

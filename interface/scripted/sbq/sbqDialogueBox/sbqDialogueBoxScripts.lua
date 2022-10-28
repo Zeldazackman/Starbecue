@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 
 local keysmashchars = {"a","s","d","f","g","h","j","k","","l",";","\'"}
 function sbq.generateKeysmashes(input, lengthMin, lengthMax)
@@ -22,6 +23,7 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
 	while continue and type(dialogueTree) == "table" do
 		continue = false
 		local nextType = type(dialogueTree.next)
+		sb.logInfo(tostring(dialogueTree.next))
 		if nextType == "string" then
 			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next)
 			continue = true
@@ -209,4 +211,9 @@ function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch)
 	else
 		return dialogueTree["false"] or dialogueTree.default
 	end
+end
+
+function dialogueBoxScripts.openNewDialogueBox(dialogueTree, settings, branch, ...)
+	player.interact("ScriptPane", { data = sb.jsonMerge(metagui.inputData, dialogueTree.inputData), gui = { }, scripts = {"/metagui.lua"}, ui = dialogueTree.ui }, pane.sourceEntity())
+	pane.dismiss()
 end
