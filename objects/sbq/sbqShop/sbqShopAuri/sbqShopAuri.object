@@ -106,6 +106,7 @@
 				}
 			}
 		},
+		"talkAboutKinks" : "/npcs/tenants/sbq/ocs/sbqAuri_LokiVulpix.npctype:scriptConfig.dialogueTree.talkAboutKinks",
 		"talkAboutSelf" : "/npcs/tenants/sbq/ocs/sbqAuri_LokiVulpix.npctype:scriptConfig.dialogueTree.talkAboutSelf",
 		"itemSelection" : "/npcs/tenants/sbq/ocs/sbqAuri_LokiVulpix.npctype:scriptConfig.dialogueTree.itemSelection"
 	}
