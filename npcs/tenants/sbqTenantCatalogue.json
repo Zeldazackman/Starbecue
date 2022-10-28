@@ -85,11 +85,12 @@
 	"guard_sylveonoid": [ "sbq_guard_sylveonoid", "sbq_guardT2_sylveonoid", "sbq_guardT3_sylveonoid", "sbq_guardT4_sylveonoid" ],
 	"guard_bunnykin": [ "sbq_guard_bunnykin", "sbq_guardT2_bunnykin", "sbq_guardT3_bunnykin", "sbq_guardT4_bunnykin" ],
 
+	"Auri" : "sbq_tenant_Auri_LokiVulpix",
 	"Zevi": "sbq_tenant_Zevi_Zygahedron",
 	"Socks": "sbq_tenant_Socks_LokiVulpix",
 	"Blue" : "sbq_tenant_Blue_Blueninja",
 	"Sandy" : "sbq_tenant_Sandy_Fevix",
-	"Helena" : "sbq_tenant_Helena_FFWizard"
-	//"Batty" : "sbq_tenant_Batty_Xeronious"
+	"Helena" : "sbq_tenant_Helena_FFWizard",
+	"Batty" : "sbq_tenant_Batty_Xeronious"
 
 }

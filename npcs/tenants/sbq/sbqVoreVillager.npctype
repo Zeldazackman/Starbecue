@@ -423,7 +423,34 @@
 							}
 						}
 					}
+				},
+				"breastVore" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getVoreButtonAction",
+								"request" : {
+									"next" : "doingVore",
+									"before" : { "randomDialogue" : [ "Hah, you're horny.", "You want to squirm into one of my boobs?", "Hehe, you want a bit more than just a drink of milk don't you~", "Thats going to be a real tight fit.", "Now to decide which side to put you on..." ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me excited~", "Ffff~ hehe now they look even bigger~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"unprompted" : {
+									"next" : "doingVore",
+									"before" : {"randomDialogue" : [ "Gonna stick you somewhere things aren't supposed to go~", "Mmm~ hey, want to try something?", "I got a bit excited thinking about this, so now I have to do it~", "I'm gonna need you to pleasure me, but not the normal way~" ] },
+									"after" : { "randomDialogue" : [ "Aahh~ ooooh thats really good~", "Mmmm~ You're getting me even more excited~", "Ffff~ hehe now they look even bigger~", "A-ahh~ Don't stop squirming~" ] }
+								},
+								"notFeelingIt" : { "randomDialogue" : [ "Don't really feel like that right now.", "Not right now.", "I'm not in the mood.", "Eh, maybe later." ] },
+								"otherLocationFull" : "vore.oralVore.race.personality.mood.full.otherLocationFull",
+								"full" : { "randomDialogue" : [ "My boobs are already occupied~", "Maybe after I'm done carrying my current occupants around~", "Hehe, I would if I wasn't already full in there~" ] },
+								"tooBig" : { "randomDialogue" : [ "I think you're a bit too big to fit in there...", "I don't think I'd be able to get you in...", "If only you were a bit smaller...", "Thats a bit too much to ask of me..." ]}
+							}
+						}
+					}
 				}
+
 			},
 			// when being pred, responses to the prey struggling inside
 			// settings come from itself, prey settings come from prey

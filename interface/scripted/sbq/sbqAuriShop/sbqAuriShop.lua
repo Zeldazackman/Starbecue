@@ -105,7 +105,7 @@ for j, tabData in pairs(shopRecipes) do
 					lastWasGreeting = false
 					sbq.updateDialogueBox({ "itemSelection", recipe.dialogue or recipe.result })
 				elseif not lastWasGreeting then
-					sbq.updateDialogueBox({ "greeting" })
+					sbq.updateDialogueBox( metagui.inputData.dialogueTreeStart or { "greeting" })
 				end
 			end
 		end

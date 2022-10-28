@@ -60,6 +60,8 @@ function init()
 	end
 	sbq.data.settings.playerRace = player.species()
 
+	sbq.data.settings = sb.jsonMerge(sbq.data.settings, (player.getProperty("sbqDialogueSettings") or {})[world.entityUniqueId(pane.sourceEntity()) or "noUUID"] or {})
+
 	for _, script in ipairs(sbq.data.dialogueBoxScripts or {}) do
 		require(script)
 	end
@@ -363,14 +365,29 @@ function dialogueCont:onClick()
 	else
 		finished = false
 	end
+	if type(sbq.prevDialogueBranch.saveSettings) == "table" then
+		for setting, value in pairs(sbq.prevDialogueBranch.saveSettings) do
+
+		end
+	end
+	if type(sbq.prevDialogueBranch.playerSaveSettings) == "table" then
+		local settings = player.getProperty("sbqDialogueSettings") or {}
+		local uuid = sbq.prevDialogueBranch.saveForUUID or world.entityUniqueId(pane.sourceEntity()) or "noUUID"
+		settings[uuid] = settings[uuid] or {}
+		for setting, value in pairs(sbq.prevDialogueBranch.playerSaveSettings) do
+			settings[uuid][setting] = value
+			sbq.data.settings[setting] = value
+		end
+		player.setProperty("sbqDialogueSettings", settings)
+	end
 	if type(sbq.prevDialogueBranch.callScript) == "string" then
 		if type(dialogueBoxScripts[sbq.prevDialogueBranch.callScript]) == "function" then
-			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, table.unpack(sbq.prevDialogueBranch.scriptArgs)))
+			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, table.unpack(sbq.prevDialogueBranch.scriptArgs or {})))
 		end
 	elseif sbq.prevDialogueBranch.continue ~= nil then
 		local continue = true
 		local entities = {}
-		if sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
+		if continue and sbq.prevDialogueBranch.continue.nearEntitiesNamed ~= nil then
 			continue = false
 			local found = checkEntityName( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), sbq.prevDialogueBranch.continue.nearEntitiesNamed)
 			for _, id in ipairs(found) do
@@ -378,7 +395,7 @@ function dialogueCont:onClick()
 				table.insert(entities, id)
 			end
 		end
-		if sbq.prevDialogueBranch.continue.nearUniqueId ~= nil then
+		if continue and sbq.prevDialogueBranch.continue.nearUniqueId ~= nil then
 			local found = checkEntityUniqueId( world.entityQuery( world.entityPosition(player.id()), sbq.prevDialogueBranch.continue.range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), sbq.prevDialogueBranch.continue.nearUniqueId)
 			for _, id in ipairs(found) do
 				continue = true
@@ -397,7 +414,23 @@ function dialogueCont:onClick()
 			local action = {option[1]}
 			local continue = true
 			local entities = {}
-			if option[2].nearEntitiesNamed ~= nil then
+			if continue and option[2].check ~= nil then
+				continue = sbq.checkSettings(option[2].check, sbq.data.settings)
+			end
+			if continue and option[2].checkPlayer ~= nil then
+				continue = sbq.checkSettings(option[2].checkPlayer, sb.jsonMerge(sb.jsonMerge(root.assetJson("/sbqGeneral.config:globalSettings"),root.assetJson("/sbqGeneral.config:defaultPreyEnabled.player")),sb.jsonMerge((player.getProperty("sbqSettings") or {}).global or {}, status.statusProperty("sbqPreyEnabled") or {})))
+			end
+			if continue and option[2].checkPlayerLikesKinks ~= nil then
+				local settings = sb.jsonMerge(sb.jsonMerge(root.assetJson("/sbqGeneral.config:globalSettings"),
+					root.assetJson("/sbqGeneral.config:defaultPreyEnabled.player")),
+					sb.jsonMerge((player.getProperty("sbqSettings") or {}).global or {}, status.statusProperty("sbqPreyEnabled") or {}))
+				for i, kink in ipairs(option[2].checkPlayerLikesKinks) do
+					if not (settings[kink] or settings[kink.."Pred"]) then
+						continue = false break
+					end
+				end
+			end
+			if continue and option[2].nearEntitiesNamed ~= nil then
 				continue = false
 				local found = checkEntityName( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearEntitiesNamed)
 				for _, id in ipairs(found) do
@@ -405,7 +438,7 @@ function dialogueCont:onClick()
 					table.insert(entities, id)
 				end
 			end
-			if option[2].nearUniqueId ~= nil then
+			if continue and option[2].nearUniqueId ~= nil then
 				local found = checkEntityUniqueId( world.entityQuery( world.entityPosition(player.id()), option[2].range or 10, sbq.prevDialogueBranch.continue.queryArgs or {includedTypes = {"object", "npc", "vehicle", "monster"}}), option[2].nearUniqueId)
 				for _, id in ipairs(found) do
 					continue = true

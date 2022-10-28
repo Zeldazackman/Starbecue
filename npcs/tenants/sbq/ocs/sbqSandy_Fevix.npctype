@@ -67,12 +67,12 @@
 				"options" : [
 					[ "* Pet", {"jump":["pet"]}],
 					[ "So whats your belly like?", {
-						"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+						"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 						"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 						"default" : { "dialogue" : ["Doesn't really do much"], "jump" : ["converse","continue"]},
-						"sbqHeal" : { "dialogue" : ["You'd be healed."], "jump" : ["converse","continue"]},
-						"sbqDigest" : { "dialogue" : ["I'd melt you down."], "jump" : ["converse","continue"]},
-						"sbqSoftDigest" : { "dialogue" : ["I'd melt you down, but you'd be fine."], "jump" : ["converse","continue"]}
+						"heal" : { "dialogue" : ["You'd be healed."], "jump" : ["converse","continue"]},
+						"digest" : { "dialogue" : ["I'd melt you down."], "jump" : ["converse","continue"]},
+						"softDigest" : { "dialogue" : ["I'd melt you down, but you'd be fine."], "jump" : ["converse","continue"]}
 					}]
 				]
 			},

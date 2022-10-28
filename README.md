@@ -1,5 +1,7 @@
 # Starbecue
 
+if you have a question check [the FAQ](https://github.com/Zygahedron/Starbecue/wiki/F.A.Q.)
+
 To install simply visit the [releases page](https://github.com/Zygahedron/Starbecue/releases), download the latest one (the .pak files), and put them in your Starbound mods folder.
 
 This mod Requires [Stardust Core Lite](https://steamcommunity.com/sharedfiles/filedetails/?id=2512589532) or [Stardust Core](https://steamcommunity.com/sharedfiles/filedetails/?id=764887546)

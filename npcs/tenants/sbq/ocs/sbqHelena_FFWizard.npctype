@@ -154,12 +154,12 @@
 										"jump" : ["converse","default","default","question"]
 									}],
 									[ "So what's your stomach like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "dialogue" : ["It's nice and quiet. Perfect if you want to take a nap."], "jump" : ["converse","default","default","question"]},
-										"sbqHeal" : { "dialogue" : ["It's surprisingly therapeutic right now. Think of it as a nice sauna."], "jump" : ["converse","default","default","question"]},
-										"sbqDigest" : { "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","default","question"]},
-										"sbqSoftDigest" : { "dialogue" : ["It's pretty active right now. No need to worry, though."], "jump" : ["converse","default","default","question"]}
+										"heal" : { "dialogue" : ["It's surprisingly therapeutic right now. Think of it as a nice sauna."], "jump" : ["converse","default","default","question"]},
+										"digest" : { "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","default","question"]},
+										"softDigest" : { "dialogue" : ["It's pretty active right now. No need to worry, though."], "jump" : ["converse","default","default","question"]}
 									}]
 								]
 							},
@@ -231,12 +231,12 @@
 										"jump" : ["converse","default","hungry","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I can probably keep it quiet enough with you in there."], "jump" : ["converse","default","hungry","question"]},
-										"sbqHeal" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I think I can trick it into patching you up if you need it."], "jump" : ["converse","default","hungry","question"]},
-										"sbqDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","hungry","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["It'll be hot. Melty, even. I can still keep you safe, though."], "jump" : ["converse","default","hungry","question"]}
+										"heal" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I think I can trick it into patching you up if you need it."], "jump" : ["converse","default","hungry","question"]},
+										"digest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","hungry","question"]},
+										"softDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["It'll be hot. Melty, even. I can still keep you safe, though."], "jump" : ["converse","default","hungry","question"]}
 									}]
 								]
 							},
@@ -316,12 +316,12 @@
 										"jump" : ["converse","default","horny","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Determined.png"], "dialogue" : ["It's nice, quiet, and just the right temperature for you, <entityname>~"], "jump" : ["converse","default","horny","question"]},
-										"sbqHeal" : { "portrait" : ["Determined.png"], "dialogue" : ["It has a few of my healing embers going. Perfect for mending a tired soul~"], "jump" : ["converse","default","horny","question"]},
-										"sbqDigest" : { "portrait" : ["Determined.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","horny","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Determined.png"], "dialogue" : ["It's going to be slightly hotter than what you'd like. Just enough to sizzle you down~"], "jump" : ["converse","default","horny","question"]}
+										"heal" : { "portrait" : ["Determined.png"], "dialogue" : ["It has a few of my healing embers going. Perfect for mending a tired soul~"], "jump" : ["converse","default","horny","question"]},
+										"digest" : { "portrait" : ["Determined.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","horny","question"]},
+										"softDigest" : { "portrait" : ["Determined.png"], "dialogue" : ["It's going to be slightly hotter than what you'd like. Just enough to sizzle you down~"], "jump" : ["converse","default","horny","question"]}
 									}]
 								]
 							},
@@ -399,12 +399,12 @@
 										"jump" : ["converse","default","friendly","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Nothing special. Take what you will of that."], "jump" : ["converse","default","friendly","question"]},
-										"sbqHeal" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["converse","default","friendly","question"]},
-										"sbqDigest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","friendly","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["converse","default","friendly","question"]}
+										"heal" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["converse","default","friendly","question"]},
+										"digest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["converse","default","friendly","question"]},
+										"softDigest" : { "portrait" : ["Angry.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["converse","default","friendly","question"]}
 									}]
 								]
 							},
@@ -488,12 +488,12 @@
 										"jump" : ["hhconverse","default","default","question"]
 									}],
 									[ "So what's your stomach like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Happy.png"], "dialogue" : ["It's nice and quiet. Perfect if you want to take a nap."], "jump" : ["hhconverse","default","default","question"]},
-										"sbqHeal" : { "portrait" : ["Happy.png"], "dialogue" : ["It's surprisingly therapeutic right now. Think of it as a nice sauna."], "jump" : ["hhconverse","default","default","question"]},
-										"sbqDigest" : { "portrait" : ["Happy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","default","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Happy.png"], "dialogue" : ["It's pretty active right now. No need to worry, though."], "jump" : ["hhconverse","default","default","question"]}
+										"heal" : { "portrait" : ["Happy.png"], "dialogue" : ["It's surprisingly therapeutic right now. Think of it as a nice sauna."], "jump" : ["hhconverse","default","default","question"]},
+										"digest" : { "portrait" : ["Happy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","default","question"]},
+										"softDigest" : { "portrait" : ["Happy.png"], "dialogue" : ["It's pretty active right now. No need to worry, though."], "jump" : ["hhconverse","default","default","question"]}
 									}]
 								]
 							},
@@ -571,12 +571,12 @@
 										"jump" : ["hhconverse","default","hungry","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I can probably keep it quiet enough with you in there."], "jump" : ["hhconverse","default","hungry","question"]},
-										"sbqHeal" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I think I can trick it into patching you up if you need it."], "jump" : ["hhconverse","default","hungry","question"]},
-										"sbqDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","hungry","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["It'll be hot. Melty, even. I can still keep you safe, though."], "jump" : ["hhconverse","default","hungry","question"]}
+										"heal" : { "portrait" : ["Sleepy.png"], "dialogue" : ["I think I can trick it into patching you up if you need it."], "jump" : ["hhconverse","default","hungry","question"]},
+										"digest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","hungry","question"]},
+										"softDigest" : { "portrait" : ["Sleepy.png"], "dialogue" : ["It'll be hot. Melty, even. I can still keep you safe, though."], "jump" : ["hhconverse","default","hungry","question"]}
 									}]
 								]
 							},
@@ -656,12 +656,12 @@
 										"jump" : ["hhconverse","default","horny","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["OwO.png"], "dialogue" : ["It's nice, quiet, and just the right temperature for you, <entityname>~"], "jump" : ["hhconverse","default","horny","question"]},
-										"sbqHeal" : { "portrait" : ["OwO.png"], "dialogue" : ["It has a few of my healing embers going. Perfect for mending a tired soul~"], "jump" : ["hhconverse","default","horny","question"]},
-										"sbqDigest" : { "portrait" : ["OwO.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","horny","question"]},
-										"sbqSoftDigest" : { "portrait" : ["OwO.png"], "dialogue" : ["It's going to be slightly hotter than what you'd like. Just enough to sizzle you down~"], "jump" : ["hhconverse","default","horny","question"]}
+										"heal" : { "portrait" : ["OwO.png"], "dialogue" : ["It has a few of my healing embers going. Perfect for mending a tired soul~"], "jump" : ["hhconverse","default","horny","question"]},
+										"digest" : { "portrait" : ["OwO.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","horny","question"]},
+										"softDigest" : { "portrait" : ["OwO.png"], "dialogue" : ["It's going to be slightly hotter than what you'd like. Just enough to sizzle you down~"], "jump" : ["hhconverse","default","horny","question"]}
 									}]
 								]
 							},
@@ -739,12 +739,12 @@
 										"jump" : ["hhconverse","default","friendly","question"]
 									}],
 									[ "So what's your belly like?", {
-										"next" : "bellyEffect", // the dialogue for the next step down the tree will be based on their bellyEffect setting
+										"next" : "bellyEffectSlot", // the dialogue for the next step down the tree will be based on their bellyEffect setting
 										"voreType" : "oralVore", // this option won't show up if oralVore isn't something either party wants to partake in
 										"default" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Nothing special. Take what you will of that."], "jump" : ["hhconverse","default","friendly","question"]},
-										"sbqHeal" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["hhconverse","default","friendly","question"]},
-										"sbqDigest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","friendly","question"]},
-										"sbqSoftDigest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["hhconverse","default","friendly","question"]}
+										"heal" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Only part of me not angry. Might mend you up."], "jump" : ["hhconverse","default","friendly","question"]},
+										"digest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;Hmph.^reset;"], "jump" : ["hhconverse","default","friendly","question"]},
+										"softDigest" : { "portrait" : ["Mad.png"], "dialogue" : ["^red;You're going to melt. Become pudge. But it isn't fatal."], "jump" : ["hhconverse","default","friendly","question"]}
 									}]
 								]
 							},
