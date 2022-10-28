@@ -25,7 +25,6 @@ player.gender = speciesOverride._gender
 
 
 require("/scripts/SBQ_RPC_handling.lua")
-require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
 
@@ -315,11 +314,16 @@ function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 
 	-- a hack until I improve how sided locations are handled
-	if (settingname:sub(1, #"balls") == "balls") or (settingname:sub(1, #"breasts") == "breasts") then
-		sbq.globalSettings[settingname.."L"] = settingvalue
-		sbq.predatorSettings[settingname.."L"] = settingvalue
-		sbq.globalSettings[settingname.."R"] = settingvalue
-		sbq.predatorSettings[settingname .. "R"] = settingvalue
+	if (settingname:sub(1, #"balls") == "balls") then
+		sbq.globalSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.globalSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+	elseif (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.globalSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.globalSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
 	end
 	sbq.saveSettings()
 end
@@ -328,9 +332,12 @@ function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 
 	-- a hack until I improve how sided locations are handled
-	if (settingname:sub(1, #"balls") == "balls") or (settingname:sub(1, #"breasts") == "breasts") then
-		sbq.predatorSettings[settingname.."L"] = settingvalue
-		sbq.predatorSettings[settingname.."R"] = settingvalue
+	if (settingname:sub(1, #"balls") == "balls") then
+		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+	elseif (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
 	end
 
 	sbq.saveSettings()

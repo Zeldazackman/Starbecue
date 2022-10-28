@@ -1274,8 +1274,7 @@
 			"shaftEffectSlot" : "none",
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,
-			"shaftHealEnable" : false,
-			"shaftEffect" : "sbqRemoveBellyEffects"
+			"shaftHealEnable" : false
 		},
 		// prey enabled settings are down below, but here are the override settings, which follow the same rules as below, however, a player is *not* allowed to modify any of these settings
 		// this is how you can enforce your OC only being prey for things they enjoy, or if they're prey at all

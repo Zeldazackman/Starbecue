@@ -18,41 +18,41 @@ function sbq.effectsPanel()
 							{
 								type = "checkBox", id = location.."None", checked = sbq.predatorSettings[location.."EffectSlot"] == "none" or sbq.predatorSettings[location.."EffectSlot"] == nil,
 								radioGroup = location.."EffectGroup", value = "none",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.none or {}).effect or (sbq.predatorConfig.effectDefaults or {}).none or "sbqRemoveBellyEffects") ) or (sbq.overrideSettings[location.."NoneEnable"] == false) or (sbq.overrideSettings.noneEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "none" ) or (sbq.overrideSettings[location.."NoneEnable"] == false) or (sbq.overrideSettings.noneEnable == false))) or false,
 								toolTip = ((locationData.none or {}).toolTip or "No effects will be applied to prey.")
 							},{
 								type = "checkBox", id = location.."Heal", checked = sbq.predatorSettings[location.."EffectSlot"] == "heal",
 								radioGroup = location.."EffectGroup", value = "heal",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.heal or {}).effect or (sbq.predatorConfig.effectDefaults or {}).heal or "sbqHeal")) or (sbq.overrideSettings[location.."HealEnable"] == false) or (sbq.overrideSettings.healEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "heal" ) or (sbq.overrideSettings[location.."HealEnable"] == false) or (sbq.overrideSettings.healEnable == false))) or false,
 								toolTip = ((locationData.heal or {}).toolTip or "Prey within will be healed, boosted by your attack power.")
 							},{
 								type = "checkBox", id = location.."SoftDigest", checked = sbq.predatorSettings[location.."EffectSlot"] == "softDigest",
 								radioGroup = location.."EffectGroup", value = "softDigest",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.softDigest or {}).effect or (sbq.predatorConfig.effectDefaults or {}).softDigest or "sbqSoftDigest")) or (sbq.overrideSettings[location.."SoftDigestEnable"] == false) or (sbq.overrideSettings.softDigestEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "softDigest") or (sbq.overrideSettings[location.."SoftDigestEnable"] == false) or (sbq.overrideSettings.softDigestEnable == false))) or false,
 								toolTip = ((locationData.softDigest or {}).toolTip or "Prey within will be digested, boosted by your attack power.\nBut they will always retain 1HP.")
 							},{
 								type = "checkBox", id = location.."Digest", checked = sbq.predatorSettings[location.."EffectSlot"] == "digest",
 								radioGroup = location.."EffectGroup", value = "digest",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= ((locationData.digest or {}).effect or (sbq.predatorConfig.effectDefaults or {}).digest or "sbqDigest")) or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= "digest") or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
 								toolTip = ((locationData.digest or {}).toolTip or "Prey within will be digested, boosted by your attack power.")
 							},
 						},
 						{
 							{
 								type = "checkBox", id = location.."NoneEnable", toolTip = "Allows the NPC to choose to have no effect.",
-								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil) or (sbq.overrideSettings[location.."NoneEnable"] == false))) or false,
+								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."EffectSlot"] ~= nil) or (sbq.overrideSettings[location.."NoneEnable"] == false) or (sbq.overrideSettings.noneEnable == false))) or false,
 							},
 							{
 								type = "checkBox", id = location.."HealEnable",  toolTip = "Allows the NPC to choose to heal.",
-								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil) or (sbq.overrideSettings[location.."HealEnable"] == false))) or false,
+								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."EffectSlot"] ~= nil) or (sbq.overrideSettings[location.."HealEnable"] == false) or (sbq.overrideSettings.healEnable == false))) or false,
 							},
 							{
 								type = "checkBox", id = location.."SoftDigestEnable",  toolTip = "Allows the NPC to choose to soft digest.",
-								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil) or (sbq.overrideSettings[location.."SoftDigestEnable"] == false))) or false,
+								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."EffectSlot"] ~= nil) or (sbq.overrideSettings[location.."SoftDigestEnable"] == false) or (sbq.overrideSettings.softDigestEnable == false))) or false,
 							},
 							{
 								type = "checkBox", id = location.."DigestEnable",  toolTip = "Allows the NPC to choose to digest.",
-								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil) or (sbq.overrideSettings[location.."DigestEnable"] == false))) or false,
+								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."EffectSlot"] ~= nil) or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
 							},
 						}
 					},
@@ -86,7 +86,18 @@ function sbq.effectsPanel()
 						},
 					}
 				}}
-			} }
+			}}
+			local otherLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+				{ type = "layout", mode = "vertical", spacing = 0, children = {
+					{
+						{
+							type = "checkBox", id = location.."Sounds", checked = sbq.globalSettings[location.."Sounds"],
+							toolTip = "Will emit gurgling sounds when prey is within."
+						},
+						{ type = "label", text = "Gurgling Sounds" }
+					}
+				}}
+			}}
 
 			local modifiersLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
@@ -99,8 +110,10 @@ function sbq.effectsPanel()
 					{
 						{ type = "checkBox", id = location .. "HammerspaceDisabledButton",
 							checked = not sbq.predatorSettings[location .. "HammerspaceDisabled"],
-							toolTip = "Allow hammerspace for this location when it is enabled." },
-						{ type = "label", text = "Allow Hammerspace"}
+							toolTip = "Allow hammerspace for this location when it is enabled.",
+							visible = locationData.hammerspace or false
+						},
+						{ type = "label", text = "Allow Hammerspace", visible = locationData.hammerspace or false}
 					},
 					{
 						{ type = "checkBox", id = location .. "CompressionButton", checked = sbq.predatorSettings[location.."Compression"], toolTip = "Prey will be compressed to a smaller size over time." },
@@ -121,6 +134,7 @@ function sbq.effectsPanel()
 					{ type = "panel", style = "convex", children = {
 						mainEffectLayout,
 						extraEffectLayout,
+						otherLayout,
 						modifiersLayout,
 						difficultyMod
 					}}
@@ -189,7 +203,7 @@ function sbq.effectsPanel()
 			multiplier:setText(tostring(sbq.overrideSettings[location .. "Multiplier"] or
 				sbq.predatorSettings[location .. "Multiplier"] or 1))
 
-			function difficultyTextbox:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "DifficultyMod") end
+			function difficultyTextbox:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "DifficultyMod", sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"]) end
 			difficultyTextbox:setText(tostring(sbq.overrideSettings[location .. "DifficultyMod"] or
 			sbq.predatorSettings[location .. "DifficultyMod"] or 0))
 
@@ -263,6 +277,7 @@ function sbq.locationDefaultSettings(locationData,location)
 	end
 	sbq.globalSettings[location.."HammerspaceDisabled"] = sbq.globalSettings[location.."HammerspaceDisabled"] or false
 	sbq.globalSettings[location.."Compression"] = sbq.globalSettings[location.."Compression"] or false
+	sbq.globalSettings[location.."Sounds"] = sbq.globalSettings[location.."Sounds"] or false
 
 end
 

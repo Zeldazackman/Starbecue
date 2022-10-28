@@ -10,7 +10,7 @@
 	],
 
 	// you really should make sure to define the npcname so the OC actually has the OC's name
-	"npcname" : "Template",
+	"npcname" : "Auroria",
 	// identity is quite important if you don't want things to be randomly generated
 	// great thing here is one can define whatever they want as the name of the hair, facial hair, or facial mask types, even if they're not
 	// available to the player in normal customization it just has to be in the folder with the rest of the hairs for the species
@@ -48,11 +48,11 @@
 		// if you want to use specially drawn sprites for dialogue box portraits, remove the two portrait args above, and uncomment the args below
 		/*
 		"defaultPortrait" : "neutral.png",
-		"portraitPath" : "/humanoid/sbqTemplate/portraits/", // Depending on how you make your OC, you may want to have your portraits located in different places, so heres some suggestions
-		"portraitPath" : "/npcs/tenants/sbq/ocs/sbqTemplate/portraits/",
+		"portraitPath" : "/humanoid/sbqAuroria_Auroria/portraits/", // Depending on how you make your OC, you may want to have your portraits located in different places, so heres some suggestions
+		"portraitPath" : "/npcs/tenants/sbq/ocs/sbqAuroria_Auroria/portraits/",
 		*/
 
-		//"dialogueBoxScripts" : ["/npcs/tenants/sbq/ocs/sbqTemplateDialogueBoxScripts.lua"], // this is for scripts used by both the dialogue box and the NPC itself, used for adding extra behavior step scripts to the dialogue tree
+		//"dialogueBoxScripts" : ["/npcs/tenants/sbq/ocs/sbqAuroria_AuroriaDialogueBoxScripts.lua"], // this is for scripts used by both the dialogue box and the NPC itself, used for adding extra behavior step scripts to the dialogue tree
 		// as the scipts here are being called on both a UI and on the NPC, do avoid using the player or npc lua tables in such scripts unless said script would only trigger in the context of it having said table
 
 		//"dialogueTree" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree", // if one wants to just use the default random gen NPC dialogue tree, one can just delete the table and uncomment this

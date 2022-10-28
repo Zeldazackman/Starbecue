@@ -17,125 +17,102 @@
 					{ "type" : "button", "id" : "summonTenant", "caption" : "Summon", "expandMode" : [0, 0], "toolTip" : "Warning! Summoning a new NPC will clear the saved data for the current tenant! You must click three times to confirm evicting the existing tenant" }
 				]}]],
 				[
-					[{ "type" : "panel", "id" : "tenantBehaviorPanel", "style" : "convex", "children" : [
-						{ "mode" : "v", "spacing" : -1 },
-						{ "type" : "label", "text" : "Tenant Behavior", "align" : "center" },
-						[
-							{ "type" : "checkBox", "id" : "allowHunting", "toolTip" : "NPC will actively seek out prey to vore" }, { "type" : "iconButton", "id" : "allowHuntingLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Allow Hunting ", "inline" : true },
-							{ "type" : "checkBox", "id" : "huntFriendlyPlayers", "toolTip" : "Friendly Players" },{ "type" : "iconButton", "id" : "huntFriendlyPlayersLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "huntHostilePlayers", "toolTip" : "Hostile Players" },{ "type" : "iconButton", "id" : "huntHostilePlayersLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "huntFriendlyNPCs", "toolTip" : "Friendly NPCs" },{ "type" : "iconButton", "id" : "huntFriendlyNPCsLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "huntHostileNPCs", "toolTip" : "Hostile NPCs" },{ "type" : "iconButton", "id" : "huntHostileNPCsLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "huntFriendlyMonsters", "toolTip" : "Friendly Monsters" },{ "type" : "iconButton", "id" : "huntFriendlyMonstersLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "huntHostileMonsters", "toolTip" : "Hostile Monsters" },{ "type" : "iconButton", "id" : "huntHostileMonstersLocked", "image" : "lockedDisabled.png", "visible" : false }
+					{"mode" : "horizontal"},
+					{"type" : "layout", "mode" : "vertical", "expandMode" : [1,0], "size" : [100,140], "children" : [
+						{ "type" : "button", "id" : "callTenant", "caption" : "Call Tenant", "expandMode" : [2, 0] },
+						[{ "type" : "panel", "id" : "tenantBehaviorPanel", "style" : "convex", "children" : [
+							{ "mode" : "v", "spacing" : -1 },
+							{ "type" : "label", "text" : "Tenant Behavior", "align" : "center" },
+							[
+								{ "type" : "checkBox", "id" : "allowHunting", "toolTip" : "NPC will actively seek out prey to vore" },  { "type" : "label", "text" : " Allow Hunting ", "inline" : true },
+								{ "type" : "checkBox", "id" : "huntFriendlyPlayers", "toolTip" : "Friendly Players" },
+								{ "type" : "checkBox", "id" : "huntHostilePlayers", "toolTip" : "Hostile Players" },
+								{ "type" : "checkBox", "id" : "huntFriendlyNPCs", "toolTip" : "Friendly NPCs" },
+								{ "type" : "checkBox", "id" : "huntHostileNPCs", "toolTip" : "Hostile NPCs" },
+								{ "type" : "checkBox", "id" : "huntFriendlyMonsters", "toolTip" : "Friendly Monsters" },
+								{ "type" : "checkBox", "id" : "huntHostileMonsters", "toolTip" : "Hostile Monsters" }
 
-						],
-						[
-							{ "type" : "checkBox", "id" : "allowBaiting", "toolTip" : "NPC will actively seek out preds to vore them" }, { "type" : "iconButton", "id" : "allowBaitingLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Allow Baiting  ", "inline" : true },
-							{ "type" : "checkBox", "id" : "baitFriendlyPlayers", "toolTip" : "Friendly Players" },{ "type" : "iconButton", "id" : "baitFriendlyPlayersLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "baitHostilePlayers", "toolTip" : "Hostile Players" },{ "type" : "iconButton", "id" : "baitHostilePlayersLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "baitFriendlyNPCs", "toolTip" : "Friendly NPCs" },{ "type" : "iconButton", "id" : "baitFriendlyNPCsLocked", "image" : "lockedDisabled.png", "visible" : false },
-							{ "type" : "checkBox", "id" : "baitHostileNPCs", "toolTip" : "Hostile NPCs" },{ "type" : "iconButton", "id" : "baitHostileNPCsLocked", "image" : "lockedDisabled.png", "visible" : false }
-
-						],
-						[
-							[[
-								[[{ "type" : "checkBox", "id" : "questParticipation", "toolTip" : "Allow NPC to give out and participate in quests.\n(Forces NPC to Respawn when toggled)" },{ "type" : "iconButton", "id" : "questParticipationLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "label", "text" : " Quest Participation", "inline" : true }]],
-								[[{ "type" : "checkBox", "id" : "crewmateGraduation", "toolTip" : "Allow NPC to give out and graduate into a cewmate.\n(Forces NPC to Respawn when toggled)" },{ "type" : "iconButton", "id" : "crewmateGraduationLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "label", "text" : " Crewmate Graduation", "inline" : true }]]
-							]]
-						]
-					]}],
-					[]
-				],
-				[[[{ "type" : "panel", "id" : "personalityPanel", "style" : "convex", "children" : [
-					{ "mode" : "h" },
-					{ "type" : "label", "text" : " Personality", "inline" : true },
-					{ "type" : "iconButton", "id" : "decPersonality", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-					{ "type" : "textBox", "id" : "personalityText", "expandMode" : [1, 0] },
-					{ "type" : "iconButton", "id" : "incPersonality", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
-				]},
-				{ "type" : "panel", "id" : "moodPanel", "style" : "convex", "children" : [
-					{ "mode" : "h" },
-					{ "type" : "label", "text" : " Mood", "inline" : true },
-					{ "type" : "iconButton", "id" : "decMood", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-					{ "type" : "textBox", "id" : "moodText", "expandMode" : [1, 0] },
-					{ "type" : "iconButton", "id" : "incMood", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
-				]}
-				]]],
-				[{ "size" : 65 },[ // third quarter
-					{ "expandMode" : [2, 2]},
-					{ "id" : "requiredTagsPanel", "type" : "panel", "style" : "convex", "children" : [
-						{ "type" : "label", "text" : "Colony Tags",  "align" : "center"},
-						[{"type":"button", "id":"tenantNote", "caption":"?", "visible" : false, "size" : [15,15]},{"type":"button", "id":"orderFurniture", "toolTip": "Order furniture this tenant may appreciate.", "caption":"Order Furniture", "visible":false, "expandMode" : [2,0]}],
-						{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-					]}
-				],[ // fourth quarter
-					{ "expandMode" : [2, 2]}
-					/*
-					{ "type" : "panel", "id" : "tenantSelectPanel", "style" : "convex", "children" : [
-						{ "mode" : "h" },
-						{ "type" : "label", "text" : "Tenant Settings", "align" : "center", "inline" : true },
-						{ "type" : "iconButton", "id" : "decCurTenant", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-						{ "type" : "label", "id" : "curTenantIndex", "text": "1", "align" : "center", "inline" : true },
-						{ "type" : "iconButton", "id" : "incCurTenant", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
-					]}*/
-				]],
-				{ "type" : "button", "id" : "callTenant", "caption" : "Call Tenant", "expandMode" : [2, 0] }
+							],
+							[
+								{ "type" : "checkBox", "id" : "allowBaiting", "toolTip" : "NPC will actively seek out preds to vore them" }, { "type" : "label", "text" : " Allow Baiting  ", "inline" : true },
+								{ "type" : "checkBox", "id" : "baitFriendlyPlayers", "toolTip" : "Friendly Players" },
+								{ "type" : "checkBox", "id" : "baitHostilePlayers", "toolTip" : "Hostile Players" },
+								{ "type" : "checkBox", "id" : "baitFriendlyNPCs", "toolTip" : "Friendly NPCs" },
+								{ "type" : "checkBox", "id" : "baitHostileNPCs", "toolTip" : "Hostile NPCs" }
+							],
+							[{ "type" : "checkBox", "id" : "questParticipation", "toolTip" : "Allow NPC to give out and participate in quests.\n(Forces NPC to Respawn when toggled)" },{ "type" : "label", "text" : " Quest Participation", "inline" : true }],
+							[{ "type" : "checkBox", "id" : "crewmateGraduation", "toolTip" : "Allow NPC to give out and graduate into a cewmate.\n(Forces NPC to Respawn when toggled)" },{ "type" : "label", "text" : " Crewmate Graduation", "inline" : true }]
+						]}],
+						[{ "type" : "panel", "id" : "personalityPanel", "expandMode" : [1, 0], "style" : "convex", "children" : [
+							{ "mode" : "h" },
+							{ "type" : "label", "text" : " P", "inline" : true },
+							{ "type" : "iconButton", "id" : "decPersonality", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+							{ "type" : "textBox", "id" : "personalityText", "expandMode" : [1, 0], "toolTip": "Personality" },
+							{ "type" : "iconButton", "id" : "incPersonality", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+						]},
+						{ "type" : "panel", "id" : "moodPanel", "expandMode" : [1, 0], "style" : "convex", "children" : [
+							{ "mode" : "h" },
+							{ "type" : "label", "text" : " M", "inline" : true },
+							{ "type" : "iconButton", "id" : "decMood", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+							{ "type" : "textBox", "id" : "moodText", "expandMode" : [1, 0], "toolTip": "Mood" },
+							{ "type" : "iconButton", "id" : "incMood", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
+						]}],
+						{"type" : "layout", "mode" : "vertical", "expandMode" : [2,2], "children" : []}
+					]},
+					[
+						{"size" : 85},
+						{ "id" : "requiredTagsPanel", "type" : "panel", "size":[80,50], "expandMode" : [1,1], "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Colony Tags",  "align" : "center"},
+							[{"type":"button", "id":"tenantNote", "caption":"?", "visible" : false, "size" : [15,15]},{"type":"button", "id":"orderFurniture", "toolTip": "Order furniture this tenant may appreciate.", "caption":"Order Furniture", "visible":false, "expandMode" : [2,0]}],
+							{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						]}
+					]
+				]
 			]},
 			{ "type" : "tab", "id" : "npcPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "vertical", "children" : [
-					[{ "size" : 85 },[//first collumn
-						{ "expandMode" : [2, 2]},
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Effects", "inline" : true },
-							{ "type" : "scrollArea", "id" : "effectsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
-								{"type" : "layout", "id": "effectsLayout", "mode" : "vertical", "spacing" : -1, "children" : [
-								]}
-							]}
-						]}
-					],[// second collumn
-						{ "expandMode" : [2, 2]},
-						[[{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center"},
-							[
+				{"type" : "layout", "mode": "horizontal", "children" : [
+					{"type" : "layout", "mode" : "vertical", "id" : "locationTabLayout", "expandMode" : [1,0], "size" : [100,165], "children" : [
+					]},
+					[
+						{ "size" : 85 },
+						{ "type" : "panel", "style" : "convex", "expandMode" : [1,0], "children" : [
+							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center" },
+							{"type" : "layout", "mode" : "horizontal", "spacing" : -1, "children" :[
+								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
+								{ "type" : "checkBox", "id" : "impossibleEscapeEnable", "toolTip" : "Allow Pred to decide to make escaping impossible" },
 								{ "type" : "textBox", "id" : "escapeValueMin", "toolTip" : "Minimum Escape Difficulty", "text" : "0" },
 								{ "type" : "textBox", "id" : "escapeValue", "toolTip" : "Current Escape Difficulty", "text" : "0" },
 								{ "type" : "textBox", "id" : "escapeValueMax", "toolTip" : "Maximum Escape Difficulty", "text" : "10" }
-							]
-						]}]],
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "iconButton", "id" : "displayDigestLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Display Effects" } ],
-							[ { "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "iconButton", "id" : "bellySoundsLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Belly Sounds" } ],
-							[ { "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "iconButton", "id" : "hammerspaceLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Hammerspace" } ]
-						]}]}
-					]],
-					[{ "size" : 65 },[ // third quarter
-						{ "expandMode" : [2, 2]},
-						{ "id" : "locationPanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Occupancy Options", "inline" : true },
-							{ "type" : "scrollArea", "id" : "locationPanelScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
-						]}
-					],[ // fourth quarter
-						{ "expandMode" : [2, 2]},
-						{ "id" : "voreTypePanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Vore Prefrences", "inline" : true },
-							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+							]}
+						]},
+						{ "id" : "globalSettingsPanel", "type" : "panel", "size":[80,50], "expandMode" : [1,0], "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Global Settings", "align" : "center" },
+							{ "type" : "scrollArea", "id" : "globalSettingsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 								{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[{ "type" : "checkBox", "id" : "oralVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Oral Vore" },{ "type" : "iconButton", "id" : "oralVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "This NPC will perform Oral Vore" },{ "type" : "iconButton", "id" : "oralVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Oral Vore" } ],
-								[{ "type" : "checkBox", "id" : "tailVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Tail Vore" },{ "type" : "iconButton", "id" : "tailVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "This NPC will perform Tail Vore" },{ "type" : "iconButton", "id" : "tailVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tail Vore" } ],
-								[{ "type" : "checkBox", "id" : "absorbVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Absorbtion" },{ "type" : "iconButton", "id" : "absorbVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "This NPC will perform Absorbtion" },{ "type" : "iconButton", "id" : "absorbVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Absorbtion" } ],
-								[{ "type" : "checkBox", "id" : "navelVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Navel Vore" },{ "type" : "iconButton", "id" : "navelVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "This NPC will perform Navel Vore" },{ "type" : "iconButton", "id" : "navelVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Navel Vore" } ],
-								[{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },{ "type" : "iconButton", "id" : "analVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" },{ "type" : "iconButton", "id" : "analVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Anal Vore" } ],
-								[{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },{ "type" : "iconButton", "id" : "cockVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" },{ "type" : "iconButton", "id" : "cockVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Cock Vore" } ],
-								[{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },{ "type" : "iconButton", "id" : "breastVorePredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" },{ "type" : "iconButton", "id" : "breastVorePredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Breast Vore" } ],
-								[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "iconButton", "id" : "unbirthPredEnableLocked", "image" : "lockedDisabled.png", "visible" : false },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" },{ "type" : "iconButton", "id" : "unbirthPredLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Unbirth" } ]
+									[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "label", "text" : " Display Effect" } ],
+									[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
+								]}
+							]}]}
+						]},
+						{ "id" : "voreTypePanel", "type" : "panel", "size":[80,50], "expandMode" : [1,1], "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Vore Preferences", "align" : "center" },
+							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								{ "type" : "panel", "style" : "flat", "children" : [ {"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+									[{ "type" : "checkBox", "id" : "oralVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Oral Vore" },{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "This NPC will perform Oral Vore" }, { "type" : "label", "text" : " Oral Vore" } ],
+									[{ "type" : "checkBox", "id" : "tailVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Tail Vore" },{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "This NPC will perform Tail Vore" }, { "type" : "label", "text" : " Tail Vore" } ],
+									[{ "type" : "checkBox", "id" : "absorbVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Absorbtion" },{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "This NPC will perform Absorbtion" }, { "type" : "label", "text" : " Absorbtion" } ],
+									[{ "type" : "checkBox", "id" : "navelVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Navel Vore" },{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "This NPC will perform Navel Vore" }, { "type" : "label", "text" : " Navel Vore" } ],
+									[{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
+									[{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
+									[{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
+									[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" }, { "type" : "label", "text" : " Unbirth" } ],
+									{"type" : "label", "text" : "-Other-", "align" : "center"},
+									[{ "type" : "checkBox", "id" : "cockTFPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock TF" },{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "This NPC will perform Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
+									[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Absorbtion" },{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "This NPCs will perform Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
+								]}
 							]}]}
 						]}
-					]],
-					{ "type" : "label", "text" : "Choose the properties of this NPC's stomach, and what properties they can decide themselves." }
+					]
 				]}
 			]},
 			{ "type" : "tab", "id" : "npcPreySettings", "title" : "Prey", "icon" : "/interface/scripted/sbq/sbqSettings/preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
@@ -146,27 +123,27 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Questionable", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "oralVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "oralVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "oralVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "oralVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Oral Vore" } ],
-							[ { "type" : "checkBox", "id" : "tailVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "tailVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "tailVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "tailVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Tail Vore" } ],
-							[ { "type" : "checkBox", "id" : "absorbVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "absorbVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "absorbVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "absorbVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Absorbtion" } ],
-							[ { "type" : "checkBox", "id" : "navelVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "navelVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "navelVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "navelVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Navel Vore" } ]
+							[ { "type" : "checkBox", "id" : "oralVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "oralVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Oral Vore" } ],
+							[ { "type" : "checkBox", "id" : "tailVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "tailVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Tail Vore" } ],
+							[ { "type" : "checkBox", "id" : "absorbVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "absorbVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Absorbtion" } ],
+							[ { "type" : "checkBox", "id" : "navelVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "navelVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Navel Vore" } ]
 						]}]},
 						// second collumn
 						{ "expandMode" : [2, 2]}, { "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Sexual", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "analVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "analVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "analVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "analVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Anal Vore" } ],
-							[ { "type" : "checkBox", "id" : "cockVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "cockVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "cockVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "cockVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Cock Vore" } ],
-							[ { "type" : "checkBox", "id" : "breastVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "breastVoreEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "breastVore", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "breastVoreLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Breast Vore" } ],
-							[ { "type" : "checkBox", "id" : "unbirthEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "unbirthEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "unbirth", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "unbirthLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Unbirth" } ]
+							[ { "type" : "checkBox", "id" : "analVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "analVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Anal Vore" } ],
+							[ { "type" : "checkBox", "id" : "cockVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "cockVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Cock Vore" } ],
+							[ { "type" : "checkBox", "id" : "breastVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "checkBox", "id" : "breastVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Breast Vore" } ],
+							[ { "type" : "checkBox", "id" : "unbirthEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "unbirth", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Unbirth" } ]
 						]}]},
 						// third collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Other", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "heldEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "iconButton", "id" : "heldEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "held", "toolTip" : "Whether this action can be used on this NPC currently" }, { "type" : "iconButton", "id" : "heldLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Grabbed" } ]
+							[ { "type" : "checkBox", "id" : "heldEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "held", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Grabbed" } ]
 						]}]}
 					],
 					[
@@ -174,12 +151,12 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "General", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[ { "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "preyEnabledEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" }, { "type" : "iconButton", "id" : "preyEnabledLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Prey Enabled" }],
+								[ { "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" },  { "type" : "label", "text" : " Prey Enabled" }],
 								[
-									{ "type" : "checkBox", "id" : "allowSoftDigest", "toolTip" : "Allow soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
-									{ "type" : "checkBox", "id" : "allowMilkSoftDigest", "toolTip" : "Allow milk soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowMilkSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
-									{ "type" : "checkBox", "id" : "allowCumSoftDigest", "toolTip" : "Allow cum soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowCumSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
-									{ "type" : "checkBox", "id" : "allowFemcumSoftDigest", "toolTip" : "Allow femcum soft digestion when otherwise immune." },{ "type" : "iconButton", "id" : "allowFemcumSoftDigestLocked", "image" : "lockedDisabled.png", "visible" : false },
+									{ "type" : "checkBox", "id" : "allowSoftDigest", "toolTip" : "Allow soft digestion when otherwise immune." },
+									{ "type" : "checkBox", "id" : "allowMilkSoftDigest", "toolTip" : "Allow milk soft digestion when otherwise immune." },
+									{ "type" : "checkBox", "id" : "allowCumSoftDigest", "toolTip" : "Allow cum soft digestion when otherwise immune." },
+									{ "type" : "checkBox", "id" : "allowFemcumSoftDigest", "toolTip" : "Allow femcum soft digestion when otherwise immune." },
 									{ "type" : "label", "text" : " Allow Soft Digest" }
 								]
 							]}
@@ -188,14 +165,14 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Immunities", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[ { "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" }, { "type" : "iconButton", "id" : "digestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" }, { "type" : "iconButton", "id" : "digestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Digestion" }],
-								[ { "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" }, { "type" : "iconButton", "id" : "cumDigestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" }, { "type" : "iconButton", "id" : "cumDigestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Cum Digestion" }],
-								[ { "type" : "checkBox", "id" : "femcumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be femcum digested or not" }, { "type" : "iconButton", "id" : "femcumDigestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "femcumDigestImmunity", "toolTip" : "If this NPC is currently immune to femcum digestion" }, { "type" : "iconButton", "id" : "femcumDigestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Femcum Digestion" }],
-								[ { "type" : "checkBox", "id" : "milkDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be milk digested or not" }, { "type" : "iconButton", "id" : "milkDigestImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "milkDigestImmunity", "toolTip" : "If this NPC is currently immune to milk digestion" }, { "type" : "iconButton", "id" : "milkDigestImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Milk Digestion" }],
-								[ { "type" : "checkBox", "id" : "cumTFImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum transformed or not" }, { "type" : "iconButton", "id" : "cumTFImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "If this NPC is currently immune to cum transformation" }, { "type" : "iconButton", "id" : "cumTFImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Cum Transformation" }],
-								[ { "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" }, { "type" : "iconButton", "id" : "transformImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" }, { "type" : "iconButton", "id" : "transformImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Transformation" }],
-								[ { "type" : "checkBox", "id" : "genderswapImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be genderswapped or not" }, { "type" : "iconButton", "id" : "genderswapImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "If this NPC is currently immune to genderswap effects" }, { "type" : "iconButton", "id" : "genderswapImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Genderswap" }],
-								[ { "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "iconButton", "id" : "eggImmunityEnableLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" }, { "type" : "iconButton", "id" : "eggImmunityLocked", "image" : "lockedDisabled.png", "visible" : false }, { "type" : "label", "text" : " Egg Entrapment" }]
+								[ { "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" },  { "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" },  { "type" : "label", "text" : " Digestion" }],
+								[ { "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" },  { "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" },  { "type" : "label", "text" : " Cum Digestion" }],
+								[ { "type" : "checkBox", "id" : "femcumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be femcum digested or not" },  { "type" : "checkBox", "id" : "femcumDigestImmunity", "toolTip" : "If this NPC is currently immune to femcum digestion" },  { "type" : "label", "text" : " Femcum Digestion" }],
+								[ { "type" : "checkBox", "id" : "milkDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be milk digested or not" },  { "type" : "checkBox", "id" : "milkDigestImmunity", "toolTip" : "If this NPC is currently immune to milk digestion" },  { "type" : "label", "text" : " Milk Digestion" }],
+								[ { "type" : "checkBox", "id" : "cumTFImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum transformed or not" },  { "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "If this NPC is currently immune to cum transformation" }, { "type" : "label", "text" : " Cum Transformation" }],
+								[ { "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" },  { "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" },  { "type" : "label", "text" : " Transformation" }],
+								[ { "type" : "checkBox", "id" : "genderswapImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be genderswapped or not" },  { "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "If this NPC is currently immune to genderswap effects" },  { "type" : "label", "text" : " Genderswap" }],
+								[ { "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" },  { "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" },  { "type" : "label", "text" : " Egg Entrapment" }]
 							]}
 						]}
 					],
@@ -218,7 +195,14 @@
 			]}
 		],
 			"bottomBar" : [
-				//{ "type" : "label", "id" : "curTenantName", "text": "", "align" : "center", "inline" : true }
+					{ "type" : "panel", "id" : "tenantSelectPanel", "style" : "convex", "children" : [
+						{ "mode" : "h" },
+						{ "type" : "label", "text" : "Tenant Selector", "align" : "center", "inline" : true },
+						{ "type" : "iconButton", "id" : "decCurTenant", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+						{ "type" : "label", "id" : "curTenantIndex", "text": "1", "align" : "center", "inline" : true },
+						{ "type" : "iconButton", "id" : "incCurTenant", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+						{ "type" : "label", "id" : "curTenantName", "text": "", "align" : "center", "inline" : true }
+					]}
 			]
 		}
 	]
