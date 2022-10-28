@@ -398,7 +398,7 @@ function onInteraction(args)
 
 		elseif sbq.lounging[args.sourceId].location ~= nil and stateData.struggle ~= nil then
 			local struggleData = stateData.struggle[sbq.lounging[args.sourceId].location]
-			if struggleData and struggleData.directions and struggleData.directions.interact ~= nil and sbq.struggleChance(struggleData, sbq.lounging[args.sourceId].index, "interact") then
+			if struggleData and struggleData.directions and struggleData.directions.interact ~= nil and sbq.struggleChance(struggleData, sbq.lounging[args.sourceId].index, "interact", sbq.lounging[args.sourceId].location) then
 				sbq.doTransition( stateData.struggle[sbq.lounging[args.sourceId].location].directions.interact.transition, { id = args.sourceId } )
 			end
 		end

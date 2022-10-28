@@ -765,7 +765,7 @@ function sbq.handleStruggles(dt)
 end
 
 function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
-	if sbq.struggleChance(struggledata, struggler, movedir) then
+	if sbq.struggleChance(struggledata, struggler, movedir, sbq.occupant[struggler].location ) then
 		sbq.occupant[struggler].struggleTime = 0
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
@@ -812,7 +812,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 	end
 end
 
-function sbq.struggleChance(struggledata, struggler, movedir)
+function sbq.struggleChance(struggledata, struggler, movedir, location)
 	if not ((struggledata.directions[movedir].settings == nil) or sbq.checkSettings(struggledata.directions[movedir].settings) ) then return false end
 
 	local chances = struggledata.chances
@@ -824,7 +824,7 @@ function sbq.struggleChance(struggledata, struggler, movedir)
 	if sbq.driving and not struggledata.directions[movedir].drivingEnabled then return false end
 
 	return chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(math.floor(chances.min * 2^((sbq.settings.escapeDifficulty or 0)/5)), math.ceil(chances.max * 2^((sbq.settings.escapeDifficulty or 0)/5))) <= (sbq.occupant[struggler].struggleTime or 0))
+	and (math.random(math.floor(chances.min * 2^(((sbq.settings.escapeDifficulty or 0) + (sbq.settings[location.."DifficultyMod"] or 0))/5)), math.ceil(chances.max * 2^((sbq.settings.escapeDifficulty or 0)/5))) <= (sbq.occupant[struggler].struggleTime or 0))
 end
 
 function sbq.inedible(occupantId)
