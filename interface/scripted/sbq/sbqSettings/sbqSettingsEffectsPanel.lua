@@ -1,5 +1,5 @@
 ---@diagnostic disable:undefined-global
-
+sbq.drawSpecialButtons = {}
 function sbq.effectsPanel()
 	if not sbq.predatorConfig or not sbq.predatorConfig.locations then return end
 	locationTabLayout:clearChildren()
@@ -158,8 +158,10 @@ function sbq.effectsPanel()
 			function healButton:draw() sbq.drawEffectButton(healButton, ((locationData.heal or {}).icon or "/interface/scripted/sbq/sbqSettings/heal.png")) end
 			function softDigestButton:draw() sbq.drawEffectButton(softDigestButton, ((locationData.softDigest or {}).icon or "/interface/scripted/sbq/sbqSettings/softDigest.png")) end
 			function digestButton:draw() sbq.drawEffectButton(digestButton, ((locationData.digest or {}).icon or "/interface/scripted/sbq/sbqSettings/digest.png")) end
-			function eggifyButton:draw() sbq.drawEffectButton(eggifyButton, ((locationData.eggify or {}).icon or "/interface/scripted/sbq/sbqSettings/eggify.png")) end
-			function transformButton:draw() sbq.drawEffectButton(transformButton, ((locationData.TF or {}).icon or "/interface/scripted/sbq/sbqSettings/transform.png")) end
+			function eggifyButton:drawSpecial() sbq.drawEffectButton(eggifyButton, ((locationData.eggify or {}).icon or "/interface/scripted/sbq/sbqSettings/eggify.png")) end
+			function transformButton:drawSpecial() sbq.drawEffectButton(transformButton, ((locationData.TF or {}).icon or "/interface/scripted/sbq/sbqSettings/transform.png")) end
+			sbq.drawSpecialButtons[location .. "TF"] = true
+			sbq.drawSpecialButtons[location .. "Eggify"] = true
 
 			function noneButton:onClick() sbq.locationEffectButton(noneButton, location, locationData, effectLabel) end
 			function healButton:onClick() sbq.locationEffectButton(healButton, location, locationData, effectLabel) end
@@ -257,7 +259,7 @@ function sbq.locationDefaultSettings(locationData,location)
 			sbq.predatorSettings[location.."TFEnable"] = false
 		end
 	end
-	if locationData.Eggify and sbq.predatorSettings[location.."Eggify"] == nil then
+	if locationData.eggify and sbq.predatorSettings[location.."Eggify"] == nil then
 		sbq.predatorSettings[location.."Eggify"] = false
 		if sbq.deedUI then
 			sbq.predatorSettings[location.."EggifyEnable"] = false
