@@ -32,34 +32,40 @@
 # Patrons
 ## Special Thanks
 	David stat man
-	Darling Devil
 ## Thank you all for your support!
-	xeronious
 	BRZYN-Z18
+	xeronious
+	Darling Devil
 	Dragonuna
 	Joseph
-	Senjor Habash
 	Robotic Boyo
 	Lunadefends
 	xyoshi
-	amber310
-	Ethan Hennen
-	pelle
 	Ivan Ivanovich
+	OtterlySam
 	Sandyagos
-	LefTonbo
 	Koole
 	assasin604
-	LP
 	dirty kitty
 	Signum
+	fabiqueen
 	Knochen
-	Fevix
-	Pascal Gailloud
-	Mojmír Závada
+	LP
+	Drexel Amatin
 	Ignitus
 	Selicia
-	Timothy D.
+	Tim D.
+	Mojma
 	lil cam
 	DarkerNebel
-	Kuni"
+	Arden Umbraheart
+	Fevix
+	Pascal Gailloud
+	Kuni
+	Quetzaquotl
+	Dexasol
+	box boyo
+	Crimson
+	Likable Spoon
+	KP
+	清 李
