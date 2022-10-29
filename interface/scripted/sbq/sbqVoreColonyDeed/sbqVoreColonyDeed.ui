@@ -175,7 +175,9 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Other", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "heldEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "held", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Grabbed" } ]
+							[
+								//{ "type" : "checkBox", "id" : "heldEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "held", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Grabbed" } ]
 						]}]}
 					],
 					[
