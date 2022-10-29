@@ -4,7 +4,6 @@
 require( "/lib/stardust/json.lua" )
 
 sbq = {
-	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
 	config = root.assetJson( "/sbqGeneral.config" ),
 	overrideSettings = {}
 }
@@ -23,19 +22,10 @@ player.species = speciesOverride._species
 speciesOverride.gender = player.gender
 player.gender = speciesOverride._gender
 
-
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
-
-function sbq.getPatronsString()
-	local patronsString = ""
-	for _, patron in ipairs(root.assetJson("/patrons.json")) do
-		patronsString = patronsString..patron.."^reset;\n"
-	end
-	return patronsString
-end
-sbq.patronsString = sbq.getPatronsString()
+require("/interface/scripted/sbq/sbqSettings/extraTabs.lua")
 
 function sbq.getInitialData()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -51,12 +41,6 @@ function sbq.getInitialData()
 	sbq.animOverrideOverrideSettings = status.statusProperty("speciesAnimOverrideOverrideSettings") or {}
 
 	sbq.sbqCurrentData.species = sbq.sbqCurrentData.species or "sbqOccupantHolder"
-end
-
-function sbq.getHelpTab()
-	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
-	end
 end
 
 function sbq.getPlayerOccupantHolderData()
@@ -198,52 +182,10 @@ function init()
 		skinsScrollArea:clearChildren()
 	end
 
-	if sbq.speciesSettingsTab ~= nil then
-		sbq.speciesSettingsTab:setVisible(false)
-		sbq.speciesSettingsTab = nil
-	end
-	local species = sbq.sbqCurrentData.species
-	local playerSpecies = player.species()
-	if (species == "sbqOccupantHolder" or species == nil) and sbq.extraTabs.speciesSettingsTabs[playerSpecies] ~= nil then
-		species = playerSpecies
-	end
-	if sbq.extraTabs.speciesSettingsTabs[species] ~= nil then
-		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[species].tab )
-		sbq.setIconDirectives()
-		if sbq.extraTabs.speciesSettingsTabs[species].scripts ~= nil then
-			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[species].scripts) do
-				require(script)
-			end
-		end
-	end
-
-	if sbq.speciesHelpTab ~= nil then
-		sbq.speciesHelpTab:setVisible(false)
-		sbq.speciesHelpTab = nil
-	end
-
-	sbq.getHelpTab()
-
-	if sbq.helpTab ~= nil then
-		sbq.helpTab:setVisible(false)
-		sbq.helpTab = nil
-	end
-
-	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
-	patronsLabel:setText(sbq.patronsString)
-
-	if root.itemConfig("vorechipkit") ~= nil and sbq.confg.SSVMParityEnabled then
-		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
-		SSVMTargetCreatures:setChecked(status.statusProperty("sbqSSVMTargeting") == "creature")
-
-		function SSVMTargetCreatures:onClick()
-			if SSVMTargetCreatures.checked then
-				status.setStatusProperty("sbqSSVMTargeting", "creature")
-			else
-				status.setStatusProperty("sbqSSVMTargeting", nil)
-			end
-		end
-	end
+	local species = player.species()
+	sbq.setSpeciesHelpTab(species)
+	sbq.setSpeciesSettingsTab(species)
+	sbq.setHelpTab()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
@@ -256,12 +198,6 @@ function init()
 		sbq.overridePreyEnabled = status.statusProperty("sbqOverridePreyEnabled") or {}
 		sbq.checkLockedSettingsButtons("sbqPreyEnabled", "overridePreyEnabled", "changePreySetting")
 	end
-	function hammerspace:onClick() -- only one that has unique logic
-		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-		sbq.locationPanel()
-	end
-
-	require("/interface/scripted/sbq/sbqSettings/sbqResetSettings.lua")
 end
 local init = init
 
@@ -277,6 +213,7 @@ function sbq.checkLockedSettingsButtons(settings, override, func)
 				end
 				function button:onClick() end
 			else
+				function button:draw() theme.drawCheckBox(self) end
 				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)
@@ -356,12 +293,6 @@ function sbq.changePreySetting(settingname, settingvalue)
 	status.setStatusProperty("sbqPreyEnabled", sbq.sbqPreyEnabled)
 	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-end
-
-function sbq.setIconDirectives()
-	if sbq.speciesSettingsTab ~= nil then
-		sbq.speciesSettingsTab:setTitle("Config", "/vehicles/sbq/"..sbq.sbqCurrentData.species.."/skins/"..((sbq.predatorSettings.skinNames or {}).head or "default").."/icon.png"..(sbq.predatorSettings.directives or ""))
-	end
 end
 
 function sbq.changeColorSetting(textbox, color, inc)

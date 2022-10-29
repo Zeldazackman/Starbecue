@@ -115,8 +115,8 @@
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				{ "type" : "panel", "id" : "speciesLayout", "style" : "flat", "children" : [
-					[[{ "type" : "panel", "id" : "speciesPanel", "style" : "convex", "children" : [
+				{ "type" : "layout", "id" : "speciesLayout", "mode" : "vertical", "children" : [
+					{ "type" : "panel", "id" : "speciesPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
 						{ "mode" : "h" },
 						{ "type" : "label", "text" : " Species", "inline" : true },
 						{ "type" : "iconButton", "id" : "decSpecies", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
@@ -124,7 +124,7 @@
 						{ "type" : "iconButton", "id" : "incSpecies", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 						{ "type" : "button", "id" : "applySpecies", "caption" : "Transform", "expandMode" : [0, 0] },
 						{ "type" : "iconButton", "id" : "speciesGenderToggle", "image" : "/interface/title/male.png" }
-					]}]],
+					]},
 					[
 						{ "type" : "panel", "id" : "speciesColorPanel", "style" : "convex", "children" : [
 							{ "mode" : "v" },
@@ -171,7 +171,7 @@
 							]
 						]}
 					],
-					[{ "size" : 90 },[{ "type" : "panel", "id" : "speciesManualColorPanel",  "style" : "convex", "children" : [
+					{ "type" : "panel", "id" : "speciesManualColorPanel", "expandMode" : [1,0], "size" : [100, 95], "style" : "convex", "children" : [
 						{ "mode" : "v" },
 						{ "type" : "label", "text" : "Manual Color Entry", "inline" : true },
 						{ "type" : "scrollArea", "id" : "speciesManualColorScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
@@ -184,7 +184,7 @@
 								[{ "type" : "label", "text" : "Emotes Color", "inline" : true },{ "type" : "textBox", "id" : "speciesEmoteColorText", "expandMode" : [1, 0] }]
 							]}
 						]}
-					]}]]
+					]}
 				]},
 				[[[
 					{ "expandMode" : [2, 2]},
@@ -207,9 +207,16 @@
 					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
 				]}]]
-			]}],
-
-			"bottomBar" : []
-		}
+			]},
+			{ "type" : "tab", "id" : "speciesConfigTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesConfigTabContents", "expandMode" : [1,0], "size" : [100,175], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "speciesHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesHelpTabContents", "expandMode" : [1,0], "size" : [100,175], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "helpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "helpTabContents", "expandMode" : [1,0], "size" : [100,175], "mode" : "horizontal", "children" : [] }
+			]}
+		],"bottomBar" : []}
 	]
 }

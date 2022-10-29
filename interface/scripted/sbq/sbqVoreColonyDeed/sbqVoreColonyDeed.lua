@@ -2,7 +2,6 @@
 sbq = {
 	config = root.assetJson("/sbqGeneral.config"),
 	tenantCatalogue = root.assetJson("/npcs/tenants/sbqTenantCatalogue.json"),
-	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
 	storage = metagui.inputData,
 	deedUI = true
 }
@@ -10,6 +9,8 @@ sbq = {
 indexes = {
 	tenantIndex = 1
 }
+
+require("/interface/scripted/sbq/sbqSettings/extraTabs.lua")
 
 function sbq.changeSelectedFromList(list, label, indexName, inc )
 	indexes[indexName] = (indexes[indexName] or 1) + inc
@@ -97,6 +98,9 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
+
+		sbq.sbqCurrentData = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqCurrentData or {}
+
 		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {})
 		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
 		sbq.animOverrideOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideOverrideSettings or {}
@@ -138,22 +142,14 @@ function init()
 		requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels})
 
 		local species = occupier.tenants[indexes.tenantIndex].species
-		local speciesSettings = sbq.extraTabs.speciesSettingsTabs[species] or sbq.extraTabs.speciesSettingsTabs.sbqOccupantHolder
-		if speciesSettings.tab then
-			if sbq.configTab then
-				sbq.configTab:setVisible(false)
-			end
-			sbq.configTab = mainTabField:newTab( speciesSettings.tab )
-			for i, script in ipairs( speciesSettings.scripts ) do
-				require(script)
-			end
-			mainTabField.tabs.tenantTab:select()
-		end
-
 		sbq.getSpeciesConfig(species)
 		sbq.predatorConfig = sbq.speciesConfig.sbqData
 
 		sbq.effectsPanel()
+
+		sbq.setSpeciesHelpTab(species)
+		sbq.setSpeciesSettingsTab(species)
+		sbq.setHelpTab()
 
 		sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
 		--sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
@@ -202,6 +198,7 @@ function sbq.checkLockedSettingsButtons(settings, override, func)
 				end
 				function button:onClick() end
 			else
+				function button:draw() theme.drawCheckBox(self) end
 				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)

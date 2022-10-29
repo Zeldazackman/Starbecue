@@ -915,6 +915,8 @@
 			"femcumDigestImmunity": true,
 			"milkDigestImmunity" : true,
 
+			"cumTFImmunity" : true,
+
 			"allowSoftDigest" : false,
 			"allowCumSoftDigest" : false,
 			"allowFemcumSoftDigest" : false,

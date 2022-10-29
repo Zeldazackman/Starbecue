@@ -31,12 +31,10 @@ function init()
 			local ownerName = world.entityName(player.id())
 			sbq.changeGlobalSetting("ownerName", ownerName)
 			ownerLabel:setText("Owner: "..ownerName)
-			ownerBar:setVisible(true)
 		else
 			sbq.changeGlobalSetting("ownerId", "")
 			sbq.changeGlobalSetting("ownerName", "")
 			ownerLabel:setText("")
-			ownerBar:setVisible(false)
 		end
 	end
 
@@ -44,15 +42,13 @@ function init()
 	if (data.settings.lockSettings and data.settings.ownerId ~= player.uniqueId()) and not player.isAdmin() then
 		mainTabField.tabs.globalPredSettings:setVisible(false)
 		mainTabField.tabs.customizeTab:setVisible(false)
+		lockSettings:setVisible(false)
 		if sbq.speciesSettingsTab ~= nil then
 			sbq.speciesSettingsTab:setVisible(false)
 		end
 	end
 	if data.settings.ownerName ~= nil and data.settings.ownerName ~= "" then
 		ownerLabel:setText("Owner: "..data.settings.ownerName)
-		ownerBar:setVisible(true)
-	else
-		ownerBar:setVisible(false)
 	end
 
 	sbq.globalSettings = sbq.predatorSettings

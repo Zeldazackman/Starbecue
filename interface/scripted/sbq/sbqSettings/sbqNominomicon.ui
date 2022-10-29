@@ -9,7 +9,7 @@
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "mode": "horizontal", "children" : [
-					{"type" : "layout", "mode" : "vertical", "id" : "locationTabLayout", "expandMode" : [1,0], "size" : [100,175], "children" : [
+					{"type" : "layout", "mode" : "vertical", "id" : "locationTabLayout", "expandMode" : [1,0], "size" : [100,165], "children" : [
 					]},
 					[
 						{ "size" : 80 },
@@ -54,29 +54,42 @@
 			]},
 
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				[
-					{ "expandMode" : [2, 2]},
-					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+				{"type" : "layout", "id" : "customizeTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "vertical", "children" : [
+					[
 						{ "expandMode" : [2, 2]},
-						{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-						{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-					]},
-					{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
-						{ "expandMode" : [2, 2]},
-						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+							{ "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Customize Colors", "inline" : true },
+							{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						]},
+						{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
+							{ "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Customize Skins", "inline" : true },
+							{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						]}
+					],
+					{ "type" : "panel", "id" : "presetsPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
+						{ "mode" : "h" },
+						{ "type" : "label", "text" : " Customize Preset", "inline" : true },
+						{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+						{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
+						{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+						{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
 					]}
-				],
-				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
-					{ "mode" : "h" },
-					{ "type" : "label", "text" : " Customize Preset", "inline" : true },
-					{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
-					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
-				]}]]
-			]}],
-			"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [{ "type" : "label", "id": "ownerLabel", "text" : "" }]} ]
-		}
+				]}
+			]},
+			{ "type" : "tab", "id" : "speciesConfigTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesConfigTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "speciesHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesHelpTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "helpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "helpTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]}
+		],"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [
+			{"spacing" : 0, "mode" : "horizontal"},
+			{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Take ownership of this pred object, preventing others from modifying its settings." },{ "type" : "label", "id": "ownerLabel", "text" : "" }
+		]}]}
 	]
 }

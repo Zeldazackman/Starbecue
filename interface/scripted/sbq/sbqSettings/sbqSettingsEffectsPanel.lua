@@ -4,7 +4,9 @@ function sbq.effectsPanel()
 	if not sbq.predatorConfig or not sbq.predatorConfig.locations then return end
 	locationTabLayout:clearChildren()
 	locationTabLayout:addChild({ id = "locationTabField", type = "tabField", layout = "vertical", tabWidth = 40, tabs = {} })
-
+	function locationTabField:onTabChanged(tab, previous)
+		sbq.selectedLocationTab = tab
+	end
 
 	for i, location in ipairs(sbq.predatorConfig.listLocations or {}) do
 		local locationData = sbq.predatorConfig.locations[location]
@@ -140,6 +142,9 @@ function sbq.effectsPanel()
 					}}
 				}
 			})
+			if i == 1 then
+				sbq.selectedLocationTab = tab
+			end
 
 			local noneButton = _ENV[location.."None"]
 			local healButton = _ENV[location.."Heal"]
