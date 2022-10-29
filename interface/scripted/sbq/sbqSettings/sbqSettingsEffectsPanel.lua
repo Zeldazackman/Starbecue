@@ -38,7 +38,7 @@ function sbq.effectsPanel()
 								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= "digest") or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
 								toolTip = ((locationData.digest or {}).toolTip or "Prey within will be digested, boosted by your attack power.")
 							},
-						},
+						}--[[,
 						{
 							{
 								type = "checkBox", id = location.."NoneEnable", toolTip = "Allows the NPC to choose to have no effect.",
@@ -56,7 +56,7 @@ function sbq.effectsPanel()
 								type = "checkBox", id = location.."DigestEnable",  toolTip = "Allows the NPC to choose to digest.",
 								visible = sbq.deedUI and (locationData.selectEffect and not ((sbq.overrideSettings[location.."EffectSlot"] ~= nil) or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
 							},
-						}
+						}]]
 					},
 					{type = "spacer", size = 1},
 					{type = "label", align = "center", id = location.."EffectLabel", text = (sbq.config.bellyStatusEffectNames[sbq.getStatusEffectSlot(location, locationData)] or "No Effect")},
@@ -76,7 +76,7 @@ function sbq.effectsPanel()
 							visible = (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
 							toolTip = ((locationData.eggify or {}).toolTip or "Prey within will be trapped in an egg.")
 						},
-					},
+					}--[[,
 					{
 						{
 							type = "checkBox", id = location.."TFEnable", toolTip = "Allows the NPC to choose to transform others.",
@@ -86,7 +86,7 @@ function sbq.effectsPanel()
 							type = "checkBox", id = location.."EggifyEnable", toolTip = "Allows the NPC to choose trap others in eggs.",
 							visible = sbq.deedUI and (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
 						},
-					}
+					}]]
 				}}
 			}}
 			local otherLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
@@ -190,6 +190,7 @@ function sbq.effectsPanel()
 				sbq.numberBox(visualMin, "changePredatorSetting", location .. "VisualMin", (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
 				sbq.numberBox(visualMax, "changePredatorSetting", location .. "VisualMax", math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
 			end
+			function visualMin:onEscape() self:onEnter() end
 
 			visualMax:setText(tostring(sbq.overrideSettings[location .. "VisualMax"] or sbq.predatorSettings[location .."VisualMax"] or locationData.max or 0))
 			visualMax.toolTip = "Maximum fullness (Max of "..(sbq.overrideSettings[location.."VisualMax"] or locationData.max)..")\nIf Hammerspace is on, this only controls the visuals"
@@ -205,14 +206,18 @@ function sbq.effectsPanel()
 				sbq.numberBox(visualMax, "changePredatorSetting", location .. "VisualMax", math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
 				sbq.numberBox(visualMin, "changePredatorSetting", location .. "VisualMin", (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
 			end
+			function visualMax:onEscape() self:onEnter() end
+
 
 			function multiplier:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "Multiplier", 0) end
 			multiplier:setText(tostring(sbq.overrideSettings[location .. "Multiplier"] or
 				sbq.predatorSettings[location .. "Multiplier"] or 1))
+			function multiplier:onEscape() self:onEnter() end
 
 			function difficultyTextbox:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "DifficultyMod", sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"]) end
 			difficultyTextbox:setText(tostring(sbq.overrideSettings[location .. "DifficultyMod"] or
 			sbq.predatorSettings[location .. "DifficultyMod"] or 0))
+			function difficultyTextbox:onEscape() self:onEnter() end
 
 		end
 	end

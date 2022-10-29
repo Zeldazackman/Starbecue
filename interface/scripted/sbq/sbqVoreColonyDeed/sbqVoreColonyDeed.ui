@@ -23,7 +23,7 @@
 						[{ "type" : "panel", "id" : "tenantBehaviorPanel", "style" : "convex", "children" : [
 							{ "mode" : "v", "spacing" : -1 },
 							{ "type" : "label", "text" : "Tenant Behavior", "align" : "center" },
-							[
+							/*[
 								{ "type" : "checkBox", "id" : "allowHunting", "toolTip" : "NPC will actively seek out prey to vore" },  { "type" : "label", "text" : " Allow Hunting ", "inline" : true },
 								{ "type" : "checkBox", "id" : "huntFriendlyPlayers", "toolTip" : "Friendly Players" },
 								{ "type" : "checkBox", "id" : "huntHostilePlayers", "toolTip" : "Hostile Players" },
@@ -39,7 +39,7 @@
 								{ "type" : "checkBox", "id" : "baitHostilePlayers", "toolTip" : "Hostile Players" },
 								{ "type" : "checkBox", "id" : "baitFriendlyNPCs", "toolTip" : "Friendly NPCs" },
 								{ "type" : "checkBox", "id" : "baitHostileNPCs", "toolTip" : "Hostile NPCs" }
-							],
+							],*/
 							[{ "type" : "checkBox", "id" : "questParticipation", "toolTip" : "Allow NPC to give out and participate in quests.\n(Forces NPC to Respawn when toggled)" },{ "type" : "label", "text" : " Quest Participation", "inline" : true }],
 							[{ "type" : "checkBox", "id" : "crewmateGraduation", "toolTip" : "Allow NPC to give out and graduate into a cewmate.\n(Forces NPC to Respawn when toggled)" },{ "type" : "label", "text" : " Crewmate Graduation", "inline" : true }]
 						]}],
@@ -79,7 +79,7 @@
 							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center" },
 							{"type" : "layout", "mode" : "horizontal", "spacing" : -1, "children" :[
 								{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
-								{ "type" : "checkBox", "id" : "impossibleEscapeEnable", "toolTip" : "Allow Pred to decide to make escaping impossible" },
+								//{ "type" : "checkBox", "id" : "impossibleEscapeEnable", "toolTip" : "Allow Pred to decide to make escaping impossible" },
 								{ "type" : "textBox", "id" : "escapeValueMin", "toolTip" : "Minimum Escape Difficulty", "text" : "0" },
 								{ "type" : "textBox", "id" : "escapeValue", "toolTip" : "Current Escape Difficulty", "text" : "0" },
 								{ "type" : "textBox", "id" : "escapeValueMax", "toolTip" : "Maximum Escape Difficulty", "text" : "10" }
@@ -98,14 +98,30 @@
 							{ "type" : "label", "text" : "Vore Preferences", "align" : "center" },
 							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
 								{ "type" : "panel", "style" : "flat", "children" : [ {"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-									[{ "type" : "checkBox", "id" : "oralVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Oral Vore" },{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "This NPC will perform Oral Vore" }, { "type" : "label", "text" : " Oral Vore" } ],
-									[{ "type" : "checkBox", "id" : "tailVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Tail Vore" },{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "This NPC will perform Tail Vore" }, { "type" : "label", "text" : " Tail Vore" } ],
-									[{ "type" : "checkBox", "id" : "absorbVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Absorbtion" },{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "This NPC will perform Absorbtion" }, { "type" : "label", "text" : " Absorbtion" } ],
-									[{ "type" : "checkBox", "id" : "navelVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Navel Vore" },{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "This NPC will perform Navel Vore" }, { "type" : "label", "text" : " Navel Vore" } ],
-									[{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
-									[{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
-									[{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
-									[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
+									[
+										//{ "type" : "checkBox", "id" : "oralVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Oral Vore" },
+										{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "This NPC will perform Oral Vore" }, { "type" : "label", "text" : " Oral Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "tailVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Tail Vore" },
+										{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "This NPC will perform Tail Vore" }, { "type" : "label", "text" : " Tail Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "absorbVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Absorbtion" },
+										{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "This NPC will perform Absorbtion" }, { "type" : "label", "text" : " Absorbtion" } ],
+									[
+										//{ "type" : "checkBox", "id" : "navelVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Navel Vore" },
+										{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "This NPC will perform Navel Vore" }, { "type" : "label", "text" : " Navel Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },
+										{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },
+										{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },
+										{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
+									[
+										//{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },
+										{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
 									//{"type" : "label", "text" : "-Other-", "align" : "center"},
 									//[{ "type" : "checkBox", "id" : "cockTFPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock TF" },{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "This NPC will perform Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
 									//[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Absorbtion" },{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "This NPCs will perform Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
@@ -123,20 +139,36 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Questionable", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "oralVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "oralVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Oral Vore" } ],
-							[ { "type" : "checkBox", "id" : "tailVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "tailVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Tail Vore" } ],
-							[ { "type" : "checkBox", "id" : "absorbVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "absorbVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Absorbtion" } ],
-							[ { "type" : "checkBox", "id" : "navelVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "navelVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Navel Vore" } ]
+							[
+								//{ "type" : "checkBox", "id" : "oralVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "oralVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Oral Vore" } ],
+							[
+								//{ "type" : "checkBox", "id" : "tailVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "tailVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Tail Vore" } ],
+							[
+								//{ "type" : "checkBox", "id" : "absorbVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "absorbVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Absorbtion" } ],
+							[
+								//{ "type" : "checkBox", "id" : "navelVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "navelVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Navel Vore" } ]
 						]}]},
 						// second collumn
 						{ "expandMode" : [2, 2]}, { "type" : "panel", "style" : "convex", "children" : [
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Sexual", "inline" : true },
 							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[ { "type" : "checkBox", "id" : "analVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "analVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Anal Vore" } ],
-							[ { "type" : "checkBox", "id" : "cockVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "cockVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Cock Vore" } ],
-							[ { "type" : "checkBox", "id" : "breastVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" }, { "type" : "checkBox", "id" : "breastVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Breast Vore" } ],
-							[ { "type" : "checkBox", "id" : "unbirthEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },  { "type" : "checkBox", "id" : "unbirth", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Unbirth" } ]
+							[
+								//{ "type" : "checkBox", "id" : "analVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "analVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Anal Vore" } ],
+							[
+								//{ "type" : "checkBox", "id" : "cockVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "cockVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Cock Vore" } ],
+							[
+								//{ "type" : "checkBox", "id" : "breastVoreEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "breastVore", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Breast Vore" } ],
+							[
+								//{ "type" : "checkBox", "id" : "unbirthEnable", "toolTip" : "Allow The NPC to choose whether this action can be used on it" },
+								{ "type" : "checkBox", "id" : "unbirth", "toolTip" : "Whether this action can be used on this NPC currently" },  { "type" : "label", "text" : " Unbirth" } ]
 						]}]},
 						// third collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
@@ -151,7 +183,9 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "General", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[ { "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" }, { "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" },  { "type" : "label", "text" : " Prey Enabled" }],
+								[
+									//{ "type" : "checkBox", "id" : "preyEnabledEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" },
+									{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "If this NPC currently has being prey enabled" },  { "type" : "label", "text" : " Prey Enabled" }],
 								[
 									{ "type" : "checkBox", "id" : "allowSoftDigest", "toolTip" : "Allow soft digestion when otherwise immune." },
 									{ "type" : "checkBox", "id" : "allowMilkSoftDigest", "toolTip" : "Allow milk soft digestion when otherwise immune." },
@@ -165,14 +199,31 @@
 							{ "mode" : "v", "expandMode" : [2, 2]},
 							{ "type" : "label", "text" : "Immunities", "inline" : true },
 							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[ { "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" },  { "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" },  { "type" : "label", "text" : " Digestion" }],
-								[ { "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" },  { "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" },  { "type" : "label", "text" : " Cum Digestion" }],
-								[ { "type" : "checkBox", "id" : "femcumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be femcum digested or not" },  { "type" : "checkBox", "id" : "femcumDigestImmunity", "toolTip" : "If this NPC is currently immune to femcum digestion" },  { "type" : "label", "text" : " Femcum Digestion" }],
-								[ { "type" : "checkBox", "id" : "milkDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be milk digested or not" },  { "type" : "checkBox", "id" : "milkDigestImmunity", "toolTip" : "If this NPC is currently immune to milk digestion" },  { "type" : "label", "text" : " Milk Digestion" }],
-								[ { "type" : "checkBox", "id" : "cumTFImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum transformed or not" },  { "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "If this NPC is currently immune to cum transformation" }, { "type" : "label", "text" : " Cum Transformation" }],
-								[ { "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" },  { "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" },  { "type" : "label", "text" : " Transformation" }],
-								[ { "type" : "checkBox", "id" : "genderswapImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be genderswapped or not" },  { "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "If this NPC is currently immune to genderswap effects" },  { "type" : "label", "text" : " Genderswap" }],
-								[ { "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" },  { "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" },  { "type" : "label", "text" : " Egg Entrapment" }]
+								[
+									//{ "type" : "checkBox", "id" : "digestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be digested or not" },
+									{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "If this NPC is currently immune to digestion" },  { "type" : "label", "text" : " Digestion" }],
+								[
+									//{ "type" : "checkBox", "id" : "cumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum digested or not" },
+									{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "If this NPC is currently immune to cum digestion" },  { "type" : "label", "text" : " Cum Digestion" }],
+								[
+									//{ "type" : "checkBox", "id" : "femcumDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be femcum digested or not" },
+									{ "type" : "checkBox", "id" : "femcumDigestImmunity", "toolTip" : "If this NPC is currently immune to femcum digestion" },  { "type" : "label", "text" : " Femcum Digestion" }],
+								[
+									//{ "type" : "checkBox", "id" : "milkDigestImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be milk digested or not" },
+									{ "type" : "checkBox", "id" : "milkDigestImmunity", "toolTip" : "If this NPC is currently immune to milk digestion" },  { "type" : "label", "text" : " Milk Digestion" }],
+								[
+									//{ "type" : "checkBox", "id" : "cumTFImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be cum transformed or not" },
+									{ "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "If this NPC is currently immune to cum transformation" }, { "type" : "label", "text" : " Cum Transformation" }],
+								[
+									//{ "type" : "checkBox", "id" : "transformImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be transformed or not" },
+									{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "If this NPC is currently immune to transformation effects" },  { "type" : "label", "text" : " Transformation" }],
+								[
+									//{ "type" : "checkBox", "id" : "genderswapImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be genderswapped or not" },
+									{ "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "If this NPC is currently immune to genderswap effects" },  { "type" : "label", "text" : " Genderswap" }],
+								[
+									//{ "type" : "checkBox", "id" : "eggImmunityEnable", "toolTip" : "Allow The NPC to choose whether it can be prey or not" },
+									{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "If this NPC is currently immune to being trapped in an egg" },  { "type" : "label", "text" : " Egg Entrapment" }
+								]
 							]}
 						]}
 					],

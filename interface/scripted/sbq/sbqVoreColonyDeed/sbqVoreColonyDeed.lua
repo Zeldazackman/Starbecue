@@ -348,10 +348,13 @@ end
 --------------------------------------------------------------------------------------------------
 
 function escapeValue:onEnter() sbq.numberBox(escapeValue, "changePredatorSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax ) end
+function escapeValue:onEscape() self:onEnter() end
 
 function escapeValueMin:onEnter() sbq.numberBox(escapeValueMin, "changePredatorSetting", "escapeDifficultyMin", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax ) end
+function escapeValueMin:onEscape() self:onEnter() end
 
 function escapeValueMax:onEnter() sbq.numberBox(escapeValueMax, "changePredatorSetting", "escapeDifficultyMax", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax ) end
+function escapeValueMax:onEscape() self:onEnter() end
 
 --------------------------------------------------------------------------------------------------
 

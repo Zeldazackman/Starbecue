@@ -56,6 +56,8 @@ function scaleValue:onEnter()
 		scaleValue:setText(tostring(sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1))
 	end
 end
+function scaleValue:onEscape() self:onEnter() end
+
 
 scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.animOverrideSettings.scaleMin or 0.1))
 function scaleValueMin:onEnter()
@@ -67,6 +69,8 @@ function scaleValueMin:onEnter()
 		scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.animOverrideSettings.scaleMin or 0.1))
 	end
 end
+function scaleValueMin:onEscape() self:onEnter() end
+
 
 scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3))
 function scaleValueMax:onEnter()
@@ -78,3 +82,4 @@ function scaleValueMax:onEnter()
 		scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3))
 	end
 end
+function scaleValueMax:onEscape() self:onEnter() end
