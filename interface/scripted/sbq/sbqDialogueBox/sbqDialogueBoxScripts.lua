@@ -23,7 +23,6 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
 	while continue and type(dialogueTree) == "table" do
 		continue = false
 		local nextType = type(dialogueTree.next)
-		sb.logInfo(tostring(dialogueTree.next))
 		if nextType == "string" then
 			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next)
 			continue = true

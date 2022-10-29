@@ -1,18 +1,11 @@
 message.setHandler( "settingsMenuSet", function(_,_, val )
 	sbq.settings = sb.jsonMerge(sbq.settings, sb.jsonMerge(val, sbq.sbqData.overrideSettings or {}))
-	sbq.hackyBallsFix()
 
 	sbq.setColorReplaceDirectives()
 	sbq.setSkinPartTags()
 	sbq.settingsMenuUpdated()
 end)
 
--- TODO remove this hack later
-function sbq.hackyBallsFix()
-	sbq.settings.ballsLTF = sbq.settings.ballsTF
-	sbq.settings.ballsRTF = sbq.settings.ballsTF
-end
-sbq.hackyBallsFix()
 
 message.setHandler( "letout", function(_,_, id )
 	sbq.letout(id)

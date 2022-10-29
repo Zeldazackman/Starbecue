@@ -182,9 +182,9 @@
 							"Interesting.",
 							"God Damn It."
 						],
-						"jump" : [ "greeting", "mood", "continue"]
+						"jump" : [ "converse"]
 					},
-					"fail" : "greeting.mood.continue"
+					"fail" : "converse"
 				},
 				"sbqCoreVaporeon" : {
 					"randomPortrait" : [
@@ -224,9 +224,9 @@
 							"Interesting.",
 							"God Damn It."
 						],
-						"jump" : [ "greeting", "mood", "continue"]
+						"jump" : [ "converse"]
 					},
-					"fail" : "greeting.mood.continue"
+					"fail" : "converse"
 				},
 
 				"sbqPotionAvian" : {
@@ -243,7 +243,7 @@
 						"I doubt the Stargazers would approve of this haha!",
 						"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreAvian" : {
 					"randomPortrait" : [
@@ -259,7 +259,7 @@
 						"I doubt the Stargazers would approve of this haha!",
 						"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqPotionXeronious" : {
 					"randomPortrait" : [
@@ -272,7 +272,7 @@
 						"If I have to say the most difficult part making this, I think it'd probably be the grab system, which started here, had to redo how I handled the transformation groups to make it work.",
 						"The inhale that he can do is really fun to use"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreXeronious" : {
 					"randomPortrait" : [
@@ -283,7 +283,7 @@
 						"Big fluffy kaiju belly, currently the one that holds the most prey.",
 						"Aside from the support for making all this stuff, Xeronious has been an excellent bug tester to help this project not come apart at the seams every update release."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqPotionSlime" : {
@@ -295,7 +295,7 @@
 						"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 						"Slime"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreSlime" : {
 					"randomPortrait" : [
@@ -306,7 +306,7 @@
 						"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 						"Slime"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqCoreCharem" : {
@@ -314,7 +314,7 @@
 					"dialogue" : [
 						"So, someone edited the shop recipes and also added this back into the game, fucking disgusting. This person expliclty allowed minors into vore spaces, I don't want to associate with them."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqCoreZiellekDragon" : {
@@ -322,14 +322,14 @@
 						"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
 						"Noodle."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqConsumableZiellekPearl" : {
 					"randomDialogue" : [
 						"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
 						"Noodle."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqPotionDartGun" : {
 					"randomPortrait" : [
@@ -344,7 +344,7 @@
 						"This thing I like, made in a single day, in a frenzy of energy.",
 						"Do be aware that some people can be immune to TF."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqSizeRay" : {
 					"randomPortrait" : [
@@ -359,39 +359,39 @@
 						"This thing is so much fun!",
 						"If you have this in your inv you can set a scale manually in the settings."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 
-				"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most.", "The gender fluid."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most.", "The gender fluid."], "jump" : [ "converse"] },
+				"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "converse"] },
 
-				"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqMysteriousPotionHellhound" : { "randomDialogue" : ["This turns you into a anthro Hellhound!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "converse"] },
+				"sbqMysteriousPotionHellhound" : { "randomDialogue" : ["This turns you into a anthro Hellhound!"], "jump" : [ "converse"] },
 
-				"sbqMysteriousPotionSandy_Fevix" : { "randomDialogue" : ["This turns you into Sandy the Floatporeon! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqMysteriousPotionHelena_FFWizard" : { "randomDialogue" : ["This turns you into Helena the Hellhound! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotionSandy_Fevix" : { "randomDialogue" : ["This turns you into Sandy the Floatporeon! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "converse"] },
+				"sbqMysteriousPotionHelena_FFWizard" : { "randomDialogue" : ["This turns you into Helena the Hellhound! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "converse"] },
 
-				"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "converse"] },
 
-				"sbqModifierFatteningDonut" : { "randomPortrait" : ["Blep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierFatteningDonut" : { "randomPortrait" : ["Blep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "converse"] },
 
-				"sbqModifierDietPill" : { "randomPortrait" : ["Confused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierDietPill" : { "randomPortrait" : ["Confused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "converse"] },
 
-				"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "converse"] },
 
-				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "converse"] },
 
-				"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "converse"] },
 
-				"sbqBallsPoster" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "greeting", "mood", "continue"] },
-				"spookypumpkinhead" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Halloween is my favorite!", "My pet plushie Socks probably would like one of these in her house."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqLargeWoodenArmchair" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["Beeg chair for beeg friends."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqBallsPoster" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "converse"] },
+				"spookypumpkinhead" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Halloween is my favorite!", "My pet plushie Socks probably would like one of these in her house."], "jump" : [ "converse"] },
+				"sbqLargeWoodenArmchair" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["Beeg chair for beeg friends."], "jump" : [ "converse"] },
 
-				"smallBellyBoundStore" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["They were the reason this mod came to be, even if I have surpassed it a bit in some aspects.", "Might as well offer this here incase anyone wants it.", "Do note that I'm not maintaining any of that mod's content.", "While this was originally an add on to SSVM, SBQ is entirely standalone from it now."], "jump" : [ "greeting", "mood", "continue"] }
+				"smallBellyBoundStore" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["They were the reason this mod came to be, even if I have surpassed it a bit in some aspects.", "Might as well offer this here incase anyone wants it.", "Do note that I'm not maintaining any of that mod's content.", "While this was originally an add on to SSVM, SBQ is entirely standalone from it now."], "jump" : [ "converse"] }
 
 			},
 
@@ -1274,8 +1274,7 @@
 			"shaftEffectSlot" : "none",
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,
-			"shaftHealEnable" : false,
-			"shaftEffect" : "sbqRemoveBellyEffects"
+			"shaftHealEnable" : false
 		},
 		// prey enabled settings are down below, but here are the override settings, which follow the same rules as below, however, a player is *not* allowed to modify any of these settings
 		// this is how you can enforce your OC only being prey for things they enjoy, or if they're prey at all

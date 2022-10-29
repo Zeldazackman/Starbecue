@@ -8,74 +8,88 @@
 	"children" : [
 		{ "type" : "tabField", "id" : "mainTabField", "layout" : "horizontal", "tabs" : [
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "vertical", "children" : [
-					[{ "size" : 78 },[//first collumn
-						{ "expandMode" : [2, 2]},
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Effects", "inline" : true },
-							{ "type" : "scrollArea", "id" : "effectsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
-								{"type" : "layout", "id": "effectsLayout", "mode" : "vertical", "spacing" : -1, "children" : [
-								]}
-							]}
-						]}
-					],[// second collumn
-						{ "expandMode" : [2, 2]},
-						[[{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v" },
-							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center"},
+				{"type" : "layout", "mode": "horizontal", "children" : [
+					{"type" : "layout", "mode" : "vertical", "id" : "locationTabLayout", "expandMode" : [1,0], "size" : [100,165], "children" : [
+					]},
+					[
+						{ "size" : 80 },
+						{ "type" : "panel", "style" : "convex", "expandMode" : [1,0], "children" : [
+							{ "type" : "label", "text" : "Escape Difficulty", "align" : "center" },
 							[
-								//{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },{ "type" : "iconButton", "id" : "impossibleEscapeLocked", "image" : "lockedDisabled.png", "visible" : false },
+								//{ "type" : "checkBox", "id" : "impossibleEscape", "toolTip" : "Make escaping impossible" },
 								{ "type" : "textBox", "id" : "escapeValue", "toolTip" : "Current Escape Difficulty", "text" : "0" }
 							]
-						]}]],
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "label", "text" : " Display Effects" } ],
-							[{ "type" : "checkBox", "id" : "bellySounds", "toolTip" : "Belly will make gurgling sounds when filled" }, { "type" : "label", "text" : " Belly Sounds" } ],
-							[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
-						]}]}
-					]],
-					[{ "size" : 75 },[ // third quarter
-						{ "expandMode" : [2, 2]},
-						{ "id" : "locationPanel", "type" : "panel", "style" : "convex", "children" : [
-							{ "type" : "label", "text" : "Occupancy Options", "inline" : true },
-							{ "type" : "scrollArea", "id" : "locationPanelScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ ]}
+						]},
+						{ "id" : "globalSettingsPanel", "type" : "panel", "size":[80,50], "expandMode" : [1,0], "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Global Settings", "align" : "center" },
+							{ "type" : "scrollArea", "id" : "globalSettingsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
+								{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+									[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "label", "text" : " Display Effect" } ],
+									[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
+								]}
+							]}]}
 						]}
-					],[ // fourth quarter
-						{ "expandMode" : [2, 2]}
-					]],
-					{ "type" : "label", "text" : "Choose the properties of this predator's stomach, these can also be modified via feeding the predator certain items." },
+						/*
+						{ "id" : "voreTypePanel", "type" : "panel", "size":[80,50], "expandMode" : [1,1], "style" : "convex", "children" : [
+							{ "type" : "label", "text" : "Vore Preferences", "align" : "center" },
+							{ "type" : "scrollArea", "id" : "preferencesScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [
+								{ "type" : "panel", "style" : "flat", "children" : [
+									{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+									[{ "type" : "checkBox", "id" : "oralVorePred", "toolTip" : "Prey NPCs will seek you out for Oral Vore" }, { "type" : "label", "text" : " Oral Vore" } ],
+									[{ "type" : "checkBox", "id" : "tailVorePred", "toolTip" : "Prey NPCs will seek you out for Tail Vore" }, { "type" : "label", "text" : " Tail Vore" } ],
+									[{ "type" : "checkBox", "id" : "absorbVorePred", "toolTip" : "Prey NPCs will seek you out for Absorbtion" }, { "type" : "label", "text" : " Absorbtion" } ],
+									[{ "type" : "checkBox", "id" : "navelVorePred", "toolTip" : "Prey NPCs will seek you out for Navel Vore" }, { "type" : "label", "text" : " Navel Vore" } ],
+									[{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "Prey NPCs will seek you out for Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
+									[{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "Prey NPCs will seek you out for Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
+									[{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "Prey NPCs will seek you out for Unbirth" }, { "type" : "label", "text" : " Unbirth" } ],
+									[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
+									{"type" : "label", "text" : "-Other-", "align" : "center"},
+									[{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "Prey NPCs will seek you out for Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
+									[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Prey NPCs will seek you out for Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
+								]}
+							]}]}
+						]}*/
+					]
+				]}
+			]},
 
-					{"type" : "panel", "style" : "convex", "children" : [
-						[{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Make it so settings cannot be modified by other players" }, { "type" : "label", "text" : "Lock Settings" }]
+			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "customizeTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "vertical", "children" : [
+					[
+						{ "expandMode" : [2, 2]},
+						{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
+							{ "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Customize Colors", "inline" : true },
+							{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						]},
+						{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
+							{ "expandMode" : [2, 2]},
+							{ "type" : "label", "text" : "Customize Skins", "inline" : true },
+							{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
+						]}
+					],
+					{ "type" : "panel", "id" : "presetsPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
+						{ "mode" : "h" },
+						{ "type" : "label", "text" : " Customize Preset", "inline" : true },
+						{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
+						{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
+						{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
+						{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
 					]}
 				]}
 			]},
-			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [
-				[
-					{ "expandMode" : [2, 2]},
-					{ "type" : "panel", "id" : "colorsPanel", "style" : "convex", "children" : [
-						{ "expandMode" : [2, 2]},
-						{ "type" : "label", "text" : "Customize Colors", "inline" : true },
-						{ "type" : "scrollArea", "id" : "colorsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-					]},
-					{ "type" : "panel", "id" : "skinsPanel", "style" : "convex", "children" : [
-						{ "expandMode" : [2, 2]},
-						{ "type" : "label", "text" : "Customize Skins", "inline" : true },
-						{ "type" : "scrollArea", "id" : "skinsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
-					]}
-				],
-				[[{ "type" : "panel", "id" : "presetsPanel", "style" : "convex", "children" : [
-					{ "mode" : "h" },
-					{ "type" : "label", "text" : " Customize Preset", "inline" : true },
-					{ "type" : "iconButton", "id" : "decPreset", "image" : "/interface/pickleft.png", "hoverImage" : "/interface/pickleftover.png" },
-					{ "type" : "textBox", "id" : "presetText", "expandMode" : [1, 0] },
-					{ "type" : "iconButton", "id" : "incPreset", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
-					{ "type" : "button", "id" : "applyPreset", "caption" : "Apply", "expandMode" : [0, 0] }
-				]}]]
-			]}],
-			"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [{ "type" : "label", "id": "ownerLabel", "text" : "" }]} ]
-		}
+			{ "type" : "tab", "id" : "speciesConfigTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesConfigTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "speciesHelpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "speciesHelpTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]},
+			{ "type" : "tab", "id" : "helpTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
+				{"type" : "layout", "id" : "helpTabContents", "expandMode" : [1,0], "size" : [100,165], "mode" : "horizontal", "children" : [] }
+			]}
+		],"bottomBar" : [ {"type" : "panel", "id" : "ownerBar", "style" : "convex", "children" : [
+			{"spacing" : 0, "mode" : "horizontal"},
+			{ "type" : "checkBox", "id" : "lockSettings", "toolTip" : "Take ownership of this pred object, preventing others from modifying its settings." },{ "type" : "label", "id": "ownerLabel", "text" : "" }
+		]}]}
 	]
 }
