@@ -105,10 +105,10 @@
 									[{ "type" : "checkBox", "id" : "analVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Anal Vore" },{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "This NPC will perform Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
 									[{ "type" : "checkBox", "id" : "cockVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock Vore" },{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "This NPC will perform Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
 									[{ "type" : "checkBox", "id" : "breastVorePredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Vore" },{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "This NPC will perform Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
-									[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" }, { "type" : "label", "text" : " Unbirth" } ],
-									{"type" : "label", "text" : "-Other-", "align" : "center"},
-									[{ "type" : "checkBox", "id" : "cockTFPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock TF" },{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "This NPC will perform Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
-									[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Absorbtion" },{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "This NPCs will perform Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
+									[{ "type" : "checkBox", "id" : "unbirthPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Unbirth" },{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "This NPC will perform Unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
+									//{"type" : "label", "text" : "-Other-", "align" : "center"},
+									//[{ "type" : "checkBox", "id" : "cockTFPredEnable", "toolTip" : "Allow this NPC to choose whether it wants to perform Cock TF" },{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "This NPC will perform Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
+									//[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Allow this NPC to choose whether it wants to perform Breast Absorbtion" },{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "This NPCs will perform Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
 								]}
 							]}]}
 						]}

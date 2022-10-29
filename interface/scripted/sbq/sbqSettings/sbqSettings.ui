@@ -41,10 +41,10 @@
 									[{ "type" : "checkBox", "id" : "analVorePred", "toolTip" : "Prey NPCs will seek you out for Anal Vore" }, { "type" : "label", "text" : " Anal Vore" } ],
 									[{ "type" : "checkBox", "id" : "cockVorePred", "toolTip" : "Prey NPCs will seek you out for Cock Vore" }, { "type" : "label", "text" : " Cock Vore" } ],
 									[{ "type" : "checkBox", "id" : "unbirthPred", "toolTip" : "Prey NPCs will seek you out for Unbirth" }, { "type" : "label", "text" : " Unbirth" } ],
-									[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ],
-									{"type" : "label", "text" : "-Other-", "align" : "center"},
-									[{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "Prey NPCs will seek you out for Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
-									[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Prey NPCs will seek you out for Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
+									[{ "type" : "checkBox", "id" : "breastVorePred", "toolTip" : "Prey NPCs will seek you out for Breast Vore" }, { "type" : "label", "text" : " Breast Vore" } ]
+									//{"type" : "label", "text" : "-Other-", "align" : "center"},
+									//[{ "type" : "checkBox", "id" : "cockTFPred", "toolTip" : "Prey NPCs will seek you out for Cock TF" }, { "type" : "label", "text" : " Cock TF" } ],
+									//[{ "type" : "checkBox", "id" : "boobsorbPred", "toolTip" : "Prey NPCs will seek you out for Breast Absorbtion" }, { "type" : "label", "text" : " Boobsorb" } ]
 								]}
 							]}]}
 						]}
