@@ -1397,7 +1397,7 @@
 						}],
 						"legs" : [{
 							"parameters" : {
-							  "directives" : "",
+							  "directives" : "?replace;2e1001=00000000;542c18=00000000;73432c=00000000;a66f46=00000000",
 							  "colorIndex" : 9
 							},
 							"name" : "dress1legs",
