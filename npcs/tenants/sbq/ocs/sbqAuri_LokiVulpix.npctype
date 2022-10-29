@@ -628,6 +628,15 @@
 			},
 			// when being pred, responses to the prey struggling inside
 			// settings come from itself, prey settings come from prey
+			"errorOrBad" : {
+				"randomDialogue" : [ "I don't like this.", "This might be an error.", "Ugh." ]
+			},
+			"allMineLines" : {
+				"randomDialogue" : [
+					["Hehe, all mine~", "Now you're all mine~", "My preything~"],
+					["Trapped inside me~", "Hehe, got you all stuck in there~", "Do you even *want* to get out~?"]
+				]
+			},
 			"struggle" : {
 				"next" : "location",
 				"taurBelly" : "struggle.belly",
@@ -639,28 +648,17 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
-								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
-								"sbqDigest" : {
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable.", {"add" : "allMineLines" } ] },
+								"sbqHeal" : { "randomDialogue" : [
+									["Now you're nice and safe.", "Hope you like how it feels in there.", "Just snuggle into the walls~", "Get yourself nice and coated in those juices~"],
+									{"add":"struggle.location.race.personality.mood.default"}
+								] },
+								"sbqSoftDigest" : {
 									"next" : "digestImmunity",
-									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
+									"false" : { "randomDialogue" : [ "Just relax as I melt you down.", "Let all your worries just melt away~", "Pretty soon you'll just be pudge on my belly~", {"add" : "allMineLines" } ] },
+									"true" : "struggle.location.race.personality.mood.default"
 								},
-								"sbqSoftDigest" : "struggle.location.race.personality.mood.sbqDigest",
-
-								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								},
-
-								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
-								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								}
+								"sbqDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -673,24 +671,22 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
-								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there.", {"add" : "allMineLines" } ] },
+								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there.", {"add" : "allMineLines" } ] },
+								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing.", "Are you excited to see what you look like once you're out?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
 									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ ["You don't want to change?", "Come on, don't you want to be different?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : { "randomDialogue" : [ ["Now to make you as fluffy as ME!", "These changes should be an improvement~", "New fluffderg coming soon~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : "struggle.location.race.personality.mood.locationEffect"
 								},
 								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
 									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing~", "Trapped even more~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : "struggle.location.race.personality.mood.locationEffect"
 								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+								"sbqFemcumDigest" : "errorOrBad",
+								"sbqFemcumSoftDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -704,18 +700,11 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
-								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+								"default" : { "randomDialogue" : [ "Ffffff yeeesss~", "MMMMmmm~ go deeeper~", "Ahhhhh~ deeeeper~", "<keysmash>~"] },
+								"transformed" : { "randomDialogue" : [ ["Ahhhh~", "Ffffff you're gonna make me cum~", "Ahhhhh~", "<keysmash>~"] ] },
+								"sbqHeal" : "errorOrBad",
+								"sbqCumDigest" : "errorOrBad",
+								"sbqCumSoftDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -730,18 +719,69 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~", "Friends are stored in the balls~" ] },
-								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+								"default" : {
+									"randomDialogue" : [
+										"Yeeess~", "Keep squirming~", "Got you stewing down there in all that cum~", "Ffff I gotta hold back from cumming you out~",
+										"<keysmash>~", "Friends are stored in the balls~", "Ohhhh I sure do want to just keep you down there~",
+										"Just get yourself absolutely covered in cum~", "Ahhhhhh~", "Sloshing around down there~", "Mmmmm you're gonna get stained white~",
+										{"add" : "allMineLines" }
+									]
+								},
+								"transformed" : { "randomDialogue" : [
+									[
+										"Heheh~ nothing but a load of cum", "Feels like I've got nothing but cum down there... oh right, thats you~",
+										"Feels like I've got more cum than usual sloshing around down there~", "Ahh~ I'm just itching to get this load out into someone~",
+										"My balls feel so full...~"
+									],
+									{"add":"struggle.location.race.personality.mood.locationEffect"}
+								]},
 								"transform" : {
 									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : "struggle.location.race.personality.mood.sbqCumDigest.false",
+									"true" : "struggle.location.race.personality.mood.default"
 								},
-								"sbqCumDigest" : {
+								"sbqCumSoftDigest" : {
 									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+									"false" : { "randomDialogue" : [
+										[
+											"Yessss get turned into some nice sticky cum~", "Mmm~ letting yourself melt down into my cum~?",
+											{"check":{"analVore": true}, "add":["Maybe I'll find a nice ass to pump you out in when we're done~"]},
+											{"check":{"unbirth": true}, "add":["Maybe I'll find a nice pussy to pump you out in when we're done~"]},
+											{"check":{"oralVore": true}, "add":["Maybe I'll find a nice throat to pump you down when we're done~"]},
+											"Ffff, you're getting softer~", "Clooooser~", "Just relaaaax as I melt you down~",
+											"Feels like I've got more cum than usual sloshing around down there~"
+										],
+										{"add":"struggle.location.race.personality.mood.locationEffect"}
+									]},
+									"true" : "struggle.location.race.personality.mood.default"
+								},
+								"sbqCumDigest" : "errorOrBad"
+							}
+						}
+					}
+				},
+				"breastsL" : "struggle.breasts",
+				"breastsR" : "struggle.breasts",
+				"breasts" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [
+									"Having a good time in there?", "Hope its comfortable.", "Get yourself a nice milk bath~",
+									"Feel free to take a drink, don't want to start leaking after all~", "hehe, look at how much bigger they are with you in there~",
+									{"add" : "allMineLines" }
+								]},
+								"sbqHeal" : { "randomDialogue" : [ ["Now you're nice and safe.", "Hope you like how it feels in there.", "Just snuggle into the walls~", "Get yourself nice and soaked in my milk~"], {"add":"struggle.location.race.personality.mood.default"} ] },
+								"sbqSoftMilkDigest" : {
+									"next" : "milkDigestImmunity",
+									"false" : { "randomDialogue" : [ "Hehe, seems like I'm going to have a nice batch of milk.", "Let all your worries just melt away~", "Mmmmm can't wait to taste whatever flavor you'll make~" ] },
+									"true" : "struggle.location.race.personality.mood.default"
+								},
+								"sbqMilkDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -1235,12 +1275,15 @@
 			"bellyEffectSlot" : "heal", // the settings in this group exist for each location, just use the correct name (belly, balls, shaft, womb, tail, breasts)
 			"wombEffectSlot" : "heal",
 			"ballsEffectSlot" : "softDigest",
+			"breastsEffectSlot" : "heal",
 
 			"bellySounds" : true,
 			"displayDigest" : false,
 
+			"ballsDifficultyMod" : 10,
+
 			"escapeDifficulty": 10,
-			"escapeDifficultyMin": 0,
+			"escapeDifficultyMin": 5,
 			"escapeDifficultyMax": 20,
 
 			"impossibleEscape": false,
@@ -1338,5 +1381,32 @@
 				"breastVore": true
 			}
 		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+						"chest" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "dress1chest",
+							"count" : 1
+						}],
+						"legs" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "dress1legs",
+							"count" : 1
+						}]
+					}
+				]
+			]
+		]
 	}
+
 }
