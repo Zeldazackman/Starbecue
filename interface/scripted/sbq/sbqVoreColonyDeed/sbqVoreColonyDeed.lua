@@ -90,13 +90,17 @@ function init()
 		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings or {}
 		sbq.overridePreyEnabled = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {}
 
+		sbq.tenant.overrides.statusControllerSettings = sbq.tenant.overrides.statusControllerSettings or {}
+		sbq.tenant.overrides.statusControllerSettings.statusProperties = sbq.tenant.overrides.statusControllerSettings.statusProperties or {}
+		sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}
+
 		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings),
 			sb.jsonMerge( sbq.npcConfig.scriptConfig.sbqDefaultSettings or {},
 				sb.jsonMerge( sbq.tenant.overrides.scriptConfig.sbqSettings or {}, sbq.overrideSettings)
 			)
 		)
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
-			sb.jsonMerge(((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
+			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
 
 		sbq.sbqCurrentData = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqCurrentData or {}
@@ -219,6 +223,7 @@ function update()
 end
 
 function sbq.savePredSettings()
+	sbq.tenant.overrides.scriptConfig.sbqSettings = sbq.predatorSettings
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
 		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
@@ -227,6 +232,7 @@ end
 sbq.saveSettings = sbq.savePredSettings
 
 function sbq.savePreySettings()
+	sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = sbq.preySettings
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
 		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSavePreySettings", sbq.preySettings)
