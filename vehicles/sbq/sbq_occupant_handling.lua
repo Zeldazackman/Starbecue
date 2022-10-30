@@ -281,7 +281,7 @@ function sbq.applyStatusLists()
 				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
 			end
 			sbq.loopedMessage( sbq.occupant[i].seatname.."StatusEffects", sbq.occupant[i].id, "sbqApplyStatusEffects", {sbq.occupant[i].statList} )
-			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
+			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id(), rotation=sbq.occupant[i].victimAnim.last.r }})
 		else
 			vehicle.setLoungeEnabled(sbq.occupant[i].seatname, false)
 		end

@@ -9,6 +9,8 @@ function update(dt)
 	lastPosition = mcontroller.position()
 	lastDt = dt
 	if data ~= nil and world.entityExists(data.source) and (data.source ~= entity.id()) and (world.entityType(data.source) == "vehicle") then
+
+		mcontroller.setRotation(data.rotation or 0)
 		mcontroller.controlParameters({ collisionPoly = sbqCurrentData.hitbox, collisionEnabled = false, frictionEnabled = false, gravityEnabled = false })
 		mcontroller.controlModifiers({movementSuppressed = true, facingSuppressed = true, runningSuppressed = true, jumpingSuppressed = true})
 
