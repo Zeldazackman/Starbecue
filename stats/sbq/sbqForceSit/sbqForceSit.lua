@@ -27,6 +27,7 @@ function update(dt)
 end
 
 function uninit()
+	mcontroller.setRotation(0)
 	local position = mcontroller.position()
 	mcontroller.setVelocity({(position[1]-lastPosition[1])/lastDt, (position[2]-lastPosition[2])/lastDt})
 	mcontroller.resetAnchorState()
