@@ -89,7 +89,8 @@ function sbq.checkPreyListEnabled(direction, tconfig, scriptargs, preyIndex, pre
 	end)
 end
 
-function sbq.doTransition( direction, scriptargs )
+function sbq.doTransition(direction, scriptargs)
+	local scriptargs = scriptargs or {}
 	if (not sbq.stateconfig or not sbq.stateconfig[sbq.state].transitions[direction]) then return "no data" end
 	if sbq.transitionLock then return "locked" end
 	local tconfig = sbq.occupantArray( sbq.stateconfig[sbq.state].transitions[direction] )

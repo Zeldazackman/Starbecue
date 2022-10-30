@@ -3,6 +3,7 @@ message.setHandler( "settingsMenuSet", function(_,_, val )
 
 	sbq.setColorReplaceDirectives()
 	sbq.setSkinPartTags()
+	sbq.initLocationEffects()
 	sbq.settingsMenuUpdated()
 end)
 

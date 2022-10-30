@@ -383,6 +383,8 @@ function escapeValue:onEnter()
 	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
 end
 
+function escapeValue:onEscape() self:onEnter() end
+
 --------------------------------------------------------------------------------------------------
 
 function decPreset:onClick()
