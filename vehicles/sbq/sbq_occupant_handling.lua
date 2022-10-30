@@ -738,7 +738,7 @@ function sbq.handleStruggles(dt)
 		end
 	end
 
-	local time = 0.75
+	local time = 0.25
 	if parts ~= nil then
 		for _, part in ipairs(parts) do
 			animation[part] = prefix .. "s_" .. movedir
@@ -750,10 +750,10 @@ function sbq.handleStruggles(dt)
 		for _, part in ipairs(parts) do
 			table.insert(times, sbq.animStateData[part .. "State"].animationState.cycle)
 		end
-		time = math.max(0.75, table.unpack(times))
+		time = math.max(0.25, table.unpack(times))
 	end
 	local entityType = world.entityType(strugglerId)
-	if entityType == "player" or entityType == "npc" then
+	if entityType == "player" then
 		sbq.addNamedRPC(strugglerId.."ConsumeEnergy", world.sendEntityMessage(strugglerId, "sbqConsumeResource", "energy", time * 5), function (consumed)
 			if consumed then
 				sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
@@ -767,6 +767,7 @@ end
 function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
 	if sbq.struggleChance(struggledata, struggler, movedir, sbq.occupant[struggler].location ) then
 		sbq.occupant[struggler].struggleTime = 0
+		sbq.occupant[struggler].bellySettleDownTimer = 0.1
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
 		local location = sbq.occupant[struggler].location
@@ -779,7 +780,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 
 		sbq.doAnims(animation)
 
-		sbq.occupant[struggler].bellySettleDownTimer = time
+		sbq.occupant[struggler].bellySettleDownTimer = time / 2
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
 		if sbq.settings[location.."Compression"] and not sbq.occupant[struggler].digested then
