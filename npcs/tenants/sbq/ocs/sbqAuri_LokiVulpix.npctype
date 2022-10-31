@@ -383,7 +383,7 @@
 
 				"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "converse"] },
 
-				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "converse"] },
+				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are entirely reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "converse"] },
 
 				"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "converse"] },
 

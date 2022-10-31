@@ -28,6 +28,7 @@
 	Rex Anivius
 	Rick4242
 	FFWizard
+	ArgobargSoup
 
 # Patrons
 ## Special Thanks
