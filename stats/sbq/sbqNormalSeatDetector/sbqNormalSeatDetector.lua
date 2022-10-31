@@ -11,7 +11,7 @@ end
 function update(dt)
 	if world.entityType(entity.id()) == "player" then
 		local data = status.statusProperty("sbqForceSitData")
-		if data and data.source and world.entityExists(data.source) then
+		if data and data.source and world.entityExists(data.source) and data.driver then
 			world.sendEntityMessage(data.source, "fixWeirdSeatBehavior", entity.id())
 		end
 	end

@@ -38,7 +38,7 @@ function sbq.effectsPanel()
 								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= "digest") or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
 								toolTip = ((locationData.digest or {}).toolTip or "Prey within will be digested, boosted by your attack power.")
 							},
-						}--[[,
+						}, {}--[[,
 						{
 							{
 								type = "checkBox", id = location.."NoneEnable", toolTip = "Allows the NPC to choose to have no effect.",
@@ -332,5 +332,22 @@ function sbq.numberBox(textbox, settingsFunc, settingName, min, max )
 		sbq.saveSettings()
 	else
 		textbox:setText(tostring(sbq.overrideSettings[settingName] or sbq.predatorSettings[settingName] or 0))
+	end
+end
+
+function sbq.dropdownButton(button, settingname, list, func, overrides)
+	local contextMenu = {}
+	for i, values in ipairs(list) do
+		table.insert(contextMenu, { values[2],
+			function ()
+				sbq[func](settingname, values[1])
+				button:setText(values[2])
+			end
+		})
+	end
+	if sbq[overrides][settingname] == nil then
+		function button:onClick()
+			metagui.contextMenu(contextMenu)
+		end
 	end
 end

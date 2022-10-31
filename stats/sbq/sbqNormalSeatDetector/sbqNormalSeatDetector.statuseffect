@@ -5,8 +5,5 @@
 
 	"scripts" : [
 	"sbqNormalSeatDetector.lua"
-	],
-
-	"label" : "Whoops, error",
-	"icon" : "/stats/sbq/sbqDigest/sbqDigest.png"
+	]
 }

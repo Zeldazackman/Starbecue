@@ -98,12 +98,13 @@
 					{ "type" : "panel", "id" : "genderswapPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
 						{"mode": "vertical", "spacing" : 0},
 						{ "type" : "label", "text" : "Genderswap Transformation", "align" : "center" },
-						[{ "type" : "checkBox", "id" : "TGOnlyEnable", "visible" : false},{ "type" : "checkBox", "id" : "TGOnly", "toolTip" : "During TF, leave prey's species unchanged."}, { "id" : "TGOnlyLabel", "type" : "label", "text" : " TG Only" }],
-						[{ "type" : "checkBox", "id" : "TFTGNoChangeEnable", "visible" : false},{ "type" : "checkBox", "id" : "TFTGNoChange", "value" : "noChange", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, leave prey's gender unchanged."}, { "id" : "TFTGNoChangeLabel", "type" : "label", "text" : " No Change" }],
-						[{ "type" : "checkBox", "id" : "TFTGSwapEnable", "visible" : false},{ "type" : "checkBox", "id" : "TFTGSwap", "value" : "swap", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender."}, { "id" : "TFTGSwapLabel", "type" : "label", "text" : " Swap Gender" }],
-						[{ "type" : "checkBox", "id" : "TFTGRandomEnable", "visible" : false},{ "type" : "checkBox", "id" : "TFTGRandom", "value" : "random", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, randomly swap prey's gender."}, { "id" : "TFTGRandomLabel", "type" : "label", "text" : " Randomize Gender" }],
-						[{ "type" : "checkBox", "id" : "TFTGMaleEnable", "visible" : false},{ "type" : "checkBox", "id" : "TFTGMale", "value" : "male", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender to male."}, { "id" : "TFTGMaleLabel", "type" : "label", "text" : " Swap to Male" }],
-						[{ "type" : "checkBox", "id" : "TFTGFemaleEnable", "visible" : false},{ "type" : "checkBox", "id" : "TFTGFemale", "value" : "female", "radioGroup" : "genderswapRadioGroup", "toolTip" : "During TF, swap prey's gender to female."}, { "id" : "TFTGFemaleLabel", "type" : "label", "text" : " Swap to Female" }]
+						[
+							//{ "type" : "checkBox", "id" : "TGOnlyEnable", "visible" : false},
+							{ "type" : "checkBox", "id" : "TGOnly", "toolTip" : "During TF, leave prey's species unchanged."}, { "id" : "TGOnlyLabel", "type" : "label", "text" : " TG Only" }],
+						[
+							{ "id" : "genderswapLabel", "type" : "label", "text" : "Genderswap"},
+							{ "id" : "genderSwapButton", "type" : "button", "caption" : "No Change", "toolTip" : "When doing TF, the prey's gender may be changed." }
+						]
 					]},
 					{ "type" : "panel", "id" : "performanceSettingsPanel", "expandMode" : [1,0], "style" : "convex", "children" : [
 						{"mode": "vertical", "spacing" : 0},
