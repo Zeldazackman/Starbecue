@@ -24,7 +24,7 @@ function sbq.setHelpTab()
 	end
 
 	require("/interface/scripted/sbq/sbqSettings/sbqResetSettings.lua")
-	if root.itemConfig("vorechipkit") ~= nil and sbq.confg.SSVMParityEnabled then
+	if root.itemConfig("vorechipkit") ~= nil and sbq.config.SSVMParityEnabled then
 		sbq.setSSVMTab = true
 		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
 		SSVMTargetCreatures:setChecked(status.statusProperty("sbqSSVMTargeting") == "creature")
