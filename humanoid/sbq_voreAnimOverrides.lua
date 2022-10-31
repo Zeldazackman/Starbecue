@@ -135,6 +135,10 @@ function setCosmetic.chest_addon(cosmetic, item, images, directives)
 
 	local whitelisted = root.assetJson("/sbqGeneral.config").chestVoreWhitelist[cosmetic.name]
 
+	local belly = fixFilepath(images.belly, item)
+	animator.setPartTag("belly_cosmetic", "cosmeticDirectives", directives or "" )
+	animator.setPartTag("belly_cosmetic", "partImage", belly or "" )
+
 	if whitelisted then
 		sbq.getSettings(function (settings)
 			if settings.breasts then
@@ -165,7 +169,8 @@ end
 
 local _chest_clear = setCosmetic.chest_clear
 function setCosmetic.chest_clear(cosmetic)
-	animator.setPartTag("breasts_cosmetic", "partImage", "" )
+	animator.setPartTag("breasts_cosmetic", "partImage", "")
+	animator.setPartTag("belly_cosmetic", "partImage", "" )
 	sbq.hideBreasts(false)
 	_chest_clear(cosmetic)
 end
@@ -173,10 +178,6 @@ end
 -- this function needs to be replaced to make sure the belly is handeled for normal vore, and the dick for cock vore
 local _legs_addon = setCosmetic.legs_addon
 function setCosmetic.legs_addon(cosmetic, item, directives)
-	local belly = fixFilepath(item.config[self.gender.."BellyFrames"], item)
-
-	animator.setPartTag("belly_cosmetic", "cosmeticDirectives", directives or "" )
-	animator.setPartTag("belly_cosmetic", "partImage", belly or "" )
 
 	local whitelisted = root.assetJson("/sbqGeneral.config").legsVoreWhitelist[cosmetic.name]
 
@@ -248,7 +249,6 @@ end
 local _legs_clear = setCosmetic.legs_clear
 function setCosmetic.legs_clear(cosmetic)
 
-	animator.setPartTag("belly_cosmetic", "partImage", "" )
 	sbq.clearPenis()
 	sbq.clearBalls()
 
