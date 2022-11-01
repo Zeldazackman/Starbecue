@@ -824,7 +824,7 @@ function sbq.struggleChance(struggledata, struggler, movedir, location)
 	if sbq.settings.impossibleEscape then return false end
 	if sbq.driving and not struggledata.directions[movedir].drivingEnabled then return false end
 
-	local escapeDifficulty = 2^(((sbq.settings.escapeDifficulty or 0) + (sbq.settings[location.."DifficultyMod"] or 0))/5)
+	local escapeDifficulty = ((sbq.settings.escapeDifficulty or 0) + (sbq.settings[location.."DifficultyMod"] or 0))
 	return chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
 	and (math.random(math.floor(chances.min * escapeDifficulty), math.ceil(chances.max * escapeDifficulty)) <= (sbq.occupant[struggler].struggleTime or 0))
 end
