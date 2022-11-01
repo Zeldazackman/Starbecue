@@ -182,9 +182,9 @@
 							"Interesting.",
 							"God Damn It."
 						],
-						"jump" : [ "greeting", "mood", "continue"]
+						"jump" : [ "converse"]
 					},
-					"fail" : "greeting.mood.continue"
+					"fail" : "converse"
 				},
 				"sbqCoreVaporeon" : {
 					"randomPortrait" : [
@@ -224,9 +224,9 @@
 							"Interesting.",
 							"God Damn It."
 						],
-						"jump" : [ "greeting", "mood", "continue"]
+						"jump" : [ "converse"]
 					},
-					"fail" : "greeting.mood.continue"
+					"fail" : "converse"
 				},
 
 				"sbqPotionAvian" : {
@@ -243,7 +243,7 @@
 						"I doubt the Stargazers would approve of this haha!",
 						"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreAvian" : {
 					"randomPortrait" : [
@@ -259,7 +259,7 @@
 						"I doubt the Stargazers would approve of this haha!",
 						"Make sure to check out the settings on this, theres some fun things that aren't enabled by default for obvious reasons!"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqPotionXeronious" : {
 					"randomPortrait" : [
@@ -272,7 +272,7 @@
 						"If I have to say the most difficult part making this, I think it'd probably be the grab system, which started here, had to redo how I handled the transformation groups to make it work.",
 						"The inhale that he can do is really fun to use"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreXeronious" : {
 					"randomPortrait" : [
@@ -283,7 +283,7 @@
 						"Big fluffy kaiju belly, currently the one that holds the most prey.",
 						"Aside from the support for making all this stuff, Xeronious has been an excellent bug tester to help this project not come apart at the seams every update release."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqPotionSlime" : {
@@ -295,7 +295,7 @@
 						"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 						"Slime"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqCoreSlime" : {
 					"randomPortrait" : [
@@ -306,7 +306,7 @@
 						"I actually made this whole thing in like, a few hours, it was done in one night. So yeah its really simple but rather fun!",
 						"Slime"
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqCoreCharem" : {
@@ -314,7 +314,7 @@
 					"dialogue" : [
 						"So, someone edited the shop recipes and also added this back into the game, fucking disgusting. This person expliclty allowed minors into vore spaces, I don't want to associate with them."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 				"sbqCoreZiellekDragon" : {
@@ -322,14 +322,14 @@
 						"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
 						"Noodle."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqConsumableZiellekPearl" : {
 					"randomDialogue" : [
 						"The third comm, fully playable dragon, has some more customizability, commed by Lakota.",
 						"Noodle."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqPotionDartGun" : {
 					"randomPortrait" : [
@@ -344,7 +344,7 @@
 						"This thing I like, made in a single day, in a frenzy of energy.",
 						"Do be aware that some people can be immune to TF."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 				"sbqSizeRay" : {
 					"randomPortrait" : [
@@ -359,39 +359,39 @@
 						"This thing is so much fun!",
 						"If you have this in your inv you can set a scale manually in the settings."
 					],
-					"jump" : [ "greeting", "mood", "continue"]
+					"jump" : [ "converse"]
 				},
 
 
-				"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most.", "The gender fluid."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqDuplicatePotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqSpeciesPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most."], "jump" : [ "converse"] },
+				"sbqGenderSwapPotion" : { "randomDialogue" : ["Do be aware that some species won't work correctly with this, but it should work for most.", "The gender fluid."], "jump" : [ "converse"] },
+				"sbqReversionPotion" : { "randomDialogue" : ["You will very much want to have lots of these on hand if you're messing around with the potions above."], "jump" : [ "converse"] },
 
-				"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqMysteriousPotionHellhound" : { "randomDialogue" : ["This turns you into a anthro Hellhound!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotionVaporeon" : { "randomDialogue" : ["Want to be a vappy hehe? This one is for being a vappy in the normal player mode, rather than being a giant one."], "jump" : [ "converse"] },
+				"sbqMysteriousPotionHellhound" : { "randomDialogue" : ["This turns you into a anthro Hellhound!"], "jump" : [ "converse"] },
 
-				"sbqMysteriousPotionSandy_Fevix" : { "randomDialogue" : ["This turns you into Sandy the Floatporeon! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqMysteriousPotionHelena_FFWizard" : { "randomDialogue" : ["This turns you into Helena the Hellhound! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqMysteriousPotionSandy_Fevix" : { "randomDialogue" : ["This turns you into Sandy the Floatporeon! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "converse"] },
+				"sbqMysteriousPotionHelena_FFWizard" : { "randomDialogue" : ["This turns you into Helena the Hellhound! just know that when playing as her, you have to go by her prefrences!"], "jump" : [ "converse"] },
 
-				"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqNominomicon" : { "randomDialogue" : ["This is a pretty important tool if you don't want to deal with every object Pred being randomized, though I still think modifiers to feed them are quite fun"], "jump" : [ "converse"] },
 
-				"sbqModifierFatteningDonut" : { "randomPortrait" : ["Blep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierFatteningDonut" : { "randomPortrait" : ["Blep.png"], "randomDialogue" : ["Hah, a donut that makes things fat!"], "jump" : [ "converse"] },
 
-				"sbqModifierDietPill" : { "randomPortrait" : ["Confused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierDietPill" : { "randomPortrait" : ["Confused.png"], "randomDialogue" : ["I think this is the only holdover sprite from our days as an addon to SSVM, we couldn't think of anything better than a pill for this."], "jump" : [ "converse"] },
 
-				"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqModifierHealingPotion" : { "randomPortrait" : ["Happy.png"], "randomDialogue" : ["The best belly effect!"], "jump" : [ "converse"] },
 
-				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are eniterly reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqPlasticEgg" : { "randomPortrait" : ["Happy.png", "Neutral.png", "Blep.png"], "randomDialogue" : ["These! These are so fun, its so dumb but they're so fun I love them.", "These are entirely reusable, and random ones can come in mismatched colors", "Did you know if you get unbirthed by a robotic species you'll get put in one of these?"], "jump" : [ "converse"] },
 
-				"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqEggWand" : { "randomPortrait" : "Confused.png", "randomDialogue" : ["Oh this? its pretty crazy, not really sure I should even be selling this?", "I know I had one of these laying around somewhere...", "Yeah I know 9999 is ridiculous but I can't just hand out something like this."], "jump" : [ "converse"] },
 
-				"sbqBallsPoster" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "greeting", "mood", "continue"] },
-				"spookypumpkinhead" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Halloween is my favorite!", "My pet plushie Socks probably would like one of these in her house."], "jump" : [ "greeting", "mood", "continue"] },
-				"sbqLargeWoodenArmchair" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["Beeg chair for beeg friends."], "jump" : [ "greeting", "mood", "continue"] },
+				"sbqBallsPoster" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Hehehehe, friends are stored in the balls~"], "jump" : [ "converse"] },
+				"spookypumpkinhead" : { "randomPortrait" : ["Joyful.png"], "randomDialogue" : ["Halloween is my favorite!", "My pet plushie Socks probably would like one of these in her house."], "jump" : [ "converse"] },
+				"sbqLargeWoodenArmchair" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["Beeg chair for beeg friends."], "jump" : [ "converse"] },
 
-				"smallBellyBoundStore" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["They were the reason this mod came to be, even if I have surpassed it a bit in some aspects.", "Might as well offer this here incase anyone wants it.", "Do note that I'm not maintaining any of that mod's content.", "While this was originally an add on to SSVM, SBQ is entirely standalone from it now."], "jump" : [ "greeting", "mood", "continue"] }
+				"smallBellyBoundStore" : { "randomPortrait" : ["Neutral.png"], "randomDialogue" : ["They were the reason this mod came to be, even if I have surpassed it a bit in some aspects.", "Might as well offer this here incase anyone wants it.", "Do note that I'm not maintaining any of that mod's content.", "While this was originally an add on to SSVM, SBQ is entirely standalone from it now."], "jump" : [ "converse"] }
 
 			},
 
@@ -628,6 +628,15 @@
 			},
 			// when being pred, responses to the prey struggling inside
 			// settings come from itself, prey settings come from prey
+			"errorOrBad" : {
+				"randomDialogue" : [ "I don't like this.", "This might be an error.", "Ugh." ]
+			},
+			"allMineLines" : {
+				"randomDialogue" : [
+					["Hehe, all mine~", "Now you're all mine~", "My preything~"],
+					["Trapped inside me~", "Hehe, got you all stuck in there~", "Do you even *want* to get out~?"]
+				]
+			},
 			"struggle" : {
 				"next" : "location",
 				"taurBelly" : "struggle.belly",
@@ -639,28 +648,17 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
-								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
-								"sbqDigest" : {
+								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable.", {"add" : "allMineLines" } ] },
+								"sbqHeal" : { "randomDialogue" : [
+									["Now you're nice and safe.", "Hope you like how it feels in there.", "Just snuggle into the walls~", "Get yourself nice and coated in those juices~"],
+									{"add":"struggle.location.race.personality.mood.default"}
+								] },
+								"sbqSoftDigest" : {
 									"next" : "digestImmunity",
-									"false" : { "randomDialogue" : [ "Time to melt you down into pudge.", "Just be a good meal and melt." ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
+									"false" : { "randomDialogue" : [ "Just relax as I melt you down.", "Let all your worries just melt away~", "Pretty soon you'll just be pudge on my belly~", {"add" : "allMineLines" } ] },
+									"true" : "struggle.location.race.personality.mood.default"
 								},
-								"sbqSoftDigest" : "struggle.location.race.personality.mood.sbqDigest",
-
-								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								},
-
-								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
-								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								}
+								"sbqDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -673,24 +671,22 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
-								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there.", {"add" : "allMineLines" } ] },
+								"sbqHeal" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there.", {"add" : "allMineLines" } ] },
+								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing.", "Are you excited to see what you look like once you're out?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
 									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ ["You don't want to change?", "Come on, don't you want to be different?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : { "randomDialogue" : [ ["Now to make you as fluffy as ME!", "These changes should be an improvement~", "New fluffderg coming soon~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : "struggle.location.race.personality.mood.locationEffect"
 								},
 								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
 									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing~", "Trapped even more~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"true" : "struggle.location.race.personality.mood.locationEffect"
 								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+								"sbqFemcumDigest" : "errorOrBad",
+								"sbqFemcumSoftDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -704,18 +700,11 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
-								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
-								},
-								"sbqCumDigest" : {
-									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+								"default" : { "randomDialogue" : [ "Ffffff yeeesss~", "MMMMmmm~ go deeeper~", "Ahhhhh~ deeeeper~", "<keysmash>~"] },
+								"transformed" : { "randomDialogue" : [ ["Ahhhh~", "Ffffff you're gonna make me cum~", "Ahhhhh~", "<keysmash>~"] ] },
+								"sbqHeal" : "errorOrBad",
+								"sbqCumDigest" : "errorOrBad",
+								"sbqCumSoftDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -730,18 +719,69 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~", "Friends are stored in the balls~" ] },
-								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+								"default" : {
+									"randomDialogue" : [
+										"Yeeess~", "Keep squirming~", "Got you stewing down there in all that cum~", "Ffff I gotta hold back from cumming you out~",
+										"<keysmash>~", "Friends are stored in the balls~", "Ohhhh I sure do want to just keep you down there~",
+										"Just get yourself absolutely covered in cum~", "Ahhhhhh~", "Sloshing around down there~", "Mmmmm you're gonna get stained white~",
+										{"add" : "allMineLines" }
+									]
+								},
+								"transformed" : { "randomDialogue" : [
+									[
+										"Heheh~ nothing but a load of cum", "Feels like I've got nothing but cum down there... oh right, thats you~",
+										"Feels like I've got more cum than usual sloshing around down there~", "Ahh~ I'm just itching to get this load out into someone~",
+										"My balls feel so full...~"
+									],
+									{"add":"struggle.location.race.personality.mood.locationEffect"}
+								]},
 								"transform" : {
 									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"false" : "struggle.location.race.personality.mood.sbqCumDigest.false",
+									"true" : "struggle.location.race.personality.mood.default"
 								},
-								"sbqCumDigest" : {
+								"sbqCumSoftDigest" : {
 									"next" : "cumDigestImmunity",
-									"false" : { "randomDialogue" : [ "You're getting so soft.", "Melt for me!" ] },
-									"true" : { "randomDialogue" : [ "Why aren't you melting down?", "Doesn't feel like you're melting." ] }
-								}
+									"false" : { "randomDialogue" : [
+										[
+											"Yessss get turned into some nice sticky cum~", "Mmm~ letting yourself melt down into my cum~?",
+											{"check":{"analVore": true}, "add":["Maybe I'll find a nice ass to pump you out in when we're done~"]},
+											{"check":{"unbirth": true}, "add":["Maybe I'll find a nice pussy to pump you out in when we're done~"]},
+											{"check":{"oralVore": true}, "add":["Maybe I'll find a nice throat to pump you down when we're done~"]},
+											"Ffff, you're getting softer~", "Clooooser~", "Just relaaaax as I melt you down~",
+											"Feels like I've got more cum than usual sloshing around down there~"
+										],
+										{"add":"struggle.location.race.personality.mood.locationEffect"}
+									]},
+									"true" : "struggle.location.race.personality.mood.default"
+								},
+								"sbqCumDigest" : "errorOrBad"
+							}
+						}
+					}
+				},
+				"breastsL" : "struggle.breasts",
+				"breastsR" : "struggle.breasts",
+				"breasts" : { // location
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "getLocationEffect",
+								"default" : { "randomDialogue" : [
+									"Having a good time in there?", "Hope its comfortable.", "Get yourself a nice milk bath~",
+									"Feel free to take a drink, don't want to start leaking after all~", "hehe, look at how much bigger they are with you in there~",
+									{"add" : "allMineLines" }
+								]},
+								"sbqHeal" : { "randomDialogue" : [ ["Now you're nice and safe.", "Hope you like how it feels in there.", "Just snuggle into the walls~", "Get yourself nice and soaked in my milk~"], {"add":"struggle.location.race.personality.mood.default"} ] },
+								"sbqSoftMilkDigest" : {
+									"next" : "milkDigestImmunity",
+									"false" : { "randomDialogue" : [ "Hehe, seems like I'm going to have a nice batch of milk.", "Let all your worries just melt away~", "Mmmmm can't wait to taste whatever flavor you'll make~" ] },
+									"true" : "struggle.location.race.personality.mood.default"
+								},
+								"sbqMilkDigest" : "errorOrBad"
 							}
 						}
 					}
@@ -1235,12 +1275,15 @@
 			"bellyEffectSlot" : "heal", // the settings in this group exist for each location, just use the correct name (belly, balls, shaft, womb, tail, breasts)
 			"wombEffectSlot" : "heal",
 			"ballsEffectSlot" : "softDigest",
+			"breastsEffectSlot" : "heal",
 
 			"bellySounds" : true,
 			"displayDigest" : false,
 
+			"ballsDifficultyMod" : 10,
+
 			"escapeDifficulty": 10,
-			"escapeDifficultyMin": 0,
+			"escapeDifficultyMin": 5,
 			"escapeDifficultyMax": 20,
 
 			"impossibleEscape": false,
@@ -1274,8 +1317,7 @@
 			"shaftEffectSlot" : "none",
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,
-			"shaftHealEnable" : false,
-			"shaftEffect" : "sbqRemoveBellyEffects"
+			"shaftHealEnable" : false
 		},
 		// prey enabled settings are down below, but here are the override settings, which follow the same rules as below, however, a player is *not* allowed to modify any of these settings
 		// this is how you can enforce your OC only being prey for things they enjoy, or if they're prey at all
@@ -1339,5 +1381,32 @@
 				"breastVore": true
 			}
 		}
+	},
+	"items" : {
+		"override" : [
+			[0,
+				[
+					{
+						"chest" : [{
+							"parameters" : {
+							  "directives" : "",
+							  "colorIndex" : 9
+							},
+							"name" : "dress1chest",
+							"count" : 1
+						}],
+						"legs" : [{
+							"parameters" : {
+							  "directives" : "?replace;2e1001=00000000;542c18=00000000;73432c=00000000;a66f46=00000000",
+							  "colorIndex" : 9
+							},
+							"name" : "dress1legs",
+							"count" : 1
+						}]
+					}
+				]
+			]
+		]
 	}
+
 }

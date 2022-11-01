@@ -437,6 +437,7 @@
 					"script": "checkOralVore"
 				},
 				"cockVore" : {
+					"position" : [2,-3],
 					"cooldown": 1,
 					"script": "checkCockVore",
 					"settings" : {

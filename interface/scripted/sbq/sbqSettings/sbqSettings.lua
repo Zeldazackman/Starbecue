@@ -4,7 +4,6 @@
 require( "/lib/stardust/json.lua" )
 
 sbq = {
-	extraTabs = root.assetJson("/interface/scripted/sbq/sbqSettings/sbqSettingsTabs.json"),
 	config = root.assetJson( "/sbqGeneral.config" ),
 	overrideSettings = {}
 }
@@ -23,20 +22,10 @@ player.species = speciesOverride._species
 speciesOverride.gender = player.gender
 player.gender = speciesOverride._gender
 
-
 require("/scripts/SBQ_RPC_handling.lua")
-require("/interface/scripted/sbq/sbqSettings/sbqSettingsLocationPanel.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
-
-function sbq.getPatronsString()
-	local patronsString = ""
-	for _, patron in ipairs(root.assetJson("/patrons.json")) do
-		patronsString = patronsString..patron.."^reset;\n"
-	end
-	return patronsString
-end
-sbq.patronsString = sbq.getPatronsString()
+require("/interface/scripted/sbq/sbqSettings/extraTabs.lua")
 
 function sbq.getInitialData()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -54,15 +43,16 @@ function sbq.getInitialData()
 	sbq.sbqCurrentData.species = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 end
 
-function sbq.getHelpTab()
-	if sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] ~= nil then
-		sbq.speciesHelpTab = mainTabField:newTab( sbq.extraTabs.speciesHelpTabs[sbq.sbqCurrentData.species] )
-	end
-end
-
 function sbq.getPlayerOccupantHolderData()
 	sbq.getSpeciesConfig(player.species())
 	sbq.predatorConfig = sbq.speciesConfig.sbqData
+end
+
+function sbq.drawLocked(w, icon)
+	local c = widget.bindCanvas(w.backingWidget)
+	c:clear()
+	local pos = vec2.mul(c:size(), 0.5)
+	c:drawImageDrawable(icon, pos, 1)
 end
 
 function init()
@@ -84,7 +74,6 @@ function init()
 	end
 	sbq.overrideSettings = sbq.predatorConfig.overrideSettings or {}
 
-	sbq.locationPanel()
 	sbq.effectsPanel()
 
 	if ((sbq.sbqCurrentData.type ~= "prey") or (sbq.sbqCurrentData.type == "object")) then
@@ -193,52 +182,10 @@ function init()
 		skinsScrollArea:clearChildren()
 	end
 
-	if sbq.speciesSettingsTab ~= nil then
-		sbq.speciesSettingsTab:setVisible(false)
-		sbq.speciesSettingsTab = nil
-	end
-	local species = sbq.sbqCurrentData.species
-	local playerSpecies = player.species()
-	if (species == "sbqOccupantHolder" or species == nil) and sbq.extraTabs.speciesSettingsTabs[playerSpecies] ~= nil then
-		species = playerSpecies
-	end
-	if sbq.extraTabs.speciesSettingsTabs[species] ~= nil then
-		sbq.speciesSettingsTab = mainTabField:newTab( sbq.extraTabs.speciesSettingsTabs[species].tab )
-		sbq.setIconDirectives()
-		if sbq.extraTabs.speciesSettingsTabs[species].scripts ~= nil then
-			for _, script in ipairs(sbq.extraTabs.speciesSettingsTabs[species].scripts) do
-				require(script)
-			end
-		end
-	end
-
-	if sbq.speciesHelpTab ~= nil then
-		sbq.speciesHelpTab:setVisible(false)
-		sbq.speciesHelpTab = nil
-	end
-
-	sbq.getHelpTab()
-
-	if sbq.helpTab ~= nil then
-		sbq.helpTab:setVisible(false)
-		sbq.helpTab = nil
-	end
-
-	sbq.helpTab = mainTabField:newTab( sbq.extraTabs.helpTab )
-	patronsLabel:setText(sbq.patronsString)
-
-	if root.itemConfig("vorechipkit") ~= nil and sbq.confg.SSVMParityEnabled then
-		helpTabs:newTab(sbq.extraTabs.SSVMOverridesTab)
-		SSVMTargetCreatures:setChecked(status.statusProperty("sbqSSVMTargeting") == "creature")
-
-		function SSVMTargetCreatures:onClick()
-			if SSVMTargetCreatures.checked then
-				status.setStatusProperty("sbqSSVMTargeting", "creature")
-			else
-				status.setStatusProperty("sbqSSVMTargeting", nil)
-			end
-		end
-	end
+	local species = player.species()
+	sbq.setSpeciesHelpTab(species)
+	sbq.setSpeciesSettingsTab(species)
+	sbq.setHelpTab()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 
@@ -251,41 +198,27 @@ function init()
 		sbq.overridePreyEnabled = status.statusProperty("sbqOverridePreyEnabled") or {}
 		sbq.checkLockedSettingsButtons("sbqPreyEnabled", "overridePreyEnabled", "changePreySetting")
 	end
-	function hammerspace:onClick() -- only one that has unique logic
-		sbq.changeGlobalSetting("hammerspace", hammerspace.checked)
-		sbq.locationPanel()
-	end
-
-	require("/interface/scripted/sbq/sbqSettings/sbqResetSettings.lua")
 end
 local init = init
 
 function sbq.checkLockedSettingsButtons(settings, override, func)
 	for setting, value in pairs(sbq[settings] or {}) do
 		local button = _ENV[setting]
-		local locked = _ENV[setting .. "Locked"]
-		local label = _ENV[setting .. "Label"]
 		if button ~= nil and type(value) == "boolean" then
-			if label ~= nil then
-				label:setVisible(true)
-			end
 			if sbq[override][setting] ~= nil then
-				button:setVisible(false)
-				if locked ~= nil then
-					locked:setVisible(true)
-					if sbq[override][setting] then
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png")
-					else
-						locked:setImage("/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png")
-					end
-					locked.toolTip = (button.toolTip or "").." (Locked)"
+				if sbq[override][setting] then
+					function button:draw() sbq.drawLocked(button, "/interface/scripted/sbq/sbqVoreColonyDeed/lockedEnabled.png") end
+				else
+					function button:draw() sbq.drawLocked(button, "/interface/scripted/sbq/sbqVoreColonyDeed/lockedDisabled.png") end
 				end
+				function button:onClick() end
 			else
-				button:setVisible(true)
-				button:setChecked(value)
-				if locked ~= nil then
-					locked:setVisible(false)
+				if sbq.drawSpecialButtons[setting] then
+					function button:draw() button:drawSpecial() end
+				else
+					function button:draw() theme.drawCheckBox(self) end
 				end
+				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)
 				end
@@ -321,11 +254,32 @@ function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.globalSettings[settingname] = settingvalue
 	sbq.predatorSettings[settingname] = settingvalue
 
+	-- a hack until I improve how sided locations are handled
+	if (settingname:sub(1, #"balls") == "balls") then
+		sbq.globalSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.globalSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+	elseif (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.globalSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.globalSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
+	end
 	sbq.saveSettings()
 end
 
 function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
+
+	-- a hack until I improve how sided locations are handled
+	if (settingname:sub(1, #"balls") == "balls") then
+		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
+	elseif (settingname:sub(1, #"breasts") == "breasts") then
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
+		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
+	end
 
 	sbq.saveSettings()
 end
@@ -343,12 +297,6 @@ function sbq.changePreySetting(settingname, settingvalue)
 	status.setStatusProperty("sbqPreyEnabled", sbq.sbqPreyEnabled)
 	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
-end
-
-function sbq.setIconDirectives()
-	if sbq.speciesSettingsTab ~= nil then
-		sbq.speciesSettingsTab:setTitle("Config", "/vehicles/sbq/"..sbq.sbqCurrentData.species.."/skins/"..((sbq.predatorSettings.skinNames or {}).head or "default").."/icon.png"..(sbq.predatorSettings.directives or ""))
-	end
 end
 
 function sbq.changeColorSetting(textbox, color, inc)
@@ -432,21 +380,10 @@ end
 --------------------------------------------------------------------------------------------------
 
 function escapeValue:onEnter()
-	local value = tonumber(escapeValue.text)
-	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings.escapeDifficulty == nil and value > 0
-	and (
-		(sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax == nil)
-		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax == nil)
-		or (sbq.overrideSettings.escapeDifficultyMin == nil and sbq.overrideSettings.escapeDifficultyMax >= value)
-		or (sbq.overrideSettings.escapeDifficultyMin <= value and sbq.overrideSettings.escapeDifficultyMax >= value)
-	)
-	then
-		sbq.changeGlobalSetting("escapeDifficulty", value)
-	else
-		escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
-	end
+	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
 end
+
+function escapeValue:onEscape() self:onEnter() end
 
 --------------------------------------------------------------------------------------------------
 

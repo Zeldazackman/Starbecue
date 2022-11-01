@@ -14,8 +14,8 @@ function init()
 
 	message.setHandler( hand.."ItemData", function(_,_, data)
 		storage.directives = data.directives or storage.directives or ""
-		storage.icon = data.icon
 		if data.assignClickAction ~= nil then
+			storage.icon = data.icon
 			storage.clickAction = data.assignClickAction
 			setIconAndDescription()
 		elseif ((not storage.clickAction) or (storage.clickAction == "unassigned")) and data.defaultClickAction ~= nil then
@@ -183,9 +183,8 @@ end
 
 
 function setIconAndDescription()
-	storage.icon = returnVoreIcon(storage.clickAction) or storage.icon
 	getDirectives()
-	activeItem.setInventoryIcon((storage.icon or ("/items/active/sbqController/"..storage.clickAction..".png"))..(storage.directives or ""))
+	activeItem.setInventoryIcon((storage.icon or returnVoreIcon(storage.clickAction) or ("/items/active/sbqController/"..storage.clickAction..".png"))..(storage.directives or ""))
 end
 
 function returnVoreIcon(action)

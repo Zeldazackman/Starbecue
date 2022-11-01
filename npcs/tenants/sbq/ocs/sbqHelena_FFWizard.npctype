@@ -2949,7 +2949,6 @@
 			"personality" : "default",
 
 			"bellyEffectSlot" : "softDigest", // the settings in this group exist for each location, just use the correct name (belly, balls, shaft, womb, tail, breasts)
-
 			"wombEffectSlot" : "heal",
 			"breastsEffectSlot" : "heal",
 
@@ -2962,9 +2961,9 @@
 			"bellySounds" : true,
 			"displayDigest" : false,
 
-			"escapeDifficulty": 2,
-			"escapeDifficultyMin": 1,
-			"escapeDifficultyMax": 6,
+			"escapeDifficulty": 10,
+			"escapeDifficultyMin": 5,
+			"escapeDifficultyMax": 20,
 
 			"impossibleEscape": false,
 			"hammerspace" : false,

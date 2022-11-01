@@ -281,7 +281,7 @@ function sbq.applyStatusLists()
 				vehicle.setLoungeEnabled(sbq.occupant[i].seatname, true)
 			end
 			sbq.loopedMessage( sbq.occupant[i].seatname.."StatusEffects", sbq.occupant[i].id, "sbqApplyStatusEffects", {sbq.occupant[i].statList} )
-			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id()}})
+			sbq.loopedMessage( sbq.occupant[i].seatname.."ForceSeat", sbq.occupant[i].id, "sbqForceSit", {{index=i, source=entity.id(), rotation=sbq.occupant[i].victimAnim.last.r, driver = (sbq.occupant[i].seatname == sbq.driverSeat) }})
 		else
 			vehicle.setLoungeEnabled(sbq.occupant[i].seatname, false)
 		end
@@ -624,7 +624,7 @@ function sbq.doBellyEffects(dt)
 					end
 				end
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
-					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..(sbq.occupant[i].smolPreyData.settings.directives or "")
+					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..((sbq.occupant[i].smolPreyData.settings or {}).directives or "")
 				end
 				sbq.openPreyHud(i, directions, progressbarDx, icon, location)
 			end
@@ -738,7 +738,7 @@ function sbq.handleStruggles(dt)
 		end
 	end
 
-	local time = 0.75
+	local time = 0.25
 	if parts ~= nil then
 		for _, part in ipairs(parts) do
 			animation[part] = prefix .. "s_" .. movedir
@@ -750,10 +750,10 @@ function sbq.handleStruggles(dt)
 		for _, part in ipairs(parts) do
 			table.insert(times, sbq.animStateData[part .. "State"].animationState.cycle)
 		end
-		time = math.max(0.75, table.unpack(times))
+		time = math.max(0.25, table.unpack(times))
 	end
 	local entityType = world.entityType(strugglerId)
-	if entityType == "player" or entityType == "npc" then
+	if entityType == "player" then
 		sbq.addNamedRPC(strugglerId.."ConsumeEnergy", world.sendEntityMessage(strugglerId, "sbqConsumeResource", "energy", time * 5), function (consumed)
 			if consumed then
 				sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
@@ -765,8 +765,9 @@ function sbq.handleStruggles(dt)
 end
 
 function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId, time)
-	if sbq.struggleChance(struggledata, struggler, movedir) then
+	if sbq.struggleChance(struggledata, struggler, movedir, sbq.occupant[struggler].location ) then
 		sbq.occupant[struggler].struggleTime = 0
+		sbq.occupant[struggler].bellySettleDownTimer = 0.1
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
 		local location = sbq.occupant[struggler].location
@@ -779,7 +780,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 
 		sbq.doAnims(animation)
 
-		sbq.occupant[struggler].bellySettleDownTimer = time
+		sbq.occupant[struggler].bellySettleDownTimer = time / 2
 		sbq.occupant[struggler].struggleTime = sbq.occupant[struggler].struggleTime + time
 
 		if sbq.settings[location.."Compression"] and not sbq.occupant[struggler].digested then
@@ -812,7 +813,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 	end
 end
 
-function sbq.struggleChance(struggledata, struggler, movedir)
+function sbq.struggleChance(struggledata, struggler, movedir, location)
 	if not ((struggledata.directions[movedir].settings == nil) or sbq.checkSettings(struggledata.directions[movedir].settings) ) then return false end
 
 	local chances = struggledata.chances
@@ -823,8 +824,9 @@ function sbq.struggleChance(struggledata, struggler, movedir)
 	if sbq.settings.impossibleEscape then return false end
 	if sbq.driving and not struggledata.directions[movedir].drivingEnabled then return false end
 
+	local escapeDifficulty = ((sbq.settings.escapeDifficulty or 0) + (sbq.settings[location.."DifficultyMod"] or 0))
 	return chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(math.floor(chances.min * 2^((sbq.settings.escapeDifficulty or 0)/5)), math.ceil(chances.max * 2^((sbq.settings.escapeDifficulty or 0)/5))) <= (sbq.occupant[struggler].struggleTime or 0))
+	and (math.random(math.floor(chances.min + escapeDifficulty), math.ceil(chances.max + escapeDifficulty)) <= (sbq.occupant[struggler].struggleTime or 0))
 end
 
 function sbq.inedible(occupantId)
