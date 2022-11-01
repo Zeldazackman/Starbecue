@@ -826,7 +826,7 @@ function sbq.struggleChance(struggledata, struggler, movedir, location)
 
 	local escapeDifficulty = ((sbq.settings.escapeDifficulty or 0) + (sbq.settings[location.."DifficultyMod"] or 0))
 	return chances ~= nil and (chances.min ~= nil) and (chances.max ~= nil)
-	and (math.random(math.floor(chances.min * escapeDifficulty), math.ceil(chances.max * escapeDifficulty)) <= (sbq.occupant[struggler].struggleTime or 0))
+	and (math.random(math.floor(chances.min + escapeDifficulty), math.ceil(chances.max + escapeDifficulty)) <= (sbq.occupant[struggler].struggleTime or 0))
 end
 
 function sbq.inedible(occupantId)
