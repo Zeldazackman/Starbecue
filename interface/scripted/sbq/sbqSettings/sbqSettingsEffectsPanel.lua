@@ -110,15 +110,15 @@ function sbq.effectsPanel()
 						{ type = "textBox", align = "center", id = location .. "Multiplier", toolTip = "Occupant Size Multiplier"},
 					},
 					{
-						{ type = "checkBox", id = location .. "HammerspaceDisabledButton",
-							checked = not sbq.predatorSettings[location .. "HammerspaceDisabled"],
-							toolTip = "Allow hammerspace for this location when it is enabled.",
+						{ type = "checkBox", id = location .. "HammerspaceDisabled",
+							checked = sbq.predatorSettings[location .. "HammerspaceDisabled"],
+							toolTip = "Disallow hammerspace for this location when it is enabled.",
 							visible = locationData.hammerspace or false
 						},
-						{ type = "label", text = "Allow Hammerspace", visible = locationData.hammerspace or false}
+						{ type = "label", text = "Disallow Hammerspace", visible = locationData.hammerspace or false}
 					},
 					{
-						{ type = "checkBox", id = location .. "CompressionButton", checked = sbq.predatorSettings[location.."Compression"], toolTip = "Prey will be compressed to a smaller size over time." },
+						{ type = "checkBox", id = location .. "Compression", checked = sbq.predatorSettings[location.."Compression"], toolTip = "Prey will be compressed to a smaller size over time." },
 						{ type = "label", text = "Compression"}
 					}
 				}}
