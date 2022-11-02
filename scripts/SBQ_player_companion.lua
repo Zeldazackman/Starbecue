@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local initStage = 0
 local oldinit = init
 sbq = {}
@@ -44,6 +45,14 @@ function init()
 			message = "Zygan SSVM Addons detected.\n \nThat mod is an older version of Starbecue before it was renamed, please remove it."
 		})
 	end
+
+	message.setHandler( "sbqPlayerCompanions", function (_,_, func, ...)
+		return playerCompanions[func](...)
+	end)
+	message.setHandler( "sbqSetRecruits", function (_,_, name, data)
+		recruitSpawner[name] = recruitSpawner:_loadRecruits(data or {})
+		recruitSpawner:markDirty()
+	end)
 
 	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
 		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})

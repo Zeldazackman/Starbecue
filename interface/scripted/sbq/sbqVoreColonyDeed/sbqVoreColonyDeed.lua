@@ -50,21 +50,6 @@ for name, tenant in pairs(sbq.tenantCatalogue) do
 end
 table.sort(sbq.validTenantCatalogueList)
 
-sbq.tenantList = {}
-if sbq.storage.occupier then
-	local occupier = sbq.storage.occupier
-	if type(occupier) == "table" and type(occupier.tenants) == "table" and
-		type(occupier.tenants[indexes.tenantIndex]) == "table" and
-		type(occupier.tenants[indexes.tenantIndex].species) == "string"
-	then
-		for i, tenant in ipairs(occupier.tenants) do
-			local name = ((tenant.overrides or {}).identity or {}).name or ""
-			table.insert(sbq.tenantList, name)
-		end
-	end
-end
-curTenantName:setText(sbq.tenantList[indexes.tenantIndex])
-
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
@@ -117,33 +102,37 @@ function init()
 		personalityText:setText(sbq.predatorSettings.personality or "default")
 		moodText:setText(sbq.predatorSettings.mood or "default")
 
-		tenantNote:setVisible(occupier.tenantNote ~= nil)
-		tenantNote.toolTip = occupier.tenantNote
+		if not sbq.storage.crewUI then
+			tenantNote:setVisible(occupier.tenantNote ~= nil)
+			tenantNote.toolTip = occupier.tenantNote
 
-		orderFurniture:setVisible(occupier.orderFurniture ~= nil)
+			orderFurniture:setVisible(occupier.orderFurniture ~= nil)
 
-		tenantText:setText( occupier.name or "")
-		local tags = sbq.storage.house.contents
-		local listed = { sbqVore = true }
-		requiredTagsScrollArea:clearChildren()
-		local colonyTagLabels = {}
-		for tag, value in pairs(occupier.tagCriteria or {}) do
-			if tag ~= "sbqVore" then
-				listed[tag] = true
-				local amount = tags[tag] or 0
-				local string = "^green;"..tag..": "..amount
-				if amount < value then
-					string = "^red;"..tag..": "..amount.." ^yellow;(Need "..value..")"
+			tenantText:setText(occupier.name or "")
+			if not sbq.storage.crewUI then
+			local tags = sbq.storage.house.contents
+			local listed = { sbqVore = true }
+			requiredTagsScrollArea:clearChildren()
+			local colonyTagLabels = {}
+			for tag, value in pairs(occupier.tagCriteria or {}) do
+				if tag ~= "sbqVore" then
+					listed[tag] = true
+					local amount = tags[tag] or 0
+					local string = "^green;"..tag..": "..amount
+					if amount < value then
+						string = "^red;"..tag..": "..amount.." ^yellow;(Need "..value..")"
+					end
+					table.insert(colonyTagLabels, { type = "label", text = string })
 				end
-				table.insert(colonyTagLabels, { type = "label", text = string })
+			end
+			for tag, value in pairs(tags or {}) do
+				if not listed[tag] then
+					table.insert(colonyTagLabels, { type = "label", text = tag..": "..value })
+				end
+			end
+			requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels})
 			end
 		end
-		for tag, value in pairs(tags or {}) do
-			if not listed[tag] then
-				table.insert(colonyTagLabels, { type = "label", text = tag..": "..value })
-			end
-		end
-		requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels})
 
 		local species = occupier.tenants[indexes.tenantIndex].species
 		sbq.getSpeciesConfig(species)
@@ -160,24 +149,29 @@ function init()
 		sbq.checkLockedSettingsButtons("preySettings", "overridePreyEnabled", "changePreySetting")
 		sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
-		function questParticipation:onClick()
-			sbq.changePredatorSetting("questParticipation", questParticipation.checked)
+		if questParticipation ~= nil then
+			if sbq.overrideSettings.questParticipation == nil then
+				function questParticipation:onClick()
+					sbq.changePredatorSetting("questParticipation", questParticipation.checked)
 
-			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "enableParticipation", questParticipation.checked, indexes.tenantIndex)
-		end
-		function crewmateGraduation:onClick()
-			sbq.changePredatorSetting("crewmateGraduation", crewmateGraduation.checked)
+					world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "enableParticipation", questParticipation.checked, indexes.tenantIndex)
+				end
+			end
+			if sbq.overrideSettings.crewmateGraduation == nil then
+				function crewmateGraduation:onClick()
+					sbq.changePredatorSetting("crewmateGraduation", crewmateGraduation.checked)
 
-			local graduation = {
-				["true"] = {
-					nextNpcType =sbq.npcConfig.scriptConfig.questGenerator.graduation.nextNpcType
-				},
-				["false"] = {
-					nextNpcType = {nil}
-				}
-			}
-
-			world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "graduation", graduation[tostring(crewmateGraduation.checked or false)], indexes.tenantIndex)
+					local graduation = {
+						["true"] = {
+							nextNpcType =sbq.npcConfig.scriptConfig.questGenerator.graduation.nextNpcType
+						},
+						["false"] = {
+							nextNpcType = {nil}
+						}
+					}
+					world.sendEntityMessage(pane.sourceEntity(), "sbqSaveQuestGenSetting", "graduation", graduation[tostring(crewmateGraduation.checked or false)], indexes.tenantIndex)
+				end
+			end
 		end
 	end
 end
@@ -269,19 +263,21 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function callTenant:onClick()
-	world.sendEntityMessage(pane.sourceEntity(), "sbqDeedInteract", {sourceId = player.id(), sourcePosition = world.entityPosition(player.id())})
-end
-
-local applyCount = 0
-function summonTenant:onClick()
-	applyCount = applyCount + 1
-
-	if applyCount > 3 or sbq.storage.occupier == nil then
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", sbq.getGuardTier() or tenantText.text)
-		pane.dismiss()
+if callTenant ~= nil then
+	function callTenant:onClick()
+		world.sendEntityMessage(pane.sourceEntity(), "sbqDeedInteract", {sourceId = player.id(), sourcePosition = world.entityPosition(player.id())})
 	end
-	summonTenant:setText(tostring(4 - applyCount))
+
+	local applyCount = 0
+	function summonTenant:onClick()
+		applyCount = applyCount + 1
+
+		if applyCount > 3 or sbq.storage.occupier == nil then
+			world.sendEntityMessage(pane.sourceEntity(), "sbqSummonNewTenant", sbq.getGuardTier() or tenantText.text)
+			pane.dismiss()
+		end
+		summonTenant:setText(tostring(4 - applyCount))
+	end
 end
 
 function sbq.getGuardTier()
@@ -306,12 +302,14 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function decTenant:onClick()
-	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", -1)
-end
+if decTenant ~= nil then
+	function decTenant:onClick()
+		sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", -1)
+	end
 
-function incTenant:onClick()
-	sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", 1)
+	function incTenant:onClick()
+		sbq.changeSelectedFromList(sbq.validTenantCatalogueList, tenantText, "tenantSelectorIndex", 1)
+	end
 end
 
 
@@ -364,52 +362,73 @@ function escapeValueMax:onEscape() self:onEnter() end
 
 --------------------------------------------------------------------------------------------------
 
-function orderFurniture:onClick()
-	local occupier = sbq.storage.occupier
-	local contextMenu = {}
-	for i, item in pairs(occupier.orderFurniture or {}) do
-		local itemConfig = root.itemConfig(item)
-		if not itemConfig then
-			sb.logInfo(item.name.." can't be ordered: doesn't exist")
-		elseif (type(item.price) ~= "number" and type((itemConfig.config or {}).price) ~= "number") then
-			sb.logInfo(item.name.." can't be ordered: has no price")
-		else
-			local actionLabel = itemConfig.config.shortdescription.."^reset;"
-			if item.count ~= nil and item.count > 1 then
-				actionLabel = actionLabel.." x"..item.count
-			end
+if orderFurniture ~= nil then
+	function orderFurniture:onClick()
+		local occupier = sbq.storage.occupier
+		local contextMenu = {}
+		for i, item in pairs(occupier.orderFurniture or {}) do
+			local itemConfig = root.itemConfig(item)
+			if not itemConfig then
+				sb.logInfo(item.name.." can't be ordered: doesn't exist")
+			elseif (type(item.price) ~= "number" and type((itemConfig.config or {}).price) ~= "number") then
+				sb.logInfo(item.name.." can't be ordered: has no price")
+			else
+				local actionLabel = itemConfig.config.shortdescription.."^reset;"
+				if item.count ~= nil and item.count > 1 then
+					actionLabel = actionLabel.." x"..item.count
+				end
 
-			local price = ((item.count or 1)*(item.price or itemConfig.config.price))
-			actionLabel = actionLabel..", Price: ^yellow;"..price.."^reset;"
+				local price = ((item.count or 1)*(item.price or itemConfig.config.price))
+				actionLabel = actionLabel..", Price: ^yellow;"..price.."^reset;"
 
-			local comma = ""
-			local gotReqTag = false
-			for reqTag, value in pairs(occupier.tagCriteria or {}) do
-				for j, tag in ipairs(itemConfig.config.colonyTags or {}) do
-					if tag == reqTag then
-						if not gotReqTag then
-							actionLabel = actionLabel..", Tags:"
-							gotReqTag = true
+				local comma = ""
+				local gotReqTag = false
+				for reqTag, value in pairs(occupier.tagCriteria or {}) do
+					for j, tag in ipairs(itemConfig.config.colonyTags or {}) do
+						if tag == reqTag then
+							if not gotReqTag then
+								actionLabel = actionLabel..", Tags:"
+								gotReqTag = true
+							end
+							actionLabel = actionLabel..comma.." ^green;"..tag.."^reset;"
+							comma = ","
+							break
 						end
-						actionLabel = actionLabel..comma.." ^green;"..tag.."^reset;"
-						comma = ","
-						break
 					end
 				end
+
+				table.insert(contextMenu, {actionLabel, function () sbq.orderItem(item, price) end})
 			end
-
-			table.insert(contextMenu, {actionLabel, function () sbq.orderItem(item, price) end})
 		end
+		metagui.contextMenu(contextMenu)
 	end
-	metagui.contextMenu(contextMenu)
-end
 
-function sbq.orderItem(item, price)
-	if player.isAdmin() or player.consumeCurrency( "money", price ) then
-		player.giveItem(item)
-	else
-		pane.playSound("/sfx/interface/clickon_error.ogg")
+	function sbq.orderItem(item, price)
+		if player.isAdmin() or player.consumeCurrency( "money", price ) then
+			player.giveItem(item)
+		else
+			pane.playSound("/sfx/interface/clickon_error.ogg")
+		end
 	end
 end
 
 --------------------------------------------------------------------------------------------------
+
+if sbq.storage.crewUI then
+	require("/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreCrewMenu.lua")
+end
+
+sbq.tenantList = {}
+if sbq.storage.occupier then
+	local occupier = sbq.storage.occupier
+	if type(occupier) == "table" and type(occupier.tenants) == "table" and
+		type(occupier.tenants[indexes.tenantIndex]) == "table" and
+		type(occupier.tenants[indexes.tenantIndex].species) == "string"
+	then
+		for i, tenant in ipairs(occupier.tenants) do
+			local name = ((tenant.overrides or {}).identity or {}).name or ""
+			table.insert(sbq.tenantList, name)
+		end
+	end
+end
+curTenantName:setText(sbq.tenantList[indexes.tenantIndex])

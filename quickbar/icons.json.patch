@@ -1,10 +1,18 @@
 [
 	{ "op" : "add", "path" : "/items/starbecue:settings",
 		"value" : {
-			"label" : "Starbecue Settings",
+			"label" : "SBQ Settings",
 			"weight" : -10,
 			"icon" : "/items/active/sbqController/oralVore.png",
 			"action" : [ "ui", "starbecue:settings" ]
+		}
+	},
+	{ "op" : "add", "path" : "/items/starbecue:voreColonyDeed",
+		"value" : {
+			"label" : "SBQ Crew",
+			"weight" : -9,
+			"icon" : "/objects/sbq/sbqVoreColonyDeed/sbqVoreColonyDeedIcon.png",
+			"action" : [ "ui", "starbecue:voreCrewMenu", { "crewUI" : true } ]
 		}
 	}
 ]

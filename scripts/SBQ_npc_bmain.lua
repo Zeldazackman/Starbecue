@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local _init = init
 local _update = update
 
@@ -89,6 +90,20 @@ function init()
 		itemDrop.parameters.predColorMap = speciesFile.baseColorMap
 
 		world.spawnItem(itemDrop, mcontroller.position())
+	end)
+
+	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
+		if menuName and menuName ~= "sbqOccupantHolder" then
+		else
+		end
+	end)
+	message.setHandler("sbqSavePreySettings", function(_, _, settings)
+		status.setStatusProperty("sbqPreyEnabled", settings)
+		status.clearPersistentEffects("digestImmunity")
+		status.setPersistentEffects("digestImmunity", { "sbqDigestImmunity" })
+	end)
+	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings)
+		status.setStatusProperty("speciesAnimOverrideSettings", settings)
 	end)
 
 
