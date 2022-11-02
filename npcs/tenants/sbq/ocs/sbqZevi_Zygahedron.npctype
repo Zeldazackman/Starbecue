@@ -43,6 +43,8 @@
 			"absorbVorePredEnable" : true
 		},
 		"sbqOverrideSettings" : {
+			"crewmateGraduation" : false,
+
 			"digestEnable" : false,
 			"shaftDigestEnable" : false,
 			"shaftSoftDigestEnable" : false,

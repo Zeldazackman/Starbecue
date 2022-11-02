@@ -84,6 +84,9 @@ function init()
 				sb.jsonMerge( sbq.tenant.overrides.scriptConfig.sbqSettings or {}, sbq.overrideSettings)
 			)
 		)
+		sbq.tenant.overrides.scriptConfig.sbqSettings = sbq.predatorSettings
+		sbq.predatorSettings.firstLoadDone = true
+
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)

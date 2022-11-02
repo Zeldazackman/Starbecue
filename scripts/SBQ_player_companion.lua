@@ -54,6 +54,15 @@ function init()
 		recruitSpawner:markDirty()
 	end)
 
+	message.setHandler( "sbqRequestFollow", function (_,_, uniqueId, recruitUuid, recruitInfo)
+		if not checkCrewLimits(recruitUuid) then
+			return false
+		end
+		promises:add(world.sendEntityMessage(uniqueId, "recruit.confirmFollow"), function(success)
+			recruitSpawner:recruitFollowing(onOwnShip(), recruitUuid, recruitInfo)
+		end)
+	end)
+
 	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
 		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})
 	end)

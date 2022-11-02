@@ -12,11 +12,11 @@ function sbq.generateKeysmashes(input, lengthMin, lengthMax)
 	end)
 end
 
-function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
+function sbq.getDialogueBranch(dialogueTreeLocation, settings, entity, dialogueTree)
 	local dialogueTree = sbq.getRedirectedDialogue(dialogueTree or sbq.dialogueTree, settings) or {}
 
 	for _, branch in ipairs(dialogueTreeLocation) do
-		dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, branch)
+		dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, branch, entity)
 	end
 
 	local continue = true
@@ -24,10 +24,10 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
 		continue = false
 		local nextType = type(dialogueTree.next)
 		if nextType == "string" then
-			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next)
+			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next, entity)
 			continue = true
 		elseif nextType == "table" then
-			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next[math.random(#dialogueTree.next)])
+			dialogueTree = sbq.checkDialogueBranch(dialogueTree, settings, dialogueTree.next[math.random(#dialogueTree.next)], entity)
 			continue = true
 		end
 	end
@@ -35,23 +35,23 @@ function sbq.getDialogueBranch(dialogueTreeLocation, settings, dialogueTree)
 	return dialogueTree
 end
 
-function sbq.checkDialogueBranch(dialogueTree, settings, branch)
+function sbq.checkDialogueBranch(dialogueTree, settings, branch, entity)
 	local dialogueTree = dialogueTree
 	if type(dialogueTree) == "table" then
 		if type(dialogueBoxScripts[branch]) == "function" then
-			dialogueTree = dialogueBoxScripts[branch](dialogueTree, settings, branch)
+			dialogueTree = dialogueBoxScripts[branch](dialogueTree, settings, branch, entity)
 		elseif settings[branch] ~= nil then
 			dialogueTree = dialogueTree[tostring(settings[branch])] or dialogueTree[branch] or dialogueTree.default
 		else
 			dialogueTree = dialogueTree[branch]
 		end
 	end
-	return sbq.getRedirectedDialogue(dialogueTree, settings)
+	return sbq.getRedirectedDialogue(dialogueTree, settings, entity)
 end
 
 local recursionCount = 0
 -- for dialog in other files thats been pointed to
-function sbq.getRedirectedDialogue(dialogueTree, settings)
+function sbq.getRedirectedDialogue(dialogueTree, settings, entity)
 	local dialogueTree = dialogueTree
 	if type(dialogueTree) == "string" then
 		local firstChar = dialogueTree:sub(1,1)
@@ -68,7 +68,7 @@ function sbq.getRedirectedDialogue(dialogueTree, settings)
 			table.insert(jump, dialogueTree)
 			if recursionCount > 10 then return {} end -- protection against possible infinite loops of recusion
 			recursionCount = recursionCount + 1
-			dialogueTree = sbq.getDialogueBranch(jump, settings)
+			dialogueTree = sbq.getDialogueBranch(jump, settings, entity)
 		end
 	end
 	return dialogueTree or {}
@@ -129,7 +129,7 @@ function sbq.checkSettings(checkSettings, settings)
 end
 
 
-function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
+function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch, entity, ...)
 	local dialogueTree = dialogueTree
 	local options = {}
 	local effect = settings[settings.location.."Effect"]
@@ -159,7 +159,7 @@ function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch)
 	return dialogueTree[options[math.random(#options)]] or dialogueTree.default
 end
 
-function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
+function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch, entity, ...)
 	local dialogueTree = dialogueTree
 	local effect = settings[settings.location.."Effect"]
 	if settings.digested then
@@ -172,7 +172,7 @@ function dialogueBoxScripts.locationEffect(dialogueTree, settings, branch)
 	return dialogueTree[effect] or dialogueTree.default
 end
 
-function dialogueBoxScripts.digestImmunity(dialogueTree, settings, branch)
+function dialogueBoxScripts.digestImmunity(dialogueTree, settings, branch, entity, ...)
 	if settings.digestImmunity and (settings.allowSoftDigest and settings[settings.location.."Effect"] == "sbqSoftDigest") then
 		return dialogueTree["false"] or dialogueTree.default
 	elseif settings.digestImmunity then
@@ -182,7 +182,7 @@ function dialogueBoxScripts.digestImmunity(dialogueTree, settings, branch)
 	end
 end
 
-function dialogueBoxScripts.cumDigestImmunity(dialogueTree, settings, branch)
+function dialogueBoxScripts.cumDigestImmunity(dialogueTree, settings, branch, entity, ...)
 	if settings.cumDigestImmunity and (settings.allowCumSoftDigest and settings[settings.location.."Effect"] == "sbqCumSoftDigest") then
 		return dialogueTree["false"] or dialogueTree.default
 	elseif settings.cumDigestImmunity then
@@ -192,7 +192,7 @@ function dialogueBoxScripts.cumDigestImmunity(dialogueTree, settings, branch)
 	end
 end
 
-function dialogueBoxScripts.femcumDigestImmunity(dialogueTree, settings, branch)
+function dialogueBoxScripts.femcumDigestImmunity(dialogueTree, settings, branch, entity, ...)
 	if settings.femcumDigestImmunity and (settings.allowFemcumSoftDigest and settings[settings.location.."Effect"] == "sbqFemcumSoftDigest") then
 		return dialogueTree["false"] or dialogueTree.default
 	elseif settings.femcumDigestImmunity then
@@ -202,7 +202,7 @@ function dialogueBoxScripts.femcumDigestImmunity(dialogueTree, settings, branch)
 	end
 end
 
-function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch)
+function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch, entity, ...)
 	if settings.milkDigestImmunity and (settings.allowMilkSoftDigest and settings[settings.location.."Effect"] == "sbqMilkSoftDigest") then
 		return dialogueTree["false"] or dialogueTree.default
 	elseif settings.milkDigestImmunity then
@@ -212,7 +212,43 @@ function dialogueBoxScripts.milkDigestImmunity(dialogueTree, settings, branch)
 	end
 end
 
-function dialogueBoxScripts.openNewDialogueBox(dialogueTree, settings, branch, ...)
+function dialogueBoxScripts.openNewDialogueBox(dialogueTree, settings, branch, entity, ...)
 	player.interact("ScriptPane", { data = sb.jsonMerge(metagui.inputData, dialogueTree.inputData), gui = { }, scripts = {"/metagui.lua"}, ui = dialogueTree.ui }, pane.sourceEntity())
 	pane.dismiss()
+end
+
+function dialogueBoxScripts.isOwner(dialogueTree, settings, branch, entity, ...)
+	local result = false
+	if entity then
+		local uuid = world.entityUniqueId(entity)
+		result = uuid ~= nil and uuid == settings.ownerUuid
+	end
+	return dialogueTree[tostring(result) or "false"]
+end
+
+function dialogueBoxScripts.dismiss(dialogueTree, settings, branch, entity, ...)
+	pane.dismiss()
+end
+
+function dialogueBoxScripts.swapFollowing(dialogueTree, settings, branch, entity, ...)
+	sbq.addRPC(world.sendEntityMessage(pane.sourceEntity(), "sbqSwapFollowing"), function(data)
+		if data and data[1] then
+			if data[1] == "None" then
+				sbq.updateDialogueBox({}, dialogueTree.continue)
+			elseif data[1] == "Message" then
+				if data[2].messageType == "recruits.requestUnfollow" then
+					world.sendEntityMessage(player.id(), "recruits.requestUnfollow", table.unpack(data[2].messageArgs))
+					sbq.updateDialogueBox({}, dialogueTree.continue)
+				elseif data[2].messageType == "recruits.requestFollow" then
+					local result = world.sendEntityMessage(player.id(), "sbqRequestFollow", table.unpack(data[2].messageArgs)):result()
+					if result == nil then
+						sbq.updateDialogueBox({}, dialogueTree.continue)
+					else
+						sbq.updateDialogueBox({}, dialogueTree.fail)
+					end
+				end
+			end
+		end
+	end)
+	return {}
 end

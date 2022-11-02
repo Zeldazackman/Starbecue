@@ -12,7 +12,9 @@
 		"behavior" : "sbqvorevillager",
 		"questGenerator" : {
 			"graduation" : {
-				"nextNpcType" : []
+				"nextNpcType" : [
+					[1, "sbqVoreCrewmember"]
+				]
 			}
 		},
 		"entityPortrait" : true,
