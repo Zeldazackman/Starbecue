@@ -31,7 +31,7 @@
 							"default" : { // mood
 								"next" : "isFollowing",
 								"true" : {
-									"randomDialogue" : [ "Greetings Captian.", "Hello Captian.", "Captain." ],
+									"randomDialogue" : [ "Greetings Captain.", "Hello Captain.", "Captain." ],
 									"buttonText"  : [ "Stay" ],
 									"callScript" : "swapFollowing",
 									"continue" : {
@@ -41,7 +41,7 @@
 									"fail" : "fullCrew"
 								},
 								"false" : {
-									"randomDialogue" : [ "Greetings Captian.", "Hello Captian.", "Captain." ],
+									"randomDialogue" : [ "Greetings Captain.", "Hello Captain.", "Captain." ],
 									"buttonText"  : [ "Follow" ],
 									"callScript" : "swapFollowing",
 									"continue" : {
