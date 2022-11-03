@@ -35,7 +35,7 @@
 									"buttonText"  : [ "Stay" ],
 									"callScript" : "swapFollowing",
 									"continue" : {
-										"randomDialogue" : [ "I'll be right here.", "Staying here.", "Yeah I'll stay"],
+										"randomDialogue" : [ "I'll be right here.", "Staying here.", "Yeah I'll stay."],
 										"callScript" : "dismiss"
 									},
 									"fail" : "fullCrew"
@@ -61,7 +61,7 @@
 						"default" : { // personality
 							"next" : "mood",
 							"default" : { // mood
-								"randomDialogue" : [ "Hi, hows it going." ]
+								"randomDialogue" : [ "Hi, how's it going." ]
 							}
 						}
 					}
