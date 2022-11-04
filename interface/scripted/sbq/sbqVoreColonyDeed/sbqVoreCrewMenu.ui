@@ -51,7 +51,10 @@
 						{"size" : 85}
 					]
 				]},
-				{"type" : "label", "id" : "notStarbecueNPC", "text" : "This NPC is not a Starbecue NPC.", "align" : "center" }
+				{"type" : "label", "id" : "notStarbecueNPC", "text" : "This NPC is not a Starbecue NPC.", "align" : "center" },
+				"spacer",
+				{"type" : "label", "id" : "tryWarpingLabel", "text" : "^#555;If this menu doesn't look right, try warping to refresh crew.", "align" : "center" }
+
 
 			]},
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
