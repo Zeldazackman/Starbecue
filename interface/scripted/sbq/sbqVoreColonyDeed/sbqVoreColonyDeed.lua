@@ -111,9 +111,10 @@ function init()
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
 
-		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {})
+		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings or {})
 		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
-		sbq.animOverrideOverrideSettings = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideOverrideSettings or {}
+		sbq.animOverrideOverrideSettings = sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideOverrideSettings or {}
+		sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings = sbq.animOverrideSettings
 
 		sbq.globalSettings = sbq.predatorSettings
 		escapeValue:setText(tostring(sbq.overrideSettings.escapeDifficulty or sbq.predatorSettings.escapeDifficulty or 0))
@@ -159,7 +160,63 @@ function init()
 
 		local sbqNPC = sbq.npcConfig.scriptConfig.sbqNPC or false
 		globalTenantSettingsLayout:setVisible(sbqNPC)
-		notStarbecueNPC:setVisible( not sbqNPC)
+		notStarbecueNPC:setVisible(not sbqNPC)
+		if not sbqNPC then
+			local convertible = sbq.config.vornyConvertTable[sbq.tenant.type]
+			if convertible ~= nil then
+				convertNPC:setVisible(true)
+				convertNPC:setText("Convert")
+				local applyCount = 0
+				function convertNPC:onClick()
+					applyCount = applyCount + 1
+
+					if applyCount > 3 then
+						world.sendEntityMessage(sbq.tenant.uniqueId, "sbqSetNPCType", convertible)
+						if sbq.storage.crewUI then
+							for i, follower in ipairs(sbq.followers) do
+								if follower.uniqueId == sbq.tenant.uniqueId then
+									follower.config.type = convertible
+									break
+								end
+							end
+							world.sendEntityMessage(player.id(), "sbqSetRecruits", "followers", sbq.followers)
+						end
+						pane.dismiss()
+					end
+					convertNPC:setText(tostring(4 - applyCount))
+				end
+			else
+				convertNPC:setVisible(false)
+			end
+		else
+			local visible = false
+			for convertible, converted in pairs(sbq.config.vornyConvertTable) do
+				if converted == sbq.tenant.type then
+					visible = true
+					local applyCount = 0
+
+					function revertNPC:onClick()
+						applyCount = applyCount + 1
+						if applyCount > 3 then
+							world.sendEntityMessage(sbq.tenant.uniqueId, "sbqSetNPCType", convertible)
+							if sbq.storage.crewUI then
+								for i, follower in ipairs(sbq.followers) do
+									if follower.uniqueId == sbq.tenant.uniqueId then
+										follower.config.type = convertible
+										break
+									end
+								end
+								world.sendEntityMessage(player.id(), "sbqSetRecruits", "followers", sbq.followers)
+							end
+							pane.dismiss()
+						end
+						revertNPC:setText(tostring(4 - applyCount))
+					end
+					break
+				end
+			end
+			revertNPC:setVisible(visible)
+		end
 
 		local predTabVisible = (sbq.npcConfig.scriptConfig.isPredator or (sbq.npcConfig.scriptConfig.isPredator == nil)) and sbqNPC
 		notPredText:setVisible(not predTabVisible)
@@ -251,7 +308,7 @@ function sbq.savePredSettings()
 	sbq.tenant.overrides.scriptConfig.sbqSettings = sbq.predatorSettings
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveSettings", sbq.predatorSettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSaveSettings", sbq.predatorSettings)
+		world.sendEntityMessage(sbq.tenant.uniqueId, "sbqSaveSettings", sbq.predatorSettings)
 	end
 end
 sbq.saveSettings = sbq.savePredSettings
@@ -260,7 +317,7 @@ function sbq.savePreySettings()
 	sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = sbq.preySettings
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSavePreySettings", sbq.preySettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSavePreySettings", sbq.preySettings)
+		world.sendEntityMessage(sbq.tenant.uniqueId, "sbqSavePreySettings", sbq.preySettings)
 	end
 end
 
@@ -285,11 +342,12 @@ end
 
 function sbq.changeAnimOverrideSetting(settingname, settingvalue)
 	sbq.animOverrideSettings[settingname] = settingvalue
+	sbq.tenant.overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings = sbq.animOverrideSettings
 	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings, indexes.tenantIndex)
 	if sbq.storage.occupier then
-		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings)
-		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
-		world.sendEntityMessage(sbq.storage.occupier.tenants[indexes.tenantIndex].uniqueId, "animOverrideScale", sbq.animOverrideSettings.scale)
+		world.sendEntityMessage(sbq.tenant.uniqueId, "sbqSaveAnimOverrideSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.tenant.uniqueId, "speciesAnimOverrideRefreshSettings", sbq.animOverrideSettings)
+		world.sendEntityMessage(sbq.tenant.uniqueId, "animOverrideScale", sbq.animOverrideSettings.scale)
 	end
 end
 

@@ -5,12 +5,10 @@ local oldinit = init
 local oldupdate = update
 local olduninit = uninit
 
-sbq = {
-	currentData = {},
-	dialogueBoxOpen = 0,
-	targetedEntities = {},
-	queuedTransitions = {}
-}
+sbq.currentData = {}
+sbq.dialogueBoxOpen = 0
+sbq.targetedEntities = {}
+sbq.queuedTransitions = {}
 
 dialogueBoxScripts = {}
 
@@ -50,6 +48,7 @@ function init()
 	end
 
 	sbq.setSpeciesConfig()
+	sbq.predatorConfig = sbq.speciesConfig.sbqData
 
 	if not storage.settings then
 		storage.settings = sb.jsonMerge( sbq.config.defaultSettings,
