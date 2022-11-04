@@ -45,7 +45,7 @@
 							{ "type" : "textBox", "id" : "moodText", "expandMode" : [1, 0], "toolTip": "Mood" },
 							{ "type" : "iconButton", "id" : "incMood", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" }
 						]}],
-						{"type" : "button", "id" : "revertNPC", "caption" : "Revert", "toolTip" : "Reverts this NPC into the equivalent vannila version.", "expandMode" : [0, 0]},
+						{"type" : "button", "id" : "revertNPC", "caption" : "Revert", "toolTip" : "Reverts this NPC into the equivalent vanilla version.", "expandMode" : [0, 0]},
 						{"type" : "layout", "mode" : "vertical", "expandMode" : [2,2], "children" : []}
 					]},
 					[
