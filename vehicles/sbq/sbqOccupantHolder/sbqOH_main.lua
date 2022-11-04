@@ -192,6 +192,8 @@ function initAfterInit(data, scale, scaleYOffset)
 	sbq.predScaleYOffset = scaleYOffset
 
 	sbq.settings = sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.sbqData.defaultSettings or {}), config.getParameter( "settings" ) or {})
+	sbq.predatorSettings = sbq.settings
+	sbq.predatorConfig = sbq.sbqData
 
 	sbq.partTags.global = {}
 

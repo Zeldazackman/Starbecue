@@ -37,3 +37,8 @@ function sbq.savePreySettings()
 		world.sendEntityMessage(player.id(), "sbqSetRecruits", "followers", followers)
 	end
 end
+
+function sbq.onTenantChanged()
+
+	mainTabField:pushEvent("tabChanged", sbq.selectedMainTabFieldTab, sbq.selectedMainTabFieldTab)
+end

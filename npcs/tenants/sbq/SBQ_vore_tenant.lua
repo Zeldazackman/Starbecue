@@ -18,6 +18,7 @@ require("/scripts/SBQ_RPC_handling.lua")
 require("/lib/stardust/json.lua")
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBoxScripts.lua")
 require("/scripts/SBQ_species_config.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
 
 local _npc_setItemSlot
 
@@ -68,6 +69,7 @@ function init()
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()
 	end
+	sbq.predatorSettings = storage.settings
 	sbq.saveCosmeticSlots()
 
 	sbq.setRelevantPredSettings()
@@ -329,8 +331,11 @@ end
 function sbq.randomizeTenantSettings()
 	local randomizeSettings = config.getParameter("sbqRandomizeSettings") or {}
 	for setting, values in pairs(randomizeSettings) do
-		storage.settings[setting] = values[math.random(#values)]
+		local value = values[math.random(#values)]
+		storage.settings[setting] = value
+		sbq.autoSetSettings(setting, value)
 	end
+
 	local randomizePreySettings = config.getParameter("sbqRandomizePreySettings") or {}
 	local preySettings = status.statusProperty("sbqPreyEnabled") or {}
 	for setting, values in pairs(randomizePreySettings) do
@@ -344,28 +349,6 @@ end
 function sbq.setRelevantPredSettings()
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
-	if storage.settings.unbirthPred or storage.settings.unbirthPredEnable then
-		storage.settings.pussy = true
-	else
-		storage.settings.pussy = false
-	end
-	if storage.settings.cockVorePred or storage.settings.cockVorePredEnable then
-		storage.settings.penis = true
-		storage.settings.balls = true
-	else
-		storage.settings.penis = false
-		storage.settings.balls = false
-	end
-	if storage.settings.navelVorePred or storage.settings.navelVorePredEnable then
-		storage.settings.navel = true
-	else
-		storage.settings.navel = false
-	end
-	if storage.settings.breastVorePred or storage.settings.breastVorePredEnable then
-		storage.settings.breasts = true
-	else
-		storage.settings.breasts = false
-	end
 	if storage.settings.breasts or storage.settings.penis or storage.settings.balls or storage.settings.pussy
 	or storage.settings.bra or storage.settings.underwear
 	then

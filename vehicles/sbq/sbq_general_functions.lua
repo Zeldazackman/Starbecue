@@ -1,5 +1,6 @@
 require("/scripts/poly.lua")
 require("/scripts/rect.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
 
 function sbq.logJson(arg)
 	sb.logInfo(sb.printJson(arg, 1))

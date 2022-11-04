@@ -53,6 +53,7 @@ table.sort(sbq.validTenantCatalogueList)
 require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
 
 function sbq.drawLocked(w, icon)
 	local c = widget.bindCanvas(w.backingWidget)
@@ -61,6 +62,8 @@ function sbq.drawLocked(w, icon)
 	c:drawImageDrawable(icon, pos, 1)
 end
 
+sbq.selectedMainTabFieldTab = mainTabField.tabs.tenantTab
+
 function init()
 	local occupier = sbq.storage.occupier
 
@@ -68,18 +71,35 @@ function init()
 		type(occupier.tenants[indexes.tenantIndex]) == "table" and
 		type(occupier.tenants[indexes.tenantIndex].species) == "string"
 	then
-
 		sbq.tenant = occupier.tenants[indexes.tenantIndex]
-
 		sbq.npcConfig = root.npcConfig(sbq.tenant.type)
-		sbq.overrideSettings = sbq.npcConfig.scriptConfig.sbqOverrideSettings or {}
-		sbq.overridePreyEnabled = sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {}
+
+		sbq.sbqCurrentData = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqCurrentData or {}
+
+		-- I do need to seperate the settings for the NPCs based on their pred species but thats for another time
+		--[[if sbq.sbqCurrentData.species ~= nil then
+			if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
+				sbq.getSpeciesConfig(sbq.tenant.species)
+				sbq.predatorConfig = sbq.speciesConfig.sbqData
+					else
+				sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+			end
+		else
+			sbq.getSpeciesConfig(sbq.tenant.species)
+			sbq.predatorConfig = sbq.speciesConfig.sbqData
+		end]]
+		sbq.getSpeciesConfig(sbq.tenant.species)
+		sbq.predatorConfig = sbq.speciesConfig.sbqData
+
+
+		sbq.overrideSettings = sb.jsonMerge(sbq.predatorConfig.overrideSettings or {}, sbq.npcConfig.scriptConfig.sbqOverrideSettings or {})
+		sbq.overridePreyEnabled = sb.jsonMerge(sbq.predatorConfig.overridePreyEnabled or {}, sbq.npcConfig.scriptConfig.sbqOverridePreyEnabled or {})
 
 		sbq.tenant.overrides.statusControllerSettings = sbq.tenant.overrides.statusControllerSettings or {}
 		sbq.tenant.overrides.statusControllerSettings.statusProperties = sbq.tenant.overrides.statusControllerSettings.statusProperties or {}
 		sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}
 
-		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sbq.config.defaultSettings, sbq.config.tenantDefaultSettings),
+		sbq.predatorSettings = sb.jsonMerge( sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.config.tenantDefaultSettings),
 			sb.jsonMerge( sbq.npcConfig.scriptConfig.sbqDefaultSettings or {},
 				sb.jsonMerge( sbq.tenant.overrides.scriptConfig.sbqSettings or {}, sbq.overrideSettings)
 			)
@@ -90,8 +110,6 @@ function init()
 		sbq.preySettings = sb.jsonMerge( sbq.config.defaultPreyEnabled.player,
 			sb.jsonMerge(sbq.tenant.overrides.statusControllerSettings.statusProperties.sbqPreyEnabled or {}, sbq.overridePreyEnabled or {})
 		)
-
-		sbq.sbqCurrentData = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).sbqCurrentData or {}
 
 		sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).speciesAnimOverrideSettings or {})
 		sbq.animOverrideSettings.scale = ((sbq.tenant.overrides.statusControllerSettings or {}).statusProperties or {}).animOverrideScale or 1
@@ -105,6 +123,8 @@ function init()
 		personalityText:setText(sbq.predatorSettings.personality or "default")
 		moodText:setText(sbq.predatorSettings.mood or "default")
 
+		sbq.onTenantChanged()
+
 		if not sbq.storage.crewUI then
 			tenantNote:setVisible(occupier.tenantNote ~= nil)
 			tenantNote.toolTip = occupier.tenantNote
@@ -113,33 +133,41 @@ function init()
 
 			tenantText:setText(occupier.name or "")
 			if not sbq.storage.crewUI then
-			local tags = sbq.storage.house.contents
-			local listed = { sbqVore = true }
-			requiredTagsScrollArea:clearChildren()
-			local colonyTagLabels = {}
-			for tag, value in pairs(occupier.tagCriteria or {}) do
-				if tag ~= "sbqVore" then
-					listed[tag] = true
-					local amount = tags[tag] or 0
-					local string = "^green;"..tag..": "..amount
-					if amount < value then
-						string = "^red;"..tag..": "..amount.." ^yellow;(Need "..value..")"
+				local tags = sbq.storage.house.contents
+				local listed = { sbqVore = true }
+				requiredTagsScrollArea:clearChildren()
+				local colonyTagLabels = {}
+				for tag, value in pairs(occupier.tagCriteria or {}) do
+					if tag ~= "sbqVore" then
+						listed[tag] = true
+						local amount = tags[tag] or 0
+						local string = "^green;" .. tag .. ": " .. amount
+						if amount < value then
+							string = "^red;" .. tag .. ": " .. amount .. " ^yellow;(Need " .. value .. ")"
+						end
+						table.insert(colonyTagLabels, { type = "label", text = string })
 					end
-					table.insert(colonyTagLabels, { type = "label", text = string })
 				end
-			end
-			for tag, value in pairs(tags or {}) do
-				if not listed[tag] then
-					table.insert(colonyTagLabels, { type = "label", text = tag..": "..value })
+				for tag, value in pairs(tags or {}) do
+					if not listed[tag] then
+						table.insert(colonyTagLabels, { type = "label", text = tag .. ": " .. value })
+					end
 				end
-			end
-			requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels})
+				requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels })
 			end
 		end
 
-		local species = occupier.tenants[indexes.tenantIndex].species
-		sbq.getSpeciesConfig(species)
-		sbq.predatorConfig = sbq.speciesConfig.sbqData
+		local sbqNPC = sbq.npcConfig.scriptConfig.sbqNPC or false
+		globalTenantSettingsLayout:setVisible(sbqNPC)
+		notStarbecueNPC:setVisible( not sbqNPC)
+
+		local predTabVisible = (sbq.npcConfig.scriptConfig.isPredator or (sbq.npcConfig.scriptConfig.isPredator == nil)) and sbqNPC
+		notPredText:setVisible(not predTabVisible)
+		globalPredSettingsLayout:setVisible(predTabVisible)
+
+		local preyTabVisible = sbq.npcConfig.scriptConfig.isPrey or (sbq.npcConfig.scriptConfig.isPrey == nil)
+		notPreyText:setVisible(not preyTabVisible)
+		globalPreySettingsLayout:setVisible(preyTabVisible)
 
 		sbq.effectsPanel()
 
@@ -238,6 +266,7 @@ end
 
 function sbq.changePredatorSetting(settingname, value)
 	sbq.predatorSettings[settingname] = value
+	sbq.autoSetSettings(settingname, value)
 	-- a hack until I improve how sided locations are handled
 	if (settingname:sub(1, #"balls") == "balls") then
 		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = value
@@ -315,6 +344,9 @@ if decTenant ~= nil then
 	end
 end
 
+
+function sbq.onTenantChanged()
+end
 
 function decCurTenant:onClick()
 	sbq.changeSelectedFromList(sbq.tenantList, curTenantName, "tenantIndex", -1)

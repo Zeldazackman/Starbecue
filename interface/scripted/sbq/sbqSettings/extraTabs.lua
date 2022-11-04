@@ -99,7 +99,9 @@ function sbq.setIconDirectives()
 end
 
 function mainTabField:onTabChanged(tab, previous)
+	sbq.selectedMainTabFieldTab = tab
 	local newSelected = tab.id
+
 	if newSelected == "globalPredSettings" and sbq.selectedLocationTab ~= nil then
 		locationTabField:pushEvent("tabChanged", sbq.selectedLocationTab, sbq.selectedLocationTab)
 	end

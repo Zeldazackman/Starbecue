@@ -7,6 +7,15 @@ state = {
 }
 
 function sbq.init()
+	if not sbq.settings.firstLoadDone then
+		for settingname, settingvalue in pairs(sbq.settings) do
+			sbq.autoSetSettings(settingname, settingvalue)
+		end
+		sbq.settings.firstLoadDone = true
+
+		world.sendEntityMessage(sbq.spawner, "sbqSaveSettings", sbq.settings, "sbqFray_IcyVixen")
+	end
+
 	checkPartsEnabled()
 end
 

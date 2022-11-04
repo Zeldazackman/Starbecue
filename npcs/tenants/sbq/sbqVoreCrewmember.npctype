@@ -9,6 +9,7 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
+		"sbqNPC" : true,
 		"behavior" : "sbqvorecrewmember",
 		"questGenerator" : {
 			"graduation" : {

@@ -16,8 +16,7 @@
 					{ "type" : "iconButton", "id" : "incTenant", "image" : "/interface/pickright.png", "hoverImage" : "/interface/pickrightover.png" },
 					{ "type" : "button", "id" : "summonTenant", "caption" : "Summon", "expandMode" : [0, 0], "toolTip" : "Warning! Summoning a new NPC will clear the saved data for the current tenant! You must click three times to confirm evicting the existing tenant" }
 				]}]],
-				[
-					{"mode" : "horizontal"},
+				{"type" : "layout", "id": "globalTenantSettingsLayout", "expandMode" : [1,0], "size" : [100,140], "mode": "horizontal", "children" : [
 					{"type" : "layout", "mode" : "vertical", "expandMode" : [1,0], "size" : [100,140], "children" : [
 						{ "type" : "button", "id" : "callTenant", "caption" : "Call Tenant", "expandMode" : [2, 0] },
 						[{ "type" : "panel", "id" : "tenantBehaviorPanel", "style" : "convex", "children" : [
@@ -67,10 +66,11 @@
 							{ "type" : "scrollArea", "id" : "requiredTagsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : []}
 						]}
 					]
-				]
+				]},
+				{"type" : "label", "id" : "notStarbecueNPC", "text" : "This NPC is not a Starbecue NPC.", "align" : "center" }
 			]},
 			{ "type" : "tab", "id" : "globalPredSettings", "title" : "Pred", "icon" : "/items/active/sbqController/oralVore.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "horizontal", "children" : [
+				{"type" : "layout", "id": "globalPredSettingsLayout", "expandMode" : [1,0], "size" : [100,165], "mode": "horizontal", "children" : [
 					{"type" : "layout", "mode" : "vertical", "id" : "locationTabLayout", "expandMode" : [1,0], "size" : [100,165], "children" : [
 					]},
 					[
@@ -129,10 +129,11 @@
 							]}]}
 						]}
 					]
-				]}
+				]},
+				{"type" : "label", "id" : "notPredText", "text" : "This NPC is not a Pred.", "align" : "center" }
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "/interface/scripted/sbq/sbqSettings/preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "vertical", "expandMode" : [1,0], "size" : [100,165],  "children" : [
+				{"type" : "layout", "mode": "vertical", "id": "globalPreySettingsLayout", "expandMode" : [1,0], "size" : [100,165],  "children" : [
 					[
 						//first collumn
 						{ "type" : "panel", "style" : "convex", "children" : [
@@ -230,7 +231,8 @@
 						]}
 					],
 					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on this NPC, and what they can decide themselves." }
-				]}
+				]},
+				{"type" : "label", "id" : "notPreyText", "text" : "This NPC is not Prey.", "align" : "center" }
 			]},
 			{ "type" : "tab", "id" : "speciesConfigTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/sbqCodex.png", "visible" : true, "color" : "ff00ff", "contents" : [
 				{"type" : "layout", "id" : "speciesConfigTabContents", "expandMode" : [1,0], "size" : [100,165],  "mode" : "horizontal", "children" : [] }

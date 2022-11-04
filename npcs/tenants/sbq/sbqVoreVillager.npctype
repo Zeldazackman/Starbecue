@@ -10,6 +10,7 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
+		"sbqNPC" : true,
 		"questGenerator" : {
 			"graduation" : {
 				"nextNpcType" : [
