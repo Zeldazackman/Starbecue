@@ -282,21 +282,22 @@ function init()
 
 	if initStage < 1 then
 		function Recruit:_spawn(position, parameters)
+
 			self.uniform = nil
 			if parameters.scriptConfig.preservedUuid then
 				parameters.scriptConfig.uniqueId = parameters.scriptConfig.preservedUuid
 				self.uniqueId = parameters.scriptConfig.preservedUuid
 
-				if type(parameters.scriptConfig.uniqueId) == "string" then
-					local entity = world.loadUniqueEntity(parameters.scriptConfig.uniqueId)
-					if entity then
-						if world.entityExists(entity) then
-							return
-						end
+				sbq.addRPC(world.findUniqueEntity(parameters.scriptConfig.preservedUuid), function(result)
+					if not result then
+						world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
 					end
-				end
+				end, function()
+					world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
+				end)
+			else
+				world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
 			end
-			return world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
 		end
 	end
 
@@ -311,6 +312,7 @@ local oldupdate = update
 function update(dt)
 	oldupdate(dt)
 	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
 
 	local current = player.getProperty("sbqCurrentData") or {}
 	if current.id and initStage >= 2 then
