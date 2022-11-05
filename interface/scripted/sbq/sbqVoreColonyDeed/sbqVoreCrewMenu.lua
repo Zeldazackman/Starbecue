@@ -13,6 +13,7 @@ for i, follower in ipairs(sbq.followers) do
 			type = follower.config.type,
 			followerTable = follower
 		}
+		follower.config.parameters.scriptConfig.preservedUuid = follower.uniqueId
 		table.insert(sbq.storage.occupier.tenants, tenant)
 	end
 end

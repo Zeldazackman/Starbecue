@@ -280,6 +280,26 @@ function init()
 		}, 1)
 	end)
 
+	if initStage < 1 then
+		function Recruit:_spawn(position, parameters)
+			self.uniform = nil
+			if parameters.scriptConfig.preservedUuid then
+				parameters.scriptConfig.uniqueId = parameters.scriptConfig.preservedUuid
+				self.uniqueId = parameters.scriptConfig.preservedUuid
+
+				if type(parameters.scriptConfig.uniqueId) == "string" then
+					local entity = world.loadUniqueEntity(parameters.scriptConfig.uniqueId)
+					if entity then
+						if world.entityExists(entity) then
+							return
+						end
+					end
+				end
+			end
+			return world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
+		end
+	end
+
 	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	initStage = 1 -- init has run

@@ -18,15 +18,9 @@ end
 
 sbq = {}
 
+local old = {}
+
 function init()
-	if type(_npc_setInteractive) ~= "function" then
-		_npc_setInteractive = npc.setInteractive
-		npc.setInteractive = capture_npc_setInteractive
-
-		_npc_setDamageTeam = npc.setDamageTeam
-		npc.setDamageTeam = capture_npc_setDamageTeam
-	end
-
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		status.setStatusProperty( "sbqCurrentData", current)
 		if current.type == "prey" then
@@ -113,8 +107,20 @@ function init()
 
 	_init()
 
-	old_tenant_setNpcType = tenant.setNpcType
-	tenant.setNpcType = sbq.tenant_setNpcType
+	if type(_npc_setInteractive) ~= "function" then
+		_npc_setInteractive = npc.setInteractive
+		npc.setInteractive = capture_npc_setInteractive
+
+		_npc_setDamageTeam = npc.setDamageTeam
+		npc.setDamageTeam = capture_npc_setDamageTeam
+
+		old_tenant_setNpcType = tenant.setNpcType
+		tenant.setNpcType = sbq.tenant_setNpcType
+
+		old.getgenerateRecruitInfo = recruitable.generateRecruitInfo
+		recruitable.generateRecruitInfo = sbq.generateRecruitInfo
+	end
+
 
 	sbq.config = root.assetJson("/sbqGeneral.config")
 	status.clearPersistentEffects("digestImmunity")
@@ -165,7 +171,8 @@ function sbq.tenant_setNpcType(npcType)
 				ownerUuid = config.getParameter("ownerUuid"),
 				personality = personality(),
 				initialStorage = preservedStorage(),
-				uniqueId = entity.uniqueId()
+				uniqueId = config.getParameter("preservedUuid") or config.getParameter("uniqueId") or entity.uniqueId(),
+				preservedUuid = config.getParameter("preservedUuid") or config.getParameter("uniqueId") or entity.uniqueId()
 			}
 		},
 		storage = storage
@@ -176,4 +183,10 @@ function sbq.tenant_setNpcType(npcType)
 	end
 
 	tenant.despawn(false)
-  end
+end
+
+function sbq.generateRecruitInfo()
+	local recruitInfo = old.getgenerateRecruitInfo()
+	recruitInfo.config.parameters.scriptConfig.preservedUuid = recruitInfo.uniqueId
+	return recruitInfo
+end
