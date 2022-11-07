@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local _init = init
 local _update = update
 
@@ -17,15 +18,9 @@ end
 
 sbq = {}
 
+local old = {}
+
 function init()
-	if type(_npc_setInteractive) ~= "function" then
-		_npc_setInteractive = npc.setInteractive
-		npc.setInteractive = capture_npc_setInteractive
-
-		_npc_setDamageTeam = npc.setDamageTeam
-		npc.setDamageTeam = capture_npc_setDamageTeam
-	end
-
 	message.setHandler("sbqGetSeatEquips", function(_,_, current)
 		status.setStatusProperty( "sbqCurrentData", current)
 		if current.type == "prey" then
@@ -91,25 +86,107 @@ function init()
 		world.spawnItem(itemDrop, mcontroller.position())
 	end)
 
+	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
+		if menuName and menuName ~= "sbqOccupantHolder" then
+		else
+		end
+	end)
+	message.setHandler("sbqSavePreySettings", function(_, _, settings)
+		status.setStatusProperty("sbqPreyEnabled", settings)
+		status.clearPersistentEffects("digestImmunity")
+		status.setPersistentEffects("digestImmunity", { "sbqDigestImmunity" })
+	end)
+	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings)
+		status.setStatusProperty("speciesAnimOverrideSettings", settings)
+	end)
+	message.setHandler("sbqSetNPCType", function(_, _, npcType)
+		sbq.tenant_setNpcType(npcType)
+	end)
 
 	status.setStatusProperty( "sbqCurrentData", nil)
 
 	_init()
 
+	if type(_npc_setInteractive) ~= "function" then
+		_npc_setInteractive = npc.setInteractive
+		npc.setInteractive = capture_npc_setInteractive
+
+		_npc_setDamageTeam = npc.setDamageTeam
+		npc.setDamageTeam = capture_npc_setDamageTeam
+
+		old_tenant_setNpcType = tenant.setNpcType
+		tenant.setNpcType = sbq.tenant_setNpcType
+
+		old.getgenerateRecruitInfo = recruitable.generateRecruitInfo
+		recruitable.generateRecruitInfo = sbq.generateRecruitInfo
+	end
+
+
+	sbq.config = root.assetJson("/sbqGeneral.config")
 	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	if not status.statusProperty("sbqDidVornyConvertCheck") then
 		status.setStatusProperty("sbqDidVornyConvertCheck", true)
 		if tenant ~= nil then
-			local vornyConvertTable = {
-				villager = "sbqVoreVillager",
-				villageguard = "sbqVoreVillageGuard",
-				villageguardcaptain = "sbqVoreVillageGuardCaptain"
-			}
-			local npcType = vornyConvertTable[npc.npcType()]
+			local npcType = sbq.config.vornyConvertTable[npc.npcType()]
 			if (math.random(8) == 8) and npcType ~= nil then
-				tenant.setNpcType(npcType)
+				sbq.tenant_setNpcType(npcType)
 			end
 		end
 	end
+end
+
+
+function sbq.tenant_setNpcType(npcType)
+	if npc.npcType() == npcType then return end
+
+	npc.resetLounging()
+
+	-- how vanilla does it is dumb so we're going to do it better and preserve the uuid because why the fuck wouldn't you
+	-- Changing the tenant's npc type consists of:
+	-- 1. Spawning a stagehand with the NPC data we want to preserve, inculding the new uuid
+	-- 3. despawning ourself
+	-- 3. the stagehand spawns the new NPC and updates the colonydeed with the new npc's npcType then despawns
+	-- This is done to turn villagers into crewmembers.
+
+	-- Preserve head item slots, even if they haven't changed from the default:
+	storage.itemSlots = storage.itemSlots or {}
+	if not storage.itemSlots.headCosmetic and not storage.itemSlots.headCosmetic then
+	  storage.itemSlots.headCosmetic = npc.getItemSlot("headCosmetic")
+	end
+	if not storage.itemSlots.head then
+	  storage.itemSlots.head = npc.getItemSlot("head")
+	end
+	storage.itemSlots.primary = nil
+	storage.itemSlots.alt = nil
+
+	local parameters = {
+		npc = npc.species(),
+		npcTypeName = npcType,
+		npcLevel = npc.level(),
+		npcSeed = npc.seed(),
+		npcParameters = {
+			identity = npc.humanoidIdentity(),
+			scriptConfig = {
+				ownerUuid = config.getParameter("ownerUuid"),
+				personality = personality(),
+				initialStorage = preservedStorage(),
+				uniqueId = config.getParameter("preservedUuid") or config.getParameter("uniqueId") or entity.uniqueId(),
+				preservedUuid = config.getParameter("preservedUuid") or config.getParameter("uniqueId") or entity.uniqueId()
+			}
+		},
+		storage = storage
+	}
+	world.spawnStagehand(entity.position(), "sbqReplaceNPC", parameters)
+
+	function die()
+	end
+
+	tenant.despawn(false)
+end
+
+function sbq.generateRecruitInfo()
+	local recruitInfo = old.getgenerateRecruitInfo()
+	recruitInfo.config.parameters.scriptConfig.preservedUuid = recruitInfo.uniqueId
+	return recruitInfo
 end

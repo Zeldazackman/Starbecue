@@ -101,6 +101,10 @@ function getColors()
 			sbq.settings.skinNames[partname] = waist
 		end
 
+		for settingname, settingvalue in pairs(sbq.settings) do
+			sbq.autoSetSettings(settingname, settingvalue)
+		end
+
 		sbq.settings.firstLoadDone = true
 		sbq.setColorReplaceDirectives()
 		sbq.setSkinPartTags()

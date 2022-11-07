@@ -107,7 +107,7 @@ local dialoguePos = 1
 
 function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 	sbq.checkVoreButtonsEnabled()
-	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, sbq.data.settings, dialogueTree)
+	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, sbq.data.settings, player.id(), dialogueTree)
 	if not dialogueTree then return false end
 	recursionCount = 0 -- since we successfully made it here, reset the recursion count
 
@@ -252,7 +252,7 @@ end
 
 function sbq.checkVoreTypeActive(voreType)
 	if (not sbq.data.settings) or sbq.data.settings.isPrey then return "hidden" end
-	if not (sbq.data.settings[voreType.."Pred"] or sbq.data.settings[voreType.."PredEnable"]) then return "hidden" end
+	if not (sbq.data.settings[voreType.."Pred"] --[[or sbq.data.settings[voreType.."PredEnable"] ]]) then return "hidden" end
 	local currentData = player.getProperty( "sbqCurrentData") or {}
 
 	local locationName = sbq.data.sbqData.voreTypes[voreType]
@@ -262,7 +262,7 @@ function sbq.checkVoreTypeActive(voreType)
 	if not locationData then return "hidden" end
 
 	local preyEnabled = sb.jsonMerge( sbq.config.defaultPreyEnabled.player, (status.statusProperty("sbqPreyEnabled") or {}))
-	if (sbq.data.settings[voreType.."PredEnable"] or sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
+	if (--[[sbq.data.settings[voreType.."PredEnable"] or]] sbq.data.settings[voreType.."Pred"]) and preyEnabled.preyEnabled and preyEnabled[voreType] and ( currentData.type ~= "prey" ) then
 		if sbq.data.settings[voreType.."Pred"] then
 			if type(sbq.data.occupantHolder) ~= "nil" and type(sbq.occupants) == "table" then
 				if currentData.type == "driver" and ((not currentData.edible)
@@ -382,7 +382,7 @@ function dialogueCont:onClick()
 	end
 	if type(sbq.prevDialogueBranch.callScript) == "string" then
 		if type(dialogueBoxScripts[sbq.prevDialogueBranch.callScript]) == "function" then
-			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, table.unpack(sbq.prevDialogueBranch.scriptArgs or {})))
+			sbq.updateDialogueBox({}, dialogueBoxScripts[sbq.prevDialogueBranch.callScript](sbq.prevDialogueBranch, sbq.data.settings, "callScript", player.id(), table.unpack(sbq.prevDialogueBranch.scriptArgs or {})))
 		end
 	elseif sbq.prevDialogueBranch.continue ~= nil then
 		local continue = true

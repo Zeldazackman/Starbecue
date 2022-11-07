@@ -39,6 +39,7 @@
 
 	},
 	"scriptConfig" : {
+		"sbqNPC" : true,
 		"isOC" : true, // this is just for scripts to identify this NPC as an OC and for some specific behavior relating to that
 		"behavior" : "sbqvorevillager",
 		"questGenerator" : {
@@ -826,6 +827,8 @@
 
 		// any setting you define above can be modified by a player, this table allows you to define settings a player *cannot* modify, making sure your OC is always in line with your prefrences
 		"sbqOverrideSettings" : {
+			"crewmateGraduation" : false,
+
 			"tailVorePred" : false,
 			"absorbVorePred" : false,
 			"navelVorePred" : false,

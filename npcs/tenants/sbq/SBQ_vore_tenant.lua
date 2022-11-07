@@ -5,12 +5,10 @@ local oldinit = init
 local oldupdate = update
 local olduninit = uninit
 
-sbq = {
-	currentData = {},
-	dialogueBoxOpen = 0,
-	targetedEntities = {},
-	queuedTransitions = {}
-}
+sbq.currentData = {}
+sbq.dialogueBoxOpen = 0
+sbq.targetedEntities = {}
+sbq.queuedTransitions = {}
 
 dialogueBoxScripts = {}
 
@@ -18,6 +16,7 @@ require("/scripts/SBQ_RPC_handling.lua")
 require("/lib/stardust/json.lua")
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBoxScripts.lua")
 require("/scripts/SBQ_species_config.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
 
 local _npc_setItemSlot
 
@@ -49,6 +48,7 @@ function init()
 	end
 
 	sbq.setSpeciesConfig()
+	sbq.predatorConfig = sbq.speciesConfig.sbqData
 
 	if not storage.settings then
 		storage.settings = sb.jsonMerge( sbq.config.defaultSettings,
@@ -64,16 +64,19 @@ function init()
 		)
 	)
 	storage.settings = sb.jsonMerge(storage.settings or {}, config.getParameter("sbqOverrideSettings") or {})
-
 	if not storage.settings.firstLoadDone then
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()
 	end
+	sbq.predatorSettings = storage.settings
 	sbq.saveCosmeticSlots()
 
 	sbq.setRelevantPredSettings()
 
 	oldinit()
+
+	storage.settings.ownerUuid = recruitable.ownerUuid()
+	storage.settings.isFollowing = recruitable.isFollowing()
 
 	sbq.dialogueTree = config.getParameter("dialogueTree")
 	sbq.dialogueBoxScripts = config.getParameter("dialogueBoxScripts")
@@ -133,13 +136,36 @@ function init()
 		if menuName then return sb.jsonMerge((config.getParameter("sbqPredatorSettings") or {})[menuName] or {}, storage.settings or {}) end
 		return storage.settings
 	end)
-
-
 	message.setHandler("requestTransition", function ( _,_, transition, args)
 		if not sbq.occupantHolder then
 			sbq.occupantHolder = world.spawnVehicle( "sbqOccupantHolder", mcontroller.position(), { driver = entity.id(), settings = storage.settings, doExpandAnim = true } )
 		end
 		table.insert(sbq.queuedTransitions, {transition, args})
+	end)
+	message.setHandler("sbqSwapFollowing", function(_, _)
+		if storage.behaviorFollowing then
+			if world.getProperty("ephemeral") then
+				recruitable.confirmUnfollowBehavior()
+				storage.settings.isFollowing = recruitable.isFollowing()
+				return { "None", {} }
+			else
+				return recruitable.generateUnfollowInteractAction()
+			end
+		else
+			return recruitable.generateFollowInteractAction()
+		end
+	end)
+	message.setHandler("recruit.confirmFollow", function(_,_)
+		recruitable.confirmFollow(true)
+		storage.settings.isFollowing = recruitable.isFollowing()
+	end)
+	message.setHandler("recruit.confirmUnfollow", function(_,_)
+		recruitable.confirmUnfollow(true)
+		storage.settings.isFollowing = recruitable.isFollowing()
+	end)
+	message.setHandler("recruit.confirmUnfollowBehavior", function(_,_)
+		recruitable.confirmUnfollowBehavior(true)
+		storage.settings.isFollowing = recruitable.isFollowing()
 	end)
 end
 
@@ -185,6 +211,10 @@ function uninit()
 end
 
 function interact(args)
+	if recruitable.isRecruitable() then
+		return recruitable.generateRecruitInteractAction()
+	end
+
 	local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
 	local dialogueBoxData = {
@@ -242,7 +272,7 @@ end
 
 function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 	settings.race = npc.species()
-	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, settings)
+	local dialogueTree = sbq.getDialogueBranch(dialogueTreeLocation, settings, entity)
 	if not dialogueTree then return false end
 	recursionCount = 0 -- since we successfully made it here, reset the recursion count
 
@@ -300,8 +330,11 @@ end
 function sbq.randomizeTenantSettings()
 	local randomizeSettings = config.getParameter("sbqRandomizeSettings") or {}
 	for setting, values in pairs(randomizeSettings) do
-		storage.settings[setting] = values[math.random(#values)]
+		local value = values[math.random(#values)]
+		storage.settings[setting] = value
+		sbq.autoSetSettings(setting, value)
 	end
+
 	local randomizePreySettings = config.getParameter("sbqRandomizePreySettings") or {}
 	local preySettings = status.statusProperty("sbqPreyEnabled") or {}
 	for setting, values in pairs(randomizePreySettings) do
@@ -315,28 +348,6 @@ end
 function sbq.setRelevantPredSettings()
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
-	if storage.settings.unbirthPred or storage.settings.unbirthPredEnable then
-		storage.settings.pussy = true
-	else
-		storage.settings.pussy = false
-	end
-	if storage.settings.cockVorePred or storage.settings.cockVorePredEnable then
-		storage.settings.penis = true
-		storage.settings.balls = true
-	else
-		storage.settings.penis = false
-		storage.settings.balls = false
-	end
-	if storage.settings.navelVorePred or storage.settings.navelVorePredEnable then
-		storage.settings.navel = true
-	else
-		storage.settings.navel = false
-	end
-	if storage.settings.breastVorePred or storage.settings.breastVorePredEnable then
-		storage.settings.breasts = true
-	else
-		storage.settings.breasts = false
-	end
 	if storage.settings.breasts or storage.settings.penis or storage.settings.balls or storage.settings.pussy
 	or storage.settings.bra or storage.settings.underwear
 	then

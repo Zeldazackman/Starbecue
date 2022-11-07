@@ -368,11 +368,7 @@ end
 
 function sbq.applyScaleStatusEffect(eid, scale)
 	local scale = {math.abs(scale[1]), math.abs(scale[2])}
-	if (scale[1] ~= 1) or (scale[2] ~= 1) then
-		world.sendEntityMessage(eid, "sbqApplyScaleStatus", scale)
-	else
-		world.sendEntityMessage(eid, "sbqRemoveStatusEffect", "sbqScaling")
-	end
+	world.sendEntityMessage(eid, "sbqApplyScaleStatus", scale)
 end
 
 function sbq.getVictimAnimInterpolatedValue(victimAnim, valName, progress)

@@ -26,6 +26,9 @@ require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
 require("/interface/scripted/sbq/sbqSettings/extraTabs.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
+
+sbq.selectedMainTabFieldTab = mainTabField.tabs.globalPredSettings
 
 function sbq.getInitialData()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -254,6 +257,7 @@ end
 function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.globalSettings[settingname] = settingvalue
 	sbq.predatorSettings[settingname] = settingvalue
+	sbq.autoSetSettings(settingname, settingvalue)
 
 	-- a hack until I improve how sided locations are handled
 	if (settingname:sub(1, #"balls") == "balls") then
@@ -272,6 +276,7 @@ end
 
 function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
+	sbq.autoSetSettings(settingname, settingvalue)
 
 	-- a hack until I improve how sided locations are handled
 	if (settingname:sub(1, #"balls") == "balls") then

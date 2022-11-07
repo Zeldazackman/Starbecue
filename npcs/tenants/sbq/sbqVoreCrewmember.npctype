@@ -1,6 +1,6 @@
 {
-	"type" : "sbqVoreVillageGuard",
-	"baseType" : "villageguard",
+	"type" : "sbqVoreCrewmember",
+	"baseType" : "crewmember",
 
 	"scripts" : [
 		"/npcs/bmain.lua",
@@ -9,11 +9,83 @@
 		"/npcs/tenants/sbq/SBQ_vore_tenant.lua"
 	],
 	"scriptConfig" : {
-		"behavior" : "sbqvorevillageguard",
 		"sbqNPC" : true,
+		"behavior" : "sbqvorecrewmember",
+		"questGenerator" : {
+			"graduation" : {
+				"nextNpcType" : []
+			},
+			"enableParticipation" : false
+		},
+
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
-		"dialogueTree" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree",
+		"dialogueTree" : {
+			"greeting" : {
+				"next" : "isOwner",
+				"true" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"next" : "isFollowing",
+								"true" : {
+									"randomDialogue" : [ "Greetings Captain.", "Hello Captain.", "Captain." ],
+									"buttonText"  : [ "Stay" ],
+									"callScript" : "swapFollowing",
+									"continue" : {
+										"randomDialogue" : [ "I'll be right here.", "Staying here.", "Yeah I'll stay."],
+										"callScript" : "dismiss"
+									},
+									"fail" : "fullCrew"
+								},
+								"false" : {
+									"randomDialogue" : [ "Greetings Captain.", "Hello Captain.", "Captain." ],
+									"buttonText"  : [ "Follow" ],
+									"callScript" : "swapFollowing",
+									"continue" : {
+										"randomDialogue" : [ "Right behind you!", "Here we go!", "Lets go!"],
+										"callScript" : "dismiss"
+									},
+									"fail" : "fullCrew"
+								}
+							}
+						}
+					}
+				},
+				"false" : {
+					"next" : "race",
+					"default" : { // race
+						"next" : "personality",
+						"default" : { // personality
+							"next" : "mood",
+							"default" : { // mood
+								"randomDialogue" : [ "Hi, how's it going." ]
+							}
+						}
+					}
+				}
+			},
+			"fullCrew": {
+				"randomDialogue" : ["I can't, you've got a full crew."]
+			},
+
+			"vore" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.vore",
+			"struggle" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.struggle",
+			"letout" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.letout",
+
+			"struggling" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.struggling",
+			"vored" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.vored",
+			"escape" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree.escape"
+		},
+
+		"sbqOverrideSettings" : {
+			"questParticipation" : false,
+			"crewmateGraduation" : false
+		},
+
 		"sbqRandomizePreySettings" : {
 			"oralVore" : [true,false],
 			"tailVore" : [true,false],

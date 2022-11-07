@@ -142,6 +142,8 @@ function init()
 	sbq.transformGroups = root.assetJson( sbq.cfgAnimationFile ).transformationGroups
 
 	sbq.settings = sb.jsonMerge(sbq.config.defaultSettings, sb.jsonMerge( sbq.sbqData.defaultSettings or {}, sb.jsonMerge(config.getParameter( "settings" ) or {}, sbq.sbqData.overrideSettings or {})))
+	sbq.predatorSettings = sbq.settings
+	sbq.predatorConfig = sbq.sbqData
 
 	sbq.spawner = config.getParameter("spawner")
 	sbq.settings.directives = sbq.sbqData.defaultDirectives or ""
@@ -262,8 +264,8 @@ function init()
 	for _, script in ipairs(sbq.config.scripts) do
 		require(script)
 	end
-	sbq.initLocationEffects()
 	sbq.init()
+	sbq.initLocationEffects()
 end
 
 function sbq.initAfterInit()
