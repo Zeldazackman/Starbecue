@@ -23,46 +23,24 @@ end
 
 scaleValue:setVisible(player.hasItem("sbqSizeRay"))
 scaleValue:setText(tostring(sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1))
-function scaleValue:onEnter()
-	local value = tonumber(scaleValue.text)
-	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and player.hasItem("sbqSizeRay")
-	and (
-		(sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax == nil)
-		or (sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax == nil)
-		or (sbq.animOverrideOverrideSettings.scaleMin == nil and sbq.animOverrideOverrideSettings.scaleMax >= value)
-		or (sbq.animOverrideOverrideSettings.scaleMin <= value and sbq.animOverrideOverrideSettings.scaleMax >= value)
-	)
-	then
-		sbq.changeAnimOverrideSetting("scale", value)
-	else
-		scaleValue:setText(tostring(sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1))
-	end
-end
+function scaleValue:onEnter() sbq.numberBox(scaleValue, "changeAnimOverrideSetting", "scale", "animOverrideSettings", "animOverrideOverrideSettings", math.max(sbq.animOverrideSettings.scaleMin or 0.1, (sbq.animOverrideOverrideSettings.scaleMin or 0.1)), (sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3) ) end
+function scaleValue:onTextChanged() sbq.numberBoxColor(scaleValue, math.max(sbq.animOverrideSettings.scaleMin or 0.1, (sbq.animOverrideOverrideSettings.scaleMin or 0.1)), (sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3) ) end
 function scaleValue:onEscape() self:onEnter() end
+function scaleValue:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+sbq.numberBoxColor(scaleValue, math.max(sbq.animOverrideSettings.scaleMin or 0.1, (sbq.animOverrideOverrideSettings.scaleMin or 0.1)), (sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3) )
 
 
 scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.animOverrideSettings.scaleMin or 0.1))
-function scaleValueMin:onEnter()
-	local value = tonumber(scaleValueMin.text)
-	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMin == nil and (value <= 1 or player.hasItem("sbqSizeRay") ) and value > 0 then
-		sbq.changeAnimOverrideSetting("scaleMin", value)
-	else
-		scaleValueMin:setText(tostring(sbq.animOverrideOverrideSettings.scaleMin or sbq.animOverrideSettings.scaleMin or 0.1))
-	end
-end
+function scaleValueMin:onEnter() sbq.numberBox(scaleValue, "changeAnimOverrideSetting", "scaleMin", "animOverrideSettings", "animOverrideOverrideSettings", (sbq.animOverrideOverrideSettings.scaleMin or 0.1), (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1) ) end
+function scaleValueMin:onTextChanged() sbq.numberBoxColor(scaleValue, (sbq.animOverrideOverrideSettings.scaleMin or 0.1), (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1) ) end
 function scaleValueMin:onEscape() self:onEnter() end
+function scaleValueMin:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+sbq.numberBoxColor(scaleValue, (sbq.animOverrideOverrideSettings.scaleMin or 0.1), (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1) )
 
 
 scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3))
-function scaleValueMax:onEnter()
-	local value = tonumber(scaleValueMax.text)
-	local isNumber = type(value) == "number"
-	if isNumber and sbq.animOverrideOverrideSettings.scale == nil and sbq.animOverrideOverrideSettings.scaleMax == nil and (value >= 1 or player.hasItem("sbqSizeRay")) and value > 0 then
-		sbq.changeAnimOverrideSetting("scaleMax", value)
-	else
-		scaleValueMax:setText(tostring(sbq.animOverrideOverrideSettings.scaleMax or sbq.animOverrideSettings.scaleMax or 3))
-	end
-end
+function scaleValueMax:onEnter() sbq.numberBox(scaleValue, "changeAnimOverrideSetting", "scaleMin", "animOverrideSettings", "animOverrideOverrideSettings", (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1), (sbq.animOverrideOverrideSettings.scaleMax or 10) ) end
+function scaleValueMax:onTextChanged() sbq.numberBoxColor(scaleValue, (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1), (sbq.animOverrideOverrideSettings.scaleMax or 10) ) end
 function scaleValueMax:onEscape() self:onEnter() end
+function scaleValueMax:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+sbq.numberBoxColor(scaleValue, (sbq.animOverrideOverrideSettings.scale or sbq.animOverrideSettings.scale or 1), (sbq.animOverrideOverrideSettings.scaleMax or 10) )

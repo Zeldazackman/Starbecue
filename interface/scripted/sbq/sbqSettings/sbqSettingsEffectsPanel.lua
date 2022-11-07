@@ -173,52 +173,45 @@ function sbq.effectsPanel()
 			local multiplier = _ENV[location .. "Multiplier"]
 			local difficultyTextbox = _ENV[location.."DifficultyMod"]
 
-			visualMin:setText(tostring(sbq.overrideSettings[location .. "VisualMin"] or sbq.predatorSettings[location ..
-				"VisualMin"] or 0))
-			visualMin.toolTip = "Minimum fullness (Min of " ..
-				(sbq.overrideSettings[location .. "VisualMin"] or locationData.minVisual or 0) .. ")"
-			local color = "00FF00"
-			if (sbq.predatorSettings[location .. "VisualMin"] or 0) >=
-				(sbq.overrideSettings[location .. "VisualMax"] or locationData.max or math.huge) then
-				color = "FF0000"
-			elseif (sbq.predatorSettings[location .. "VisualMin"] or 0) <= 0 then
-				color = "FFFF00"
-			end
-			visualMin:setColor(color)
-
+			visualMin:setText(tostring(sbq.overrideSettings[location .. "VisualMin"] or sbq.predatorSettings[location .."VisualMin"] or 0))
 			function visualMin:onEnter()
-				sbq.numberBox(visualMin, "changePredatorSetting", location .. "VisualMin", (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
-				sbq.numberBox(visualMax, "changePredatorSetting", location .. "VisualMax", math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
+				sbq.numberBox(visualMin, "changePredatorSetting", location .. "VisualMin", "predatorSettings", "overrideSettings", (sbq.overrideSettings[location .. "VisualMin"] or locationData.minVisual or 0), math.min(sbq.predatorSettings[location .. "VisualMax"], (sbq.overrideSettings[location .. "VisualMax"] or locationData.max)))
+				sbq.numberBoxColor(visualMax, math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
+			end
+			function visualMin:onTextChanged()
+				sbq.numberBoxColor(visualMin, (sbq.overrideSettings[location .. "VisualMin"] or locationData.minVisual or 0), math.min(sbq.predatorSettings[location .. "VisualMax"], (sbq.overrideSettings[location .. "VisualMax"] or locationData.max)))
+				sbq.numberBoxColor(visualMax, math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
 			end
 			function visualMin:onEscape() self:onEnter() end
+			function visualMin:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+			sbq.numberBoxColor(visualMin, (sbq.overrideSettings[location .. "VisualMin"] or locationData.minVisual or 0), math.min(sbq.predatorSettings[location .. "VisualMax"], (sbq.overrideSettings[location .. "VisualMax"] or locationData.max)))
 
 			visualMax:setText(tostring(sbq.overrideSettings[location .. "VisualMax"] or sbq.predatorSettings[location .."VisualMax"] or locationData.max or 0))
-			visualMax.toolTip = "Maximum fullness (Max of "..(sbq.overrideSettings[location.."VisualMax"] or locationData.max)..")\nIf Hammerspace is on, this only controls the visuals"
-			local color = "00FF00"
-			if (sbq.predatorSettings[location.."VisualMax"] or sbq.overrideSettings[location.."VisualMax"] or locationData.max) >= (sbq.overrideSettings[location.."VisualMax"] or locationData.max or math.huge) then
-				color = "FF0000"
-			elseif (sbq.predatorSettings[location .. "VisualMax"] or 0) <= (sbq.predatorSettings[location .. "VisualMin"] or 0) then
-				color = "FFFF00"
-			end
-			visualMax:setColor(color)
-
 			function visualMax:onEnter()
-				sbq.numberBox(visualMax, "changePredatorSetting", location .. "VisualMax", math.max(sbq.predatorSettings[location.."VisualMin"], (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
-				sbq.numberBox(visualMin, "changePredatorSetting", location .. "VisualMin", (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
+				sbq.numberBox(visualMax, "changePredatorSetting", location .. "VisualMax", "predatorSettings", "overrideSettings", math.max(sbq.predatorSettings[location.."VisualMin"] or 0, (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
+				sbq.numberBoxColor(visualMin, (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
+			end
+			function visualMax:onTextChanged()
+				sbq.numberBoxColor(visualMax, math.max(sbq.predatorSettings[location.."VisualMin"] or 0, (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
+				sbq.numberBoxColor(visualMin, (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0), math.min( sbq.predatorSettings[location.."VisualMax"], (sbq.overrideSettings[location.."VisualMax"] or locationData.max)) )
 			end
 			function visualMax:onEscape() self:onEnter() end
+			function visualMax:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+			sbq.numberBoxColor(visualMax, math.max(sbq.predatorSettings[location.."VisualMin"] or 0, (sbq.overrideSettings[location.."VisualMin"] or locationData.minVisual or 0)), (sbq.overrideSettings[location.."VisualMax"] or locationData.max) )
 
-
-			function multiplier:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "Multiplier", 0) end
-			multiplier:setText(tostring(sbq.overrideSettings[location .. "Multiplier"] or
-				sbq.predatorSettings[location .. "Multiplier"] or 1))
+			multiplier:setText(tostring(sbq.overrideSettings[location .. "Multiplier"] or sbq.predatorSettings[location .. "Multiplier"] or 1))
+			function multiplier:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "Multiplier", "globalSettings", "overrideSettings", 0) end
+			function multiplier:onTextChanged() sbq.numberBoxColor(self, 0) end
 			function multiplier:onEscape() self:onEnter() end
+			function multiplier:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+			sbq.numberBoxColor(multiplier, 0)
 
-			function difficultyTextbox:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "DifficultyMod", sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"]) end
-			difficultyTextbox:setText(tostring(sbq.overrideSettings[location .. "DifficultyMod"] or
-			sbq.predatorSettings[location .. "DifficultyMod"] or 0))
+			difficultyTextbox:setText(tostring(sbq.overrideSettings[location .. "DifficultyMod"] or sbq.predatorSettings[location .. "DifficultyMod"] or 0))
+			function difficultyTextbox:onEnter() sbq.numberBox(self, "changeGlobalSetting", location .. "DifficultyMod", "globalSettings", "overrideSettings", sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"]) end
+			function difficultyTextbox:onTextChanged() sbq.numberBoxColor(self, sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"]) end
 			function difficultyTextbox:onEscape() self:onEnter() end
-
+			function difficultyTextbox:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+			sbq.numberBoxColor(difficultyTextbox, sbq.overrideSettings[location.."DifficultyModMin"], sbq.overrideSettings[location.."DifficultyModMax"])
 		end
 	end
 end
@@ -313,26 +306,42 @@ function sbq.getStatusEffectSlot(location, locationData)
 	return effect
 end
 
-function sbq.numberBox(textbox, settingsFunc, settingName, min, max )
+function sbq.numberBox(textbox, settingsFunc, settingName, settings, overrideSettings, min, max )
 	local value = tonumber(textbox.text)
 	local isNumber = type(value) == "number"
-	if isNumber and sbq.overrideSettings[settingName] == nil then
+	if isNumber and (sbq[overrideSettings] or {})[settingName] == nil then
 		local newValue = math.min(math.max(value, (min or -math.huge)), (max or math.huge))
-		sbq[settingsFunc](settingName, newValue)
-		local color = "00FF00"
-		if newValue >= (max or math.huge) then
-			color = "FF0000"
-		elseif newValue <= (min or -math.huge) then
-			color = "FFFF00"
-		end
-		if type(max) == "number" and type(min) == "number" then
-			textbox:setColor(color)
-		end
 		textbox:setText(tostring(newValue))
+		sbq[settingsFunc](settingName, newValue)
+		sbq.numberBoxColor(textbox, min, max)
 		sbq.saveSettings()
 	else
-		textbox:setText(tostring(sbq.overrideSettings[settingName] or sbq.predatorSettings[settingName] or 0))
+		textbox:setText(tostring((sbq[overrideSettings] or {})[settingName] or (sbq[settings] or {})[settingName] or 0))
 	end
+end
+function sbq.numberBoxColor(textbox, min, max)
+	local value = tonumber(textbox.text)
+	local isNumber = type(value) == "number"
+	local color = "FFFFFF"
+	if isNumber then
+		if type(max) == "number" and value == max
+		or type(min) == "number" and value == min
+		then
+			color = "FFFF00"
+		elseif type(max) == "number" and type(min) == "number" then
+			if value > min and value < max then
+				color = "00FF00"
+			end
+		end
+		if type(max) == "number" and value > max
+		or type(min) == "number" and value < min
+		then
+			color = "FF0000"
+		end
+	else
+		color = "FF0000"
+	end
+	textbox:setColor(color)
 end
 
 function sbq.dropdownButton(button, settingname, list, func, overrides)
