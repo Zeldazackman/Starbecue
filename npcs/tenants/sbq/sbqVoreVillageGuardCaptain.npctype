@@ -10,6 +10,7 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillageguard",
+		"sbqNPC" : true,
 		"entityPortrait" : true,
 		"defaultPortrait" : "bust",
 		"dialogueTree" : "/npcs/tenants/sbq/sbqVoreVillager.npctype:scriptConfig.dialogueTree",

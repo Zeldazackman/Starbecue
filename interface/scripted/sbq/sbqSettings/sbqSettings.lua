@@ -26,6 +26,9 @@ require("/scripts/SBQ_RPC_handling.lua")
 require("/interface/scripted/sbq/sbqSettings/sbqSettingsEffectsPanel.lua")
 require("/scripts/SBQ_species_config.lua")
 require("/interface/scripted/sbq/sbqSettings/extraTabs.lua")
+require("/interface/scripted/sbq/sbqSettings/autoSetSettings.lua")
+
+sbq.selectedMainTabFieldTab = mainTabField.tabs.globalPredSettings
 
 function sbq.getInitialData()
 	sbq.sbqSettings = player.getProperty("sbqSettings") or {}
@@ -188,6 +191,7 @@ function init()
 	sbq.setHelpTab()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+	sbq.numberBoxColor(escapeValue, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
 
 	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
 	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
@@ -253,6 +257,7 @@ end
 function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.globalSettings[settingname] = settingvalue
 	sbq.predatorSettings[settingname] = settingvalue
+	sbq.autoSetSettings(settingname, settingvalue)
 
 	-- a hack until I improve how sided locations are handled
 	if (settingname:sub(1, #"balls") == "balls") then
@@ -271,6 +276,7 @@ end
 
 function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
+	sbq.autoSetSettings(settingname, settingvalue)
 
 	-- a hack until I improve how sided locations are handled
 	if (settingname:sub(1, #"balls") == "balls") then
@@ -379,11 +385,16 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function escapeValue:onEnter()
-	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
-end
 
+function escapeValue:onEnter()
+	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", "predatorSettings", "overrideSettings", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
+end
+function escapeValue:onTextChanged()
+	sbq.numberBoxColor(self, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
+end
 function escapeValue:onEscape() self:onEnter() end
+function escapeValue:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+
 
 --------------------------------------------------------------------------------------------------
 

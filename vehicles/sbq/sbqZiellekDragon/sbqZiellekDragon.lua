@@ -60,6 +60,9 @@ function getColors()
 				sbq.settings.skinNames[partname] = result
 			end
 		end
+		for settingname, settingvalue in pairs(sbq.settings) do
+			sbq.autoSetSettings(settingname, settingvalue)
+		end
 
 		sbq.settings.firstLoadDone = true
 		sbq.setColorReplaceDirectives()

@@ -7,6 +7,10 @@ local catagoryLabels = root.assetJson("/items/categories.config").labels
 
 local buyRecipe
 
+if type(metagui.inputData.dialogueTree.itemSelection) == "string" then
+	metagui.inputData.dialogueTree.itemSelection = root.assetJson(metagui.inputData.dialogueTree.itemSelection)
+end
+
 require("/interface/scripted/sbq/sbqDialogueBox/sbqDialogueBox.lua")
 
 local lastWasGreeting = true

@@ -131,6 +131,17 @@
 			"balls" : false,
 			"pussy" : false
 		},
+		"autoSetSettings" : {
+			"cockVorePred" : {
+				"true" : { "penis" : true, "balls" : true }
+			},
+			"unbirthPred" : {
+				"true" : { "pussy" : true }
+			},
+			"breastVorePred" : {
+				"true" : { "breasts" : true }
+			}
+		},
 		"allowedModifiers": {
 			"bellyVisualMin": {"min": 0, "max": 1},
 			"escapeDifficulty": {"min": -100, "max": 100},

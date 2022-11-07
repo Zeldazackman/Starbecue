@@ -1,0 +1,8 @@
+{
+	"type": "sbqReplaceNPC",
+	"keepAlive" : true,
+	"scripts": [
+		"/stagehands/sbq/sbqReplaceNPC.lua"
+	],
+	"broadcastArea" : [-1, -1, 1, 1]
+}

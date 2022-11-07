@@ -34,10 +34,11 @@ function update(dt)
 			digestRate = 0.1
 		end
 
-		local digestAmount = (digestRate * dt * self.powerMultiplier) + self.cdamage
+		local digestAmount = (digestRate * dt * self.powerMultiplier)
 
 		if health[1] > (digestAmount + 1) and not self.digested and health[1] > 1 then
 			if config.getParameter("displayDamage") then
+				digestAmount = digestAmount * status.resourceMax("health") + self.cdamage
 				if digestAmount >= 1 then
 					self.cdamage = digestAmount % 1
 					digestAmount = math.floor(digestAmount)

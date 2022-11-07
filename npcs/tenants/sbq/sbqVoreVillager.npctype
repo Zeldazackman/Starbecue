@@ -10,9 +10,12 @@
 	],
 	"scriptConfig" : {
 		"behavior" : "sbqvorevillager",
+		"sbqNPC" : true,
 		"questGenerator" : {
 			"graduation" : {
-				"nextNpcType" : []
+				"nextNpcType" : [
+					[1, "sbqVoreCrewmember"]
+				]
 			}
 		},
 		"entityPortrait" : true,
@@ -33,7 +36,7 @@
 					"default" : { // personality
 						"next" : "mood",
 						"default" : { // mood
-							"randomDialogue" : [ "Hi, hows it going." ]
+							"randomDialogue" : [ "Hi, how's it going." ]
 						}
 					}
 				}

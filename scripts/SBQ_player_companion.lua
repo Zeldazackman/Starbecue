@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local initStage = 0
 local oldinit = init
 sbq = {}
@@ -44,6 +45,23 @@ function init()
 			message = "Zygan SSVM Addons detected.\n \nThat mod is an older version of Starbecue before it was renamed, please remove it."
 		})
 	end
+
+	message.setHandler( "sbqPlayerCompanions", function (_,_, func, ...)
+		return playerCompanions[func](...)
+	end)
+	message.setHandler( "sbqSetRecruits", function (_,_, name, data)
+		recruitSpawner[name] = recruitSpawner:_loadRecruits(data or {})
+		recruitSpawner:markDirty()
+	end)
+
+	message.setHandler( "sbqRequestFollow", function (_,_, uniqueId, recruitUuid, recruitInfo)
+		if not checkCrewLimits(recruitUuid) then
+			return false
+		end
+		promises:add(world.sendEntityMessage(uniqueId, "recruit.confirmFollow"), function(success)
+			recruitSpawner:recruitFollowing(onOwnShip(), recruitUuid, recruitInfo)
+		end)
+	end)
 
 	message.setHandler( "sbqPreyWarp", function(_,_, uuid, prey)
 		player.setProperty("sbqPreyWarpData", {uuid = uuid, prey = prey})
@@ -262,6 +280,27 @@ function init()
 		}, 1)
 	end)
 
+	if initStage < 1 then
+		function Recruit:_spawn(position, parameters)
+
+			self.uniform = nil
+			if parameters.scriptConfig.preservedUuid then
+				parameters.scriptConfig.uniqueId = parameters.scriptConfig.preservedUuid
+				self.uniqueId = parameters.scriptConfig.preservedUuid
+
+				sbq.addRPC(world.findUniqueEntity(parameters.scriptConfig.preservedUuid), function(result)
+					if not result then
+						world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
+					end
+				end, function()
+					world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
+				end)
+			else
+				world.spawnNpc(position, self.spawnConfig.species, self.spawnConfig.type, parameters.level, self.spawnConfig.seed, parameters)
+			end
+		end
+	end
+
 	status.clearPersistentEffects("digestImmunity")
 	status.setPersistentEffects("digestImmunity", {"sbqDigestImmunity"})
 	initStage = 1 -- init has run
@@ -273,6 +312,7 @@ local oldupdate = update
 function update(dt)
 	oldupdate(dt)
 	sbq.checkRPCsFinished(dt)
+	sbq.checkTimers(dt)
 
 	local current = player.getProperty("sbqCurrentData") or {}
 	if current.id and initStage >= 2 then

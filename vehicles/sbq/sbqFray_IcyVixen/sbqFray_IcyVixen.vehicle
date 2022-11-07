@@ -146,6 +146,11 @@
 			"balls" : false
 
 		},
+		"autoSetSettings" : {
+			"cockVorePred" : {
+				"true" : { "penis" : true, "balls" : true }
+			}
+		},
 		"allowedModifiers": {
 			"bellyVisualMin": {"min": 0, "max": 2},
 			"escapeDifficulty": {"min": -100, "max": 100},
