@@ -188,6 +188,7 @@ function init()
 	sbq.setHelpTab()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
+	sbq.numberBoxColor(escapeValue, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
 
 	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
 	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
@@ -379,11 +380,16 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function escapeValue:onEnter()
-	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
-end
 
+function escapeValue:onEnter()
+	sbq.numberBox(self, "changeGlobalSetting", "escapeDifficulty", "predatorSettings", "overrideSettings", sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
+end
+function escapeValue:onTextChanged()
+	sbq.numberBoxColor(self, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
+end
 function escapeValue:onEscape() self:onEnter() end
+function escapeValue:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
+
 
 --------------------------------------------------------------------------------------------------
 
