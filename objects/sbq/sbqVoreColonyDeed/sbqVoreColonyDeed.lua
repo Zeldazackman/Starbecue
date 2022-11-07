@@ -40,6 +40,21 @@ function init()
 		storage.occupier.tenants[index or 1].overrides.scriptConfig = scriptConfig
 	end)
 
+	message.setHandler("sbqSaveTenants", function (_,_, tenants)
+		for _, tenant in ipairs(storage.occupier.tenants) do
+			if tenant.uniqueId and world.findUniqueEntity(tenant.uniqueId):result() then
+				local entityId = world.loadUniqueEntity(tenant.uniqueId)
+
+				world.callScriptedEntity(entityId, "tenant.evictTenant")
+			end
+		end
+		storage.occupier.tenants = tenants
+
+		sbq.timer("doRespawn", 2, function()
+			respawnTenants()
+		end)
+	end)
+
 	message.setHandler("sbqSavePreySettings", function (_,_, settings, index)
 
 		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
@@ -410,7 +425,11 @@ function spawn(tenant, i)
 		entityId = world.spawnMonster(tenant.type, position, overrides)
 
 	else
-		sb.logInfo("colonydeed can't be used to spawn entity type '" .. tenant.spawn .. "'")
+		if tenant.spawn then
+			sb.logInfo("colonydeed can't be used to spawn entity type '" .. tenant.spawn .. "'")
+		else
+			sb.logInfo("no spawn type")
+		end
 		return nil
 	end
 

@@ -67,6 +67,8 @@ sbq.selectedMainTabFieldTab = mainTabField.tabs.tenantTab
 function init()
 	local occupier = sbq.storage.occupier
 
+	sbq.refreshDeedPage()
+
 	if type(occupier) == "table" and type(occupier.tenants) == "table" and
 		type(occupier.tenants[indexes.tenantIndex]) == "table" and
 		type(occupier.tenants[indexes.tenantIndex].species) == "string"
@@ -128,38 +130,6 @@ function init()
 		moodText:setText(sbq.predatorSettings.mood or "default")
 
 		sbq.onTenantChanged()
-
-		if not sbq.storage.crewUI then
-			tenantNote:setVisible(occupier.tenantNote ~= nil)
-			tenantNote.toolTip = occupier.tenantNote
-
-			orderFurniture:setVisible(occupier.orderFurniture ~= nil)
-
-			tenantText:setText(occupier.name or "")
-			if not sbq.storage.crewUI then
-				local tags = sbq.storage.house.contents
-				local listed = { sbqVore = true }
-				requiredTagsScrollArea:clearChildren()
-				local colonyTagLabels = {}
-				for tag, value in pairs(occupier.tagCriteria or {}) do
-					if tag ~= "sbqVore" then
-						listed[tag] = true
-						local amount = tags[tag] or 0
-						local string = "^green;" .. tag .. ": " .. amount
-						if amount < value then
-							string = "^red;" .. tag .. ": " .. amount .. " ^yellow;(Need " .. value .. ")"
-						end
-						table.insert(colonyTagLabels, { type = "label", text = string })
-					end
-				end
-				for tag, value in pairs(tags or {}) do
-					if not listed[tag] then
-						table.insert(colonyTagLabels, { type = "label", text = tag .. ": " .. value })
-					end
-				end
-				requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels })
-			end
-		end
 
 		local sbqNPC = sbq.npcConfig.scriptConfig.sbqNPC or false
 		globalTenantSettingsLayout:setVisible(sbqNPC)
@@ -518,19 +488,120 @@ end
 
 if sbq.storage.crewUI then
 	require("/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreCrewMenu.lua")
-end
-
-sbq.tenantList = {}
-if sbq.storage.occupier then
-	local occupier = sbq.storage.occupier
-	if type(occupier) == "table" and type(occupier.tenants) == "table" and
-		type(occupier.tenants[indexes.tenantIndex]) == "table" and
-		type(occupier.tenants[indexes.tenantIndex].species) == "string"
-	then
-		for i, tenant in ipairs(occupier.tenants) do
-			local name = ((tenant.overrides or {}).identity or {}).name or ""
-			table.insert(sbq.tenantList, name)
-		end
+else
+	function insertTenant:onClick()
+		local item = insertTenantItemSlot:item()
+		table.insert(sbq.storage.occupier.tenants, {
+			species = item.parameters.npcArgs.npcSpecies,
+			seed = item.parameters.npcArgs.npcSeed,
+			type = item.parameters.npcArgs.npcType,
+			level = item.parameters.npcArgs.npcLevel,
+			overrides = item.parameters.npcArgs.npcParam,
+			uniqueId = ((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId,
+			spawn = item.parameters.npcArgs.npcSpawn or "npc"
+		})
+		world.sendEntityMessage(pane.sourceEntity(), "sbqSaveTenants", sbq.storage.occupier.tenants)
+		init()
 	end
 end
-curTenantName:setText(sbq.tenantList[indexes.tenantIndex])
+
+function sbq.refreshDeedPage()
+	sbq.tenantList = {}
+	local occupier = sbq.storage.occupier
+	if not sbq.storage.crewUI then
+		tenantListScrollArea:clearChildren()
+	end
+
+	if sbq.storage.occupier then
+		if type(occupier) == "table" and type(occupier.tenants) == "table" then
+			indexes.tenantIndex = math.min(indexes.tenantIndex, #occupier.tenants)
+		end
+		if type(occupier) == "table" and type(occupier.tenants) == "table" and
+			type(occupier.tenants[indexes.tenantIndex]) == "table" and
+			type(occupier.tenants[indexes.tenantIndex].species) == "string"
+		then
+			for i, tenant in ipairs(occupier.tenants) do
+				local name = ((tenant.overrides or {}).identity or {}).name or ""
+				table.insert(sbq.tenantList, name)
+
+				if not sbq.storage.crewUI then
+					local panel = { type = "panel", expandMode = { 0, 1 }, style = "convex", children = {
+						{ mode = "vertical"},
+						{ type = "itemSlot", autoInteract = false, item = sbq.generateNPCItemCard(tenant), id = "tenant"..i.."ItemSlot" },
+						{
+							{ type = "label", text = ((tenant.overrides or {}).identity or {}).name or "" },
+							{ type = "button", caption = "X", color = "FF0000", id = "tenant" .. i .. "Remove", size = {12,12}, expandMode = { 0, 0 } }
+						}
+					}}
+					tenantListScrollArea:addChild(panel)
+					local button = _ENV["tenant" .. i .. "Remove"]
+					local itemSlot = _ENV["tenant" .. i .. "ItemSlot"]
+					function button:onClick()
+						player.giveItem(sbq.generateNPCItemCard(sbq.storage.occupier.tenants[i]))
+						table.remove(sbq.storage.occupier.tenants, i)
+						world.sendEntityMessage(pane.sourceEntity(), "sbqSaveTenants", sbq.storage.occupier.tenants)
+						init()
+					end
+					function itemSlot:onMouseButtonEvent(btn, down)
+						indexes.tenantIndex = i
+						curTenantName:setText(sbq.tenantList[indexes.tenantIndex])
+						curTenantIndex:setText(indexes.tenantIndex)
+						init()
+					end
+				end
+			end
+		end
+	end
+	curTenantName:setText(sbq.tenantList[indexes.tenantIndex])
+
+	if not sbq.storage.crewUI then
+		tenantNote:setVisible(occupier.tenantNote ~= nil)
+		tenantNote.toolTip = occupier.tenantNote
+
+		orderFurniture:setVisible(occupier.orderFurniture ~= nil)
+
+		tenantText:setText(occupier.name or "")
+		local tags = sbq.storage.house.contents
+		local listed = { sbqVore = true }
+		requiredTagsScrollArea:clearChildren()
+		local colonyTagLabels = {}
+		for tag, value in pairs(occupier.tagCriteria or {}) do
+			if tag ~= "sbqVore" then
+				listed[tag] = true
+				local amount = tags[tag] or 0
+				local string = "^green;" .. tag .. ": " .. amount
+				if amount < value then
+					string = "^red;" .. tag .. ": " .. amount .. " ^yellow;(Need " .. value .. ")"
+				end
+				table.insert(colonyTagLabels, { type = "label", text = string })
+			end
+		end
+		for tag, value in pairs(tags or {}) do
+			if not listed[tag] then
+				table.insert(colonyTagLabels, { type = "label", text = tag .. ": " .. value })
+			end
+		end
+		requiredTagsScrollArea:addChild({ type = "panel", style = "flat", children = colonyTagLabels })
+	end
+end
+
+function sbq.generateNPCItemCard(tenant)
+
+	local item = copy(sbq.config.npcCardTemplate)
+	item.parameters.shortdescription = ((tenant.overrides or {}).identity or {}).name or ""
+	item.parameters.inventoryIcon = root.npcPortrait("bust", tenant.species, tenant.type, tenant.level or 1, tenant.seed, tenant.overrides)
+	item.parameters.description = ""
+	item.parameters.tooltipFields.collarNameLabel = "Created By:  "
+	item.parameters.tooltipFields.objectImage = root.npcPortrait("full", tenant.species, tenant.type, tenant.level or 1, tenant.seed, tenant.overrides)
+	item.parameters.tooltipFields.subtitle = tenant.type
+	item.parameters.tooltipFields.collarIconImage = nil
+	item.parameters.npcArgs = {
+		npcSpecies = tenant.species,
+		npcSeed = tenant.seed,
+		npcType = tenant.type,
+		npcLevel = tenant.level,
+		npcParam = tenant.overrides,
+		npcSpawn = tenant.spawn
+	}
+	return item
+end
