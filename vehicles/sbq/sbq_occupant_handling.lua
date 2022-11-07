@@ -524,7 +524,7 @@ end
 function sbq.doBellyEffects(dt)
 	if sbq.occupants.total <= 0 then return end
 
-	local powerMultiplier = math.max(math.log(sbq.seats[sbq.driverSeat].controls.powerMultiplier) + 1, 1)
+	local powerMultiplier = math.atan(math.max(sbq.seats[sbq.driverSeat].controls.powerMultiplier, 1)/3) * 5
 
 	for i = sbq.startSlot, sbq.occupantSlots do
 
