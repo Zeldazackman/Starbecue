@@ -187,7 +187,9 @@
 									{ "type" : "checkBox", "id" : "allowCumSoftDigest", "toolTip" : "Allow cum soft digestion when otherwise immune." },
 									{ "type" : "checkBox", "id" : "allowFemcumSoftDigest", "toolTip" : "Allow femcum soft digestion when otherwise immune." },
 									{ "type" : "label", "text" : " Allow Soft Digest" }
-								]
+								],
+								[{ "type" : "checkBox", "id" : "digestItemDrops", "toolTip" : "Allow special drops upon being digested." }, { "type" : "label", "text" : " Digestion Drops" } ]
+
 							]}
 						]},
 						{ "type" : "panel", "style" : "convex", "children" : [

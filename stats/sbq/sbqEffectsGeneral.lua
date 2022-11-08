@@ -16,7 +16,7 @@ function doItemDrop()
 	if self.dropItem and not self.droppedItem then
 		self.droppedItem = true
 		local drop = config.getParameter("itemDrop")
-		if drop then
+		if drop and getPreyEnabled("digestItemDrops") then
 			world.sendEntityMessage(effect.sourceEntity(), "sbqDigestDrop", generateItemDrop({
 				name = drop,
 				count = config.getParameter("itemDropCount") or 1,
@@ -78,4 +78,8 @@ function generateItemDrop(itemDrop)
 	end
 
 	return itemDrop
+end
+
+function getPreyEnabled(setting)
+	return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))[setting]
 end

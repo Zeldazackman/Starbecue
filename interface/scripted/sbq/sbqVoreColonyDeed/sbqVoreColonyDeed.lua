@@ -491,28 +491,31 @@ if sbq.storage.crewUI then
 else
 	function insertTenantItemSlot:acceptsItem(item)
 		if (item.parameters or {}).npcArgs ~= nil then
-			return not item.parameters.npcArgs.wasPlayer
-
+			if item.parameters.npcArgs.wasPlayer then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+			if item.parameters.npcArgs.uniqueId then
+				for i, tenant in ipairs((sbq.storage.occupier or {}).tenants or {}) do
+					if tenant.uniqueId == item.parameters.npcArgs.uniqueId then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+				end
+			end
+			return true
 		end
+		pane.playSound("/sfx/interface/clickon_error.ogg")
 		return false
 	end
 	function insertTenant:onClick()
 		local item = insertTenantItemSlot:item()
-		insertTenantItemSlot:setItem(nil, true)
-		local tenant = {
-			species = item.parameters.npcArgs.npcSpecies,
-			seed = item.parameters.npcArgs.npcSeed,
-			type = item.parameters.npcArgs.npcType,
-			level = item.parameters.npcArgs.npcLevel,
-			overrides = item.parameters.npcArgs.npcParam or {},
-			uniqueId = ((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId or sb.makeUuid(),
-			spawn = item.parameters.npcArgs.npcSpawn or "npc"
-		}
-		tenant.overrides.scriptConfig = tenant.overrides.scriptConfig or {}
-		tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
-		table.insert(sbq.storage.occupier.tenants, tenant)
-		world.sendEntityMessage(pane.sourceEntity(), "sbqSaveTenants", sbq.storage.occupier.tenants)
-		init()
+
+		sbq.addRPC(world.findUniqueEntity(((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId),
+			function(result)
+				if not result then
+					sbq.insertTenant(item)
+				end
+				pane.playSound("/sfx/interface/clickon_error.ogg")
+			end,
+			function ()
+				sbq.insertTenant(item)
+			end
+		)
 	end
 	function uninit()
 		local item = insertTenantItemSlot:item()
@@ -520,6 +523,24 @@ else
 			player.giveItem(item)
 		end
 	end
+end
+
+function sbq.insertTenant(item)
+	insertTenantItemSlot:setItem(nil, true)
+	local tenant = {
+		species = item.parameters.npcArgs.npcSpecies,
+		seed = item.parameters.npcArgs.npcSeed,
+		type = item.parameters.npcArgs.npcType,
+		level = item.parameters.npcArgs.npcLevel,
+		overrides = item.parameters.npcArgs.npcParam or {},
+		uniqueId = ((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId or sb.makeUuid(),
+		spawn = item.parameters.npcArgs.npcSpawn or "npc"
+	}
+	tenant.overrides.scriptConfig = tenant.overrides.scriptConfig or {}
+	tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
+	table.insert(sbq.storage.occupier.tenants, tenant)
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveTenants", sbq.storage.occupier.tenants)
+	init()
 end
 
 function sbq.refreshDeedPage()
@@ -542,7 +563,7 @@ function sbq.refreshDeedPage()
 				table.insert(sbq.tenantList, name)
 
 				if not sbq.storage.crewUI then
-					local panel = { type = "panel", expandMode = { 0, 1 }, style = "convex", children = {
+					local panel = { type = "panel", expandMode = { 0, 1 }, style = "flat", children = {
 						{ mode = "vertical"},
 						{ type = "itemSlot", autoInteract = false, item = sbq.generateNPCItemCard(tenant), id = "tenant"..i.."ItemSlot" },
 						{
