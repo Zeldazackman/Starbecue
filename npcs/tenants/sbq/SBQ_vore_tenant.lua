@@ -64,11 +64,11 @@ function init()
 		)
 	)
 	storage.settings = sb.jsonMerge(storage.settings or {}, config.getParameter("sbqOverrideSettings") or {})
+	sbq.predatorSettings = storage.settings
 	if not storage.settings.firstLoadDone then
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()
 	end
-	sbq.predatorSettings = storage.settings
 	sbq.saveCosmeticSlots()
 
 	sbq.setRelevantPredSettings()
