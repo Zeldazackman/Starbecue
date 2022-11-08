@@ -490,7 +490,11 @@ if sbq.storage.crewUI then
 	require("/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreCrewMenu.lua")
 else
 	function insertTenantItemSlot:acceptsItem(item)
-		return (item.parameters or {}).npcArgs ~= nil
+		if (item.parameters or {}).npcArgs ~= nil then
+			return not item.parameters.npcArgs.wasPlayer
+
+		end
+		return false
 	end
 	function insertTenant:onClick()
 		local item = insertTenantItemSlot:item()

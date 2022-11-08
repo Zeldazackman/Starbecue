@@ -58,6 +58,7 @@ function generateItemDrop(itemDrop)
 			npcType = "generictenant",
 			npcLevel = 1,
 			npcParam = {
+				wasPlayer = preyType == "player",
 				identity = identity,
 				scriptConfig = {
 					uniqueId = itemDrop.parameters.preyUUID
