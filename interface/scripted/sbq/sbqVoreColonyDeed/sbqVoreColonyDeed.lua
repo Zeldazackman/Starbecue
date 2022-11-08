@@ -489,6 +489,9 @@ end
 if sbq.storage.crewUI then
 	require("/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreCrewMenu.lua")
 else
+	function insertTenantItemSlot:acceptsItem(item)
+		return (item.parameters or {}).npcArgs ~= nil
+	end
 	function insertTenant:onClick()
 		local item = insertTenantItemSlot:item()
 		insertTenantItemSlot:setItem(nil, true)
@@ -601,7 +604,7 @@ function sbq.generateNPCItemCard(tenant)
 	item.parameters.shortdescription = ((tenant.overrides or {}).identity or {}).name or ""
 	item.parameters.inventoryIcon = root.npcPortrait("bust", tenant.species, tenant.type, tenant.level or 1, tenant.seed, tenant.overrides)
 	item.parameters.description = ""
-	item.parameters.tooltipFields.collarNameLabel = "Created By:  "
+	item.parameters.tooltipFields.collarNameLabel = ""
 	item.parameters.tooltipFields.objectImage = root.npcPortrait("full", tenant.species, tenant.type, tenant.level or 1, tenant.seed, tenant.overrides)
 	item.parameters.tooltipFields.subtitle = tenant.type
 	item.parameters.tooltipFields.collarIconImage = nil

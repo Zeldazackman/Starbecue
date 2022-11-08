@@ -10,6 +10,8 @@ function removeOtherBellyEffects()
 	end
 end
 
+require("/items/active/sbqTransformation/sbqDuplicatePotion/sbqGetIdentity.lua")
+
 function doItemDrop()
 	if self.dropItem and not self.droppedItem then
 		self.droppedItem = true
@@ -32,44 +34,36 @@ function doItemDrop()
 			if preyType == "npc" or preyType == "player" then
 				itemDrop.parameters.prey = world.entityName(entity.id())
 				itemDrop.parameters.preyUUID = world.entityUniqueId(entity.id())
-				local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
+				local overrideData = getIdentity(entity.id())
 				local identity = overrideData.identity or {}
 				local species = overrideData.species or world.entitySpecies(entity.id())
-				local speciesFile = root.assetJson("/species/"..species..".species")
+				local speciesFile = root.assetJson("/species/" .. species .. ".species")
+				itemDrop.parameters.fullPortrait = world.entityPortrait(entity.id(), "full")
 				itemDrop.parameters.preySpecies = species
 				itemDrop.parameters.preyDirectives = (overrideData.directives or "")..(identity.bodyDirectives or "")..(identity.hairDirectives or "")
 				itemDrop.parameters.preyColorMap = speciesFile.baseColorMap
-				if itemDrop.parameters.preyDirectives == "" then
-					local portrait = world.entityPortrait(entity.id(), "full")
-					local hairGroup
-					local gotBody
-					local gotHair
-					for i, data in ipairs(speciesFile.genders or {}) do
-						if data.name == world.entityGender(entity.id()) then
-							hairGroup = data.hairGroup or "hair"
-						end
-					end
-					for _, part in ipairs(portrait) do
-						local imageString = part.image
-						if not gotBody then
-							local found1, found2 = imageString:find("body.png:idle.")
-							if found1 ~= nil then
-								local found3 = imageString:find("?")
-								gotBody = imageString:sub(found3)
-							end
-						end
-						if not gotHair then
-							local found1, found2 = imageString:find("/"..(hairGroup or "hair").."/")
-							if found1 ~= nil then
-								local found3, found4 = imageString:find(".png:normal")
-
-								local found5, found6 = imageString:find("?addmask=")
-								gotHair = imageString:sub(found4+1, (found5 or 0)-1) -- this is really elegant haha
-							end
-						end
-						if gotHair and gotBody then break end
-					end
-					itemDrop.parameters.preyDirectives = gotBody..gotHair
+				identity.name = itemDrop.parameters.prey or ""
+				itemDrop.parameters.npcArgs = {
+					npcSpecies = overrideData.species,
+					npcType = "generictenant",
+					npcLevel = 1,
+					npcParam = {
+						identity = identity,
+						scriptConfig = {
+							uniqueId = itemDrop.parameters.preyUUID
+						},
+						statusControllerSettings = {
+							statusProperties = {
+								sbqPreyEnabled = status.statusProperty("sbqPreyEnabled")
+							}
+						}
+					}
+				}
+				sb.logInfo(sb.printJson(itemDrop,1))
+				if preyType == "npc" then
+					itemDrop.parameters.npcArgs.npcType = world.callScriptedEntity(entity.id(), "npc.npcType")
+					itemDrop.parameters.npcArgs.npcLevel = world.callScriptedEntity(entity.id(), "npc.level")
+					itemDrop.parameters.npcArgs.npcSeed = world.callScriptedEntity(entity.id(), "npc.seed")
 				end
 			end
 

@@ -82,6 +82,21 @@ function build( directory, config, parameters, level, seed )
 			config.shortdescription = sb.replaceTags(shortdescription, replaceTagTable)
 		end
 	end
+
+	if (config or {}).npcArgs ~= nil then
+		parameters.tooltipKind = "filledcapturepod"
+		parameters.tooltipFields = {
+			subtitle = config.npcArgs.npcType or "generictenant",
+			collarNameLabel = "",
+			noCollarLabel = "",
+		}
+		parameters.tooltipFields.objectImage = parameters.fullPortrait or
+			root.npcPortrait("full", config.npcArgs.npsSpecies, config.npcArgs.npcType or "generictenant",
+				config.npcArgs.npcLevel or 1, config.npcArgs.npcSeed, config.npcArgs.npcParam)
+		if config.pred then
+			parameters.tooltipFields.collarNameLabel = "Gurgled by: "..config.pred
+		end
+	end
 	config.animationParts.object = config.objectImage..(config.directives or "")
 	config.inventoryIcon = config.iconImage..(config.directives or "")
 
