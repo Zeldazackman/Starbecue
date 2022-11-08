@@ -206,7 +206,8 @@ function setTenantsData(occupier)
 		tenant.overrides = tenant.overrides or {}
 		tenant.overrides.scriptConfig = tenant.overrides.scriptConfig or {}
 
-		tenant.uniqueId = npcConfig.scriptConfig.uniqueId
+		tenant.uniqueId = npcConfig.scriptConfig.uniqueId or sb.makeUuid()
+		tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
 		tenant.overrides.scriptConfig.sbqSettings = npcConfig.scriptConfig.sbqDefaultSettings
 		tenant.overrides.statusControllerSettings = npcConfig.statusControllerSettings
 

@@ -491,17 +491,27 @@ if sbq.storage.crewUI then
 else
 	function insertTenant:onClick()
 		local item = insertTenantItemSlot:item()
-		table.insert(sbq.storage.occupier.tenants, {
+		insertTenantItemSlot:setItem(nil, true)
+		local tenant = {
 			species = item.parameters.npcArgs.npcSpecies,
 			seed = item.parameters.npcArgs.npcSeed,
 			type = item.parameters.npcArgs.npcType,
 			level = item.parameters.npcArgs.npcLevel,
-			overrides = item.parameters.npcArgs.npcParam,
-			uniqueId = ((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId,
+			overrides = item.parameters.npcArgs.npcParam or {},
+			uniqueId = ((item.parameters.npcArgs.npcParam or {}).scriptConfig or {}).uniqueId or sb.makeUuid(),
 			spawn = item.parameters.npcArgs.npcSpawn or "npc"
-		})
+		}
+		tenant.overrides.scriptConfig = tenant.overrides.scriptConfig or {}
+		tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
+		table.insert(sbq.storage.occupier.tenants, tenant)
 		world.sendEntityMessage(pane.sourceEntity(), "sbqSaveTenants", sbq.storage.occupier.tenants)
 		init()
+	end
+	function uninit()
+		local item = insertTenantItemSlot:item()
+		if item then
+			player.giveItem(item)
+		end
 	end
 end
 
