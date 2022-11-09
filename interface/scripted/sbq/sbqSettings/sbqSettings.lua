@@ -37,6 +37,8 @@ function sbq.getInitialData()
 	sbq.lastSpecies = sbq.sbqCurrentData.species
 	sbq.lastType = sbq.sbqCurrentData.type
 
+	sbq.storedDigestedPrey = status.statusProperty("sbqStoredDigestedPrey") or {}
+
 	sbq.predatorEntity = sbq.sbqCurrentData.id
 
 	sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), status.statusProperty("speciesAnimOverrideSettings") or {})

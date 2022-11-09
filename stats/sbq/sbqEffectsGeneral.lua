@@ -24,8 +24,8 @@ function doItemDrop()
 			}))
 		else
 			local preyType = world.entityType(entity.id())
-			if not preyType == "monster" then
-				world.sendEntityMessage(effect.sourceEntity(), "sbqDigestStore", generateItemDrop(root.assetJson("/sbqGeneral.config:npcCardTemplate")))
+			if preyType ~= "monster" and entity.uniqueId() ~= nil then
+				world.sendEntityMessage(effect.sourceEntity(), "sbqDigestStore", status.statusProperty("sbqDigestLocation"), entity.uniqueId(), generateItemDrop(root.assetJson("/sbqGeneral.config:npcCardTemplate")))
 			end
 		end
 	end
@@ -75,6 +75,21 @@ function generateItemDrop(itemDrop)
 			itemDrop.parameters.npcArgs.npcLevel = world.callScriptedEntity(entity.id(), "npc.level")
 			itemDrop.parameters.npcArgs.npcSeed = world.callScriptedEntity(entity.id(), "npc.seed")
 		end
+		itemDrop.parameters.tooltipKind = "filledcapturepod"
+		itemDrop.parameters.tooltipFields = {
+			subtitle = (itemDrop.parameters.npcArgs.wasPlayer and "Player") or itemDrop.parameters.npcArgs.npcType or
+				"generictenant",
+			collarNameLabel = "",
+			noCollarLabel = "",
+		}
+		itemDrop.parameters.tooltipFields.objectImage = itemDrop.parameters.fullPortrait or
+			root.npcPortrait("full", itemDrop.parameters.npcArgs.npsSpecies,
+				itemDrop.parameters.npcArgs.npcType or "generictenant",
+				itemDrop.parameters.npcArgs.npcLevel or 1, itemDrop.parameters.npcArgs.npcSeed, itemDrop.parameters.npcArgs.npcParam)
+		if itemDrop.parameters.pred then
+			itemDrop.parameters.tooltipFields.collarNameLabel = "Gurgled by: " .. itemDrop.parameters.pred
+		end
+		itemDrop.parameters.inventoryIcon = world.entityPortrait(entity.id(), "bust")
 	end
 
 	return itemDrop

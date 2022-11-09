@@ -50,6 +50,7 @@ function init()
 		end
 		storage.occupier.tenants = tenants
 
+		setTenantsData(storage.occupier)
 		sbq.timer("doRespawn", 2, function()
 			respawnTenants()
 		end)

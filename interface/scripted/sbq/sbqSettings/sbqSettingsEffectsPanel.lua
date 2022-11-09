@@ -128,7 +128,34 @@ function sbq.effectsPanel()
 					{type = "label", text = "Difficulty Mod", align = "center"},
 					{ type = "textBox", align = "center", id = location .. "DifficultyMod", toolTip = "Make this location easier or harder relative to the main difficulty."},
 				}}
-			}}
+			} }
+			local absorbedPreyList
+			local absorbedPreyPanel
+			if type(sbq.storedDigestedPrey[location]) == "table" then
+				local players = {}
+				local ocs = {}
+				local other = {}
+				local count = 0
+				for uniqueId, item in pairs(sbq.storedDigestedPrey[location]) do
+					count = count + 1
+					if item.parameters.npcArgs.wasPlayer then
+						table.insert(players, item)
+					elseif (root.npcConfig(item.parameters.npcArgs.npcType).scriptConfig or {}).isOC then
+						table.insert(ocs, item)
+					else
+						table.insert(other, item)
+					end
+				end
+				absorbedPreyList = players
+				util.appendLists(absorbedPreyList, ocs)
+				util.appendLists(absorbedPreyList, other)
+				absorbedPreyPanel = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+					{ type = "layout", mode = "vertical", spacing = 0, children = {
+						{ type = "label", text = "Absorbed Prey", align = "center" },
+						{ type = "itemGrid", slots = count, id = location.."ItemGrid" },
+					}}
+				} }
+			end
 
 			local tab = locationTabField:newTab({
 				type = "tab", id = location .. "Tab", title = (locationData.name .. " " or location),
@@ -138,12 +165,18 @@ function sbq.effectsPanel()
 						extraEffectLayout,
 						otherLayout,
 						modifiersLayout,
-						difficultyMod
+						difficultyMod,
+						absorbedPreyPanel
 					}}
 				}
 			})
 			if i == 1 then
 				sbq.selectedLocationTab = tab
+			end
+
+			local itemGrid = _ENV[location .. "ItemGrid"]
+			for i, item in ipairs(absorbedPreyList or {}) do
+				itemGrid:setItem(i, item)
 			end
 
 			local noneButton = _ENV[location.."None"]

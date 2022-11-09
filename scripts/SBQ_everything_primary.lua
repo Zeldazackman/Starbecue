@@ -85,13 +85,21 @@ function sbq.everything_primary()
 		sbq.endMysteriousTF()
 	end)
 
-	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, power, sourceEntityId)
+	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, power, location, sourceEntityId)
+		status.setStatusProperty("sbqDigestLocation", location)
 		status.setStatusProperty("sbqDigestPower", power or 1)
 		status.addEphemeralEffect(effectConfig, 1, sourceEntityId)
 	end)
 
 	message.setHandler("sbqConsumeResource", function(_, _, resourceName, amount)
 		return status.consumeResource(resourceName, amount)
+	end)
+
+	message.setHandler("sbqDigestStore", function(_, _, location, uniqueId, item)
+		local digestedStoredTable = status.statusProperty("sbqStoredDigestedPrey") or {}
+		digestedStoredTable[location] = digestedStoredTable[location] or {}
+		digestedStoredTable[location][uniqueId] = item
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
 	end)
 
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )

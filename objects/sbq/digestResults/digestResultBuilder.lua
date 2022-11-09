@@ -86,7 +86,7 @@ function build( directory, config, parameters, level, seed )
 	if (config or {}).npcArgs ~= nil then
 		parameters.tooltipKind = "filledcapturepod"
 		parameters.tooltipFields = {
-			subtitle = (config.npcArgs.npcType.wasPlayer and "Player") or config.npcArgs.npcType or "generictenant",
+			subtitle = (config.npcArgs.wasPlayer and "Player") or config.npcArgs.npcType or "generictenant",
 			collarNameLabel = "",
 			noCollarLabel = "",
 		}
