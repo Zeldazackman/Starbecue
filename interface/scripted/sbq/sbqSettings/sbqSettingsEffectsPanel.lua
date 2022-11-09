@@ -130,7 +130,12 @@ function sbq.effectsPanel()
 				}}
 			} }
 			local absorbedPreyList
-			local absorbedPreyPanel
+			local absorbedPreyPanel = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+				{ type = "layout", mode = "vertical", spacing = 0, children = {
+					{ type = "label", text = "Absorbed Prey", align = "center" },
+					{ type = "itemGrid", slots = 5, id = location.."ItemGrid" },
+				}}
+			} }
 			if type(sbq.storedDigestedPrey[location]) == "table" then
 				local players = {}
 				local ocs = {}
@@ -149,24 +154,21 @@ function sbq.effectsPanel()
 				absorbedPreyList = players
 				util.appendLists(absorbedPreyList, ocs)
 				util.appendLists(absorbedPreyList, other)
-				absorbedPreyPanel = { type = "panel", style = "flat", expandMode = {1,0}, children = {
-					{ type = "layout", mode = "vertical", spacing = 0, children = {
-						{ type = "label", text = "Absorbed Prey", align = "center" },
-						{ type = "itemGrid", slots = count, id = location.."ItemGrid" },
-					}}
-				} }
+				absorbedPreyPanel.children[1].children[2].slots = (count+10)-((count+10)%5)
 			end
 
 			local tab = locationTabField:newTab({
 				type = "tab", id = location .. "Tab", title = (locationData.name .. " " or location),
 				contents = {
-					{ type = "panel", style = "convex", children = {
-						mainEffectLayout,
-						extraEffectLayout,
-						otherLayout,
-						modifiersLayout,
-						difficultyMod,
-						absorbedPreyPanel
+					{ type = "scrollArea", scrollBars = true, thumbScrolling = true, scrollDirections = {0,1}, children = {
+						{ type = "panel", style = "convex", children = {
+							mainEffectLayout,
+							extraEffectLayout,
+							otherLayout,
+							modifiersLayout,
+							difficultyMod,
+							absorbedPreyPanel
+						} }
 					}}
 				}
 			})
