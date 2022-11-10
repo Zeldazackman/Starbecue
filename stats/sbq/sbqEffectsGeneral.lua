@@ -16,7 +16,7 @@ function doItemDrop()
 	if self.dropItem and not self.droppedItem then
 		self.droppedItem = true
 		local drop = config.getParameter("itemDrop")
-		if drop and getPreyEnabled("digestItemDrops") then
+		if drop and getPreyEnabled("digestItemDrops") and (status.statusProperty("sbqDigestData") or {}).dropItem then
 			world.sendEntityMessage(effect.sourceEntity(), "sbqDigestDrop", generateItemDrop({
 				name = drop,
 				count = config.getParameter("itemDropCount") or 1,
@@ -25,7 +25,7 @@ function doItemDrop()
 		else
 			local preyType = world.entityType(entity.id())
 			if preyType ~= "monster" and entity.uniqueId() ~= nil then
-				world.sendEntityMessage(effect.sourceEntity(), "sbqDigestStore", status.statusProperty("sbqDigestLocation"), entity.uniqueId(), generateItemDrop(root.assetJson("/sbqGeneral.config:npcCardTemplate")))
+				world.sendEntityMessage(effect.sourceEntity(), "sbqDigestStore", (status.statusProperty("sbqDigestData") or {}).location, entity.uniqueId(), generateItemDrop(root.assetJson("/sbqGeneral.config:npcCardTemplate")))
 			end
 		end
 	end

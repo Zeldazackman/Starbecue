@@ -49,7 +49,7 @@ function update(dt, fireMode, shiftHeld, controls)
 
 
 				local sbqSettings = player.getProperty("sbqSettings") or {}
-				local settings = sb.jsonMerge(sbqSettings.global or {}, sbqSettings.sbqOccupantHolder or {})
+				local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
 
 				local options = {
 					{

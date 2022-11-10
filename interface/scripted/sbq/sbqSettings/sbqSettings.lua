@@ -273,6 +273,7 @@ function sbq.changeGlobalSetting(settingname, settingvalue)
 		sbq.globalSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
 		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
 	end
+
 	sbq.saveSettings()
 end
 

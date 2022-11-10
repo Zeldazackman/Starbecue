@@ -85,9 +85,8 @@ function sbq.everything_primary()
 		sbq.endMysteriousTF()
 	end)
 
-	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, power, location, sourceEntityId)
-		status.setStatusProperty("sbqDigestLocation", location)
-		status.setStatusProperty("sbqDigestPower", power or 1)
+	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, data, sourceEntityId)
+		status.setStatusProperty("sbqDigestData", data)
 		status.addEphemeralEffect(effectConfig, 1, sourceEntityId)
 	end)
 

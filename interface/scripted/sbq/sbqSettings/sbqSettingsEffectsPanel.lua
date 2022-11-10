@@ -133,7 +133,7 @@ function sbq.effectsPanel()
 			local absorbedPreyPanel = { type = "panel", style = "flat", expandMode = {1,0}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{ type = "label", text = "Absorbed Prey", align = "center" },
-					{ type = "itemGrid", slots = 5, id = location.."ItemGrid" },
+					{ type = "itemGrid", slots = 5, id = location.."ItemGrid", autoInteract = true },
 				}}
 			} }
 			if type(sbq.storedDigestedPrey[location]) == "table" then
