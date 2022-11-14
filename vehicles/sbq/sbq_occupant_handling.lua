@@ -11,11 +11,10 @@ function sbq.unForceSeat(occupantId)
 	end
 end
 
-function sbq.eat( occupantId, location, size, voreType, force )
+function sbq.eat( occupantId, location, size, voreType, locationSide, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
-	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
-	local locationSpace = sbq.locationSpaceAvailable(location)
+	local locationSpace = sbq.locationSpaceAvailable(location..(locationSide or ""))
 	if locationSpace < ((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) then return false end
 	if (not occupantId) or (not world.entityExists(occupantId))
 	or ((sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
@@ -189,27 +188,27 @@ function sbq.getSidedLocationWithSpace(location, size)
 		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
 		if sbq.occupants[location.."L"] == sbq.occupants[location.."R"] then
 			if sbq.direction > 0 then -- thinking about it, after adding everything underneath to prioritize the one with less prey, this is kinda useless
-				if leftHasSpace then return location.."L", data
-				elseif rightHasSpace then return location.."R", data
+				if leftHasSpace then return location, "L", data
+				elseif rightHasSpace then return location, "R", data
 				else return false end
 			else
-				if rightHasSpace then return location.."R", data
-				elseif leftHasSpace then return location.."L", data
+				if rightHasSpace then return location, "R", data
+				elseif leftHasSpace then return location, "L", data
 				else return false end
 			end
-		elseif sbq.occupants[location .. "L"] < sbq.occupants[location .. "R"] and leftHasSpace then return location .. "L", data
-		elseif sbq.occupants[location .. "L"] > sbq.occupants[location .. "R"] and rightHasSpace then return location .. "R", data
+		elseif sbq.occupants[location .. "L"] < sbq.occupants[location .. "R"] and leftHasSpace then return location, "L", data
+		elseif sbq.occupants[location .. "L"] > sbq.occupants[location .. "R"] and rightHasSpace then return location, "R", data
 		else return false end
 	end
-	return location, data
+	return location, "", data
 end
 
 
 function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
-	local location = sbq.getSidedLocationWithSpace(location, args.size)
+	local location, locationSide = sbq.getSidedLocationWithSpace(location, args.size)
 	if not location then return false end
-	if sbq.eat( args.id, location, args.size, voreType ) then
+	if sbq.eat( args.id, location, args.size, voreType, locationSide ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
 		sbq.showEmote("emotehappy")
@@ -361,7 +360,7 @@ function sbq.updateOccupants(dt)
 				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
 
 				local size = ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
-				sbq.occupants[location] = sbq.occupants[location] + size
+				sbq.occupants[location..(sbq.occupant[i].locationSide or "")] = sbq.occupants[location..(sbq.occupant[i].locationSide or "")] + size
 				sbq.occupants.totalSize = sbq.occupants.totalSize + size
 				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
@@ -770,7 +769,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 		sbq.occupant[struggler].bellySettleDownTimer = 0.1
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
-		local location = sbq.occupant[struggler].location
+		local location = sbq.occupant[struggler].location..(sbq.occupant[struggler].locationSide or "")
 
 		if (struggledata.directions[movedir].indicate == "red" or struggledata.directions[movedir].indicate == "green") and ( struggledata.directions[movedir].settings == nil or sbq.checkSettings(struggledata.directions[movedir].settings) ) then
 			sbq.occupant[struggler].controls.favorDirection = movedir

@@ -271,16 +271,7 @@ function sbq.locationEffectButton(button, location, locationData, effectLabel)
 	sbq.predatorSettings[location.."EffectSlot"] = value
 	local effect = sbq.getStatusEffectSlot(location, locationData)
 	sbq.predatorSettings[location.."Effect"] = effect
-	if locationData.sided then
-		local left =  sbq.predatorConfig.locations[location.."L"]
-		local right =  sbq.predatorConfig.locations[location.."R"]
-		if not right.selectEffect then
-			sbq.predatorSettings[location.."REffect"] = effect
-		end
-		if not left.selectEffect then
-			sbq.predatorSettings[location.."LEffect"] = effect
-		end
-	end
+
 	effectLabel:setText((sbq.config.bellyStatusEffectNames[effect] or "No Effect"))
 	sbq.saveSettings()
 end

@@ -291,22 +291,16 @@ local copyList = {
 function sbq.initLocationEffects()
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.sided then
-			if not sbq.sbqData.locations[location.."L"] then
-				sbq.sbqData.locations[location.."L"] = {}
-			end
-			if not sbq.sbqData.locations[location.."R"] then
-				sbq.sbqData.locations[location.."R"] = {}
-			end
+			sbq.sbqData.locations[location.."L"] = sbq.sbqData.locations[location.."L"] or {}
+			sbq.sbqData.locations[location.."R"] = sbq.sbqData.locations[location.."R"] or {}
 			for name, copy in pairs(data) do
 				if name ~= "combine" and name ~= "sided" then
-					if not sbq.sbqData.locations[location.."L"][name] then
-						sbq.sbqData.locations[location.."L"][name] = copy
-					end
-					if not sbq.sbqData.locations[location.."R"][name] then
-						sbq.sbqData.locations[location.."R"][name] = copy
-					end
+					sbq.sbqData.locations[location.."L"][name] = sbq.sbqData.locations[location.."L"][name] or copy
+					sbq.sbqData.locations[location.."R"][name] = sbq.sbqData.locations[location.."R"][name] or copy
 				end
 			end
+			sbq.sbqData.locations[location .. "L"].side = sbq.sbqData.locations[location .. "L"].side or "L"
+			sbq.sbqData.locations[location .. "R"].side = sbq.sbqData.locations[location .. "R"].side or "R"
 		end
 	end
 	for location, data in pairs(sbq.sbqData.locations) do
@@ -317,32 +311,6 @@ function sbq.initLocationEffects()
 				effect = (sbq.sbqData.defaultSettings or {})[location.."Effect"] or "sbqRemoveBellyEffects"
 			end
 			sbq.settings[location.."Effect"] = effect
-			if data.sided then
-				local left =  sbq.sbqData.locations[location.."L"]
-				local right =  sbq.sbqData.locations[location.."R"]
-				if not right.selectEffect then
-					sbq.settings[location.."REffect"] = effect
-				end
-				if not left.selectEffect then
-					sbq.settings[location.."LEffect"] = effect
-				end
-			end
-		end
-		if data.sided then
-			local left =  sbq.sbqData.locations[location.."L"]
-			local right =  sbq.sbqData.locations[location.."R"]
-			if not right.TF then
-				right.TF = data.TF
-			end
-			if not left.TF then
-				left.TF = data.TF
-			end
-			if not right.eggify then
-				right.eggify = data.eggify
-			end
-			if not left.eggify then
-				left.eggify = data.eggify
-			end
 		end
 	end
 end

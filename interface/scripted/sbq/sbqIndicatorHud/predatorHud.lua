@@ -349,16 +349,6 @@ function sbq.locationEffectButton(button, location, locationData)
 	local effect = (locationData[value] or {}).effect or (sbq.predatorConfig.effectDefaults or {})[value] or (sbq.config.effectDefaults or {})[value] or "sbqRemoveBellyEffects"
 	sbq.globalSettings[location.."EffectSlot"] = value
 	sbq.globalSettings[location.."Effect"] = effect
-	if locationData.sided then
-		local left =  sbq.predatorConfig.locations[location.."L"]
-		local right =  sbq.predatorConfig.locations[location.."R"]
-		if not right.selectEffect then
-			sbq.globalSettings[location.."REffect"] = effect
-		end
-		if not left.selectEffect then
-			sbq.globalSettings[location.."LEffect"] = effect
-		end
-	end
 	sbq.saveSettings()
 end
 
