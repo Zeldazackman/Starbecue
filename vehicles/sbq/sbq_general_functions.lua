@@ -82,7 +82,7 @@ function sbq.occupantArray( maybearray )
 		if maybearray.location and maybearray.failOnFull ~= nil then
 			if maybearray.failOnFull then
 				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif sbq.locationSpaceAvailable(maybearray.location) <= 0 then return maybearray.failTransition end
+				elseif not sbq.getSidedLocationWithSpace(maybearray.location, 1) then return maybearray.failTransition end
 			else
 				if sbq.occupants[maybearray.location] <= 0 then return maybearray.failTransition end
 			end

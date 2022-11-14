@@ -138,16 +138,10 @@ end
 -- used for moving around between locations
 
 function sbq.moveToLocation(args, tconfig)
-	if sbq.sbqData.locations[tconfig.location].sided then
-		if math.random() > 0.5 then
-			if sbq.moveOccupantLocation(args, tconfig.location.."L") then return true end
-			if sbq.moveOccupantLocation(args, tconfig.location.."R") then return true end
-		else
-			if sbq.moveOccupantLocation(args, tconfig.location.."R") then return true end
-			if sbq.moveOccupantLocation(args, tconfig.location.."L") then return true end
-		end
-	else
-		sbq.moveOccupantLocation(args, tconfig.location)
+	if not args.id then return false end
+	local location, side = sbq.getSidedLocationWithSpace(tconfig.location, sbq.lounging[args.id].size)
+	if location then
+		sbq.moveOccupantLocation(args, location, side)
 	end
 end
 

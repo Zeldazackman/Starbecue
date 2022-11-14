@@ -301,14 +301,7 @@ end
 function sbq.changePredatorSetting(settingname, value)
 	sbq.predatorSettings[settingname] = value
 	sbq.autoSetSettings(settingname, value)
-	-- a hack until I improve how sided locations are handled
-	if (settingname:sub(1, #"balls") == "balls") then
-		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = value
-		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = value
-	elseif (settingname:sub(1, #"breasts") == "breasts") then
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = value
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = value
-	end
+
 	sbq.savePredSettings()
 end
 

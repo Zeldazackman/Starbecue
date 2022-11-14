@@ -93,9 +93,9 @@ function sbq.letout(id)
 		return sbq.doTransition("tailEscape", {id = id})
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
-	elseif location == "ballsL" or location == "ballsR" then
+	elseif location == "ballsL" or location == "ballsR" or location == "balls" then
 		return sbq.moveToLocation({id = id}, {location = "shaft"})
-	elseif location == "breastsL" or location == "breastsR" then
+	elseif location == "breastsL" or location == "breastsR" or location == "breasts" then
 		return sbq.doTransition("breastEscape", {id = id})
 	elseif location == "womb" then
 		return sbq.doTransition("unbirthEscape", {id = id})

@@ -14,7 +14,7 @@ end
 function sbq.eat( occupantId, location, size, voreType, locationSide, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
-	local locationSpace = sbq.locationSpaceAvailable(location..(locationSide or ""))
+	local locationSpace = sbq.locationSpaceAvailable(location, locationSide)
 	if locationSpace < ((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) then return false end
 	if (not occupantId) or (not world.entityExists(occupantId))
 	or ((sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
@@ -145,11 +145,12 @@ function sbq.firstNotLounging(entityaimed)
 	end
 end
 
-function sbq.moveOccupantLocation(args, location)
-	local space = sbq.locationSpaceAvailable(location)
+function sbq.moveOccupantLocation(args, location, side)
+	local space = sbq.locationSpaceAvailable(location, side)
 	if not args.id or (space < ((sbq.lounging[args.id].size or 1) * (sbq.settings[location.."Multiplier"] or 1))) then return false end
 
 	sbq.lounging[args.id].location = location
+	sbq.lounging[args.id].locationSide = side
 	return true
 end
 
@@ -175,19 +176,19 @@ function sbq.locationVisualSize(location, side)
 	return math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(math.floor((unscaled / sbq.predScale) + 0.4), (sbq.settings[location.."VisualMax"] or data.max or math.huge))))
 end
 
-function sbq.locationSpaceAvailable(location)
+function sbq.locationSpaceAvailable(location, side)
 	if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
 	and not sbq.settings[location.."HammerspaceDisabled"] then
 		return math.huge
 	end
-	return (sbq.sbqData.locations[location].max * (sbq.predScale or 1)) - sbq.occupants[location]
+	return (sbq.sbqData.locations[location..(side or "")].max * (sbq.predScale or 1)) - sbq.occupants[location..(side or "")]
 end
 
 function sbq.getSidedLocationWithSpace(location, size)
 	local data = sbq.sbqData.locations[location]
 	if data.sided then
-		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
-		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local leftHasSpace = sbq.locationSpaceAvailable(location, "L") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local rightHasSpace = sbq.locationSpaceAvailable(location, "R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
 		if sbq.occupants[location.."L"] == sbq.occupants[location.."R"] then
 			if sbq.direction > 0 then -- thinking about it, after adding everything underneath to prioritize the one with less prey, this is kinda useless
 				if leftHasSpace then return location, "L", data
@@ -604,7 +605,7 @@ function sbq.doBellyEffects(dt)
 
 			if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
 				-- p.occupant[i].indicatorCooldown = 0.5
-				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
+				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location..(sbq.occupant[i].locationSide or "")] or {}
 				local directions = {}
 				local icon
 				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" then
@@ -671,7 +672,7 @@ function sbq.validStruggle(struggler, dt)
 	if not movedir then sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt) return end
 
 	local struggling
-	struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location]
+	struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location..(sbq.occupant[struggler].locationSide or "")]
 
 	if (struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil) then return end
 
