@@ -33,6 +33,7 @@ function sbq.eat( occupantId, location, size, voreType, locationSide, force )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			sbq.occupant[seatindex].id = occupantId
 			sbq.occupant[seatindex].location = location
+			sbq.occupant[seatindex].locationSide = locationSide
 			sbq.occupant[seatindex].size = size or 1
 			sbq.occupant[seatindex].entryType = voreType
 			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
@@ -52,6 +53,7 @@ function sbq.eat( occupantId, location, size, voreType, locationSide, force )
 	sbq.occupant[seatindex].id = occupantId
 	sbq.occupant[seatindex].species = species
 	sbq.occupant[seatindex].location = location
+	sbq.occupant[seatindex].locationSide = locationSide
 	sbq.occupant[seatindex].size = size or 1
 	sbq.occupant[seatindex].entryType = voreType
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
@@ -625,7 +627,7 @@ function sbq.doBellyEffects(dt)
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
 					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..((sbq.occupant[i].smolPreyData.settings or {}).directives or "")
 				end
-				sbq.openPreyHud(i, directions, progressbarDx, icon, location)
+				sbq.openPreyHud(i, directions, progressbarDx, icon, location..(sbq.occupant[i].locationSide or ""))
 			end
 
 			sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier )
