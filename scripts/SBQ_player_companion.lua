@@ -9,6 +9,7 @@ local prey = {}
 
 function init()
 	oldinit()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 
 	player.setUniverseFlag("foodhall_auriShop")
 

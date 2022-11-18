@@ -298,6 +298,13 @@ function sbq.savePreySettings()
 	end
 end
 
+function sbq.saveDigestedPrey()
+	world.sendEntityMessage(pane.sourceEntity(), "sbqSaveDigestedPrey", sbq.storedDigestedPrey, indexes.tenantIndex )
+	if sbq.storage.occupier then
+		world.sendEntityMessage( sbq.tenant.uniqueId, "sbqSaveDigestedPrey", sbq.storedDigestedPrey )
+	end
+end
+
 function sbq.changePredatorSetting(settingname, value)
 	sbq.predatorSettings[settingname] = value
 	sbq.autoSetSettings(settingname, value)

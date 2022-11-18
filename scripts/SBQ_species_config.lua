@@ -59,5 +59,11 @@ function sbq.getSpeciesConfig(species)
 	for i, config in ipairs(configs) do
 		finalConfig = sb.jsonMerge(finalConfig, config)
 	end
+
+	for location, data in pairs(sbq.speciesConfig.sbqData.locations or {}) do
+		sbq.speciesConfig.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+	end
+
+
 	sbq.speciesConfig.states = finalConfig
 end

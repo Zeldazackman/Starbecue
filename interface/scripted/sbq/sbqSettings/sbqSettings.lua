@@ -70,7 +70,10 @@ function init()
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
 			sbq.getPlayerOccupantHolderData()
 		else
-			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+			sbq.predatorConfig = root.assetJson("/vehicles/sbq/" .. sbq.sbqCurrentData.species .. "/" .. sbq.sbqCurrentData.species .. ".vehicle").sbqData or {}
+			for location, data in pairs(sbq.predatorConfig.locations or {}) do
+				sbq.predatorConfig.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+			end
 		end
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
@@ -794,3 +797,7 @@ if speciesLayout ~= nil then
 end
 
 --------------------------------------------------------------------------------------------------
+
+function sbq.saveDigestedPrey()
+	status.setStatusProperty("sbqStoredDigestedPrey", sbq.storedDigestedPrey)
+end

@@ -289,6 +289,10 @@ local copyList = {
 }
 
 function sbq.initLocationEffects()
+	for location, data in pairs(sbq.sbqData.locations or {}) do
+		sbq.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+	end
+
 	for location, data in pairs(sbq.sbqData.locations) do
 		if data.sided then
 			sbq.sbqData.locations[location.."L"] = sbq.sbqData.locations[location.."L"] or {}

@@ -57,18 +57,13 @@ function init()
 	end)
 
 	message.setHandler("sbqSavePreySettings", function (_,_, settings, index)
-
-		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
-			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
-			{statusProperties = { sbqPreyEnabled = settings}}
-		)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = settings
+	end)
+	message.setHandler("sbqSaveDigestedPrey", function (_,_, prey, index)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.sbqStoredDigestedPrey = prey
 	end)
 	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings, index)
-
-		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
-			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
-			{statusProperties = { speciesAnimOverrideSettings = settings}}
-		)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings = settings
 	end)
 
 	message.setHandler("sbqDeedInteract", function (_,_, args)
@@ -210,7 +205,8 @@ function setTenantsData(occupier)
 		tenant.uniqueId = npcConfig.scriptConfig.uniqueId or sb.makeUuid()
 		tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
 		tenant.overrides.scriptConfig.sbqSettings = npcConfig.scriptConfig.sbqDefaultSettings
-		tenant.overrides.statusControllerSettings = npcConfig.statusControllerSettings
+		tenant.overrides.statusControllerSettings = npcConfig.statusControllerSettings or {}
+		tenant.overrides.statusControllerSettings.statusProperties = tenant.overrides.statusControllerSettings.statusProperties or {}
 
 		tenant.seed = sb.makeRandomSource():randu64()
 	end

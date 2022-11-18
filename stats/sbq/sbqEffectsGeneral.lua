@@ -89,6 +89,7 @@ function generateItemDrop(itemDrop)
 		if itemDrop.parameters.pred then
 			itemDrop.parameters.tooltipFields.collarNameLabel = "Gurgled by: " .. itemDrop.parameters.pred
 		end
+		itemDrop.parameters.shortdescription = itemDrop.parameters.prey
 		itemDrop.parameters.inventoryIcon = world.entityPortrait(entity.id(), "bust")
 	end
 

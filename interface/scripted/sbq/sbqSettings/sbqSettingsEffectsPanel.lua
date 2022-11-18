@@ -136,11 +136,11 @@ function sbq.effectsPanel()
 					{ type = "itemGrid", slots = 5, id = location.."ItemGrid", autoInteract = true },
 				}}
 			} }
+			local count = 5
 			if type(sbq.storedDigestedPrey[location]) == "table" then
 				local players = {}
 				local ocs = {}
 				local other = {}
-				local count = 0
 				for uniqueId, item in pairs(sbq.storedDigestedPrey[location]) do
 					count = count + 1
 					if item.parameters.npcArgs.wasPlayer then
@@ -151,10 +151,11 @@ function sbq.effectsPanel()
 						table.insert(other, item)
 					end
 				end
+				count = (count+5)-((count+5)%5)
 				absorbedPreyList = players
 				util.appendLists(absorbedPreyList, ocs)
 				util.appendLists(absorbedPreyList, other)
-				absorbedPreyPanel.children[1].children[2].slots = (count+10)-((count+10)%5)
+				absorbedPreyPanel.children[1].children[2].slots = count
 			end
 
 			local tab = locationTabField:newTab({
@@ -180,6 +181,40 @@ function sbq.effectsPanel()
 			for i, item in ipairs(absorbedPreyList or {}) do
 				itemGrid:setItem(i, item)
 			end
+			for i = 1, count do
+				local itemSlot = itemGrid:slot(i)
+				function itemSlot:acceptsItem(item)
+					if not ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+
+					local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
+					local validPrey = true
+					for i, voreType in ipairs(locationData.voreTypes or {}) do
+						validPrey = preySettings[voreType]
+						if validPrey then return true end
+					end
+					if not validPrey then
+						pane.playSound("/sfx/interface/clickon_error.ogg")
+						return false
+					end
+					return true
+				end
+				function itemSlot:onItemModified()
+					local itemList = {}
+					for i = 1, count do
+						local item = itemGrid:item(i)
+						if item then
+							table.insert(itemList, item)
+						end
+					end
+					sbq.storedDigestedPrey[location] = {}
+					for i, item in ipairs(itemList) do
+						local uniqueId = item.parameters.npcArgs.npcParam.scriptConfig.uniqueId
+						sbq.storedDigestedPrey[location][uniqueId] = item
+					end
+					sbq.saveDigestedPrey()
+				end
+			end
+
 
 			local noneButton = _ENV[location.."None"]
 			local healButton = _ENV[location.."Heal"]

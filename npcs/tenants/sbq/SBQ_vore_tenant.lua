@@ -31,9 +31,10 @@ function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
 	if deedUniqueId and not storage.settings.dontSaveToDeed then
 		sbq.timer("setHome", 0.5, function ()
 			local id = world.loadUniqueEntity(deedUniqueId)
-			if id and world.entityExists(id) then
-				world.sendEntityMessage(id, "sbqSaveSettings", storage.settings)
-				world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {})
+			local index = config.getParameter("tenantIndex")
+			if id and world.entityExists(id) and index ~= nil then
+				world.sendEntityMessage(id, "sbqSaveSettings", storage.settings or {}, index )
+				world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {}, index)
 			end
 		end)
 	end
@@ -166,6 +167,19 @@ function init()
 	message.setHandler("recruit.confirmUnfollowBehavior", function(_,_)
 		recruitable.confirmUnfollowBehavior(true)
 		storage.settings.isFollowing = recruitable.isFollowing()
+	end)
+	message.setHandler("sbqDigestStore", function(_, _, location, uniqueId, item)
+		local digestedStoredTable = status.statusProperty("sbqStoredDigestedPrey") or {}
+		digestedStoredTable[location] = digestedStoredTable[location] or {}
+		digestedStoredTable[location][uniqueId] = item
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
+		local index = config.getParameter("tenantIndex")
+		if storage.respawner and index ~= nil then
+			world.sendEntityMessage(storage.respawner, "sbqSaveDigestedPrey", digestedStoredTable, index)
+		end
+	end)
+	message.setHandler("sbqSaveDigestedPrey", function(_, _, digestedStoredTable )
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
 	end)
 end
 
