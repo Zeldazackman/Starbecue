@@ -51,6 +51,11 @@ function sbq.everything_primary()
 		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	end)
 
+	message.setHandler("sbqGetPreyEnabledSetting", function(_,_, setting)
+		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))[setting]
+	end)
+
+
 	message.setHandler("sbqProjectileSource", function (_,_, source)
 		status.setStatusProperty("sbqProjectileSource", source)
 	end)
@@ -145,8 +150,8 @@ function sbq.doMysteriousTF(data)
 
 	local genders = {"male", "female"}
 
-	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge(status.statusProperty("sbqPreyEnabled") or {}, status.statusProperty("sbqOverridePreyEnabled") or {})).genderswapImmunity
-	if genderswapImmunity then
+	local genderswapAllow = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge(status.statusProperty("sbqPreyEnabled") or {}, status.statusProperty("sbqOverridePreyEnabled") or {})).genderswapAllow
+	if not genderswapAllow then
 		overrideData.gender = currentData.gender or world.entityGender(entity.id())
 	else
 		if overrideData.gender == "random" then

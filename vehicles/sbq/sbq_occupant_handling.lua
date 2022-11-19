@@ -580,8 +580,8 @@ function sbq.doBellyEffects(dt)
 					end
 				end
 			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].egged or sbq.occupant[i][location.."EggifyImmune"]) then
-				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (enabled)
-					if enabled and not enabled.enabled then
+				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqGetPreyEnabledSetting", {sbq.sbqData.locations[location].eggify.immunity or "eggAllow"}, function (enabled)
+					if enabled then
 						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")
 					else
 						sbq.occupant[i][location.."EggifyImmune"] = true
@@ -590,8 +590,8 @@ function sbq.doBellyEffects(dt)
 					sbq.occupant[i][location.."EggifyImmune"] = true
 				end)
 			elseif sbq.settings[location.."TF"] and sbq.sbqData.locations[location].TF and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."TFImmune"]) then
-				sbq.loopedMessage(location.."TF"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].TF.immunity or "transformImmunity"}, function (enabled)
-					if enabled and not enabled.enabled then
+				sbq.loopedMessage(location.."TF"..eid, eid, "sbqGetPreyEnabledSetting", {sbq.sbqData.locations[location].TF.immunity or "transformAllow"}, function (enabled)
+					if enabled then
 						sbq.transformMessageHandler(eid)
 					else
 						sbq.occupant[i][location.."TFImmune"] = true

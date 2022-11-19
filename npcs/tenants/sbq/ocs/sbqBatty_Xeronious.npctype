@@ -132,15 +132,15 @@
 				"preyEnabled": true,
 				//"preyEnabledEnable": true,
 
-				"digestImmunity": false,
+				"digestAllow": true,
 				//"digestImmunityEnable": true,
 
-				"cumDigestImmunity" : true,
+				"cumDigestAllow": false,
 
-				"transformImmunity": false,
-				"genderswapImmunity" : true,
+				"transformAllow": true,
+				"genderswapAllow": false,
 
-				"eggImmunity": false,
+				"eggAllow": true,
 
 				"held": true,
 

@@ -14,7 +14,7 @@ function sbq.effectsPanel()
 			sbq.locationDefaultSettings(locationData, location)
 
 			local mainEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
-				{ type = "layout", mode = "horizontal", spacing = 0, children = {
+				{ type = "layout", mode = "horizontal", spacing = 0, expandMode = {1,0}, size = {100, 20}, children = {
 					{
 						{
 							{
@@ -125,8 +125,20 @@ function sbq.effectsPanel()
 			} }
 			local difficultyMod = { type = "panel", style = "flat", expandMode = {1,0}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
-					{type = "label", text = "Difficulty Mod", align = "center"},
+					{type = "label", text = "Difficulty", align = "center"},
 					{ type = "textBox", align = "center", id = location .. "DifficultyMod", toolTip = "Make this location easier or harder relative to the main difficulty."},
+				}}
+			} }
+			local InfusionPanel = { type = "panel", style = "flat", expandMode = {1,0}, visible = locationData.infusion or false, children = {
+				{ type = "layout", mode = "vertical", spacing = 0, children = {
+					{type = "label", text = "Infusion", align = "center"},
+					{
+						{ expandMode = {0,0} },
+						{ type = "itemSlot", autoInteract = true, id = location .. "InfusedItem",
+							item = sbq.predatorSettings[location .. "InfusedItem"] },
+						{ type = "checkBox", id = location .. "InfusedVisual", checked = sbq.predatorSettings[location .. "InfusedVisual"],
+							toolTip = "Change colors to match infused character if applicable.", visible = locationData.infusedVisual or false },
+					}
 				}}
 			} }
 			local absorbedPreyList
@@ -167,7 +179,7 @@ function sbq.effectsPanel()
 							extraEffectLayout,
 							otherLayout,
 							modifiersLayout,
-							difficultyMod,
+							{ type = "layout", mode = "horizontal", expandMode = {1,0}, size = {100, 30}, children = {difficultyMod, InfusionPanel} },
 							absorbedPreyPanel
 						} }
 					}}
