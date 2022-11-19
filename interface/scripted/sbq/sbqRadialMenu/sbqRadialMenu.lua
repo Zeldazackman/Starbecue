@@ -111,7 +111,15 @@ function update( dt )
 			generateSegment(segmentSize - segmentSpacing, segmentAngle, sidesPerSegment, spacingOffset, r1, r2),
 			color
 		)
-		canvas:drawImage(options[i].icon, radialPoint(segmentSize * (i - 1) + 180, ri), nil, nil, true)
+		if options[i].icon then
+			canvas:drawImage(options[i].icon, radialPoint(segmentSize * (i - 1) + 180, ri), nil, nil, true)
+		else
+			canvas:drawText(options[i].name, {
+				position = radialPoint(segmentSize * (i - 1) + 180, ri),
+				horizontalAnchor = "mid",
+				verticalAnchor = "mid"
+			}, 8)
+		end
 	end
 
 	-- save selection
