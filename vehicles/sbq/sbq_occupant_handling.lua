@@ -672,7 +672,7 @@ function sbq.validStruggle(struggler, dt)
 	if not movedir then sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt) return end
 
 	local struggling
-	struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location..(sbq.occupant[struggler].locationSide or "")]
+	struggledata = sbq.stateconfig[sbq.state].struggle[(sbq.occupant[struggler].location or "")..(sbq.occupant[struggler].locationSide or "")]
 
 	if (struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil) then return end
 

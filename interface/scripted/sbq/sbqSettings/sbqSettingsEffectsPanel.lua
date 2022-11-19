@@ -123,13 +123,13 @@ function sbq.effectsPanel()
 					}
 				}}
 			} }
-			local difficultyMod = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+			local difficultyMod = { type = "panel", style = "flat", expandMode = {1,1}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{type = "label", text = "Difficulty", align = "center"},
 					{ type = "textBox", align = "center", id = location .. "DifficultyMod", toolTip = "Make this location easier or harder relative to the main difficulty."},
 				}}
 			} }
-			local InfusionPanel = { type = "panel", style = "flat", expandMode = {1,0}, visible = locationData.infusion or false, children = {
+			local InfusionPanel = { type = "panel", style = "flat", expandMode = {1,1}, visible = locationData.infusion or false, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{type = "label", text = "Infusion", align = "center"},
 					{
@@ -225,6 +225,26 @@ function sbq.effectsPanel()
 					end
 					sbq.saveDigestedPrey()
 				end
+			end
+
+			local infusedItemSlot = _ENV[location .. "InfusedItem"]
+
+			function infusedItemSlot:acceptsItem(item)
+				if not ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then
+					if (item.parameters or {}).species ~= nil and item.name == "sbqMysteriousPotion" then
+						return true
+					else
+						pane.playSound("/sfx/interface/clickon_error.ogg")
+						return false
+					end
+				else
+					local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
+					if not preySettings[locationData.infusionSetting or "undefined"] then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+					return true
+				end
+			end
+			function infusedItemSlot:onItemModified()
+				sbq.changeGlobalSetting(location .. "InfusedItem", infusedItemSlot:item())
 			end
 
 

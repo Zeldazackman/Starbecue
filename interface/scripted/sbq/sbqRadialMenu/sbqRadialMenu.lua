@@ -115,12 +115,12 @@ function update( dt )
 		if options[i].icon then
 			canvas:drawImage(options[i].icon, iconPos, nil, nil, true)
 		else
-			canvas:drawText(options[i].name, {
-				position = {iconPos[1] + 1, iconPos[2] + 1},
+			canvas:drawText(options[i].title or options[i].name, {
+				position = {iconPos[1] + 0.75, iconPos[2] - 0.75},
 				horizontalAnchor = "mid",
 				verticalAnchor = "mid"
 			}, 8, {0, 0, 0})
-			canvas:drawText(options[i].name, {
+			canvas:drawText(options[i].title or options[i].name, {
 				position = iconPos,
 				horizontalAnchor = "mid",
 				verticalAnchor = "mid"

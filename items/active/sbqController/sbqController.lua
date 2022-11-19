@@ -29,101 +29,62 @@ end
 local assignedMenu
 local currentData
 local occpantsWhenAssigned
+local selectedPrey
 
 function dontDoRadialMenu(arg)
 	dontDoMenu = arg
 end
 
 function update(dt, fireMode, shiftHeld, controls)
+	sbq.checkRPCsFinished(dt)
 	if not player.isLounging() then
 		currentData = player.getProperty( "sbqCurrentData") or {}
 		if occpantsWhenAssigned ~= (currentData.totalOccupants or 0) then
 			assignedMenu = nil
 		end
 
-		if (storage.seatdata.shift or 0) > 0.2 and controls.up then
-			if not assignedMenu then
+		if (storage.seatdata.shift or 0) > 0.2 then
+			if not assignedMenu and controls.up then
 				if activeItem.hand() == "primary" then activeItem.callOtherHandScript("dontDoRadialMenu", true) end
 				if dontDoMenu then return end
 				assignedMenu = true
+				selectedPrey = nil
+				assignSelectMenu()
 
-
-				local sbqSettings = player.getProperty("sbqSettings") or {}
-				local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
-
-				local options = {
-					{
-						name = "despawn",
-						icon = "/interface/xhover.png"
-					},
-					{
-						name = "oralVore",
-						icon = returnVoreIcon("oralVore") or "/items/active/sbqController/oralVore.png"
-					},
-					{
-						name = "analVore",
-						icon = returnVoreIcon("analVore") or "/items/active/sbqController/analVore.png"
-					}
-				}
-				occpantsWhenAssigned = currentData.totalOccupants or 0
-				if (currentData.totalOccupants or 0) > 0 then
-					options[1].icon = "/items/active/sbqController/letout.png"
-				end
-				if settings.tailMaw then
-					table.insert(options, 3, {
-						name = "tailVore",
-						icon = returnVoreIcon("tailVore") or "/items/active/sbqController/tailVore.png"
-					} )
-				end
-				if settings.navel then
-					table.insert(options, {
-						name = "navelVore",
-						icon = returnVoreIcon("navelVore") or "/items/active/sbqController/navelVore.png"
-					} )
-				end
-				if settings.breasts then
-					table.insert(options, {
-						name = "breastVore",
-						icon = returnVoreIcon("breastVore") or "/items/active/sbqController/breastVore.png"
-					} )
-				end
-				if settings.pussy then
-					table.insert(options, {
-						name = "unbirth",
-						icon = returnVoreIcon("unbirth") or "/items/active/sbqController/unbirth.png"
-					} )
-				end
-				if settings.penis then
-					table.insert(options, {
-						name = "cockVore",
-						icon = returnVoreIcon("cockVore") or "/items/active/sbqController/cockVore.png"
-					} )
-				end
-
-				world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerActionSelect" }, true )
-			else
+			elseif assignedMenu then
 				if dontDoMenu then return end
 				sbq.loopedMessage("radialSelection", player.id(), "sbqGetRadialSelection", {}, function(data)
-					if data.selection ~= nil and data.type == "controllerActionSelect" then
+					if data.selection ~= nil then
 						sbq.lastRadialSelection = data.selection
 						sbq.radialSelectionType = data.type
 						if data.selection == "cancel" then return end
 						if data.selection == "despawn" and data.pressed and not sbq.click then
 							sbq.click = true
-							if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-								if (currentData.totalOccupants or 0) > 0 then
-									world.sendEntityMessage(currentData.id, "letout")
-								else
-									world.sendEntityMessage(currentData.id, "despawn")
+							letout(selectedPrey)
+						end
+
+						if data.type == "controllerActionSelect" then
+							if data.button == 0 and data.pressed and not sbq.click then
+								sbq.click = true
+								world.sendEntityMessage(player.id(), "primaryItemData", { assignClickAction = data.selection })
+							elseif data.button == 2 and data.pressed and not sbq.click then
+								sbq.click = true
+								world.sendEntityMessage(player.id(), "altItemData", {assignClickAction = data.selection })
+
+							end
+						elseif data.type == "controllerSelectMenu" then
+							if data.pressed and not sbq.click then
+								sbq.click = true
+								if data.selection == "assignAction" then
+									assignAssignActionMenu()
+								elseif data.selection == "rpAction" then
+									assignRPActionMenu()
+								elseif data.selection == "preyAction" then
+									assignPreyActionMenu()
 								end
 							end
-						elseif data.button == 0 and data.pressed and not sbq.click then
-							sbq.click = true
-							world.sendEntityMessage(player.id(), "primaryItemData", { assignClickAction = data.selection })
-						elseif data.button == 2 and data.pressed and not sbq.click then
-							sbq.click = true
-							world.sendEntityMessage(player.id(), "altItemData", {assignClickAction = data.selection })
-						elseif not data.pressed then
+						end
+						if not data.pressed then
 							sbq.click = false
 						end
 					end
@@ -131,16 +92,8 @@ function update(dt, fireMode, shiftHeld, controls)
 			end
 		elseif assignedMenu then
 			world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqClose" )
-			if sbq.radialSelectionType == "controllerActionSelect" then
-				if sbq.lastRadialSelection == "despawn" then
-					if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-						if (currentData.totalOccupants or 0) > 0 then
-							world.sendEntityMessage(currentData.id, "letout")
-						else
-							world.sendEntityMessage(currentData.id, "despawn")
-						end
-					end
-				end
+			if sbq.lastRadialSelection == "despawn" then
+				letout(selectedPrey)
 			end
 			assignedMenu = nil
 			activeItem.callOtherHandScript("dontDoRadialMenu")
@@ -159,6 +112,131 @@ function update(dt, fireMode, shiftHeld, controls)
 			end
 		end
 	end
+end
+
+function letout(i)
+	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
+		if (currentData.totalOccupants or 0) > 0 then
+			world.sendEntityMessage(currentData.id, "letout",i)
+		else
+			world.sendEntityMessage(currentData.id, "despawn",i)
+		end
+	end
+end
+
+function assignAssignActionMenu()
+	local sbqSettings = player.getProperty("sbqSettings") or {}
+	local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
+
+	local options = {
+		{
+			name = "despawn",
+			icon = "/interface/xhover.png"
+		},
+		{
+			name = "oralVore",
+			icon = returnVoreIcon("oralVore") or "/items/active/sbqController/oralVore.png"
+		},
+		{
+			name = "analVore",
+			icon = returnVoreIcon("analVore") or "/items/active/sbqController/analVore.png"
+		}
+	}
+	occpantsWhenAssigned = currentData.totalOccupants or 0
+	if (currentData.totalOccupants or 0) > 0 then
+		options[1].icon = nil
+	end
+	if settings.tailMaw then
+		table.insert(options, 3, {
+			name = "tailVore",
+			icon = returnVoreIcon("tailVore") or "/items/active/sbqController/tailVore.png"
+		} )
+	end
+	if settings.navel then
+		table.insert(options, {
+			name = "navelVore",
+			icon = returnVoreIcon("navelVore") or "/items/active/sbqController/navelVore.png"
+		} )
+	end
+	if settings.breasts then
+		table.insert(options, {
+			name = "breastVore",
+			icon = returnVoreIcon("breastVore") or "/items/active/sbqController/breastVore.png"
+		} )
+	end
+	if settings.pussy then
+		table.insert(options, {
+			name = "unbirth",
+			icon = returnVoreIcon("unbirth") or "/items/active/sbqController/unbirth.png"
+		} )
+	end
+	if settings.penis then
+		table.insert(options, {
+			name = "cockVore",
+			icon = returnVoreIcon("cockVore") or "/items/active/sbqController/cockVore.png"
+		} )
+	end
+
+	world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerActionSelect" }, true )
+end
+
+function assignSelectMenu()
+	local options = {
+		{
+			name = "despawn",
+			icon = "/interface/xhover.png",
+			title = "Let Out"
+		},
+		--[[{
+			name = "rpAction",
+			title = "Roleplay\nActions"
+		},]]
+		{
+			name = "assignAction",
+			title = "Assign\nClick"
+		}
+	}
+	occpantsWhenAssigned = currentData.totalOccupants or 0
+	if (currentData.totalOccupants or 0) > 0 then
+		options[1].icon = nil
+		table.insert(options, {
+			name = "preyAction",
+			title = "Prey\nActions"
+		})
+	end
+	world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerSelectMenu" }, true )
+end
+
+function assignRPActionMenu()
+
+end
+
+function assignPreyActionMenu()
+	local sbqSettings = player.getProperty("sbqSettings") or {}
+	local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
+
+	local options = {
+		{
+			name = "all",
+			title = "All Prey"
+		}
+	}
+	if currentData.id and world.entityExists(currentData.id) then
+		sbq.addRPC(world.sendEntityMessage(currentData.id, "getOccupancyData"), function (data)
+			for i = 0, 7 do
+				local number = i
+				local i = tostring(i)
+				if data.occupant and data.occupant[i].id ~= nil and world.entityExists(data.occupant[i].id) then
+					table.insert(options, {
+						name = data.occupant[i].id,
+						title = (number+1)..": "..(world.entityName(data.occupant[i].id) or "")
+					})
+				end
+			end
+			world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerPreySelect" }, true )
+		end)
+	end
+
 end
 
 function doVoreAction(id)
