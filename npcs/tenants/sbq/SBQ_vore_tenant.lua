@@ -184,7 +184,7 @@ function init()
 end
 
 function sbq.setSpeciesConfig()
-	sbq.getSpeciesConfig(npc.species())
+	sbq.getSpeciesConfig(npc.species(), storage.settings)
 	status.setStatusProperty("sbqOverridePreyEnabled", sbq.speciesConfig.sbqData.overridePreyEnabled)
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 	local effects = status.getPersistentEffects("speciesAnimOverride")

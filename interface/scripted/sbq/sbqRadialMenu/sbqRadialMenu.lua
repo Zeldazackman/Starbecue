@@ -137,7 +137,7 @@ function update( dt )
 	if activeSegment == -1 then
 		player.setProperty( "sbqRadialSelection", {selection = "cancel", type = menuType, button = button, pressed = pressed})
 	else
-		player.setProperty( "sbqRadialSelection", {selection = options[activeSegment].name, type = menuType, button = button, pressed = pressed} )
+		player.setProperty( "sbqRadialSelection", {selection = options[activeSegment].name, data = options[activeSegment].data, type = menuType, button = button, pressed = pressed} )
 	end
 end
 

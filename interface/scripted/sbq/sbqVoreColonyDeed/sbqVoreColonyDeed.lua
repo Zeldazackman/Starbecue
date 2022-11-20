@@ -81,16 +81,16 @@ function init()
 		-- I do need to seperate the settings for the NPCs based on their pred species but thats for another time
 		--[[if sbq.sbqCurrentData.species ~= nil then
 			if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
-				sbq.getSpeciesConfig(sbq.tenant.species)
+				sbq.getSpeciesConfig(sbq.tenant.species, sbq.tenant.overrides.scriptConfig.sbqSettings)
 				sbq.predatorConfig = sbq.speciesConfig.sbqData
 					else
 				sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
 			end
 		else
-			sbq.getSpeciesConfig(sbq.tenant.species)
+			sbq.getSpeciesConfig(sbq.tenant.species, sbq.tenant.overrides.scriptConfig.sbqSettings)
 			sbq.predatorConfig = sbq.speciesConfig.sbqData
 		end]]
-		sbq.getSpeciesConfig(sbq.tenant.species)
+		sbq.getSpeciesConfig(sbq.tenant.species, sbq.tenant.overrides.scriptConfig.sbqSettings)
 		sbq.predatorConfig = sbq.speciesConfig.sbqData
 
 

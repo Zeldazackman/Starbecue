@@ -2,8 +2,11 @@
 sbq = {}
 
 require("/scripts/SBQ_RPC_handling.lua")
+require("/scripts/SBQ_species_config.lua")
+require("/interface/scripted/sbq/sbqIndicatorHud/hudActions.lua")
 
 function init()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 	activeItem.setHoldingItem(false)
 	local hand = activeItem.hand()
 	if storage.clickAction == nil then
@@ -26,10 +29,12 @@ function init()
 	end)
 end
 
+require("/scripts/speciesAnimOverride_player_species.lua")
+
 local assignedMenu
-local currentData
 local occpantsWhenAssigned
 local selectedPrey
+local selectedPreyIndex
 
 function dontDoRadialMenu(arg)
 	dontDoMenu = arg
@@ -38,8 +43,8 @@ end
 function update(dt, fireMode, shiftHeld, controls)
 	sbq.checkRPCsFinished(dt)
 	if not player.isLounging() then
-		currentData = player.getProperty( "sbqCurrentData") or {}
-		if occpantsWhenAssigned ~= (currentData.totalOccupants or 0) then
+		sbq.sbqCurrentData = player.getProperty( "sbqCurrentData") or {}
+		if occpantsWhenAssigned ~= (sbq.sbqCurrentData.totalOccupants or 0) then
 			assignedMenu = nil
 		end
 
@@ -61,6 +66,7 @@ function update(dt, fireMode, shiftHeld, controls)
 						if data.selection == "despawn" and data.pressed and not sbq.click then
 							sbq.click = true
 							letout(selectedPrey)
+							return
 						end
 
 						if data.type == "controllerActionSelect" then
@@ -70,7 +76,6 @@ function update(dt, fireMode, shiftHeld, controls)
 							elseif data.button == 2 and data.pressed and not sbq.click then
 								sbq.click = true
 								world.sendEntityMessage(player.id(), "altItemData", {assignClickAction = data.selection })
-
 							end
 						elseif data.type == "controllerSelectMenu" then
 							if data.pressed and not sbq.click then
@@ -81,6 +86,18 @@ function update(dt, fireMode, shiftHeld, controls)
 									assignRPActionMenu()
 								elseif data.selection == "preyAction" then
 									assignPreyActionMenu()
+								end
+							end
+						elseif data.type == "controllerPreySelect" then
+							if data.pressed and not sbq.click then
+								sbq.click = true
+								assignPreyActionsLocation(data.selection)
+							end
+						elseif data.type == "controllerPreyAction" then
+							if data.pressed and not sbq.click then
+								sbq.click = true
+								if type(sbq[data.selection]) == "function" then
+									sbq[data.selection](selectedPrey, selectedPreyIndex)
 								end
 							end
 						end
@@ -100,8 +117,8 @@ function update(dt, fireMode, shiftHeld, controls)
 		else
 			if fireMode == "primary" and not clicked then
 				clicked = true
-				if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-					doVoreAction(currentData.id)
+				if type(sbq.sbqCurrentData.id) == "number" and world.entityExists(sbq.sbqCurrentData.id) then
+					doVoreAction(sbq.sbqCurrentData.id)
 				else
 					local sbqSettings = player.getProperty("sbqSettings") or {}
 					local settings = sb.jsonMerge( sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
@@ -115,11 +132,11 @@ function update(dt, fireMode, shiftHeld, controls)
 end
 
 function letout(i)
-	if type(currentData.id) == "number" and world.entityExists(currentData.id) then
-		if (currentData.totalOccupants or 0) > 0 then
-			world.sendEntityMessage(currentData.id, "letout",i)
+	if type(sbq.sbqCurrentData.id) == "number" and world.entityExists(sbq.sbqCurrentData.id) then
+		if (sbq.sbqCurrentData.totalOccupants or 0) > 0 then
+			world.sendEntityMessage(sbq.sbqCurrentData.id, "letout",i)
 		else
-			world.sendEntityMessage(currentData.id, "despawn",i)
+			world.sendEntityMessage(sbq.sbqCurrentData.id, "despawn",i)
 		end
 	end
 end
@@ -131,7 +148,8 @@ function assignAssignActionMenu()
 	local options = {
 		{
 			name = "despawn",
-			icon = "/interface/xhover.png"
+			icon = "/interface/xhover.png",
+			title = "Let Out"
 		},
 		{
 			name = "oralVore",
@@ -142,8 +160,8 @@ function assignAssignActionMenu()
 			icon = returnVoreIcon("analVore") or "/items/active/sbqController/analVore.png"
 		}
 	}
-	occpantsWhenAssigned = currentData.totalOccupants or 0
-	if (currentData.totalOccupants or 0) > 0 then
+	occpantsWhenAssigned = sbq.sbqCurrentData.totalOccupants or 0
+	if (sbq.sbqCurrentData.totalOccupants or 0) > 0 then
 		options[1].icon = nil
 	end
 	if settings.tailMaw then
@@ -196,8 +214,8 @@ function assignSelectMenu()
 			title = "Assign\nClick"
 		}
 	}
-	occpantsWhenAssigned = currentData.totalOccupants or 0
-	if (currentData.totalOccupants or 0) > 0 then
+	occpantsWhenAssigned = sbq.sbqCurrentData.totalOccupants or 0
+	if (sbq.sbqCurrentData.totalOccupants or 0) > 0 then
 		options[1].icon = nil
 		table.insert(options, {
 			name = "preyAction",
@@ -212,17 +230,14 @@ function assignRPActionMenu()
 end
 
 function assignPreyActionMenu()
-	local sbqSettings = player.getProperty("sbqSettings") or {}
-	local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
-
 	local options = {
 		{
 			name = "all",
-			title = "All Prey"
+			title = "By Location"
 		}
 	}
-	if currentData.id and world.entityExists(currentData.id) then
-		sbq.addRPC(world.sendEntityMessage(currentData.id, "getOccupancyData"), function (data)
+	if sbq.sbqCurrentData.id and world.entityExists(sbq.sbqCurrentData.id) then
+		sbq.addRPC(world.sendEntityMessage(sbq.sbqCurrentData.id, "getOccupancyData"), function (data)
 			for i = 0, 7 do
 				local number = i
 				local i = tostring(i)
@@ -236,7 +251,56 @@ function assignPreyActionMenu()
 			world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerPreySelect" }, true )
 		end)
 	end
+end
 
+function assignLocationActionSelect()
+	local sbqSettings = player.getProperty("sbqSettings") or {}
+	local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
+
+
+end
+
+function assignPreyActionsLocation(id)
+	selectedPrey = id
+	local sbqSettings = player.getProperty("sbqSettings") or {}
+	local settings = sb.jsonMerge(sbqSettings.sbqOccupantHolder or {}, sbqSettings.global or {})
+	sbq.getSpeciesConfig(player.species(), settings)
+	local sbqData = sbq.speciesConfig.sbqData
+
+	local options = {
+		{
+			name = "despawn",
+			title = "Let Out"
+		},
+		{
+			name = "npcInteract",
+			title = "Interact"
+
+		}
+	}
+	if sbq.sbqCurrentData.id and world.entityExists(sbq.sbqCurrentData.id) then
+		sbq.addRPC(world.sendEntityMessage(sbq.sbqCurrentData.id, "getOccupancyData"), function(data)
+			sbq.occupant = data.occupant
+			for i = 0, 7 do
+				local number = i
+				local i = tostring(i)
+				selectedPreyIndex = i
+				if data.occupant and data.occupant[i].id ~= nil and world.entityExists(data.occupant[i].id) and data.occupant[i].id == id then
+					local locationData = sbqData.locations[data.occupant[i].location]
+					for j, action in ipairs(locationData.preyActions or {}) do
+						if (not action.checkSettings) or sbq.checkSettings(action.checkSettings, settings) then
+							table.insert(options, {
+								name = action.script,
+								title = action.name
+							})
+						end
+					end
+					world.sendEntityMessage( player.id(), "sbqOpenInterface", "sbqRadialMenu", {options = options, type = "controllerPreyAction" }, true )
+					break
+				end
+			end
+		end)
+	end
 end
 
 function doVoreAction(id)
@@ -267,8 +331,8 @@ end
 
 function returnVoreIcon(action)
 	local icon
-	currentData = player.getProperty( "sbqCurrentData") or {}
-	if currentData.species == "sbqOccupantHolder" or not currentData.species then
+	sbq.sbqCurrentData = player.getProperty( "sbqCurrentData") or {}
+	if sbq.sbqCurrentData.species == "sbqOccupantHolder" or not sbq.sbqCurrentData.species then
 		local species = player.species()
 		local success, notEmpty = pcall(root.nonEmptyRegion, ("/humanoid/"..species.."/voreControllerIcons/"..action..".png"))
 		if success and notEmpty ~= nil then
@@ -279,9 +343,24 @@ function returnVoreIcon(action)
 end
 
 function getDirectives()
-	currentData = player.getProperty( "sbqCurrentData") or {}
-	if currentData.species == "sbqOccupantHolder" or not currentData.species then
+	sbq.sbqCurrentData = player.getProperty( "sbqCurrentData") or {}
+	if sbq.sbqCurrentData.species == "sbqOccupantHolder" or not sbq.sbqCurrentData.species then
 		local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
 		storage.directives = overrideData.directives
 	end
+end
+
+function sbq.checkSettings(checkSettings, settings)
+	for setting, value in pairs(checkSettings) do
+		if type(value) == "table" then
+			local match = false
+			for i, value in ipairs(value) do if (settings[setting] or false) == value then
+				match = true
+				break
+			end end
+			if not match then return false end
+		elseif (settings[setting] or false) ~= value then return false
+		end
+	end
+	return true
 end

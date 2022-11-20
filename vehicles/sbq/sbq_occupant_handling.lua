@@ -531,8 +531,8 @@ function sbq.doBellyEffects(dt)
 	for i = sbq.startSlot, sbq.occupantSlots do
 
 		local eid = sbq.occupant[i].id
-		if type(eid) == "number" and world.entityExists(eid) then
-			local location = sbq.occupant[i].location
+		local location = sbq.occupant[i].location
+		if type(eid) == "number" and world.entityExists(eid) and location ~= "escaping" then
 			local locationEffect = sbq.settings[(location or "").."Effect"] or "sbqRemoveBellyEffects"
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey

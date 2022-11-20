@@ -49,7 +49,7 @@ function sbq.getInitialData()
 end
 
 function sbq.getPlayerOccupantHolderData()
-	sbq.getSpeciesConfig(player.species())
+	sbq.getSpeciesConfig(player.species(), sbq.sbqSettings.global)
 	sbq.predatorConfig = sbq.speciesConfig.sbqData
 end
 
