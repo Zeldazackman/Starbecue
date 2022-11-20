@@ -15,13 +15,14 @@ end )
 message.setHandler( "eggify", function(_,_, eid, data)
 	if not eid or not sbq.lounging[eid] then return end
 	local location = sbq.lounging[eid].location
-	sbq.addRPC( world.sendEntityMessage(eid, "sbqGetPreyEnabledSetting", (data or sbq.sbqData.locations[location].eggify or {}).immunity or "eggAllow"), function (enabled)
+	sbq.addRPC( world.sendEntityMessage(eid, "sbqGetPreyEnabledSetting", (data or sbq.sbqData.locations[location].Eggify or {}).immunity or "eggAllow"), function (enabled)
 		if enabled then
-			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].eggify, "eggify")
+			sbq.transformMessageHandler(eid, data or sbq.sbqData.locations[location].Eggify, "Eggify")
 		end
 	end)
 end)
-message.setHandler( "transform", function(_,_, eid, data)
+message.setHandler("transform", function(_, _, eid, data)
+	if not eid or not sbq.lounging[eid] then return end
 	local location = sbq.lounging[eid].location
 	sbq.addRPC( world.sendEntityMessage(eid, "sbqGetPreyEnabledSetting", (data or sbq.sbqData.locations[location].TF or {}).immunity or "transformAllow"), function (enabled)
 		if enabled then

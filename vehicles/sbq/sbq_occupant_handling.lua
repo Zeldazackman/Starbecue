@@ -579,26 +579,21 @@ function sbq.doBellyEffects(dt)
 						sbq.occupant[i].progressBarActive = false
 					end
 				end
-			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].egged or sbq.occupant[i][location.."EggifyImmune"]) then
-				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqGetPreyEnabledSetting", {sbq.sbqData.locations[location].eggify.immunity or "eggAllow"}, function (enabled)
-					if enabled then
-						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")
-					else
-						sbq.occupant[i][location.."EggifyImmune"] = true
+			else
+				for i, passiveEffect in ipairs(sbq.sbqData.locations[location].passiveToggles or {}) do
+					local data = sbq.sbqData.locations[location][passiveEffect]
+					if sbq.settings[location..passiveEffect] and data and not (sbq.occupant[i][data.occupantFlag or "transformed"] or sbq.occupant[i][location..passiveEffect.."Immune"]) then
+						sbq.loopedMessage(location..passiveEffect..eid, eid, "sbqGetPreyEnabledSetting", {data.immunity or "transformAllow"}, function (enabled)
+							if enabled then
+								sbq[data.func or "transformMessageHandler"](eid, data, passiveEffect)
+							else
+								sbq.occupant[i][location..passiveEffect.."Immune"] = true
+							end
+						end, function ()
+							sbq.occupant[i][location..passiveEffect.."Immune"] = true
+						end)
 					end
-				end, function ()
-					sbq.occupant[i][location.."EggifyImmune"] = true
-				end)
-			elseif sbq.settings[location.."TF"] and sbq.sbqData.locations[location].TF and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."TFImmune"]) then
-				sbq.loopedMessage(location.."TF"..eid, eid, "sbqGetPreyEnabledSetting", {sbq.sbqData.locations[location].TF.immunity or "transformAllow"}, function (enabled)
-					if enabled then
-						sbq.transformMessageHandler(eid)
-					else
-						sbq.occupant[i][location.."TFImmune"] = true
-					end
-				end, function ()
-					sbq.occupant[i][location.."TFImmune"] = true
-				end)
+				end
 			end
 
 			sbq.occupant[i].indicatorCooldown = sbq.occupant[i].indicatorCooldown - dt

@@ -63,30 +63,24 @@ function sbq.effectsPanel()
 				}}
 			} }
 
-			local extraEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+			local extraEffectToggles = {}
+			local extraEffectsVisible = false
+			for i, extraEffect in ipairs(locationData.passiveToggles or {}) do
+				local toggleData = locationData[extraEffect]
+				if toggleData then
+					extraEffectsVisible = extraEffectsVisible or ((locationData[extraEffect] and not (sbq.overrideSettings[location..extraEffect] ~= nil)) or false)
+
+					sbq.predatorSettings[location..extraEffect] = sbq.predatorSettings[location..extraEffect] or false
+					table.insert(extraEffectToggles,{
+						type = "checkBox", id = location..extraEffect, checked = sbq.predatorSettings[location..extraEffect],
+						visible = (locationData[extraEffect] and not (sbq.overrideSettings[location..extraEffect] ~= nil)) or false,
+						toolTip = ((locationData[extraEffect] or {}).toolTip or "Prey within will be transformed.")
+					})
+				end
+			end
+			local extraEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, visible = extraEffectsVisible, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
-					{
-						{
-							type = "checkBox", id = location.."TF", checked = sbq.predatorSettings[location.."TF"],
-							visible = (locationData.TF and not (sbq.overrideSettings[location.."TF"] ~= nil)) or false,
-							toolTip = ((locationData.TF or {}).toolTip or "Prey within will be transformed.")
-						},
-						{
-							type = "checkBox", id = location.."Eggify", checked = sbq.predatorSettings[location.."Eggify"],
-							visible = (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
-							toolTip = ((locationData.eggify or {}).toolTip or "Prey within will be trapped in an egg.")
-						},
-					}--[[,
-					{
-						{
-							type = "checkBox", id = location.."TFEnable", toolTip = "Allows the NPC to choose to transform others.",
-							visible = sbq.deedUI and (locationData.TF and not (sbq.overrideSettings[location.."TF"] ~= nil)) or false,
-						},
-						{
-							type = "checkBox", id = location.."EggifyEnable", toolTip = "Allows the NPC to choose trap others in eggs.",
-							visible = sbq.deedUI and (locationData.eggify and not (sbq.overrideSettings[location.."Eggify"] ~= nil)) or false,
-						},
-					}]]
+					extraEffectToggles
 				}}
 			}}
 			local otherLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
@@ -247,23 +241,27 @@ function sbq.effectsPanel()
 				sbq.changeGlobalSetting(location .. "InfusedItem", infusedItemSlot:item())
 			end
 
+			for i, extraEffect in ipairs(locationData.passiveToggles or {}) do
+				local toggleData = locationData[extraEffect]
+				if toggleData then
+					local toggleButton = _ENV[location .. extraEffect]
+					if toggleButton ~= nil then
+						function toggleButton:drawSpecial() sbq.drawEffectButton(toggleButton, ((locationData[extraEffect] or {}).icon or "/interface/scripted/sbq/sbqSettings/transform.png")) end
+						sbq.drawSpecialButtons[location .. extraEffect] = true
+					end
+				end
+			end
 
 			local noneButton = _ENV[location.."None"]
 			local healButton = _ENV[location.."Heal"]
 			local softDigestButton = _ENV[location.."SoftDigest"]
 			local digestButton = _ENV[location.."Digest"]
-			local eggifyButton = _ENV[location.."Eggify"]
-			local transformButton = _ENV[location .. "TF"]
 			local effectLabel = _ENV[location.."EffectLabel"]
 
 			function noneButton:draw() sbq.drawEffectButton(noneButton, ((locationData.none or {}).icon or "/interface/scripted/sbq/sbqSettings/noEffect.png") ) end
 			function healButton:draw() sbq.drawEffectButton(healButton, ((locationData.heal or {}).icon or "/interface/scripted/sbq/sbqSettings/heal.png")) end
 			function softDigestButton:draw() sbq.drawEffectButton(softDigestButton, ((locationData.softDigest or {}).icon or "/interface/scripted/sbq/sbqSettings/softDigest.png")) end
 			function digestButton:draw() sbq.drawEffectButton(digestButton, ((locationData.digest or {}).icon or "/interface/scripted/sbq/sbqSettings/digest.png")) end
-			function eggifyButton:drawSpecial() sbq.drawEffectButton(eggifyButton, ((locationData.eggify or {}).icon or "/interface/scripted/sbq/sbqSettings/eggify.png")) end
-			function transformButton:drawSpecial() sbq.drawEffectButton(transformButton, ((locationData.TF or {}).icon or "/interface/scripted/sbq/sbqSettings/transform.png")) end
-			sbq.drawSpecialButtons[location .. "TF"] = true
-			sbq.drawSpecialButtons[location .. "Eggify"] = true
 
 			function noneButton:onClick() sbq.locationEffectButton(noneButton, location, locationData, effectLabel) end
 			function healButton:onClick() sbq.locationEffectButton(healButton, location, locationData, effectLabel) end
@@ -344,32 +342,7 @@ function sbq.locationEffectButton(button, location, locationData, effectLabel)
 end
 
 function sbq.locationDefaultSettings(locationData,location)
-	if locationData.TF and sbq.predatorSettings[location.."TF"] == nil then
-		sbq.predatorSettings[location.."TF"] = false
-		if sbq.deedUI then
-			sbq.predatorSettings[location.."TFEnable"] = false
-		end
-	end
-	if locationData.eggify and sbq.predatorSettings[location.."Eggify"] == nil then
-		sbq.predatorSettings[location.."Eggify"] = false
-		if sbq.deedUI then
-			sbq.predatorSettings[location.."EggifyEnable"] = false
-		end
-	end
-	if sbq.deedUI then
-		if locationData.selectEffect and sbq.predatorSettings[location.."NoneEnable"] == nil then
-			sbq.predatorSettings[location.."NoneEnable"] = false
-		end
-		if locationData.selectEffect and sbq.predatorSettings[location.."HealEnable"] == nil then
-			sbq.predatorSettings[location.."HealEnable"] = false
-		end
-		if locationData.selectEffect and sbq.predatorSettings[location.."SoftDigestEnable"] == nil then
-			sbq.predatorSettings[location.."SoftDigestEnable"] = false
-		end
-		if locationData.selectEffect and sbq.predatorSettings[location.."DigestEnable"] == nil then
-			sbq.predatorSettings[location.."DigestEnable"] = false
-		end
-	end
+
 	if sbq.predatorSettings[location.."VisualMax"] == nil then
 		sbq.predatorSettings[location.."VisualMax"] = locationData.max or 0
 	end
