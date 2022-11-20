@@ -275,7 +275,6 @@ function assignPreyActionsLocation(id)
 		{
 			name = "npcInteract",
 			title = "Interact"
-
 		}
 	}
 	if sbq.sbqCurrentData.id and world.entityExists(sbq.sbqCurrentData.id) then

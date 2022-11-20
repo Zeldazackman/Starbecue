@@ -290,7 +290,26 @@ local copyList = {
 
 function sbq.initLocationEffects()
 	for location, data in pairs(sbq.sbqData.locations or {}) do
-		sbq.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+		local data = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+		local infusedLocation
+		local item = (sbq.settings or {})[location .. "InfusedItem"]
+		if item and data.infusion then
+			local infuseSpecies
+			if ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then
+				infuseSpecies = item.parameters.npcArgs.npcSpecies
+			else
+				infuseSpecies = (item.parameters or {}).species
+			end
+			if infuseSpecies then
+				local sbqData = sbq.getSbqData(infuseSpecies)
+				infusedLocation = (sbqData.locations or {})[location]
+				if infusedLocation.TF then
+					infusedLocation.TF.data = infusedLocation.TF.data or {species = infuseSpecies, playerSpeciesTF = true}
+				end
+			end
+		end
+
+		sbq.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation or data)
 	end
 
 	for location, data in pairs(sbq.sbqData.locations) do

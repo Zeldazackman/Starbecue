@@ -109,6 +109,20 @@ end
 
 function sbq.handleBodyParts()
 	local defaultSbqData = sbq.defaultSbqData
+	if sbq.settings.shaftInfusedVisual then
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "cock", sbq.settings.shaftInfusedItem)
+	end
+	if sbq.settings.breastsInfusedVisual then
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "breastsFront", sbq.settings.breastsInfusedItem)
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "breastsBack", sbq.settings.breastsInfusedItem)
+	end
+	if sbq.settings.ballsInfusedVisual then
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "ballsFront", sbq.settings.ballsInfusedItem)
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "ballsBack", sbq.settings.ballsInfusedItem)
+	end
+	if sbq.settings.wombInfusedVisual then
+		world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "pussy", sbq.settings.wombInfusedItem)
+	end
 	if sbq.settings.penis then
 		if sbq.settings.underwear then
 			sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
