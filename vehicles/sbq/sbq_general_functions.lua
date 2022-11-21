@@ -288,6 +288,8 @@ local copyList = {
 	"eggify"
 }
 
+require("/scripts/SBQ_species_config.lua")
+
 function sbq.initLocationEffects()
 	for location, data in pairs(sbq.sbqData.locations or {}) do
 		local data = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)

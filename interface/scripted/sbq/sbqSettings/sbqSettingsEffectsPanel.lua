@@ -349,7 +349,7 @@ function sbq.locationDefaultSettings(locationData,location)
 	sbq.globalSettings[location.."HammerspaceDisabled"] = sbq.globalSettings[location.."HammerspaceDisabled"] or false
 	sbq.globalSettings[location.."Compression"] = sbq.globalSettings[location.."Compression"] or false
 	sbq.globalSettings[location.."Sounds"] = sbq.globalSettings[location.."Sounds"] or false
-
+	sbq.globalSettings[location .. "InfusedVisual"] = sbq.globalSettings[location .. "InfusedVisual"] or false
 end
 
 local map = {

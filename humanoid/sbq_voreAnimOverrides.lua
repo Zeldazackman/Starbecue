@@ -76,7 +76,9 @@ message.setHandler("sbqSetInfusedPartColors", function(_, _, partname, item)
 		finalConfig = sb.jsonMerge(finalConfig, config)
 	end
 
+	local string = (finalConfig.infusedPartImages or {})[partname] or (finalConfig.partImages or {})[partname]
 	local remapPart = finalConfig.infusedParts[partname]
+
 	local part = replaceSpeciesGenderTags(string, remapPart.imagePath or remapPart.species, remapPart.reskin)
 	local success2, baseColorMap = pcall(root.assetJson, "/species/" .. (remapPart.species or "human") .. ".species:baseColorMap")
 	local colorRemap
