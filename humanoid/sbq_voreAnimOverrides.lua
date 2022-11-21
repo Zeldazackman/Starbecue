@@ -39,12 +39,48 @@ message.setHandler("sbqSetStatusValue", function (_,_, name, value)
 	refreshCosmetics = true
 end)
 
+function sbq.resetPart(partname)
+	local string = self.speciesData.partImages[partname]
+	local part = replaceSpeciesGenderTags(string)
+	local success, notEmpty = pcall(root.nonEmptyRegion, (part))
+	if success and notEmpty ~= nil then
+		animator.setPartTag(partname, "partImage", part)
+		animator.setPartTag(partname, "colorRemap", "")
+		self.parts[partname] = part
+	elseif (self.speciesData.remapParts or {})[partname] then
+		local remapPart = self.speciesData.remapParts[partname]
+		local part = replaceSpeciesGenderTags(string, remapPart.imagePath or remapPart.species, remapPart.reskin)
+		local success2, baseColorMap = pcall(root.assetJson,
+			"/species/" .. (remapPart.species or "human") .. ".species:baseColorMap")
+		local colorRemap
+		if success2 and baseColorMap ~= nil and remapPart.remapColors and self.speciesFile.baseColorMap then
+			colorRemap = "?replace"
+			for _, data in ipairs(remapPart.remapColors) do
+				local from = baseColorMap[data[1]]
+				local to = self.speciesFile.baseColorMap[data[2]]
+				for i, color in ipairs(from or {}) do
+					colorRemap = colorRemap .. ";" .. color .. "=" .. (to[i] or to[#to])
+				end
+			end
+		end
+		animator.setPartTag(partname, "partImage", part)
+		animator.setPartTag(partname, "colorRemap", colorRemap or "")
+		self.parts[partname] = part
+	else
+		animator.setPartTag(partname, "partImage", "")
+		animator.setPartTag(partname, "colorRemap", "")
+		self.parts[partname] = nil
+	end
+	animator.setPartTag(partname, "customDirectives", self.overrideData.directives or "" )
+end
+
 message.setHandler("sbqSetInfusedPartColors", function(_, _, partname, item)
-	local species = (((item.parameters or {}).npcArgs or {}).npcSpecies)
-	local identity = (((item.parameters or {}).npcArgs or {}).npcParam or {}).identity
-	if (not species) or (not identity) then return end
+	if not item then sbq.resetPart(partname) return end
+	local species = ((((item or {}).parameters or {}).npcArgs or {}).npcSpecies)
+	local identity = ((((item or {}).parameters or {}).npcArgs or {}).npcParam or {}).identity
+	if (not species) or (not identity) then sbq.resetPart(partname) return end
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..species..".species"))
-	if not success then return end
+	if not success then sbq.resetPart(partname) return end
 
 	local speciesData
 	if speciesFile.speciesAnimOverride ~= nil then

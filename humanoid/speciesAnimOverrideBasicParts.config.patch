@@ -85,6 +85,8 @@
 	{ "op": "add", "path": "/partImages/breastsFront", "value": "/humanoid/<species><reskin>/breastsFront.png" },
 	{ "op": "add", "path": "/globalTagDefaults/breastsFrontMask", "value": "/humanoid/<species><reskin>/breastsFront.png" },
 
+	{ "op": "add", "path": "/partImages/breastsCover2", "value": "/humanoid/<species><reskin>/breastsCover.png" },
+
 	{ "op": "add", "path": "/animations/idle/breastsBack", "value": "idle" },
 	{ "op": "add", "path": "/animations/sit/breastsBack", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/breastsBack", "value": "idle" },
@@ -137,6 +139,12 @@
 			]
 		},
 		"ballsBack" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"breastsCover2" :  {
 			"imagePath" : "any/sbqVoreParts",
 			"remapColors" : [
 				["primary","primary"]
