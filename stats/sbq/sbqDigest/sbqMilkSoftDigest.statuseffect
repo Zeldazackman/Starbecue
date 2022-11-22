@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqMilkSoftDigest",
+		"digestType" : "milkDigest",
+
 		"itemDrop" : "sbqMilkCarton"
 	},
 	"defaultDuration" : 5,

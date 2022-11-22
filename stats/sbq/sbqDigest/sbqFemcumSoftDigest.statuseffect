@@ -3,7 +3,9 @@
 	"blockingStat" : "femcumSoftDigestImmunity",
 
 	"effectConfig" : {
-		"effect" : "sbqFemcumSoftDigest"
+		"effect" : "sbqFemcumSoftDigest",
+		"digestType" : "femcumDigest"
+
 	},
 	"defaultDuration" : 5,
 

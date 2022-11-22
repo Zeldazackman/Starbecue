@@ -285,7 +285,7 @@ function sbq.doMysteriousTF(data)
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 	local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
 	if resultEffect == currentEffect then
-		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides" )
 	else
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
@@ -317,7 +317,7 @@ function sbq.endMysteriousTF()
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 	local resultEffect = oldData.customAnimStatus or "speciesAnimOverride"
 	if resultEffect == currentEffect then
-		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides" )
 	else
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })

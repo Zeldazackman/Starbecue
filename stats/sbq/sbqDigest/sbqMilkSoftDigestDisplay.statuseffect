@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqMilkSoftDigestDisplay",
+		"digestType" : "milkDigest",
+
 		"itemDrop" : "sbqMilkCarton",
 		"displayDamage" : true
 	},

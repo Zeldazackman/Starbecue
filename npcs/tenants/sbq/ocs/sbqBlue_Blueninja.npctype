@@ -841,7 +841,12 @@
 		"sbqOverridePreyEnabled" : {
 			"breastVore": false,
 			"milkDigestAllow": false,
-			"allowMilkSoftDigest": false
+			"milkSoftDigestAllow": false,
+
+			"bellyInfusion" : false,
+			"cockInfusion" : false,
+			"pussyInfusion" : false,
+			"breastsInfusion" : false
 		}
 
 		// the args below are for randomizing specific settings between possible values in the table when the pred is first summoned

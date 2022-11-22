@@ -60,6 +60,7 @@ function sbq.getSpeciesConfig(species, settings)
 	for i, config in ipairs(configs) do
 		finalConfig = sb.jsonMerge(finalConfig, config)
 	end
+	sbq.speciesConfig.states = finalConfig
 
 	for location, data in pairs(sbq.speciesConfig.sbqData.locations or {}) do
 		local data = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
@@ -73,19 +74,23 @@ function sbq.getSpeciesConfig(species, settings)
 				infuseSpecies = (item.parameters or {}).species
 			end
 			if infuseSpecies then
-				local sbqData = sbq.getSbqData(infuseSpecies)
+				local sbqData = sbq.getSbqData(infuseSpecies) or {}
 				infusedLocation = (sbqData.locations or {})[location]
-				if infusedLocation.TF then
-					infusedLocation.TF.data = infusedLocation.TF.data or {species = infuseSpecies, playerSpeciesTF = true}
+				if infusedLocation then
+					if infusedLocation.TF then
+						if (not infusedLocation.TF.data) or (not infusedLocation.TF.data.species) then
+							infusedLocation.TF.data = { species = infuseSpecies, playerSpeciesTF = true }
+						end
+					end
+					-- this is to make sure that if you have used an infusion slot to get this modified locationData you can still get these options for *your* species
+					infusedLocation.infusedVisual = data.infusedVisual
+					infusedLocation.infusion = data.infusion
+					infusedLocation.infusionAccepts = data.infusionAccepts
 				end
 			end
 		end
-
 		sbq.speciesConfig.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation or data)
 	end
-
-
-	sbq.speciesConfig.states = finalConfig
 end
 
 function sbq.getSbqData(species)

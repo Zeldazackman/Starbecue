@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqSoftDigest",
+		"digestType" : "digest",
+
 		"sendHunger" : true
 	},
 	"defaultDuration" : 5,

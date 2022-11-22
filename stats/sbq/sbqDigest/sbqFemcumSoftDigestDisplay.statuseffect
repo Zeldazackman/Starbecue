@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqFemcumSoftDigestDisplay",
+		"digestType" : "femcumDigest",
+
 		"displayDamage" : true
 	},
 	"defaultDuration" : 5,

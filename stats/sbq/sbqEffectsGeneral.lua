@@ -16,7 +16,7 @@ function doItemDrop()
 	if self.dropItem and not self.droppedItem then
 		self.droppedItem = true
 		local drop = config.getParameter("itemDrop")
-		if drop and getPreyEnabled("digestItemDrops") and (status.statusProperty("sbqDigestData") or {}).dropItem then
+		if drop and getPreyEnabled(config.getParameter("digestType").."ItemDropsAllow") and (status.statusProperty("sbqDigestData") or {}).dropItem then
 			world.sendEntityMessage(effect.sourceEntity(), "sbqDigestDrop", generateItemDrop({
 				name = drop,
 				count = config.getParameter("itemDropCount") or 1,

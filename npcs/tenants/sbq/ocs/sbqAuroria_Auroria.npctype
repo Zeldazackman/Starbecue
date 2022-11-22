@@ -155,15 +155,10 @@
 			// the prey prefrences for this NPC are set here!
 			// set each one to the value you want, if there are any that are unset, they'll just go to the default values
 
-			// the Enable sub setting is what would allow the NPC to decide itself if it can turn check or uncheck the check for its setting
-			// for example, if "[setting]Enable" was set to true, the NPC would change the value of "[setting]" in its scripts
-			// if "[setting]Enable" is unchecked, "[setting]" will always stay at whatever its current value is whether it was defined in this file, or changed in the deed menu
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,
-				//"preyEnabledEnable": true,
 
 				"digestAllow": true,
-				//"digestImmunityEnable": true,
 
 				"cumDigestAllow": false,
 
@@ -182,7 +177,12 @@
 				"analVore": true,
 				"unbirth": true,
 				"cockVore": true,
-				"breastVore": true
+				"breastVore": true,
+
+				"bellyInfusion" : true,
+				"cockInfusion" : true,
+				"pussyInfusion" : true,
+				"breastsInfusion" : true
 			}
 		}
 	}

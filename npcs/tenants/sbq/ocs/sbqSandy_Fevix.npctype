@@ -930,7 +930,12 @@
 				"analVore": true,
 				"unbirth": true,
 				"cockVore": true,
-				"breastVore": true
+				"breastVore": true,
+
+				"bellyInfusion" : true,
+				"cockInfusion" : true,
+				"pussyInfusion" : true,
+				"breastsInfusion" : true
 			}
 		}
 	}

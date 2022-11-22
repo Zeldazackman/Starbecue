@@ -165,7 +165,7 @@ function sbq.effectsPanel()
 			end
 
 			local tab = locationTabField:newTab({
-				type = "tab", id = location .. "Tab", title = (locationData.name .. " " or location),
+				type = "tab", id = location .. "Tab", title = ((locationData.name or location) .. " "),
 				contents = {
 					{ type = "scrollArea", scrollBars = true, thumbScrolling = true, scrollDirections = {0,1}, children = {
 						{ type = "panel", style = "convex", children = {
@@ -225,16 +225,19 @@ function sbq.effectsPanel()
 
 			function infusedItemSlot:acceptsItem(item)
 				if not ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then
-					if (item.parameters or {}).species ~= nil and item.name == "sbqMysteriousPotion" then
+					if ((item.parameters or {}).species ~= nil and item.name == "sbqMysteriousPotion") and ((not locationData.infusionAccepts) or locationData.infusionAccepts.sbqMysteriousPotion )  then
 						return true
 					else
 						pane.playSound("/sfx/interface/clickon_error.ogg")
 						return false
 					end
-				else
+				elseif ((not locationData.infusionAccepts) or locationData.infusionAccepts.humanoids ) then
 					local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
 					if not preySettings[locationData.infusionSetting or "undefined"] then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
 					return true
+				else
+					pane.playSound("/sfx/interface/clickon_error.ogg")
+					return false
 				end
 			end
 			function infusedItemSlot:onItemModified()

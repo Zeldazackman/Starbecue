@@ -1261,29 +1261,6 @@
 		},
 
 		"sbqRandomizePreySettings" : {
-			"oralVore" : [true,false],
-			"tailVore" : [true,false],
-			"navelVore" : [true,false],
-			"absorbVore" : [true,false],
-
-			"cockVore" : [true,false],
-			"analVore" : [true,false],
-			"breastVore" : [true,false],
-			"unbirth" : [true,false],
-
-
-			"digestAllow" : [true,false],
-
-			"cumDigestAllow" : [true,false],
-
-			"femcumDigestAllow" : [true,false],
-
-			"eggAllow" : [true,false],
-
-			"transformAllow" : [true,false],
-
-			"genderswapAllow" : [true,false]
-
 		},
 		"sbqRandomizeSettings" : {
 			"oralVorePred" : [true,false],

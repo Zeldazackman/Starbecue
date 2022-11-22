@@ -156,7 +156,12 @@
 			"analVore": false,
 			"unbirth": false,
 			"cockVore": false,
-			"breastVore": false
+			"breastVore": false,
+
+			"bellyInfusion" : false,
+			"cockInfusion" : false,
+			"pussyInfusion" : false,
+			"breastsInfusion" : false
 		}
 
 	},
