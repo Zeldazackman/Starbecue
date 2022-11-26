@@ -125,7 +125,7 @@
 			"balls"
 		],
 		"locations" :{
-			"belly" : { "combine" : ["womb"], "mass" : 1, "transformGroups" : ["bellybob", "bodybob"] },
+			"belly" : { "combine" : ["womb"], "max" : 2, "transformGroups" : ["bellybob", "bodybob"] },
 			"womb" : { "max": 2, "combined" : true, "transformGroups" : ["bodybob"] },
 			"shaft" : { "max": 1, "maxNested" : -1, "transformGroups" : ["bellybob", "bodybob"] },
 			"balls" : { "max": 1, "transformGroups" : ["bellybob", "bodybob"] },

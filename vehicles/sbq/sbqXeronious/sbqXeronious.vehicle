@@ -147,7 +147,7 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 3, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true,
-				"passiveToggles" : ["TF"], "preyActions" : [
+				"passiveToggles" : ["Eggify"], "preyActions" : [
 					{ "name":"Turbo Digest", "script":"turboDigest", "checkSettings": { "bellyEffectSlot" : ["softDigest", "digest"]} },
 					{ "name":"Eggify", "script":"eggify"}
 				],
