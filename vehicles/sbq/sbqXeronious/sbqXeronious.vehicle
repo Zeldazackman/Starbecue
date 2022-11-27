@@ -492,7 +492,18 @@
 					"hold" : true,
 					"position" : [3, 1.5],
 					"animation": {"head": "succ"},
-					"script": "succ"
+					"script": "succ",
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"fullPuffAnim" : {"head": "puffed"},
+					"puff" : {
+						"name": "sbqAirBlast",
+						"position" : [3, 1.5],
+						"aimable": true
+					}
 				}
 			},
 			"control": {
@@ -679,7 +690,18 @@
 					"hold" : true,
 					"position" : [4.5, -2],
 					"animation": {"head": "succ"},
-					"script": "succ"
+					"script": "succ",
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"fullPuffAnim" : {"head": "puffed"},
+					"puff" : {
+						"name": "sbqAirBlast",
+						"position" : [4.5, -2],
+						"aimable": true
+					}
 				}
 			},
 			"control": {
@@ -873,7 +895,18 @@
 					"position" : [3, 1.5],
 					"hold" : true,
 					"animation": {"head": "succ"},
-					"script": "succ"
+					"script": "succ",
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"fullPuffAnim" : {"head": "puffed"},
+					"puff" : {
+						"name": "sbqAirBlast",
+						"position" : [3, 1.5],
+						"aimable": true
+					}
 				}
 			},
 			"control": {
@@ -1150,7 +1183,18 @@
 					"hold" : true,
 					"position" : [2, -0.5],
 					"animation": {"head": "succ"},
-					"script": "succ"
+					"script": "succ",
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"fullPuffAnim" : {"head": "puffed"},
+					"puff" : {
+						"name": "sbqAirBlast",
+						"position" : [2, -0.5],
+						"aimable": true
+					}
 				}
 			}
 		},
@@ -1408,8 +1452,20 @@
 				*/
 				"succ": {
 					"hold" : true,
+					"position" : [2, -0.5],
 					"animation": {"head": "succ"},
-					"script": "succ"
+					"script": "succ",
+					"sounds" : {
+						"fireStart" : "fireStart",
+						"fireLoop" : "fireLoop",
+						"fireEnd" : "fireEnd"
+					},
+					"fullPuffAnim" : {"head": "puffed"},
+					"puff" : {
+						"name": "sbqAirBlast",
+						"position" : [2, -0.5],
+						"aimable": true
+					}
 				}
 			}
 		}

@@ -133,6 +133,7 @@
 					"escape": { "frames": 8, "cycle": 1.5, "mode": "end", "priority": 4, "baseAnim": "idle" },
 
 					"succ": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
+					"puffed": { "frames": 1, "cycle": 0.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
 					"burp": { "frames": 4, "cycle": 1.5, "mode": "end", "priority": 3, "baseAnim": "idle" },
 
 
@@ -982,6 +983,10 @@
 		}
 	},
 	"sounds": {
+		"fireStart" : ["/sfx/kirby/rtdl_succ_start.ogg"],
+		"fireLoop" : ["/sfx/kirby/rtdl_succ_loop.ogg"],
+		"fireEnd" : ["/sfx/kirby/rtdl_succ_end.ogg"],
+
 		"error" : ["/sfx/interface/clickon_error.ogg"],
 		"swallow": ["/sfx/objects/gulp.ogg"],
 		"digest": [ "/sfx/vore/digest/digest (17).ogg", "/sfx/vore/digest/digest (18).ogg", "/sfx/vore/digest/digest (25).ogg", "/sfx/vore/digest/digest (11).ogg", "/sfx/vore/digest/digest (13).ogg", "/sfx/vore/digest/digest (15).ogg", "/sfx/vore/digest/digest (16).ogg", "/sfx/vore/digest/digest (19).ogg", "/sfx/vore/digest/digest (20).ogg", "/sfx/vore/digest/digest (3).ogg", "/sfx/vore/digest/digest (31).ogg", "/sfx/vore/digest/digest (36).ogg", "/sfx/vore/digest/digest (37).ogg", "/sfx/vore/digest/digest (9).ogg" ],
