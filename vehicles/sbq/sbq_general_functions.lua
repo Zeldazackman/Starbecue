@@ -306,19 +306,21 @@ function sbq.initLocationEffects()
 				local sbqData = sbq.getSbqData(infuseSpecies) or {}
 				infusedLocation = (sbqData.locations or {})[location]
 				if infusedLocation then
+					infusedLocation = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation)
 					if infusedLocation.TF then
 						if (not infusedLocation.TF.data) or (not infusedLocation.TF.data.species) then
 							infusedLocation.TF.data = { species = infuseSpecies, playerSpeciesTF = true }
 						end
 					end
 					-- this is to make sure that if you have used an infusion slot to get this modified locationData you can still get these options for *your* species
+					infusedLocation.combine = data.combine
+					infusedLocation.combined = data.combined
 					infusedLocation.infusedVisual = data.infusedVisual
 					infusedLocation.infusion = data.infusion
 					infusedLocation.infusionAccepts = data.infusionAccepts
 				end
 			end
 		end
-
 		sbq.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation or data)
 	end
 
