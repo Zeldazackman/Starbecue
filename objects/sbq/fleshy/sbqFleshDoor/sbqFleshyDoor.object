@@ -9,7 +9,7 @@
 	"shortdescription" : "Sphincter Door",
 	"race" : "generic",
 
-	"learnBlueprintsOnPickup" : [ "sbqFleshyDoor" ],
+	"learnBlueprintsOnPickup" : [ "sbqFleshyDoorCollission" ],
 
 	//"apexDescription" : "A shielded door.",
 	//"avianDescription" : "A shielded door.",
@@ -19,15 +19,15 @@
 	//"hylotlDescription" : "A shielded door.",
 	"novakidDescription" : "Looks kinda like a... well... y'know",
 
-	"animation" : "/objects/wasabiRaptor/metroidDoor/metroidDoor.animation",
+	"animation" : "/objects/sbq/fleshy/sbqFleshDoor/sbqFleshyDoor.animation",
 	"animationCustom" : {
 		"sounds" : {
-			"doorOpen" : [ "/sfx/wasabiRaptor/metroid/doorOpen.ogg" ],
-			"doorClose" : [ "/sfx/wasabiRaptor/metroid/doorClose.ogg" ]
+			"doorOpen" : [ "/sfx/objects/fleshdoor_open.ogg" ],
+			"doorClose" : [ "/sfx/objects/fleshdoor_close.ogg" ]
 		}
 	},
 
-	"collissionObject" : "wrMetroidZMDoorCollission",
+	"collissionObject" : "sbqFleshyDoorCollission",
 	"leftCollissionOffset" : [0,-4],
 	"rightCollissionOffset" : [-4,0],
 
