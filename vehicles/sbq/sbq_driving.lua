@@ -365,7 +365,7 @@ function sbq.assignClickAction(state)
 		return true
 	elseif sbq.movement.assignClickActionRadial then
 		world.sendEntityMessage( sbq.driver, "sbqOpenInterface", "sbqClose" )
-		if sbq.radialSelectionType == "actionSelect" then
+		if sbq.radialSelectionType == "actionSelect" and (not sbq.click) then
 			if sbq.lastRadialSelection == "despawn" then
 				if sbq.occupants.total > 0 then
 					sbq.letout()
@@ -432,23 +432,47 @@ function sbq.action(stateData, name, control)
 
 	if sbq.clickActionCooldowns[name] > 0 then return end
 
-	if control == "force" or (sbq.pressControl(sbq.driverSeat, control))
-	or (sbq.heldControl(sbq.driverSeat, control) and stateData.actions[name].hold)
+	local pressed = (sbq.pressControl(sbq.driverSeat, control))
+	local actionData = stateData.actions[name]
+
+	if control == "force" or pressed or actionData.hold and (sbq.heldControl(sbq.driverSeat, control))
 	then
-		sbq.clickActionCooldowns[name] = stateData.actions[name].cooldown or 0
-		if stateData.actions[name].script ~= nil then
-			if state[sbq.state][stateData.actions[name].script] ~= nil then
-				if not state[sbq.state][stateData.actions[name].script]() then return end
+		sbq.clickActionCooldowns[name] = actionData.cooldown or 0
+		if actionData.script ~= nil then
+			if state[sbq.state][actionData.script] ~= nil then
+				if not state[sbq.state][actionData.script](actionData, control, pressed) then return end
 			else
-				sb.logError("no script named: ["..stateData.actions[name].script.."] in state: ["..sbq.state.."]")
+				sb.logError("no script named: ["..actionData.script.."] in state: ["..sbq.state.."]")
 			end
 		end
-		sbq.doTransition(stateData.actions[name].transition)
-		if stateData.actions[name].animation ~= nil then
-			sbq.doAnims(stateData.actions[name].animation)
+		local sounds = actionData.sounds
+		local cooldown = actionData.cooldown
+		local projectiledata = actionData.projectile
+
+		sbq.doTransition(actionData.transition)
+		if actionData.animation ~= nil then
+			sbq.doAnims(actionData.animation)
 		end
-		if stateData.actions[name].projectile ~= nil then
-			sbq.projectile(stateData.actions[name].projectile, sbq.pressControl(sbq.driverSeat, control), stateData.actions[name].sounds, stateData.actions[name].cooldown)
+		if actionData.projectile ~= nil then
+			sbq.projectile(projectiledata, sbq.driver )
+		end
+		if sounds ~= nil then
+			if pressed then
+				if sounds.fireStart then
+					animator.setSoundPosition(sounds.fireStart, actionData.position or projectiledata.position )
+					animator.playSound(sounds.fireStart)
+				end
+				if sounds.fireLoop then
+					animator.setSoundPosition(sounds.fireLoop, actionData.position or projectiledata.position )
+					animator.playSound(sounds.fireLoop, -1)
+				end
+				if sounds.fireEnd then
+					animator.setSoundPosition(sounds.fireEnd, actionData.position or projectiledata.position )
+				end
+			end
+			sbq.forceTimer( name.."ActionSounds", (cooldown or 0) + 0.05, function ()
+				sbq.stopSounds(sounds)
+			end)
 		end
 	end
 end
@@ -550,20 +574,20 @@ function sbq.driverSeatStateChange()
 	end
 end
 
-function sbq.projectile( projectiledata, pressed, sounds, cooldown)
-	local driver = sbq.driver
+function sbq.projectile(projectiledata, driver)
 	if projectiledata.energy and driver then
 		sbq.useEnergy(driver, projectiledata.cost, function(energyUsed)
 			if energyUsed then
-				sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
+				sbq.fireProjectile( projectiledata, driver)
 			end
 		end)
 	else
-		sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
+		sbq.fireProjectile( projectiledata, driver)
 	end
 end
 
-function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
+function sbq.fireProjectile(projectiledata, driver )
+
 	local position = {0,0}
 	if projectiledata.position then
 		if type(projectiledata.position[1]) == "table" then
@@ -595,18 +619,6 @@ function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 		direction = { sbq.direction, 0 }
 	end
 
-	if sounds ~= nil then
-		if pressed then
-			animator.setSoundPosition(sounds.fireStart, projectiledata.position )
-			animator.playSound(sounds.fireStart)
-			animator.setSoundPosition(sounds.fireLoop, projectiledata.position )
-			animator.playSound(sounds.fireLoop, -1)
-		end
-		sbq.forceTimer( "projectileSounds", cooldown + 0.05, function ()
-			sbq.stopSounds(sounds)
-		end)
-	end
-
 	if driver then
 		params.powerMultiplier = sbq.seats[sbq.driverSeat].controls.powerMultiplier
 		world.spawnProjectile( projectiledata.name, position, driver, direction, projectiledata.relative, params )
@@ -617,8 +629,15 @@ function sbq.fireProjectile( projectiledata, driver, pressed, sounds, cooldown )
 end
 
 function sbq.stopSounds(sounds)
-	animator.stopAllSounds(sounds.fireLoop)
-	animator.playSound(sounds.fireEnd)
+	if sounds.fireStart then
+		animator.stopAllSounds(sounds.fireStart)
+	end
+	if sounds.fireLoop then
+		animator.stopAllSounds(sounds.fireLoop)
+	end
+	if sounds.fireEnd then
+		animator.playSound(sounds.fireEnd)
+	end
 end
 
 function sbq.grab(location, aimrange, grabrange)

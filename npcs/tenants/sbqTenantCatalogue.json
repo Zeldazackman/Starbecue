@@ -41,6 +41,7 @@
 	"hisuzor": "sbq_villager_hisuzor",
 	"sylveonoid": "sbq_villager_sylveonoid",
 	"bunnykin": "sbq_villager_bunnykin",
+	"yharian": "sbq_villager_yharian",
 
 	"guard_random": [ "sbq_guard_random", "sbq_guardT2_random", "sbq_guardT3_random", "sbq_guardT4_random" ],
 	"guard_apex": [ "sbq_guard_apex", "sbq_guardT2_apex", "sbq_guardT3_apex", "sbq_guardT4_apex" ],
@@ -84,6 +85,7 @@
 	"guard_hisuzor": [ "sbq_guard_hisuzor", "sbq_guardT2_hisuzor", "sbq_guardT3_hisuzor", "sbq_guardT4_hisuzor" ],
 	"guard_sylveonoid": [ "sbq_guard_sylveonoid", "sbq_guardT2_sylveonoid", "sbq_guardT3_sylveonoid", "sbq_guardT4_sylveonoid" ],
 	"guard_bunnykin": [ "sbq_guard_bunnykin", "sbq_guardT2_bunnykin", "sbq_guardT3_bunnykin", "sbq_guardT4_bunnykin" ],
+	"guard_yharian": [ "sbq_guard_yharian", "sbq_guardT2_yharian", "sbq_guardT3_yharian", "sbq_guardT4_yharian" ],
 
 	"Auri" : "sbq_tenant_Auri_LokiVulpix",
 	"Zevi": "sbq_tenant_Zevi_Zygahedron",

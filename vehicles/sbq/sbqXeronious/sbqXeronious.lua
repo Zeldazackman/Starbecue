@@ -29,6 +29,8 @@ function sbq.init()
 	getColors()
 end
 
+sbq.fullSuccTime = 4
+
 function getColors()
 	if not sbq.settings.firstLoadDone then
 		for i, colors in ipairs(sbq.sbqData.replaceColors or {}) do
@@ -53,7 +55,12 @@ function sbq.update(dt)
 	sbq.whenFalling()
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
-	if not sbq.heldControl(sbq.driverSeat, "primaryFire") and not sbq.heldControl(sbq.driverSeat, "altFire") then
+	if not sbq.heldControl(sbq.driverSeat, sbq.succControl or "primaryFire") then
+		if sbq.succTime >= sbq.fullSuccTime then
+			sbq.doAnims(sbq.succArgs.puffAnim or sbq.succArgs.animation)
+			sbq.succTime = 0
+			sbq.projectile(sbq.succArgs.puff, sbq.driver)
+		end
 		sbq.succTime = math.max(0, sbq.succTime - sbq.dt)
 	end
 end
@@ -110,18 +117,28 @@ end
 
 sbq.succTime = 0
 sbq.succing = false
-function succ(args)
-	if sbq.transitionLock or sbq.succTime > 5 then return end
+function succ(args, control, pressed)
+	if control == "force" or sbq.transitionLock then return false end
 
-	local globalSuccPosition = sbq.localToGlobal(sbq.stateconfig[sbq.state].actions.succ.position or {0,0})
+	sbq.succControl = control
+	sbq.succArgs = args
+
 	local aim = sbq.seats[sbq.driverSeat].controls.aim
+	sbq.facePoint(aim)
+
+	if sbq.succTime > sbq.fullSuccTime then
+		sbq.doAnims(args.fullPuffAnim)
+		return false
+	end
+
+
+	local globalSuccPosition = sbq.localToGlobal(args.position or {0,0})
 
 	local magnitude = world.magnitude(globalSuccPosition, aim)
 	local range = 30
 	if magnitude > range then return end
 
 	sbq.succTime = sbq.succTime + sbq.dt
-	sbq.facePoint(sbq.seats[sbq.driverSeat].controls.aim[1])
 	sbq.movement.aimingLock = 0.1
 
 	local entities = world.entityLineQuery(globalSuccPosition, aim, {

@@ -54,7 +54,7 @@ end
 function openDoor()
 	if (storage.doorState or storage.wasConnected ~= object.isInputNodeConnected(0)) and not (object.getInputNodeLevel(1) or storage.wasLocked) then
 		removeDoorCollission()
-		storage.doorTimer = 10
+		storage.doorTimer = config.getParameter("doorTimer") or 5
 		if storage.doorState then
 			animator.setAnimationState("doorState", "open", true)
 			animator.playSound("doorOpen")

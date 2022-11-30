@@ -1,0 +1,44 @@
+{
+	"projectileName" : "sbqAirBlast",
+	"image" : "sbqAirBlast.png",
+	"frameNumber" : 1,
+	"speed" : 20,
+	"flippable" : true,
+	"scriptDelta" : 1,
+
+	"physics" : "laser",
+	"timeToLive" : 5,
+	"animationCycle" : 0.8,
+	//"windupFrames" : 3,
+	//"winddownFrames" : 3,
+	"periodicActions" : [
+	  {
+		"time" : 0,
+		"repeat" : false,
+		"action" : "sound",
+		"options" : [ "/sfx/kirby/rtdl_puff.ogg" ]
+	  }
+	],
+	"actionOnReap" : [],
+	"power" : 0,
+
+	"onlyHitTerrain" : true,
+
+	"boundBox" : [-2, -2, 2, 2],
+	"physicsForces" : {
+	  "push" : {
+		"type" : "RadialForceRegion",
+		"categoryWhitelist" : ["monster", "player", "npc", "vehicle", "itemdrop"],
+		"outerRadius" : 3,
+		"innerRadius" : 2,
+		"targetRadialVelocity" : 40,
+		"controlForce" : 300
+	  }
+	},
+
+	"emitters" : [ ],
+
+	"piercing" : true,
+	"bounces" : 0
+
+  }
