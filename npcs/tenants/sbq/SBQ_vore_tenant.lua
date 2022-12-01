@@ -43,6 +43,8 @@ end
 
 function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
+	sbq.NPCconfig = root.npcConfig(npc.npcType())
+
 	if type(_npc_setItemSlot) ~= "function" then
 		_npc_setItemSlot = npc.setItemSlot
 		npc.setItemSlot = new_npc_setItemSlot
@@ -106,9 +108,9 @@ function init()
 		return {sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0}
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
-		storage.settings = settings
 		if menuName and menuName ~= "sbqOccupantHolder" then
 		else
+			storage.settings = settings
 			sbq.setRelevantPredSettings()
 			if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
 				world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
@@ -332,12 +334,15 @@ function sbq.say(string, tags, imagePortrait, emote)
 end
 
 function sbq.saveCosmeticSlots()
-	if not storage.saveCosmeticSlots then
+	if (not storage.saveCosmeticSlots) then
 		storage.saveCosmeticSlots = {}
 		local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
 		for i, slot in ipairs(slots) do
 			storage.saveCosmeticSlots[slot] = npc.getItemSlot(slot)
 		end
+		storage.originalCosmeticSlots = sb.jsonMerge({}, storage.saveCosmeticSlots)
+	elseif (not storage.originalCosmeticSlots) then
+		storage.originalCosmeticSlots = sb.jsonMerge({}, storage.saveCosmeticSlots)
 	end
 end
 
@@ -360,6 +365,11 @@ function sbq.randomizeTenantSettings()
 end
 
 function sbq.setRelevantPredSettings()
+	local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
+	for i, slot in ipairs(slots) do
+		npc.setItemSlot(slot, storage.settings[slot] or storage.originalCosmeticSlots[slot])
+	end
+
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
 	if storage.settings.breasts or storage.settings.penis or storage.settings.balls or storage.settings.pussy

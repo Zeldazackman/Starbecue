@@ -214,6 +214,25 @@ function init()
 		sbq.checkLockedSettingsButtons("preySettings", "overridePreyEnabled", "changePreySetting")
 		sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
+		local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
+		local itemType =  { "headarmor", "chestarmor", "legsarmor", "backarmor"}
+		for i, slot in ipairs(slots) do
+			local itemSlot = _ENV[slot]
+			if itemSlot then
+				itemSlot:setItem(sbq.predatorSettings[slot])
+				itemSlot.autoInteract = (sbq.overrideSettings[slot] == nil)
+				function itemSlot:acceptsItem(item)
+					if sbq.overrideSettings[slot] == nil then
+						return (root.itemType((item or {}).name)) == itemType[i]
+					end
+				end
+				function itemSlot:onItemModified()
+					local item = itemSlot:item()
+					sbq.changePredatorSetting(slot, item)
+				end
+			end
+		end
+
 		if questParticipation ~= nil then
 			if sbq.overrideSettings.questParticipation == nil then
 				function questParticipation:onClick()
