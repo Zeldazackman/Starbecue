@@ -535,12 +535,11 @@
 							"default" : { // mood
 								"next" : "getLocationEffect",
 								"default" : { "randomDialogue" : [
-									"Having a good time in there?",// "Hope its comfortable.",
-									{"check":{"shaftInfusedItem":{"parameters":{"npcArgs":true}}},"add":[
+									"Having a good time in there?", "Hope its comfortable.",
+									{"infusedSlot":true,"default":[
 										"I bet <infusedName> is enjoying that."
 									]}
-									]
-								},
+								]},
 								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
 									"next" : "cumTransformAllow",

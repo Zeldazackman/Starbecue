@@ -701,7 +701,17 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Ffffff yeeesss~", "MMMMmmm~ go deeeper~", "Ahhhhh~ deeeeper~", "<keysmash>~"] },
+								"default" : { "randomDialogue" : [
+									["Ffffff yeeesss~", "MMMMmmm~ go deeeper~", "Ahhhhh~ deeeeper~", "<keysmash>~"],
+									{"infusedSlot":true,
+										"default":[
+											"ctf lines go here"
+										],
+										"sbqZevi_Zygahedron":[
+											"specific ctf lines go here"
+										]
+									}
+								]},
 								"transformed" : { "randomDialogue" : [ ["Ahhhh~", "Ffffff you're gonna make me cum~", "Ahhhhh~", "<keysmash>~"] ] },
 								"sbqHeal" : "errorOrBad",
 								"sbqCumDigest" : "errorOrBad",

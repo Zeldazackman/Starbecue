@@ -77,6 +77,7 @@ end
 function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name)
 	local randomRolls = randomRolls
 	local randomTable = randomTable
+	local badRolls = {}
 	local i = 1
 	local prevTable
 	while type(randomTable) == "table" do
@@ -88,8 +89,15 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 					else
 						randomTable = randomTable.add
 					end
+				elseif randomTable.fail ~= nil then
+					if type(randomTable.fail) == "string" then
+						randomTable = sbq.getRedirectedDialogue(randomTable.fail, settings)[name]
+					else
+						randomTable = randomTable.fail
+					end
 				else
 					i = i - 1
+					badRolls[randomRolls[i]] = true
 					randomRolls[i] = nil -- clear the saved random value so it chooses a different one next round
 					randomTable = prevTable
 				end
@@ -100,9 +108,34 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 					randomTable = (randomTable or {}).add
 				end
 			end
+		elseif randomTable.infusedSlot then
+			local itemSlot = settings[(settings.location or "").."InfusedItem"]
+			if type(randomTable.infusedSlot) == "string" then
+				itemSlot = settings[randomTable.infusedSlot]
+			end
+			if ((itemSlot or {}).parameters or {}).npcArgs then
+				local uniqueId = (((((itemSlot or {}).parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId
+				if uniqueId and randomTable[uniqueId] ~= nil then
+					randomTable = randomTable[uniqueId]
+				else
+					randomTable = randomTable.default
+				end
+				if type(randomTable) == "string" then
+					randomTable = sbq.getRedirectedDialogue(randomTable, settings)[name]
+				end
+			else
+				i = i - 1
+				badRolls[randomRolls[i]] = true
+				randomRolls[i] = nil -- clear the saved random value so it chooses a different one next round
+				randomTable = prevTable
+			end
 		else
 			if randomRolls[i] == nil then
-				table.insert(randomRolls, math.random(#randomTable))
+				local roll = math.random(#randomTable)
+				while badRolls[roll] do
+					roll = math.random(#randomTable)
+				end
+				table.insert(randomRolls, roll)
 			end
 			prevTable = randomTable
 			randomTable = randomTable[randomRolls[i]] or randomTable[1]

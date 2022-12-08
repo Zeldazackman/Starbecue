@@ -379,7 +379,15 @@ function sbq.setRelevantPredSettings()
 		if not effects[1] then
 			status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
 		end
-		sbq.timer("setOverrideSettings", 0.5, function ()
+		sbq.timer("setOverrideSettings", 0.5, function()
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "cock", storage.settings.shaftInfusedVisual and storage.settings.shaftInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsCover2", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsFront", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsBack", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "ballsFront", storage.settings.ballsInfusedVisual and storage.settings.ballsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "ballsBack", storage.settings.ballsInfusedVisual and storage.settings.ballsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "pussy", storage.settings.wombInfusedVisual and storage.settings.wombInfusedItem)
+
 			if storage.settings.penis then
 				if storage.settings.underwear then
 					sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
