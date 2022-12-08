@@ -145,8 +145,6 @@ function sbq.checkTable(check, checked)
 end
 
 
-
-
 function dialogueBoxScripts.getLocationEffect(dialogueTree, settings, branch, entity, ...)
 	local dialogueTree = dialogueTree
 	local options = {}
@@ -269,4 +267,16 @@ function dialogueBoxScripts.swapFollowing(dialogueTree, settings, branch, entity
 		end
 	end)
 	return {}
+end
+
+function dialogueBoxScripts.infusedCharacter(dialogueTree, settings, branch, entity, ...)
+	if (((settings[settings.location.."InfusedItem"] or {}).parameters or {}).npcArgs) ~= nil then
+		local uniqueID = settings[settings.location .. "InfusedItem"].parameters.npcArgs.npcParam.scriptConfig.uniqueId
+		if dialogueTree[uniqueID] then
+			return dialogueTree[uniqueID]
+		else
+			return dialogueTree.defaultInfused
+		end
+	end
+	return dialogueTree.default
 end
