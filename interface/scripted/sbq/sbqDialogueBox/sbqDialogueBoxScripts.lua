@@ -116,7 +116,7 @@ end
 function sbq.checkSettings(checkSettings, settings)
 	for setting, value in pairs(checkSettings) do
 		if (type(settings[setting]) == "table") and settings[setting].name ~= nil then
-			if not value then sb.logInfo("noItem") return false
+			if not value then return false
 			elseif type(value) == "table" then
 				if not sbq.checkTable(value, settings[setting]) then return false end
 			end
