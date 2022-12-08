@@ -77,7 +77,7 @@ function generateItemDrop(itemDrop)
 		end
 		itemDrop.parameters.tooltipKind = "filledcapturepod"
 		itemDrop.parameters.tooltipFields = {
-			subtitle = (itemDrop.parameters.npcArgs.wasPlayer and "Player") or itemDrop.parameters.npcArgs.npcType or
+			subtitle = (itemDrop.parameters.npcArgs.npcParam.wasPlayer and "Player") or itemDrop.parameters.npcArgs.npcType or
 				"generictenant",
 			collarNameLabel = "",
 			noCollarLabel = "",

@@ -312,7 +312,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 		playerName = world.entityName(entity)
 	end
 
-	local tags = { entityname = playerName }
+	local tags = { entityname = playerName, dontSpeak = "", infusedName = (((((settings[(settings.location or "").."InfusedItem"] or {}).parameters or {}).npcArgs or {}).npcParam or {}).identity or {}).name or "" }
 
 	if type(randomDialogue) == "string" then
 		sbq.say( sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax), tags, imagePortrait, randomEmote )

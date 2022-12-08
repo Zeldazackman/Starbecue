@@ -534,7 +534,13 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
+								"default" : { "randomDialogue" : [
+									"Having a good time in there?",// "Hope its comfortable.",
+									{"check":{"shaftInfusedItem":{"parameters":{"npcArgs":true}}},"add":[
+										"I bet <infusedName> is enjoying that."
+									]}
+									]
+								},
 								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
 									"next" : "cumTransformAllow",
@@ -1292,7 +1298,47 @@
 	"statusControllerSettings" : {
 		"statusProperties" : {
 			"sbqDidVornyConvertCheck" : true,
-			"sbqPreyEnabled" : {}
+			"sbqPreyEnabled" : {
+				"preyEnabled" : true,
+
+				"digestAllow": true,
+				"softDigestAllow" : true,
+				"digestItemDropsAllow" : true,
+
+				"cumDigestAllow": true,
+				"cumSoftDigestAllow": true,
+				"cumDigestItemDropsAllow" : true,
+
+				"femcumDigestAllow": true,
+				"femcumSoftDigestAllow": true,
+				"femcumDigestItemDropsAllow" : true,
+
+				"milkDigestAllow": true,
+				"milkSoftDigestAllow" : true,
+				"milkDigestItemDropsAllow" : true,
+
+				"transformAllow": true,
+				"cumTransformAllow": true,
+				"genderswapAllow": true,
+				"eggAllow": true,
+
+				"held" : true,
+
+				"oralVore" : true,
+				"tailVore" : true,
+				"absorbVore" : true,
+				"navelVore" : true,
+
+				"analVore" : true,
+				"unbirth" : true,
+				"cockVore" : true,
+				"breastVore" : true,
+
+				"bellyInfusion" : true,
+				"cockInfusion" : true,
+				"pussyInfusion" : true,
+				"breastsInfusion" : true
+			}
 		}
 	}
 }

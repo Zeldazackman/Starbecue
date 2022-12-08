@@ -330,6 +330,7 @@ function sbq.changePredatorSetting(settingname, value)
 
 	sbq.savePredSettings()
 end
+sbq.changeGlobalSetting = sbq.changePredatorSetting
 
 function sbq.changePreySetting(settingname, value)
 	sbq.preySettings[settingname] = value
