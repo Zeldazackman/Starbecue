@@ -89,9 +89,11 @@ function sbq.getSpeciesConfig(species, settings)
 					infusedLocation.infusedVisual = data.infusedVisual
 					infusedLocation.infusion = data.infusion
 					infusedLocation.infusionAccepts = data.infusionAccepts
+					infusedLocation.checkSettings = data.checkSettings
 				end
 			end
 		end
+
 		sbq.speciesConfig.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation or data)
 	end
 end

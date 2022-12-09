@@ -197,9 +197,7 @@ function init()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 	sbq.numberBoxColor(escapeValue, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
-
-	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
-	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+	sbq.refreshButtons()
 	sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
 	if mainTabField.tabs.globalPreySettings ~= nil then
@@ -209,6 +207,11 @@ function init()
 	end
 end
 local init = init
+
+function sbq.refreshButtons()
+	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
+	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+end
 
 function sbq.checkLockedSettingsButtons(settings, override, func)
 	for setting, value in pairs(sbq[settings] or {}) do
@@ -230,6 +233,9 @@ function sbq.checkLockedSettingsButtons(settings, override, func)
 				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)
+					if type(settingsButtonScripts[setting]) == "function" then
+						settingsButtonScripts[setting](setting, button.checked)
+					end
 				end
 			end
 		end

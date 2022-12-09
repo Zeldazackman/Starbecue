@@ -46,4 +46,6 @@ function scaleValueMax:onEnter() sbq.numberBox(self, "changeAnimOverrideSetting"
 function scaleValueMax:onTextChanged() sbq.numberBoxColor(self, table.unpack(minmaxTable) ) end
 function scaleValueMax:onEscape() self:onEnter() end
 function scaleValueMax:onUnfocus() self.focused = false self:queueRedraw() self:onEnter() end
-sbq.numberBoxColor(scaleValueMax, table.unpack(minmaxTable) )
+sbq.numberBoxColor(scaleValueMax, table.unpack(minmaxTable))
+
+require("/interface/scripted/sbq/sbqSettings/speciesScripts/sbqBallsAndBreastsRefresh.lua")

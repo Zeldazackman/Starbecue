@@ -1,4 +1,36 @@
 ---@diagnostic disable:undefined-global
+
+function sbq.checkSettings(checkSettings, settings)
+	for setting, value in pairs(checkSettings or {}) do
+		if (type(settings[setting]) == "table") and settings[setting].name ~= nil then
+			if not value then return false
+			elseif type(value) == "table" then
+				if not sbq.checkTable(value, settings[setting]) then return false end
+			end
+		elseif type(value) == "table" then
+			local match = false
+			for i, value in ipairs(value) do if (settings[setting] or false) == value then
+				match = true
+				break
+			end end
+			if not match then return false end
+		elseif (settings[setting] or false) ~= value then return false
+		end
+	end
+	return true
+end
+
+function sbq.checkTable(check, checked)
+	for k, v in pairs(check) do
+		if type(v) == "table" then
+			if not sbq.checkTable(v, (checked or {})[k]) then return false end
+		elseif v == true and type((checked or {})[k]) ~= "boolean" and ((checked or {})[k]) ~= nil then
+		elseif not (v == (checked or {})[k] or false) then return false
+		end
+	end
+	return true
+end
+
 sbq.drawSpecialButtons = {}
 function sbq.effectsPanel()
 	if not sbq.predatorConfig or not sbq.predatorConfig.locations then return end
@@ -13,29 +45,34 @@ function sbq.effectsPanel()
 		if type(locationData) == "table" then
 			sbq.locationDefaultSettings(locationData, location)
 
-			local mainEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+			local requiresInfusionVisible = true
+			if locationData.requiresInfusion then
+				requiresInfusionVisible = sbq.infusionSlotAccepts(locationData, sbq.predatorSettings[location .. "InfusedItem"])
+			end
+
+			local mainEffectLayout = { type = "panel", style = "flat", visible = requiresInfusionVisible and locationData.selectEffect or false, expandMode = {1,0}, children = {
 				{ type = "layout", mode = "horizontal", spacing = 0, expandMode = {1,0}, size = {100, 20}, children = {
 					{
 						{
 							{
 								type = "checkBox", id = location.."None", checked = sbq.predatorSettings[location.."EffectSlot"] == "none" or sbq.predatorSettings[location.."EffectSlot"] == nil,
 								radioGroup = location.."EffectGroup", value = "none",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "none" ) or (sbq.overrideSettings[location.."NoneEnable"] == false) or (sbq.overrideSettings.noneEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "none" ) or (sbq.overrideSettings[location.."NoneEnable"] == false) or (sbq.overrideSettings.noneEnable == false) or (locationData.none == false))) or false,
 								toolTip = ((locationData.none or {}).toolTip or "No effects will be applied to prey.")
 							},{
 								type = "checkBox", id = location.."Heal", checked = sbq.predatorSettings[location.."EffectSlot"] == "heal",
 								radioGroup = location.."EffectGroup", value = "heal",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "heal" ) or (sbq.overrideSettings[location.."HealEnable"] == false) or (sbq.overrideSettings.healEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "heal" ) or (sbq.overrideSettings[location.."HealEnable"] == false) or (sbq.overrideSettings.healEnable == false) or (locationData.heal == false))) or false,
 								toolTip = ((locationData.heal or {}).toolTip or "Prey within will be healed, boosted by your attack power.")
 							},{
 								type = "checkBox", id = location.."SoftDigest", checked = sbq.predatorSettings[location.."EffectSlot"] == "softDigest",
 								radioGroup = location.."EffectGroup", value = "softDigest",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "softDigest") or (sbq.overrideSettings[location.."SoftDigestEnable"] == false) or (sbq.overrideSettings.softDigestEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."EffectSlot"] ~= "softDigest") or (sbq.overrideSettings[location.."SoftDigestEnable"] == false) or (sbq.overrideSettings.softDigestEnable == false) or (locationData.softDigest == false))) or false,
 								toolTip = ((locationData.softDigest or {}).toolTip or "Prey within will be digested, boosted by your attack power.\nBut they will always retain 1HP.")
 							},{
 								type = "checkBox", id = location.."Digest", checked = sbq.predatorSettings[location.."EffectSlot"] == "digest",
 								radioGroup = location.."EffectGroup", value = "digest",
-								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= "digest") or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false))) or false,
+								visible = (locationData.selectEffect and not ((sbq.overrideSettings[location.."Effect"] ~= nil and sbq.overrideSettings[location.."Effect"] ~= "digest") or (sbq.overrideSettings[location.."DigestEnable"] == false) or (sbq.overrideSettings.digestEnable == false) or (locationData.digest == false))) or false,
 								toolTip = ((locationData.digest or {}).toolTip or "Prey within will be digested, boosted by your attack power.")
 							},
 						}, {}--[[,
@@ -78,12 +115,12 @@ function sbq.effectsPanel()
 					})
 				end
 			end
-			local extraEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, visible = extraEffectsVisible, children = {
+			local extraEffectLayout = { type = "panel", style = "flat", expandMode = {1,0}, visible = requiresInfusionVisible and extraEffectsVisible, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					extraEffectToggles
 				}}
 			}}
-			local otherLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+			local otherLayout = { type = "panel", style = "flat", visible = requiresInfusionVisible or false, expandMode = {1,0}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{
 						{
@@ -95,7 +132,7 @@ function sbq.effectsPanel()
 				}}
 			}}
 
-			local modifiersLayout = { type = "panel", style = "flat", expandMode = {1,0}, children = {
+			local modifiersLayout = { type = "panel", style = "flat", visible = requiresInfusionVisible or false, expandMode = {1,0}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{type = "label", text = "Size Modifiers", align = "center"},
 					{
@@ -117,7 +154,7 @@ function sbq.effectsPanel()
 					}
 				}}
 			} }
-			local difficultyMod = { type = "panel", style = "flat", expandMode = {1,1}, children = {
+			local difficultyMod = { type = "panel", style = "flat", visible = requiresInfusionVisible or false, expandMode = {1,1}, children = {
 				{ type = "layout", mode = "vertical", spacing = 0, children = {
 					{type = "label", text = "Difficulty", align = "center"},
 					{ type = "textBox", align = "center", id = location .. "DifficultyMod", toolTip = "Make this location easier or harder relative to the main difficulty."},
@@ -165,7 +202,7 @@ function sbq.effectsPanel()
 			end
 
 			local tab = locationTabField:newTab({
-				type = "tab", id = location .. "Tab", title = ((locationData.name or location) .. " "),
+				type = "tab", id = location .. "Tab", title = ((locationData.name or location) .. " "), visible = sbq.checkSettings(locationData.checkSettings, sbq.predatorSettings),
 				contents = {
 					{ type = "scrollArea", scrollBars = true, thumbScrolling = true, scrollDirections = {0,1}, children = {
 						{ type = "panel", style = "convex", children = {
@@ -224,21 +261,8 @@ function sbq.effectsPanel()
 			local infusedItemSlot = _ENV[location .. "InfusedItem"]
 
 			function infusedItemSlot:acceptsItem(item)
-				if not ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then
-					if ((item.parameters or {}).species ~= nil and item.name == "sbqMysteriousPotion") and ((not locationData.infusionAccepts) or locationData.infusionAccepts.sbqMysteriousPotion )  then
-						return true
-					else
-						pane.playSound("/sfx/interface/clickon_error.ogg")
-						return false
-					end
-				elseif ((not locationData.infusionAccepts) or locationData.infusionAccepts.humanoids ) then
-					local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
-					if not preySettings[locationData.infusionSetting or "undefined"] then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
-					return true
-				else
-					pane.playSound("/sfx/interface/clickon_error.ogg")
-					return false
-				end
+				if sbq.infusionSlotAccepts(locationData, item) then return true
+				else pane.playSound("/sfx/interface/clickon_error.ogg") return false end
 			end
 			function infusedItemSlot:onItemModified()
 				sbq.changeGlobalSetting(location .. "InfusedItem", infusedItemSlot:item())
@@ -427,5 +451,33 @@ function sbq.dropdownButton(button, settingname, list, func, overrides)
 		function button:onClick()
 			metagui.contextMenu(contextMenu)
 		end
+	end
+end
+
+function sbq.infusionSlotAccepts(locationData, item)
+	local uniqueId = (((((item or {}).parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId
+	if uniqueId and ((not locationData.infusionAccepts) or locationData.infusionAccepts.characters ) then
+		local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
+		if not preySettings[locationData.infusionSetting or "undefined"] then return false end
+		if type((locationData.infusionAccepts or {}).characters) == "table" then
+			for i, uuid in ipairs((locationData.infusionAccepts or {}).characters or {}) do
+				if uuid == uniqueId then
+					return true
+				end
+			end
+			return false
+		end
+		if (locationData.infusionAccepts or {}).rejectCharacters ~= nil then
+			for i, uuid in ipairs((locationData.infusionAccepts or {}).rejectCharacters or {}) do
+				if uuid == uniqueId then
+					return false
+				end
+			end
+		end
+		return true
+	elseif (((item or {}).parameters or {}).species ~= nil and item.name == "sbqMysteriousPotion") and ((not locationData.infusionAccepts) or locationData.infusionAccepts.sbqMysteriousPotion ) then
+		return true
+	else
+		return false
 	end
 end

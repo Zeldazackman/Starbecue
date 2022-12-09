@@ -65,9 +65,11 @@ function sbq.setSpeciesHelpTab(entitySpecies)
 	end
 end
 
+settingsButtonScripts = {}
 local setIcon
 function sbq.setSpeciesSettingsTab(entitySpecies)
 	speciesConfigTabContents:clearChildren()
+	settingsButtonScripts = {}
 
 	local species = sbq.sbqCurrentData.species or "sbqOccupantHolder"
 	if (species == "sbqOccupantHolder") and sbq.extraTabs.speciesSettingsTabs[entitySpecies] ~= nil then

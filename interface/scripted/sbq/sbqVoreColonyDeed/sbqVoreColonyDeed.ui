@@ -29,7 +29,7 @@
 						{ "type" : "layout", "mode" : "vertical", "expandMode" : [2,2], "children" : []}
 					]},
 					[
-						{"size" : 85},
+						{"size" : 90},
 						{ "id" : "requiredTagsPanel", "type" : "panel", "size":[80,50], "expandMode" : [1,1], "style" : "convex", "children" : [
 							{ "type" : "label", "text" : "Colony Tags",  "align" : "center"},
 							[{"type":"button", "id":"tenantNote", "caption":"?", "visible" : false, "size" : [15,15]},{"type":"button", "id":"orderFurniture", "toolTip": "Order furniture this tenant may appreciate.", "caption":"Order Furniture", "visible":false, "expandMode" : [2,0]}],

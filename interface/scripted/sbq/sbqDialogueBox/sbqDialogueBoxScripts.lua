@@ -147,7 +147,7 @@ function sbq.getRandomDialogueTreeValue(settings, randomRolls, randomTable, name
 end
 
 function sbq.checkSettings(checkSettings, settings)
-	for setting, value in pairs(checkSettings) do
+	for setting, value in pairs(checkSettings or {}) do
 		if (type(settings[setting]) == "table") and settings[setting].name ~= nil then
 			if not value then return false
 			elseif type(value) == "table" then

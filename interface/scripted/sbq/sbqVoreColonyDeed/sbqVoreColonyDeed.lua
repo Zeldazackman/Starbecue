@@ -209,8 +209,8 @@ function init()
 		sbq.setSpeciesSettingsTab(species)
 		sbq.setHelpTab()
 
-		sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
-		--sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+		sbq.refreshButtons()
+
 		sbq.checkLockedSettingsButtons("preySettings", "overridePreyEnabled", "changePreySetting")
 		sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
@@ -260,6 +260,11 @@ function init()
 	end
 end
 
+function sbq.refreshButtons()
+	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
+	--sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+end
+
 function sbq.checkLockedSettingsButtons(settings, override, func)
 	for setting, value in pairs(sbq[settings]) do
 		if setting:sub(-1,-#"Enable") ~= "Enable" then
@@ -288,6 +293,9 @@ function sbq.checkLockedSettingsButtons(settings, override, func)
 				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)
+					if type(settingsButtonScripts[setting]) == "function" then
+						settingsButtonScripts[setting](setting, button.checked)
+					end
 				end
 			end
 		end
