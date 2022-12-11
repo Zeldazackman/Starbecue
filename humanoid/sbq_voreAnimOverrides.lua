@@ -80,12 +80,15 @@ message.setHandler("sbqSetInfusedPartColors", function(_, _, partname, item)
 	local identity = ((((item or {}).parameters or {}).npcArgs or {}).npcParam or {}).identity
 	if (not species) or (not identity) then sbq.resetPart(partname) return end
 	local success, speciesFile = pcall(root.assetJson, ("/species/"..species..".species"))
-	if not success then sbq.resetPart(partname) return end
+	if not success then
+		speciesFile = ((item or {}).parameters or {}).speciesFile
+		if not speciesFile then sbq.resetPart(partname) return end
+	end
 
 	local speciesData
 	if speciesFile.speciesAnimOverride ~= nil then
 		if speciesFile.speciesAnimOverride:sub(1,1) == "/" then
-			speciesData = root.assetJson(self.speciesFile.speciesAnimOverride)
+			speciesData = root.assetJson(speciesFile.speciesAnimOverride)
 		else
 			speciesData = root.assetJson("/humanoid/"..species.."/"..speciesFile.speciesAnimOverride)
 		end
@@ -130,7 +133,7 @@ message.setHandler("sbqSetInfusedPartColors", function(_, _, partname, item)
 	end
 	animator.setPartTag(partname, "partImage", part)
 	animator.setPartTag(partname, "colorRemap", colorRemap or "")
-	animator.setPartTag(partname, "customDirectives", identity.bodyDirectives..identity.hairDirectives)
+	animator.setPartTag(partname, "customDirectives", (identity.bodyDirectives or "")..(identity.hairDirectives or ""))
 	self.parts[partname] = part
 end)
 

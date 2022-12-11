@@ -228,8 +228,15 @@ function sbq.effectsPanel()
 				local itemSlot = itemGrid:slot(i)
 				function itemSlot:acceptsItem(item)
 					if not ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+					local npcConfig = root.npcConfig(((item.parameters or {}).npcArgs or {}).npcType)
 
-					local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
+					local preySettings = sb.jsonMerge(
+						sb.jsonMerge(
+							((((npcConfig or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}),
+							(((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {})
+						),
+						(((npcConfig or {}).scriptConfig or {}).sbqOverridePreyEnabled or {})
+					)
 					local validPrey = true
 					for i, voreType in ipairs(locationData.voreTypes or {}) do
 						validPrey = preySettings[voreType]
@@ -457,7 +464,15 @@ end
 function sbq.infusionSlotAccepts(locationData, item)
 	local uniqueId = (((((item or {}).parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId
 	if uniqueId and ((not locationData.infusionAccepts) or locationData.infusionAccepts.characters ) then
-		local preySettings = ((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}
+		local npcConfig = root.npcConfig(((item.parameters or {}).npcArgs or {}).npcType)
+
+		local preySettings = sb.jsonMerge(
+			sb.jsonMerge(
+				((((npcConfig or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {}),
+				(((((item.parameters.npcArgs or {}).npcParam or {}).statusControllerSettings or {}).statusProperties or {}).sbqPreyEnabled or {})
+			),
+			(((npcConfig or {}).scriptConfig or {}).sbqOverridePreyEnabled or {})
+		)
 		if not preySettings[locationData.infusionSetting or "undefined"] then return false end
 		if type((locationData.infusionAccepts or {}).characters) == "table" then
 			for i, uuid in ipairs((locationData.infusionAccepts or {}).characters or {}) do

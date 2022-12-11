@@ -83,7 +83,7 @@ function generateItemDrop(itemDrop)
 			noCollarLabel = "",
 		}
 		itemDrop.parameters.tooltipFields.objectImage = itemDrop.parameters.fullPortrait or
-			root.npcPortrait("full", itemDrop.parameters.npcArgs.npsSpecies,
+			root.npcPortrait("full", itemDrop.parameters.npcArgs.npcSpecies,
 				itemDrop.parameters.npcArgs.npcType or "generictenant",
 				itemDrop.parameters.npcArgs.npcLevel or 1, itemDrop.parameters.npcArgs.npcSeed, itemDrop.parameters.npcArgs.npcParam)
 		if itemDrop.parameters.pred then

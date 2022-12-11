@@ -266,14 +266,6 @@ function sbq.refreshButtons()
 end
 
 function sbq.checkLockedSettingsButtons(settings, override, func)
-	for setting, value in pairs(sbq[settings]) do
-		if setting:sub(-1,-#"Enable") ~= "Enable" then
-			local enable = _ENV[setting .. "Enable"]
-			if enable ~= nil then
-				sbq[settings][setting.."Enable"] = sbq[settings][setting.."Enable"] or false
-			end
-		end
-	end
 	for setting, value in pairs(sbq[settings] or {}) do
 		local button = _ENV[setting]
 		if button ~= nil and type(value) == "boolean" then
@@ -521,18 +513,22 @@ end
 if sbq.storage.crewUI then
 	require("/interface/scripted/sbq/sbqVoreColonyDeed/sbqVoreCrewMenu.lua")
 else
-	function insertTenantItemSlot:acceptsItem(item)
+	function sbq.isValidTenantCard(item)
 		if (item.parameters or {}).npcArgs ~= nil then
-			if item.parameters.npcArgs.wasPlayer then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+			local success, speciesFile = pcall(root.assetJson, ("/species/"..(item.parameters.npcArgs.npcSpecies or "")..".species"))
+			if not success then return false end
+			if item.parameters.npcArgs.wasPlayer then return false end
 			if item.parameters.npcArgs.uniqueId then
 				for i, tenant in ipairs((sbq.storage.occupier or {}).tenants or {}) do
-					if tenant.uniqueId == item.parameters.npcArgs.uniqueId then pane.playSound("/sfx/interface/clickon_error.ogg") return false end
+					if tenant.uniqueId == item.parameters.npcArgs.uniqueId then return false end
 				end
 			end
 			return true
 		end
-		pane.playSound("/sfx/interface/clickon_error.ogg")
-		return false
+	end
+	function insertTenantItemSlot:acceptsItem(item)
+		if not sbq.isValidTenantCard(item) then pane.playSound("/sfx/interface/clickon_error.ogg") return false
+		else return true end
 	end
 	function insertTenant:onClick()
 		local item = insertTenantItemSlot:item()
