@@ -11,11 +11,10 @@ function sbq.unForceSeat(occupantId)
 	end
 end
 
-function sbq.eat( occupantId, location, size, voreType, force )
+function sbq.eat( occupantId, location, size, voreType, locationSide, force )
 	local seatindex = sbq.occupants.total + sbq.startSlot
-	local emptyslots = sbq.occupantSlots - sbq.occupants.total - sbq.startSlot
 	if seatindex > sbq.occupantSlots then return false end
-	local locationSpace = sbq.locationSpaceAvailable(location)
+	local locationSpace = sbq.locationSpaceAvailable(location, locationSide)
 	if locationSpace < ((size or 1) * (sbq.settings[location.."Multiplier"] or 1)) then return false end
 	if (not occupantId) or (not world.entityExists(occupantId))
 	or ((sbq.entityLounging(occupantId) or sbq.inedible(occupantId)) and not force)
@@ -34,6 +33,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 		if loungeables[1] == nil then -- now just making sure the prey doesn't belong to another loungable now
 			sbq.occupant[seatindex].id = occupantId
 			sbq.occupant[seatindex].location = location
+			sbq.occupant[seatindex].locationSide = locationSide
 			sbq.occupant[seatindex].size = size or 1
 			sbq.occupant[seatindex].entryType = voreType
 			world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
@@ -53,6 +53,7 @@ function sbq.eat( occupantId, location, size, voreType, force )
 	sbq.occupant[seatindex].id = occupantId
 	sbq.occupant[seatindex].species = species
 	sbq.occupant[seatindex].location = location
+	sbq.occupant[seatindex].locationSide = locationSide
 	sbq.occupant[seatindex].size = size or 1
 	sbq.occupant[seatindex].entryType = voreType
 	world.sendEntityMessage( occupantId, "sbqMakeNonHostile")
@@ -144,11 +145,12 @@ function sbq.firstNotLounging(entityaimed)
 	end
 end
 
-function sbq.moveOccupantLocation(args, location)
-	local space = sbq.locationSpaceAvailable(location)
+function sbq.moveOccupantLocation(args, location, side)
+	local space = sbq.locationSpaceAvailable(location, side)
 	if not args.id or (space < ((sbq.lounging[args.id].size or 1) * (sbq.settings[location.."Multiplier"] or 1))) then return false end
 
 	sbq.lounging[args.id].location = location
+	sbq.lounging[args.id].locationSide = side
 	return true
 end
 
@@ -174,42 +176,42 @@ function sbq.locationVisualSize(location, side)
 	return math.floor(math.max((sbq.settings[location.."VisualMin"] or data.minVisual or 0), math.min(math.floor((unscaled / sbq.predScale) + 0.4), (sbq.settings[location.."VisualMax"] or data.max or math.huge))))
 end
 
-function sbq.locationSpaceAvailable(location)
+function sbq.locationSpaceAvailable(location, side)
 	if sbq.settings.hammerspace and sbq.sbqData.locations[location].hammerspace
 	and not sbq.settings[location.."HammerspaceDisabled"] then
 		return math.huge
 	end
-	return (sbq.sbqData.locations[location].max * (sbq.predScale or 1)) - sbq.occupants[location]
+	return (sbq.sbqData.locations[location..(side or "")].max * (sbq.predScale or 1)) - sbq.occupants[location..(side or "")]
 end
 
 function sbq.getSidedLocationWithSpace(location, size)
 	local data = sbq.sbqData.locations[location]
 	if data.sided then
-		local leftHasSpace = sbq.locationSpaceAvailable(location.."L") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
-		local rightHasSpace = sbq.locationSpaceAvailable(location.."R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local leftHasSpace = sbq.locationSpaceAvailable(location, "L") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
+		local rightHasSpace = sbq.locationSpaceAvailable(location, "R") > ((size or 1) * (sbq.settings[location.."Multiplier"] or 1))
 		if sbq.occupants[location.."L"] == sbq.occupants[location.."R"] then
 			if sbq.direction > 0 then -- thinking about it, after adding everything underneath to prioritize the one with less prey, this is kinda useless
-				if leftHasSpace then return location.."L", data
-				elseif rightHasSpace then return location.."R", data
+				if leftHasSpace then return location, "L", data
+				elseif rightHasSpace then return location, "R", data
 				else return false end
 			else
-				if rightHasSpace then return location.."R", data
-				elseif leftHasSpace then return location.."L", data
+				if rightHasSpace then return location, "R", data
+				elseif leftHasSpace then return location, "L", data
 				else return false end
 			end
-		elseif sbq.occupants[location .. "L"] < sbq.occupants[location .. "R"] and leftHasSpace then return location .. "L", data
-		elseif sbq.occupants[location .. "L"] > sbq.occupants[location .. "R"] and rightHasSpace then return location .. "R", data
+		elseif sbq.occupants[location .. "L"] < sbq.occupants[location .. "R"] and leftHasSpace then return location, "L", data
+		elseif sbq.occupants[location .. "L"] > sbq.occupants[location .. "R"] and rightHasSpace then return location, "R", data
 		else return false end
 	end
-	return location, data
+	return location, "", data
 end
 
 
 function sbq.doVore(args, location, statuses, sound, voreType )
 	if sbq.isNested then return false end
-	local location = sbq.getSidedLocationWithSpace(location, args.size)
+	local location, locationSide = sbq.getSidedLocationWithSpace(location, args.size)
 	if not location then return false end
-	if sbq.eat( args.id, location, args.size, voreType ) then
+	if sbq.eat( args.id, location, args.size, voreType, locationSide ) then
 		sbq.justAte = args.id
 		vehicle.setInteractive( false )
 		sbq.showEmote("emotehappy")
@@ -361,7 +363,7 @@ function sbq.updateOccupants(dt)
 				sbq.occupant[i].visited[location .. "Time"] = (sbq.occupant[i].visited[location .. "Time"] or 0) + dt
 
 				local size = ((sbq.occupant[i].size * sbq.occupant[i].sizeMultiplier) * (sbq.settings[location.."Multiplier"] or 1))
-				sbq.occupants[location] = sbq.occupants[location] + size
+				sbq.occupants[location..(sbq.occupant[i].locationSide or "")] = sbq.occupants[location..(sbq.occupant[i].locationSide or "")] + size
 				sbq.occupants.totalSize = sbq.occupants.totalSize + size
 				massMultiplier = sbq.sbqData.locations[location].mass or 0
 
@@ -529,8 +531,8 @@ function sbq.doBellyEffects(dt)
 	for i = sbq.startSlot, sbq.occupantSlots do
 
 		local eid = sbq.occupant[i].id
-		if type(eid) == "number" and world.entityExists(eid) then
-			local location = sbq.occupant[i].location
+		local location = sbq.occupant[i].location
+		if type(eid) == "number" and world.entityExists(eid) and location ~= "escaping" then
 			local locationEffect = sbq.settings[(location or "").."Effect"] or "sbqRemoveBellyEffects"
 			local health = world.entityHealth(eid)
 			local light = sbq.sbqData.lights.prey
@@ -551,9 +553,9 @@ function sbq.doBellyEffects(dt)
 			local status = (sbq.settings.displayDigest and sbq.config.bellyDisplayStatusEffects[locationEffect] ) or locationEffect
 
 			if (sbq.settings[location.."Sounds"] == true) and (not sbq.occupant[i].digested) then
-				sbq.randomTimer( "gurgle", 1.0, 8.0, function() animator.playSound( "digest" ) end )
+				sbq.randomTimer("gurgle", 1.0, 8.0, function() animator.playSound("digest") end)
 			end
-			world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, powerMultiplier, sbq.driver or entity.id())
+			world.sendEntityMessage( eid, "sbqApplyDigestEffect", status, { power = powerMultiplier, location = location, dropItem = sbq.settings.predDigestItemDrops}, sbq.driver or entity.id())
 
 			if sbq.settings[location.."Compression"] and not sbq.occupant[i].digested and sbq.occupant[i].bellySettleDownTimer <= 0 then
 				sbq.occupant[i].sizeMultiplier = math.min(1, math.max(0.1, sbq.occupant[i].sizeMultiplier - (powerMultiplier * dt)/100 ))
@@ -577,33 +579,28 @@ function sbq.doBellyEffects(dt)
 						sbq.occupant[i].progressBarActive = false
 					end
 				end
-			elseif sbq.settings[location.."Eggify"] and sbq.sbqData.locations[location].eggify and not (sbq.occupant[i].egged or sbq.occupant[i][location.."EggifyImmune"]) then
-				sbq.loopedMessage(location.."Eggify"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].eggify.immunity or "eggImmunity"}, function (enabled)
-					if enabled and not enabled.enabled then
-						sbq.transformMessageHandler(eid, sbq.sbqData.locations[location].eggify, "eggify")
-					else
-						sbq.occupant[i][location.."EggifyImmune"] = true
+			else
+				for i, passiveEffect in ipairs(sbq.sbqData.locations[location].passiveToggles or {}) do
+					local data = sbq.sbqData.locations[location][passiveEffect]
+					if sbq.settings[location..passiveEffect] and data and not (sbq.occupant[i][data.occupantFlag or "transformed"] or sbq.occupant[i][location..passiveEffect.."Immune"]) then
+						sbq.loopedMessage(location..passiveEffect..eid, eid, "sbqGetPreyEnabledSetting", {data.immunity or "transformAllow"}, function (enabled)
+							if enabled then
+								sbq[data.func or "transformMessageHandler"](eid, data, passiveEffect)
+							else
+								sbq.occupant[i][location..passiveEffect.."Immune"] = true
+							end
+						end, function ()
+							sbq.occupant[i][location..passiveEffect.."Immune"] = true
+						end)
 					end
-				end, function ()
-					sbq.occupant[i][location.."EggifyImmune"] = true
-				end)
-			elseif sbq.settings[location.."TF"] and sbq.sbqData.locations[location].TF and not (sbq.occupant[i].transformed or sbq.occupant[i][location.."TFImmune"]) then
-				sbq.loopedMessage(location.."TF"..eid, eid, "sbqIsPreyEnabled", {sbq.sbqData.locations[location].TF.immunity or "transformImmunity"}, function (enabled)
-					if enabled and not enabled.enabled then
-						sbq.transformMessageHandler(eid)
-					else
-						sbq.occupant[i][location.."TFImmune"] = true
-					end
-				end, function ()
-					sbq.occupant[i][location.."TFImmune"] = true
-				end)
+				end
 			end
 
 			sbq.occupant[i].indicatorCooldown = sbq.occupant[i].indicatorCooldown - dt
 
 			if world.entityType(sbq.occupant[i].id) == "player" and sbq.occupant[i].indicatorCooldown <= 0 then
 				-- p.occupant[i].indicatorCooldown = 0.5
-				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location] or {}
+				local struggledata = (sbq.stateconfig[sbq.state].struggle or {})[location..(sbq.occupant[i].locationSide or "")] or {}
 				local directions = {}
 				local icon
 				if not sbq.transitionLock and sbq.occupant[i].species ~= "sbqEgg" then
@@ -626,7 +623,7 @@ function sbq.doBellyEffects(dt)
 				if sbq.occupant[i].species and sbq.occupant[i].species ~= "sbqOccupantHolder" then
 					icon = "/vehicles/sbq/"..sbq.occupant[i].species.."/skins/"..((sbq.occupant[i].smolPreyData.settings.skinNames or {}).head or "default").."/icon.png"..((sbq.occupant[i].smolPreyData.settings or {}).directives or "")
 				end
-				sbq.openPreyHud(i, directions, progressbarDx, icon, location)
+				sbq.openPreyHud(i, directions, progressbarDx, icon, location..(sbq.occupant[i].locationSide or ""))
 			end
 
 			sbq.otherLocationEffects(i, eid, health, locationEffect, status, location, powerMultiplier )
@@ -670,7 +667,7 @@ function sbq.validStruggle(struggler, dt)
 	if not movedir then sbq.occupant[struggler].struggleTime = math.max( 0, sbq.occupant[struggler].struggleTime - dt) return end
 
 	local struggling
-	struggledata = sbq.stateconfig[sbq.state].struggle[sbq.occupant[struggler].location]
+	struggledata = sbq.stateconfig[sbq.state].struggle[(sbq.occupant[struggler].location or "")..(sbq.occupant[struggler].locationSide or "")]
 
 	if (struggledata == nil or struggledata.directions == nil or struggledata.directions[movedir] == nil) then return end
 
@@ -770,7 +767,7 @@ function sbq.doStruggle(struggledata, struggler, movedir, animation, strugglerId
 		sbq.occupant[struggler].bellySettleDownTimer = 0.1
 		sbq.doTransition( struggledata.directions[movedir].transition, {direction = movedir, id = strugglerId, struggleTrigger = true} )
 	else
-		local location = sbq.occupant[struggler].location
+		local location = sbq.occupant[struggler].location..(sbq.occupant[struggler].locationSide or "")
 
 		if (struggledata.directions[movedir].indicate == "red" or struggledata.directions[movedir].indicate == "green") and ( struggledata.directions[movedir].settings == nil or sbq.checkSettings(struggledata.directions[movedir].settings) ) then
 			sbq.occupant[struggler].controls.favorDirection = movedir

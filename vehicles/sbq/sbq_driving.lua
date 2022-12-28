@@ -481,7 +481,8 @@ function sbq.assignClickActionMenu(state)
 	local options = {
 		{
 			name = "despawn",
-			icon = "/interface/xhover.png"
+			icon = "/interface/xhover.png",
+			title = "Let Out"
 		},
 		{
 			name = "unassigned",
@@ -490,7 +491,7 @@ function sbq.assignClickActionMenu(state)
 	}
 	sbq.movement.occpantsWhenAssigned = sbq.occupants.total
 	if sbq.occupants.total > 0 then
-		options[1].icon = "/items/active/sbqController/letout.png"
+		options[1].icon = nil
 	end
 
 	for action, data in pairs((state.actions or {})) do
@@ -518,7 +519,8 @@ function sbq.checkValidAim(seat, range)
 end
 
 function sbq.checkEatPosition(position, range, location, transition, noaim, aimrange)
-	if sbq.locationSpaceAvailable(location) > 0 then
+	local location, side = sbq.getSidedLocationWithSpace(location, 0.1)
+	if location then
 		local target = sbq.checkValidAim(sbq.driverSeat, aimrange)
 
 		local prey = world.entityQuery(position, range, {

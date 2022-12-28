@@ -111,14 +111,33 @@ function update( dt )
 			generateSegment(segmentSize - segmentSpacing, segmentAngle, sidesPerSegment, spacingOffset, r1, r2),
 			color
 		)
-		canvas:drawImage(options[i].icon, radialPoint(segmentSize * (i - 1) + 180, ri), nil, nil, true)
+		local iconPos = radialPoint(segmentSize * (i - 1) + 180, ri);
+		if options[i].icon then
+			canvas:drawImage(options[i].icon, iconPos, nil, nil, true)
+		else
+			canvas:drawText(options[i].title or options[i].name, {
+				position = {iconPos[1] + 0.5, iconPos[2] - 0.5},
+				horizontalAnchor = "mid",
+				verticalAnchor = "mid"
+			}, 8, { 0, 0, 0 })
+			canvas:drawText(options[i].title or options[i].name, {
+				position = {iconPos[1] + 1, iconPos[2] - 1},
+				horizontalAnchor = "mid",
+				verticalAnchor = "mid"
+			}, 8, {0, 0, 0})
+			canvas:drawText(options[i].title or options[i].name, {
+				position = iconPos,
+				horizontalAnchor = "mid",
+				verticalAnchor = "mid"
+			}, 8)
+		end
 	end
 
 	-- save selection
 	if activeSegment == -1 then
 		player.setProperty( "sbqRadialSelection", {selection = "cancel", type = menuType, button = button, pressed = pressed})
 	else
-		player.setProperty( "sbqRadialSelection", {selection = options[activeSegment].name, type = menuType, button = button, pressed = pressed} )
+		player.setProperty( "sbqRadialSelection", {selection = options[activeSegment].name, data = options[activeSegment].data, type = menuType, button = button, pressed = pressed} )
 	end
 end
 

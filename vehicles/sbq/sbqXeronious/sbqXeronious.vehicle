@@ -147,7 +147,11 @@
 		],
 		"locations" :{
 			"belly" : { "name" : "Belly", "max": 3, "selectEffect" : true, "mass" : 1, "transformGroups" : ["bodybob"], "hammerspace" : true,
-				"eggify" : {
+				"passiveToggles" : ["Eggify"], "preyActions" : [
+					{ "name":"Turbo Digest", "script":"turboDigest", "checkSettings": { "bellyEffectSlot" : ["softDigest", "digest"]} },
+					{ "name":"Eggify", "script":"eggify"}
+				],
+				"Eggify" : {
 					"icon" : "/interface/scripted/sbq/sbqSettings/eggify.png?replace;a99f87=e4a126;eae0c8=ffb62e;fff6de=ffca69",
 					"data" : {
 						"barColor" : ["aa720a", "e4a126", "ffb62e", "ffca69"],

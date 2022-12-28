@@ -77,7 +77,7 @@ end
 
 function sbq.letout(id)
 	local id = id or sbq.getRecentPrey()
-	if not id then return false end
+	if (not id) or (not sbq.lounging[id]) then return false end
 
 	local location = sbq.lounging[id].location
 
@@ -93,9 +93,9 @@ function sbq.letout(id)
 		return sbq.doTransition("tailEscape", {id = id})
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
-	elseif location == "ballsL" or location == "ballsR" then
+	elseif location == "ballsL" or location == "ballsR" or location == "balls" then
 		return sbq.moveToLocation({id = id}, {location = "shaft"})
-	elseif location == "breastsL" or location == "breastsR" then
+	elseif location == "breastsL" or location == "breastsR" or location == "breasts" then
 		return sbq.doTransition("breastEscape", {id = id})
 	elseif location == "womb" then
 		return sbq.doTransition("unbirthEscape", {id = id})
@@ -109,7 +109,14 @@ end
 
 function sbq.handleBodyParts()
 	local defaultSbqData = sbq.defaultSbqData
-	if sbq.settings.penis then
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "cock", sbq.settings.shaftInfusedVisual and sbq.settings.shaftInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "breastsCover2", sbq.settings.breastsInfusedVisual and sbq.settings.breastsInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "breastsFront", sbq.settings.breastsInfusedVisual and sbq.settings.breastsInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "breastsBack", sbq.settings.breastsInfusedVisual and sbq.settings.breastsInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "ballsFront", sbq.settings.ballsInfusedVisual and sbq.settings.ballsInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "ballsBack", sbq.settings.ballsInfusedVisual and sbq.settings.ballsInfusedItem)
+	world.sendEntityMessage(sbq.driver, "sbqSetInfusedPartColors", "pussy", sbq.settings.wombInfusedVisual and sbq.settings.wombInfusedItem)
+	if sbq.settings.penis and ((not defaultSbqData.locations.shaft.requiresInfusion) or (defaultSbqData.locations.shaft.requiresInfusion and sbq.settings.shaftInfusedItem ~= nil)) then
 		if sbq.settings.underwear then
 			sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 		else
@@ -120,34 +127,40 @@ function sbq.handleBodyParts()
 		sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 		sbq.sbqData.locations.shaft.max = 0
 	end
-	if sbq.settings.balls then
+	if sbq.settings.balls and ((not defaultSbqData.locations.balls.requiresInfusion) or (defaultSbqData.locations.balls.requiresInfusion and sbq.settings.ballsInfusedItem ~= nil)) then
 		if sbq.settings.underwear then
 			sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
 		else
 			sbq.setStatusValue( "ballsVisible", "")
 		end
+		sbq.sbqData.locations.balls.max = defaultSbqData.locations.balls.max
 		sbq.sbqData.locations.ballsL.max = defaultSbqData.locations.balls.max
 		sbq.sbqData.locations.ballsR.max = defaultSbqData.locations.balls.max
 	else
-		sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue("ballsVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.balls.max = 0
 		sbq.sbqData.locations.ballsL.max = 0
 		sbq.sbqData.locations.ballsR.max = 0
 	end
-	if sbq.settings.breasts then
-		sbq.setStatusValue( "breastsVisible", "")
+	if sbq.settings.breasts and ((not defaultSbqData.locations.breasts.requiresInfusion) or (defaultSbqData.locations.breasts.requiresInfusion and sbq.settings.breastsInfusedItem ~= nil)) then
+		sbq.setStatusValue("breastsVisible", "")
+		sbq.sbqData.locations.breasts.max = defaultSbqData.locations.breasts.max
 		sbq.sbqData.locations.breastsL.max = defaultSbqData.locations.breasts.max
 		sbq.sbqData.locations.breastsR.max = defaultSbqData.locations.breasts.max
 	else
-		sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue("breastsVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.breasts.max = 0
 		sbq.sbqData.locations.breastsL.max = 0
 		sbq.sbqData.locations.breastsR.max = 0
 	end
 	world.sendEntityMessage(sbq.driver, "setBoobMask", sbq.settings.breasts)
 
-	if sbq.settings.pussy then
-		sbq.setStatusValue( "pussyVisible", "")
+	if sbq.settings.pussy and ((not defaultSbqData.locations.womb.requiresInfusion) or (defaultSbqData.locations.womb.requiresInfusion and sbq.settings.wombInfusedItem ~= nil)) then
+		sbq.setStatusValue("pussyVisible", "")
+		sbq.sbqData.locations.womb.max = defaultSbqData.locations.womb.max
 	else
-		sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")
+		sbq.setStatusValue("pussyVisible", "?crop;0;0;0;0")
+		sbq.sbqData.locations.womb.max = 0
 	end
 end
 

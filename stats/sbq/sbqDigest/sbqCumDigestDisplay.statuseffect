@@ -5,6 +5,7 @@
 	"effectConfig" : {
 		"effect" : "sbqCumDigestDisplay",
 		"itemDrop" : "sbqFilledCondom",
+		"digestType" : "cumDigest",
 		"fatal" : true,
 		"displayDamage" : true
 	},

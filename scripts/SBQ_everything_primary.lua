@@ -51,6 +51,11 @@ function sbq.everything_primary()
 		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	end)
 
+	message.setHandler("sbqGetPreyEnabledSetting", function(_,_, setting)
+		return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))[setting]
+	end)
+
+
 	message.setHandler("sbqProjectileSource", function (_,_, source)
 		status.setStatusProperty("sbqProjectileSource", source)
 	end)
@@ -85,13 +90,20 @@ function sbq.everything_primary()
 		sbq.endMysteriousTF()
 	end)
 
-	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, power, sourceEntityId)
-		status.setStatusProperty("sbqDigestPower", power or 1)
+	message.setHandler("sbqApplyDigestEffect", function(_, _, effectConfig, data, sourceEntityId)
+		status.setStatusProperty("sbqDigestData", data)
 		status.addEphemeralEffect(effectConfig, 1, sourceEntityId)
 	end)
 
 	message.setHandler("sbqConsumeResource", function(_, _, resourceName, amount)
 		return status.consumeResource(resourceName, amount)
+	end)
+
+	message.setHandler("sbqDigestStore", function(_, _, location, uniqueId, item)
+		local digestedStoredTable = status.statusProperty("sbqStoredDigestedPrey") or {}
+		digestedStoredTable[location] = digestedStoredTable[location] or {}
+		digestedStoredTable[location][uniqueId] = item
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
 	end)
 
 	mysteriousTFDuration = status.statusProperty("sbqMysteriousPotionTFDuration" )
@@ -138,8 +150,8 @@ function sbq.doMysteriousTF(data)
 
 	local genders = {"male", "female"}
 
-	local genderswapImmunity = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge(status.statusProperty("sbqPreyEnabled") or {}, status.statusProperty("sbqOverridePreyEnabled") or {})).genderswapImmunity
-	if genderswapImmunity then
+	local genderswapAllow = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge(status.statusProperty("sbqPreyEnabled") or {}, status.statusProperty("sbqOverridePreyEnabled") or {})).genderswapAllow
+	if not genderswapAllow then
 		overrideData.gender = currentData.gender or world.entityGender(entity.id())
 	else
 		if overrideData.gender == "random" then
@@ -273,7 +285,7 @@ function sbq.doMysteriousTF(data)
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 	local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
 	if resultEffect == currentEffect then
-		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides" )
 	else
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
@@ -305,7 +317,7 @@ function sbq.endMysteriousTF()
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 	local resultEffect = oldData.customAnimStatus or "speciesAnimOverride"
 	if resultEffect == currentEffect then
-		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides" )
 	else
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })

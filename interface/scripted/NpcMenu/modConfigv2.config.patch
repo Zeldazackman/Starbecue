@@ -1,0 +1,51 @@
+[
+	[
+		{
+			"op": "add",
+			"path": "/init/additionalSpecies/-",
+			"value": "vaporeon"
+		},
+		{
+			"op": "add",
+			"path": "/init/additionalSpecies/-",
+			"value": "hellhound"
+		}
+	],
+	[
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreVillager"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreVillageGuard"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreVillageGuardCaptain"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreTenant"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreFriendlyGuardTenant"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreFriendlyGuard"
+		},
+		{
+			"op": "add",
+			"path": "/init/npcTypeList/-",
+			"value": "sbqVoreCrewmember"
+		}
+	]
+]

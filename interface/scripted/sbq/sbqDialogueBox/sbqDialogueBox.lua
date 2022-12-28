@@ -142,7 +142,7 @@ function sbq.updateDialogueBox(dialogueTreeLocation, dialogueTree)
 		end
 		speaker = dialogueTree.speaker
 	end
-	local tags = { entityname = playerName, dontSpeak = "" }
+	local tags = { entityname = playerName, dontSpeak = "", infusedName = (((((sbq.data.settings[(sbq.data.settings.location or "").."InfusedItem"] or {}).parameters or {}).npcArgs or {}).npcParam or {}).identity or {}).name or "" }
 	local imagePortrait
 
 	if type(randomName) == "string" then

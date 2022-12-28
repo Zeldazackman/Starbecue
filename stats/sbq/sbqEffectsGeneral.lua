@@ -10,70 +10,92 @@ function removeOtherBellyEffects()
 	end
 end
 
+require("/items/active/sbqTransformation/sbqDuplicatePotion/sbqGetIdentity.lua")
+
 function doItemDrop()
 	if self.dropItem and not self.droppedItem then
 		self.droppedItem = true
 		local drop = config.getParameter("itemDrop")
-		if drop then
-			local itemDrop = {
+		if drop and getPreyEnabled(config.getParameter("digestType").."ItemDropsAllow") and (status.statusProperty("sbqDigestData") or {}).dropItem then
+			world.sendEntityMessage(effect.sourceEntity(), "sbqDigestDrop", generateItemDrop({
 				name = drop,
-				count = 1,
-				parameters = {
-
-				}
-			}
-			local predType = world.entityType(effect.sourceEntity())
+				count = config.getParameter("itemDropCount") or 1,
+				parameters = config.getParameter("itemDropParams") or {}
+			}))
+		else
 			local preyType = world.entityType(entity.id())
-
-			if predType == "npc" or predType == "player" then
-				itemDrop.parameters.pred = world.entityName(effect.sourceEntity())
-				itemDrop.parameters.predUUID = world.entityUniqueId(effect.sourceEntity())
+			if preyType ~= "monster" and entity.uniqueId() ~= nil then
+				world.sendEntityMessage(effect.sourceEntity(), "sbqDigestStore", (status.statusProperty("sbqDigestData") or {}).location, entity.uniqueId(), generateItemDrop(root.assetJson("/sbqGeneral.config:npcCardTemplate")))
 			end
-			if preyType == "npc" or preyType == "player" then
-				itemDrop.parameters.prey = world.entityName(entity.id())
-				itemDrop.parameters.preyUUID = world.entityUniqueId(entity.id())
-				local overrideData = status.statusProperty("speciesAnimOverrideData") or {}
-				local identity = overrideData.identity or {}
-				local species = overrideData.species or world.entitySpecies(entity.id())
-				local speciesFile = root.assetJson("/species/"..species..".species")
-				itemDrop.parameters.preySpecies = species
-				itemDrop.parameters.preyDirectives = (overrideData.directives or "")..(identity.bodyDirectives or "")..(identity.hairDirectives or "")
-				itemDrop.parameters.preyColorMap = speciesFile.baseColorMap
-				if itemDrop.parameters.preyDirectives == "" then
-					local portrait = world.entityPortrait(entity.id(), "full")
-					local hairGroup
-					local gotBody
-					local gotHair
-					for i, data in ipairs(speciesFile.genders or {}) do
-						if data.name == world.entityGender(entity.id()) then
-							hairGroup = data.hairGroup or "hair"
-						end
-					end
-					for _, part in ipairs(portrait) do
-						local imageString = part.image
-						if not gotBody then
-							local found1, found2 = imageString:find("body.png:idle.")
-							if found1 ~= nil then
-								local found3 = imageString:find("?")
-								gotBody = imageString:sub(found3)
-							end
-						end
-						if not gotHair then
-							local found1, found2 = imageString:find("/"..(hairGroup or "hair").."/")
-							if found1 ~= nil then
-								local found3, found4 = imageString:find(".png:normal")
-
-								local found5, found6 = imageString:find("?addmask=")
-								gotHair = imageString:sub(found4+1, (found5 or 0)-1) -- this is really elegant haha
-							end
-						end
-						if gotHair and gotBody then break end
-					end
-					itemDrop.parameters.preyDirectives = gotBody..gotHair
-				end
-			end
-
-			world.sendEntityMessage(effect.sourceEntity(), "sbqDigestDrop", itemDrop)
 		end
 	end
+end
+
+function generateItemDrop(itemDrop)
+	local itemDrop = itemDrop
+
+	local predType = world.entityType(effect.sourceEntity())
+	local preyType = world.entityType(entity.id())
+
+	if predType == "npc" or predType == "player" then
+		itemDrop.parameters.pred = world.entityName(effect.sourceEntity())
+		itemDrop.parameters.predUUID = world.entityUniqueId(effect.sourceEntity())
+	end
+	if preyType == "npc" or preyType == "player" then
+		itemDrop.parameters.prey = world.entityName(entity.id())
+		itemDrop.parameters.preyUUID = world.entityUniqueId(entity.id())
+		local overrideData = getIdentity(entity.id())
+		local identity = overrideData.identity or {}
+		local species = overrideData.species or world.entitySpecies(entity.id())
+		local speciesFile = root.assetJson("/species/" .. species .. ".species")
+		itemDrop.parameters.fullPortrait = world.entityPortrait(entity.id(), "full")
+		itemDrop.parameters.preySpecies = species
+		itemDrop.parameters.preyDirectives = (overrideData.directives or "")..(identity.bodyDirectives or "")..(identity.hairDirectives or "")
+		itemDrop.parameters.preyColorMap = speciesFile.baseColorMap
+		identity.name = itemDrop.parameters.prey or ""
+		itemDrop.parameters.npcArgs = {
+			npcSpecies = overrideData.species,
+			npcType = "generictenant",
+			npcLevel = 1,
+			npcParam = {
+				wasPlayer = preyType == "player",
+				identity = identity,
+				scriptConfig = {
+					uniqueId = itemDrop.parameters.preyUUID
+				},
+				statusControllerSettings = {
+					statusProperties = {
+						sbqPreyEnabled = status.statusProperty("sbqPreyEnabled")
+					}
+				}
+			}
+		}
+		if preyType == "npc" then
+			itemDrop.parameters.npcArgs.npcType = world.callScriptedEntity(entity.id(), "npc.npcType")
+			itemDrop.parameters.npcArgs.npcLevel = world.callScriptedEntity(entity.id(), "npc.level")
+			itemDrop.parameters.npcArgs.npcSeed = world.callScriptedEntity(entity.id(), "npc.seed")
+		end
+		itemDrop.parameters.tooltipKind = "filledcapturepod"
+		itemDrop.parameters.tooltipFields = {
+			subtitle = (itemDrop.parameters.npcArgs.npcParam.wasPlayer and "Player") or itemDrop.parameters.npcArgs.npcType or
+				"generictenant",
+			collarNameLabel = "",
+			noCollarLabel = "",
+		}
+		itemDrop.parameters.tooltipFields.objectImage = itemDrop.parameters.fullPortrait or
+			root.npcPortrait("full", itemDrop.parameters.npcArgs.npcSpecies,
+				itemDrop.parameters.npcArgs.npcType or "generictenant",
+				itemDrop.parameters.npcArgs.npcLevel or 1, itemDrop.parameters.npcArgs.npcSeed, itemDrop.parameters.npcArgs.npcParam)
+		if itemDrop.parameters.pred then
+			itemDrop.parameters.tooltipFields.collarNameLabel = "Gurgled by: " .. itemDrop.parameters.pred
+		end
+		itemDrop.parameters.shortdescription = itemDrop.parameters.prey
+		itemDrop.parameters.inventoryIcon = world.entityPortrait(entity.id(), "bust")
+	end
+
+	return itemDrop
+end
+
+function getPreyEnabled(setting)
+	return sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))[setting]
 end

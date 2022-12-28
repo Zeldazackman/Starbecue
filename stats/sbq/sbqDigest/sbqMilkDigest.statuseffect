@@ -5,6 +5,8 @@
 	"effectConfig" : {
 		"effect" : "sbqMilkDigest",
 		"itemDrop" : "sbqMilkCarton",
+		"digestType" : "milkDigest",
+
 		"fatal" : true
 	},
 	"defaultDuration" : 5,

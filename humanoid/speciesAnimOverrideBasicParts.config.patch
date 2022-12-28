@@ -85,6 +85,8 @@
 	{ "op": "add", "path": "/partImages/breastsFront", "value": "/humanoid/<species><reskin>/breastsFront.png" },
 	{ "op": "add", "path": "/globalTagDefaults/breastsFrontMask", "value": "/humanoid/<species><reskin>/breastsFront.png" },
 
+	{ "op": "add", "path": "/partImages/breastsCover2", "value": "/humanoid/<species><reskin>/breastsCover.png" },
+
 	{ "op": "add", "path": "/animations/idle/breastsBack", "value": "idle" },
 	{ "op": "add", "path": "/animations/sit/breastsBack", "value": "idle" },
 	{ "op": "add", "path": "/animations/lay/breastsBack", "value": "idle" },
@@ -115,5 +117,50 @@
 
 	{ "op": "add", "path": "/braPartImages/breastsCover_underwear", "value": "/humanoid/any/underwear/<gender>BreastsCover.png" },
 	{ "op": "add", "path": "/braPartImages/breastsFront_underwear", "value": "/humanoid/any/underwear/breastsFront.png" },
-	{ "op": "add", "path": "/braPartImages/breastsBack_underwear", "value": "/humanoid/any/underwear/breastsBack.png" }
+	{ "op": "add", "path": "/braPartImages/breastsBack_underwear", "value": "/humanoid/any/underwear/breastsBack.png" },
+
+	{ "op": "add", "path": "/infusedParts", "value": {
+		"cock" : {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"pussy" : {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["flesh","primary"]
+			]
+		},
+		"ballsFront" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"ballsBack" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"breastsCover2" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"breastsFront" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		},
+		"breastsBack" :  {
+			"imagePath" : "any/sbqVoreParts",
+			"remapColors" : [
+				["primary","primary"]
+			]
+		}
+	} }
 ]

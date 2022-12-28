@@ -479,16 +479,16 @@
 
 								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "transformAllow",
+									"true" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 
 								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								}
 							}
 						}
@@ -505,15 +505,15 @@
 								"default" : { "randomDialogue" : [ "Now you're nice and safe.", "Hope you like how it feels in there." ] },
 								"transformed" : { "randomDialogue" : [ ["Seems like you're finished.", "I think you're finished changing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ ["You don't want to change?", "Come on, don't you want to be different?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "transformAllow",
+									"true" : { "randomDialogue" : [ ["You'll be a bit different after this is all done.", "These changes should be an improvement."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ ["You don't want to change?", "Come on, don't you want to be different?"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"egged" : { "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "randomDialogue" : [ ["Can you feel that egg forming around you?", "Soon your squirming won't do a thing."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqFemcumSoftDigest" : "struggle.location.race.personality.mood.sbqFemcumDigest",
 								"sbqFemcumDigest" : {
@@ -534,12 +534,17 @@
 							"next" : "mood",
 							"default" : { // mood
 								"next" : "getLocationEffect",
-								"default" : { "randomDialogue" : [ "Having a good time in there?", "Hope its comfortable." ] },
+								"default" : { "randomDialogue" : [
+									"Having a good time in there?", "Hope its comfortable.",
+									{"infusedSlot":true,"default":[
+										"I bet <infusedName> is enjoying that."
+									]}
+								]},
 								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "cumTransformAllow",
+									"true" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqCumDigest" : {
 									"next" : "cumDigestImmunity",
@@ -563,9 +568,9 @@
 								"default" : { "randomDialogue" : [ "Having a good time in there?", "Keep squirming.", "It feels so good having you in there~", "Friends are stored in the balls~" ] },
 								"transformed" : { "randomDialogue" : [ ["Heh, I can feel you sloshing around.", "Seems like you're not quite solid anymore."], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
-									"true" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "cumTransformAllow",
+									"true" : { "randomDialogue" : [ ["I can feel you getting goopy in there.", "I can feel you tarting to turn~"], {"add":"struggle.location.race.personality.mood.locationEffect"} ] },
+									"false" : { "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqCumDigest" : {
 									"next" : "cumDigestImmunity",
@@ -605,15 +610,15 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Now you can see the new you.", "You might look a bit different now." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Didn't want to become something like me?", "Didn't like the changes I was making?" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Didn't want to become something like me?", "Didn't like the changes I was making?" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "randomDialogue" : ["Ah... you want out... just a moment to reform.", "Ah ok, I'll reform you now.", "Fine, I'll reform you now.", "Alright, I'll reform you."]}
 								}
@@ -636,15 +641,15 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Now you can see the new you~", "You might look a bit different now~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Didn't want to become something like me?~", "Didn't like the changes I was making?~" ] },
-										"true" : { "randomDialogue" : [ "Didn't want to become something like me?~", "Didn't like the changes I was trying to make?~" ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Didn't want to become something like me?~", "Didn't like the changes I was making?~" ] },
+										"false" : { "randomDialogue" : [ "Didn't want to become something like me?~", "Didn't like the changes I was trying to make?~" ] }
 									},
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?~", "You don't like eggs?~" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Don't want to be trapped in an egg?~", "You don't like eggs?~" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "randomDialogue" : ["Ah... you want out... just a moment to reform~", "Oh alright, you can stop being fat for a little bit~", "I'll reform you if thats what you want, but you know I can just eat you again later~", "Alright, I'll reform you~"]}
 								}
@@ -667,15 +672,15 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Hehe... now you're like me.", "I-I t-think I like the new look." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "O-oh y-you didn't want to change?", "Do... do you not want to be like me?" ] },
-										"true" : { "randomDialogue" : [ "O-oh y-you didn't want to change?", "Do... do you not want to be like me?" ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "O-oh y-you didn't want to change?", "Do... do you not want to be like me?" ] },
+										"false" : { "randomDialogue" : [ "O-oh y-you didn't want to change?", "Do... do you not want to be like me?" ] }
 									},
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "S-so you don't want to be in an egg?", "S-so you don't like eggs?" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "S-so you don't want to be in an egg?", "S-so you don't like eggs?" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "randomDialogue" : ["H-here, let me reform you real quick.", "I...uhm... melted you... so I gotta reform you.", "I-I hope you had fun being a part of me...", "I-I don't think I can keep you forever..."]}
 								}
@@ -704,9 +709,9 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Now you can see the new you.", "You might look a bit different now." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Maybe I shouldn't change you.", "Maybe I should stop this." ] },
-										"true" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Maybe I shouldn't change you.", "Maybe I should stop this." ] },
+										"false" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
 									},
 									"egged" : { "randomDialogue" : "Mmm time to get this egg out." },
 									"digested" : { "randomDialogue" : ["Here, let me reform you real quick.", "You got digested so I gotta reform you.", "Ah, guess its time to reform you.", "Time to reform you I guess."]}
@@ -730,9 +735,9 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Now you can see the new you~", "You might look a bit different now~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Maybe I shouldn't change you.", "Maybe I should stop this." ] },
-										"true" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Maybe I shouldn't change you.", "Maybe I should stop this." ] },
+										"false" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
 									},
 									"egged" : { "randomDialogue" : "Mmm time to get this egg out~" },
 									"digested" : { "randomDialogue" : ["Here, let me reform you real quick~", "I can't let you spend tooooo long on my hips~", "Hey silly, its time for you to be more than pudge again~", "Welcome back to not being simply a part of me~"]}
@@ -756,9 +761,9 @@
 									},
 									"transformed" : { "randomDialogue" : [ "Hehe... now you're like me.", "I-I t-think I like the new look." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "M-maybe I shouldn't change you.", "M-maybe I should stop this." ] },
-										"true" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "M-maybe I shouldn't change you.", "M-maybe I should stop this." ] },
+										"false" : { "randomDialogue" : [ "Seems like I can't change you.", "For some reason this isn't working..." ] }
 									},
 									"egged" : { "randomDialogue" : "P-probably time to get this egg out." },
 									"digested" : { "randomDialogue" : ["H-here, let me reform you real quick.", "I...uhm... melted you... so I gotta reform you.", "I-I hope you had fun being a part of me...", "I-I don't think I can keep you forever..."]}
@@ -785,9 +790,9 @@
 									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Don't want to be trapped in an egg?", "You don't like eggs?" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							},
@@ -800,9 +805,9 @@
 									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "Don't want to be trapped in an egg?~", "You don't like eggs?~" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Don't want to be trapped in an egg?~", "You don't like eggs?~" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							},
@@ -815,9 +820,9 @@
 									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "S-so you don't want to be in an egg?", "S-so you don't like eggs?" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "S-so you don't want to be in an egg?", "S-so you don't like eggs?" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -873,9 +878,9 @@
 									"default" : { "randomDialogue" : [ "Ahh~ ahh that felt so good~", "Could you get back in and squirm some more?", "Mmm~ I thought you were pretty comfortable.", "I thought you liked it in there.", "Oh... alright." ] },
 									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "If only you stayed a bit longer...", "Ahh~ you didn't stay in long enough.", "Maybe you should stay in a little longer." ] },
-										"true" : { "randomDialogue" : [ "Hmmm why aren't you turning?", "Come on, don't you want to see what happens?" ] }
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [ "If only you stayed a bit longer...", "Ahh~ you didn't stay in long enough.", "Maybe you should stay in a little longer." ] },
+										"false" : { "randomDialogue" : [ "Hmmm why aren't you turning?", "Come on, don't you want to see what happens?" ] }
 									}
 								}
 							},
@@ -886,9 +891,9 @@
 									"default" : { "randomDialogue" : [ "Don't you know friends are supposed to be stored in the balls~", " Ahh~ Why'd you come out silly, it feels muuuch better to have you squirming in there~", "Mmm~ I thought you said you were comfortable~?", "Are you coming out just to squirm back in~?" ] },
 									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "If only you stayed a bit longer~", "Ahh~ you didn't stay in long enough~", "Maybe you should stay in a little longer~" ] },
-										"true" : { "randomDialogue" : [ "Hmmm why aren't you turning?", "Come on, don't you want to see what happens?", "Don't you want to see what its like to be my cum?~" ] }
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [ "If only you stayed a bit longer~", "Ahh~ you didn't stay in long enough~", "Maybe you should stay in a little longer~" ] },
+										"false" : { "randomDialogue" : [ "Hmmm why aren't you turning?", "Come on, don't you want to see what happens?", "Don't you want to see what its like to be my cum?~" ] }
 									}
 								}
 							},
@@ -899,9 +904,9 @@
 									"default" : { "randomDialogue" : [ ["<keysmash>", "*Horny Noise*"], "A-ahhhh~ Y-you're squirming so much!", "Fffff~ That feels so g-good... m-maybe get back in?", "Ahhh~" ] },
 									"transformed" : { "randomDialogue" : [ "O-oohhh that felt good... w-where'd you go?", ["Ahhhhh~ ...O-oh I turned you... into... <keysmash>", "Ahhhhh~ ...O-oh I turned you... into... *Flustered Noises*"] ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
 									}
 								}
 							}
@@ -918,9 +923,9 @@
 									"default" : { "randomDialogue" : [ "Hhhhhh I'm gonna cum...", "C-can't hold back much longer~", "Gonna blast you out with a load~", "Ahhhh feeels soooo goood~" ] },
 									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
-										"true" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
+										"false" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
 									}
 								}
 							},
@@ -931,9 +936,9 @@
 									"default" : { "randomDialogue" : [ "Don't you know friends are supposed to be stored in the balls~", " Ahh~ Why'd you come out silly, it feels muuuch better to have you squirming in there~", "Mmm~ I thought you said you were comfortable~?", "Are you coming out just to squirm back in~?" ] },
 									"transformed" : { "randomDialogue" : [ "Heh, now you're a blob of cum~", "Ahhh~ I came~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : {  "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
-										"true" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
+										"next" : "cumTransformAllow",
+										"true" : {  "randomDialogue" : [ "Ffff... came too early...", "C-couldn't hold back long enough..." ] },
+										"false" : { "randomDialogue" : [ "Ffffff... shouldn't you have turned...?", "Ahhh~ oh... you didn't turn..." ] }
 									}
 								}
 							},
@@ -944,9 +949,9 @@
 									"default" : { "randomDialogue" : [ ["<keysmash>", "*Horny Noise*"], "A-ahhhh~ Y-you're squirming so much! I-I can't hold back!", "Fffff~ That feels so g-good... m-maybe get back in?", "Ahhh~" ] },
 									"transformed" : { "randomDialogue" : [ "O-oohhh that felt good... w-where'd you go?", ["Ahhhhh~ ...O-oh I turned you... into... <keysmash>", "Ahhhhh~ ...O-oh I turned you... into... *Flustered Noises*"] ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.default"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [ "W-was something happening in there?", "Y-you look a bit more uh... drippy than normal.", "Y-you seem a bit more... white... than normal." ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.default"} ] } // shy type is, kinda unaware of Cum Transformation, so they wouldn't notice any difference between being immune and just being in there normally so mostly use those lines
 									}
 								}
 							}
@@ -1012,12 +1017,12 @@
 									},
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "It feels like... I'm changing?"],
 											{"check":{"predator":["sbqVaporeon","vaporeon"]},"add":["Its... its like I'm turning into goo?", "I'm being turned into a Vapreon..."]}
 										]},
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -1041,9 +1046,9 @@
 									},
 									"transformed" : { "randomDialogue" : ["I've been turned into a slime!", "Oh my... I'm a slime now", "I'm just a blob of slime now..."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : ["Ahh... I'm being turned into slime...", "Its like my limbs are turning into jelly..."]},
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : ["Ahh... I'm being turned into slime...", "Its like my limbs are turning into jelly..."]},
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -1065,11 +1070,11 @@
 									"default" : { "randomDialogue" : [ "All this cum sloshing around me~", "Ahhh... I'm stored in the balls~", "Stuck down here in your balls~", "This is so hot~" ] },
 									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ I'm sloshing around in here~", "Now I'm just a load of cum~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
 										]},
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -1091,11 +1096,11 @@
 									"default" : { "randomDialogue" : [ "Ahh~ your cock is squeezing tight around me~", "Ohhh~ Your shaft is squeezing so hard~", "This is so hot~" ] },
 									"transformed" : { "randomDialogue" : [ "O-oh my... I'm just cum now~", "Oooh~ Are you about to cum me out~?", "Now I'm just a load of cum~" ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [
+										"next" : "cumTransformAllow",
+										"true" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "I think... I think I'm turning white?", "I think... I'm starting to feel goopy?"]
 										]},
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -1118,16 +1123,16 @@
 										{"check":{"egged":true},"add":["You used an egg to transform me~", "Can't wait to hatch and see my new body~"]} // oh wait
 									]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [
 											["It feels kinda weird in here?", "I think... I think changing?", "I think... I'm starting to feel goopy?"],
 											{"check":{"egged":true},"add":["I think this egg is doing something?", "Is this egg changing me?"]} // yeah fuck I just realized
 										]},
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
+										"next" : "eggAllow",
 										"false" : { "randomDialogue" : [ "Is this... an egg?", "Are you making an egg around me?", "I'm gonna be trapped in an egg!" ] },
 										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
@@ -1261,55 +1266,12 @@
 		},
 
 		"sbqRandomizePreySettings" : {
-			"oralVore" : [true,false],
-			"tailVore" : [true,false],
-			"navelVore" : [true,false],
-			"absorbVore" : [true,false],
-
-			"cockVore" : [true,false],
-			"analVore" : [true,false],
-			"breastVore" : [true,false],
-			"unbirth" : [true,false],
-
-			"oralVoreEnable" : [true,false],
-			"tailVoreEnable" : [true,false],
-			"navelVoreEnable" : [true,false],
-			"absorbVoreEnable" : [true,false],
-
-			"cockVoreEnable" : [true,false],
-			"analVoreEnable" : [true,false],
-			"breastVoreEnable" : [true,false],
-			"unbirthEnable" : [true,false],
-
-			"digestImmunity" : [true,false],
-			"digestImmunityEnable" : [true,false],
-
-			"cumDigestImmunity" : [true,false],
-			"cumDigestImmunityEnable" : [true,false],
-
-			"femcumDigestImmunity" : [true,false],
-			"femcumDigestImmunityEnable" : [true,false],
-
-			"eggImmunity" : [true,false],
-			"eggImmunityEnable" : [true,false],
-
-			"transformImmunity" : [true,false],
-			"transformImmunityEnable" : [true,false],
-
-			"genderswapImmunity" : [true,false],
-			"genderswapImmunityEnable" : [true,false]
-
 		},
 		"sbqRandomizeSettings" : {
 			"oralVorePred" : [true,false],
 			"tailVorePred" : [true,false],
 			"navelVorePred" : [true,false],
 			"absorbVorePred" : [true,false],
-
-			"oralVorePredEnable" : [true,false],
-			"tailVorePredEnable" : [true,false],
-			"navelVorePredEnable" : [true,false],
-			"absorbVorePredEnable" : [true,false],
 
 			// we shouldn't have the randomly generated preds generate with nsfw stuff
 			// not everyone wants to stumble across an NPC with their dick out
@@ -1318,11 +1280,6 @@
 			//"analVorePred" : [true,false],
 			//"breastVorePred" : [true,false],
 			//"unbirthPred" : [true,false],
-
-			//"cockVorePredEnable" : [true,false],
-			//"analVorePredEnable" : [true,false],
-			//"breastVorePredEnable" : [true,false],
-			//"unbirthPredEnable" : [true,false],
 
 			"bellyEffectSlot" : [ "none", "heal", "digest", "softDigest"],
 			"wombEffectSlot" : [ "none", "heal", "digest", "softDigest"],
@@ -1340,7 +1297,47 @@
 	"statusControllerSettings" : {
 		"statusProperties" : {
 			"sbqDidVornyConvertCheck" : true,
-			"sbqPreyEnabled" : {}
+			"sbqPreyEnabled" : {
+				"preyEnabled" : true,
+
+				"digestAllow": true,
+				"softDigestAllow" : true,
+				"digestItemDropsAllow" : true,
+
+				"cumDigestAllow": true,
+				"cumSoftDigestAllow": true,
+				"cumDigestItemDropsAllow" : true,
+
+				"femcumDigestAllow": true,
+				"femcumSoftDigestAllow": true,
+				"femcumDigestItemDropsAllow" : true,
+
+				"milkDigestAllow": true,
+				"milkSoftDigestAllow" : true,
+				"milkDigestItemDropsAllow" : true,
+
+				"transformAllow": true,
+				"cumTransformAllow": true,
+				"genderswapAllow": true,
+				"eggAllow": true,
+
+				"held" : true,
+
+				"oralVore" : true,
+				"tailVore" : true,
+				"absorbVore" : true,
+				"navelVore" : true,
+
+				"analVore" : true,
+				"unbirth" : true,
+				"cockVore" : true,
+				"breastVore" : true,
+
+				"bellyInfusion" : true,
+				"cockInfusion" : true,
+				"pussyInfusion" : true,
+				"breastsInfusion" : true
+			}
 		}
 	}
 }

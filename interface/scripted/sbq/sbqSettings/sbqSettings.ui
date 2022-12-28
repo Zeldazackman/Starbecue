@@ -25,7 +25,9 @@
 							{ "type" : "scrollArea", "id" : "globalSettingsScrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [ { "type" : "panel", "style" : "flat", "children" : [
 								{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
 									[{ "type" : "checkBox", "id" : "displayDigest", "toolTip" : "Effects applied to prey may emit particles based on the effect" }, { "type" : "label", "text" : " Display Effect" } ],
-									[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ]
+									[{ "type" : "checkBox", "id" : "hammerspace", "toolTip" : "Some locations can keep being filled past their normal limits" }, { "type" : "label", "text" : " Hammerspace" } ],
+									[{ "type" : "checkBox", "id" : "predDigestItemDrops", "toolTip" : "Some digest effect may cause prey to drop a special item." }, { "type" : "label", "text" : " Digest Drops" } ]
+
 								]}
 							]}]}
 						]},
@@ -52,66 +54,48 @@
 				]}
 			]},
 			{ "type" : "tab", "id" : "globalPreySettings", "title" : "Prey", "icon" : "preySettings.png", "visible" : true, "color" : "ff00ff", "contents" : [
-				{"type" : "layout", "mode": "vertical", "children" : [
-					[//first collumn
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{ "type" : "label", "text" : "Questionable", "inline" : true },
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+				{"type" : "layout", "mode": "horizontal", "expandMode" : [1,0], "size" : [100,175], "children" : [
+					{ "type" : "panel", "style" : "convex", "mode" : "vertical", "size" : [80, 175], "expandMode" : [0, 0], "children" : [
+						{ "type" : "label", "text" : "Prey Preferences", "align" : "center" },
+						[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : " Prey Enabled" }],
+						{ "type" : "scrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [{ "type" : "panel", "style" : "flat", "children" : [{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
 							[{ "type" : "checkBox", "id" : "oralVore" }, { "type" : "label", "text" : " Oral Vore" } ],
 							[{ "type" : "checkBox", "id" : "tailVore" }, { "type" : "label", "text" : " Tail Vore" } ],
 							[{ "type" : "checkBox", "id" : "absorbVore" }, { "type" : "label", "text" : " Absorbtion" } ],
-							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : " Navel Vore" } ]
-						]}]},
-						// second collumn
-						{ "expandMode" : [2, 2]}, { "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{ "type" : "label", "text" : "Sexual", "inline" : true },
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+							[{ "type" : "checkBox", "id" : "navelVore" }, { "type" : "label", "text" : " Navel Vore" } ],
 							[{ "type" : "checkBox", "id" : "analVore" }, { "type" : "label", "text" : " Anal Vore" } ],
 							[{ "type" : "checkBox", "id" : "cockVore" }, { "type" : "label", "text" : " Cock Vore" } ],
 							[{ "type" : "checkBox", "id" : "breastVore" }, { "type" : "label", "text" : " Breast Vore" } ],
-							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : " Unbirth" } ]
-						]}]},
-						// third collumn
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-							{ "type" : "label", "text" : "Other", "inline" : true },
-							[{ "type" : "checkBox", "id" : "held" }, { "type" : "label", "text" : " Grabbed" } ]
-						]}]}
-					],
+							[{ "type" : "checkBox", "id" : "unbirth" }, { "type" : "label", "text" : " Unbirth" } ],
+							[{ "type" : "checkBox", "id" : "bellyInfusion", "toolTip" : "" }, { "type" : "label", "text" : " Belly TF" } ],
+							[{ "type" : "checkBox", "id" : "cockInfusion", "toolTip" : "" }, { "type" : "label", "text" : " Cock TF" } ],
+							[{ "type" : "checkBox", "id" : "pussyInfusion", "toolTip" : "" }, { "type" : "label", "text" : " Pussy TF" } ],
+							[{ "type" : "checkBox", "id" : "breastsInfusion", "toolTip" : "" }, { "type" : "label", "text" : " Boobsorb" } ]
+
+						]}]}]}
+					]},
 					[
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{ "type" : "label", "text" : "General", "inline" : true },
-							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[{ "type" : "checkBox", "id" : "preyEnabled", "toolTip" : "Enable or Disable being prey in general" }, { "type" : "label", "text" : " Prey Enabled" }],
-								[
-									{ "type" : "checkBox", "id" : "allowSoftDigest", "toolTip" : "Allow soft digestion when otherwise immune." },
-									{ "type" : "checkBox", "id" : "allowMilkSoftDigest", "toolTip" : "Allow milk soft digestion when otherwise immune." },
-									{ "type" : "checkBox", "id" : "allowCumSoftDigest", "toolTip" : "Allow cum soft digestion when otherwise immune." },
-									{ "type" : "checkBox", "id" : "allowFemcumSoftDigest", "toolTip" : "Allow femcum soft digestion when otherwise immune." },
-									{ "type" : "label", "text" : " Allow Soft Digest" }
-								]
-							]}
+						{ "type" : "panel", "style" : "convex", "mode" : "vertical", "size" : [100, 100], "expandMode" : [1, 0], "children" : [
+							{ "type" : "label", "text" : "Immunities", "align" : "center" },
+							{ "type" : "scrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [{ "type" : "panel", "style" : "flat", "children" : [{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								//[{ "type" : "checkBox", "id" : "digestOverallAllow", "toolTip" : "Allow digestion overall." },{ "type" : "checkBox", "id" : "softDigestOverallAllow", "toolTip" : "Allow soft digestion overall." }, { "type" : "checkBox", "id" : "digestOverallItemDropsAllow", "toolTip" : "Allow special drops upon being digested overall." }, { "type" : "label", "text" : " Overall Digestion" }],
+								[{ "type" : "checkBox", "id" : "digestAllow", "toolTip" : "Allow digestion." },{ "type" : "checkBox", "id" : "softDigestAllow", "toolTip" : "Allow soft digestion." }, { "type" : "checkBox", "id" : "digestItemDropsAllow", "toolTip" : "Allow special drops upon being digested." }, { "type" : "label", "text" : " Digestion" }],
+								[{ "type" : "checkBox", "id" : "cumDigestAllow", "toolTip" : "Allow cum digestion." }, { "type" : "checkBox", "id" : "cumSoftDigestAllow", "toolTip" : "Allow cum soft digestion." }, { "type" : "checkBox", "id" : "cumDigestItemDropsAllow", "toolTip" : "Allow special drops upon being cum digested." }, { "type" : "label", "text" : " Cum Digestion" }],
+								[{ "type" : "checkBox", "id" : "femcumDigestAllow", "toolTip" : "Allow femcum digestion." },{ "type" : "checkBox", "id" : "femcumSoftDigestAllow", "toolTip" : "Allow femcum soft digestion." }, { "type" : "checkBox", "id" : "femcumDigestItemDropsAllow", "toolTip" : "Allow special drops upon being femcum digested." }, { "type" : "label", "text" : " Femcum Digestion" }],
+								[{ "type" : "checkBox", "id" : "milkDigestAllow", "toolTip" : "Allow milk digestion." }, { "type" : "checkBox", "id" : "milkSoftDigestAllow", "toolTip" : "Allow milk soft digestion." }, { "type" : "checkBox", "id" : "milkDigestItemDropsAllow", "toolTip" : "Allow special drops upon being milk digested." }, { "type" : "label", "text" : " Milk Digestion" }],
+								[{ "type" : "checkBox", "id" : "cumTransformAllow", "toolTip" : "Allow cum transformation." }, { "type" : "label", "text" : " Cum Transformation" }],
+								[{ "type" : "checkBox", "id" : "transformAllow", "toolTip" : "Allow transformation effects." }, { "type" : "label", "text" : " Transformation" }],
+								[{ "type" : "checkBox", "id" : "genderswapAllow", "toolTip" : "Allow genderswap effects." }, { "type" : "label", "text" : " Genderswap" }],
+								[{ "type" : "checkBox", "id" : "eggAllow", "toolTip" : "Allow being trapped in an egg." }, { "type" : "label", "text" : " Egg Entrapment" }]
+							]}]}]}
 						]},
-						{ "type" : "panel", "style" : "convex", "children" : [
-							{ "mode" : "v", "expandMode" : [2, 2]},
-							{ "type" : "label", "text" : "Immunities", "inline" : true },
-							{ "type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
-								[{ "type" : "checkBox", "id" : "digestImmunity", "toolTip" : "Become immune to digestion" }, { "type" : "label", "text" : " Digestion" }],
-								[{ "type" : "checkBox", "id" : "cumDigestImmunity", "toolTip" : "Become immune to cum digestion" }, { "type" : "label", "text" : " Cum Digestion" }],
-								[{ "type" : "checkBox", "id" : "femcumDigestImmunity", "toolTip" : "Become immune to femcum digestion" }, { "type" : "label", "text" : " Femcum Digestion" }],
-								[{ "type" : "checkBox", "id" : "milkDigestImmunity", "toolTip" : "Become immune to milk digestion" }, { "type" : "label", "text" : " Milk Digestion" }],
-								[{ "type" : "checkBox", "id" : "cumTFImmunity", "toolTip" : "Become immune to cum transformation" }, { "type" : "label", "text" : " Cum Transformation" }],
-								[{ "type" : "checkBox", "id" : "transformImmunity", "toolTip" : "Become immune to transformation effects" }, { "type" : "label", "text" : " Transformation" }],
-								[{ "type" : "checkBox", "id" : "genderswapImmunity", "toolTip" : "Become immune to genderswap effects" }, { "type" : "label", "text" : " Genderswap" }],
-								[{ "type" : "checkBox", "id" : "eggImmunity", "toolTip" : "Become immune to being trapped in an egg" }, { "type" : "label", "text" : " Egg Entrapment" }]
-							]}
+						{ "type" : "panel", "style" : "convex", "mode" : "vertical", "size" : [100, 75], "expandMode" : [1, 0], "children" : [
+							{ "type" : "label", "text" : "Other", "align" : "center" },
+							{ "type" : "scrollArea", "thumbScrolling" : true, "scrollBars" : true, "scrollDirections" : [0, 1], "children" : [{ "type" : "panel", "style" : "flat", "children" : [{"type" : "layout", "mode" : "vertical", "spacing" : -1, "children" : [
+								[{ "type" : "checkBox", "id" : "held", "toolTip" : "Whether you can be grabbed, pinned, hugged, etc." }, { "type" : "label", "text" : " Grabbed" } ]
+							]}]}]}
 						]}
-					],
-					{ "type" : "label", "text" : "Choose What kind of ^yellow;Vore Actions^reset; can be performed on you, uncheck ^yellow;Prey Enabled^reset; if you don't want to be prey at all." }
+					]
 				]}
 			]},
 			{ "type" : "tab", "id" : "customizeTab", "title" : "", "icon" : "/interface/scripted/sbq/sbqSettings/customize.png", "color" : "ff00ff", "contents" : [

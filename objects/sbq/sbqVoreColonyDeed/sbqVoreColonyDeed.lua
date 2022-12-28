@@ -40,19 +40,30 @@ function init()
 		storage.occupier.tenants[index or 1].overrides.scriptConfig = scriptConfig
 	end)
 
-	message.setHandler("sbqSavePreySettings", function (_,_, settings, index)
+	message.setHandler("sbqSaveTenants", function (_,_, tenants)
+		for _, tenant in ipairs(storage.occupier.tenants) do
+			if tenant.uniqueId and world.findUniqueEntity(tenant.uniqueId):result() then
+				local entityId = world.loadUniqueEntity(tenant.uniqueId)
 
-		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
-			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
-			{statusProperties = { sbqPreyEnabled = settings}}
-		)
+				world.callScriptedEntity(entityId, "tenant.evictTenant")
+			end
+		end
+		storage.occupier.tenants = tenants
+
+		setTenantsData(storage.occupier)
+		sbq.timer("doRespawn", 2, function()
+			respawnTenants()
+		end)
+	end)
+
+	message.setHandler("sbqSavePreySettings", function (_,_, settings, index)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.sbqPreyEnabled = settings
+	end)
+	message.setHandler("sbqSaveDigestedPrey", function (_,_, prey, index)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.sbqStoredDigestedPrey = prey
 	end)
 	message.setHandler("sbqSaveAnimOverrideSettings", function (_,_, settings, index)
-
-		storage.occupier.tenants[index or 1].overrides.statusControllerSettings = sb.jsonMerge(
-			storage.occupier.tenants[index or 1].overrides.statusControllerSettings or {},
-			{statusProperties = { speciesAnimOverrideSettings = settings}}
-		)
+		storage.occupier.tenants[index or 1].overrides.statusControllerSettings.statusProperties.speciesAnimOverrideSettings = settings
 	end)
 
 	message.setHandler("sbqDeedInteract", function (_,_, args)
@@ -191,9 +202,11 @@ function setTenantsData(occupier)
 		tenant.overrides = tenant.overrides or {}
 		tenant.overrides.scriptConfig = tenant.overrides.scriptConfig or {}
 
-		tenant.uniqueId = npcConfig.scriptConfig.uniqueId
+		tenant.uniqueId = npcConfig.scriptConfig.uniqueId or sb.makeUuid()
+		tenant.overrides.scriptConfig.uniqueId = tenant.uniqueId
 		tenant.overrides.scriptConfig.sbqSettings = npcConfig.scriptConfig.sbqDefaultSettings
-		tenant.overrides.statusControllerSettings = npcConfig.statusControllerSettings
+		tenant.overrides.statusControllerSettings = npcConfig.statusControllerSettings or {}
+		tenant.overrides.statusControllerSettings.statusProperties = tenant.overrides.statusControllerSettings.statusProperties or {}
 
 		tenant.seed = sb.makeRandomSource():randu64()
 	end
@@ -410,7 +423,11 @@ function spawn(tenant, i)
 		entityId = world.spawnMonster(tenant.type, position, overrides)
 
 	else
-		sb.logInfo("colonydeed can't be used to spawn entity type '" .. tenant.spawn .. "'")
+		if tenant.spawn then
+			sb.logInfo("colonydeed can't be used to spawn entity type '" .. tenant.spawn .. "'")
+		else
+			sb.logInfo("no spawn type")
+		end
 		return nil
 	end
 

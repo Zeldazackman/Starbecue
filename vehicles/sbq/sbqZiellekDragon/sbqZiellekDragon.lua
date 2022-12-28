@@ -40,7 +40,7 @@ function sbq.letout(id)
 	elseif location == "shaft" then
 		return sbq.doTransition("cockEscape", {id = id})
 
-	elseif location == "ballsL" or location == "ballsR" then
+	elseif location == "ballsL" or location == "ballsR" or location == "balls" then
 		return sbq.moveToLocation({id = id}, {location = "shaft"})
 	elseif location == "womb" then
 		return sbq.doTransition("unbirthEscape", {id = id})

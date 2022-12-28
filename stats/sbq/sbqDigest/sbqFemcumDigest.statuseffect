@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqFemcumDigest",
+		"digestType" : "femcumDigest",
+
 		"fatal" : true
 	},
 	"defaultDuration" : 5,

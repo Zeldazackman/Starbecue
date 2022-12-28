@@ -1324,15 +1324,15 @@
 								"sbqHeal" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Heal up, dear. My womb is your private sanctuary.", "Mmm, yes... Get yourself nice and coated in my healing fluids.", "There's no rush, dear. I've got all the time in the world.", "Hush... No one can hurt you..."] },
 								"transformed" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
-									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
+									"next" : "transformAllow",
+									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
+									"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
 								},
 								"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Learned how to do this from a Yoshi. No, I'm not going to elaborate on how."] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Eggs are fun, don't you think?", "Don't worry. I won't drop you into a bottomless pit. Even though he still remembers.", "Heh, doggo make eggo~", "It's fine. My eggs aren't nearly as possessive as I am."] },
-									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Eggs are fun, don't you think?", "Don't worry. I won't drop you into a bottomless pit. Even though he still remembers.", "Heh, doggo make eggo~", "It's fine. My eggs aren't nearly as possessive as I am."] },
+									"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqFemcumSoftDigest" : {
 									"next" : "femcumDigestImmunity",
@@ -1364,15 +1364,15 @@
 								"sbqHeal" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Stay calm... I'm here for you.", "I'll be your shield as long as you need.", "Your adventure isn't going anywhere.", "Let my steady heartbeat and occasional gurgle help you drift away..."] },
 								"transformed" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
-									"true" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
+									"next" : "transformAllow",
+									"true" : { "portrait" : ["Tired.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
+									"false" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
 								},
 								"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Learned how to do this from a Yoshi. No, I'm not going to elaborate on how."] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Sadly, I lack a giant frying pan.", "It's tempting to swallow the egg whole once I'm done. I'm that hungry.", "I better start cooking up some waffles.", "Don't be afraid. I won't yeet you at any giant frogs."] },
-									"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.default.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "portrait" : ["Tired.png"], "randomDialogue" : ["Sadly, I lack a giant frying pan.", "It's tempting to swallow the egg whole once I'm done. I'm that hungry.", "I better start cooking up some waffles.", "Don't be afraid. I won't yeet you at any giant frogs."] },
+									"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.default.locationEffect"} ] }
 								},
 								"sbqFemcumSoftDigest" : {
 									"next" : "femcumDigestImmunity",
@@ -1404,15 +1404,15 @@
 								"sbqHeal" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Rest your body, dear. I've got you~", "Ooh~ That was a nice, strong kick~", "I'll always be your private getaway~", "Mmhm... <entityname>..."] },
 								"transformed" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Welcome to the pack.", "Should be done now.", "Can't go wrong with more borks.", "One brand new ^pink;sexy^reset; hellhound, ready to claim the world~"] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
-									"true" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
+									"next" : "transformAllow",
+									"true" : { "portrait" : ["OwO.png"], "randomDialogue" : ["I'm sprinkling a bit of my essence on you.", "I'm slowly adding you to the pack. It's not permanent.", "Won't be long before you're just like me.", "I think you're gonna look ^pink;smoking hot^reset; once I'm done~"] },
+									"false" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Staying true to yourself is a good trait.", "This works, too. Keep wiggling anyway.", "I'll lay off my personal spices for now. I couldn't resist~", "You'd make for a sexy hellhound, but I won't force you."] }
 								},
 								"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Learned how to do this from a Yoshi. No, I'm not going to elaborate on how."] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "portrait" : ["OwO.png"], "randomDialogue" : ["One portable sauna, coming up~", "The feeling of a smooth egg coming out is just~ Mm~", "Maybe I should influence the egg to keep you for a lot longer, too~", "Woof, this is gonna be good~"] },
-									"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "portrait" : ["OwO.png"], "randomDialogue" : ["One portable sauna, coming up~", "The feeling of a smooth egg coming out is just~ Mm~", "Maybe I should influence the egg to keep you for a lot longer, too~", "Woof, this is gonna be good~"] },
+									"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqFemcumSoftDigest" : {
 									"next" : "femcumDigestImmunity",
@@ -1444,15 +1444,15 @@
 								"sbqHeal" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Relax. You deserve this.", "^red;I will always protect you.", "^red;Ssh... It's fine.", "^red;Let your enemies try me. They will fail."] },
 								"transformed" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;You're like me now.", "^red;Safety in numbers.", "^red;We both bork now.", "^red;A new you."] },
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;You're slowly changing now.", "^red;A bit of me to protect you.", "^red;I'm reshaping your heat.", "^red;You'll be hot. I promise."] },
-									"true" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Immune? That's okay.", "^red;Sorry, can't help it.", "^red;Keep squirming, anyway. Feels good.", "^red;You're too pure. I love it."]}
+									"next" : "transformAllow",
+									"true" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;You're slowly changing now.", "^red;A bit of me to protect you.", "^red;I'm reshaping your heat.", "^red;You'll be hot. I promise."] },
+									"false" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Immune? That's okay.", "^red;Sorry, can't help it.", "^red;Keep squirming, anyway. Feels good.", "^red;You're too pure. I love it."]}
 								},
 								"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["^red;Smash Bros 64. Yoshi. Murrr."] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Heh. Egg.", "^red;Hope this one doesn't explode.", "^red;Makes me feel like a Pokémon.", "^red;A good look for you."] },
-									"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
+									"next" : "eggAllow",
+									"true" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Heh. Egg.", "^red;Hope this one doesn't explode.", "^red;Makes me feel like a Pokémon.", "^red;A good look for you."] },
+									"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggle.location.race.personality.mood.locationEffect"} ] }
 								},
 								"sbqFemcumSoftDigest" : {
 									"next" : "femcumDigestImmunity",
@@ -1736,15 +1736,15 @@
 									},
 									"transformed" : { "portrait" : ["Joyful.png"], "randomDialogue" : ["Damn, that's a good look for you.", "I hope you like having a bit of me within you temporarily.", "It's not permanent, so don't worry.", "Heh, now you can really bork properly."] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Not interested in joining the pack?", "Scared? Don't be, it's not permanent.", "You would've been so sexy, too...", "I can understand that. Let me know next time."] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Not interested in joining the pack?", "Scared? Don't be, it's not permanent.", "You would've been so sexy, too...", "I can understand that. Let me know next time."] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Yoshi would be proud, I think."] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I'm not a Pokémon Trainer. I won't jam you in a box if your IVs are bad.", "Not interested? I totally wouldn't yeet or eat the egg.", "Don't want to be doubly trapped? I can respect that.", "Damn, I had so many hatchday jokes ready."] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : ["I'm not a Pokémon Trainer. I won't jam you in a box if your IVs are bad.", "Not interested? I totally wouldn't yeet or eat the egg.", "Don't want to be doubly trapped? I can respect that.", "Damn, I had so many hatchday jokes ready."] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "portrait" : ["Happy.png"], "randomDialogue" : ["Based on your sloshing, you want out. I'll gladly reform you.", "You've still got some punch in your current form. Let me reform you properly.", "Mmm-ngg, keep flowing in that direction and--", "You need out? Alright."]}
 								},
@@ -1759,15 +1759,15 @@
 									},
 									"transformed" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect", // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect"
 								},
@@ -1782,15 +1782,15 @@
 									},
 									"transformed" : { "portrait" : ["Joyful.png"], "randomDialogue" : ["Damn, you look even hotter now.", "I hope you like having a bit of me with you, you hot dog.", "It's not permanent~", "Heh, now you can really bork~"] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Yoshi would be proud, I think."] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : "letout.voreType.struggleTrigger.race.personality.default.locationEffect",
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "portrait" : ["OwO.png"], "randomDialogue" : ["Uunf~ Damn, I think I'm about to--", "Ugh, I never should've trusted that discount aphrodisiac. Side effects include sudden--", "Mmm, I've got a lot of steam built up this time~ Time to let loose~", "I'd keep you for even longer, sweetie, but I'm afraid you'd disappear into thin air. Time to reform you~"]}
 								},
@@ -1805,15 +1805,15 @@
 									},
 									"transformed" : { "portrait" : ["Joyful.png"], "randomDialogue" : ["^red;Hot damn. You look good.", "^red;See? It's not bad.", "^red;It's temporary. Milk helps.", "^red;My friend will be jealous."] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;No changes? I understand.", "^red;You would've looked sexy.", "^red;Ask again later if you like.", "^red;Ow. Tell me next time."] },
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;No changes? I understand.", "^red;You would've looked sexy.", "^red;Ask again later if you like.", "^red;Ow. Tell me next time."] },
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : { "portrait" : ["Blep.png"], "randomDialogue" : ["Yoshi would be proud, I think."] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;No egg? Alright.", "^red;I see. Not in the mood?", "^red;Another day, another egg.", "^red;I wouldn't nickname you. You're not a Pokémon."] },
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;No egg? Alright.", "^red;I see. Not in the mood?", "^red;Another day, another egg.", "^red;I wouldn't nickname you. You're not a Pokémon."] },
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									},
 									"digested" : { "portrait" : ["Mad.png"], "randomDialogue" : ["^red;Good flow. I'll reform you.", "^red;Done in there? I'll push, then.", "^red;Longer would've been nice...", "^red;Okay. Make sure to heal."]}
 								}
@@ -2052,9 +2052,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"hungry" : { // mood
@@ -2079,9 +2079,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"horny" : { // mood
@@ -2106,9 +2106,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry~"]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no~?"]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no~?"]},
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"friendly" : { // mood
@@ -2133,9 +2133,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, no?"]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, no?"]},
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -2163,9 +2163,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
 									}
 								},
 								"hungry" : { // mood
@@ -2184,9 +2184,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no?"]},
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
 									}
 								},
 								"horny" : { // mood
@@ -2205,9 +2205,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, sorry~"]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no~?"]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["Mm, no~?"]},
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.default"} ] }
 									}
 								},
 								"friendly" : { // mood
@@ -2226,9 +2226,9 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, sorry."]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, no?"]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : ["^red;Mm, no?"]},
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -2264,19 +2264,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"hungry" : {
@@ -2294,19 +2294,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"horny" : {
@@ -2324,19 +2324,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"friendly" : {
@@ -2354,19 +2354,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -2398,19 +2398,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Happy.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"hungry" : {
@@ -2428,19 +2428,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Tired.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"horny" : {
@@ -2458,19 +2458,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["OwO.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								},
 								"friendly" : {
@@ -2488,19 +2488,19 @@
 									},
 									"transformed" : { "portrait" : ["Confused.png"], "randomDialogue" : [ "Mm, sorry." ] },
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "transformAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									},
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "portrait" : ["Confused.png"], "randomDialogue" : [
+										"next" : "eggAllow",
+										"true" : { "portrait" : ["Confused.png"], "randomDialogue" : [
 											["Mm, no?"]
 										]},
-										"true" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"false" : { "portrait" : ["Mad.png"], "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -2942,9 +2942,6 @@
 		// the pred prefrences and general settings for this NPC are set here!
 		// set each one to the value you want, if there are any that are unset, they'll just go to the default values
 
-		// the Enable sub setting is what would allow the NPC to decide itself if it can turn check or uncheck the check for its setting
-		// for example, if "[setting]Enable" was set to true, the NPC would change the value of "[setting]" in its scripts
-		// if "[setting]Enable" is unchecked, "[setting]" will always stay at whatever its current value is whether it was defined in this file, or changed in the deed menu
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
@@ -3002,14 +2999,14 @@
 			"absorbVore" : false,
 			"cockVore" : false,
 
-			"transformImmunity": true,
-			"digestImmunity" : true,
-			"cumDigestImmunity" : true,
-			"femcumDigestImmunity" : true,
-			"milkDigestImmunity" : true,
-			"genderswapImmunity" : true,
-			"cumTFImmunity" : true,
-			"eggImmunity": true
+			"transformAllow": false,
+			"digestAllow": false,
+			"cumDigestAllow": false,
+			"femcumDigestAllow": false,
+			"milkDigestAllow": false,
+			"genderswapAllow": false,
+			"cumTransformAllow": false,
+			"eggAllow": false
 		}
 	},
 	"statusControllerSettings" : {
@@ -3032,24 +3029,21 @@
 			// the prey prefrences for this NPC are set here!
 			// set each one to the value you want, if there are any that are unset, they'll just go to the default values
 
-			// the Enable sub setting is what would allow the NPC to decide itself if it can turn check or uncheck the check for its setting
-			// for example, if "[setting]Enable" was set to true, the NPC would change the value of "[setting]" in its scripts
-			// if "[setting]Enable" is unchecked, "[setting]" will always stay at whatever its current value is whether it was defined in this file, or changed in the deed menu
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,
 
-				"digestImmunity": true,
-				"cumDigestImmunity" : true,
-				"milkDigestImmunity" : true,
+				"digestAllow": false,
+				"cumDigestAllow": false,
+				"milkDigestAllow": false,
 
-				"allowSoftDigest": true,
-				"allowCumSoftDigest" : true,
-				"allowMilkSoftDigest" : true,
+				"softDigestAllow": true,
+				"cumSoftDigestAllow" : true,
+				"milkSoftDigestAllow" : true,
 
-				"transformImmunity": true,
-				"genderswapImmunity" : true,
-				"cumTFImmunity" : true,
-				"eggImmunity": true,
+				"transformAllow": false,
+				"genderswapAllow": false,
+				"cumTransformAllow": false,
+				"eggAllow": false,
 
 				"held": true,
 
@@ -3061,7 +3055,12 @@
 				"analVore": true,
 				"unbirth": true,
 				"cockVore": false,
-				"breastVore": true
+				"breastVore": true,
+
+				"bellyInfusion" : true,
+				"cockInfusion" : true,
+				"pussyInfusion" : true,
+				"breastsInfusion" : true
 			}
 		}
 	},

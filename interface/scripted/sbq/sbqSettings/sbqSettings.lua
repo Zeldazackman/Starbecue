@@ -37,6 +37,8 @@ function sbq.getInitialData()
 	sbq.lastSpecies = sbq.sbqCurrentData.species
 	sbq.lastType = sbq.sbqCurrentData.type
 
+	sbq.storedDigestedPrey = status.statusProperty("sbqStoredDigestedPrey") or {}
+
 	sbq.predatorEntity = sbq.sbqCurrentData.id
 
 	sbq.animOverrideSettings = sb.jsonMerge(root.assetJson("/animOverrideDefaultSettings.config"), status.statusProperty("speciesAnimOverrideSettings") or {})
@@ -47,7 +49,7 @@ function sbq.getInitialData()
 end
 
 function sbq.getPlayerOccupantHolderData()
-	sbq.getSpeciesConfig(player.species())
+	sbq.getSpeciesConfig(player.species(), sbq.sbqSettings.global)
 	sbq.predatorConfig = sbq.speciesConfig.sbqData
 end
 
@@ -68,7 +70,10 @@ function init()
 		if sbq.sbqCurrentData.species == "sbqOccupantHolder" then
 			sbq.getPlayerOccupantHolderData()
 		else
-			sbq.predatorConfig = root.assetJson("/vehicles/sbq/"..sbq.sbqCurrentData.species.."/"..sbq.sbqCurrentData.species..".vehicle").sbqData or {}
+			sbq.predatorConfig = root.assetJson("/vehicles/sbq/" .. sbq.sbqCurrentData.species .. "/" .. sbq.sbqCurrentData.species .. ".vehicle").sbqData or {}
+			for location, data in pairs(sbq.predatorConfig.locations or {}) do
+				sbq.predatorConfig.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+			end
 		end
 		sbq.predatorSettings = sb.jsonMerge(sb.jsonMerge(sb.jsonMerge(sbq.config.defaultSettings, sbq.predatorConfig.defaultSettings or {}), sbq.sbqSettings[sbq.sbqCurrentData.species] or {}), sbq.globalSettings)
 	else
@@ -192,9 +197,7 @@ function init()
 
 	escapeValue:setText(tostring(sbq.globalSettings.escapeDifficulty or 0))
 	sbq.numberBoxColor(escapeValue, sbq.overrideSettings.escapeDifficultyMin, sbq.overrideSettings.escapeDifficultyMax)
-
-	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
-	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+	sbq.refreshButtons()
 	sbq.checkLockedSettingsButtons("animOverrideSettings", "animOverrideOverrideSettings", "changeAnimOverrideSetting")
 
 	if mainTabField.tabs.globalPreySettings ~= nil then
@@ -204,6 +207,11 @@ function init()
 	end
 end
 local init = init
+
+function sbq.refreshButtons()
+	sbq.checkLockedSettingsButtons("predatorSettings", "overrideSettings", "changePredatorSetting")
+	sbq.checkLockedSettingsButtons("globalSettings", "overrideSettings", "changeGlobalSetting")
+end
 
 function sbq.checkLockedSettingsButtons(settings, override, func)
 	for setting, value in pairs(sbq[settings] or {}) do
@@ -225,6 +233,9 @@ function sbq.checkLockedSettingsButtons(settings, override, func)
 				button:setChecked(value)
 				function button:onClick()
 					sbq[func](setting, button.checked)
+					if type(settingsButtonScripts[setting]) == "function" then
+						settingsButtonScripts[setting](setting, button.checked)
+					end
 				end
 			end
 		end
@@ -259,33 +270,12 @@ function sbq.changeGlobalSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 	sbq.autoSetSettings(settingname, settingvalue)
 
-	-- a hack until I improve how sided locations are handled
-	if (settingname:sub(1, #"balls") == "balls") then
-		sbq.globalSettings[settingname:gsub("balls", "ballsL")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
-		sbq.globalSettings[settingname:gsub("balls", "ballsR")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
-	elseif (settingname:sub(1, #"breasts") == "breasts") then
-		sbq.globalSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
-		sbq.globalSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
-	end
 	sbq.saveSettings()
 end
 
 function sbq.changePredatorSetting(settingname, settingvalue)
 	sbq.predatorSettings[settingname] = settingvalue
 	sbq.autoSetSettings(settingname, settingvalue)
-
-	-- a hack until I improve how sided locations are handled
-	if (settingname:sub(1, #"balls") == "balls") then
-		sbq.predatorSettings[settingname:gsub("balls", "ballsL")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("balls", "ballsR")] = settingvalue
-	elseif (settingname:sub(1, #"breasts") == "breasts") then
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsL")] = settingvalue
-		sbq.predatorSettings[settingname:gsub("breasts", "breastsR")] = settingvalue
-	end
 
 	sbq.saveSettings()
 end
@@ -457,7 +447,7 @@ if speciesLayout ~= nil then
 				local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 				local resultEffect = sbq.speciesFile.customAnimStatus or "speciesAnimOverride"
 				if resultEffect == currentEffect then
-					world.sendEntityMessage(player.id(), "refreshAnimOverrides", true)
+					world.sendEntityMessage(player.id(), "refreshAnimOverrides")
 				else
 					status.clearPersistentEffects("speciesAnimOverride")
 					status.setPersistentEffects("speciesAnimOverride", { resultEffect })
@@ -813,3 +803,7 @@ if speciesLayout ~= nil then
 end
 
 --------------------------------------------------------------------------------------------------
+
+function sbq.saveDigestedPrey()
+	status.setStatusProperty("sbqStoredDigestedPrey", sbq.storedDigestedPrey)
+end

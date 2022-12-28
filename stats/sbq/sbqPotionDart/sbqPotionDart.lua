@@ -30,8 +30,8 @@ function uninit()
 end
 
 function sbq.transform(data)
-	local immune = getPreyEnabled().transformImmunity
-	if immune then return effect.expire() end
+	local allow = getPreyEnabled().transformAllow
+	if not allow then return effect.expire() end
 
 	world.sendEntityMessage(entity.id(), "sbqMysteriousPotionTF", data, 5*60)
 	world.spawnProjectile("sbqWarpInEffect", mcontroller.position(), entity.id(), { 0, 0 }, true)
@@ -39,8 +39,8 @@ function sbq.transform(data)
 end
 
 function sbq.genderswap()
-	local immune = getPreyEnabled().genderswapImmunity
-	if immune then return effect.expire() end
+	local allowed = getPreyEnabled().genderswapAllow
+	if not allowed then return effect.expire() end
 
 	local table = {
 		male = "female",
@@ -59,7 +59,7 @@ function sbq.genderswap()
 	local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 	local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
 	if resultEffect == currentEffect then
-		world.sendEntityMessage(entity.id(), "refreshAnimOverrides", true)
+		world.sendEntityMessage(entity.id(), "refreshAnimOverrides" )
 	else
 		status.clearPersistentEffects("speciesAnimOverride")
 		status.setPersistentEffects("speciesAnimOverride", { resultEffect })
@@ -70,16 +70,16 @@ function sbq.genderswap()
 end
 
 function sbq.reversion()
-	local immune = getPreyEnabled().transformImmunity
-	if immune then return effect.expire() end
+	local allow = getPreyEnabled().transformAllow
+	if not allow then return effect.expire() end
 
 	world.sendEntityMessage(entity.id(), "sbqEndMysteriousPotionTF")
 	animator.playSound("activate")
 end
 
 function sbq.vehiclePred(vehicle)
-	local immune = getPreyEnabled().transformImmunity
-	if immune then return effect.expire() end
+	local allow = getPreyEnabled().transformAllow
+	if not allow then return effect.expire() end
 
 	local currentData = status.statusProperty("sbqCurrentData") or {}
 	sbq.addRPC(world.sendEntityMessage(entity.id(), "sbqLoadSettings", vehicle), function (settings)

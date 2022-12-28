@@ -24,7 +24,7 @@
 		"position": [0, 3]	// in blocks
 	},
 
-	"scripts" : [ "/items/sbq/sbqCore.lua" ]
+	"scripts" : [ "/items/sbq/predCore/sbqCore.lua" ]
 	//"builder" : "/objects/sbq/sbqSpawners/sbqItemBuilder.lua"
 
   }

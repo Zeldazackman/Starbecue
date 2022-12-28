@@ -947,6 +947,18 @@
 		},
 		{
 			"op" : "add",
+			"path" : "/animatedParts/parts/breastsCover2",
+			"value" : {
+				"properties": {
+					"centered": true,
+					"zLevel": 0.011,
+					"transformationGroups": ["breasts_offset", "chestbob", "breastsbob", "globalOffset", "globalOffset2", "globalScale", "globalScale2", "globalRotation", "globalRotation2", "sitrotation", "sitrotation2"],
+					"image" : "<partImage><colorRemap><customDirectives><bodyDirectives><breastsVisible><directives>"
+				}
+			}
+		},
+		{
+			"op" : "add",
 			"path" : "/animatedParts/parts/breastsCover_underwear",
 			"value" : {
 				"properties": {

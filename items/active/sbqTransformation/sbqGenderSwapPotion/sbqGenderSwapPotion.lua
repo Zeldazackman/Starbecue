@@ -38,7 +38,7 @@ function update(dt, fireMode, shiftHeld)
 			local currentEffect = (status.getPersistentEffects("speciesAnimOverride") or {})[1]
 			local resultEffect = speciesFile.customAnimStatus or "speciesAnimOverride"
 			if resultEffect == currentEffect then
-				world.sendEntityMessage(player.id(), "refreshAnimOverrides", true)
+				world.sendEntityMessage(player.id(), "refreshAnimOverrides" )
 			else
 				status.clearPersistentEffects("speciesAnimOverride")
 				status.setPersistentEffects("speciesAnimOverride", { resultEffect })

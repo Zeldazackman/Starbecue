@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqFemcumDigestDisplay",
+		"digestType" : "femcumDigest",
+
 		"fatal" : true,
 		"displayDamage" : true
 	},
