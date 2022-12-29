@@ -58,15 +58,15 @@
 
 		},
 		"sbqOverridePreyEnabled" : {
-			"digestImmunity": true,
-			"transformImmunity": true,
-			"cumDigestImmunity": true,
+			"digestAllow": false,
+			"transformAllow": false,
+			"cumDigestAllow": false,
 			"cumTFImmunity":true,
-			"genderswapImmunity": true,
+			"genderswapAllow": false,
 
 			"preyEnabled": false,
 
-			"eggImmunity": false,
+			"eggAllow": true,
 			"held": false,
 			"oralVore": true,
 			"tailVore": true,
@@ -219,14 +219,14 @@
 			"sbqPreyEnabled" : {
 				"preyEnabled": false,
 
-				"digestImmunity": true,
-				"cumDigestImmunity": true,
-				"milkDigestImmunity": true,
-				"transformImmunity": true,
-				"cumTFImmunity": true,
-				"genderswapImmunity" : true,
+				"digestAllow": false,
+				"cumDigestAllow": false,
+				"milkDigestAllow": false,
+				"transformAllow": false,
+				"cumTransformAllow": false,
+				"genderswapAllow": false,
 
-				"eggImmunity": false,
+				"eggAllow": true,
 				"held": false,
 				"oralVore": true,
 				"tailVore": true,

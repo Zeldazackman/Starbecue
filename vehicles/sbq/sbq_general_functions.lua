@@ -50,8 +50,13 @@ function sbq.randomChance(percent)
 end
 
 function sbq.checkSettings(checkSettings)
-	for setting, value in pairs(checkSettings) do
-		if type(value) == "table" then
+	for setting, value in pairs(checkSettings or {}) do
+		if (type(sbq.settings[setting]) == "table") and sbq.settings[setting].name ~= nil then
+			if not value then return false
+			elseif type(value) == "table" then
+				if not sbq.checkTable(value, sbq.settings[setting]) then return false end
+			end
+		elseif type(value) == "table" then
 			local match = false
 			for i, value in ipairs(value) do if (sbq.settings[setting] or false) == value then
 				match = true
@@ -59,6 +64,17 @@ function sbq.checkSettings(checkSettings)
 			end end
 			if not match then return false end
 		elseif (sbq.settings[setting] or false) ~= value then return false
+		end
+	end
+	return true
+end
+
+function sbq.checkTable(check, checked)
+	for k, v in pairs(check) do
+		if type(v) == "table" then
+			if not sbq.checkTable(v, (checked or {})[k]) then return false end
+		elseif v == true and type((checked or {})[k]) ~= "boolean" and ((checked or {})[k]) ~= nil then
+		elseif not (v == (checked or {})[k] or false) then return false
 		end
 	end
 	return true
@@ -82,7 +98,7 @@ function sbq.occupantArray( maybearray )
 		if maybearray.location and maybearray.failOnFull ~= nil then
 			if maybearray.failOnFull then
 				if (maybearray.failOnFull ~= true) and (sbq.occupants[maybearray.location] >= maybearray.failOnFull) then return maybearray.failTransition
-				elseif sbq.locationSpaceAvailable(maybearray.location) <= 0 then return maybearray.failTransition end
+				elseif not sbq.getSidedLocationWithSpace(maybearray.location, 1) then return maybearray.failTransition end
 			else
 				if sbq.occupants[maybearray.location] <= 0 then return maybearray.failTransition end
 			end
@@ -288,25 +304,55 @@ local copyList = {
 	"eggify"
 }
 
+require("/scripts/SBQ_species_config.lua")
+
 function sbq.initLocationEffects()
-	for location, data in pairs(sbq.sbqData.locations) do
-		if data.sided then
-			if not sbq.sbqData.locations[location.."L"] then
-				sbq.sbqData.locations[location.."L"] = {}
+	for location, data in pairs(sbq.sbqData.locations or {}) do
+		local data = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, data)
+		local infusedLocation
+		local item = (sbq.settings or {})[location .. "InfusedItem"]
+		if item and data.infusion then
+			local infuseSpecies
+			if ((((item.parameters or {}).npcArgs or {}).npcParam or {}).scriptConfig or {}).uniqueId then
+				infuseSpecies = item.parameters.npcArgs.npcSpecies
+			else
+				infuseSpecies = (item.parameters or {}).species
 			end
-			if not sbq.sbqData.locations[location.."R"] then
-				sbq.sbqData.locations[location.."R"] = {}
-			end
-			for name, copy in pairs(data) do
-				if name ~= "combine" and name ~= "sided" then
-					if not sbq.sbqData.locations[location.."L"][name] then
-						sbq.sbqData.locations[location.."L"][name] = copy
+			if infuseSpecies then
+				local sbqData = sbq.getSbqData(infuseSpecies) or {}
+				infusedLocation = (sbqData.locations or {})[location]
+				if infusedLocation then
+					infusedLocation = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation)
+					if infusedLocation.TF then
+						if (not infusedLocation.TF.data) or (not infusedLocation.TF.data.species) then
+							infusedLocation.TF.data = { species = infuseSpecies, playerSpeciesTF = true }
+						end
 					end
-					if not sbq.sbqData.locations[location.."R"][name] then
-						sbq.sbqData.locations[location.."R"][name] = copy
-					end
+					-- this is to make sure that if you have used an infusion slot to get this modified locationData you can still get these options for *your* species
+					infusedLocation.combine = data.combine
+					infusedLocation.combined = data.combined
+					infusedLocation.infusedVisual = data.infusedVisual
+					infusedLocation.infusion = data.infusion
+					infusedLocation.infusionAccepts = data.infusionAccepts
+					infusedLocation.checkSettings = data.checkSettings
 				end
 			end
+		end
+		sbq.sbqData.locations[location] = sb.jsonMerge(sbq.config.defaultLocationData[location] or {}, infusedLocation or data)
+	end
+
+	for location, data in pairs(sbq.sbqData.locations) do
+		if data.sided then
+			sbq.sbqData.locations[location.."L"] = sbq.sbqData.locations[location.."L"] or {}
+			sbq.sbqData.locations[location.."R"] = sbq.sbqData.locations[location.."R"] or {}
+			for name, copy in pairs(data) do
+				if name ~= "combine" and name ~= "sided" then
+					sbq.sbqData.locations[location.."L"][name] = sbq.sbqData.locations[location.."L"][name] or copy
+					sbq.sbqData.locations[location.."R"][name] = sbq.sbqData.locations[location.."R"][name] or copy
+				end
+			end
+			sbq.sbqData.locations[location .. "L"].side = sbq.sbqData.locations[location .. "L"].side or "L"
+			sbq.sbqData.locations[location .. "R"].side = sbq.sbqData.locations[location .. "R"].side or "R"
 		end
 	end
 	for location, data in pairs(sbq.sbqData.locations) do
@@ -317,32 +363,6 @@ function sbq.initLocationEffects()
 				effect = (sbq.sbqData.defaultSettings or {})[location.."Effect"] or "sbqRemoveBellyEffects"
 			end
 			sbq.settings[location.."Effect"] = effect
-			if data.sided then
-				local left =  sbq.sbqData.locations[location.."L"]
-				local right =  sbq.sbqData.locations[location.."R"]
-				if not right.selectEffect then
-					sbq.settings[location.."REffect"] = effect
-				end
-				if not left.selectEffect then
-					sbq.settings[location.."LEffect"] = effect
-				end
-			end
-		end
-		if data.sided then
-			local left =  sbq.sbqData.locations[location.."L"]
-			local right =  sbq.sbqData.locations[location.."R"]
-			if not right.TF then
-				right.TF = data.TF
-			end
-			if not left.TF then
-				left.TF = data.TF
-			end
-			if not right.eggify then
-				right.eggify = data.eggify
-			end
-			if not left.eggify then
-				left.eggify = data.eggify
-			end
 		end
 	end
 end

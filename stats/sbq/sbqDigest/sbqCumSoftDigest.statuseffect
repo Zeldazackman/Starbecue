@@ -4,7 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqCumSoftDigest",
-		"itemDrop" : "sbqFilledCondom"
+		"itemDrop" : "sbqFilledCondom",
+		"digestType" : "cumDigest"
 	},
 	"defaultDuration" : 5,
 

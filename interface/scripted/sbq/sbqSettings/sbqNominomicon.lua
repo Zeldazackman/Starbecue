@@ -21,6 +21,7 @@ function init()
 	sbq.sbqSettings = { global = data.settings }
 	sbq.sbqSettings[sbq.sbqCurrentData.species] = data.settings
 	sbq.predatorSpawner = data.spawner
+	sbq.storedDigestedPrey = data.storedDigestedPrey or {}
 
 	oldInit()
 
@@ -79,3 +80,8 @@ end
 sbq.changePredatorSetting = sbq.changeGlobalSetting
 
 --------------------------------------------------------------------------------------
+
+function sbq.saveDigestedPrey()
+	world.sendEntityMessage( sbq.predatorEntity, "sbqSaveDigestedPrey", sbq.storedDigestedPrey )
+	world.sendEntityMessage( sbq.predatorSpawner, "sbqSaveDigestedPrey", sbq.storedDigestedPrey )
+end

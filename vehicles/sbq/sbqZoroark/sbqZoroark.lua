@@ -16,7 +16,68 @@ function sbq.update(dt)
 	--sbq.changeSize()
 	sbq.armRotationUpdate()
 	sbq.setGrabTarget()
+	eyeTracking()
 end
+
+function eyeTracking()
+	local X = 0
+	local Y = 0
+	local target
+	local center = { 0, 0.5 }
+	if sbq.driving then
+		target = sbq.globalToLocal(sbq.seats[sbq.driverSeat].controls.aim)
+	else
+		local center = sbq.localToGlobal(center)
+		local targetEntity = getVisibleEntity(world.playerQuery(center, 50))
+		if not targetEntity then
+			targetEntity = getVisibleEntity(world.npcQuery(center, 50 ))
+		end
+		if targetEntity then
+			target = sbq.globalToLocal(world.entityPosition(targetEntity))
+		end
+	end
+
+	if target ~= nil then
+		local angle = math.atan((target[2] - center[2]), (target[1] - center[1])) * 180/math.pi
+
+		if angle <= 15 and angle >= -15 then
+			X = 1
+			Y = 0
+		elseif angle <= 75 and angle > 15 then
+			X = 1
+			Y = 1
+		elseif angle <= 105 and angle > 75 then
+			X = 0
+			Y = 1
+		elseif angle <= 165 and angle > 105 then
+			X = -1
+			Y = 1
+		elseif angle > 165 then
+			X = -1
+			Y = 0
+
+		elseif angle >= -75 and angle < -15 then
+			X = 1
+			Y = -1
+		elseif angle >= -105 and angle < -75 then
+			X = 0
+			Y = -1
+		elseif angle >= -165 and angle < -105 then
+			X = -1
+			Y = -1
+		elseif angle < -165 then
+			X = -1
+			Y = 0
+		end
+
+		if math.abs(target[1]-center[1]) > 10 then
+			X = X * 2
+		end
+	end
+	animator.setGlobalTag("eyesX", X)
+	animator.setGlobalTag("eyesY", Y)
+end
+
 
 function sbq.changeSize()
 	if sbq.tapControl( sbq.driverSeat, "special1" ) and sbq.totalTimeAlive > 0.5 and not sbq.transitionLock then

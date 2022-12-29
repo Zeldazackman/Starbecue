@@ -9,14 +9,15 @@ function init()
 	removeOtherBellyEffects()
 
 	animator.setParticleEmitterOffsetRegion("healing", mcontroller.boundBox())
-	animator.setParticleEmitterEmissionRate("healing", self.powerMultiplier * 3)
-	animator.setParticleEmitterActive("healing", true)
 
 end
 
 function update(dt)
-	self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
+	self.powerMultiplier = (status.statusProperty("sbqDigestData") or {}).power or 1
+	animator.setParticleEmitterEmissionRate("healing", self.powerMultiplier * 3)
 	status.modifyResourcePercentage("health", 0.01 * dt * self.powerMultiplier)
+	local health = world.entityHealth(entity.id())
+	animator.setParticleEmitterActive("healing", health[1] < health[2])
 end
 
 function uninit()

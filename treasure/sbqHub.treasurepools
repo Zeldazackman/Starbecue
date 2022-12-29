@@ -67,6 +67,57 @@
 				"preyColorMap" : {
 					"primary" : ["0b0b0b","101010","1b1b1b"],
 					"secondary" : ["3890cf","1ac2e7","01e9fa"]
+				},
+				"npcArgs" : {
+					"npcSpecies" : "sbqKaori_Fevix",
+					"npcType" : "sbqKaori_Fevix",
+					"npcParam" : {
+						"identity" : {},
+						"scriptConfig" : {
+							"uniqueId" : "sbqKaori_Fevix"
+						},
+						"statusControllerSettings" : {
+							"statusProperties" : {
+								"sbqDidVornyConvertCheck" : true,
+								"sbqPreyEnabled" : {
+									"preyEnabled": true,
+
+									"digestAllow": true,
+									"cumDigestAllow": true,
+									"milkDigestAllow": true,
+
+									"transformAllow": true,
+									"genderswapAllow": true,
+
+									"eggAllow": true,
+
+									"held": true,
+
+									"oralVore": true,
+									"tailVore": true,
+									"absorbVore": true,
+									"navelVore": true,
+
+									"analVore": true,
+									"unbirth": true,
+									"cockVore": true,
+									"breastVore": true,
+
+									"bellyInfusion" : true,
+									"cockInfusion" : true,
+									"pussyInfusion" : true,
+									"breastsInfusion" : true
+								}
+							}
+						}
+					}
+				},
+				"speciesFile": {
+					"speciesAnimOverride" : "speciesAnimOverride.config",
+					"baseColorMap" : {
+						"primary" : ["0b0b0b","101010","1b1b1b"],
+						"secondary" : ["3890cf","1ac2e7","01e9fa"]
+					}
 				}
 			}}}
 		]}]

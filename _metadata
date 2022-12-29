@@ -6,10 +6,13 @@
 	"link" : "https://github.com/Zygahedron/Starbecue",
 	"name" : "Starbecue",
 	"friendlyName" : "Starbecue",
+	"requires" : [
+		"starboundSpeciesAnimOverrides"
+	],
 	"includes" : [
-		"starboundSpeciesAnimOverrides",
 		"Umbreon Race Mod", "Avali", "novalirace", "Gnolls", "lucario", "The Crylik Race [BETA]", "Lyceen  Race", "ssvm", "Draconis Race(Humanoid Dragon Race)", "Familiars", "Latex Race",
 
+		"NpcSpawnerPlus", // so we can add our NPC types to their editors
 		"Braixen Race Fired Up", "Braixen Race", // so they don't take damage from being wet because thats dumb
 		"StarboundSimpleVoreModVSO", "ssvm", "Starbound Simple Vore Mod", "SSVMVSOchars", "SSVMSPOVZovoroth", "SSVMSPOVLekrashar", "SSVMSPOVHappers", "SSVMSPOVelric", "SSVMSPOV_TEMPLATE", // to make sure we overwrite anything from SSVM that we need to
 		"StardustLib", "Stardust Core", "QuickbarMini", "Stardust Core Lite", // we use them for UIs

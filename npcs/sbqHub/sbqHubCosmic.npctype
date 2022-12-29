@@ -57,13 +57,13 @@
 		"sbqOverridePreyEnabled" : {
 			"preyEnabled": false,
 
-			"digestImmunity": true,
+			"digestAllow": false,
 			"cumDigestImmunity":true,
 			"milkDigestImmunity":true,
-			"transformImmunity": true,
-			"cumTFImmunity": true,
+			"transformAllow": false,
+			"cumTransformAllow": false,
 
-			"eggImmunity": false,
+			"eggAllow": true,
 			"held": false,
 			"oralVore": true,
 			"tailVore": true,

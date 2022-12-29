@@ -15,27 +15,27 @@ end
 function refresh()
 	local preyEnabled = sb.jsonMerge(root.assetJson("/sbqGeneral.config:defaultPreyEnabled")[world.entityType(entity.id())], sb.jsonMerge((status.statusProperty("sbqPreyEnabled") or {}), (status.statusProperty("sbqOverridePreyEnabled")or {})))
 	local statModifierGroup = {}
-	if preyEnabled.digestImmunity then
+	if not preyEnabled.digestAllow then
 		table.insert(statModifierGroup, {stat = "digestionImmunity", amount = 1})
-		if not preyEnabled.allowSoftDigest then
+		if not preyEnabled.softDigestAllow then
 			table.insert(statModifierGroup, {stat = "softDigestImmunity", amount = 1})
 		end
 	end
-	if preyEnabled.cumDigestImmunity then
+	if not preyEnabled.cumDigestAllow then
 		table.insert(statModifierGroup, {stat = "cumDigestImmunity", amount = 1})
-		if not preyEnabled.allowCumSoftDigest then
+		if not preyEnabled.cumSoftDigestAllow then
 			table.insert(statModifierGroup, {stat = "cumSoftDigestImmunity", amount = 1})
 		end
 	end
-	if preyEnabled.femcumDigestImmunity then
+	if not preyEnabled.femcumDigestAllow then
 		table.insert(statModifierGroup, {stat = "femcumDigestImmunity", amount = 1})
-		if not preyEnabled.allowFemcumSoftDigest then
+		if not preyEnabled.femcumSoftDigestAllow then
 			table.insert(statModifierGroup, {stat = "femcumSoftDigestImmunity", amount = 1})
 		end
 	end
-	if preyEnabled.milkDigestImmunity then
+	if not preyEnabled.milkDigestAllow then
 		table.insert(statModifierGroup, {stat = "milkDigestImmunity", amount = 1})
-		if not preyEnabled.allowMilkSoftDigest then
+		if not preyEnabled.milkSoftDigestAllow then
 			table.insert(statModifierGroup, {stat = "milkSoftDigestImmunity", amount = 1})
 		end
 	end

@@ -81,6 +81,7 @@ More content can be found via discovering **Auri's Shop** which you can get to v
 - [Lastree](https://steamcommunity.com/sharedfiles/filedetails/?id=1380941596)
 - [Synth](https://steamcommunity.com/sharedfiles/filedetails/?id=2207290706)
 - [Bunnykin](https://steamcommunity.com/sharedfiles/filedetails/?id=732452461)
+- [Yharian](https://www.furaffinity.net/view/47517002/)
 
 This mod includes no assets from the respective modded races, modified or not, meaning said modded race *must* be installed to access its content
 

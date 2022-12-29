@@ -16,12 +16,12 @@
 
 		},
 		"sbqOverridePreyEnabled" : {
-			"digestImmunity": true,
-			"transformImmunity": true,
-			"milkDigestImmunity": true,
-			"cumDigestImmunity": true,
+			"digestAllow": false,
+			"transformAllow": false,
+			"milkDigestAllow": false,
+			"cumDigestAllow": false,
 			"cumTFImmunity":true,
-			"genderswapImmunity": true
+			"genderswapAllow": false
 		},
 
 		"dialogueTree" : {

@@ -18,7 +18,9 @@
 		"directives" : "",
 		"statusDirectives" : "",
 		"bellymask" : "",
-		"smolpath": ""
+		"smolpath": "",
+		"eyesX" : "0",
+		"eyesY" : "0"
 	},
 	"animatedParts": {
 		"stateTypes": {
@@ -547,6 +549,15 @@
 						"none": { "properties": {} }
 					}
 				}
+			},
+			"eyes": {
+				"properties": {
+					"centered": true,
+					"zLevel": -1.29,
+					"transformationGroups": ["globalScale", "headbob"],
+					"image": "skins/<headSkin>/giant/giant_eyes.png:<eyesX>.<eyesY><partVisible><directives><statusDirectives>"
+				}
+
 			},
 			"hair": {
 				"properties": {

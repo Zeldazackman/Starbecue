@@ -9,6 +9,7 @@ local prey = {}
 
 function init()
 	oldinit()
+	sbq.config = root.assetJson("/sbqGeneral.config")
 
 	player.setUniverseFlag("foodhall_auriShop")
 
@@ -259,7 +260,7 @@ function init()
 	end)
 
 	message.setHandler("sbqGetSpeciesVoreConfig", function (_,_)
-		sbq.getSpeciesConfig(player.species())
+		sbq.getSpeciesConfig(player.species(), (player.getProperty("sbqSettings") or {}).global)
 
 		local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 		status.setStatusProperty("sbqOverridePreyEnabled", sbq.speciesConfig.sbqData.overridePreyEnabled)

@@ -31,9 +31,10 @@ function tenant.setHome(position, boundary, deedUniqueId, skipNotification)
 	if deedUniqueId and not storage.settings.dontSaveToDeed then
 		sbq.timer("setHome", 0.5, function ()
 			local id = world.loadUniqueEntity(deedUniqueId)
-			if id and world.entityExists(id) then
-				world.sendEntityMessage(id, "sbqSaveSettings", storage.settings)
-				world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {})
+			local index = config.getParameter("tenantIndex")
+			if id and world.entityExists(id) and index ~= nil then
+				world.sendEntityMessage(id, "sbqSaveSettings", storage.settings or {}, index )
+				world.sendEntityMessage(id, "sbqSavePreySettings", status.statusProperty("sbqPreyEnabled") or {}, index)
 			end
 		end)
 	end
@@ -42,6 +43,8 @@ end
 
 function init()
 	sbq.config = root.assetJson("/sbqGeneral.config")
+	sbq.NPCconfig = root.npcConfig(npc.npcType())
+
 	if type(_npc_setItemSlot) ~= "function" then
 		_npc_setItemSlot = npc.setItemSlot
 		npc.setItemSlot = new_npc_setItemSlot
@@ -64,11 +67,11 @@ function init()
 		)
 	)
 	storage.settings = sb.jsonMerge(storage.settings or {}, config.getParameter("sbqOverrideSettings") or {})
+	sbq.predatorSettings = storage.settings
 	if not storage.settings.firstLoadDone then
 		storage.settings.firstLoadDone = true
 		sbq.randomizeTenantSettings()
 	end
-	sbq.predatorSettings = storage.settings
 	sbq.saveCosmeticSlots()
 
 	sbq.setRelevantPredSettings()
@@ -105,9 +108,9 @@ function init()
 		return {sbq.speciesConfig, status.statusProperty("animOverrideScale") or 1, status.statusProperty("animOverridesGlobalScaleYOffset") or 0}
 	end)
 	message.setHandler("sbqSaveSettings", function (_,_, settings, menuName)
-		storage.settings = settings
 		if menuName and menuName ~= "sbqOccupantHolder" then
 		else
+			storage.settings = settings
 			sbq.setRelevantPredSettings()
 			if type(sbq.occupantHolder) == "number" and world.entityExists(sbq.occupantHolder) then
 				world.sendEntityMessage(sbq.occupantHolder, "settingsMenuSet", storage.settings)
@@ -167,10 +170,23 @@ function init()
 		recruitable.confirmUnfollowBehavior(true)
 		storage.settings.isFollowing = recruitable.isFollowing()
 	end)
+	message.setHandler("sbqDigestStore", function(_, _, location, uniqueId, item)
+		local digestedStoredTable = status.statusProperty("sbqStoredDigestedPrey") or {}
+		digestedStoredTable[location] = digestedStoredTable[location] or {}
+		digestedStoredTable[location][uniqueId] = item
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
+		local index = config.getParameter("tenantIndex")
+		if storage.respawner and index ~= nil then
+			world.sendEntityMessage(storage.respawner, "sbqSaveDigestedPrey", digestedStoredTable, index)
+		end
+	end)
+	message.setHandler("sbqSaveDigestedPrey", function(_, _, digestedStoredTable )
+		status.setStatusProperty("sbqStoredDigestedPrey", digestedStoredTable)
+	end)
 end
 
 function sbq.setSpeciesConfig()
-	sbq.getSpeciesConfig(npc.species())
+	sbq.getSpeciesConfig(npc.species(), storage.settings)
 	status.setStatusProperty("sbqOverridePreyEnabled", sbq.speciesConfig.sbqData.overridePreyEnabled)
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 	local effects = status.getPersistentEffects("speciesAnimOverride")
@@ -296,7 +312,7 @@ function sbq.getRandomDialogue(dialogueTreeLocation, entity, settings)
 		playerName = world.entityName(entity)
 	end
 
-	local tags = { entityname = playerName }
+	local tags = { entityname = playerName, dontSpeak = "", infusedName = (((((settings[(settings.location or "").."InfusedItem"] or {}).parameters or {}).npcArgs or {}).npcParam or {}).identity or {}).name or "" }
 
 	if type(randomDialogue) == "string" then
 		sbq.say( sbq.generateKeysmashes(randomDialogue, dialogueTree.keysmashMin, dialogueTree.keysmashMax), tags, imagePortrait, randomEmote )
@@ -318,12 +334,15 @@ function sbq.say(string, tags, imagePortrait, emote)
 end
 
 function sbq.saveCosmeticSlots()
-	if not storage.saveCosmeticSlots then
+	if (not storage.saveCosmeticSlots) then
 		storage.saveCosmeticSlots = {}
 		local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
 		for i, slot in ipairs(slots) do
 			storage.saveCosmeticSlots[slot] = npc.getItemSlot(slot)
 		end
+		storage.originalCosmeticSlots = sb.jsonMerge({}, storage.saveCosmeticSlots)
+	elseif (not storage.originalCosmeticSlots) then
+		storage.originalCosmeticSlots = sb.jsonMerge({}, storage.saveCosmeticSlots)
 	end
 end
 
@@ -346,6 +365,11 @@ function sbq.randomizeTenantSettings()
 end
 
 function sbq.setRelevantPredSettings()
+	local slots = { "headCosmetic", "chestCosmetic", "legsCosmetic", "backCosmetic" }
+	for i, slot in ipairs(slots) do
+		npc.setItemSlot(slot, storage.settings[slot] or storage.originalCosmeticSlots[slot])
+	end
+
 	local speciesAnimOverrideData = status.statusProperty("speciesAnimOverrideData") or {}
 
 	if storage.settings.breasts or storage.settings.penis or storage.settings.balls or storage.settings.pussy
@@ -355,8 +379,16 @@ function sbq.setRelevantPredSettings()
 		if not effects[1] then
 			status.setPersistentEffects("speciesAnimOverride", { speciesAnimOverrideData.customAnimStatus or "speciesAnimOverride" })
 		end
-		sbq.timer("setOverrideSettings", 0.5, function ()
-			if storage.settings.penis then
+		sbq.timer("setOverrideSettings", 0.5, function()
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "cock", storage.settings.shaftInfusedVisual and storage.settings.shaftInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsCover2", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsFront", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "breastsBack", storage.settings.breastsInfusedVisual and storage.settings.breastsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "ballsFront", storage.settings.ballsInfusedVisual and storage.settings.ballsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "ballsBack", storage.settings.ballsInfusedVisual and storage.settings.ballsInfusedItem)
+			world.sendEntityMessage(entity.id(), "sbqSetInfusedPartColors", "pussy", storage.settings.wombInfusedVisual and storage.settings.wombInfusedItem)
+
+			if storage.settings.penis and ((not sbq.predatorConfig.locations.shaft.requiresInfusion) or (sbq.predatorConfig.locations.shaft.requiresInfusion and storage.settings.shaftInfusedItem ~= nil)) then
 				if storage.settings.underwear then
 					sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 				else
@@ -365,7 +397,7 @@ function sbq.setRelevantPredSettings()
 			else
 				sbq.setStatusValue( "cockVisible", "?crop;0;0;0;0")
 			end
-			if storage.settings.balls then
+			if storage.settings.balls and ((not sbq.predatorConfig.locations.balls.requiresInfusion) or (sbq.predatorConfig.locations.balls.requiresInfusion and storage.settings.ballsInfusedItem ~= nil)) then
 				if storage.settings.underwear then
 					sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
 				else
@@ -374,12 +406,12 @@ function sbq.setRelevantPredSettings()
 			else
 				sbq.setStatusValue( "ballsVisible", "?crop;0;0;0;0")
 			end
-			if storage.settings.breasts then
+			if storage.settings.breasts and ((not sbq.predatorConfig.locations.breasts.requiresInfusion) or (sbq.predatorConfig.locations.breasts.requiresInfusion and storage.settings.breastsInfusedItem ~= nil)) then
 				sbq.setStatusValue( "breastsVisible", "")
 			else
 				sbq.setStatusValue( "breastsVisible", "?crop;0;0;0;0")
 			end
-			if storage.settings.pussy then
+			if storage.settings.pussy and ((not sbq.predatorConfig.locations.womb.requiresInfusion) or (sbq.predatorConfig.locations.womb.requiresInfusion and storage.settings.wombInfusedItem ~= nil)) then
 				sbq.setStatusValue( "pussyVisible", "")
 			else
 				sbq.setStatusValue( "pussyVisible", "?crop;0;0;0;0")

@@ -26,7 +26,7 @@ end
 function update(dt)
 	if world.entityExists(effect.sourceEntity()) and (effect.sourceEntity() ~= entity.id()) then
 
-		self.powerMultiplier = status.statusProperty("sbqDigestPower") or 1
+		self.powerMultiplier = (status.statusProperty("sbqDigestData") or {}).power or 1
 
 		local health = world.entityHealth(entity.id())
 		local digestRate = 0.01
@@ -38,7 +38,7 @@ function update(dt)
 
 		if health[1] > (digestAmount + 1) and not self.digested and health[1] > 1 then
 			if config.getParameter("displayDamage") then
-				digestAmount = digestAmount * status.resourceMax("health") + self.cdamage
+				digestAmount = digestAmount * health[2] + self.cdamage
 				if digestAmount >= 1 then
 					self.cdamage = digestAmount % 1
 					digestAmount = math.floor(digestAmount)

@@ -4,6 +4,8 @@
 
 	"effectConfig" : {
 		"effect" : "sbqDigestDisplay",
+		"digestType" : "digest",
+
 		"fatal" : true,
 		"displayDamage" : true,
 		"sendHunger" : true

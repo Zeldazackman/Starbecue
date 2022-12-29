@@ -97,35 +97,25 @@
 			"breastVore" : [true,false],
 			"unbirth" : [true,false],
 
-			"oralVoreEnable" : [true,false],
-			"tailVoreEnable" : [true,false],
-			"navelVoreEnable" : [true,false],
-			"absorbVoreEnable" : [true,false],
 
-			"cockVoreEnable" : [true,false],
-			"analVoreEnable" : [true,false],
-			"breastVoreEnable" : [true,false],
-			"unbirthEnable" : [true,false],
+			"digestAllow" : [true,false],
 
-			"digestImmunity" : [true,false],
-			"digestImmunityEnable" : [true,false],
+			"cumDigestAllow" : [true,false],
 
-			"eggImmunity" : [true,false],
-			"eggImmunityEnable" : [true,false],
+			"femcumDigestAllow" : [true,false],
 
-			"transformImmunity" : [true,false],
-			"transformImmunityEnable" : [true,false]
+			"eggAllow" : [true,false],
+
+			"transformAllow" : [true,false],
+
+			"genderswapAllow" : [true,false]
+
 		},
 		"sbqRandomizeSettings" : {
 			"oralVorePred" : [true,false],
 			"tailVorePred" : [true,false],
 			"navelVorePred" : [true,false],
 			"absorbVorePred" : [true,false],
-
-			"oralVorePredEnable" : [true,false],
-			"tailVorePredEnable" : [true,false],
-			"navelVorePredEnable" : [true,false],
-			"absorbVorePredEnable" : [true,false],
 
 			// we shouldn't have the randomly generated preds generate with nsfw stuff
 			// not everyone wants to stumble across an NPC with their dick out
@@ -134,11 +124,6 @@
 			//"analVorePred" : [true,false],
 			//"breastVorePred" : [true,false],
 			//"unbirthPred" : [true,false],
-
-			//"cockVorePredEnable" : [true,false],
-			//"analVorePredEnable" : [true,false],
-			//"breastVorePredEnable" : [true,false],
-			//"unbirthPredEnable" : [true,false],
 
 			"bellyEffectSlot" : [ "none", "heal", "digest", "softDigest"],
 			"wombEffectSlot" : [ "none", "heal", "digest", "softDigest"],

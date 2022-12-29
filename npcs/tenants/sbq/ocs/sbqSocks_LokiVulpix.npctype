@@ -419,15 +419,15 @@
 									{"add":"struggle.location.race.personality.mood.locationEffect"}
 								]},
 								"transform" : {
-									"next" : "transformImmunity",
-									"false" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
+									"next" : "transformAllow",
+									"true" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
 										[
 											"Can you feel yourself getting softer~?", "I think you'll make a cute vee plushie~", "I think I can feel you getting more snuggly~",
 											"Hehe, you're getting fluffier in there aren't you~", "I bet you've got a little tag on your butt by now~"
 										],
 										{"add":"struggle.location.race.personality.mood.locationEffect"}
 									]},
-									"true" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
+									"false" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
 										[
 											"A real shame you're resisting,\nI think you'd make a cute plushie~", "Guess I won't be having a new vee plush to snuggle..."
 										],
@@ -468,15 +468,15 @@
 								"transform" :  "struggle.belly.race.personality.mood.transform",
 								"egged" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [ "Now you're trapped in an egg" ] }, // I don't think this will ever trigger because eggs can't struggle haha
 								"eggify" : {
-									"next" : "eggImmunity",
-									"false" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
+									"next" : "eggAllow",
+									"true" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
 										[
 											"Hehe, you're gonna be like a toy in a prize egg soon", "Once this egg is done, you'll be like a hidden prize~",
 											{"check":{"wombTF":true},"add":["Hehe, you'll just be a plushie toy in a prize egg when I'm done~"]}
 										],
 										{"add":"struggle.location.race.personality.mood.locationEffect"}
 									] },
-									"true" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
+									"false" : { "jump" : ["converse"], "buttonText" : "[converse]", "randomDialogue" : [
 										[
 											"Aww, I really wanted to put you in a prize egg...", "It would have been such fun to pop out a prize egg."
 										],
@@ -516,9 +516,9 @@
 										"Hehe, look at you now,\na cute vee plush~", "Hehe, now you're a plushie like me~"
 									]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Didn't want to become a plushie?", "Oh darn, I'll have to start all over again." ] },
-										"true" : { "randomDialogue" : [ "I still think you'd have made a cute plushie", {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Didn't want to become a plushie?", "Oh darn, I'll have to start all over again." ] },
+										"false" : { "randomDialogue" : [ "I still think you'd have made a cute plushie", {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -546,9 +546,9 @@
 										"Now you can see the new you.", "You might look a bit different now."
 									]},
 									"transform" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Maybe I shouldn't turn you into a plushie...", "Maybe I should stop this..." ] },
-										"true" : { "randomDialogue" : [ "Seems like I can't turn you into a plushie...", "For some reason this isn't working..." ] }
+										"next" : "transformAllow",
+										"true" : { "randomDialogue" : [ "Maybe I shouldn't turn you into a plushie...", "Maybe I should stop this..." ] },
+										"false" : { "randomDialogue" : [ "Seems like I can't turn you into a plushie...", "For some reason this isn't working..." ] }
 									}
 								}
 							}
@@ -578,9 +578,9 @@
 									"transform" : "letout.oralVore.struggleTrigger.race.personality.mood.transform",
 									"egged" : { "randomDialogue" : ["Hah, egg"] }, // I don't think this one is possible to get due to the fact that eggs can't struggle haha
 									"eggify" : {
-										"next" : "eggImmunity",
-										"false" : { "randomDialogue" : [ "Don't want to be in a prize egg?", "I thought you'd look cute in a prize egg~" ] },
-										"true" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Don't want to be in a prize egg?", "I thought you'd look cute in a prize egg~" ] },
+										"false" : { "randomDialogue" : [ {"add":"letout.voreType.struggleTrigger.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -671,8 +671,8 @@
 									},
 									"sbqSoftDigest" : "struggling.location.predator.race.personality.mood.sbqDigest",
 									"transform" : {
-										"next" : "transformImmunity",
-										"true" : { "randomDialogue" : [ "I can tell what you're trying to do, it won't work on me.", "This sort of stuff doesn't work on me.", {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "transformAllow",
+										"false" : { "randomDialogue" : [ "I can tell what you're trying to do, it won't work on me.", "This sort of stuff doesn't work on me.", {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -727,8 +727,8 @@
 										]}
 									},
 									"transform" : {
-										"next" : "transformImmunity",
-										"true" : { "randomDialogue" : [
+										"next" : "cumTransformAllow",
+										"false" : { "randomDialogue" : [
 											"A-all this is doing is staining me white!", "I-I'm not going to turn,\nall you're doing is making me more messy!",
 											{"add":"struggling.location.predator.race.personality.mood.locationEffect"}
 										]}
@@ -800,9 +800,9 @@
 									"transform" : "struggling.belly.predator.race.personality.mood.transform",
 									"egged" : {}, // struggles can't trigger while egged and inside someone
 									"eggify" : {
-										"next" : "transformImmunity",
-										"false" : { "randomDialogue" : [ "Is this... an egg?", "Are you making an egg around me?", "I'm gonna be trapped in an egg!" ] },
-										"true" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
+										"next" : "eggAllow",
+										"true" : { "randomDialogue" : [ "Is this... an egg?", "Are you making an egg around me?", "I'm gonna be trapped in an egg!" ] },
+										"false" : { "randomDialogue" : [ {"add":"struggling.location.predator.race.personality.mood.locationEffect"} ] }
 									}
 								}
 							}
@@ -1013,9 +1013,6 @@
 		// the pred prefrences and general settings for this NPC are set here!
 		// set each one to the value you want, if there are any that are unset, they'll just go to the default values
 
-		// the Enable sub setting is what would allow the NPC to decide itself if it can turn check or uncheck the check for its setting
-		// for example, if "[setting]Enable" was set to true, the NPC would change the value of "[setting]" in its scripts
-		// if "[setting]Enable" is unchecked, "[setting]" will always stay at whatever its current value is whether it was defined in this file, or changed in the deed menu
 		"sbqDefaultSettings" : {
 			"mood" : "default",
 			"personality" : "default",
@@ -1074,15 +1071,15 @@
 		"sbqOverridePreyEnabled" : {
 			"navelVore" : false,
 
-			"digestImmunity": true,
-			"cumDigestImmunity" : true,
-			"milkDigestImmunity" : true,
-			"cumTFImmunity" : true,
-			"femcumDigestImmunity" : true,
-			"allowFemcumSoftDigest" : false,
+			"digestAllow": false,
+			"cumDigestAllow": false,
+			"milkDigestAllow": false,
+			"cumTransformAllow": false,
+			"femcumDigestAllow": false,
+			"femcumSoftDigestAllow": false,
 
-			"transformImmunity": true,
-			"genderswapImmunity" : true
+			"transformAllow": false,
+			"genderswapAllow": false
 		}
 	},
 	"statusControllerSettings" : {
@@ -1102,13 +1099,10 @@
 			// the prey prefrences for this NPC are set here!
 			// set each one to the value you want, if there are any that are unset, they'll just go to the default values
 
-			// the Enable sub setting is what would allow the NPC to decide itself if it can turn check or uncheck the check for its setting
-			// for example, if "[setting]Enable" was set to true, the NPC would change the value of "[setting]" in its scripts
-			// if "[setting]Enable" is unchecked, "[setting]" will always stay at whatever its current value is whether it was defined in this file, or changed in the deed menu
 			"sbqPreyEnabled" : {
 				"preyEnabled": true,
 
-				"eggImmunity": false,
+				"eggAllow": true,
 
 				"held": true,
 
